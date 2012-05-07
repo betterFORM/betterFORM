@@ -611,6 +611,263 @@
 
     </xsl:template>
 
+    <xsl:template match="xf:group[@appearance='bf:verticalTable']" priority="15" mode="repeated-compact-prototype">
+        <xsl:variable name="group-id" select="@id"/>
+
+        <xsl:variable name="mip-classes">
+            <xsl:call-template name="get-mip-classes"/>
+        </xsl:variable>
+
+        <table cellspacing="0" cellpadding="0" class="xfContainer xfGroup appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}">
+            <xsl:if test="exists(xf:label)">
+                <caption class="xfGroupLabel">
+                    <xsl:apply-templates select="./xf:label"/>
+                    <xsl:apply-templates select="xf:alert"/>
+                </caption>
+            </xsl:if>
+            <tbody>
+                <xsl:for-each select="*[not(local-name()='label')]">
+                    <xsl:choose>
+                        <!-- if we got a group with appearance bf:GroupLabelLeft we put the label
+                of the first control into the lefthand column -->
+                        <xsl:when test="local-name()='group' and ./@appearance='bf:GroupLabelLeft'">
+                            <tr class="appBfGroupLabelLeft bfGroupLabelLeft">
+                                <td>
+                                    <!-- use the label of the nested group for the left column -->
+                                    <xsl:value-of select="xf:label"/>
+                                </td>
+                                <td>
+                                    <xsl:apply-templates select="." mode="repeated-compact-prototype"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:when test="local-name()='group' or local-name()='repeat' or local-name()='switch'">
+                            <tr>
+                                <td colspan="3">
+                                    <xsl:apply-templates select="." mode="repeated-compact-prototype"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:when test="namespace-uri()='http://www.w3.org/1999/xhtml'">
+                            <tr>
+                                <td colspan="3">
+                                    <xsl:apply-templates select="." mode="repeated-compact-prototype"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:if test="exists(node())">
+                                <tr>
+                                    <td class="bfVerticalTableLabel" valign="top">
+                                        <xsl:variable name="label-classes">
+                                            <xsl:call-template name="assemble-label-classes"/>
+                                        </xsl:variable>
+                                        <xsl:if test="local-name(.) != 'trigger'">
+                                            <label id="{@id}-label" for="{@id}-value" class="{$label-classes}">
+                                                <xsl:apply-templates select="xf:label"/>
+                                            </label>
+                                        </xsl:if>
+                                    </td>
+                                    <td class="bfVerticalTableValue" valign="top">
+                                        <xsl:apply-templates select="." mode="table"/>
+                                    </td>
+                                    <td class="bfVerticalTableInfo" valign="top">
+                                        <xsl:apply-templates select="xf:alert"/>
+                                        <xsl:apply-templates select="xf:hint"/>
+                                        <xsl:apply-templates select="xf:help"/>
+                                        <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
+                                    </td>
+                                </tr>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </tbody>
+        </table>
+    </xsl:template>
+    
+    <xsl:template match="xf:group[@appearance='bf:verticalTable']" priority="15" mode="repeated-full-prototype">
+        <xsl:variable name="group-id" select="@id"/>
+
+        <xsl:variable name="mip-classes">
+            <xsl:call-template name="get-mip-classes"/>
+        </xsl:variable>
+
+        <table cellspacing="0" cellpadding="0" class="xfContainer xfGroup appBfVerticalTable bfVerticalTable {$mip-classes}" id="{$group-id}">
+            <xsl:if test="exists(xf:label)">
+                <caption class="xfGroupLabel">
+                    <xsl:apply-templates select="./xf:label"/>
+                    <xsl:apply-templates select="xf:alert"/>
+                </caption>
+            </xsl:if>
+            <tbody>
+                <xsl:for-each select="*[not(local-name()='label')]">
+                    <xsl:choose>
+                        <!-- if we got a group with appearance bf:GroupLabelLeft we put the label
+                of the first control into the lefthand column -->
+                        <xsl:when test="local-name()='group' and ./@appearance='bf:GroupLabelLeft'">
+                            <tr class="appBfGroupLabelLeft bfGroupLabelLeft">
+                                <td>
+                                    <!-- use the label of the nested group for the left column -->
+                                    <xsl:value-of select="xf:label"/>
+                                </td>
+                                <td>
+                                    <xsl:apply-templates select="." mode="repeated-full-prototype"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:when test="local-name()='group' or local-name()='repeat' or local-name()='switch'">
+                            <tr>
+                                <td colspan="3">
+                                    <xsl:apply-templates select="." mode="repeated-full-prototype"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:when test="namespace-uri()='http://www.w3.org/1999/xhtml'">
+                            <tr>
+                                <td colspan="3">
+                                    <xsl:apply-templates select="." mode="repeated-full-prototype"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:if test="exists(node())">
+                                <tr>
+                                    <td class="bfVerticalTableLabel" valign="top">
+                                        <xsl:variable name="label-classes">
+                                            <xsl:call-template name="assemble-label-classes"/>
+                                        </xsl:variable>
+                                        <xsl:if test="local-name(.) != 'trigger'">
+                                            <label id="{@id}-label" for="{@id}-value" class="{$label-classes}">
+                                                <xsl:apply-templates select="xf:label"/>
+                                            </label>
+                                        </xsl:if>
+                                    </td>
+                                    <td class="bfVerticalTableValue" valign="top">
+                                        <xsl:apply-templates select="." mode="table"/>
+                                    </td>
+                                    <td class="bfVerticalTableInfo" valign="top">
+                                        <xsl:apply-templates select="xf:alert"/>
+                                        <xsl:apply-templates select="xf:hint"/>
+                                        <xsl:apply-templates select="xf:help"/>
+                                        <span class="info" style="display:none;" id="{concat(@id,'-info')}">ok</span>
+                                    </td>
+                                </tr>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </tbody>
+        </table>
+    </xsl:template>
+
+    <xsl:template match="xf:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable" mode="repeated-compact-prototype">
+        <xsl:variable name="mip-classes">
+            <xsl:call-template name="get-mip-classes"/>
+        </xsl:variable>
+
+        <xsl:message>$$$$$$$$$$$$ Count of children: <xsl:value-of select="bf:childCount(.)"/></xsl:message>
+        <!--
+                <xsl:message>$$$$$$$$$$$$ Count of label childs: <xsl:value-of select="count(child::xf:label)"/> </xsl:message>
+                <xsl:message>$$$$$$$$$$$$ Count of text() childs: <xsl:value-of select="count(child::text())"/> </xsl:message>
+        -->
+
+        <!-- todo: should we really have appBFHorizontalTable AND bfHorizontalTable ? -->
+        <table id="{@id}" class="xfContainer xfGroup appBfHorizontalTable bfHorizontalTable {$mip-classes}">
+
+            <xsl:message>$$$$$$$$ has group label:<xsl:value-of select="bf:hasGroupLabel(.)"/></xsl:message>
+
+            <!-- todo: need a hook to integrate xf:alert for horizontal group -->
+            <xsl:if test="bf:hasGroupLabel(.)=true()">
+                <tr>
+                    <td colspan="{bf:childCount(.)}" class="xfGroupLabel">
+                        <xsl:if test="exists(xf:label) and @appearance !='bf:GroupLabelLeft'">
+                            <xsl:apply-templates select="./xf:label"/>
+                        </xsl:if>
+                    </td>
+                </tr>
+            </xsl:if>
+
+
+            <tr>
+                <!--<xsl:for-each select="*[position() &gt; 1]">-->
+                <xsl:for-each select="*">
+                    <xsl:if test="bf:isGroupOutput(.)=true()">
+                        <td class="appBfHorizontalTableLabel bfHorizontalTableLabel  appBfTableCol{position()} bfTableCol{position()}">
+                            <xsl:if test="local-name(.) != 'trigger'">
+                                <label id="{@id}-label" for="{@id}-value" class="appBfTableLabel bfTableLabel">
+                                    <xsl:apply-templates select="xf:label"/>
+                                </label>
+                            </xsl:if>
+                        </td>
+                    </xsl:if>
+                </xsl:for-each>
+            </tr>
+            <tr>
+                <xsl:for-each select="*">
+                    <xsl:if test="bf:isGroupOutput(.)=true()">
+                        <td class="appBfHorizontalTableValue bfHorizontalTableValue">
+                            <xsl:apply-templates select="." mode="repeated-compact-prototype"/>
+                        </td>
+                    </xsl:if>
+                </xsl:for-each>
+            </tr>
+        </table>
+    </xsl:template>
+    <xsl:template match="xf:group[@appearance='bf:horizontalTable']" priority="15" name="horizontalTable" mode="repeated-full-prototype">
+        <xsl:variable name="mip-classes">
+            <xsl:call-template name="get-mip-classes"/>
+        </xsl:variable>
+
+        <xsl:message>$$$$$$$$$$$$ Count of children: <xsl:value-of select="bf:childCount(.)"/></xsl:message>
+        <!--
+                <xsl:message>$$$$$$$$$$$$ Count of label childs: <xsl:value-of select="count(child::xf:label)"/> </xsl:message>
+                <xsl:message>$$$$$$$$$$$$ Count of text() childs: <xsl:value-of select="count(child::text())"/> </xsl:message>
+        -->
+
+        <!-- todo: should we really have appBFHorizontalTable AND bfHorizontalTable ? -->
+        <table id="{@id}" class="xfContainer xfGroup appBfHorizontalTable bfHorizontalTable {$mip-classes}">
+
+            <xsl:message>$$$$$$$$ has group label:<xsl:value-of select="bf:hasGroupLabel(.)"/></xsl:message>
+
+            <!-- todo: need a hook to integrate xf:alert for horizontal group -->
+            <xsl:if test="bf:hasGroupLabel(.)=true()">
+                <tr>
+                    <td colspan="{bf:childCount(.)}" class="xfGroupLabel">
+                        <xsl:if test="exists(xf:label) and @appearance !='bf:GroupLabelLeft'">
+                            <xsl:apply-templates select="./xf:label"/>
+                        </xsl:if>
+                    </td>
+                </tr>
+            </xsl:if>
+
+
+            <tr>
+                <!--<xsl:for-each select="*[position() &gt; 1]">-->
+                <xsl:for-each select="*">
+                    <xsl:if test="bf:isGroupOutput(.)=true()">
+                        <td class="appBfHorizontalTableLabel bfHorizontalTableLabel  appBfTableCol{position()} bfTableCol{position()}">
+                            <xsl:if test="local-name(.) != 'trigger'">
+                                <label id="{@id}-label" for="{@id}-value" class="appBfTableLabel bfTableLabel">
+                                    <xsl:apply-templates select="xf:label"/>
+                                </label>
+                            </xsl:if>
+                        </td>
+                    </xsl:if>
+                </xsl:for-each>
+            </tr>
+            <tr>
+                <xsl:for-each select="*">
+                    <xsl:if test="bf:isGroupOutput(.)=true()">
+                        <td class="appBfHorizontalTableValue bfHorizontalTableValue">
+                            <xsl:apply-templates select="." mode="repeated-full-prototype"/>
+                        </td>
+                    </xsl:if>
+                </xsl:for-each>
+            </tr>
+        </table>
+    </xsl:template>
+
     <xsl:template match="xf:switch" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="switch-id" select="@id"/>
         <xsl:variable name="switch-classes">

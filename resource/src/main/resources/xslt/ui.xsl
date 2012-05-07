@@ -303,7 +303,9 @@
         <span id="{$id}"
              class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
-            <xsl:call-template name="buildControl"/>
+            <span class="widgetContainer">
+                <xsl:call-template name="buildControl"/>
+            </span>
             <xsl:copy-of select="xhtml:script"/>
         </span>
     </xsl:template>
