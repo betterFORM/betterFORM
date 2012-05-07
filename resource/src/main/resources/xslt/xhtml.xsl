@@ -926,7 +926,10 @@
                         fluxProcessor = new XFProcessor();
                         <!-- create a XFormsModelElement class for each model in the form -->
                         <xsl:for-each select="//xf:model">
-                            <xsl:value-of select="@id"/> = new XFormsModelElement({id:"<xsl:value-of select="@id"/>"});
+                            <xsl:variable name="modelName">
+                                <xsl:value-of select="if(contains(@id,'-')) then replace(@id,'-','_') else @id"/>
+                            </xsl:variable>
+                            <xsl:value-of select="$modelName"/> = new XFormsModelElement({id:"<xsl:value-of select="$modelName"/>"});
                         </xsl:for-each>
                 }
             );
