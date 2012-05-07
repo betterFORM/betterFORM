@@ -45,16 +45,15 @@
                
                
                <xf:instance xmlns="" id="instance-1">
-                  
                   <avt>
-                     
                      <theme>tundra</theme>
-                     
+                     <date>2012-01-01</date>
+                     <time>11:12:23</time>
                   </avt>
-                  
                </xf:instance>
-               
-               
+                <xf:bind nodeset="date" type="date"/>
+                <xf:bind nodeset="time" type="time"/>
+
             </xf:model>
          </div>
          <div class="pageintro">
@@ -118,19 +117,16 @@
                </xf:select1>
                
                
-               <xf:trigger>
-                  
-                  <xf:label>a sample trigger</xf:label>
-                  
-                  <xf:message>button clicked</xf:message>
-                  
-               </xf:trigger>
-               
-               <xf:input id="input1" ref="theme">
-                  
-                  <xf:label>current theme</xf:label>
-                  
+               <xf:input ref="date">
+                  <xf:label>Date:</xf:label>
                </xf:input>
+               <xf:input ref="time" appearance="bf:timetextbox">
+                  <xf:label>Time:</xf:label>
+               </xf:input>
+
+               <xf:output id="input1" ref="theme">
+                  <xf:label>current theme</xf:label>
+               </xf:output>
                
             </xf:group>
          </div>
