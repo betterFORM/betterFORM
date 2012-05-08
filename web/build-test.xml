@@ -32,8 +32,6 @@
     <property name="target" value="${basedir}/target"/>
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
-    <property name="servlet.container" value="${properties.webappPath}"/>
-
 
     <path id="saxon.libs" description="classpath for Saxon">
         <pathelement location="${basedir}/../core/src/main/lib/saxon-9.0.jar"/>

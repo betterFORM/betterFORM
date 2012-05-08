@@ -164,7 +164,7 @@
         </copy>
 
          <copy todir="${targetname}/resources">
-            <fileset dir="${basedir}/${properties.rootDir}/resource/src/main/resources"  />
+            <fileset dir="${basedir}/../resource/src/main/resources"  />
         </copy>
 
         <echo/>

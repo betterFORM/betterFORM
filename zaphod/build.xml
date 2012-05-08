@@ -34,7 +34,6 @@
     <property name="target" value="${basedir}/target"/>
     <property name="webapp.dir" value="${target}/${zaphod.app.name}"/>
     <property name="targetname" value="${target}/${zaphod.app.name}-${zaphod.app.version}"/>
-    <property name="servlet.container" value="${properties.webappPath}"/>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -143,7 +142,7 @@
         <echo/>
         <copy todir="${webapp.dir}/${forms.target}"
               overwrite="true">
-            <fileset dir="${basedir}/${properties.rootDir}/src/main/xforms"/>
+            <fileset dir="${basedir}/../src/main/xforms"/>
         </copy>
     </target>
 
@@ -170,20 +169,6 @@
 
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
-    </target>
-
-    <target name="deploy-to-servlet-container"
-            depends="deploy-resources"
-            description="copy all resources (including forms) to webapp dir">
-        <echo/>
-        <echo message="************************************************************************************"/>
-        <echo message="deploy into servlet container..."/>
-        <echo message="************************************************************************************"/>
-        <echo/>
-        <copy todir="${servlet.container}/${zaphod.app.name}"
-              overwrite="true">
-            <fileset dir="${webapp.dir}"/>
-        </copy>
     </target>
 
 

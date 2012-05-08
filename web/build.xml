@@ -35,7 +35,7 @@
     <!--<property name="resources.dir" value="${webapp.dir}/resources"/>-->
     <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
-    <property name="servlet.container" value="${properties.webappPath}"/>
+
     <antversion property="antversion" atleast="1.7"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -204,14 +204,6 @@
         These must be handled by target depending on this.
         ************************************************************************************
         </echo>
-<!--
-        <mkdir dir="${webapp.dir}"/>
--->
-        <echo>
-        ************************************************************************************
-        copying webapp folder from src
-        ************************************************************************************
-        </echo>
 
         <!-- Filters for log4j.xml see build.properties.xml for a description-->
         <filter token="APPENDER" value="${config.log4j.appender}"/>
@@ -254,6 +246,12 @@
 
         </copy>
 
+        <!-- copy version.info to betterform-version.config -->
+        <copy tofile="${src.webinf.dir}/betterform-version.info"
+              overwrite="true"
+              file="${core.dir}/src/main/resources/META-INF/version.info">
+        </copy>
+
         <!--TODO: URGENT: webapp dir should be urgently be cleaned up!!!! -->
         <copy description="copy WEB-INF dir"
               todir="${webapp.dir}"
@@ -264,6 +262,7 @@
                 <exclude name="*/META-INF/context.xml"/>
             </fileset>
         </copy>
+
 
         <mkdir dir="${webapp.dir}/resources"/>
         <copy description="copy resources dir"
@@ -320,7 +319,7 @@
         </ant>
     </target>
 
-    <target name="deploy-exploded-resources" description="only deployed resources in resources/src/main/resources">
+    <target name="deploy-exploded-resources" description="only deployes resources in resources/src/main/resources">
 
         <echo>
         ************************************************************************************
@@ -332,6 +331,7 @@
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
     </target>
+
 
     <target name="deploy" depends="compile, exploded-webapp-base, create-single-jar" description="default deployment as single jar">
         <echo>
