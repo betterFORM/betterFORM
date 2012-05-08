@@ -61,6 +61,7 @@ define(["dojo/_base/declare",
 
     constructor:function() {
         console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
+
         // initialize DWR
 
         Flux._path = dojo.config.bf.fluxPath;
@@ -617,6 +618,9 @@ define(["dojo/_base/declare",
                 fluxProcessor._uiReady = true;
                 fluxProcessor.applyChanges(fluxProcessor.initialEvents);
                 fluxProcessor.initialEvents = null;
+                var formWrapper = dom.byId("formWrapper");
+                console.debug("formWrapper:",formWrapper);
+                domStyle.set(formWrapper,"display","block");
             });
         });
     },

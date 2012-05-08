@@ -76,12 +76,14 @@ var profile = {
                 'dojo/dom-style',
                 'dojo/dom-attr',
                 'dojo/query',
-                'dojo/i18n',
                 'dojo/fx',
                 'dojo/fx/easing',
                 'dojo/io/iframe',
                 'dojo/_base/window',
-                'dojo/has'
+                'dojo/has',
+                'dojo/i18n',
+                'dojo/date/locale',
+                'dojo/cldr/nls/en/gregorian'
             ],
             boot: true,
             customBase: true

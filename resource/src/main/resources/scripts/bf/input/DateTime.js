@@ -10,7 +10,8 @@ define(["dojo/_base/declare",
     "dijit/form/TimeTextBox",
     "dojo/date/stamp",
     "dojo/_base/connect",
-    "dojo/_base/lang"],
+    "dojo/_base/lang",
+    "dojo/i18n!dojo/cldr/nls/en/gregorian"],
     function(declare, WidgetBase, TemplatedMixin, template,DateTextBox, TimeTextBox,stamp,connect,lang) {
         return declare([WidgetBase, TemplatedMixin],
             {

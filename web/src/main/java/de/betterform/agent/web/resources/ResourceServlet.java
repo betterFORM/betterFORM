@@ -15,15 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * ResourceServlet is responsible for streaming resources like css, script, images and etc to the client.
@@ -36,6 +31,8 @@ public class ResourceServlet extends HttpServlet {
     private List<ResourceStreamer> resourceStreamers;
     private boolean caching;
     private boolean exploded = false;
+    private long oneYear = 31363200000L;
+
     /**
      * RESOURCE_FOLDER refers to the location in the classpath where resources are found.
      */
@@ -52,6 +49,7 @@ public class ResourceServlet extends HttpServlet {
      *
      */
     public final static String RESOURCE_PATTERN = "bfResources";
+    private long lastModified = 0;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -63,11 +61,12 @@ public class ResourceServlet extends HttpServlet {
             }
         }else {
             caching=true;
+
             if(LOG.isTraceEnabled()){
                 LOG.trace("Caching of Resources is enabled - resources are loaded from classpath");
             }
         }
-
+        lastModified = getLastModifiedValue();
         if (new File(config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources")).exists()) {
             exploded = true;
         }
@@ -191,13 +190,20 @@ public class ResourceServlet extends HttpServlet {
      */
     protected void setCaching(HttpServletRequest request, HttpServletResponse response) {
         long now = System.currentTimeMillis();
-        long oneYear = 31363200000L;
-
         if (caching) {
-            response.setHeader("Cache-Control", "Public");
-            response.setDateHeader("Expires", now + oneYear);
+            response.setHeader("Cache-Control", "max-age=3600, public");
+            response.setDateHeader("Date", now);
+            response.setDateHeader("Expires", now + this.oneYear);
+            response.setDateHeader("Last-Modified", this.getLastModifiedValue());
         } else {
-            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            // Set to expire far in the past.
+            response.setHeader("Expires", "Sat, 6 May 1995 12:00:00 GMT");
+            // Set standard HTTP/1.1 no-cache headers.
+            response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+            // Set IE extended HTTP/1.1 no-cache headers (use addHeader).
+            response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+            // Set standard HTTP/1.0 no-cache header.
+            response.setHeader("Pragma", "no-cache");
         }
     }
 
@@ -206,15 +212,12 @@ public class ResourceServlet extends HttpServlet {
         if (jsessionidIndex != -1) {
             requestURI = requestURI.substring(0, jsessionidIndex);
         }
-
         int patternIndex = requestURI.indexOf(RESOURCE_PATTERN);
         return requestURI.substring(patternIndex + RESOURCE_PATTERN.length(), requestURI.length());
-
     }
 
     protected String getResourceContentType(String resourcePath) {
         String resourceFileExtension = getResourceFileExtension(resourcePath);
-
         return mimeTypes.get(resourceFileExtension);
     }
 
@@ -222,5 +225,42 @@ public class ResourceServlet extends HttpServlet {
         String parsed[] = resourcePath.split("\\.");
 
         return parsed[parsed.length - 1];
+    }
+
+    private long getLastModifiedValue() {
+        if(this.lastModified == 0){
+            long APP_TIMESTAMP;
+            try {
+                BufferedInputStream stream = new BufferedInputStream(ResourceServlet.class.getResourceAsStream("/META-INF/version.info"));
+                StringBuffer buffer = new StringBuffer("betterForm/");
+                int c;
+
+                while ((c = stream.read()) > -1) {
+                    if (c != 10 && c != 13) {
+                        buffer.append((char) c);
+                    }
+                }
+
+                stream.close();
+
+                String versionInfo = buffer.toString();
+
+                // String APP_NAME = APP_INFO.substring(0, APP_INFO.indexOf(" "));
+                // String APP_VERSION = APP_INFO.substring(APP_INFO.indexOf(" ") + 1, APP_INFO.indexOf("-") - 1);
+                String timestamp = versionInfo.substring(versionInfo.indexOf("Timestamp:")+10,versionInfo.length());
+                String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+                SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+                Date date = sdf.parse(timestamp);
+                APP_TIMESTAMP = date.getTime();
+            } catch (Exception e) {
+                APP_TIMESTAMP = System.currentTimeMillis();
+            }
+            this.lastModified = APP_TIMESTAMP;
+        }
+        return lastModified;
+    }
+
+    protected long getLastModified(HttpServletRequest req) {
+        return this.getLastModifiedValue();
     }
 }

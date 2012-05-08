@@ -65,8 +65,7 @@
     <xsl:param name="form-id" select="'betterform'"/>
     <xsl:param name="form-name" select="//title"/>
     <xsl:param name="debug-enabled" select="'true'"/>
-    <!-- <xsl:variable name="isDebugEnabled" select="$debug-enabled eq 'true'" as="xsd:boolean"/> -->
-    <xsl:variable name="isDebugEnabled" select="true()" as="xsd:boolean"/>
+    <xsl:variable name="isDebugEnabled" select="$debug-enabled eq 'true'" as="xsd:boolean"/>
 
     <!-- ### specifies the parameter prefix for repeat selectors ### -->
     <xsl:param name="selector-prefix" select="'s_'"/>
@@ -319,8 +318,8 @@
         <body class="{$theme} bf {$client-device} {$alert}">
             <!-- TODO: Lars: keep original CSS classes on body-->
             <xsl:copy-of select="@*[name() != 'class']"/>
-            <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>
-            <xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>
+           <!-- <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>-->
+            <!--<xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>-->
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             the 'bfLoading' div is used to display an animated icon during ajax activity
@@ -361,7 +360,7 @@
             actual content of the form starts here
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             -->
-            <div id="formWrapper">
+            <div id="formWrapper" style="display:none">
                 <!--
                 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 creates the client-side processor
@@ -878,6 +877,7 @@
             },
             isDebug:<xsl:value-of select="$isDebugEnabled"/>,
             locale:'en',
+            extraLocale: ['en'],
             baseUrl: '<xsl:value-of select="concat($contextroot,$scriptPath)"/>',
 
             parseOnLoad:false,

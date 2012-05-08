@@ -91,7 +91,9 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
      * Creates a new XFormsProcessorImpl object.
      */
     public XFormsProcessorImpl() {
-        LOGGER.info(getAppInfo());
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug(getAppInfo());
+        }
         this.context = new HashMap(10);
         this.eventList = new ArrayList();
     }
@@ -114,16 +116,12 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
                             buffer.append((char) c);
                         }
                     }
-
                     stream.close();
-
                     APP_INFO = buffer.toString();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     APP_INFO = "betterForm";
                 }
             }
-
             return APP_INFO;
         }
     }
