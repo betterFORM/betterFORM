@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Status</title>
+        <script type="text/javascript" src="/bfResources/scripts/dojo/dojo.js"
+                data-dojo-config="parseOnLoad: true"> </script>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+        <!--<link id="themeStyles" rel="stylesheet" href="/bfResources/scripts/dijit/themes/claro/claro.css"/>-->
+
+        <style type="text/css">
+            @import "style.css";
+            /*@import "/bfResources/scripts/dijit/themes/claro/document.css";*/
+            /*@import "/bfResources/scripts/dijit/tests/css/dijitTests.css";*/
+        </style>
+        <script type="text/javascript">
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.Dialog");
+            dojo.require("dijit.form.TextBox");
+            dojo.require("dijit.TooltipDialog");
+        </script>
+        <style type="text/css">
+            #detail #content{
+                background: white;
+                border:thin solid;
+                max-width: 100%;
+            }
+        </style>
+<!--
+        <script type="text/javascript">
+            require(["dojo/query", "dojo/_base/fx", "dojo/dom", "dojo/on", "dojo/fx", "dojo/domReady!", "dijit/form/Button", "dojo/dom-style", "dojo/NodeList-fx"],
+                    function (query, baseFx, dom, on, fx, domReady, Button, domStyle) {
+                        // The piece we had before?
+                        function move(evt) {
+                            console.debug("this", evt);
+
+                            var btn = evt.target;
+                            domStyle.set(btn, "margin", "0");
+
+                            domStyle.set(btn,"margin","0");
+                            fx.slideTo({
+                                top:15,
+                                left:50,
+                                auto:true,
+                                node:btn
+                            }).play();
+
+                            var contentPane=dom.byId("content");
+//                            baseFx.fadeOut({ node: contentPane }).play();
+//                            domStyle.set(contentPane,"display","none");
+                        }
+
+                        query(".menubutton").on("click", move);
+                    });
+
+        </script>
+-->
+        <style type="text/css">
+        </style>
+    </head>
+    <body id="detail">
+
+        <div id="header">
+<!--
+            <div class="startButton" data-dojo-type="dijit.form.DropDownButton">
+                <span id="user">admin</span>
+                <div data-dojo-type="dijit.TooltipDialog">
+                    <label for="name">Name:</label> <input data-dojo-type="dijit.form.TextBox" id="name" name="name"><br>
+                    <label for="hobby">Hobby:</label> <input data-dojo-type="dijit.form.TextBox" id="hobby" name="hobby"><br>
+                </div>
+            </div>
+-->
+            <img src="configuration.png" alt="Start" id="startButton"/>
+            <div id="user">admin</div>
+        </div>
+        <div id="content">
+            <!--<div id="logo" class="twocolumn">-->
+                <!--<img src="existdb.gif" align="right"/>-->
+            <!--</div>-->
+<!--
+            <ul>
+
+                <li class="twoColumn">
+                    <div id="logo"/>
+                </li>
+                <li>
+                    <a href="#" id="users">
+                        <img src="user-admin.png" />
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="backup">
+                        <img src="help.png" />
+                        <span>Backup</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="statistic.png" />
+                        <span>System Information</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="statistic.png" />
+                        <span>System Information</span>
+                    </a>
+                </li>
+                <li class="twoColumn">
+                    <a href="#">
+                        <span id="exide">eXide</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="statistic.png" />
+                        <span>System Information</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="statistic.png" />
+                        <span>System Information</span>
+                    </a>
+                </li>
+            </ul>
+-->
+        </div>
+<!--
+        <div id="workspace">
+            here is the area for working
+        </div>
+-->
+    </body>
+</html>

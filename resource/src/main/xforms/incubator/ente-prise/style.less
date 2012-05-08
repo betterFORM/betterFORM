@@ -1,0 +1,189 @@
+@gutter:15px;
+@block-width: 150px;
+@block-height: 150px;
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    position: relative;
+    background: -moz-linear-gradient(top, rgba(170, 170, 170, 1) 0%,  rgb(238, 238, 238) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(125, 126, 125, 1)), color-stop(100%, rgba(14, 14, 14, 1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* IE10+ */
+    background: linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7d7e7d', endColorstr = '#0e0e0e', GradientType = 0); /* IE6-9 */
+    font-size:100%;
+    font-family: "Montserrat", sans-serif;
+
+    #header{
+        width:100%;
+        height:40px;
+
+        #startButton{
+            width: 32px;
+            height: 32px;
+            margin:3px 0 0 10px;
+            float: left;
+        }
+        #user{
+            margin: 9px 0 0 5px;
+            float: left;
+        }
+    }
+    #content{
+        min-height: 600px;
+        /*background: rgb(125, 126, 125); *//* Old browsers */
+        max-width:(@block-width * 4) + (@gutter * 8);
+        margin-left: auto;
+        margin-right: auto;
+        min-width: @block-width * 2 + @gutter * 4;
+        
+        ul{
+            margin: 0;
+            padding:0;
+
+            .appGroup{
+                width: auto;
+                height: auto !important;
+                border: thin solid #555555;
+
+                //todo: jt: use same colors for different browsers - use less!
+                background: -moz-linear-gradient(top, rgba(170, 170, 170, 1) 0%,  rgb(238, 238, 238) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(125, 126, 125, 1)), color-stop(100%, rgba(14, 14, 14, 1))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* IE10+ */
+                background: linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7d7e7d', endColorstr = '#0e0e0e', GradientType = 0); /* IE6-9 */
+            }
+            .appGroupIcon{
+                span{
+                    color:#4682b4;
+                    font-style: italic;
+                }
+            }
+
+            ul li{
+                margin: @gutter - 5;
+            }
+        }
+        ul li{
+            list-style-type: none;
+            float: left;
+            position: relative;
+            width: @block-width;
+            height: 150px;
+            margin: @gutter;
+            font-size: 1em;
+            border-radius: 5px;
+            color: #353535;
+
+            background-color: #fff;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.25), 0 0 50px rgba(0,0,0,0.1) inset;
+            border-radius: 1%     1%     1%     1% /     1%     1%     1%     1%;
+
+            a,button{
+                height: 100%;
+                text-decoration: none;
+                margin:10px;
+                color: #777777;
+                text-align: right;
+
+                #exide{
+                    font-size:5.0em;
+                    padding-top: 35px;
+                    text-align: center;
+                    width: 100%; 
+                    position:relative;
+                }
+            }
+            span{
+                float:right;
+                width: 130px;
+                color:#444444;
+                position: absolute;
+                bottom:10px;
+                right: 10px;
+
+            }
+            img{
+                float: left;
+                width: 69%;
+                margin: 5px 0 0 5px;
+            }
+
+        }
+        /*
+         ul li:after{
+                position: absolute;
+                left: 100px;
+                bottom: 0px;
+                width: 99%;
+                height: 20%;
+                border-radius: 0% 0 0 0;
+                z-index: -1;
+                content: "";
+                box-shadow: -97px 0 19px rgba(0,0,0,0.18);
+                -webkit-transform: skew(43deg);
+                -moz-transform: skew(43deg);
+                -ms-transform: skew(43deg);
+                -o-transform: skew(43deg);
+                transform: skew(43deg);
+                -webkit-transform-origin: 0% 100%;
+                -moz-transform-origin: 0% 100%;
+                -ms-transform-origin: 0% 100%;
+                -o-transform-origin: 0% 100%;
+                transform-origin: 0% 100%;
+            }
+            */
+
+            #logo {
+                    background: url("existdb.gif") no-repeat center center #bdbdbd;
+                    width: @block-width * 2 + @gutter * 2;
+                    height: @block-height;
+                    opacity: 0.7;
+
+            }
+            #existIconBack{
+                display: none;
+            }
+            .backside #logo{
+                display: none;
+            }
+            .backside #existIconBack{
+                    display: block;
+                    width: @block-width * 2 + @gutter * 2;
+                    height: @block-height;
+                    background: white;
+                    color:#666666;
+                    font-size: .8em;
+            }
+            .twoColumn{
+                width: (@block-width * 2) + (@gutter * 2);
+            }
+            #repoConfigIcon{
+                position: absolute;
+                bottom: 5px;
+                left: 5px;
+                width: 28px;
+                height: 28px;
+                cursor: pointer;
+                opacity: 0.5;
+            }
+        }
+
+}
+
+
+
+
+
+
+    /*
+            #users{
+                background: url("user-admin.png") no-repeat;
+            }
+    */
+

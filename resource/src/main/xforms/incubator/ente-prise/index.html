@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Status</title>
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"
+                data-dojo-config="async: true"></script>
+
+        <script type="text/javascript">
+            require(["dojo/query", "dojo/_base/fx", "dojo/dom", "dojo/on", "dojo/fx", "dojo/domReady!", "dijit/form/Button", "dojo/dom-style", "dojo/NodeList-fx"],
+                    function (query, baseFx, dom, on, fx, domReady, Button, domStyle) {
+                        // The piece we had before?
+                        function move(evt) {
+                            console.debug("this", evt);
+
+                            var btn = evt.target;
+                            domStyle.set(btn, "margin", "0");
+
+                            domStyle.set(btn,"margin","0");
+                            fx.slideTo({
+                                top:15,
+                                left:50,
+                                auto:true,
+                                node:btn
+                            }).play();
+
+                            var contentPane=dom.byId("content");
+//                            baseFx.fadeOut({ node: contentPane }).play();
+//                            domStyle.set(contentPane,"display","none");
+                        }
+
+                        query(".menubutton").on("click", move);
+                    });
+
+        </script>
+        <style type="text/css">
+            body {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                position: relative;
+            }
+
+            #header {
+                height: 150px;
+                background: rgb(238, 238, 238); /* Old browsers */
+                background: -moz-linear-gradient(top, rgba(238, 238, 238, 1) 0%, rgba(204, 204, 204, 1) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(238, 238, 238, 1)), color-stop(100%, rgba(204, 204, 204, 1))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, rgba(238, 238, 238, 1) 0%, rgba(204, 204, 204, 1) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, rgba(238, 238, 238, 1) 0%, rgba(204, 204, 204, 1) 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, rgba(238, 238, 238, 1) 0%, rgba(204, 204, 204, 1) 100%); /* IE10+ */
+                background: linear-gradient(top, rgba(238, 238, 238, 1) 0%, rgba(204, 204, 204, 1) 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#cccccc', GradientType = 0); /* IE6-9 */
+            }
+            #subtitle{
+                font-size:1.8em;
+                float: right;
+                font-style: italic;
+                color: rgb(0,131,201);
+                clear:both;
+                margin-right: 15px;
+                margin-top: -5px;
+            }
+            #logo {
+                float: right;
+                margin:10px 25px 0 0;
+                /*margin: 33px;*/
+            }
+
+            #content, #workspace {
+                padding-top:50px;
+                min-height: 600px;
+                background: rgb(125, 126, 125); /* Old browsers */
+                background: -moz-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(125, 126, 125, 1)), color-stop(100%, rgba(14, 14, 14, 1))); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* IE10+ */
+                background: linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7d7e7d', endColorstr = '#0e0e0e', GradientType = 0); /* IE6-9 */
+
+            }
+
+            .menubutton {
+                width: 250px;
+                height: 120px;
+                margin: 0 50px;
+                font-size: 1.2em;
+                border-radius: 5px;
+                color: #353535;
+            }
+            .menubutton img{
+                float: left;
+            }
+            .menubutton span{
+                float:right;
+                width: 130px;
+            }
+
+                /*
+                        #users{
+                            background: url("user-admin.png") no-repeat;
+                        }
+                */
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <img id="logo" src="existdb.gif"/>
+            <div id="subtitle">Enterprise</div>
+        </div>
+        <div id="content">
+            <button id="users" class="menubutton" data-dojo-type="dijit.form.Button" type="button">
+                <img src="user-admin.png" width="40%"/>
+                <span>Users</span>
+            </button>
+            <button id="backup" class="menubutton" data-dojo-type="dijit.form.Button" type="button">
+                <img src="help.png" width="40%"/>
+                <span>Backup</span>
+            </button>
+            <button class="menubutton" data-dojo-type="dijit.form.Button" type="button">
+                <img src="statistic.png" width="40%"/>
+                <span>System Information</span>
+            </button>
+        </div>
+<!--
+        <div id="workspace">
+            here is the area for working
+        </div>
+-->
+    </body>
+</html>
