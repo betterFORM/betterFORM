@@ -84,6 +84,13 @@
         ************************************************************************************
         compiling Core classes
         ************************************************************************************
+            JavaOptions:
+                version:     ${properties.javac.version}
+                debug:       ${properties.javac.debug}
+                deprecation: ${properties.javac.deprecation}
+                optimize:    ${properties.javac.optimize}
+
+        ************************************************************************************
         </echo>
         
         <javac description="compile source files"

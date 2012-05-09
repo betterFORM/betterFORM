@@ -4,6 +4,11 @@
   -->
 
 <root>
+    <app>
+        <name>betterform</name>
+        <version>4.1</version>
+    </app>
+
     <properties>
         <javac>
             <deprecation>off</deprecation>
@@ -61,10 +66,6 @@
     </config>
     <!-- release properties -->
 
-    <app>
-        <name>betterform</name>
-        <version>4.1</version>
-    </app>
     <core>
         <app>
             <name>betterform-core</name>

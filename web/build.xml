@@ -63,7 +63,7 @@
         <tstamp/>
         <mkdir dir="${target}/classes"/>
 
-        <ant antfile="build.xml" target="compile" dir="${core.dir}" inheritall="false"/>
+        <ant antfile="build.xml" target="compile" dir="${core.dir}" inheritall="true"/>
 
         <copy todir="${target}/classes">
             <fileset dir="${core.dir}/target/classes"/>
@@ -89,6 +89,13 @@
         <echo>
         ************************************************************************************
         compiling Web classes...
+        ************************************************************************************
+        JavaOptions:
+            version:     ${properties.javac.version}
+            debug:       ${properties.javac.debug}
+            deprecation: ${properties.javac.deprecation}
+            optimize:    ${properties.javac.optimize}
+
         ************************************************************************************
         </echo>
 
