@@ -619,7 +619,7 @@ define(["dojo/_base/declare",
                 fluxProcessor.applyChanges(fluxProcessor.initialEvents);
                 fluxProcessor.initialEvents = null;
                 var formWrapper = dom.byId("formWrapper");
-                console.debug("formWrapper:",formWrapper);
+                // console.debug("formWrapper:",formWrapper);
                 domStyle.set(formWrapper,"display","block");
             });
         });
