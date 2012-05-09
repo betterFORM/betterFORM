@@ -5,9 +5,12 @@
   -->
 
 <!--
+    Ant build file to create a betterFORM Release.
+    Properties in build.properties.xml are overwritten by properties specified in release.properties.xml
+
     author: Lars Windauer
  -->
-<project id="release" name="betterForm Release Targets" default="deploy" basedir=".">
+<project id="release" name="betterForm Release Targets" default="release" basedir=".">
 
     <!-- **************************************** PROPERTIES **************************************** -->
     <!-- **************************************** PROPERTIES **************************************** -->
@@ -22,12 +25,19 @@
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="relase.name" value="${app.name}-${app.version}"/>
     <property name="target.dir" value="${basedir}/target"/>
+    <property name="core.dir" value="${basedir}/../core"/>
+    <property name="resource.dir" value="${basedir}/../resource"/>
 
-    <target name="deploy" description="default deployment as single jar">
+    <!--+ Target to run all JUnit Tests, create a custom dojo build and deploy betterform as a single-jar release
+            to web/target
+    -->
+    <target name="deploy" description="run test and creates all release relevant betterform resources">
+        <!--<ant antfile="${core.dir}/build.xml" inheritall="false" target="test"/>-->
+        <ant antfile="${resource.dir}/build-dojo.xml" inheritall="false" target="build-dojo"/>
         <ant antfile="build.xml" inheritall="true" target="deploy"/>
     </target>
 
-    <target name="release" description="creates betterFORM release in web/target">
+    <target name="release" depends="deploy" description="creates betterFORM release in web/target">
         <zip description="create betterform zip "
              zipfile="${target.dir}/${relase.name}.zip"
              basedir="${target.dir}/${app.name}"/>

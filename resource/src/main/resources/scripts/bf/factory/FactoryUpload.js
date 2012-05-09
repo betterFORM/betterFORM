@@ -18,9 +18,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             case "fileUpload":
                             case "base64binary":
                             case "hexBinary":
-                                console.warn("FactoryUpload.[file|base64|hex]");
+                                // console.warn("FactoryUpload.[file|base64|hex]");
                                 require(["bf/upload/Upload"], function(Upload) {
-                                    console.debug("upload created bald: ",xfId);
+                                    // console.debug("upload created: ",xfId);
                                     uploadWidget = new Upload({
                                         xfControlId : xfId,
                                         name:domAttr.get(n,'name')

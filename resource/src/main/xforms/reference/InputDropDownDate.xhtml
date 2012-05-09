@@ -228,7 +228,7 @@
                </xf:input>
                
                
-               <xf:input id="input2" ref="input1/value[2]" appearance="bf:dropdowndate=1970">
+               <xf:input id="input2" ref="input1/value[2]" appearance="bf:dropdowndate" data-bf-params="date:'1970'">
                   
                   <xf:label>Date with years range starting from 1970 to current year</xf:label>
                   
@@ -239,7 +239,7 @@
                </xf:input>
                
                
-               <xf:input id="input3" ref="input1/value[3]" appearance="bf:dropdowndate=1970:1980">
+               <xf:input id="input3" ref="input1/value[3]" appearance="bf:dropdowndate" data-bf-params="date:'1970:1980'">
                   
                   <xf:label>Date with years range starting from 1970 to 1980</xf:label>
                   
@@ -250,7 +250,7 @@
                </xf:input>
                
                
-               <xf:input id="input4" ref="input1/value[4]" appearance="bf:dropdowndate=1980:1970">
+               <xf:input id="input4" ref="input1/value[4]" appearance="bf:dropdowndate" data-bf-params="date:'1980:1970'">
                   
                   <xf:label>Date with years range starting from 1980 to 1970</xf:label>
                   
@@ -261,7 +261,7 @@
                </xf:input>
                
                
-               <xf:input id="input5" ref="input1/value[5]" appearance="bf:dropdowndate=-50:+50">
+               <xf:input id="input5" ref="input1/value[5]" appearance="bf:dropdowndate" data-bf-params="date:'-50:+50'">
                   
                   <xf:label>Date with years range starting 50 years in the past from current year, ending 50 years in the future from current year</xf:label>
                   
@@ -272,7 +272,7 @@
                </xf:input>
                
                
-               <xf:input id="input6" ref="input1/value[6]" appearance="bf:dropdowndate=+50:-50">
+               <xf:input id="input6" ref="input1/value[6]" appearance="bf:dropdowndate" data-bf-params="date:'+50:-50'">
                   
                   <xf:label>Date with years range starting 50 years in the future from current year, ending 50 years in the past from current year</xf:label>
                   
@@ -283,7 +283,7 @@
                </xf:input>
                
                
-               <xf:input id="input7" ref="input1/value[7]" appearance="bf:dropdowndate=+30:+20">
+               <xf:input id="input7" ref="input1/value[7]" appearance="bf:dropdowndate" data-bf-params="date:'+30:+20'">
                   
                   <xf:label>Date with years range starting 30 years in the future from current year, ending 20 years in the future from current year</xf:label>
                   
@@ -296,7 +296,7 @@
                </xf:input>
                
                
-               <xf:input id="input8" ref="input1/value[8]" appearance="bf:dropdowndate=-40:-30">
+               <xf:input id="input8" ref="input1/value[8]" appearance="bf:dropdowndate" data-bf-params="date:'-40:-30'">
                   
                   <xf:label>Date with years range starting 40 years in the past from current year, ending 30 years in the past from current year</xf:label>
                   
@@ -349,44 +349,44 @@
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input2" ref="input1/value[2]" appearance="bf:dropdowndate=1970"&gt;
+    &lt;xf:input id="input2" ref="input1/value[2]" appearance="bf:dropdowndate" data-bf-params="date:'1970'"&gt;
         &lt;xf:label&gt;Date with years range starting from 1970 to current year&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input3" ref="input1/value[3]" appearance="bf:dropdowndate=1970:1980"&gt;
+    &lt;xf:input id="input3" ref="input1/value[3]" appearance="bf:dropdowndate" data-bf-params="date:'1970:1980'"&gt;
         &lt;xf:label&gt;Date with years range starting from 1970 to 1980&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input4" ref="input1/value[4]" appearance="bf:dropdowndate=1980:1970"&gt;
+    &lt;xf:input id="input4" ref="input1/value[4]" appearance="bf:dropdowndate" data-bf-params="date:'1980:1970'"&gt;
         &lt;xf:label&gt;Date with years range starting from 1980 to 1970&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input5" ref="input1/value[5]" appearance="bf:dropdowndate=-50:+50"&gt;
+    &lt;xf:input id="input5" ref="input1/value[5]" appearance="bf:dropdowndate" data-bf-params="date:'-50:+50'"&gt;
         &lt;xf:label&gt;Date with years range starting 50 years in the past from current year, ending 50 years in the future from current year&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input6" ref="input1/value[6]" appearance="bf:dropdowndate=+50:-50"&gt;
+    &lt;xf:input id="input6" ref="input1/value[6]" appearance="bf:dropdowndate" data-bf-params="date:'+50:-50'"&gt;
         &lt;xf:label&gt;Date with years range starting 50 years in the future from current year, ending 50 years in the past from current year&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input7" ref="input1/value[7]" appearance="bf:dropdowndate=+30:+20"&gt;
+    &lt;xf:input id="input7" ref="input1/value[7]" appearance="bf:dropdowndate" data-bf-params="date:'+30:+20'"&gt;
         &lt;xf:label&gt;Date with years range starting 30 years in the future from current year, ending 20 years in the future from current year&lt;/xf:label&gt;
         &lt;xf:label&gt;Date +30:+20:&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
-    &lt;xf:input id="input8" ref="input1/value[8]" appearance="bf:dropdowndate=-40:-30"&gt;
+    &lt;xf:input id="input8" ref="input1/value[8]" appearance="bf:dropdowndate" data-bf-params="date:'-40:-30'"&gt;
         &lt;xf:label&gt;Date with years range starting 40 years in the past from current year, ending 30 years in the past from current year&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
         &lt;xf:alert&gt;Not valid&lt;/xf:alert&gt;

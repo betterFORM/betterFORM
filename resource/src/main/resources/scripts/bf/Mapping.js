@@ -90,7 +90,7 @@ require(['dojo/_base/declare'],
 
             // UPLOAD
             ['.xfUpload.xsdAnyURI .widgetContainer',    "bf/factory/FactoryUpload", "fileUpload"],
-            ['.xfUpload.xsdBase64Binary .widgetContainer',    "bf/factory/FactoryUpload", "base64encoded"],
+            ['.xfUpload.xsdBase64Binary .widgetContainer',    "bf/factory/FactoryUpload", "base64binary"],
             ['.xfUpload.xsdHexBinary .widgetContainer',    "bf/factory/FactoryUpload", "hexBinary"],
 
             // COMMON CHILDS
