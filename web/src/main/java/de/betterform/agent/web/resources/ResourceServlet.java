@@ -66,7 +66,7 @@ public class ResourceServlet extends HttpServlet {
                 LOG.trace("Caching of Resources is enabled - resources are loaded from classpath");
             }
         }
-        lastModified = getLastModifiedValue();
+        this.lastModified = getLastModifiedValue();
         if (new File(config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources")).exists()) {
             exploded = true;
         }
@@ -229,33 +229,33 @@ public class ResourceServlet extends HttpServlet {
 
     private long getLastModifiedValue() {
         if(this.lastModified == 0){
-            long APP_TIMESTAMP;
+            long bfTimestamp;
             try {
-                BufferedInputStream stream = new BufferedInputStream(ResourceServlet.class.getResourceAsStream("/META-INF/version.info"));
-                StringBuffer buffer = new StringBuffer("betterForm/");
-                int c;
+                String path = this.getServletContext().getRealPath("WEB-INF/betterform-version.info");
 
-                while ((c = stream.read()) > -1) {
-                    if (c != 10 && c != 13) {
-                        buffer.append((char) c);
+                StringBuilder versionInfo = new StringBuilder();
+                String NL = System.getProperty("line.separator");
+                Scanner scanner = new Scanner(new FileInputStream(path), "UTF-8");
+                try {
+                    while (scanner.hasNextLine()){
+                        versionInfo.append(scanner.nextLine() + NL);
                     }
                 }
-
-                stream.close();
-
-                String versionInfo = buffer.toString();
-
+                finally{
+                    scanner.close();
+                }
                 // String APP_NAME = APP_INFO.substring(0, APP_INFO.indexOf(" "));
                 // String APP_VERSION = APP_INFO.substring(APP_INFO.indexOf(" ") + 1, APP_INFO.indexOf("-") - 1);
                 String timestamp = versionInfo.substring(versionInfo.indexOf("Timestamp:")+10,versionInfo.length());
-                String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-                SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+                String df = "yyyy-MM-dd HH:mm:ss";
+                SimpleDateFormat sdf = new SimpleDateFormat(df);
                 Date date = sdf.parse(timestamp);
-                APP_TIMESTAMP = date.getTime();
+                bfTimestamp = date.getTime();
             } catch (Exception e) {
-                APP_TIMESTAMP = System.currentTimeMillis();
+                LOG.error("Error setting HTTP Header 'Last Modified', could not parse the given date.");
+                bfTimestamp = 0;
             }
-            this.lastModified = APP_TIMESTAMP;
+            this.lastModified = bfTimestamp;
         }
         return lastModified;
     }

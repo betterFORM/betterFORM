@@ -29,7 +29,8 @@
     <!-- local Web properties -->
     <property name="forms.target" value="forms"/>
     <property name="lib.dir" value="${basedir}/src/main/lib"/>
-    <property name="src.webinf.dir" value="${basedir}/src/main/webapp/WEB-INF"/>
+    <property name="src.webapp.dir" value="${basedir}/src/main/webapp"/>
+    <property name="src.webinf.dir" value="${src.webapp.dir}/WEB-INF"/>
     <property name="target" value="${basedir}/target"/>
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <!--<property name="resources.dir" value="${webapp.dir}/resources"/>-->
@@ -247,19 +248,28 @@
         </copy>
 
         <!-- copy version.info to betterform-version.config -->
+        <filter token="app.name" value="${web.app.name}"/>
+        <filter token="app.version" value="${web.app.version}"/>
+        <tstamp>
+            <format property="current.time"
+                    pattern="yyyy-MM-dd HH:mm:ss"
+                    unit="millisecond"/>
+        </tstamp>
+        <filter token="timestamp" value="${current.time}"/>
+
         <copy tofile="${src.webinf.dir}/betterform-version.info"
-              overwrite="true"
-              file="${core.dir}/src/main/resources/META-INF/version.info">
-        </copy>
+              file="${core.dir}/src/main/java/version.info"
+              filtering="true"
+              overwrite="true"/>
 
         <!--TODO: URGENT: webapp dir should be urgently be cleaned up!!!! -->
         <copy description="copy WEB-INF dir"
               todir="${webapp.dir}"
               overwrite="true"
               filtering="true">
-            <fileset dir="${src.webinf.dir}">
-                <exclude name="*.template.xml"/>
-                <exclude name="*/META-INF/context.xml"/>
+            <fileset dir="${src.webapp.dir}">
+                <exclude name="WEB-INF/*.template.xml"/>
+                <exclude name="META-INF/context.xml"/>
             </fileset>
         </copy>
 

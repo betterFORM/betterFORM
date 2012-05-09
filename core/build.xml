@@ -71,19 +71,10 @@
 
     <target name="compile" depends="prepare" description="compile all core sources">
 
-        <tstamp>
-            <format property="current.time"
-                    pattern="yyyy-MM-dd HH:mm:ss"
-                    unit="millisecond"/>
-        </tstamp>
 
-        <tstamp>
-            <format property="TSTAMP" pattern="hh:mm aa" locale="en"/>
-        </tstamp>
-
-        <filter token="app.name" value="${web.app.name}"/>
-        <filter token="app.version" value="${web.app.version}"/>
-        <filter token="timestamp" value="${current.time}"/>
+        <filter token="app.name" value="${core.app.name}"/>
+        <filter token="app.version" value="${core.app.version}"/>
+        <filter token="timestamp" value="''"/>
 
         <copy todir="${basedir}/src/main/resources/META-INF"
               file="src/main/java/version.info"
