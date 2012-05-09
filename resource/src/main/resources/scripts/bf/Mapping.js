@@ -42,18 +42,19 @@ require(['dojo/_base/declare'],
             Therefore here the Dijit is created as a child of 'widgetContainer'.
              */
             //todo: use descriptive names for the different types of controls
-            ['.uaDesktop .xfInput.xsdDate:not(.aBfDropdowndate) .widgetContainer', "bf/factory/FactoryInput", "date"],
-            ['.uaDesktop .xfInput.xsdDate.aBfDropdowndate .widgetContainer',       "bf/factory/FactoryInput", "dropDownDate"],
+            ['body.uaDesktop .xfInput.xsdDate:not(.aBfDropdowndate) .widgetContainer', "bf/factory/FactoryInput", "date"],
+            ['body.uaDesktop .xfInput.xsdDate.aBfDropdowndate .widgetContainer',       "bf/factory/FactoryInput", "dropDownDate"],
 
-            ['.uaDesktop .xfInput.xsdDateTime > * > .xfValue',              "bf/factory/FactoryInput", "dateTime"],
+            ['body.uaDesktop .xfInput.xsdDateTime > * > .xfValue',              "bf/factory/FactoryInput", "dateTime"],
 
-            ['.uaDesktop .xfInput.xsdTime:not(.aBfTimetextbox):not(.aBfDropdowntime) > * >  .xfValue',        "bf/factory/FactoryInput", "text"],
-            ['.uaDesktop .xfInput.xsdTime.aBfTimetextbox > * >  .xfValue',  "bf/factory/FactoryInput", "timeTextBox"],
-            ['.uaDesktop .xfInput.xsdTime.aBfDropdowntime > * >  .xfValue', "bf/factory/FactoryInput", "dropDownTime"],
+            ['body.uaDesktop .xfInput.xsdTime:not(.aBfTimetextbox):not(.aBfDropdowntime) > * >  .xfValue',        "bf/factory/FactoryInput", "text"],
+            ['body.uaDesktop .xfInput.xsdTime.aBfTimetextbox > * >  .xfValue',  "bf/factory/FactoryInput", "timeTextBox"],
+            ['body.uaDesktop .xfInput.xsdTime.aBfDropdowntime > * >  .xfValue', "bf/factory/FactoryInput", "dropDownTime"],
             //DateTime support for mobile might still be a problem and must be solved by a combination of controls
-            ['.uaMobile .xfInput.xsdDate > * >  .xfValue, .uaTablet .xfInput.xsdDate > * >  .xfValue', "bf/factory/FactoryInput", "mobileDate"],
-            ['.uaMobile .xfInput.xsdDateTime > * > .xfValue',             "bf/factory/FactoryInput", "mobileDateTime"],
-            ['.uaMobile .xfInput.xsdTime > * >  .xfValue',                "bf/factory/FactoryInput", "mobileTime"],
+            ['body:not(.uaDesktop) .xfInput.xsdDate .xfValue',            "bf/factory/FactoryInput", "mobileDate"],
+            ['body:not(.uaDesktop) .xfInput.xsdTime .xfValue',            "bf/factory/FactoryInput", "mobileTime"],
+            ['body:not(.uaDesktop) .xfInput.xsdDateTime .xfValue',        "bf/factory/FactoryInput", "mobileDateTime"],
+
 
             // SECRET
             ['.xfSecret .xfValue', "bf/factory/FactorySecret", "password"],

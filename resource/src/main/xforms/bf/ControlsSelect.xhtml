@@ -90,15 +90,15 @@
 
         <xf:instance id="colors">
             <items xmlns="">
-                <color>
+                <color id="red">
                     <name>RED</name>
                     <value>00FF00</value>
                 </color>
-                <color>
+                <color id="green">
                     <name>GREEN</name>
                     <value>0000FF</value>
                 </color>
-                <color>
+                <color id="blue">
                     <name>BLUE</name>
                     <value>FF0000</value>
                 </color>
@@ -106,9 +106,13 @@
         </xf:instance>
         <xf:instance id="origin">
             <items xmlns="">
-                <color>
+                <color id="black">
                     <name>BLACK</name>
                     <value>000000</value>
+                </color>
+                <color id="white">
+                    <name>WHITE</name>
+                    <value>FFFFFF</value>
                 </color>
             </items>
         </xf:instance>
@@ -148,6 +152,55 @@
                 <xf:trigger>
                     <xf:label>Value[2]</xf:label>
                     <xf:setvalue ref="instance()/select[2]/value" value="'00FF00 FF0000'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[3]</xf:label>
+                    <xf:setvalue ref="instance()/select[3]/value" value="'00FF00 Foo'"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Select1:</span>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/select1[1]/value" value="'00FF00'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/select1[2]/value" value="'0000FF'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[3]</xf:label>
+                    <xf:setvalue ref="instance()/select1[3]/value" value="'FF0000'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[4]</xf:label>
+                    <xf:setvalue ref="instance()/select1[4]/value" value="'00FF00'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[4] freetext</xf:label>
+                    <xf:setvalue ref="instance()/select1[4]/value" value="'foo'"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>insert / delete item from itemset</span>
+                <xf:trigger>
+                    <xf:label>Insert Black Item</xf:label>
+                    <xf:insert nodeset="instance('colors')/color" at="1" position="before" origin="instance('origin')/color[1]"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Insert White Item</xf:label>
+                    <xf:insert nodeset="instance('colors')/color" at="last()" position="after" origin="instance('origin')/color[2]"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Delete Last Item</xf:label>
+                    <xf:delete nodeset="instance('colors')/color" at="last()"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Rename 2nd. Item</xf:label>
+                    <xf:action>
+                        <xf:setvalue ref="instance('colors')/color[2]/name" value="'YELLOW'"/>
+                        <xf:setvalue ref="instance('colors')/color[2]/value" value="'FFE303'"/>
+                    </xf:action>
                 </xf:trigger>
             </div>
         </xf:group>
@@ -260,8 +313,6 @@
                     <xf:label>select1[4] value:</xf:label>
                 </xf:output>
             </xf:group>
-
-
         </xf:group>
     </xf:group>
 </body>

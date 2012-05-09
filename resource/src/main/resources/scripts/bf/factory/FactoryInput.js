@@ -52,10 +52,10 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             this._createMobileDate(xfControlDijit, node);
                             break;
                         case "mobileDateTime":
-                            console.warn("tbd: input dateTime");
+                            this._createMobileDateTime(xfControlDijit, node);
                             break;
                         case "mobileTime":
-                            console.warn("tbd: input Time");
+                            this._createMobileTime(xfControlDijit, node);
                             break;
                         case "tbd":
                             console.warn("No handler for node", node, " yet");
@@ -206,7 +206,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var controlId =domAttr.get(n,"id");
                     var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
                     // console.debug("createDateTime: dataObj:",dataObj);
-                    var xfValue = dataObj.value;
+                    var xfValue = this._getISODate(dataObj.value);
                     xfControlDijit.setCurrentValue(xfValue);
                     var self = this;
                     var xfId = bf.util.getXfId(n);
@@ -222,7 +222,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 datePattern:'M/d/yyyy'
                             },
                             timeConstraints:{
-                                timePattern:'HH:mm:ss',
+                                timePattern:'HH:mm:ss z',
                                 clickableIncrement: 'T00:15:00',
                                 visibleIncrement: 'T00:15:00',
                                 visibleRange: 'T01:00:00'
@@ -344,17 +344,50 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                 },
 
                 _createMobileDate:function(xfControlDijit, dateWidget){
-                    xfControlDijit.setValue = function(value, schemavalue) {
-                        domAttr.set(node, "value", value);
-                    };
-                    connect.connect(n,"onkeyup",function(evt){
-                        xfControlDijit.sendValue(n.value,false);
-                    });
-                    connect.connect(n,"onblur",function(evt){
-                        xfControlDijit.sendValue(n.value, true);
-                    });
+                    this._createMobileWidget(xfControlDijit,dateWidget,"date");
+
                 },
 
+                _createMobileDateTime:function(xfControlDijit, dateTimeWidget){
+                    this._createMobileWidget(xfControlDijit,dateTimeWidget,"dateTime");
+                },
+
+                _createMobileTime:function(xfControlDijit, timeWidget){
+                    this._createMobileWidget(xfControlDijit,timeWidget,"time");
+                },
+
+                _createMobileWidget:function(xfControlDijit, widget, type){
+                    var dataObj = bf.util.parseDataAttribute(widget,"data-bf-params");
+                    var value = this._getISODate(dataObj.value);
+                    domAttr.set(widget, "value", value);
+                    xfControlDijit.setCurrentValue(value);
+
+                    xfControlDijit.setValue = function(value, schemavalue) {
+                        domAttr.set(widget, "value", value);
+                    };
+                    var self = this;
+                    connect.connect(widget,"onkeyup",function(evt){
+                        var value = widget.value;
+                        if(type == "dateTime"){
+                            value = self._getISODateTime(value);
+                        }else if(type=="time"){
+                            value = self._getMobileTime(value);
+                        }
+                        //console.debug("send: (keyup)"+ value);
+                        xfControlDijit.sendValue(value,false);
+                    });
+                    connect.connect(widget,"onblur",function(evt){
+                        var value = widget.value;
+                        if(type == "dateTime"){
+                            value = self._getISODateTime(value);
+                        }else if(type=="time"){
+                            value = self._getMobileTime(value);
+                        }
+                        console.debug("send: (keyup)"+ value);
+                        // console.debug("dateTime.send: (blur) "+ value);
+                        xfControlDijit.sendValue(value, true);
+                    });
+                },
                 /**
                  *
                  * @param xfControlDijit
@@ -412,6 +445,42 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         domClass.replace(xfControlDijit.domNode,"xfReadWrite","xfReadOnly");
                         controlWidget.set('readOnly', false);
                     };
+                },
+
+                _getISODate:function(value){
+                    var timezone = undefined;
+                    if(value.indexOf("+") !=-1){
+                        timezone = value.substring(value.indexOf("+"),value.length);
+                        if(timezone.indexOf(":")!=-1){
+                            timezone = timezone.replace(":","");
+                        }
+                    }
+                    var zulu = (value.indexOf("Z") !=-1);
+                    if(timezone == undefined && !zulu){
+                        value = value + "Z";
+                    }
+                    var date = new Date(value);
+                    return date.toISOString();
+                },
+                _getISODateTime:function(value){
+                    var datePart = value.substring(0,value.indexOf('T'));
+                    // console.debug("datePart:" + datePart);
+                    var timePart = value.substring(value.indexOf('T'),value.length);
+                    // console.debug("timePart:" + timePart + " " + timePart.length);
+                    if(timePart.length == 7) {
+                        timePart = timePart.substring(0,6)+":00.000Z";
+                    }
+                    var result = datePart + timePart;
+                    // console.debug("result:" + result);
+                    return result;
+                },
+
+                _getMobileTime:function(value){
+                    if(value.length == 5) {
+                        value = value +":00";
+                    }
+                    // console.debug("_getMobileTime: value" + value);
+                    return value;
                 }
             }
         );

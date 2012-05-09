@@ -167,7 +167,20 @@ a:active {
         .dijitButtonNode {
             display:none;
         }
+    }
+    .xfDateTimeControl {
+        display: inline;
 
+        > xfLabel {
+            float: left;
+        }
+        .dijitDateTextBox{
+            width:9em;
+        }
+
+        .dijitTimeTextBox {
+            width:9em;
+        }
     }
 }
 
@@ -443,13 +456,7 @@ alert + hints should always be aligned with the control.
 	vertical-align:top;
 }
 
-.xfDateTimeControl {
-    display: inline;
-}
 
-.xfDateTimeControl > xfLabel {
-    float: left;
-}
 
 .xfDropDownDateControl {
     display:inline;
