@@ -24,8 +24,8 @@
 
     <packaging>war</packaging>
     <description>betterForm Server Project</description>
-    <inceptionYear>2010</inceptionYear>
-    <url>http://betterform.sourceforge.net</url>
+    <inceptionYear>2012</inceptionYear>
+    <url>http://betterform.de</url>
 
 
     <dependencies>

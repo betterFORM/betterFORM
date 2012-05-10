@@ -6,15 +6,14 @@
 <root>
     <app>
         <name>betterform</name>
-        <version>4.1</version>
+        <version>5.0</version>
     </app>
-
     <properties>
         <javac>
             <deprecation>off</deprecation>
             <debug>on</debug>
             <optimize>off</optimize>
-            <version>1.5</version>
+            <version>1.6</version>
         </javac>
 
         <dojo>dojo-release-1.7.2-src-patched</dojo>
@@ -69,7 +68,7 @@
     <core>
         <app>
             <name>betterform-core</name>
-            <version>4.1</version>
+            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -125,7 +124,7 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>4.1</version>
+            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">

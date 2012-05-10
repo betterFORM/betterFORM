@@ -26,15 +26,41 @@
     <property name="relase.name" value="${app.name}-${app.version}"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="core.dir" value="${basedir}/../core"/>
+    <property name="zaphod.dir" value="${basedir}/../zaphod"/>
+    <property name="editor.dir" value="${basedir}/../tools/editor"/>
     <property name="resource.dir" value="${basedir}/../resource"/>
 
+    <target name="clean" description="clean all target directories">
+        <echo>
+            ************************************************************************************
+            clean all target folders...
+            ************************************************************************************
+        </echo>
+        <ant antfile="../build.xml"                     inheritall="false" target="clean"/>
+        <ant antfile="${core.dir}/build.xml"            inheritall="false" target="clean"/>
+        <ant antfile="${zaphod.dir}/build.xml"          inheritall="false" target="clean"/>
+        <ant antfile="${editor.dir}/build.xml"          inheritall="false" target="clean"/>
+        <ant antfile="build.xml"                        inheritall="false" target="clean"/>
+        <ant antfile="${resource.dir}/build-dojo.xml"   inheritall="false" target="clean"/>
+    </target>
+
+    <target name="prepare" description="update all Maven POMS">
+        <ant antfile="../build.xml"                     inheritall="false" target="update-maven-poms"/>
+    </target>
     <!--+ Target to run all JUnit Tests, create a custom dojo build and deploy betterform as a single-jar release
             to web/target
     -->
     <target name="deploy" description="run test and creates all release relevant betterform resources">
         <!--<ant antfile="${core.dir}/build.xml" inheritall="false" target="test"/>-->
-        <ant antfile="${resource.dir}/build-dojo.xml" inheritall="false" target="build-dojo"/>
+        <!--<ant antfile="${resource.dir}/build-dojo.xml" inheritall="false" target="build-dojo"/>-->
         <ant antfile="build.xml" inheritall="true" target="deploy"/>
+
+        <copy todir="${webapp.dir}/${forms.target}"
+              overwrite="true">
+            <fileset dir="${resource.module.dir}/src/main/xforms" excludes="**/TimeTracker.xhtml"/>
+        </copy>
+
+
     </target>
 
     <target name="release" depends="deploy" description="creates betterFORM release in web/target">

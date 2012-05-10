@@ -13,14 +13,14 @@
 
     <groupId>de.betterform</groupId>
     <artifactId>betterform-core</artifactId>
-    <version>4.1</version>
+    <version>5.0</version>
 
     <packaging>jar</packaging>
 
     <name>betterFORM Core</name>
     <description>betterForm Core Project</description>
-    <inceptionYear>2010</inceptionYear>
-    <url>http://betterform.sourceforge.net</url>
+    <inceptionYear>2012</inceptionYear>
+    <url>http://betterform.de</url>
 
 
     <build>
@@ -28,6 +28,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>

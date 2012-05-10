@@ -19,7 +19,7 @@
             <deprecation>off</deprecation>
             <debug>off</debug>
             <optimize>on</optimize>
-            <version>1.5</version>
+            <version>1.6</version>
         </javac>
     </properties>
 

@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform</artifactId>
-    <version>4.1</version>
+    <version>5.0</version>
 
 
 
@@ -20,8 +20,8 @@
 
     <name>betterFORM Web</name>
     <description>betterForm Web Project</description>
-    <inceptionYear>2010</inceptionYear>
-    <url>http://betterform.sourceforge.net</url>
+    <inceptionYear>2012</inceptionYear>
+    <url>http://betterform.de</url>
 
 
     <build>
@@ -42,6 +42,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -66,7 +67,7 @@
                         <configuration>
                             <tasks>
                                 <ant antfile="${basedir}/build.xml">
-                                    <target name="deploy-resources"/>
+                                    <target name="deploy"/>
                                 </ant>
                             </tasks>
                         </configuration>
@@ -77,9 +78,9 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>org.apache.ant</groupId>
+                        <groupId>ant</groupId>
                         <artifactId>ant-trax</artifactId>
-                        <version>1.7.1</version>
+                        <version>1.6.5</version>
                         <scope>provided</scope>
                     </dependency>
                 </dependencies>
@@ -98,7 +99,7 @@
 <dependency>
 <groupId>de.betterform</groupId>
 <artifactId>betterform-core</artifactId>
-<version>4.1</version>
+<version>5.0</version>
 </dependency>
 <dependency>
 <groupId>org.directwebremoting.dwr</groupId>
