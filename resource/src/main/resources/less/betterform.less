@@ -170,10 +170,12 @@ a:active {
     }
     .xfDateTimeControl {
         display: inline;
+    }
 
-        > xfLabel {
+    .xfDateTimeControl > xfLabel {
             float: left;
-        }
+    }
+    .xfDateTimeControl {
         .dijitDateTextBox{
             width:9em;
         }
@@ -182,6 +184,19 @@ a:active {
             width:9em;
         }
     }
+    .bfTabContainer {
+        height: 600px;
+        width: 98%;
+        overflow: auto;
+        .xfCase .caseContent {
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+    }
+
 }
 
 .dijitError .dijitValidationIcon,
@@ -813,11 +828,6 @@ table .xfContainer{
 	display:table-row-group;
 }
 
-.bfTabContainer {
-    height: 600px;
-    width: 98%;
-    overflow: auto;
-}
 
 /* ***************************************************************************** */
 /* ***************************************************************************** */

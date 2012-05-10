@@ -54,16 +54,30 @@ define(["dojo/_base/declare","bf/util"],
                             });
                             break;
                         case "tabswitch":
-                            // console.debug("FactoryContainer (tabswitch) n: ",n);
-                            require(["dijit/layout/ContentPane","dijit/layout/TabContainer","dojo/query","dojo/aspect","dojo/_base/array","dojo/dom","dojo/dom-attr","dojo/_base/connect"], function(ContentPane, TabContainer, query,aspect,array,dom,domAttr,connect) {
+                            console.debug("FactoryContainer (tabswitch) n: ",n);
+                            require(["dijit/layout/ContentPane","dijit/layout/TabContainer","dojo/query","dojo/aspect","dojo/_base/array","dojo/dom","dojo/dom-attr","dojo/_base/connect","dojo/dom-style",],
+                                function(ContentPane, TabContainer, query,aspect,array,dom,domAttr,connect,domStyle) {
                                 // connect and overwrite 'handleStateChanged' since it is not supported by switch
                                 var xfCases = query(".xfCase",n);
-                                var tabContainer = new TabContainer({id:n.id, tabPosition: "top", "class": "bfTabContainer"},n);
+                                var tabContainerId = domAttr.get(n,"id");
+
+                                var tabContainer = new TabContainer({id:tabContainerId, tabPosition: "top", "class": "bfTabContainer"},n);
                                 // add xfCases to TabContainer
                                 array.forEach(xfCases, function(xfCase) {
-                                    tabContainer.addChild( new ContentPane({title:xfCase.title},xfCase) );
+                                    var selected = domAttr.get(xfCase,"selected") == "true";
+                                    var title = domAttr.get(xfCase, "title");
+                                    // domStyle.set(xfCase, "display","block");
+                                    console.debug("add case: " + title  + " selected: " + selected);
+                                    var xfCaseDijit = new ContentPane({title:title},xfCase);
+                                    xfCaseDijit.startup();
+                                    tabContainer.addChild(xfCaseDijit);
+                                    if(selected){
+                                        console.debug("TabContainer.select case: " + title);
+                                        tabContainer.selectChild(xfCaseDijit);
+                                    }
                                 });
                                 tabContainer.startup();
+                                tabContainer.layout();
 
                                 // save and overwrite tabContainer.selectChild function, selectChild is executed in response to
                                 // bf-switch-toggled-[this-id];

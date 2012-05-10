@@ -564,8 +564,7 @@
                         <xsl:with-param name="label-elements" select="xf:label"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <div style="width:100%;height:100%;" class="xfCase" caseId="{@id}"
-                     selected="{$selected}" title="{$label}">
+                <div class="xfCase" caseId="{@id}" selected="{$selected}" title="{$label}">
                     <xsl:apply-templates select="*[not(self::xf:label)]"/>
                 </div>
             </xsl:for-each>
