@@ -246,7 +246,7 @@
         </copy>
 
         <!-- package zip -->
-        <zip basedir="${target}" destfile="${target}-${app.version}.zip"/>
+        <zip basedir="${target}" destfile="${target}-${app.version.number}.zip"/>
     </target>
 
     <target name="javadoc" depends="compile" description="generate source documentation">
@@ -314,7 +314,7 @@
         <!-- sign jar -->
         <!-- todo: existence of keystore must be checked -->
         <signjar alias="${signjar.alias}" storepass="${signjar.storepass}" keystore="${basedir}/target/keystore">
-            <!--<fileset dir="${deploy.dir}/${app.name}-${app.version}/bin" includes="*.jar"/>  -->
+            <!--<fileset dir="${deploy.dir}/${app.name}-${app.version.number}/bin" includes="*.jar"/>  -->
             <fileset dir="${targetname}/bin" includes="*.jar"/>
         </signjar>
     </target>

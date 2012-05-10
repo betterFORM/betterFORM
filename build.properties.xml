@@ -6,7 +6,10 @@
 <root>
     <app>
         <name>betterform</name>
-        <version>5.0</version>
+        <version>
+            <name>springBud</name>
+            <number>5.0</number>
+        </version>
     </app>
     <properties>
         <javac>
@@ -278,28 +281,8 @@
     <installer>
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
-        <exist>
-            <version>1.4</version>
-        </exist>
-        <compile>
-            <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
-                <!-- Use libs provided by eXist Installer -->
-                <!--
-                <pathelement location="${installer.dir}/src/main/lib/exist-1.4.jar" groupid="org.exist" version="1.4"
-                             artifactId="exist"/>
-                <pathelement location="${installer.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="11112001"
-                             artifactId="xmldb"/>
-                -->
-                <pathelement location="${installer.dir}/target/bf-XRX/exist.jar" groupid="org.exist" version="1.4" artifactId="exist"/>
-                <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
-            </classpath>
-        </compile>
-        <izPack>
-            <dir>/opt/izPack-4.3.4</dir>
-        </izPack>
-        <launch4j>
-            <dir>/opt/launch4j-3.0.2</dir>
-        </launch4j>
+        <izPack>/opt/izPack-4.3.4</izPack>
+        <launch4j>/opt/launch4j-3.0.2</launch4j>
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
