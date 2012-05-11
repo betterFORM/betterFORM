@@ -50,40 +50,32 @@ body #content {
   margin-left: auto;
   margin-right: auto;
   min-width: 360px;
-  /*
-         ul li:after{
-                position: absolute;
-                left: 100px;
-                bottom: 0px;
-                width: 99%;
-                height: 20%;
-                border-radius: 0% 0 0 0;
-                z-index: -1;
-                content: "";
-                box-shadow: -97px 0 19px rgba(0,0,0,0.18);
-                -webkit-transform: skew(43deg);
-                -moz-transform: skew(43deg);
-                -ms-transform: skew(43deg);
-                -o-transform: skew(43deg);
-                transform: skew(43deg);
-                -webkit-transform-origin: 0% 100%;
-                -moz-transform-origin: 0% 100%;
-                -ms-transform-origin: 0% 100%;
-                -o-transform-origin: 0% 100%;
-                transform-origin: 0% 100%;
-            }
-            */
-
+}
+body #content #inlineAppArea {
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  display: none;
+  width: 100%;
+  min-height: 400px;
+  min-width: 400px;
+  background: white;
+}
+body #content #inlineAppArea img {
+  width: 24px;
+  height: 24px;
+  float: right;
 }
 body #content ul {
   margin: 0;
   padding: 0;
+  display: inline-block;
 }
 body #content ul .appGroup {
   width: auto;
   height: auto !important;
-  border: thin solid #555555;
-  background: -moz-linear-gradient(top, #aaaaaa 0%, #eeeeee 100%);
+  border: thin solid #888888;
+  background: -moz-linear-gradient(top, #cccccc 0%, #eeeeee 100%);
   /* FF3.6+ */
 
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7d7e7d), color-stop(100%, #0e0e0e));
@@ -126,21 +118,30 @@ body #content ul li {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25), 0 0 50px rgba(0, 0, 0, 0.1) inset;
   border-radius: 1% 1% 1% 1% 1% 1% 1%;
 }
-body #content ul li a,
-body #content ul li button {
+body #content ul li a {
   height: 100%;
   text-decoration: none;
   margin: 10px;
   color: #777777;
   text-align: right;
 }
-body #content ul li a #exide,
-body #content ul li button #exide {
+body #content ul li a #exide {
   font-size: 5.0em;
   padding-top: 35px;
   text-align: center;
   width: 100%;
   position: relative;
+}
+body #content ul li button {
+  margin: 0;
+  color: #777777;
+  border: none;
+  width: 150px;
+  height: 150px;
+}
+body #content ul li > button:focus {
+  border: solid 3px #4682b4;
+  border-radius: 5px;
 }
 body #content ul li span {
   float: right;
@@ -155,11 +156,72 @@ body #content ul li img {
   width: 69%;
   margin: 5px 0 0 5px;
 }
+body #content ul li:after {
+  position: absolute;
+  left: 100px;
+  bottom: 0px;
+  width: 99%;
+  height: 20%;
+  border-radius: 0% 0 0 0;
+  z-index: -1;
+  content: "";
+  box-shadow: -97px 0 19px rgba(0, 0, 0, 0.18);
+  -webkit-transform: skew(43deg);
+  -moz-transform: skew(43deg);
+  -ms-transform: skew(43deg);
+  -o-transform: skew(43deg);
+  transform: skew(43deg);
+  -webkit-transform-origin: 0% 100%;
+  -moz-transform-origin: 0% 100%;
+  -ms-transform-origin: 0% 100%;
+  -o-transform-origin: 0% 100%;
+  transform-origin: 0% 100%;
+}
 body #content #logo {
-  background: url("existdb.gif") no-repeat center center #bdbdbd;
+  /*background: url("existdb.gif") no-repeat center center #bdbdbd;*/
+
   width: 330px;
   height: 150px;
   opacity: 0.7;
+  background: #cccccc;
+}
+body #content #existIcon #existIconFront button {
+  cursor: pointer;
+}
+body #content #existIcon #existIconFront button img {
+  margin: 0;
+  opacity: 0.5;
+}
+body #content #existIcon #existIconFront #repoConfigIcon {
+  width: 40px;
+  height: 34px;
+  position: absolute;
+  bottom: 8px;
+  left: 5px;
+  background: transparent;
+}
+body #content #existIcon #existIconFront #repoConfigIcon img {
+  width: 36px;
+  height: 36px;
+}
+body #content #existIcon #existIconFront #addAppIcon {
+  /*width: 40px;*/
+
+  /*height: 32px;*/
+
+  cursor: pointer;
+  opacity: 0.5;
+  background: transparent;
+  height: 22px;
+  position: absolute;
+  right: 21px;
+  bottom: 15px;
+  width: 22px;
+  opacity: 0.8;
+}
+body #content #existIcon #existIconFront #addAppIcon img {
+  width: 28px;
+  height: 28px;
 }
 body #content #existIconBack {
   display: none;
@@ -178,14 +240,44 @@ body #content .backside #existIconBack {
 body #content .twoColumn {
   width: 330px;
 }
-body #content #repoConfigIcon {
+body #content .twoColumn button {
+  width: 330px;
+}
+body #content #availableApps {
+  display: none;
+  background: #aaaaaa;
+  border-radius: 5px;
+  width: 100%;
+  overflow-x: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  opacity: 0.9;
+  border-top: thin solid #888888;
+}
+body #content #availableApps li {
+  width: 50px;
+  height: 50px;
+}
+body #content #availableApps button {
+  width: 50px;
+  height: 50px;
+  margin: 0;
+}
+body #content #availableApps .twoColumn {
+  width: 100px;
+}
+body #content #availableApps .twoColumn button {
+  width: 100px;
+}
+body #content #availableApps span {
+  display: none;
+}
+body #content #availableApps #closeRepo {
   position: absolute;
-  bottom: 5px;
-  left: 5px;
-  width: 28px;
-  height: 28px;
-  cursor: pointer;
-  opacity: 0.5;
+  right: 2px;
+  top: 0;
 }
 /*
             #users{

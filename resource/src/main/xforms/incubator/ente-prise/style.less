@@ -1,6 +1,10 @@
 @gutter:15px;
 @block-width: 150px;
 @block-height: 150px;
+@small-gutter:0;         //used for smaller list of buttons (for available apps)
+@small-block-width:50px;    //used for smaller list of buttons (for available apps)
+@small-block-height:50px;   //used for smaller list of buttons (for available apps)
+
 
 body {
     padding: 0;
@@ -39,18 +43,36 @@ body {
         margin-left: auto;
         margin-right: auto;
         min-width: @block-width * 2 + @gutter * 4;
-        
+
+        #inlineAppArea{
+            overflow: auto;
+            margin: 0;
+            padding: 0;
+            display: none;
+            width: 100%;
+            min-height: 400px;
+            min-width: 400px;
+            background: white;       
+            
+            img{
+                width:24px;
+                height: 24px;
+                float:right;
+            }
+        }
+
         ul{
             margin: 0;
             padding:0;
+            display:inline-block;
 
             .appGroup{
                 width: auto;
                 height: auto !important;
-                border: thin solid #555555;
+                border: thin solid #888888;
 
                 //todo: jt: use same colors for different browsers - use less!
-                background: -moz-linear-gradient(top, rgba(170, 170, 170, 1) 0%,  rgb(238, 238, 238) 100%); /* FF3.6+ */
+                background: -moz-linear-gradient(top, #CCCCCC 0%,  rgb(238, 238, 238) 100%); /* FF3.6+ */
                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(125, 126, 125, 1)), color-stop(100%, rgba(14, 14, 14, 1))); /* Chrome,Safari4+ */
                 background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Chrome10+,Safari5.1+ */
                 background: -o-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); /* Opera 11.10+ */
@@ -84,7 +106,7 @@ body {
             box-shadow: 0 1px 5px rgba(0,0,0,0.25), 0 0 50px rgba(0,0,0,0.1) inset;
             border-radius: 1%     1%     1%     1% /     1%     1%     1%     1%;
 
-            a,button{
+            a{
                 height: 100%;
                 text-decoration: none;
                 margin:10px;
@@ -98,6 +120,17 @@ body {
                     width: 100%; 
                     position:relative;
                 }
+            }
+            button{
+                margin:0;
+                color: #777777;
+                border:none;
+                width: @block-width;
+                height:@block-height;
+            }
+            > button:focus{
+                border:solid 3px #4682b4;
+                border-radius: 5px;
             }
             span{
                 float:right;
@@ -115,7 +148,6 @@ body {
             }
 
         }
-        /*
          ul li:after{
                 position: absolute;
                 left: 100px;
@@ -137,15 +169,63 @@ body {
                 -o-transform-origin: 0% 100%;
                 transform-origin: 0% 100%;
             }
-            */
 
             #logo {
-                    background: url("existdb.gif") no-repeat center center #bdbdbd;
+                    /*background: url("existdb.gif") no-repeat center center #bdbdbd;*/
                     width: @block-width * 2 + @gutter * 2;
                     height: @block-height;
                     opacity: 0.7;
+                    background: #cccccc;
 
             }
+            #existIcon{
+
+
+                #existIconFront{
+                    button {
+                        cursor: pointer;
+
+                    }
+                    button img{
+                        margin: 0;
+                        opacity: 0.5;
+                    }
+                    #repoConfigIcon{
+                        width: 40px;
+                        height: 34px;
+                        position: absolute;
+                        bottom: 8px;
+                        left: 5px;
+                        background:transparent;
+
+                        img{
+                            width: 36px;
+                            height: 36px;
+                        }
+
+                    }
+                    #addAppIcon{
+                        /*width: 40px;*/
+                        /*height: 32px;*/
+                        cursor: pointer;
+                        opacity: 0.5;
+                        background:transparent;
+
+                        height: 22px;
+                        position: absolute;
+                        right: 21px;
+                        bottom: 15px;
+                        width: 22px;
+                        opacity: 0.8;
+
+                        img{
+                            width: 28px;
+                            height: 28px;
+                        }
+                    }
+                }
+            }
+
             #existIconBack{
                 display: none;
             }
@@ -162,15 +242,49 @@ body {
             }
             .twoColumn{
                 width: (@block-width * 2) + (@gutter * 2);
+
+                button{
+                    width: (@block-width * 2) + (@gutter * 2);
+                }
             }
-            #repoConfigIcon{
-                position: absolute;
-                bottom: 5px;
-                left: 5px;
-                width: 28px;
-                height: 28px;
-                cursor: pointer;
-                opacity: 0.5;
+
+            #availableApps{
+                display: none;
+                background: #aaaaaa;
+                border-radius:5px;
+                width:100%;
+                overflow-x:auto;
+                position:fixed;
+                bottom:0;
+                left:0;
+                z-index:100;
+                opacity:0.9;
+                border-top:thin solid #888888;
+
+                li{
+                    width:@small-block-width;
+                    height: @small-block-height;
+                }
+                button{
+                    width:@small-block-width;
+                    height: @small-block-height;
+                    margin: @small-gutter;
+                }
+                .twoColumn{
+                    width: (@small-block-width * 2) + (@small-gutter * 2);
+                    button{
+                        width: (@small-block-width * 2) + (@small-gutter * 2);
+                    }
+
+                }
+                span{
+                    display: none;
+               }
+                #closeRepo{
+                    position: absolute;
+                    right: 2px;
+                    top:0;
+                }
             }
         }
 

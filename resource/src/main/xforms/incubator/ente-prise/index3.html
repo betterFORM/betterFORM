@@ -2,6 +2,10 @@
 <!--
   Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   Licensed under the terms of BSD License
+
+    todo:jt: add app group button somewhere to create a new app group
+    todo:jt: add dnd to reorder apps and allow installation when repo view is active
+    todo:jt: add escape key handler when in repo view to switch back
   -->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,11 +17,13 @@
         <link id="themeStyles" rel="stylesheet" href="/bfResources/scripts/dijit/themes/claro/claro.css"/>
 
         <style type="text/css">
+            @import "/bfResources/scripts/dojo/resources/dnd.css";
             @import "style.css";
 
 
             body #content #existIcon #addAppIcon{
                 /*display: none;*/
+
                 height: 22px;
                 position: absolute;
                 right: 7px;
@@ -41,102 +47,156 @@
             dojo.require("dijit.Dialog");
             dojo.require("dijit.form.TextBox");
             dojo.require("dojox.fx.flip");
+            dojo.require("dojo.fx");
+            dojo.require("dojo.fx.easing");
+            dojo.require("dojo.dnd.Source");
 
             // ##################### opening an app group ##########################
             // ##################### opening an app group ##########################
             // ##################### opening an app group ##########################
+            running = false;//flag used with animations to prevent them from being interrupted by new events
+
+            /*
+            This function opens/closes app groups. It will fadeOut all li items but the one the user clicked and
+            insert the hidden <ul> which is a child of the same <li> as a following sibling into the top list.
+             */
             function toggleAppGroup(n){
-                console.debug("this.id: ",n);
-                console.debug("openGroup parent.id: ",n.parentNode.id);
-                var appListItem = dojo.byId("appList");
-                var parentitem = dojo.byId(n.parentNode.id); //we're fired from a link below <li>. Step up to get the list item
+                n.focus();
+                if(!running){
+                    running=true;
 
-                if(dojo.hasClass(appListItem,"appGroupOpen")){
-                    //go back to home screen (or parent group)
-                    dojo.query("#appList > li").forEach(function(selectTag){
-                        // hide all list items but the current one
-                        if(selectTag != parentitem){
-                            dojo.style(selectTag,"opacity","0");
-                            dojo.style(selectTag,"display","inline-block");
+                    var appListElement= dojo.byId("appList");
+                    var parentitem = dojo.byId(n.parentNode.id); //we're fired from a button below <li>. Step up to get the list item
 
-                            var anim1 = dojo.fadeIn({
-                                node:selectTag,
-                                duration:500
-/*
-                                onEnd:function(){
-                                    dojo.style(selectTag,"display","inline-block");
-                                }
-*/
+                    if(dojo.hasClass(appListElement,"appGroupOpen")){
+                        //go back to home screen (or parent group)
+                        dojo.query("#appList > li").forEach(function(selectTag){
+                            // hide all list items but the current one
+                            if(selectTag != parentitem){
+                                dojo.style(selectTag,"opacity","0");
+                                dojo.style(selectTag,"display","inline-block");
+                                var isRunning = running;
+                                var anim1 = dojo.fadeIn({
+                                    node:selectTag,
+                                    duration:500,
+                                    onBegin:function(){
+                                        dojo.style(selectTag, {
+                                            height: "150px",
+                                            marginTop: "15px",
+                                            marginBottom: "15px"
+                                        });
 
-                            });
-                            anim1.play();
-                        }
-                    });
-                    dojo.removeClass(appListItem,"appGroupOpen");
+                                    },
+                                    onEnd:function(){
+                                        running=false;
+                                    }
 
-                    var openGroup = dojo.query("#appList > .appGroup")[0];
-                    var openGroupList = dojo.query("#appList > .appGroup > ul")[0]
-                    //hide
-                    dojo.style(openGroupList,"display","none");
-                    //move group back
-                    dojo.place(openGroupList,parentitem,0);
-                    dojo.destroy(openGroup);
+                                    /*
+                                     onEnd:function(){
+                                     dojo.style(selectTag,"display","inline-block");
+                                     }
+                                     */
+
+                                });
+                                anim1.play();
+                            }
+                        });
+                        dojo.removeClass(appListElement,"appGroupOpen");
+
+                        var openGroup = dojo.query("#appList > .appGroup")[0];
+                        var openGroupList = dojo.query("#appList > .appGroup > ul")[0]
+                        //hide
+                        dojo.style(openGroupList,"display","none");
+                        //move group back
+                        dojo.place(openGroupList,parentitem,0);
+                        dojo.destroy(openGroup);
+                    }else{
+                        // hide all list items to give place for grouped apps
+                        dojo.query("#appList > li").forEach(function(selectTag){
+                            if(selectTag != parentitem){
+                                var anim1 = dojo.fadeOut({
+                                    node:selectTag,
+                                    duration:200
+                                });
+                                var anim2 = dojo.animateProperty({
+                                    node: selectTag,
+                                    properties: {
+                                        height: {start: 150, end: 0, unit: "px"},
+                                        marginTop:{start:15,end:0, unit:"px"},
+                                        marginBottom:{start:15,end:10, unit:"px"}
+                                    },
+                                    duration: 550  ,
+                                    onEnd:function(){
+                                        running=false;
+                                    }
+                                })
+                                dojo.fx.combine([anim1,anim2]).play();
+                            }
+                        });
+
+                        // remember we are in an app group - store value on outermost ul 'appList'
+                        dojo.addClass(appListElement,"appGroupOpen");
+
+                        //place and show group contents
+                        //prepare a <li class="appGroup"> to hold the sublist
+                        var groupListItem = dojo.create("li",{class:"appGroup"});
+                        dojo.place(groupListItem, parentitem, "after");
+
+                        //look for <ul> below current appGroupItem (the one that called this function) - should be present and hidden with style="display:none;"
+                        var appGroupContent = dojo.query("> ul",parentitem)[0];
+                        dojo.place(appGroupContent, groupListItem, 0);
+                        dojo.style(appGroupContent,"display","inline-block");
+                    }
+                }
+
+            }
+
+            function toggleRepoView(n){
+                console.debug("repoView");
+                var appListElement= dojo.byId("appList");
+                if(dojo.hasClass(appListElement,"repoViewOpen")){
+                    //repo view is active
+
+                    dojo.removeClass(appListElement,"repoViewOpen");
+                    dojo.style("availableApps","display","none");
                 }else{
-                    // hide all list items to give place for grouped apps
-                    dojo.query("#appList > li").forEach(function(selectTag){
-                        if(selectTag != parentitem){
-                            var anim1 = dojo.fadeOut({
-                                node:selectTag,
-                                duration:500,
-                                onEnd:function(){
-                                    dojo.style(selectTag,"display","none");
-                                }
-
-                            });
-                            anim1.play();
-                        }
-                    });
-
-                    // remember we are in an app group
-                    dojo.addClass(appListItem,"appGroupOpen");
-
-                    //place and show group contents
-                    var groupListItem = dojo.create("li",{class:"appGroup"});
-                    dojo.place(groupListItem, parentitem, "after");
-
-                    var appGroupContent = dojo.query("> ul",parentitem)[0];
-                    console.debug("appgroup: ",appGroupContent);
-
-                    dojo.place(appGroupContent, groupListItem, 0);
-                    dojo.style(appGroupContent,"display","inline-block");
+                    //switch to repo view
+                    dojo.addClass(appListElement,"repoViewOpen");
+                    dojo.style("availableApps","display","inline-block");
                 }
 
 
-
-
-
-//                dojo.query("> li:not('.selectedAppGroup')").forEach
-                // mark current list item so it can be excluded from first (fade out) animation
-//                var groupNode = dojo.byId(n.parentNode.id+"Group");
-
-//                var displayed = dojo.style(groupNode,"display");
-//                console.debug("displayed: ", displayed);
-//                if(displayed=="none"){
-                    //hide existIcon
-
 /*
-                }else{
-                    var animation = dojo.fadeOut({ // returns a dojo._Animation
-                        // this is an Object containing properties used to define the animation
-                        node:groupNode,
-                        duration:600,
-                        onEnd:function(){
-                            dojo.style(groupNode,"display","none");
-                        }
-                    });
-                    animation.play();
-                }
+                dojo.animateProperty({
+                    node: selectTag,
+                    properties: {
+                            -moz-transform:rotate(45deg);
+                -webkit-transform:rotate(45deg);
+                -o-transform:rotate(45deg);
+                transform:rotate(45deg);
+
+                        height: {start: 150, end: 0, unit: "px"},
+                        marginTop:{start:15,end:0, unit:"px"},
+                        marginBottom:{start:15,end:10, unit:"px"}
+                    },
+                    duration: 550  ,
+                    onEnd:function(){
+                        running=false;
+                    }
+                }).play();
 */
+
+            }
+            function openInline(n){
+                dojo.style("availableApps","display","none");
+                dojo.style("appList","display","none");
+                dojo.style("inlineAppArea","display","inline-block");
+
+            }
+            function closeApp(n){
+                dojo.style("availableApps","display","none");
+                dojo.style("appList","display","inline-block");
+                dojo.style("inlineAppArea","display","none");
 
             }
 
@@ -146,10 +206,9 @@
                 // ############## routines to handle eXist app card #####################
                 // ############## routines to handle eXist app card #####################
                 dojo.connect(dojo.byId("repoConfigIcon"), "onclick", function(e){
-                    console.debug("exist icon clicked");
+//                    console.debug("exist icon clicked");
 
                     var existIconNode = dojo.byId("existIcon");
-
                     if(dojo.hasClass(existIconNode,"backside")){
                         console.debug("to front side");
                         var anim = dojox.fx.flip({
@@ -160,12 +219,6 @@
                         });
                         dojo.connect(anim, "onEnd", this, function(){
                             var n = dojo.byId("existIcon");
-/*
-                            dojo.style(existIconNode, {
-                                color: "#ddd",
-                                background: "#666"
-                            });
-*/
                             dojo.removeClass(existIconNode,"backside");
                         })
                         anim.play();
@@ -184,6 +237,7 @@
                         anim.play();
                     }
                 });
+
 
 /*
 todo:global close handler for open group
@@ -205,35 +259,6 @@ todo:global close handler for open group
             });
 
         </script>
-<!--
-        <script type="text/javascript">
-            require(["dojo/query", "dojo/_base/fx", "dojo/dom", "dojo/on", "dojo/fx", "dojo/domReady!", "dijit/form/Button", "dojo/dom-style", "dojo/NodeList-fx"],
-                    function (query, baseFx, dom, on, fx, domReady, Button, domStyle) {
-                        // The piece we had before?
-                        function move(evt) {
-                            console.debug("this", evt);
-
-                            var btn = evt.target;
-                            domStyle.set(btn, "margin", "0");
-
-                            domStyle.set(btn,"margin","0");
-                            fx.slideTo({
-                                top:15,
-                                left:50,
-                                auto:true,
-                                node:btn
-                            }).play();
-
-                            var contentPane=dom.byId("content");
-//                            baseFx.fadeOut({ node: contentPane }).play();
-//                            domStyle.set(contentPane,"display","none");
-                        }
-
-                        query(".menubutton").on("click", move);
-                    });
-
-        </script>
--->
         <style type="text/css">
         </style>
     </head>
@@ -253,50 +278,90 @@ todo:global close handler for open group
             <div id="user">admin</div>
         </div>
         <div id="content">
+
+            <!-- ########################### this div is used as inline space for applications #################### -->
+            <div id="inlineAppArea">
+                <img src="close_exit.png" onclick="closeApp(this);"/>
+            </div>
+            <!--
+            ################################### List for available apps (not yet installed) - Repo View #################
+            -->
+            <ul id="availableApps" dojoType="dojo.dnd.Source" class="container">
+                <li class="twoColumn dojoDndItem">
+                    <button>
+                        <span>available3</span>
+                    </button>
+                </li>
+                <li class="dojoDndItem">
+                    <button>
+                        <img src="statistic.png" />
+                        <span>available1</span>
+                    </button>
+                </li>
+                <li class="dojoDndItem">
+                    <button>
+                        <img src="statistic.png" />
+                        <span>available2</span>
+                    </button>
+                </li>
+<!--
+                <button id="closeRepo">
+                    <img src="close_exit.png"/>
+                </button>
+-->
+            </ul>
+
             <!--<div id="logo" class="twocolumn">-->
                 <!--<img src="existdb.gif" align="right"/>-->
             <!--</div>-->
-            <ul id="appList">
-                <li id="existIcon" class="twoColumn">
+            <ul id="appList" dojoType="dojo.dnd.Source" class="container">
+                <li id="existIcon" class="twoColumn dojoDndItem">
+                    <button  id="logo">
+                        <img src="existdb.gif" align="right"/>
+                    </button>
                     <div id="existIconFront">
-                        <button id="logo">
-                            <a href="#"><img id="addAppIcon" src="plusss.png"/></a>
-                        </button>
-                        <img id="repoConfigIcon" src="config-gear.png" />
+<!--
+                        <div id="logo">
+                        </div>
+-->
+                        <button id="repoConfigIcon"><img src="config-gear.png" /></button>
+                        <!--<button id="repoConfigIcon"><img src="configuration.png" /></button>-->
+                        <button id="addAppIcon" onclick="toggleRepoView(this);"><img src="plusss.png"/></button>
+                        <!--<button id="addAppIcon" onclick="toggleRepoView(this);"><img src="add.png"/></button>-->
                     </div>
                     <div id="existIconBack">
                         repo config
                     </div>
                 </li>
-                <li id="users" class="appGroupIcon">
+                <li id="users" class="appGroupIcon dojoDndItem">
                     <button onclick="toggleAppGroup(this);">
                         <img src="user-admin.png" />
                         <span>Users</span>
                     </button>
                     <ul style="display: none;">
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 1</span>
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 2</span>
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 3</span>
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 4</span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </li>
@@ -306,43 +371,43 @@ todo:global close handler for open group
                 <li id="usersAppGroup" class="appGroup">
                 </li>
 -->
-                <li>
-                    <a href="#" id="backup">
+                <li class="dojoDndItem">
+                    <button id="backup">
                         <img src="help.png" />
                         <span>Backup</span>
-                    </a>
+                    </button>
                 </li>
                 <!-- to display group icon and group contents at the same time but separate the group icon
                 has to be in the parent list. -->
-                <li id="groupA" class="appGroupIcon">
-                    <a id="groupALink" href="#" onclick="toggleAppGroup(this);">
+                <li id="groupA" class="appGroupIcon dojoDndItem">
+                    <button id="groupALink" href="#" onclick="toggleAppGroup(this);">
                         <img src="folder.png" />
                         <span>App Group A</span>
-                    </a>
+                    </button>
                     <ul style="display: none;">
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 5</span>
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 6</span>
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 7</span>
-                            </a>
+                            </button>
                         </li>
                         <li>
-                            <a href="#">
+                            <button>
                                 <img src="statistic.png" />
                                 <span>Sub 8</span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </li>
@@ -350,32 +415,32 @@ todo:global close handler for open group
                 <li id="groupAGroup" class="appGroup">
                 </li>
 -->
-
-
-                <li>
-                    <a href="#">
+                <!-- ########## Example for an inline app ########### -->
+                <li class="dojoDndItem">
+                    <button onclick="openInline(this);" data-appLink="myfiles/mysample.html#fook">
                         <img src="statistic.png" />
-                        <span>System Information</span>
-                    </a>
+                        <span>Inline App 1</span>
+                    </button>
                 </li>
-                <li class="twoColumn">
-                    <a href="#">
+                <li class="twoColumn dojoDndItem">
+                    <button>
                         <span id="exide">eXide</span>
-                    </a>
+                    </button>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="dojoDndItem">
+                    <button>
                         <img src="statistic.png" />
                         <span>System Information</span>
-                    </a>
+                    </button>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="dojoDndItem">
+                    <button>
                         <img src="statistic.png" />
                         <span>System Information</span>
-                    </a>
+                    </button>
                 </li>
             </ul>
+
         </div>
 <!--
         <div id="workspace">
