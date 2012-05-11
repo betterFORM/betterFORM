@@ -37,13 +37,15 @@
         </copy>
 
         <!-- Create WAR for Installer -->
-        <ant antfile="${buildfiles.dir}/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="false">
-            <property name="installer.target" value="${installer.target}"/>
-        </ant>
+            <ant antfile="${buildfiles.dir}/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="false">
+                <property name="installer.target" value="${installer.target}"/>
+            </ant>
+
 
 
         <!-- Create jetty-environment for Installer -->
-        <ant antfile="${buildfiles.dir}/build-jetty.xml" target="create-jetty" usenativebasedir="false"/>
+            <ant antfile="${buildfiles.dir}/build-jetty.xml" target="create-jetty" usenativebasedir="false"/>
+
 
         <!-- Create XRX-environment for Installer -->
 

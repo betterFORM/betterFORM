@@ -4,100 +4,51 @@
   -->
 
 <project name="Installer-eXist" default="create-XRX" basedir=".">
-    <property name="eXist.1.4.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
-                                          <!-- http://downloads.sourceforge.net/project/exist/Stable/1.4.1/eXist-setup-1.4.1-rev15155.jar"/> -->
-    <property name="eXist.1.5.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
+    <property name="eXist.stable.src" value="http://downloads.sourceforge.net/project/exist/Stable/2.0/eXist-setup-2.0-tech-preview.jar"/>
+    <property name="eXist.dev.src" value="http://downloads.sourceforge.net/project/exist/Stable/1.4.2/eXist-setup-1.4.2dev-rev15584.jar"/>
 
     <property name="eXist.db.user" value="betterFORM"/>
     <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
 
-    <available property="eXist-1.4-available" file="${installer.utils}/exist-install-1.4.jar"/>
-    <available property="eXist-1.5-available" file="${installer-utils}/exist-install-1.5.jar"/>
+    <available property="eXist-stable-available" file="${installer.utils}/exist-install-stable.jar"/>
+    <available property="eXist-dev-available" file="${installer-utils}/exist-install-dev.jar"/>
 
     <xmlproperty file="../../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
-    <condition property="eXist-1.4">
-        <equals arg1="${installer.exist.version}" arg2="1.4"/>
+    <condition property="eXist-stable">
+        <equals arg1="${installer.exist.version}" arg2="stable"/>
     </condition>
 
-    <condition property="eXist-1.5">
-        <equals arg1="${installer.exist.version}" arg2="1.5"/>
+    <condition property="eXist-dev">
+        <equals arg1="${installer.exist.version}" arg2="dev"/>
     </condition>
 
     <!-- Download eXist installer dependent on version -->
     <target name="get-eXist">
         <mkdir dir="${installer.utils}"/>
-        <antcall target="get-and-set-eXist-1.4-installer"/>
-        <antcall target="get-and-set-eXist-1.5-installer"/>
+        <antcall target="get-and-set-eXist-stable-installer"/>
+        <antcall target="get-and-set-eXist-dev-installer"/>
     </target>
 
-    <target name="get-and-set-eXist-1.4-installer" if="eXist-1.4">
-        <antcall target="get-eXist-1.4"/>
-        <copy file="${installer.utils}/exist-install-1.4.jar" tofile="${installer.target}/exist-install.jar" description="setting eXist installer to version 1.4"/>
+    <target name="get-and-set-eXist-stable-installer" if="eXist-stable">
+        <antcall target="get-eXist-stable"/>
+        <copy file="${installer.utils}/exist-install-stable.jar" tofile="${installer.target}/exist-install.jar" description="setting eXist installer to stable version"/>
     </target>
 
-    <target name="get-eXist-1.4" if="eXist-1.4" unless="eXist-1.4-available">
-        <get src="${eXist.1.4.src}" dest="${installer.utils}/exist-install-1.4.jar" description="downloads eXist 1.4 installer"/>
+    <target name="get-eXist-stable" if="eXist-stable" unless="eXist-stable-available">
+        <get src="${eXist.stable.src}" dest="${installer.utils}/exist-install-stable.jar" description="downloads eXist stable installer"/>
     </target>
 
-    <target name="get-and-set-eXist-1.5-installer" if="eXist-1.5">
-        <antcall target="get-eXist-1.5"/>
-        <copy file="${installer.utils}/exist-install-1.5.jar" tofile="${installer.target}/exist-install.jar" description="setting eXist installer to version 1.5"/>
+    <target name="get-and-set-eXist-dev-installer" if="eXist-dev">
+        <antcall target="get-eXist-dev"/>
+        <copy file="${installer.utils}/exist-install-dev.jar" tofile="${installer.target}/exist-install.jar" description="setting eXist installer to development version"/>
     </target>
 
-    <target name="get-eXist-1.5" if="eXist-1.5" unless="eXist-1.5-available">
-        <get src="${eXist.1.5.src}" dest="${installer.utils}/exist-install-1.5.jar" description="downloads eXist 1.5 installer"/>
-    </target>
-
-    <target name="setupBetterFORMUser">
-        <antcall target="build-SetupBetterFORMUserJar" inheritrefs="true"/>
-        <copy file="${installer.target}/betterFORM-Setup.jar" todir="${installer.target}/bf-XRX/" overwrite="true"/>
-
-
-        <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
-            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
-        </ant>
-
-
-
-        <java jar="${installer.target}/bf-XRX/betterFORM-Setup.jar"
-              fork="true"
-              dir="${installer.target}/bf-XRX"
-              maxmemory="512m"
-              failonerror="true"/>
-
-        <delete file="${installer.target}/bf-XRX/betterFORM-Setup.jar"/>
-
-
-        <!-- Wait for db-shutdown -->
-        <sleep seconds="20"/>
+    <target name="get-eXist-dev" if="eXist-dev" unless="eXist-dev-available">
+        <get src="${eXist.dev.src}" dest="${installer.utils}/exist-install-dev.jar" description="downloads eXist dev installer"/>
     </target>
 
 
-    <target name="build-SetupBetterFORMUserJar">
-        <echo message="*******************************************************************************"/>
-        <echo message="* Building betterFORM-Setup.jar                                               *"/>
-        <echo message="*******************************************************************************"/>
-        <mkdir dir="${installer.target}/classes"/>
-
-        <javac description="compile source files"
-               srcdir="${basedir}/src/main/java"
-               destdir="${installer.target}/classes"
-               classpathref="installer.class.path"
-               target="${properties.javac.version}"
-               debug="${properties.javac.debug}"
-               deprecation="${properties.javac.deprecation}"
-               optimize="${properties.javac.optimize}"/>
-
-        <jar description="package betterform jar"
-             jarfile="${installer.target}/betterFORM-Setup.jar"
-             basedir="${installer.target}/classes"
-             manifest="${basedir}/src/main/resources/MANIFEST.MF"/>
-    </target>
-
-    <target name="setupBetterFORMContext">
-
-    </target>
 
     <target name="create-XRX" depends="get-eXist">
         <echo>
@@ -116,12 +67,7 @@
             <arg line="-p ${installer.target}/bf-XRX/"/>
         </java>
 
-        <delete file="${installer.target}/bf-XRX/Install_V1.4.1*.log"/>
-
-        <!-- Create an 'betterFORM'-DB-User for storing stuff -->
-        <!-- See eXist-build-file for password -->
-
-        <antcall target="setupBetterFORMUser" inheritrefs="true"/>
+        <delete file="${installer.target}/bf-XRX/Install_*.log"/>
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="update-betterFORM" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
@@ -130,6 +76,10 @@
         </ant>
 
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="start-eXist">
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+        </ant>
+
+        <ant antfile="${installer.dir}/build-files/setup-user.xml" target="setup" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
 
@@ -160,13 +110,27 @@
         </ant>
 	-->
 
+
         <ant antfile="${xrx.dir}/build-utils-eXist.xml" target="stop-eXist">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+            <property name="eXist.db.user" value="admin"/>
+            <property name="eXist.db.passwd" value=""/>
         </ant>
 
         <ant antfile="${xrx.dir}/build-XRX.xml" target="setup-betterFORM-context" inheritall="false" usenativebasedir="true">
             <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
         </ant>
+
+        <ant antfile="${installer.dir}/../installer-setupContext/build.xml" target="create-context-jar" inheritall="false" usenativebasedir="true">
+            <property name="dest.dir" value="${installer.target}/bf-XRX/extensions/betterform/main/lib/"/>
+            <property name="eXist.home" value="${installer.target}/bf-XRX/"/>
+        </ant>
+
+        <delete file="${installer.target}/bf-XRX/tools/jetty/lib/existdb-favicon.jar"/>
+
+        <!--
+            <copy todir="${installer.target}/bf-XRX/extensions/betterform/main/lib/" overwrite="true" failonerror="true" file="${basedir}/../../core/src/main/lib/commons-lang3-3.1.jar"/>
+        -->
 
         <!-- Copy template-files which will be modified by the Installer-->
 
@@ -177,6 +141,11 @@
         <copy todir="${installer.target}/bf-XRX" overwrite="true">
             <fileset dir="${installer.target}/bf-XRX/installer/scripts" includes="build.sh build.bat"/>
         </copy>
+
+        <!-- Copy wrapper.conf template refuses to be overriden by installer -->
+        <delete file="${installer.target}/bf-XRX/tools/wrapper/conf/wrapper.conf"/>
+        <copy tofile="${installer.target}/bf-XRX/tools/wrapper/conf/wrapper.conf" file="${installer.target}/bf-XRX/tools/wrapper/conf/wrapper.conf.install" overwrite="true"/>
+
 
 	    <unzip src="${basedir}/lib/betterFORM-Launcher-1.4-xrx-distribution.zip" dest="${installer.target}/bf-XRX"/>
         <move file="${installer.target}/bf-XRX/betterFORM-Launcher-1.4.jar" tofile="${installer.target}/bf-XRX/betterFORM.jar"/>
