@@ -119,7 +119,7 @@
 -->
         <!--
             Specify a customPort for SSLProtocolSocketFactory for httpclient.
-            Port 443,8443 are the default ports.
+            Port 443 is the default port. If you need another port like 8443 change this property to your desired port.
             See: http://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/protocol/Protocol.html
         -->
 <!--

@@ -386,16 +386,61 @@ public class AbstractHTTPConnector extends AbstractConnector {
 
         if (getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)) {
             LOGGER.debug("Using customSSL-Protocol-Handler");
-            Iterator<Scheme> schemes = ((Vector<Scheme>) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)).iterator();
+            /*
+                Iterator<Scheme> schemes = ((Vector<Scheme>) ).iterator();
 
-            while (schemes.hasNext()) {
-                client.getConnectionManager().getSchemeRegistry().register(schemes.next());
-            }
+                while (schemes.hasNext()) {
+                    client.getConnectionManager().getSchemeRegistry().register(schemes.next());
+                }
+             */
+
+            Scheme sslScheme = (Scheme) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_SCHEME);
+            client.getConnectionManager().getSchemeRegistry().register(sslScheme);
         }
 
         if(httpRequestBase.getURI().isAbsolute()){
             httpRequestBase.setHeader("host", httpRequestBase.getURI().getHost());
         }
+
+        /*
+            //TODO: handle more than one scheme, could look something like this:
+            if (getContext().containsKey(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)) {
+                LOGGER.debug("Using customSSL-Protocol-Handler");
+                Iterator<Scheme> schemes = ((Vector<Scheme>) getContext().get(AbstractHTTPConnector.SSL_CUSTOM_SCHEME)).iterator();
+                boolean proceed = true;
+
+                while (schemes.hasNext() && proceed) {
+                    client.getConnectionManager().getSchemeRegistry().register(schemes.next());
+                    HttpResponse httpResponse = client.execute(httpRequestBase);
+
+                    statusCode = httpResponse.getStatusLine().getStatusCode();
+                    reasonPhrase = httpResponse.getStatusLine().getReasonPhrase();
+
+                    if (statusCode != 404) {
+                        proceed = false;
+                    }
+                }
+            }
+
+            try {
+                if ( statusCode >= 300) {
+                    // Allow 302 only
+                    if (statusCode != 302) {
+                        throw new XFormsInternalSubmitException(statusCode, reasonPhrase, EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
+                    }
+                }
+                this.handleHttpMethod(httpResponse);
+            }
+            catch (Exception e) {
+
+                LOGGER.trace("AbstractHTTPConnector Exception: ", e);
+                try {
+                    throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), EntityUtils.toString(httpResponse.getEntity()), XFormsConstants.RESOURCE_ERROR);
+                } catch (IOException e1) {
+                    throw new XFormsInternalSubmitException(httpResponse.getStatusLine().getStatusCode(), httpResponse.getStatusLine().getReasonPhrase(), XFormsConstants.RESOURCE_ERROR);
+                }
+            }
+         */
 
         HttpResponse httpResponse = client.execute(httpRequestBase);
         statusCode = httpResponse.getStatusLine().getStatusCode();
@@ -453,29 +498,51 @@ public class AbstractHTTPConnector extends AbstractConnector {
             LOGGER.debug("KeyStoreSSLContext: " + contextPath);
             Class contextClass = Class.forName(contextPath);
             Object context = contextClass.newInstance();
-            Vector<Scheme> schemes = new Vector<Scheme>();
+            /* Multiple Schemes: This does not work!
+                Vector<Scheme> schemes = new Vector<Scheme>();
+            */
+            Scheme sslScheme = null;
 
             if (context instanceof KeyStoreSSLContext) {
-                int httpSSLPort = 443;
-                int tomcatSSLPort = 8443;
+                final int httpSSLPort = 443;
+                /* Multiple Schemes: This does not work!
+                    int tomcatSSLPort = 8443;
+                */
 
                 SSLSocketFactory socketFactory = new SSLSocketFactory(((KeyStoreSSLContext)context).getSSLContext());
                 if (Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT) != null) {
                     try {
                         int customPort = Integer.parseInt(Config.getInstance().getProperty(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT));
                         LOGGER.trace("CustomPort: " + customPort);
-                        Scheme sslScheme = new Scheme("https", customPort, socketFactory);
-                        schemes.add(sslScheme);
+                        sslScheme = new Scheme("https", customPort, socketFactory);
+                        /* Multiple Schemes: This does not work!
+                            Scheme sslScheme = new Scheme("https", customPort, socketFactory);
+                            schemes.add(sslScheme);
+                        */
                     } catch (NumberFormatException nfe) {
-                        LOGGER.warn(AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT + " is not parsable as a number. Check your settings in betterform-config.xml!", nfe);
+                        LOGGER.warn("AbstractHTTPConnector: " + AbstractHTTPConnector.HTTPCLIENT_SSL_CONTEXT_CUSTOMPORT + " is not parsable as a number. Check your settings in betterform-config.xml!", nfe);
+                        LOGGER.warn("AbstractHTTPConnector: Falling back to 443 as default.");
+
+                        /* Multiple Schemes: This does not work!
+                            Scheme sslScheme = new Scheme("https", httpSSLPort, socketFactory);
+                            schemes.add(sslScheme);
+                        */
                     }
                 }
-                Scheme sslScheme1 = new Scheme("https", httpSSLPort, socketFactory);
-                schemes.add(sslScheme1);
-                Scheme sslScheme2 = new Scheme("https", tomcatSSLPort, socketFactory);
-                schemes.add(sslScheme2);
 
-                getContext().put(AbstractHTTPConnector.SSL_CUSTOM_SCHEME, schemes);
+                /* Multiple Schemes: This does not work!
+                    Scheme sslScheme2 = new Scheme("https", tomcatSSLPort, socketFactory);
+                    schemes.add(sslScheme2);
+
+                    getContext().put(AbstractHTTPConnector.SSL_CUSTOM_SCHEME, schemes);
+                */
+
+                if (sslScheme == null) {
+                    LOGGER.info("AbstractHTTPConnector: using port 443 for ssl.");
+                    sslScheme = new Scheme("https", httpSSLPort, socketFactory);
+                }
+
+                getContext().put(AbstractHTTPConnector.SSL_CUSTOM_SCHEME, sslScheme);
             }
     }
 }
