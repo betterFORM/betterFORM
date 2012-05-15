@@ -37,7 +37,7 @@
     <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
 
-    <antversion property="antversion" atleast="1.7"/>
+    <antversion property="antversion" atleast="${properties.antversion}"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -401,7 +401,7 @@
     </target>
 
     <target name="check-ant-version" unless="antversion">
-        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
     <target name="deploy-test-resources" description="copy all official XForms test suite files to webapp dir">

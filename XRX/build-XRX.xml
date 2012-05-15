@@ -63,7 +63,6 @@ Error: eXist is not installed in ${eXist.home}.
     <!-- Include helper buildfiles -->
     <include file="build-utils-eXist.xml" as="db"/>
 
-    <include file="${root.dir}/build-util.xml" as="ant"/>
 
     <!-- Available properties -->
     <!-- betterFORM installed -->
@@ -89,8 +88,15 @@ Error: eXist is not installed in ${eXist.home}.
         </or>
     </condition>
 
+    <antversion property="antversion" atleast="${properties.antversion}"/>
+
 
     <!-- *********************************************************************************************************** -->
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+
     <target name="setup-betterFORM-context">
         <echo>
             __== Setting up betterFORM context and fixing files ==__
@@ -296,7 +302,7 @@ Error: eXist is not installed in ${eXist.home}.
     <!--
         Exploded Mode
     -->
-    <target name="update-betterFORM-exploded" depends="ant.check-ant-version" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
+    <target name="update-betterFORM-exploded" depends="check-ant-version" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in exlopded Mode ==__
         </echo>
@@ -358,7 +364,7 @@ Error: eXist is not installed in ${eXist.home}.
     <!--
         Single JAR Mode
     -->
-    <target name="update-betterFORM" depends="ant.check-ant-version" description="update betterFORM in single jar mode, eXist must not(!) run">
+    <target name="update-betterFORM" depends="check-ant-version" description="update betterFORM in single jar mode, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in single JAR Mode ==__
         </echo>

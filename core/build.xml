@@ -20,7 +20,7 @@
 
     <property name="dist.path" value="${basedir}/target/${core.app.name}"/>
     <property name="dist.name" value="${core.app.name}-${core.app.version}"/>
-    <antversion property="antversion" atleast="1.7"/>
+    <antversion property="antversion" atleast="${properties.antversion}"/>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -302,7 +302,7 @@
      </target>
 
     <target name="check-ant-version" unless="antversion">
-        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
 

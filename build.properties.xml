@@ -23,6 +23,7 @@
         <timeline>timeline_libraries_v2.3.0</timeline>
         <ckeditor>ckeditor_3.6.3</ckeditor>
         <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
+        <antversion>1.8.2</antversion>
     </properties>
 
     <config>

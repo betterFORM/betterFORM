@@ -21,7 +21,11 @@
 
     <property name="scripts.target" value="${target.dir}/scripts"/>
 
-    <import file="../build-util.xml" />
+    <antversion property="antversion" atleast="${properties.antversion}"/>
+
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
 
     <target name="prepare-js" depends="check-ant-version" if="antversion">
         <echo>

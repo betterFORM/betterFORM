@@ -16,7 +16,14 @@
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="src.target.dir" value="${basedir}/target"/>
-    <import file="build-util.xml"/>
+
+
+    <antversion property="antversion" atleast="${properties.antversion}"/>
+
+    <target name="check-ant-version" unless="antversion">
+        <fail>Apache Ant 1.8.2 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.8.2 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</fail>
+    </target>
+
 
     <!-- local Web properties -->
 
@@ -31,6 +38,7 @@
         <echo/>
         <delete dir="${target.dir}"/>
     </target>
+
 
     <target name="clean-all" description="clean build target directory">
         <echo/>
@@ -60,23 +68,9 @@
         <ant antfile="${betty.dir}/build.xml"  target="create-jar" dir="${betty.dir}"  inheritall="false"/>
     </target>
 
-    <target  name="create-src-distribution">
-        <delete dir="betty/target" />
-        <delete dir="core/target" />
-        <delete dir="XRX/target" />
-        <delete dir="tools/installer/target" />
-        <delete dir="web/target" />
-        <delete dir="xApp/target" />
-        <delete dir="zaphod/target" />
-        <mkdir dir="${target.dir}" />
-        <zip description="create source zip of the complete betterFORM sources"
-             zipfile="${target.dir}/${web.app.name}-${web.app.version}-src.zip"
-             basedir="${basedir}"/>
-    </target>
-
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <!-- **************************************** BUILDING JAR **************************************** -->
+    <!-- **************************************** TARGETS FOR MAVEN **************************************** -->
+    <!-- **************************************** TARGETS FOR MAVEN **************************************** -->
+    <!-- **************************************** TARGETS FOR MAVEN **************************************** -->
     <target name="install-maven-dependencies" description="install all project dependencies into local maven repository" depends="check-ant-version" if="antversion">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="install-maven-dependencies" dir="${basedir}/tools/maven"  inheritall="false"/>
 
@@ -86,11 +80,12 @@
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
-        <!--<ant antfile="${basedir}/tools/maven/build.xml"  target="update-server-pom" dir="${basedir}/tools/maven"  inheritall="false"/>-->
     </target>
 
 
 
+    <!-- TODO: review targets, neither of these works since xbl.xsl and src/main/components -->
+<!--
     <target name="transformToXFormsUsingComponent" depends="check-ant-version" if="antversion">
          <xslt in="${basedir}/resource/src/main/xforms/demo/registration.xhtml"
                out="${basedir}/registration.xhtml"
@@ -132,6 +127,7 @@
         </xslt>
     </target>
 
+-->
 
 
 </project>
