@@ -59,14 +59,36 @@
 
 
 
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <!-- **************************************** BUILDING JAR **************************************** -->
-    <target name="package" description="package core, web and betty" depends="check-ant-version" if="antversion">
-        <ant antfile="${core.dir}/build.xml" target="package" dir="${core.dir}" inheritall="false"/>
-        <ant antfile="${web.dir}/build.xml"  target="package" dir="${web.dir}"  inheritall="false"/>
-        <ant antfile="${betty.dir}/build.xml"  target="create-jar" dir="${betty.dir}"  inheritall="false"/>
+    <!-- **************************************** BUILDING OPTIMIZED BETTERFORM WAR  **************************************** -->
+    <!-- **************************************** BUILDING OPTIMIZED BETTERFORM WAR  **************************************** -->
+    <!-- **************************************** BUILDING OPTIMIZED BETTERFORM WAR  **************************************** -->
+    <target name="package" description="create betterform WAR file" depends="check-ant-version" if="antversion">
+        <echo>
+            __== create optimized betterform.war file in ${target.dir}==__
+        </echo>
+        <!-- Create optimized JavaScript package-->
+        <ant antfile="${basedir}/resource/build-dojo.xml" inheritall="false" target="build-dojo"/>
+        <!-- Create WAR for Installer -->
+        <ant antfile="${basedir}/tools/installer/build-files/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="true">
+            <property name="installer.target" value="${target.dir}"/>
+        </ant>
     </target>
+
+
+    <!-- **************************************** BUILDING BETTERFORM WEBSITE  **************************************** -->
+    <!-- **************************************** BUILDING BETTERFORM WEBSITE  **************************************** -->
+    <!-- **************************************** BUILDING BETTERFORM WEBSITE  **************************************** -->
+    <target name="build-website" description="generates the betterFORM site" depends="check-ant-version" if="antversion">
+        <ant antfile="${basedir}/resource/build-site.xml"  target="deploy" inheritall="false"/>
+    </target>
+
+    <!-- **************************************** GENERATE BETTERFORM REFERENCE FORMS **************************************** -->
+    <!-- **************************************** GENERATE BETTERFORM REFERENCE FORMS **************************************** -->
+    <!-- **************************************** GENERATE BETTERFORM REFERENCE FORMS **************************************** -->
+    <target name="build-references" description="builds and deploys reference forms to target" depends="check-ant-version" if="antversion">
+        <ant antfile="${basedir}/resource/build-reference.xml"  target="deploy-forms" inheritall="false"/>
+    </target>
+
 
     <!-- **************************************** TARGETS FOR MAVEN **************************************** -->
     <!-- **************************************** TARGETS FOR MAVEN **************************************** -->
@@ -81,7 +103,6 @@
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
     </target>
-
 
 
     <!-- TODO: review targets, neither of these works since xbl.xsl and src/main/components -->
