@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -127,7 +128,9 @@ public class AntSubmissionHandler extends AbstractConnector implements Submissio
                     document.appendChild(document.createElementNS(null, "ant"));
 
                     Element rootElement = document.getDocumentElement();
-
+                    Attr filename = document.createAttribute("fileName");
+                    filename.setValue(buildFile.getName());
+                    rootElement.setAttributeNode(filename);
                     Element element = document.createElement("buildFile");
                     DOMUtil.setElementValue(element, buildFile.getAbsolutePath());
                     rootElement.appendChild(element);

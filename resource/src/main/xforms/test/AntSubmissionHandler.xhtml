@@ -66,27 +66,40 @@
                     <xf:message>Submission failed</xf:message>
                 </xf:action>
             </xf:submission>
+
+            <xf:instance id="i-ant-file" resource="antsubmission-handler-test.xml"/>
         </xf:model>
     </div>
-    <xf:group appearance="full">
-        <xf:trigger>
-            <xf:label>Run Ant with default target</xf:label>
-            <xf:send submission="s-ant-default-target"/>
-        </xf:trigger>
-        <xf:trigger>
-            <xf:label>Run Ant with instance target</xf:label>
-            <xf:send submission="s-ant-instance-target"/>
-        </xf:trigger>
-        <xf:trigger>
-            <xf:label>Run Ant with uri target (# fragment)</xf:label>
-            <xf:send submission="s-ant-uri-target"/>
-        </xf:trigger>
+    <xf:group appearance="minimal">
+        <xf:label>Execute Ant Targets (ant build file can be viewed by clicking <i><b>Model:model-1 :: Instance:i-ant-file</b></i> in the debug bar)</xf:label>
+        <p>
+            <xf:trigger>
+                <xf:label>default</xf:label>
+                <xf:send submission="s-ant-default-target"/>
+            </xf:trigger>
+            If no target is given via the referenced instance nor an uri param the default target is executed
+        </p>
+        <p>
+            <xf:trigger>
+                <xf:label>test</xf:label>
+                <xf:send submission="s-ant-instance-target"/>
+            </xf:trigger>
+            Trigger references the instance 'i-target' which contains a node &lt;target/&gt; which value is taken as target (test)</p>
+        <p>
+            <xf:trigger>
+                <xf:label>test2</xf:label>
+                <xf:send submission="s-ant-uri-target"/>
+            </xf:trigger>
+            The Ant target is chosen via an URL fragment like 'antsubmission-handler-test.xml#test2'</p>
     </xf:group>
 
-    <xf:group appearance="full" ref="instance('i-result')">
+    <xf:group appearance="full" ref="instance('i-result')/@fileName">
         <xf:label>Ant Result</xf:label>
+        <xf:output ref="instance('i-result')/@fileName">
+            <xf:label>Ant File:</xf:label>
+        </xf:output>
         <xf:output ref="instance('i-result')/buildFile">
-            <xf:label>Build File:</xf:label>
+            <xf:label>Path to Ant File:</xf:label>
         </xf:output>
         <xf:output ref="instance('i-result')/target">
             <xf:label>Ant Target:</xf:label>
