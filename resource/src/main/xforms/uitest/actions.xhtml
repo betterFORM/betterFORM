@@ -19,13 +19,6 @@
         </style>
 
         <xf:model id="model-1" functions="bf:appContext">
-            <xf:submission id="s-debug" action="{$contextroot}/jsp/debug-instance.jsp" method="post" replace="all"/>
-            <xf:submission id="s-debug-partial" action="{$contextroot}/jsp/debug-instance.jsp" method="post" replace="all" ref="instance('default')/repeatdata"/>
-            <xf:submission id="s-update" action="{$contextroot}/jsp/generate-instance.jsp" method="post" replace="instance"/>
-            <xf:submission id="s-test" action="{$contextroot}/jsp/return-instance.jsp" method="post" replace="none">
-                <xf:message ev:event="xforms-submit-done">Your data have been send.</xf:message>
-            </xf:submission>
-
             <xf:instance xmlns="" id="default">
                 <data>
                     <helloworld hw="4711">Hello World</helloworld>
@@ -89,17 +82,6 @@
                 </xf:trigger>
             </xf:group>
 
-            <xf:group class="buttons" appearance="bf:horizontalTable">
-                <xf:label/>
-                <xf:trigger>
-                    <xf:label>load</xf:label>
-                </xf:trigger>
-            </xf:group>
-
-
-
-
-            
             <xf:group class="buttons" appearance="bf:horizontalTable">
                 <xf:label/>
                 <xf:trigger>
@@ -265,14 +247,13 @@
                 <xf:trigger bind="message-action">
                     <xf:label>Load (new)</xf:label>
                     <xf:action>
-                        <xf:load resource="{$contextroot}/bfResources/images/betterform50t.gif" show="new"/>
+                        <xf:load resource="{$contextroot}/bfResources/images/logo.png" show="new"/>
                     </xf:action>
                 </xf:trigger>
                 <xf:trigger>
                     <xf:label>Load (replace)</xf:label>
                     <xf:action>
-                        <xf:load resource="{$contextroot}/forms/apps/address.xhtml?betterformjs=true" if="string-length(bf:appContext('betterformjs')) != 0" show="replace"/>
-                        <xf:load resource="{$contextroot}/forms/apps/address.xhtml" if="string-length(bf:appContext('betterformjs')) = 0" show="replace"/>
+                        <xf:load resource="{$contextroot}/forms/uitest/Boolean.xhtml"  show="replace"/>
                     </xf:action>
                 </xf:trigger>
                 <xf:trigger>
@@ -287,6 +268,8 @@
                         <xf:message level="ephemeral" bind="message-action"/>
                     </xf:action>
                 </xf:trigger>
+            </xf:group>
+            <xf:group class="buttons" appearance="minimal">
                 <xf:trigger>
                     <xf:label>setFocus</xf:label>
                     <xf:hint>sets focus to first input on this page</xf:hint>
@@ -299,36 +282,6 @@
                     <xf:hint>sets focus to first input on this page</xf:hint>
                     <xf:action>
                         <xf:setfocus control="repeatInput"/>
-                    </xf:action>
-                </xf:trigger>
-            </xf:group>
-            <xf:group class="buttons" appearance="minimal">
-                <xf:trigger>
-                    <xf:label>Show new document (replace=all)</xf:label>
-                    <xf:hint>shows submitted instance data in a separate JSP page</xf:hint>
-                    <xf:action>
-                        <xf:send submission="s-debug"/>
-                    </xf:action>
-                </xf:trigger>
-                <xf:trigger>
-                    <xf:label>Select partial document (replace=all)</xf:label>
-                    <xf:hint>shows partial instance data in a separate JSP page</xf:hint>
-                    <xf:action>
-                        <xf:send submission="s-debug-partial"/>
-                    </xf:action>
-                </xf:trigger>
-                <xf:trigger>
-                    <xf:label>Show returned instance (replace=instance)</xf:label>
-                    <xf:hint>imports generated instance data into the current form</xf:hint>
-                    <xf:action>
-                        <xf:send submission="s-update"/>
-                    </xf:action>
-                </xf:trigger>
-                <xf:trigger>
-                    <xf:label>Just send (replace=none)</xf:label>
-                    <xf:hint>submits instance data and ignores any response</xf:hint>
-                    <xf:action>
-                        <xf:send submission="s-test"/>
                     </xf:action>
                 </xf:trigger>
                 <xf:trigger>
