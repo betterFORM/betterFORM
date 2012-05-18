@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html
  xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:xf="http://www.w3.org/2002/xforms"
         >
 	<head>
         <!--
@@ -12,8 +12,8 @@
 		<meta name="description" content="test form for copy control"/>
 		<meta name="version" content="$Id: CopyTest.xhtml 2631 2007-08-08 13:39:22Z adam $"/>
 
-		<xforms:model id="list_items">
-			<xforms:instance xmlns="">
+		<xf:model id="list_items">
+			<xf:instance xmlns="">
 				<options>
 					<address desc="work_address" label="work">
 						<email>mdubinko@example.info</email>
@@ -28,51 +28,86 @@
 						<item3>item 3</item3>
 					</address>
 				</options>
-			</xforms:instance>
-		</xforms:model>
+			</xf:instance>
+			<xf:instance xmlns="" id="i-copy-attr">
+                <options>
+				    <address desc="work_address" label="work" href="http://my/work" role="worker"/>
+                </options>
+			</xf:instance>
 
-		<xforms:model id="form_data">
-			<xforms:instance xmlns="">
+		</xf:model>
+
+		<xf:model id="form_data">
+			<xf:instance xmlns="">
 				<user_selection>
 					<address desc="alternate_address" label="alternate">
 						<email>nospam@example.net</email>
 						<item3>item 3</item3>
 					</address>
 				</user_selection>
-			</xforms:instance>
-		</xforms:model>
+			</xf:instance>
+
+            <xf:instance xmlns="" id="i-attr-result">
+                <options>
+                    <address/>
+                </options>
+            </xf:instance>
+
+        </xf:model>
 
 	</head>
 	<body>
-		<xforms:group appearance="full">
-			<xforms:select1 ref="." model="form_data">
-				<xforms:label>Send a copy to the following email addresses</xforms:label>
-				<xforms:itemset nodeset="address" model="list_items">
-					<xforms:label ref="@label"/>
-					<xforms:copy ref="."/>
-				</xforms:itemset>
-			</xforms:select1>
-		</xforms:group>
-		<xforms:group appearance="full">
-			<xforms:label>Select Result:</xforms:label>
-			<xforms:output ref="address/email" model="form_data">
-				<xforms:label>Email:</xforms:label>
-			</xforms:output>
-			<xforms:output ref="address/@desc" model="form_data">
-				<xforms:label>Description:</xforms:label>
-			</xforms:output>
-			<xforms:group ref="address" model="form_data" appearance="full">
-				<xforms:label>Items</xforms:label>
-				<xforms:output ref="item1">
-					<xforms:label>Label Item 1</xforms:label>
-				</xforms:output>
-				<xforms:output ref="item2">
-					<xforms:label>Label Item 2</xforms:label>
-				</xforms:output>
-				<xforms:output ref="item3">
-					<xforms:label>Label Item 3</xforms:label>
-				</xforms:output>
-			</xforms:group>
-		</xforms:group>
+		<xf:group appearance="full">
+            <xf:label>Copy XML Nodes</xf:label>
+            <xf:select1 ref="." model="form_data">
+                <xf:label>Send a copy to the following email addresses</xf:label>
+                <xf:itemset nodeset="address" model="list_items">
+                    <xf:label ref="@label"/>
+                    <xf:copy ref="."/>
+                </xf:itemset>
+            </xf:select1>
+            <xf:group appearance="full">
+                <xf:label>Result:</xf:label>
+                <xf:output ref="address/email" model="form_data">
+                    <xf:label>Email:</xf:label>
+                </xf:output>
+                <xf:output ref="address/@desc" model="form_data">
+                    <xf:label>Description:</xf:label>
+                </xf:output>
+                <xf:group ref="address" model="form_data" appearance="full">
+                    <xf:label>Items</xf:label>
+                    <xf:output ref="item1">
+                        <xf:label>Label Item 1</xf:label>
+                    </xf:output>
+                    <xf:output ref="item2">
+                        <xf:label>Label Item 2</xf:label>
+                    </xf:output>
+                    <xf:output ref="item3">
+                        <xf:label>Label Item 3</xf:label>
+                    </xf:output>
+                </xf:group>
+            </xf:group>
+
+        </xf:group>
+		<xf:group appearance="full">
+            <xf:label>Copy XML Nodes</xf:label>
+            <xf:select1 ref="instance('i-attr-result')/address" model="form_data">
+                <xf:label>Send a copy to the following email addresses</xf:label>
+                <xf:itemset nodeset="instance('i-copy-attr')/address/@*" model="list_items">
+                    <xf:label><xf:output value="local-name(.)"/></xf:label>
+                    <xf:copy ref="."/>
+                </xf:itemset>
+            </xf:select1>
+            <xf:group appearance="full" ref="instance('i-attr-result')/address" model="form_data">
+                <xf:label>Result:</xf:label>
+                <xf:input ref="@desc">
+                    <xf:label>Deskription Attr:</xf:label>
+                </xf:input>
+                <xf:input ref="@label">
+                    <xf:label>Label Attr:</xf:label>
+                </xf:input>
+            </xf:group>
+
+        </xf:group>
 	</body>
 </html>
