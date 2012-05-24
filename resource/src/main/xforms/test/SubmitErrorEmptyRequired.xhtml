@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Submit error</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <msg/>
+                        <notempty></notempty>
+                    </data>
+                </xf:instance>
+
+                <xf:bind nodeset="notempty" required="true()"/>
+
+                <xf:submission id="s-submission"
+                               replace="none"
+                               resource="echo:test"
+                               method="get">
+                    <xf:action ev:event="xforms-submit-error">
+                        <xf:message>Registration failed. Please fill in valid values</xf:message>
+                    </xf:action>
+                    <xf:action ev:event="xforms-submit-done">
+                        <xf:message>You have been registered successfully.</xf:message>
+                    </xf:action>
+                </xf:submission>
+
+            </xf:model>
+        </div>
+		<xf:group>
+            <xf:input ref="notempty">
+                <xf:label>Required:</xf:label>
+            </xf:input>
+            <xf:trigger>
+                <xf:label>Submit</xf:label>
+                <xf:send submission="s-submission"/>
+            </xf:trigger>
+
+            <xf:output ref="/msg">
+                <xf:label>resource-URI:</xf:label>
+            </xf:output>
+		</xf:group>
+    </body>
+</html>

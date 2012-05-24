@@ -22,7 +22,7 @@
 
     <cache name="xfSessionCache"
         eternal="false"
-        timeToIdleSeconds="600"
+        timeToIdleSeconds="1800"
         timeToLiveSeconds="1800"
         maxElementsInMemory="200"
         memoryStoreEvictionPolicy="LRU"

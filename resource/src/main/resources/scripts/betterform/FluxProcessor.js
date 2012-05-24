@@ -753,7 +753,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
         dojo.query(".xfRequired", dojo.doc).forEach(function(control) {
             //if control has no value add CSS class xfRequiredEmpty
             var xfControl = dijit.byId(control.id);
-            if(xfControl != undefined && xfControl.getControlValue === 'function'){
+            if(xfControl != undefined && typeof xfControl.getControlValue === 'function'){
                 var xfValue = xfControl.getControlValue();
                 if(xfValue == undefined || xfValue == ''){
                     dojo.addClass(xfControl.domNode,"xfRequiredEmpty");
