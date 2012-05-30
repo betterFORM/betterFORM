@@ -65,6 +65,7 @@
     <xsl:param name="form-id" select="'betterform'"/>
     <xsl:param name="form-name" select="//title"/>
     <xsl:param name="debug-enabled" select="'true'"/>
+    <xsl:param name="unloadingMessage" select="'You are about to leave this XForms application'"/>
     <xsl:variable name="isDebugEnabled" select="$debug-enabled eq 'true'" as="xsd:boolean"/>
 
     <!-- ### specifies the parameter prefix for repeat selectors ### -->
@@ -897,7 +898,8 @@
                 useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
                 useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
                 useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
-                logEvents:<xsl:value-of select="$isDebugEnabled"/>
+                logEvents:<xsl:value-of select="$isDebugEnabled"/>,
+                unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
             }
         </xsl:variable>
         <xsl:text>

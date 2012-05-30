@@ -65,6 +65,7 @@ define(["dojo/_base/declare",
         // initialize DWR
 
         Flux._path = dojo.config.bf.fluxPath;
+        this.unloadMsg = dojo.config.bf.unloadingMessage;
         // console.debug("calling Flux.init");
         Flux.init(dojo.config.bf.sessionkey, dojo.hitch(this,this.applyChanges));
 

@@ -333,6 +333,10 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         return configuration.getProperty("betterform.debug-allowed").equals("true");
     }
 
+    protected String getUnloadingMessage() {
+        return configuration.getProperty("betterform.unloading-message");
+    }
+
 
     protected boolean eventOptimizationIsDisabled() {
         return configuration.getProperty("betterform.event-optimization-enabled").equals("false");

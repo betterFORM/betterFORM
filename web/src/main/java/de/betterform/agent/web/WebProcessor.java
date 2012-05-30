@@ -554,6 +554,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
             generator.setParameter("action-url", getActionURL(true));
         }
         generator.setParameter("debug-enabled", String.valueOf(isDebugOn()));
+        generator.setParameter("unloadingMessage", getUnloadingMessage());
 
         generator.setParameter("baseURI", getBaseURI());
 

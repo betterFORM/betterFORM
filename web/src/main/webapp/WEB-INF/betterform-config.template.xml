@@ -102,6 +102,9 @@
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
         <property name="betterform.debug-allowed" value="@DEBUG_COMPONENTS@" description="if true enables debug bar and event log viewer"/>
+
+        <property name="betterform.unloading-message" value="You are about to leave this XForms application" description="Set message which is shown to user if unsaved form is left."/>
+
         <!-- WARNING: not ready for production use -->
         <property name="betterform.event-optimization-enabled" value="@EVENT_OPTIMIZATION@" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
