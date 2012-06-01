@@ -3,7 +3,7 @@
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
-      <title>Text input control</title>
+      <title>Text input control with alert, hint and help</title>
       
       
       
@@ -48,7 +48,7 @@
             </xf:model>
          </div>
          <div class="pageintro">
-            <h1>Text input control</h1>
+            <h1>Text input control with alert, hint and help</h1>
          </div>
          <div class="markup">
             
@@ -89,17 +89,40 @@
             
             <div class="Section sample"><code class="ui">
                   
-                  <xf:input id="input1" ref="input1/value" incremental="true">
+                  <xf:group>
                      
-                     <xf:label>a text</xf:label>
+                     <xf:input ref="input1/value" incremental="true">
+                        
+                        <xf:label>a text</xf:label>
+                        
+                        <xf:hint>typical hint is not much more than this</xf:hint>
+                        
+                        <xf:help>help for input1 - <br /> This commonly a more long text <b>sometimes</b> even with markup.
+                        </xf:help>
+                        
+                        <xf:alert>In this case the author was not a lazy man and gave us detailed instruction. And he probably even
+                           invites you to dinner. But even this does not make a bar of gold of a swine.
+                        </xf:alert>
+                        
+                     </xf:input>
                      
-                     <xf:hint>Hint for this input</xf:hint>
+                     <xf:input id="input1" ref="input1/value" incremental="true">
+                        
+                        <xf:label>a text</xf:label>
+                        
+                        <xf:hint>Hint for this input with some more text than usual. But sometime you have to say more and more - and nobody will listen anyway.
+                           But
+                           to test or not to test is not the question
+                        </xf:hint>
+                        
+                        <xf:help>help for input1 - <br /> This commonly a more long text <b>sometimes</b> even with markup.
+                        </xf:help>
+                        
+                        <xf:alert>invalid</xf:alert>
+                        
+                     </xf:input>
                      
-                     <xf:help>help for input1</xf:help>
-                     
-                     <xf:alert>invalid</xf:alert>
-                     
-                  </xf:input>
+                  </xf:group>
                   </code></div>
             <div class="Section sample">
                <xf:group appearance="full">

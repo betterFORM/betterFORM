@@ -90,31 +90,57 @@
 
     <xsl:template match="code[@class='ui']">
 
-        <xsl:variable name="ref" select="./xf:*[1]/@ref[1]"/>
+        <!--
+            we are using the first model ref for the test.
+            refparent is
+        -->
+        <xsl:variable name="ref" select="//xf:*[1][@ref]/@ref[1]"/>
         <xsl:variable name="refparent" select="substring-before($ref, '/')"/>
         <xsl:variable name="refchild" select="substring-after($ref, '/')"/>
+        <xsl:variable name="refchildtype" select="//xf:bind[@nodeset='value']/@type"/>
 
 
         <div class="Section sample">
             <xsl:copy-of select="."/>
         </div>
 
+        <!-- Verify sent and receive -->
         <div class="Section sample">
             <xf:group appearance="full">
-                <xf:label>Test send and set value</xf:label>
+                <xf:label>Test send and set value (type: <xsl:value-of select="$refchildtype"/>)</xf:label>
                 <xf:trigger>
                     <xf:label>setvalue</xf:label>
-                    <xf:setvalue ref="{$ref}" value="'new value'"/>
+                    <xf:setvalue ref="{$ref}">
+                        <xsl:call-template name="setValue">
+                            <xsl:with-param name="inputType"><xsl:value-of select="$refchildtype"/></xsl:with-param>
+                        </xsl:call-template>
+                    </xf:setvalue>
                 </xf:trigger>
                 <xf:output ref="{$ref}">
                     <xf:label>verify sent value</xf:label>
                 </xf:output>
             </xf:group>
         </div>
+
+
+        <!-- Test the creation and deletion of this control inside of an repeat -->
         <div class="Section sample">
             <xf:group appearance="full">
                 <xf:label>Test creation of controls</xf:label>
-                <xf:repeat nodeset="{$refparent}[position() &gt; 1]" appearance="full">
+
+                <xf:trigger>
+                    <xf:label>Insert</xf:label>
+                    <xf:action>
+                        <xf:insert nodeset="{$refparent}[1]" />
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Delete</xf:label>
+                    <!--<xf:message if="count({$refparent}) = 1">nodeset '<xsl:value-of select="$refparent"/>' is empty</xf:message>-->
+                    <xf:delete nodeset="{$refparent}[position() &gt; 1]" at="last()" if="count({$refparent}) > 1"/>
+                </xf:trigger>
+
+                <xf:repeat id="r-repeat" nodeset="{$refparent}[position() &gt; 1]" appearance="full">
                     <xf:input ref="{$refchild}" incremental="true" >
                         <xf:label>a text</xf:label>
                         <xf:hint>Hint for this input</xf:hint>
@@ -123,17 +149,39 @@
                     </xf:input>
                 </xf:repeat>
 
-                <xf:trigger>
-                    <xf:label>Insert</xf:label>
-                    <xf:insert nodeset="{$refparent}" at="last()" position="before"/>
-                </xf:trigger>
-                <xf:trigger>
-                    <xf:label>Delete</xf:label>
-                    <xf:message if="count({$refparent}) = 1">nodeset '<xsl:value-of select="$refparent"/>' is empty</xf:message>
-                    <xf:delete nodeset="{$refparent}" at="last()" if="count({$refparent}) &gt; 1"/>
-                </xf:trigger>
             </xf:group>
         </div>
+    </xsl:template>
+
+
+    <xsl:template name="setValue">
+
+        <xsl:param name="inputType"/>
+
+        <xsl:variable name="string">new value</xsl:variable>
+        <xsl:variable name="date">2012-06-01</xsl:variable>
+        <xsl:variable name="time">23:55:01</xsl:variable>
+        <xsl:variable name="xf:boolean">true</xsl:variable>
+
+        <xsl:choose>
+            <xsl:when test="$inputType = 'date'">
+                <xsl:value-of select="$date"/>
+            </xsl:when>
+            <xsl:when test="$inputType = 'time'">
+                <xsl:value-of select="$time"/>
+            </xsl:when>
+            <xsl:when test="$inputType = 'dateTime'">
+                <xsl:value-of select="$date"/>T<xsl:value-of select="$time"/>
+            </xsl:when>
+            <xsl:when test="$inputType = 'xf:boolean'">
+                <xsl:value-of select="$xf:boolean"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$string"/>
+            </xsl:otherwise>
+        </xsl:choose>
+
+
     </xsl:template>
 
 
