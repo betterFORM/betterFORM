@@ -152,7 +152,7 @@
         compressing classes plus resources into a single jar
         ************************************************************************************
         </echo>
-        <jar basedir="${target}/classes" compress="true" jarfile="${basedir}/target/betterform.jar" update="true"/>
+        <jar basedir="${target}/classes" compress="true" jarfile="${basedir}/target/betterform.jar" update="true" excludes="**/ehcache.xml"/>
 
         <echo>
             ************************************************************************************
@@ -365,6 +365,7 @@
         ************************************************************************************
         </echo>
         <copy todir="${webapp.dir}/WEB-INF/lib" file="${web.dir}/target/betterform.jar"/>
+        <copy todir="${webapp.dir}/WEB-INF/classes" file="${web.dir}/target/classes/ehcache.xml"/>
     </target>
 
     <target name="deploy-forms" description="deploy the forms to target">
