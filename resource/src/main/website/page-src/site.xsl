@@ -145,7 +145,7 @@
                                buildArrows         : true,
                                buildNavigation     : false,
                                navigationFormatter : null,
-                               startStopped        : false
+                               startStopped        : true
                               });
 
                         $.Juitter.start({
