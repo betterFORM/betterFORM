@@ -366,19 +366,17 @@
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
                     <xsl:otherwise>
-<!--                        <span class="select1wrapper">-->
-                            <select id="{$id}-value"
-                                    name="{$name}"
-                                    class="xfValue"
-                                    title=""
-                                    tabindex="{$navindex}"
-                                    schemaValue="{bf:data/@bf:schema-value}"
-                                    incremental="{$incremental}">
-                                <xsl:call-template name="build-items">
-                                    <xsl:with-param name="parent" select="$parent"/>
-                                </xsl:call-template>
-                            </select>
-<!--                        </span>-->
+                        <select id="{$id}-value"
+                                name="{$name}"
+                                class="xfValue"
+                                title=""
+                                tabindex="{$navindex}"
+                                schemaValue="{bf:data/@bf:schema-value}"
+                                incremental="{$incremental}">
+                            <xsl:call-template name="build-items">
+                                <xsl:with-param name="parent" select="$parent"/>
+                            </xsl:call-template>
+                        </select>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:otherwise>
