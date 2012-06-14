@@ -21,6 +21,27 @@
         </xslt>
     </target>
 
+    <target name="generate-test-forms" description="generate test forms of reference forms">
+            <!--
+        <xslt in="${basedir}/xml/InputCalendar.xml"
+              out="${basedir}/../xforms/referencetest/InputCalendar.xhtml"
+              style="${basedir}/build-test.xsl"
+              force="true">
+            <classpath refid="transform.class.path"/>
+            <param name="webContext" expression="../.."/>
+        </xslt>  -->
+        <xslt basedir="${basedir}/xml"
+              destdir="${basedir}/../xforms/referencetest"
+              style="${basedir}/build-test.xsl"
+              force="true"
+              includes="Input*.xml"
+              extension=".xhtml">
+            <classpath refid="transform.class.path"/>
+            <param name="webContext" expression="../.."/>
+        </xslt>
+
+    </target>
+
     <target name="deploy-forms" depends="generate-forms" description="builds and deploys reference forms to standard webapp">
         <ant antfile="build.xml" target="deploy-forms" dir="../../../../web/"/>
     </target>
