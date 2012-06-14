@@ -4,7 +4,7 @@
   -->
 
 <project name="betterFORM extension installer" default="update-betterFORM" basedir=".">
-
+    <xmlproperty file="../build.properties.local.xml" semanticAttributes="true" keepRoot="false"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <property name="betterFORM.src" value="${basedir}/../"/>
@@ -401,6 +401,13 @@ Error: eXist is not installed in ${eXist.home}.
 
 
         <move file="${betterFORM.extension}/target/WEB-INF/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar"/>
+
+        <!-- ehcache 2.5.2: remove me when exist has been updated -->
+        <delete file="${betterFORM.extension}/target/WEB-INF/lib/ehcache-1.6.2.jar"/>
+        <move file="${core.dir}/src/main/lib/ehcache-core-2.5.2.jar" todir="${betterFORM.libs}"/>
+        <move file="${core.dir}/src/main/lib/slf4j-api-1.6.1.jar" todir="${betterFORM.libs}"/>
+        <move file="${betterFORM.extension}/target/WEB-INF/classes/ehcache.xml" todir="${eXist.home}/webapp/WEB-INF/classes/"/>
+
 
         <echo>
             _== Moving needed files from betterFROM WEB-INF directory to eXist WEB-INF directory ==_
