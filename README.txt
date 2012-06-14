@@ -5,7 +5,7 @@ Minimal Requirements for betterFORM limeGreen
 ---------------------------------------------
 
    * JDK 1.6
-   * Apache Ant 1.7.0 or newer
+   * Apache Ant 1.8.2 or newer
    * [Optional: Apache Maven 2.0.5 or newer]
 
 
