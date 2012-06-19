@@ -69,7 +69,8 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
-                <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
+                <pathelement location="${core.dir}/src/main/lib/ehcache-core-2.5.2.jar" groupid="net.sf.ehcache" version="2.5.2" artifactId="ehcache-core"/>
+                <pathelement location="${core.dir}/src/main/lib/slf4j-api-1.6.1.jar" groupid="org.slf4j" version="1.6.1" artifactId="slf4j-api"/>
                 <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
 
                 <!--

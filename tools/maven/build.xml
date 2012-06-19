@@ -42,8 +42,8 @@
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="module" expression="${core.app.name}"/>
         </xslt>
-        <rename src="${project.dir}/core/pom.xml" dest="${project.dir}/core/pom.xml.old"/>
-        <rename src="${project.dir}/core/pom.new.xml" dest="${project.dir}/core/pom.xml"/>
+        <move file="${project.dir}/core/pom.xml" tofile="${project.dir}/core/pom.xml.old"/>
+        <move file="${project.dir}/core/pom.new.xml" tofile="${project.dir}/core/pom.xml"/>
     </target>
 
     <target name="update-web-pom"
@@ -55,8 +55,8 @@
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="module" expression="${web.app.name}"/>
         </xslt>
-        <rename src="${project.dir}/web/pom.xml" dest="${project.dir}/web/pom.xml.old"/>
-        <rename src="${project.dir}/web/pom.new.xml" dest="${project.dir}/web/pom.xml"/>
+        <move file="${project.dir}/web/pom.xml" tofile="${project.dir}/web/pom.xml.old"/>
+        <move file="${project.dir}/web/pom.new.xml" tofile="${project.dir}/web/pom.xml"/>
     </target>
 
     <target name="update-betty-pom"
@@ -68,8 +68,8 @@
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="module" expression="${betty.app.name}"/>
         </xslt>
-        <rename src="${project.dir}/betty/pom.xml" dest="${project.dir}/betty/pom.xml.old"/>
-        <rename src="${project.dir}/betty/pom.new.xml" dest="${project.dir}/betty/pom.xml"/>
+        <move file="${project.dir}/betty/pom.xml" tofile="${project.dir}/betty/pom.xml.old"/>
+        <move file="${project.dir}/betty/pom.new.xml" tofile="${project.dir}/betty/pom.xml"/>
     </target>
 
     <target name="create-core-install" depends="update-core-pom">
