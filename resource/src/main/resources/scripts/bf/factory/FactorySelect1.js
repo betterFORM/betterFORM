@@ -135,7 +135,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 connect.subscribe("betterform-insert-item-" + n.id , function(contextInfo){
                                     console.warn("TBD: FactorySelect1 (open) betterform-insert-item contextInfo:",contextInfo)
                                 });
-                                connect.subscribe("betterform-delte-item-" + n.id , function(contextInfo){
+                                connect.subscribe("betterform-delete-item-" + n.id , function(contextInfo){
                                     console.warn("TBD: FactorySelect1 (open) betterform-delete-item contextInfo:",contextInfo)
                                 });
 

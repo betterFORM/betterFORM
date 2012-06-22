@@ -8,7 +8,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
                 // console.debug("Select1CheckBox postCreate id:",this.id);
                 connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
                 connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
-                connect.subscribe("betterform-delte-item-" + this.id , this, "handleDeleteItem");
+                connect.subscribe("betterform-delete-item-" + this.id , this, "handleDeleteItem");
 
 
             },

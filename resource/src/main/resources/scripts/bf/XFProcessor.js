@@ -1260,7 +1260,7 @@ define(["dojo/_base/declare",
     _handleBetterFormItemDeleted:function(xmlEvent) {
         // console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            connect.publish("betterform-delte-item-"+ xmlEvent.contextInfo.parentId + "-value", xmlEvent.contextInfo);
+            connect.publish("betterform-delete-item-"+ xmlEvent.contextInfo.parentId + "-value", xmlEvent.contextInfo);
         }else {
             connect.publish("betterform-item-deleted-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
         }
