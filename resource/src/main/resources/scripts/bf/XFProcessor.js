@@ -602,16 +602,13 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
-        require(["bf/MappingProcessor"],function(MappingProcessor){
+        require(["bf/MappingProcessor","dojo/behavior", "dojo/domReady!"],function(MappingProcessor,behavior){
             if (this.mappingProcessor == undefined) {
                 this.mappingProcessor = new MappingProcessor();
             }
+            behavior.apply();
         });
 
-
-        require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
-            var behaviourResult= behavior.apply();
-        });
         // fire remaining initial events
         require(["dojo/ready"], function (ready) {
             ready(function () {

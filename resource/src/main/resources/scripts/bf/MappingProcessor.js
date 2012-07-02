@@ -3,8 +3,8 @@
  * function of a given factory and passes in the matched node and the 3rd param of the mapping (a string telling the
  * factory which Widget to create)
  */
-define(["dojo/_base/declare","dojo/_base/connect"],
-    function(declare,connect) {
+define(["dojo/_base/declare"],
+    function(declare) {
         return declare(null, {
             factories:{},
 
@@ -40,13 +40,21 @@ define(["dojo/_base/declare","dojo/_base/connect"],
                                                     factory = widgetFactories[mapping[1]];
                                                 }else {
                                                     // console.debug("create new factory: ",mapping[1]);
-                                                    factory = new JS_CLASS_NAME({},n);
-                                                    widgetFactories[mapping[1]] = factory;
+                                                    try {
+                                                        factory = new JS_CLASS_NAME({},n);
+                                                        widgetFactories[mapping[1]] = factory;
+                                                    }catch(err) {
+                                                        console.error("Could not create factory ",JS_CLASS_NAME, " Mapping: ",mapping);
+                                                    }
                                                 }
                                                 // call the create function of the factory
                                                 factory.create(param,n);
                                             }else {
-                                                new JS_CLASS_NAME({},n);
+                                                try {
+                                                    new JS_CLASS_NAME({},n);
+                                                }catch(err) {
+                                                    console.error("Could not create dijit ",JS_CLASS_NAME, " Mapping: ",mapping);
+                                                }
                                             }
                                         }
                                     );

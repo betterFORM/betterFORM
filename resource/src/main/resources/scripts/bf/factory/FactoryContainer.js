@@ -1,6 +1,6 @@
 define(["dojo/_base/declare","bf/util"],
     function(declare) {
-        return declare(null,
+        return declare( null,
             {
                 /**
                  * Function to create Container Classes / Controls like Group, Switch, Repeat
@@ -55,7 +55,7 @@ define(["dojo/_base/declare","bf/util"],
                             break;
                         case "tabswitch":
                             console.debug("FactoryContainer (tabswitch) n: ",n);
-                            require(["dijit/layout/ContentPane","dijit/layout/TabContainer","dojo/query","dojo/aspect","dojo/_base/array","dojo/dom","dojo/dom-attr","dojo/_base/connect","dojo/dom-style",],
+                            require(["dijit/layout/ContentPane","dijit/layout/TabContainer","dojo/query","dojo/aspect","dojo/_base/array","dojo/dom","dojo/dom-attr","dojo/_base/connect","dojo/dom-style"],
                                 function(ContentPane, TabContainer, query,aspect,array,dom,domAttr,connect,domStyle) {
                                 // connect and overwrite 'handleStateChanged' since it is not supported by switch
                                 var xfCases = query(".xfCase",n);

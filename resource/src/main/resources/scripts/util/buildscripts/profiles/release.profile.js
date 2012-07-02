@@ -101,8 +101,6 @@ var profile = {
 
                 'dijit/registry',
 
-                'bf/core',
-
                 'bf/common/Alert',
                 'bf/common/AlertInline',
 
