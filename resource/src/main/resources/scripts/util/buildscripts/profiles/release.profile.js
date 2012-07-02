@@ -284,11 +284,9 @@ var profile = {
                 "bf/tabcontainer",
                 "bf/dates",
                 "bf/upload",
-                "tooltipAlert",
+                "bf/tooltipAlert",
                 "bf/debug",
                 "bf/bfRelease"
-
-
             ],
             boot: false,
             customBase: true
