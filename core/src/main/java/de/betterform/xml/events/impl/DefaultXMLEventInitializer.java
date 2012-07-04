@@ -93,6 +93,7 @@ public class DefaultXMLEventInitializer implements XMLEventInitializer {
         INITIALIZATION_RULES.put(BetterFormEventNames.ITEM_CHANGED, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(BetterFormEventNames.INDEX_CHANGED, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(BetterFormEventNames.SWITCH_TOGGLED, new boolean[]{true, false, true});
+        INITIALIZATION_RULES.put(BetterFormEventNames.CUSTOM_MIP_CHANGED, new boolean[]{true, false, true});
     }
 
     /**

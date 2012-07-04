@@ -17,8 +17,11 @@ import de.betterform.xml.xforms.ui.*;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+
+import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.logging.Log;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventTarget;
@@ -215,6 +218,50 @@ public abstract class XFormsElement implements XFormsConstants {
         }
         if (element.hasAttributeNS(null, name)) {
             return element.getAttributeNS(null, name);
+        }
+        return null;
+    }
+    
+    /**
+     * returns the value of a given BetterForm attribute
+     *
+     * @param name the localname of the attribute
+     * @return the value of the attribute as string or null if attribute is not found
+     */
+    public String getBFAttribute(String name) {
+        return getBFAttribute(this.element, name);
+    }
+    
+    /**
+     * returns the list of BetterForm attributes
+     *
+     * 
+     * @return the key-value-pair of the attributes
+     */
+    public Map<String, String> getBFAttributes() {
+    	
+    	 HashMap<String, String> bfAttributes = new HashMap<String, String>(); 
+    	 NamedNodeMap nnm = element.getAttributes();
+    	 for (int i = 0; i < nnm.getLength(); i++) {
+			Node attribute = nnm.item(i);
+		   	if (NamespaceConstants.BETTERFORM_NS.equals(attribute.getNamespaceURI()) ) {
+		   		bfAttributes.put(attribute.getPrefix() + WordUtils.capitalize(attribute.getLocalName()), attribute.getTextContent());
+		   	}
+		}
+    	 return bfAttributes;
+    	 
+    }
+
+    /**
+     * returns the value of a given BetterForm attribute. First tries to fetch it from
+     * the XForms namespace. If not successful tries to find it in the null namespace.
+     *
+     * @param name the localname of the attribute
+     * @return the value of the attribute as string or null if attribute is not found
+     */
+    public static String getBFAttribute(Element element, String name) {
+        if (element.hasAttributeNS(NamespaceConstants.BETTERFORM_NS, name)) {
+            return element.getAttributeNS(NamespaceConstants.BETTERFORM_NS, name);
         }
         return null;
     }

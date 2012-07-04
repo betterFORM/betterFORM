@@ -27,8 +27,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -51,6 +53,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     private String calculate;
     private String constraint;
     private String p3ptype;
+    private Map<String,String> customMIPs;
 
     private XPathReferenceFinder referenceFinder;
     private Set readonlyReferences;
@@ -58,6 +61,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     private Set relevantReferences;
     private Set calculateReferences;
     private Set constraintReferences;
+    private HashMap<String, Set> customMIPReferences;
 
     protected List nodeset;
 
@@ -245,6 +249,10 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     public String getConstraint() {
         return this.constraint;
     }
+    
+    public Map<String,String> getCustomMIPs() {
+    	return this.customMIPs;
+    }
 
     /**
      * Returns the <code>p3ptype</code> attribute.
@@ -307,6 +315,14 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
      */
     public Set getConstraintReferences() {
         return this.constraintReferences;
+    }
+    
+    public Set getCustomMIPReferences(String customMIP) {
+        return this.customMIPReferences.get(customMIP);
+    }
+    
+    public Map<String, Set> getCustomMIPsReferences() {
+        return this.customMIPReferences;
     }
 
     // implementation of 'de.betterform.xml.events.DefaultAction'
@@ -402,7 +418,15 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 	        if (this.constraint != null) {
 	            this.constraintReferences = this.referenceFinder.getReferences(this.constraint, getPrefixMapping(), this.container);
 	        }
-	
+
+	        this.customMIPs = getBFAttributes();
+	        if (!this.customMIPs.isEmpty()) {
+	        	this.customMIPReferences = new HashMap<String, Set>();
+	           	for (String key : this.customMIPs.keySet()) {
+	            	this.customMIPReferences.put(key, this.referenceFinder.getReferences(this.customMIPs.get(key), getPrefixMapping(), this.container));
+				}
+	        }
+	        	
 	        updateXPathContext();
         }
         catch(XFormsComputeException e) {

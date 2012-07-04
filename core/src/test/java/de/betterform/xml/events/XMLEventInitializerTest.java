@@ -784,6 +784,23 @@ public class XMLEventInitializerTest extends TestCase {
     }
 
     /**
+     * Tests event initialization.
+     *
+     * @throws Exception in any error occurred during setup.
+     */
+    public void testInitCustomMIPToggledEvent() throws Exception {
+        String type = BetterFormEventNames.CUSTOM_MIP_CHANGED;
+        Map context = new HashMap();
+        context.put("diff", "true");
+        this.xmlEventInitializer.initXMLEvent(this.xmlEvent, type, true, false, context);
+
+        assertEquals(type, this.xmlEvent.getType());
+        assertEquals(true, this.xmlEvent.getBubbles());
+        assertEquals(false, this.xmlEvent.getCancelable());
+        assertEquals("true", this.xmlEvent.getContextInfo("diff"));
+    }
+    
+    /**
      * Sets up the test.
      *
      * @throws Exception in any error occurred during setup.
