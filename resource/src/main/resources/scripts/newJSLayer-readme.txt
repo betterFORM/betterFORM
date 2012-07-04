@@ -37,6 +37,10 @@ add a declarative way of adding these.
    (listing of basic schema datatypes: http://www.w3.org/TR/xmlschema-2/#built-in-datatypes)
  * xforms-select events within itemsets do not work
  * validation of DropDownDate (if bf:dropdowndata=xyz is used there must be a corresponding constraint on the bind)
+ * Repeat: the RepeatIndex does not get changed correctly if the index('repeatId') function is used for insert / delete actions
+ * EventOptimization
+    * ClientSide: if not absolut needed, don't send events to the server for every change but in packages
+    * if DOMFocus (in/out) is not used, don't send the events
 
 
 

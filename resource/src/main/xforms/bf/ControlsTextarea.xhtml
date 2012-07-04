@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Textarea Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+        .bf .xfControl .xfLabel {
+            width:200px;
+        }
+
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <textarea label="range">Just some text</textarea>
+                <textarea label="range html"><![CDATA[<b>Bold</b> and <i>italic</i> text]]></textarea>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="textarea[1]" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
+            <xf:bind nodeset="textarea[2]" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
+            <xf:bind nodeset="textarea[3]" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
+        </xf:bind>
+        <xf:instance id="i-origin" xmlns="">
+            <data>
+                <textarea><![CDATA[Some other <b>bold</b> and <i>italic</i> text]]></textarea>
+            </data>
+        </xf:instance>
+    </xf:model>
+
+</head>
+
+<body class="tundra">
+    <xf:group appearance="minimal">
+
+        <xf:group>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Required [',boolean-from-string(instance()/@required),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Relevant [',boolean-from-string(instance()/@relevant),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Valid [',boolean-from-string(instance()/@valid),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Readonly [',boolean-from-string(instance()/@readonly),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Textarea:</span>
+                <xf:trigger>
+                    <xf:label>Label[1]</xf:label>
+                    <xf:setvalue ref="instance()/output[1]/@label" value="'new output label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/textarea[1]" value="'new textarea value'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/textarea[2]" value="instance('i-origin')/textarea"/>
+                </xf:trigger>
+            </div>
+        </xf:group>
+        <xf:group ref="instance()" appearance="full">
+            <xf:label>textarea</xf:label>
+
+            <xf:textarea ref="textarea[1]" appearance="full" incremental="true">
+                <xf:label ref="@label"/>
+                <xf:hint>textarea[1] hint</xf:hint>
+                <xf:help>textarea[1] help</xf:help>
+                <xf:alert>textarea[1] alert</xf:alert>
+            </xf:textarea>
+            <xf:output ref="textarea[1]">
+                    <xf:label>textarea[1] value:</xf:label>
+            </xf:output>
+
+            <xf:textarea ref="textarea[2]" mediatype="text/html"  incremental="true">
+                <xf:label ref="@label"/>
+                <xf:hint>textarea[2] hint</xf:hint>
+                <xf:help>textarea[2] help</xf:help>
+                <xf:alert>textarea[2] alert</xf:alert>
+            </xf:textarea>
+            <xf:output ref="textarea[2]">
+                <xf:label>textarea[2] value:</xf:label>
+            </xf:output>
+
+
+        </xf:group>
+    </xf:group>
+</body>
+</html>

@@ -6,14 +6,14 @@
 
 <project id="test" default="run" basedir=".">
     <target name="run">
-        <mkdir dir="run"/>
+        <echo>executing Ant target: run</echo>
     </target>
 
     <target name="test">
-        <mkdir dir="test"/>
+        <echo>executing Ant target: test</echo>
     </target>
 
     <target name="test2">
-        <mkdir dir="test2"/>
+        <echo>executing Ant target: test2</echo>
     </target>
 </project>

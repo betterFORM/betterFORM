@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:my="http://my.namespace.org">
+<head>
+    <title>Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+    </style>
+
+    <xf:model schema="#my-schema">
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <string>input value</string>
+                <date>2012-01-01</date>
+                <dropdowndate>2012-01-01</dropdowndate>
+                <boolean>false</boolean>
+                <decimal>20</decimal>
+                <integer>4</integer>
+                <xsinteger>234</xsinteger>
+                <restricted>131</restricted>
+
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="string" />
+            <xf:bind nodeset="date"  type="date"/>
+            <xf:bind nodeset="dropdowndate"  type="date"/>
+            <xf:bind nodeset="boolean"  type="boolean"/>
+            <xf:bind nodeset="decimal"  type="decimal"/>
+            <xf:bind nodeset="integer" type="integer"/>
+            <xf:bind nodeset="xsinteger" type="xs:integer"/>
+            <xf:bind nodeset="restricted" type="my:restricted"/>
+        </xf:bind>
+    </xf:model>
+    <xs:schema id="my-schema" targetNamespace="http://my.namespace.org">
+        <xs:simpleType name="restricted">
+            <xs:restriction base="xs:integer">
+                <xs:maxInclusive value="180"/>
+                <xs:minInclusive value="-180"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:schema>
+
+</head>
+
+<body class="tundra">
+    <xf:group ref="instance()" appearance="full" id="eventListener" class="xfFullGroup">
+        <xf:label>Input</xf:label>
+        <xf:input ref="string">
+            <xf:label>String:</xf:label>
+            <xf:hint>String hint</xf:hint>
+            <xf:help>String help</xf:help>
+            <xf:alert>String Alert</xf:alert>
+        </xf:input>
+        <xf:output ref="string">
+            <xf:label>string value:</xf:label>
+        </xf:output>
+
+
+        <xf:input ref="date" appearance="iso8601:dd-MM-yyyy">
+            <xf:label>Date:</xf:label>
+            <xf:hint>Date hint</xf:hint>
+            <xf:help>Date help</xf:help>
+            <xf:alert>Date Alert</xf:alert>
+        </xf:input>
+        <xf:output ref="date">
+            <xf:label>date value:</xf:label>
+        </xf:output>
+
+        <xf:input ref="dropdowndate" appearance="bf:dropdowndate=-17:-100">
+            <xf:label>Dropdowndate:</xf:label>
+            <xf:hint>Dropdowndate hint</xf:hint>
+            <xf:help>Dropdowndate help</xf:help>
+            <xf:alert>Dropdowndate Alert</xf:alert>
+        </xf:input>
+        <xf:output ref="dropdowndate">
+            <xf:label>dropdowndate value:</xf:label>
+        </xf:output>
+
+        <xf:input ref="boolean">
+            <xf:label>boolean:</xf:label>
+            <xf:hint>boolean hint</xf:hint>
+            <xf:help>boolean help</xf:help>
+            <xf:alert>boolean Alert</xf:alert>
+        </xf:input>
+        <xf:output ref="boolean">
+            <xf:label>boolean value:</xf:label>
+        </xf:output>
+        <xf:input ref="decimal">
+            <xf:label>decimal:</xf:label>
+            <xf:hint>decimal hint</xf:hint>
+            <xf:help>decimal help</xf:help>
+            <xf:alert>decimal Alert</xf:alert>
+        </xf:input>
+        <xf:output ref="decimal">
+            <xf:label>decimal value:</xf:label>
+        </xf:output>
+
+        <xf:input ref="integer">
+            <xf:label>integer</xf:label>
+            <xf:alert>A <b>integer</b> is needed</xf:alert>
+        </xf:input>
+        <xf:output ref="integer">
+            <xf:label>integer value:</xf:label>
+        </xf:output>
+        <xf:input ref="xsinteger">
+            <xf:label>xs:integer</xf:label>
+            <xf:alert>A <b>xs:integer</b> is needed</xf:alert>
+        </xf:input>
+        <xf:output ref="xsinteger">
+            <xf:label>xs:integer value:</xf:label>
+        </xf:output>
+        <xf:input ref="restricted">
+            <xf:label>my:restricted</xf:label>
+            <xf:hint>my:restricted is extended from integer and allows values between -180 and +180.</xf:hint>
+            <xf:alert>A <b>my:restricted</b> is needed</xf:alert>
+        </xf:input>
+        <xf:output ref="restricted">
+            <xf:label>my:restricted value:</xf:label>
+        </xf:output>
+
+
+    </xf:group>
+</body>
+</html>

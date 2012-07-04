@@ -29,13 +29,15 @@
     <!-- local Web properties -->
     <property name="forms.target" value="forms"/>
     <property name="lib.dir" value="${basedir}/src/main/lib"/>
+    <property name="src.webapp.dir" value="${basedir}/src/main/webapp"/>
+    <property name="src.webinf.dir" value="${src.webapp.dir}/WEB-INF"/>
     <property name="target" value="${basedir}/target"/>
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <!--<property name="resources.dir" value="${webapp.dir}/resources"/>-->
     <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
     <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
-    <property name="servlet.container" value="${properties.webappPath}"/>
-    <antversion property="antversion" atleast="1.7"/>
+
+    <antversion property="antversion" atleast="${properties.antversion}"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -61,7 +63,7 @@
         <tstamp/>
         <mkdir dir="${target}/classes"/>
 
-        <ant antfile="build.xml" target="compile" dir="${core.dir}" inheritall="false"/>
+        <ant antfile="build.xml" target="compile" dir="${core.dir}" inheritall="true"/>
 
         <copy todir="${target}/classes">
             <fileset dir="${core.dir}/target/classes"/>
@@ -87,6 +89,13 @@
         <echo>
         ************************************************************************************
         compiling Web classes...
+        ************************************************************************************
+        JavaOptions:
+            version:     ${properties.javac.version}
+            debug:       ${properties.javac.debug}
+            deprecation: ${properties.javac.deprecation}
+            optimize:    ${properties.javac.optimize}
+
         ************************************************************************************
         </echo>
 
@@ -118,9 +127,11 @@
             <fileset dir="${resource.src.dir}/main/resources" includes="**/*" excludes="scripts/**" />
         </copy>
 
+<!--
         <copy todir="${target}/classes/META-INF/resources/scripts/betterform/editor/">
             <fileset file="${resource.src.dir}/main/resources/scripts/betterform/editor/addMenu.js"/>
         </copy>
+-->
 
         <!--delete the script folder - did not find a solution to exclude these in the copy above -->
         <!--<delete dir="${basedir}/target/classes/META-INF/resources/scripts"/>-->
@@ -141,7 +152,7 @@
         compressing classes plus resources into a single jar
         ************************************************************************************
         </echo>
-        <jar basedir="${target}/classes" compress="true" jarfile="${basedir}/target/betterform.jar" update="true"/>
+        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/ehcache.xml"/>
 
         <echo>
             ************************************************************************************
@@ -201,38 +212,79 @@
         These must be handled by target depending on this.
         ************************************************************************************
         </echo>
-        <mkdir dir="${webapp.dir}"/>
-        <mkdir dir="${webapp.dir}/upload"/>
 
-        <echo>
-        ************************************************************************************
-        copying webapp folder from src
-        ************************************************************************************
-        </echo>
-        <!--todo: webapp dir should be urgently be cleaned up from betterform site resources. Therefore this
-        copy only copies positively -->
-        <copy description="copy dashboard"
-              todir="${webapp.dir}"
+        <!-- Filters for log4j.xml see build.properties.xml for a description-->
+        <filter token="APPENDER" value="${config.log4j.appender}"/>
+        <filter token="ROOT_LOG_LEVEL" value="${config.log4j.loglevel.root}"/>
+        <filter token="BETTERFORM_LOG_LEVEL" value="${config.log4j.loglevel.betterform}"/>
+        <filter token="EHCACHE_LOG_LEVEL" value="${config.log4j.loglevel.ehcache}"/>
+        <filter token="DWR_LOG_LEVEL" value="${config.log4j.loglevel.dwr}"/>
+
+        <copy description="filter log4j.xml"
+              tofile="${src.webinf.dir}/log4j.xml"
+              overwrite="true"
               filtering="true"
-              file="${basedir}/src/main/webapp/dashboard.html"/>
-        <copy description="copy logo page"
-              todir="${webapp.dir}"
-              filtering="true"
-              file="${basedir}/src/main/webapp/logo.html"/>
-        <copy description="copy dashboard xforms"
-              todir="${webapp.dir}"
-              filtering="true"
-              file="${basedir}/src/main/webapp/dashboard.xhtml"/>
-        <copy description="copy blank"
-              todir="${webapp.dir}"
-              filtering="true"
-              file="${basedir}/src/main/webapp/blank.html"/>
-        <copy description="copy WEB-INF dir"
-              todir="${webapp.dir}/WEB-INF"
-              filtering="true">
-            <fileset dir="${basedir}/src/main/webapp/WEB-INF"/>
+              file="${src.webinf.dir}/log4j.template.xml">
+
         </copy>
 
+        <!-- Filters for web.xml see build.properties.xml for a description-->
+        <filter token="CACHING" value="${config.webinf.caching}"/>
+        <filter token="DWR_DEBUG" value="${config.webinf.debugDWR}"/>
+        <copy description="filter web.xml"
+              tofile="${src.webinf.dir}/web.xml"
+              overwrite="true"
+              filtering="true"
+              file="${src.webinf.dir}/web.template.xml">
+
+        </copy>
+
+        <!-- Filters for betterform.config see build.properties.xml for a description-->
+        <filter token="INIT_LOGGING" value="${config.bfconfig.initLogging}"/>
+        <filter token="DEFAULT_ALERT" value="${config.bfconfig.generateDefaultAlerts}"/>
+        <filter token="DEBUG_COMPONENTS" value="${config.bfconfig.debugComponents}"/>
+        <filter token="EVENT_OPTIMIZATION" value="${config.bfconfig.enableEventOptimization}"/>
+        <filter token="INCLUDES" value="${config.bfconfig.doIncludes}"/>
+        <filter token="MAIL_ADMIN" value="${config.bfconfig.mailadmin}"/>
+        <copy description="filter betterform-config.xml"
+              tofile="${src.webinf.dir}/betterform-config.xml"
+              overwrite="true"
+              filtering="true"
+              file="${src.webinf.dir}/betterform-config.template.xml">
+
+        </copy>
+
+        <!-- copy version.info to betterform-version.config -->
+        <filter token="app.name" value="${web.app.name}"/>
+        <filter token="app.version" value="${web.app.version}"/>
+        <tstamp>
+            <format property="current.time"
+                    pattern="yyyy-MM-dd HH:mm:ss"
+                    unit="millisecond"/>
+        </tstamp>
+        <filter token="timestamp" value="${current.time}"/>
+
+        <copy tofile="${src.webinf.dir}/betterform-version.info"
+              file="${core.dir}/src/main/java/version.info"
+              filtering="true"
+              overwrite="true"/>
+
+        <!--TODO: URGENT: webapp dir should be urgently be cleaned up!!!! -->
+        <copy description="copy WEB-INF dir"
+              todir="${webapp.dir}"
+              overwrite="true"
+              filtering="true">
+            <fileset dir="${src.webapp.dir}">
+                <exclude name="WEB-INF/*.template.xml"/>
+                <exclude name="META-INF/context.xml"/>
+            </fileset>
+        </copy>
+
+
+        <mkdir dir="${webapp.dir}/resources"/>
+        <copy description="copy resources dir"
+              todir="${webapp.dir}/resources"
+              file="${resource.src.dir}/main/resources/images/blank.gif"/>
     </target>
 
     <target name="copy-libs" unless="should.not.copy.libs">
@@ -284,7 +336,7 @@
         </ant>
     </target>
 
-    <target name="deploy-exploded-resources" description="only deployed resources in resources/src/main/resources">
+    <target name="deploy-exploded-resources" description="only deployes resources in resources/src/main/resources">
 
         <echo>
         ************************************************************************************
@@ -296,6 +348,7 @@
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
     </target>
+
 
     <target name="deploy" depends="compile, exploded-webapp-base, create-single-jar" description="default deployment as single jar">
         <echo>
@@ -311,7 +364,8 @@
         copying betterform.jar to WEB-INF/lib
         ************************************************************************************
         </echo>
-        <copy todir="${webapp.dir}/WEB-INF/lib" file="${web.dir}/target/betterform.jar"/>
+        <copy todir="${webapp.dir}/WEB-INF/lib" file="${target}/betterform.jar"/>
+        <copy todir="${webapp.dir}/WEB-INF/classes" file="${target}/classes/ehcache.xml"/>
     </target>
 
     <target name="deploy-forms" description="deploy the forms to target">
@@ -348,7 +402,7 @@
     </target>
 
     <target name="check-ant-version" unless="antversion">
-        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
     <target name="deploy-test-resources" description="copy all official XForms test suite files to webapp dir">
@@ -385,9 +439,6 @@
                  classpathref="compile.class.path"
                  packagenames="de.betterform.*">
         </javadoc>
-
-        <!--set version filter-->
-        <filter token="app.version" value="${app.version}"/>
     </target>
 
 </project>

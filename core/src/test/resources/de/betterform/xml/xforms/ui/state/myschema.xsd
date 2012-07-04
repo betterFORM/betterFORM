@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:myschema="http://example.org/myschema/1.0"
+        targetNamespace="http://example.org/myschema/1.0"
+        elementFormDefault="qualified">
+
+    <xsd:simpleType name="login">
+        <xsd:restriction base="myschema:login2"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="login2">
+        <xsd:restriction base="myschema:login3"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="login3">
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+</xsd:schema>

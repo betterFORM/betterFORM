@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.xforms.ui;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
@@ -78,6 +79,34 @@ public class CopyTest extends XMLTestBase {
         
         //de.betterform.xml.dom.DOMUtil.prettyPrintDOM(processor.getContainer().getDocument());
         //de.betterform.xml.dom.DOMUtil.prettyPrintDOM(processor.getContainer().getModel("form_data").getDefaultInstance().getInstanceDocument());
+    }
+    public void testCopyAttribute() throws Exception{
+        Document document = getXmlResource("CopyAttributeTest.xhtml");
+
+        XFormsProcessorImpl xformsProcesssorImpl = new XFormsProcessorImpl();
+        xformsProcesssorImpl.setXForms(document);
+        xformsProcesssorImpl.init();
+
+
+        XFormsElement xfe = xformsProcesssorImpl.getContainer().lookup("C8");
+        assertTrue(xfe instanceof Item);
+        assertFalse(((Item)xfe).isSelected());
+        xfe = xformsProcesssorImpl.getContainer().lookup("C15");
+        assertTrue(xfe instanceof Item);
+        assertFalse(((Item)xfe).isSelected());
+        xfe = xformsProcesssorImpl.getContainer().lookup("C22");
+        assertTrue(xfe instanceof Item);
+        assertFalse(((Item)xfe).isSelected());
+        xfe = xformsProcesssorImpl.getContainer().lookup("C29");
+        assertTrue(xfe instanceof Item);
+        assertFalse(((Item)xfe).isSelected());
+
+        xformsProcesssorImpl.setControlValue("C4","C28");
+        de.betterform.xml.dom.DOMUtil.prettyPrintDOM(xformsProcesssorImpl.getContainer().getModel("form_data").getDefaultInstance().getInstanceDocument());
+
+        Document expected = getXmlResource("CopyAttributeExpected.xml");
+        assertTrue(getComparator().compare(expected, xformsProcesssorImpl.getContainer().getModel("form_data").getDefaultInstance().getInstanceDocument()));
+
     }
 }
 

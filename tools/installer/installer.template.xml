@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<installation version="1.0">
+    <info>
+        <appname>betterFORM</appname>
+        <appversion>@APP_VERSION_NAME@</appversion>
+        <authors>
+                 <author email="info@betterform.de" name="betterFORM"/>
+        </authors>
+        <url>http://www.betterform.de</url>
+        <uninstaller name="Uninstaller.jar" write="yes"/>
+        <javaversion>@JAVA_VERSION@</javaversion>
+        <pack200/>
+        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+        <webdir>http://www.betterform.de/packs</webdir>
+    </info>
+
+    <guiprefs width="640" height="610" resizable="no">
+        <modifier key="useButtonIcons" value="no"/>
+  		<modifier key="useLabelIcons" value="no"/>
+  		<modifier key="layoutAnchor" value="NORTHWEST"/>
+  		<modifier key="useHeadingPanel" value="yes"/>
+  		<modifier key="headingImageOnLeft" value="yes"/>
+  		<modifier key="headingLineCount" value="1"/>
+  		<modifier key="headingFontSize" value="1.5"/>
+  		<modifier key="headingBackgroundColor" value="0x00ffffff"/>
+		<modifier key="labelFontSize" value="1.2"/>
+        <modifier key="useButtonIcons" value="yes"/>
+  		<modifier key="useLabelIcons" value="yes"/>
+		<modifier key="labelGap" value="6"/>
+        <modifier key="" value="0x00ffffff"/>
+ 	</guiprefs>
+
+     <locale>
+        <langpack iso3="eng"/>
+    </locale>
+
+    <resources>
+        <res id="Heading.image" src="../resource/bf_logo_145x59.png"/>
+        <res id="Installer.image" src="../resource/logo.png" />
+        <res id="Installer.image" src="../resource/info-border.png" />
+<!--
+        <res id="shortcutSpec.xml"          src="../resource/configs/shortcutSpec.xml" />
+        <res id="Unix_shortcutSpec.xml"      src="../resource/configs/UnixShortcutSpec.xml"/>
+-->
+        <res id="HTMLInfoPanel.readme" src="../resource/readme.html"/>
+        <res id="HTMLHelloPanel.welcome" src="../resource/welcome.html"/>
+        <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
+        <res id="LicencePanel.licence" src="BSD-license.txt"/>
+        <res src="../resource/info-border.png" id="Installer.image.0"/>
+        <res src="../resource/info-border.png" id="Installer.image.1"/>
+        <res src="../resource/pack-border.png" id="Installer.image.2"/>
+        <res src="../resource/pack-border.png" id="Installer.image.3"/>
+        <res src="../resource/pack-border.png" id="Installer.image.4"/>
+        <res src="../resource/pack-border.png" id="Installer.image.5"/>
+        <res id="TargetPanel.dir.windows"   src="../resource/targetdir-windows.txt" />
+        <res id="TargetPanel.dir.unix"      src="../resource/targetdir-unix.txt" />
+        <res id="TargetPanel.dir.macosx"    src="../resource/targetdir-mac.txt" />
+    </resources>
+
+    <!--
+        <native name="ShellLink.dll" type="izpack"/>
+        <native name="ShellLink_x64.dll" type="izpack"/>
+
+        <native type="3rdparty" name="COIOSHelper.dll" stage="both">
+            <os family="windows"/>
+        </native>
+        <native type="3rdparty" name="COIOSHelper_x64.dll" stage="both">
+            <os family="windows"/>
+        </native>
+    -->
+
+    <variables>
+        <variable name="JDKPathPanel.skipIfValid" value="yes"/>
+        <variable name="JDKPathPanel.minVersion" value="@JAVA_VERSION@"/>
+    </variables>
+
+    <panels labelFontSize="2.0">
+        <panel classname="HTMLHelloPanel" id="welcome"/>
+        <panel classname="JDKPathPanel"/>
+        <panel classname="LicencePanel"/>
+        <panel classname="HTMLInfoPanel" id="readme" />
+        <panel classname="TargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <!--<panel classname="ShortcutPanel"/>-->
+        <panel classname="FinishPanel"/>
+    </panels>
+
+    <conditions>
+        <condition id="jetty" type="packselection">
+            <packid>jetty</packid>
+        </condition>
+        <condition id="bf" type="packselection">
+            <packid>betterForm</packid>
+        </condition>
+
+        <condition id="jetty-install" type="not">
+            <condition type="ref" refid="bf"/>
+        </condition>
+        <condition id="bf-install" type="not">
+            <condition type="ref" refid="jetty"/>
+        </condition>
+    </conditions>
+
+
+	<listeners>
+		<listener installer="RegistryInstallerListener"	uninstaller="RegistryUninstallerListener" >
+			<os family="windows"/>
+		</listener>
+	</listeners>
+
+
+    <packs>
+
+        <pack id="jetty" name="betterFORM XForms Toolkit (standalone)" required="no" preselected="no" condition="jetty-install">
+            <description>betterFORM XForms Toolkit bundled with the jetty webcontainer</description>
+            <fileset dir="jetty/betterform" targetdir="$INSTALL_PATH" includes="*/**"/>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/web/root"/>
+        </pack>
+
+        <pack name="betterFORM XForms Toolkit (deployable)" id="betterForm" required="no" preselected="no" condition="bf-install">
+            <description>betterFORM XForms Toolkit deployable to a webcontainer.</description>
+            <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
+        </pack>
+
+        <pack name="Forms" required="no" preselected="no" >
+            <description>betterFORM demos, reference and test forms</description>
+            <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
+                  condition="bf"/>
+            <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms/reference"
+                  condition="bf"/>
+<!--        <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/betterform/forms/incubator/editor" condition="bf"/> -->
+            <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/betterform/forms/FeatureExplorer.xhtml" condition="bf"/>
+            <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/betterform/forms/Status.xhtml" condition="bf"/>
+
+
+            <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo" condition="jetty"/>
+            <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference" condition="jetty"/>
+            <!--<fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/web/root/forms/incubator/editor" condition="jetty"/>-->
+            <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/web/root/forms/FeatureExplorer.xhtml" condition="jetty"/>
+            <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/web/root/forms/Status.xhtml" condition="jetty"/>
+        </pack>
+
+        <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no">
+            <description>official XForms 1.1 Conformance Test Suite</description>
+            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1" condition="bf"/>
+            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1" condition="jetty"/>
+        </pack>
+    </packs>
+
+</installation>

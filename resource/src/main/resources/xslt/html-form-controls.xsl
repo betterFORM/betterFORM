@@ -66,15 +66,20 @@
                     <xsl:apply-templates select="xf:hint"/>
                 </input>
             </xsl:when>
-            <xsl:when test="$type='date'">
+            <xsl:when test="$type='date' or $type='dateTime' or $type='time'">
+                <xsl:variable name="dataBfParams">
+                    <xsl:choose>
+                        <xsl:when test="exists(@data-bf-params) and string-length(@data-bf-params) &gt; 0"><xsl:value-of select="@data-bf-params"/>,value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <input  id="{$id}-value"
                         name="{$name}"
-                        type="date"
+                        type="{$type}"
                         class="xfValue"
                         tabindex="{$navindex}"
-                        appearance="{@appearance}"
+                        data-bf-params="{$dataBfParams}"
                         placeholder="{xf:hint/text()}"
-                        schemaValue="{bf:data/@bf:schema-value}"
                         value="{bf:data/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
@@ -86,15 +91,37 @@
 -->
                 </input>
             </xsl:when>
+            <xsl:when test="$type='byte' or $type='decimal'
+                            or $type='int' or $type='integer'
+                            or $type='float' or $type='double'
+                            or $type='long' or $type='negativeInteger'
+                            or $type='nonNegativeInteger' or $type='nonPositiveInteger'
+                            or $type='positiveInteger' or $type='short'
+                            or $type='unsignedLong' or $type='unsignedInt'
+                            or $type='unsignedShort' or $type='unsignedByte'">
+                <input  id="{$id}-value"
+                        name="{$name}"
+                        type="number"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        placeholder="{xf:hint}"
+                        value="{bf:data/text()}">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
+                </input>
+
+
+
+            </xsl:when>
             <xsl:otherwise>
                 <input  id="{$id}-value"
                         name="{$name}"
                         type="text"
                         class="xfValue"
                         tabindex="{$navindex}"
-                        appearance="{@appearance}"
-                        value="{bf:data/text()}"
-                        placeholder="{xf:hint}">
+                        placeholder="{xf:hint}"
+                        value="{bf:data/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
@@ -193,21 +220,16 @@
         <!--
         todo: review: start and end are optional attributes in XForms but how can we make sense of that?
         -->
+        <xsl:variable name="dataBfParam" select="concat('start:',@start,',end:',@end,',step:',@step,',value:',bf:data/text())"/>
         <input  id="{$id}-value"
                 name="{$name}"
                 class="xfValue"
                 type="range"
-                incremental="{@incremental}"
-                min="{@start}"
-                max="{@end}"
-                value="{bf:data/text()}"
+                data-bf-params="{$dataBfParam}"
                 tabindex="{$navindex}"
                 title="{xf:hint/text()}">
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
-            </xsl:if>
-            <xsl:if test="string-length(@step) != 0">
-                <xsl:attribute name="step" select="@step"/>
             </xsl:if>
         </input>
             <!--
@@ -265,7 +287,7 @@
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="size" select="if(exists(@size)) then @size else 5"/>
-        <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+        <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
 
         <xsl:if test="exists(.//xf:itemset)"><xsl:text>
 </xsl:text>
@@ -278,14 +300,19 @@
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
             <xsl:when test="@appearance='compact'">
+                <xsl:variable name="dataBfParam">
+                    <xsl:choose>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <select id="{$id}-value"
                         name="{$name}"
                         size="{$size}"
                         class="xfValue"
-                        title=""
+                        title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        schemaValue="{bf:data/@bf:schema-value}"
-                        incremental="{$incremental}">
+                        data-bf-params="{$dataBfParam}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>
@@ -311,7 +338,7 @@
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
                       class="xfValue"
-                      incremental="{$incremental}">
+                      data-bf-params="value:'{bf:data/@bf:schema-value}'">
                     <xsl:call-template name="build-radiobuttons">
                         <xsl:with-param name="id" select="$id"/>
                         <xsl:with-param name="name" select="$name"/>
@@ -338,47 +365,31 @@
             </xsl:when>
             <xsl:otherwise>
                 <!-- No appearance or appearance='minimal'-->
-                <xsl:choose>
-                    <!--
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    a minimal select1 with OpenSelection
-                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    -->
-                    <xsl:when test="@selection='open'">
-                        <select id="{concat($id,'-value')}"
-                                name="{$name}"
-                                class="xfValue"
-                                size="1"
-                                dataType="{$datatype}"
-                                title=""
-                                tabindex="{$navindex}"
-                                schemaValue="{bf:data/@bf:schema-value}"
-                                autocomplete="true"
-                                incremental="{$incremental}">
-                            <xsl:call-template name="build-items">
-                                <xsl:with-param name="parent" select="$parent"/>
-                            </xsl:call-template>
-                        </select>
-                    </xsl:when>
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                     a minimal select1 is rendered as a DROPDOWN
                     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     -->
-                    <xsl:otherwise>
-                        <select id="{$id}-value"
-                                name="{$name}"
-                                class="xfValue"
-                                title=""
-                                tabindex="{$navindex}"
-                                schemaValue="{bf:data/@bf:schema-value}"
-                                incremental="{$incremental}">
-                            <xsl:call-template name="build-items">
-                                <xsl:with-param name="parent" select="$parent"/>
-                            </xsl:call-template>
-                        </select>
-                    </xsl:otherwise>
-                </xsl:choose>
+<!--            <span class="select1wrapper">-->
+                <xsl:variable name="dataBfParam">
+                    <xsl:choose>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
+                <select id="{$id}-value"
+                            name="{$name}"
+                            class="xfValue"
+                            size="1"
+                            title="{xf:hint/text()}"
+                            tabindex="{$navindex}"
+                            data-bf-params="{$dataBfParam}">
+                        <xsl:call-template name="build-items">
+                            <xsl:with-param name="parent" select="$parent"/>
+                        </xsl:call-template>
+                    </select>
+<!--            </span>-->
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -389,11 +400,11 @@
     <xsl:template name="select">
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="selection" select="@selection"/>
+        <xsl:variable name="size" select="if(exists(@size)) then @size else 5"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
-        <xsl:variable name="datatype"><xsl:call-template name="getType"/></xsl:variable>
+        <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
             of appearance will be matched and represented as a list control. -->
@@ -401,11 +412,9 @@
                 <span id="{$parent/@id}-value"
                       name="{$name}"
                       class="xfValue bfCheckBoxGroup"
-                      selection="{$selection}"
-                      dataType="{$datatype}"
-                      title=""
-                      schemaValue="{bf:data/@bf:schema-value}"
-                      incremental="{$incremental}">
+                      title="{xf:hint/text()}"
+                      data-bf-params="value:'{bf:data/@bf:schema-value}'"
+                      tabindex="{$navindex}">
                     <xsl:for-each select="$parent/xf:item|$parent/xf:choices|$parent/xf:itemset">
                         <xsl:call-template name="build-checkboxes-list">
                             <xsl:with-param name="name" select="$name"/>
@@ -434,16 +443,21 @@
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
             <xsl:otherwise>
+                <xsl:variable name="dataBfParam">
+                    <xsl:choose>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open'</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+
                 <select id="{concat($id,'-value')}"
                         name="{$name}"
-                        size="{@size}"
+                        size="{$size}"
                         multiple="true"
                         class="xfValue"
-                        title=""
+                        title="{xf:hint/text()}"
                         tabindex="{$navindex}"
-                        schemaValue="{bf:data/@bf:schema-value}"
-                        selection="{$selection}"
-                        incremental="{$incremental}">
+                        data-bf-params="{$dataBfParam}">
                     <xsl:call-template name="build-items">
                         <xsl:with-param name="parent" select="$parent"/>
                     </xsl:call-template>
@@ -528,28 +542,53 @@
         <xsl:variable name="name" select="concat($trigger-prefix,$id)"/>
         <xsl:variable name="navindex" select="@navindex" />
 
+
+        <xsl:choose>
+            <xsl:when test="exists(@src)">
+                <button id="{$id}-value"
+                        name="{$name}"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        title="{xf:hint/text()}"
+                        type="button">
+                    <img src="{@src}" alt="image"/>
+                </button>
+            </xsl:when>
+            <xsl:when test="@appearance='minimal'">
+                <a      id="{$id}-value"
+                        href="javascript:return false;"
+                        name="{$name}"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        title="{xf:hint/text()}">
+                    <xsl:value-of select="xf:label"/>
+                </a>
+            </xsl:when>
+            <xsl:otherwise>
+                <input  id="{$id}-value"
+                        name="{$name}"
+                        class="xfValue"
+                        tabindex="{$navindex}"
+                        title="{xf:hint/text()}"
+                        type="button"
+                        value="{xf:label}"
+                        >
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="readonly">readonly</xsl:attribute>
+                    </xsl:if>
+                    <!-- todo: does this still apply? -->
+                    <xsl:if test="@accesskey">
+                        <xsl:attribute name="accesskey">
+                            <xsl:value-of select="@accesskey"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </input>
+            </xsl:otherwise>
+        </xsl:choose>
             <!-- minimal appearance only supported in scripted mode -->
-        <input  id="{$id}-value"
-                name="{$name}"
-                class="xfValue"
-                tabindex="{$navindex}"
-                title="{xf:hint/text()}"
-                type="submit"
-                value="{xf:label}"
-                >
-            <xsl:if test="bf:data/@bf:readonly='true'">
-                <xsl:attribute name="readonly">readonly</xsl:attribute>
-            </xsl:if>
-            <!-- todo: does this still apply? -->
-            <xsl:if test="@accesskey">
-                <xsl:attribute name="accesskey">
-                    <xsl:value-of select="@accesskey"/>
-                </xsl:attribute>
-                <xsl:attribute name="title">
-                    <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
-                </xsl:attribute>
-            </xsl:if>
-        </input>
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         the hint will be applied as html title attribute and additionally output
@@ -583,10 +622,12 @@
         <xsl:if test="xf:filename">
             <input type="hidden" id="{xf:filename/@id}" value="{xf:filename/bf:data}"/>
         </xsl:if>
+        <!-- create hidden parameter for destination -->
+<!--
         <xsl:if test="@bf:destination">
-            <!-- create hidden parameter for destination -->
             <input type="hidden" id="{$id}-destination" value="{@bf:destination}"/>
         </xsl:if>
+-->
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         the hint will be applied as html title attribute and additionally output
@@ -686,7 +727,7 @@
             </xsl:choose>
         </xsl:variable>
         <option id="{xf:item[1]/@id}" value="{$itemValue}" class="xfSelectorItem" data-bf-itemset="{@id}">
-            <xsl:if test="xf:item/@selected='true'">
+            <xsl:if test="xf:item[1]/@selected='true'">
                 <xsl:attribute name="selected">selected</xsl:attribute>
             </xsl:if>
             <xsl:call-template name="create-label">
@@ -813,7 +854,7 @@
     	<xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
-		<span id="{@id}" >
+		<span id="{@id}" class="xfItemset">
 			<xsl:for-each select="xf:item">
 				<xsl:call-template name="build-checkboxes-item">
 	           		<xsl:with-param name="name" select="$name"/>

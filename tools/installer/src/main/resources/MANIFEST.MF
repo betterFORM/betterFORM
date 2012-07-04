@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Archiver-Version: Plexus Archiver
-Created-By: betterFORM
-Built-By: Tobi Krebs
-Build-Jdk: 1.6.0_22
-Main-Class: de/betterform/installer/utils/SetupBetterFORMUser
-Class-Path: exist.jar start.jar lib/core/xmldb.jar lib/core/xmlrpc-common-3.1.2.jar lib/core/xmlrpc-client-3.1.2.jar  lib/core/commons-logging-1.1.1.jar  lib/core/log4j-1.2.15.jar lib/core/commons-pool-1.5.1.jar lib/core/ws-commons-util-1.0.2.jar
-

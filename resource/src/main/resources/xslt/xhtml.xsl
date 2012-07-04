@@ -13,7 +13,7 @@
                 exclude-result-prefixes="xf bf"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
-    <!--<xsl:import href="common.xsl"/>-->
+    <xsl:import href="common-ui.xsl"/>
     <xsl:include href="html-form-controls.xsl"/>
     <xsl:include href="ui.xsl"/>
 
@@ -65,6 +65,8 @@
     <xsl:param name="form-id" select="'betterform'"/>
     <xsl:param name="form-name" select="//title"/>
     <xsl:param name="debug-enabled" select="'true'"/>
+    <xsl:param name="unloadingMessage" select="'You are about to leave this XForms application'"/>
+    <xsl:variable name="isDebugEnabled" select="$debug-enabled eq 'true'" as="xsd:boolean"/>
 
     <!-- ### specifies the parameter prefix for repeat selectors ### -->
     <xsl:param name="selector-prefix" select="'s_'"/>
@@ -132,6 +134,21 @@
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
     <xsl:variable name="uses-DOMFocusIn" select="exists(//*[@ev:event='DOMFocusIn'])"/>
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    checks, whether this form uses the DOMFocusOut event. Used for optimizing
+    the client-side processor execution
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
+    <xsl:variable name="uses-DOMFocusOut" select="exists(//*[@ev:event='DOMFocusOut'])"/>
+
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    checks, whether this form uses the xforms-select event. Used for optimizing
+    the client-side processor execution
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
+    <xsl:variable name="uses-xforms-select" select="exists(//*[@ev:event='xforms-select'])"/>
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -261,8 +278,10 @@
                 <style type="text/css">
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
 <!--
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
                     @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
+
+
 -->
                 </style><xsl:text>
 </xsl:text>
@@ -300,8 +319,8 @@
         <body class="{$theme} bf {$client-device} {$alert}">
             <!-- TODO: Lars: keep original CSS classes on body-->
             <xsl:copy-of select="@*[name() != 'class']"/>
-            <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>
-            <xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>
+           <!-- <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>-->
+            <!--<xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>-->
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             the 'bfLoading' div is used to display an animated icon during ajax activity
@@ -321,15 +340,9 @@
             of the window
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-<!--
-            <div data-dojo-type="dojox.widget.Toaster"
-                 id="betterformMessageToaster"
-                 positionDirection="bl-up"
-                 duration="8000"
-                 separator="&lt;div style='height:1px;border-top:thin dotted;width:100%;'&gt;&lt;/div&gt;"
-                 messageTopic="testMessageTopic">
-            </div>
--->
+
+            <div id="betterformMessageToaster"> </div>
+
 
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -348,7 +361,7 @@
             actual content of the form starts here
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             -->
-            <div id="formWrapper">
+            <div id="formWrapper" style="display:none">
                 <!--
                 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 creates the client-side processor
@@ -362,7 +375,7 @@
                         contextroot="{$contextroot}"
                         usesDOMFocusIN="{$uses-DOMFocusIn}"
                         dataPrefix="{$data-prefix}"
-                        logEvents="{$debug-enabled}">
+                        logEvents="{$isDebugEnabled}">
 -->
 
 
@@ -426,7 +439,7 @@
             in betterform-config.xml
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <xsl:if test="$debug-enabled='true'">
+            <xsl:if test="$isDebugEnabled">
                 <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
                 <div id="evtLogContainer" style="width:26px;height:26px;overflow:hidden;">
                     <div id="logControls">
@@ -436,18 +449,18 @@
                     <ul id="eventLog">
                     </ul>
                 </div>
-                <div id="openclose">
-                    <a href="javascript:bf.devtool.toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
+                <div id="bfDebugOpenClose">
+                    <a href="javascript:bf.util.toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
-                    <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
-                        <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
+                    <div id="bfDebug" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                        <div id="bfCopyright">
                             <a href="http://www.betterform.de">
                                 <img style="vertical-align:text-bottom; margin-right:5px;"
                                      src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
                             </a>
                             <span>&#xA9; 2012 betterFORM</span>
                         </div>
-                        <div id="debug-pane-links">
+                        <div id="bfDebugLinks">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                         </div>
                     </div>
@@ -795,7 +808,10 @@
                 <!--<xsl:apply-templates select="xf:alert"/>-->
             </xsl:when>
             <xsl:when test="local-name()='submit'">
-                <xsl:call-template name="submit"/>
+                <!-- map to trigger for now - does there need to be a difference? -->
+                <xsl:call-template name="trigger"/>
+
+                <!--<xsl:call-template name="submit"/>-->
                 <!-- xf:hint is handled by widget itself -->
                 <!--<xsl:apply-templates select="xf:help"/>-->
                 <!--<xsl:apply-templates select="xf:alert"/>-->
@@ -848,14 +864,21 @@
     <!-- ####################################### NAMED HELPER TEMPLATES ########################################## -->
 
     <xsl:template name="addDojoImport">
+        <!--
+        todo: allow re-definition of dojoConfig: if a dojoConfig is present in the page use that instead of the code below.
+        Or to be more precise - it should be possible to define your own package locations. Alternatively of course
+        this template might be overwritten by a custom stylesheet. Which is better?
+        -->
+        <!-- todo: should we use explicit package locations and a baseUrl ? -->
+        <!-- todo: use locale again -->
         <xsl:variable name="dojoConfig">
             has: {
-                "dojo-firebug": <xsl:value-of select="$debug-enabled"/>,
-                "dojo-debug-messages": <xsl:value-of select="$debug-enabled"/>
+                "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
+                "dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
             },
-            debugAtAllCosts:<xsl:value-of select="$debug-enabled"/>,
-            isDebug:<xsl:value-of select="$debug-enabled"/>,
-            locale:'<xsl:value-of select="$locale"/>',
+            isDebug:<xsl:value-of select="$isDebugEnabled"/>,
+            locale:'en',
+            extraLocale: ['en'],
             baseUrl: '<xsl:value-of select="concat($contextroot,$scriptPath)"/>',
 
             parseOnLoad:false,
@@ -873,26 +896,42 @@
                 contextroot:"<xsl:value-of select="$contextroot"/>",
                 fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
                 useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
-                logEvents:<xsl:value-of select="$debug-enabled"/>
+                useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
+                useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
+                logEvents:<xsl:value-of select="$isDebugEnabled"/>,
+                unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
             }
         </xsl:variable>
-
+        <xsl:text>
+</xsl:text>
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
+        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
+        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/bfRelease.js')}">&#160;</script><xsl:text>
+</xsl:text>
+        <xsl:if test="$isDebugEnabled">
+            <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/debug.js')}">&#160;</script><xsl:text>
+</xsl:text>
+        </xsl:if>
+
     </xsl:template>
 
     <xsl:template name="addLocalScript">
+        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
         <script type="text/javascript">
-            require(["bf/XFProcessor","bf/XFormsModelElement"],
-                function(XFProcessor, XFormsModelElement){
-                        console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
+            require([<xsl:value-of select="$requires"/>],
+                function(XFProcessor, XFormsModelElement, connect){
+                        // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
                         <!-- create a XForms Processor for the form -->
                         fluxProcessor = new XFProcessor();
                         <!-- create a XFormsModelElement class for each model in the form -->
                         <xsl:for-each select="//xf:model">
-                            <xsl:value-of select="@id"/> = new XFormsModelElement({id:"<xsl:value-of select="@id"/>"});
+                            <xsl:variable name="modelName">
+                                <xsl:value-of select="if(contains(@id,'-')) then replace(@id,'-','_') else @id"/>
+                            </xsl:variable>
+                            <xsl:value-of select="$modelName"/> = new XFormsModelElement({id:"<xsl:value-of select="$modelName"/>"});
                         </xsl:for-each>
                 }
             );

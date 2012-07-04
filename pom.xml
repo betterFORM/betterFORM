@@ -14,8 +14,8 @@
 
     <name>betterForm Project</name>
     <description>betterForm Project</description>
-    <inceptionYear>2010</inceptionYear>
-    <url>http://betterform.sourceforge.net</url>
+    <inceptionYear>2012</inceptionYear>
+    <url>http://betterform.de</url>
 
     <modules>
         <module>core</module>
@@ -184,7 +184,7 @@
         <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
-            <version>1.7.1</version>
+            <version>1.8.2</version>
         </dependency>
     </dependencies>
 </project>

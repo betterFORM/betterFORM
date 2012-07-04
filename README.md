@@ -1,6 +1,14 @@
 betterForm Project Quickstart Guide
 ===================================
 
+Minimal Requirements for betterFORM springBud
+---------------------------------------------
+
+   * JDK 1.6
+   * Apache Ant 1.8.2 or newer
+   * [Optional: Apache Maven 2.0.5 or newer]
+
+
 Minimal Requirements for betterFORM limeGreen
 ---------------------------------------------
 

@@ -48,7 +48,7 @@
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
-            <xf:model id="model-child">
+            <xf:model id="modelChild">
                
                <xf:instance>
                   
@@ -148,7 +148,7 @@
                <xf:label>Input after observed Group</xf:label>
                
             </xf:input>
-            <xf:action ev:observer="model-child" ev:event="xforms-ready">
+            <xf:action ev:observer="modelChild" ev:event="xforms-ready">
                
                <xf:setfocus control="inputCase1"></xf:setfocus>
                
@@ -156,7 +156,7 @@
          </div>
          <div class="MIPS"></div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:model id="model-child"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:model id="modelChild"&gt;
     &lt;xf:instance&gt;
         &lt;data&gt;&lt;/data&gt;
     &lt;/xf:instance&gt;
@@ -197,28 +197,41 @@
     &lt;xf:label&gt;Input after observed Group&lt;/xf:label&gt;
 &lt;/xf:input&gt;
 
-&lt;xf:action ev:observer="model-child" ev:event="xforms-ready"&gt;
+&lt;xf:action ev:observer="modelChild" ev:event="xforms-ready"&gt;
     &lt;xf:setfocus control="inputCase1"&gt;&lt;/xf:setfocus&gt;
 &lt;/xf:action&gt;
 </code></pre></div>
          <h2>Limitations</h2>
          <div class="Limitations">
             
-         </div><script type="text/javascript">
-                    function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+         </div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        // console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
-                        });
-                    }                    
-                </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
+                );
             </script></body>
    
 </html>

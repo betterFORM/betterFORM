@@ -1,1 +1,1 @@
-@app.name@ @app.version@
+@app.name@ @app.version@ - Timestamp:@timestamp@

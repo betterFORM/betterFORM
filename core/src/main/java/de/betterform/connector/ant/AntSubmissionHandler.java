@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -94,9 +95,6 @@ public class AntSubmissionHandler extends AbstractConnector implements Submissio
 
     public Map submit(Submission submission, Node instance) throws XFormsException {
         LOGGER.debug("AntSubmissionHandler.submit()");
-        if (! "none".equalsIgnoreCase(submission.getReplace())) {
-           throw new XFormsException("submission mode '" + submission.getReplace() + "' at: " + DOMUtil.getCanonicalPath(submission.getElement()) + " not supported");
-        }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         if (submission.getMethod().equals("get")) {
@@ -107,48 +105,48 @@ public class AntSubmissionHandler extends AbstractConnector implements Submissio
 
                 String buildFilePath = (new URI(uri)).getSchemeSpecificPart().substring((new URI(uri)).getSchemeSpecificPart().indexOf(':')+1);
                 if (! "".equals(buildFilePath)) {
-                    File buildFile;
-                    String target;
-                    //get Traget from uri
+                    File buildFile = new File(buildFilePath);
+                    String target = null;
                     if (uri.contains("#")) {
-                        buildFile = new File(buildFilePath);
+                        //got Traget from uri
                         target = uri.substring(uri.indexOf('#')+1);
-                    } else {
-                        //get target from xform
-                        buildFile = new File(buildFilePath);
+                    } else if(((Document) instance).getElementsByTagName("target").item(0) != null){
+                        //got target from xform
                         target = ((Document) instance).getElementsByTagName("target").item(0).getTextContent();
+                    }else {
+                        // use default target
+                        target = "default";
                     }
 
                     LOGGER.debug("AntSubmissionHandler.runTarget() BuildFile: " + buildFile.getAbsolutePath() + " with Target:" + target);
                     runTarget(buildFile, target, outputStream, errorStream);
 
-                    if (LOGGER.isDebugEnabled()) {
-                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                        factory.setNamespaceAware(true);
-                        factory.setValidating(false);
-                        Document document = factory.newDocumentBuilder().newDocument();
-                        document.appendChild(document.createElementNS(null, "ant"));
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    factory.setNamespaceAware(true);
+                    factory.setValidating(false);
+                    Document document = factory.newDocumentBuilder().newDocument();
+                    document.appendChild(document.createElementNS(null, "ant"));
 
-                        Element rootElement = document.getDocumentElement();
+                    Element rootElement = document.getDocumentElement();
+                    Attr filename = document.createAttribute("fileName");
+                    filename.setValue(buildFile.getName());
+                    rootElement.setAttributeNode(filename);
+                    Element element = document.createElement("buildFile");
+                    DOMUtil.setElementValue(element, buildFile.getAbsolutePath());
+                    rootElement.appendChild(element);
 
-                        Element element = document.createElement("buildFile");
-                        DOMUtil.setElementValue(element, buildFile.getAbsolutePath());
-                        rootElement.appendChild(element);
+                    element = document.createElement("target");
+                    DOMUtil.setElementValue(element, target);
+                    rootElement.appendChild(element);
 
-                        element = document.createElement("target");
-                        DOMUtil.setElementValue(element, target);
-                        rootElement.appendChild(element);
+                    element = document.createElement("output-stream");
+                    DOMUtil.setElementValue(element, outputStream.toString());
+                    rootElement.appendChild(element);
 
-                        element = document.createElement("output-stream");
-                        DOMUtil.setElementValue(element, outputStream.toString());
-                        rootElement.appendChild(element);
-
-                        element = document.createElement("error-stream");
-                        DOMUtil.setElementValue(element, errorStream.toString());
-                        rootElement.appendChild(element);
-
-                        DOMUtil.prettyPrintDOM(document, stream);
-                    }
+                    element = document.createElement("error-stream");
+                    DOMUtil.setElementValue(element, errorStream.toString());
+                    rootElement.appendChild(element);
+                    DOMUtil.prettyPrintDOM(document, stream);
                 }  else {
                     throw new XFormsException("submission method '" + submission.getMethod() + "' at: " + DOMUtil.getCanonicalPath(submission.getElement()) + " not supported");
                 }
@@ -164,17 +162,31 @@ public class AntSubmissionHandler extends AbstractConnector implements Submissio
         return response;
     }
 
-    private void runTarget(File buildFile, String target, ByteArrayOutputStream outputStream, ByteArrayOutputStream errorStream) {
+    private void runTarget(File buildFile, String target, ByteArrayOutputStream outputStream, ByteArrayOutputStream errorStream) throws Exception {
         Project project = new Project();
         DefaultLogger consoleLogger = new DefaultLogger();
+        project.addBuildListener(consoleLogger);
         consoleLogger.setErrorPrintStream(new PrintStream(errorStream));
         consoleLogger.setOutputPrintStream(new PrintStream(outputStream));
+        consoleLogger.setMessageOutputLevel(Project.MSG_INFO);
+
 
         project.setUserProperty("ant.file", buildFile.getAbsolutePath());
         project.init();
         ProjectHelper projectHelper = ProjectHelper.getProjectHelper();
         project.addReference("ant.projectHelper", projectHelper);
         projectHelper.parse(project, buildFile);
-        project.executeTarget(target);
+        if("default".equals(target)){
+            String defaultTarget =project.getDefaultTarget();
+            if(defaultTarget != null){
+                project.executeTarget(defaultTarget);
+            }else {
+                throw new XFormsException("No target was given for Ant file and no default target is present on the build file");
+            }
+
+        }else {
+            project.executeTarget(target);
+        }
+
     }
 }

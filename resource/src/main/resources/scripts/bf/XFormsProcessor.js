@@ -14,7 +14,7 @@ define(["dojo/_base/declare"],
         sessionKey:"",
 
         constructor: function() {
-            console.info("creating XFormsProcessor");
+            // console.info("XFormsProcessor creating XForms Processor");
         },
 
         init: function(){

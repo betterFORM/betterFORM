@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>group with appearance 'full'</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+</head>
+<body>
+
+<div style="display: none;">
+    <xf:model>
+        <xf:instance>
+            <data xmlns="">
+                <repeat readonly="false" relevant="true">
+                    <items>
+                        <item>text 1</item>
+                        <item>2009-01-20</item>
+                        <item>2009-01-20</item>
+                        <item>true</item>
+                    </items>
+                </repeat>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="instance()/repeat/items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)">
+            <xf:bind nodeset="item[2]" type="date"/>
+            <xf:bind nodeset="item[3]" type="date"/>
+            <xf:bind nodeset="item[4]" type="boolean"/>
+        </xf:bind>
+    </xf:model>
+</div>
+<div>
+    <span>Insert Actions:</span>
+    <xf:trigger>
+        <xf:label>Before [index]</xf:label>
+        <xf:action>
+            <xf:insert nodeset="repeat/items" at="index('repeat1')" position="before"/>
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>Add [first]</xf:label>
+        <xf:action>
+            <xf:insert nodeset="repeat/items" at="1" position="before"/>
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>Add [last]</xf:label>
+        <xf:action>
+            <xf:insert nodeset="repeat/items" at="last()" position="after"/>
+        </xf:action>
+    </xf:trigger>
+</div>
+<div>
+    <span>Delete Actions:</span>
+    <xf:trigger>
+        <xf:label>Delete [index]</xf:label>
+        <xf:action>
+            <xf:delete nodeset="repeat/items" at="index('repeat1')"/>
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>Delete [first]</xf:label>
+        <xf:action>
+            <xf:delete nodeset="repeat/items" at="first()" />
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>Delete [last]</xf:label>
+        <xf:action>
+            <xf:delete nodeset="repeat/items" at="last()" />
+        </xf:action>
+    </xf:trigger>
+</div>
+<div>
+    <span>MIPS</span>
+    <xf:trigger>
+        <xf:label><xf:output value="concat('Readonly:',instance()/repeat/@readonly)"/></xf:label>
+        <xf:action>
+            <xf:setvalue ref="instance()/repeat/@readonly" value="not(boolean-from-string(instance()/repeat/@readonly))" />
+        </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label><xf:output value="concat('Relevant:',instance()/repeat/@relevant)"/></xf:label>
+        <xf:action>
+            <xf:setvalue ref="instance()/repeat/@relevant" value="not(boolean-from-string(instance()/repeat/@relevant))" />
+        </xf:action>
+    </xf:trigger>
+</div>
+
+<xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
+    <xf:group appearance="minimal" ref=".">
+        <xf:label>Minimal Group</xf:label>
+        <xf:input ref="item[1]">
+            <xf:label>String:</xf:label>
+            <xf:alert>Alert String</xf:alert>
+        </xf:input>
+        <xf:input ref="item[2]">
+            <xf:label>Date:</xf:label>
+            <xf:alert>Alert Date</xf:alert>
+        </xf:input>
+    </xf:group>
+    <xf:group appearance="compact" ref=".">
+        <xf:label>Compact Group</xf:label>
+        <xf:input ref="item[1]">
+            <xf:label>String:</xf:label>
+            <xf:alert>Alert String</xf:alert>
+        </xf:input>
+        <xf:input ref="item[2]">
+            <xf:label>Date:</xf:label>
+            <xf:alert>Alert Date</xf:alert>
+        </xf:input>
+    </xf:group>
+    <xf:group appearance="full" ref=".">
+        <xf:label>Full Group</xf:label>
+        <xf:input ref="item[1]">
+            <xf:label>String:</xf:label>
+            <xf:alert>Alert String</xf:alert>
+        </xf:input>
+        <xf:input ref="item[2]">
+            <xf:label>Date:</xf:label>
+            <xf:alert>Alert Date</xf:alert>
+        </xf:input>
+    </xf:group>
+    <xf:group appearance="bf:horizontalTable" ref=".">
+        <xf:label>bf:horizontalTable</xf:label>
+        <xf:input ref="item[1]">
+            <xf:label>String:</xf:label>
+            <xf:alert>Alert String</xf:alert>
+        </xf:input>
+        <xf:input ref="item[2]">
+            <xf:label>Date:</xf:label>
+            <xf:alert>Alert Date</xf:alert>
+        </xf:input>
+    </xf:group>
+    <xf:group appearance="bf:verticalTable" ref=".">
+        <xf:label>bf:verticalTable</xf:label>
+        <xf:input ref="item[1]">
+            <xf:label>String:</xf:label>
+            <xf:alert>Alert String</xf:alert>
+        </xf:input>
+        <xf:input ref="item[2]">
+            <xf:label>Date:</xf:label>
+            <xf:alert>Alert Date</xf:alert>
+        </xf:input>
+    </xf:group>
+</xf:repeat>
+
+<br/>
+
+<xf:trigger>
+    <xf:label>Apply Behaviour</xf:label>
+    <xf:action>
+        <script type="text/javascript">
+            require(["dojo/behavior"],function(behavior) {
+                behavior.apply();
+            });
+
+        </script>
+    </xf:action>
+</xf:trigger>
+</body>
+</html>

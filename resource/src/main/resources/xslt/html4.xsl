@@ -11,7 +11,7 @@
     xmlns:bf="http://betterform.sourceforge.net/xforms"
     exclude-result-prefixes="xhtml xf bf">
 
-    <xsl:import href="common.xsl"/>
+    <xsl:import href="html4-common.xsl"/>
     <xsl:include href="ui.xsl"/>
     <xsl:include href="html-form-controls.xsl"/>
 

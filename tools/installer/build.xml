@@ -3,27 +3,26 @@
   ~ Licensed under the terms of BSD License
   -->
 
-<project name="Installer" default="create-betterFORMInstaller" basedir=".">
-    <property name="installer.dir" value="."/>
-
-    <property name="buildfiles.dir" value="${basedir}/build-files"/>
-    <property name="xrx.dir" value="${basedir}/../../XRX"/>
-
-    <property name="installer.target" value="${basedir}/target"/>
-    <property name="installer.utils" value="${basedir}/target-utils"/>
-
-    <property name="eXist.db.user" value="betterFORM"/>
-    <property name="eXist.db.passwd" value="Tha0xeiC8a"/>
-
+<project name="Installer" default="release" basedir="." >
+    <xmlproperty file="../../build.properties.local.xml" semanticAttributes="true" keepRoot="false"/>
+    <xmlproperty file="../../release.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
-    <target name="clean">
-        <delete dir="${basedir}/target"/>
-    </target>
+    <property name="installer.dir" value="."/>
+    <property name="buildfiles.dir" value="${basedir}/build-files"/>
+    <property name="installer.target" value="${basedir}/target"/>
+    <property name="project.dir" value="../../"/>
+
 
     <tstamp>
         <format property="build.date" pattern="yyyyMMdd-HHmmss"/>
     </tstamp>
+
+
+    <!-- clean target folders of all modules -->
+    <target name="clean">
+        <ant antfile="${project.dir}/build.xml" target="clean-all" inheritall="false"/>
+    </target>
 
 
     <target name="prepare" description="prepares all files needed for installer" depends="clean">
@@ -36,18 +35,58 @@
             <fileset file="${basedir}/resource/BSD-license-inlined.txt"/>
         </copy>
 
+        <echo>
+            __== Update Maven POMS ==__
+        </echo>
+
+        <ant antfile="${project.dir}/build.xml" inheritall="false" target="update-maven-poms"/>
+
+        <echo>
+            __== Create Custom Dojo Build ==__
+        </echo>
+        <ant antfile="${project.dir}/resource/build-dojo.xml" inheritall="false" target="build-dojo"/>
+
+        <echo>
+            __== Create WAR file ==__
+        </echo>
+
         <!-- Create WAR for Installer -->
-        <ant antfile="${buildfiles.dir}/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="false">
+        <ant antfile="${buildfiles.dir}/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="true">
             <property name="installer.target" value="${installer.target}"/>
         </ant>
 
 
+        <echo>
+            __== Create Jetty environment ==__
+        </echo>
         <!-- Create jetty-environment for Installer -->
         <ant antfile="${buildfiles.dir}/build-jetty.xml" target="create-jetty" usenativebasedir="false"/>
 
-        <!-- Create XRX-environment for Installer -->
+        <echo>
+            __== Filter Installer Resources ==__
+        </echo>
+        <!-- Filter jetty resources -->
+        <filter token="APP_VERSION_NUMBER" value="${app.version.number}"/>
+        <filter token="APP_VERSION_NAME" value="${app.version.name}"/>
 
-        <ant antfile="${buildfiles.dir}/build-XRX.xml" target="create-XRX" usenativebasedir="false" inheritrefs="true"/>
+        <copy description="filter welome.html"
+              tofile="${basedir}/resource/welcome.html"
+              overwrite="true"
+              filtering="true"
+              file="${basedir}/resource/welcome.template.html"/>
+
+        <filter token="JAVA_VERSION" value="${properties.javac.version}"/>
+        <copy description="filter launch4j.xml"
+              tofile="${basedir}/launch4j.xml"
+              overwrite="true"
+              filtering="true"
+              file="${basedir}/launch4j.template.xml"/>
+
+        <copy description="filter installer.xml"
+              tofile="${basedir}/installer.xml"
+              overwrite="true"
+              filtering="true"
+              file="${basedir}/installer.template.xml"/>
 
     </target>
 
@@ -62,7 +101,7 @@
         <!-- Use whole izPack Distribution -->
         <!--
         <path id="izpackdeps">
-			<fileset dir="${installer.izPack.dir}/lib/">
+			<fileset dir="${installer.izPack}/lib/">
 				<include name="*.jar"/>
 			</fileset>
 		</path>
@@ -95,18 +134,25 @@
                 output="${basedir}/target/betterform-install.jar"
                 installerType="${installer.installerType}"
                 basedir="${basedir}/target"/>
-
-
-
-
-
-
     </target>
 
     <target name="create-betterFORMInstaller" depends="create-betterFORMInstaller-jar"  description="Create .exe from installer">
-		<taskdef name="launch4j"
+        <echo>
+            __== Create IzPack .exe ==__
+        </echo>
+        <available property="launch4j.available" file="${installer.launch4j}/launch4j.jar" />
+
+        <fail unless="launch4j.available">Error: Can't detect launch4j
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Error: launch4j.jar is not installed at ${installer.launch4j}/launch4j.jar.
+            Please download it at http://launch4j.sourceforge.net/ and check the property 'launch4j'
+            in the build.properties.xml file.
+            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        </fail>
+
+        <taskdef name="launch4j"
 			classname="net.sf.launch4j.ant.Launch4jTask"
-			classpath="${installer.launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />
+			classpath="${installer.launch4j}/launch4j.jar:${installer.launch4j}/lib/xstream.jar" />
 
         <property name="inst-jar" value="${basedir}/target/betterform-install.jar"/>
 		<property name="inst-exe" value="${basedir}/target/betterform-install.exe"/>
@@ -114,9 +160,18 @@
         <launch4j configFile="${basedir}/launch4j.xml" jar="${inst-jar}" outfile="${inst-exe}"/>
 
         <chmod file="${basedir}/target/betterform-install.jar" perm="775"/>
-        <move file="${basedir}/target/betterform-install.jar" tofile="${basedir}/betterform-install-${build.date}.jar"/>
         <chmod file="${basedir}/target/betterform-install.exe" perm="775"/>
-        <move file="${basedir}/target/betterform-install.exe" tofile="${basedir}/betterform-install-${build.date}.exe"/>
 	</target>
+
+
+    <target name="release" depends="create-betterFORMInstaller" description="creates betterFORM release">
+        <echo>
+            __== Move Release Files to ${basedir}/release ==__
+        </echo>
+        <mkdir dir="${basedir}/release"/>
+        <move file="${basedir}/target/betterform-install.jar" tofile="${basedir}/release/betterform-${app.version.name}-${app.version.number}-${build.date}.jar"/>
+        <move file="${basedir}/target/betterform-install.exe" tofile="${basedir}/release/betterform-${app.version.name}-${app.version.number}-${build.date}.exe"/>
+        <move file="${basedir}/target/betterform.war" tofile="${basedir}/release/betterform-${app.version.name}-${app.version.number}-${build.date}.war"/>
+    </target>
 
 </project>

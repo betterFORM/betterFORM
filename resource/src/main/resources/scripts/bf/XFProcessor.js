@@ -12,10 +12,9 @@ define(["dojo/_base/declare",
         "dojo/dom-construct",
         "dojo/_base/array",
         "dijit/registry",
-        "dojo/_base/event",
         "dojo/has",
-        "dojo/_base/sniff"], function(declare, XFormsProcessor,ClientServerEvent,
-                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,event,has){
+        "dojo/_base/json"], function(declare, XFormsProcessor,ClientServerEvent,
+                                    dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
 /**
@@ -42,7 +41,12 @@ define(["dojo/_base/declare",
     fifoReaderTimer:null,
     lastServerClientFocusEvent:null,
     usesDOMFocusIN:dojo.config.bf.useDOMFocusIN,
+    usesDOMFocusOUT:dojo.config.bf.useDOMFocusOUT,
+    useXFSelect:dojo.config.bf.useXFSelect,
     logEvents:dojo.config.bf.logEvents,
+    mappingProcessor:null,
+    _uiReady:false,
+    initialEvents:new Array(),
 
 
     /*
@@ -57,10 +61,12 @@ define(["dojo/_base/declare",
 
     constructor:function() {
         console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
+
         // initialize DWR
 
         Flux._path = dojo.config.bf.fluxPath;
-        console.debug("calling init");
+        this.unloadMsg = dojo.config.bf.unloadingMessage;
+        // console.debug("calling Flux.init");
         Flux.init(dojo.config.bf.sessionkey, dojo.hitch(this,this.applyChanges));
 
         // This is used for referencing this object from within ajax-callback-functions
@@ -130,57 +136,59 @@ define(["dojo/_base/declare",
         //Loop as long as Pending Events are being skipped (as long as no Request is being initiated)
         while ((!this.requestPending) && (this.clientServerEventQueue.length != 0)) {
             nextPendingClientServerEvent = this.clientServerEventQueue.shift();
-            switch (nextPendingClientServerEvent.getCallerFunction()) {
-                case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingClientServerEvent.getTargetId() + ")"); break;
-                case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
-                case "setControlValue":     console.info("FIFO-READ:  setControlValue(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingClientServerEvent.getTargetId() + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                default:                                        break;
+
+            var callerFunction = nextPendingClientServerEvent.getCallerFunction();
+            var nextPendingTargetId = nextPendingClientServerEvent.getTargetId();
+            // TODO: Lars: not need anymore due to devtool!?!
+/*
+            switch (callerFunction) {
+                case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingTargetId + ")"); break;
+                case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
+                case "setControlValue":     console.info("FIFO-READ:  setControlValue(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
+                case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
+                default:break;
             }
+*/
 
             //*****************************************************************************
             // START: skip this pending Event, if one of the following conditions occurred:
             //*****************************************************************************
 
-            if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
-                dojoObject = query("*[repeatId='" + nextPendingClientServerEvent.getTargetId() + "']")[0];
-            }else {
-                dojoObject = dom.byId(nextPendingClientServerEvent.getTargetId());
-            }
-            // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
+            dojoObject = dom.byId(nextPendingTargetId);
+            // console.debug("EventFifoReader dojoObject:",dojoObject, " targetId: ",nextPendingTargetId);
             if (dojoObject == null) {
-                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingClientServerEvent.getTargetId());
+                console.warn("Event (Client to Server) for Dojo Control " + dojoObject + " skipped. CAUSE: OBJECT is NULL",nextPendingTargetId);
                 continue;
             }
 
-            if(nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex"){
-                dijitObject = this._getRepeatObject(nextPendingClientServerEvent.getTargetId());
-            }else {
-                dijitObject = registry.byId(nextPendingClientServerEvent.getTargetId());
+            if(callerFunction != "setRepeatIndex"){
+                dijitObject = registry.byId(nextPendingTargetId);
             }
 
+            // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingTargetId);
 
-            // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingClientServerEvent.getTargetId());
-
-            if (dijitObject == null) {
+            if (dijitObject == null && callerFunction != "setRepeatIndex") {
                 console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
                 continue;
+
+            }else if(callerFunction != "setRepeatIndex"){
+                // Test if this dijit-control has an isReadonly() method
+                console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
+
+                if (dijitObject && dijitObject.isReadonly()) {
+                    console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
+                    continue;
+                }
+
             }
 
-            // Test if this dijit-control has an isReadonly() method
-            console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
-
-            if (dijitObject && dijitObject.isReadonly()) {
-                console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
-                continue;
-            }
 
             // Test if the Control's event was a setControlValue
-            if (nextPendingClientServerEvent.getCallerFunction() == "setControlValue") {
+            if (callerFunction == "setControlValue") {
                 // Test if the next Control-Value-Change originates from the same Control as this Control-Value-Change
                 if (this.clientServerEventQueue[0] != null) {
                     // Test if the targetId of this event and the next one are equal
-                    if (this.clientServerEventQueue[0].getTargetId() == nextPendingClientServerEvent.getTargetId()) {
+                    if (this.clientServerEventQueue[0].getTargetId() == nextPendingTargetId) {
                         // Test if the CallerFunction of the next Event is also setControlValue
                         if (this.clientServerEventQueue[0].getCallerFunction() == "setControlValue") {
                             console.debug("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
@@ -205,9 +213,9 @@ define(["dojo/_base/declare",
             // Further processing of setRepeatIndex events
             // TODO: check if really not needed anymore
 /*
-            if (nextPendingClientServerEvent.getCallerFunction() == "setRepeatIndex") {
+            if (callerFunction == "setRepeatIndex") {
                 if (nextPendingClientServerEvent.getRepeatItem() == null) {
-                    console.warn("Event (Client to Server) for Dijit Control " + nextPendingClientServerEvent.getTargetId() + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
+                    console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
                     continue;
                 }
 
@@ -227,13 +235,13 @@ define(["dojo/_base/declare",
                 this._useLoadingMessage(dojoObject);
             }
 
-            // console.debug("XFProcessor.dispatch event for ",nextPendingClientServerEvent.getCallerFunction());
-            switch (nextPendingClientServerEvent.getCallerFunction()) {
-                case "dispatchEvent":                this.requestPending = true; this._dispatchEvent(nextPendingClientServerEvent.getTargetId()); break;
-                case "dispatchEventType":        this.requestPending = true; this._dispatchEventType(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getEventType(), nextPendingClientServerEvent.getContextInfo()); break;
-                case "setControlValue":            this.requestPending = true; this._setControlValue(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getValue()); break;
+            // console.debug("XFProcessor.dispatch event for ",callerFunction);
+            switch (callerFunction) {
+                case "dispatchEvent":                this.requestPending = true; this._dispatchEvent(nextPendingTargetId); break;
+                case "dispatchEventType":        this.requestPending = true; this._dispatchEventType(nextPendingTargetId, nextPendingClientServerEvent.getEventType(), nextPendingClientServerEvent.getContextInfo()); break;
+                case "setControlValue":            this.requestPending = true; this._setControlValue(nextPendingTargetId, nextPendingClientServerEvent.getValue()); break;
                 //Re-transform the dojo-Id to repeat-Id
-                case "setRepeatIndex":            this.requestPending = true; this._setRepeatIndex(nextPendingClientServerEvent.getTargetId(), nextPendingClientServerEvent.getValue()); break;
+                case "setRepeatIndex":            this.requestPending = true; this._setRepeatIndex(nextPendingTargetId, nextPendingClientServerEvent.getValue()); break;
                 default:                                        break;
             }
         }
@@ -291,10 +299,22 @@ define(["dojo/_base/declare",
         } catch(ex) {
             fluxProcessor._handleExceptions("Failure executing Flux.dispatchEvent", ex);
         }
-        return false;
+        // TODO: TBR: Lars really needed?
+        // return false;
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
+        if((this.usesDOMFocusOUT == false && "DOMFocusOut" == eventType) ||
+           (this.usesDOMFocusIN == false && "DOMFocusIn" == eventType) ||
+            (this.useXFSelect == false && "xformsSelect" == eventType)){
+            console.info("XFProcessor.dispatchEventType: event:",eventType, " is disabled in form!! targetId is: ",targetId);
+            return;
+
+        }
+        // change clientside eventType xformsSelect to DOMActivate for the Java processor
+        if(eventType == "xformsSelect"){
+            eventType = "DOMActivate";
+        }
         console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
@@ -452,14 +472,20 @@ define(["dojo/_base/declare",
             var eventLog = dom.byId("eventLog");
 
             array.forEach(data,
-                    function(xmlEvent) {
-                        // *** DO NOT COMMENT THIS OUT !!! ***
+                function(xmlEvent) {
+                    // *** DO NOT COMMENT THIS OUT !!! ***
+                    if(!fluxProcessor._uiReady && xmlEvent.type != "xforms-model-construct" &&
+                                                  xmlEvent.type != "betterform-instance-created" &&
+                                                  xmlEvent.type != "xforms-model-construct-done" &&
+                                                  xmlEvent.type != "xforms-ready"){
+                        fluxProcessor.initialEvents.push(xmlEvent);
+                    }else {
                         console.debug("XFProcessor.applyChanges:", xmlEvent.type, " [", xmlEvent.contextInfo, "]");
 
 /*
                         if 'logEvents' is true the eventlog from the server will be written
                         to DOM and can be viewed in a separate expandable section in the window.
-*/
+    */
                         //todo: the following code should be made a behavior only if debugging is available
                         //probably we have to add a private _applyChanges method to do the actual work to
                         //allow us to hook to this function and connect to it for outputting debug output.
@@ -503,6 +529,7 @@ define(["dojo/_base/declare",
                                 innerHTML: "<a href='#' onclick='bf.devtool.toggleEntry(this);'><span>"+xmlEvent.type+"</span></a><table class='eventLogTable'>" + tableCells + "</table>"
                             }, eventLog);
                         }
+
                         switch (xmlEvent.type) {
                             case "betterform-index-changed"      : fluxProcessor._handleBetterFormIndexChanged(xmlEvent); break;
                             case "betterform-insert-itemset"     : fluxProcessor._handleBetterFormInsertItemset(xmlEvent); break;
@@ -524,7 +551,7 @@ define(["dojo/_base/declare",
                             case "xforms-help"                   : fluxProcessor._handleShowHelp(xmlEvent); break;
                             case "xforms-hint"                   : fluxProcessor._handleXFormsHint(xmlEvent); break;
                             case "xforms-link-exception"         : fluxProcessor._handleLinkException(xmlEvent); break;
-                            case "betterform-switch-toggled"     : fluxProcessor._handleSwitchToggled(xmlEvent); break;
+                            case "betterform-switch-toggled"     : connect.publish("bf-switch-toggled-" + xmlEvent.contextInfo.targetId, xmlEvent.contextInfo); break;
                             case "betterform-script-action"      : eval(xmlEvent.contextInfo["script"]); break;
                             case "xforms-value-changed"          : /* console.debug(xmlEvent); */ break;
                             case "xforms-version-exception"      : fluxProcessor._handleVersionException(xmlEvent); break;
@@ -540,16 +567,18 @@ define(["dojo/_base/declare",
                             case "xforms-select"                 : break;
                             case "xforms-deselect"               : break;
                             case "DOMFocusOut"                   : break;
-                            case "xforms-model-construct"        : break;
-                            case "xforms-model-construct-done"   : fluxProcessor._buildUI();  break;
-                            case "xforms-ready"                  : this.isReady = true;connect.publish("xforms-ready", []);break; //not perfect - should be on XFormsModelElement
+                            case "xforms-model-construct"        : /*console.info("xforms-model-construct-done")*/;break;
+                            case "xforms-model-construct-done"   : /*console.info("xforms-model-construct-done");*/fluxProcessor._buildUI();  break;
+                            case "xforms-ready"                  : /*console.info("xforms-ready");*/fluxProcessor.isReady = true;connect.publish("xforms-ready", []);break; //not perfect - should be on XFormsModelElement
                             case "xforms-submit"                 : break;
                             case "xforms-submit-done"            : fluxProcessor._handleSubmitDone(xmlEvent);break;
                             /* Unknow XMLEvent: */
                             default                              : console.error("Event " + xmlEvent.type + " unknown [Event:", xmlEvent, "]"); break;
                         }
+
                     }
-                    );
+                }
+            );
 
             if(fluxProcessor.logEvents){
                 // add a devider for eventLogViewer
@@ -573,37 +602,24 @@ define(["dojo/_base/declare",
     },
 
     _buildUI : function(){
-        require(["dojo/behavior",
-                    "bf/ControlBehavior",
-                    "bf/OutputBehavior",
-                    "bf/InputBehavior",
-                    "bf/RangeBehavior",
-                    "bf/SecretBehavior",
-                    "bf/Select1Behavior",
-                    "bf/SelectBehavior",
-                    "bf/TextareaBehavior",
-                    "bf/TriggerBehavior",
-                    "bf/UploadBehavior",
-                    /* Container */
-                    "bf/RepeatBehavior",
-                    /* Common Childs */
-                    "bf/AlertBehavior"],
-            function(behavior,ControlBehavior,OutputBehavior,InputBehavior,RangeBehavior, SecretBehavior, Select1Behavior, SelectBehavior, TextareaBehavior,TriggerBehavior,UploadBehavior, AlertBehavior){
-                behavior.add(ControlBehavior);
-                behavior.add(OutputBehavior);
-                behavior.add(InputBehavior);
-                behavior.add(RangeBehavior);
-                behavior.add(SecretBehavior);
-                behavior.add(Select1Behavior);
-                behavior.add(SelectBehavior);
-                behavior.add(TextareaBehavior);
-                behavior.add(TriggerBehavior);
-                behavior.add(UploadBehavior);
-                behavior.add(AlertBehavior);
-
-            });
-        require(["dojo/behavior", "dojo/domReady!"],function(behavior) {
+        require(["bf/MappingProcessor","dojo/behavior", "dojo/domReady!"],function(MappingProcessor,behavior){
+            if (this.mappingProcessor == undefined) {
+                this.mappingProcessor = new MappingProcessor();
+            }
             behavior.apply();
+        });
+
+        // fire remaining initial events
+        require(["dojo/ready"], function (ready) {
+            ready(function () {
+                // console.debug("missing initial Events:",fluxProcessor.initialEvents);
+                fluxProcessor._uiReady = true;
+                fluxProcessor.applyChanges(fluxProcessor.initialEvents);
+                fluxProcessor.initialEvents = null;
+                var formWrapper = dom.byId("formWrapper");
+                // console.debug("formWrapper:",formWrapper);
+                domStyle.set(formWrapper,"display","block");
+            });
         });
     },
 
@@ -614,13 +630,12 @@ define(["dojo/_base/declare",
 
     _handleInstanceCreated:function(xmlEvent){
         console.debug("XFProcessor._handleInstanceCreated xmlEvent:",xmlEvent);
-        /* TODO: Lars: upgrade to Dojo 1.7 */
-        /*
-        dojo.require("dojox.fx");
-        var debugPane = dom.byId("debug-pane-links");
+        // TODO: Lars: add animation again
+        // dojo.require("dojox.fx");
+        var debugPane = dom.byId("bfDebugLinks");
 
         if(debugPane != null){
-            var contextroot = domAttr.get(dom.byId("debug-pane"),"context");
+            var contextroot = domAttr.get(dom.byId("bfDebug"),"context");
             var newLink = document.createElement("a");
             domAttr.set(newLink,"href",contextroot + xmlEvent.contextInfo.modelId + "/" + xmlEvent.contextInfo.instanceId);
             domAttr.set(newLink,"target","_blank");
@@ -628,16 +643,16 @@ define(["dojo/_base/declare",
             var linkText = document.createTextNode("Model:" + xmlEvent.contextInfo.modelId + " :: " + "Instance:" + xmlEvent.contextInfo.instanceId);
             newLink.appendChild(linkText);
             debugPane.appendChild(newLink);
-            dojox.fx.highlight({node:newLink, color:'#999999', duration:600}).play()
+            // dojox.fx.highlight({node:newLink, color:'#999999', duration:600}).play()
         }
-*/
     },
 
     _handleModelRemoved:function(xmlEvent){
         console.debug("XFProcessor._handleModelRemoved xmlEvent:",xmlEvent);
         var modelId = xmlEvent.contextInfo.modelId;
-        query("#debug-pane a[modelId='" + modelId +"']").orphan();
-
+        require(["dojo/query", "dojo/NodeList-manipulate"], function(query){
+            query("#bfDebug a[modelId='" + modelId +"']").remove();
+        });
     },
 
     _handleValidity:function(validityEvents) {
@@ -776,10 +791,9 @@ define(["dojo/_base/declare",
             domAttr.set(htmlEntryPoint, "id", xlinkTarget + "Old");
             var nodesToEmbed = dom.byId(targetid);
 
-            require("dojo/parser", function(parser){
-                parser.parse(htmlEntryPoint);
-            });
-
+//            require("dojo/parser", function(parser){
+//                parser.parse(htmlEntryPoint);
+//            });
             // dojo.parser.parse(htmlEntryPoint);
 
             domConstruct.place(nodesToEmbed, htmlEntryPoint, "before");
@@ -789,7 +803,31 @@ define(["dojo/_base/declare",
             //copy classes from mountpoint
             var classes = domAttr.get(htmlEntryPoint, "class");
             domAttr.set(nodesToEmbed, "class", classes);
+
             htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
+
+
+            require(["dojo/behavior"],function(behavior) {
+                // console.debug("htmlEntryPoint:",nodesToEmbed);
+                behavior.apply();
+            });
+
+
+            var utilizedEvents = xmlEvent.contextInfo.utilizedEvents;
+            // console.debug("xmlEvent.contextInfo.utilizedEvents:",xmlEvent.contextInfo.utilizedEvents);
+            if(utilizedEvents && utilizedEvents != ""){
+                var utilizedEventsObj =  json.fromJson("{" + utilizedEvents +  "}");
+                // console.debug("utilizedEventsObj:",utilizedEventsObj);
+                if(utilizedEventsObj.useXFSelect){
+                    this.useXFSelect = true;
+                }
+                if(utilizedEventsObj.useDOMFocusIN){
+                    this.useDOMFocusIN = true;
+                }
+                if(utilizedEventsObj.useDOMFocusOUT){
+                    this.useDOMFocusOUT = true;
+                }
+            }
 
             // finally dynamically load the CSS (if some) form the embedded form
             var cssToLoad = xmlEvent.contextInfo.inlineCSS;
@@ -819,13 +857,12 @@ define(["dojo/_base/declare",
                 var head2 = document.getElementsByTagName('head')[0];
                 for (var i = 0; i <= styles.length; i = i+1) {
                     if (styles[i] != undefined && styles[i] != "") {
-                        //console.debug("adding Style: ", styles[i]);
+                        // console.debug("adding Style: ", styles[i]);
                         var stylesheet2 = document.createElement('link');
-
-                        domAttr.set(stylesheet1,"rel","stylesheet");
-                        domAttr.set(stylesheet1,"type","text/css");
-                        domAttr.set(stylesheet1,"href",styles[i]);
-                        domAttr.set(stylesheet1,"name",xlinkTarget);
+                        domAttr.set(stylesheet2,"rel","stylesheet");
+                        domAttr.set(stylesheet2,"type","text/css");
+                        domAttr.set(stylesheet2,"href",styles[i]);
+                        domAttr.set(stylesheet2,"name",xlinkTarget);
                         head2.appendChild(stylesheet2);
                     }
                 }
@@ -869,8 +906,100 @@ define(["dojo/_base/declare",
         else {
             console.error("betterform-load-uri show='" + xmlEvent.contextInfo.show + "' unknown!");
         }
+
+
     },
 
+    _unloadDOM:function(target) {
+
+        //delete CSS specific to subform
+        var htmlEntryPoint = dom.byId(target);
+        if (htmlEntryPoint == undefined) {
+            return;
+        }
+
+        var styleList = document.getElementsByTagName("style");
+        //console.debug("styleList" , styleList);
+        if (styleList != undefined) {
+            array.forEach(styleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+                    if(domAttr.get(item,"name") == target){
+                        //console.debug("removing style: ", item);
+                        //console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        /*
+         unload previously loaded subform-specific stylesheets
+         */
+        var externalStyleList = document.getElementsByTagName("link");
+        // console.debug("XFProcessor._unloadDOM: styleList" , externalStyleList);
+        if (externalStyleList != undefined) {
+            array.forEach(externalStyleList, function(item) {
+                //console.debug("style: ", item);
+                if (item != undefined) {
+                    if(domAttr.get(item,"name") == target){
+                        console.debug("removing style: ", item);
+                        console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        /*
+         unload previously loaded subform-specific Javascripts
+         */
+        var scriptList = document.getElementsByTagName("script");
+        //console.debug("scriptList" , scriptList);
+        if (scriptList != undefined) {
+            array.forEach(scriptList, function(item) {
+                //console.debug("script: ", item);
+                if (item != undefined) {
+                    if(domAttr.get(item,"name") == target){
+                        //console.debug("removing: ", item);
+                        //console.debug("parentNode: ", item.parentNode);
+                        item.parentNode.removeChild(item);
+                    }
+                }
+            });
+        }
+
+        var widgetID = "widgetid";
+        if (has("ie") >= 5) {
+            widgetID = "widgetId"
+        }
+
+        /*
+         destroy all child dijits within subform tree
+         */
+        var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
+        array.forEach(widgets,
+            function(item) {
+                if (item != undefined) {
+                    var childDijit = registry.byId(domAttr.get(item, 'id'));
+                    if (childDijit != undefined) {
+                         console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
+                        childDijit.destroy();
+                    } else {
+                         console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
+                        childDijit = registry.byId(domAttr.get(item, widgetID));
+                        if (childDijit != undefined) {
+                            childDijit.destroy();
+                        }
+                    }
+
+                }
+            }
+        );
+        while (htmlEntryPoint.hasChildNodes()) {
+            htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
+        }
+    },
     /*
          ******************************************************************************************************
          * handles XForms xforms-submit-done events
@@ -924,99 +1053,6 @@ define(["dojo/_base/declare",
         }
     },
 
-    //todo: see above '_handleBetterFormLoadURI'  - should be moved behind handleLoadURI function
-    _unloadDOM:function(target) {
-        console.debug("XFProcessor._unloadDOM xmlEvent:",xmlEvent);
-
-        //delete CSS specific to subform
-        var htmlEntryPoint = dom.byId(target);
-        if (htmlEntryPoint == undefined) {
-            return;
-        }
-
-        var styleList = document.getElementsByTagName("style");
-        //console.debug("styleList" , styleList);
-        if (styleList != undefined) {
-        array.forEach(styleList, function(item) {
-                //console.debug("style: ", item);
-                if (item != undefined) {
-            if(domAttr.get(item,"name") == target){
-                        //console.debug("removing style: ", item);
-                        //console.debug("parentNode: ", item.parentNode);
-                item.parentNode.removeChild(item);
-            }
-                }
-        });
-        }
-
-        /*
-        unload previously loaded subform-specific stylesheets
-         */
-        var externalStyleList = document.getElementsByTagName("link");
-        console.debug("styleList" , externalStyleList);
-        if (externalStyleList != undefined) {
-        array.forEach(externalStyleList, function(item) {
-                //console.debug("style: ", item);
-                if (item != undefined) {
-            if(domAttr.get(item,"name") == target){
-                        console.debug("removing style: ", item);
-                        console.debug("parentNode: ", item.parentNode);
-                item.parentNode.removeChild(item);
-            }
-                }
-        });
-        }
-
-        /*
-        unload previously loaded subform-specific Javascripts
-         */
-        var scriptList = document.getElementsByTagName("script");
-        //console.debug("scriptList" , scriptList);
-        if (scriptList != undefined) {
-            array.forEach(scriptList, function(item) {
-                //console.debug("script: ", item);
-                if (item != undefined) {
-                    if(domAttr.get(item,"name") == target){
-                        //console.debug("removing: ", item);
-                        //console.debug("parentNode: ", item.parentNode);
-                        item.parentNode.removeChild(item);
-                    }
-                }
-            });
-        }
-
-        var widgetID = "widgetid";
-        if (has("ie") >= 5) {
-            widgetID = "widgetId"
-        }
-
-        /*
-        destroy all child dijits within subform tree
-         */
-        var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
-        array.forEach(widgets,
-                function(item) {
-                    if (item != undefined) {
-                        var childDijit = registry.byId(domAttr.get(item, 'id'));
-                        if (childDijit != undefined) {
-                            // console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
-                            childDijit.destroy();
-                        } else {
-                            // console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
-                            childDijit = registry.byId(domAttr.get(item, widgetID));
-                            if (childDijit != undefined) {
-                                childDijit.destroy();
-                            }
-                        }
-
-                    }
-                }
-                );
-        while (htmlEntryPoint.hasChildNodes()) {
-            htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
-        }
-    },
-
     /*
          ******************************************************************************************************
          * handles XForms message actions
@@ -1028,8 +1064,20 @@ define(["dojo/_base/declare",
         var level = xmlEvent.contextInfo.level;
         //console.debug("XFProcessor.handleRenderMessage: message='" + message + "', level='" + level + "'");
         if (level == "ephemeral") {
-            registry.byId("betterformMessageToaster").setContent(message, 'message');
-            registry.byId("betterformMessageToaster").show();
+            require(["dojox/widget/Toaster"],function(Toaster) {
+                if(registry.byId("betterformMessageToaster") == undefined) {
+                    new Toaster({id:"betterformMessageToaster",
+                                positionDirection:"bl-up",
+                                duration:"8000",
+                                messageTopic:'bfMessageTopic'
+                                },"betterformMessageToaster");
+                }
+                connect.publish("bfMessageTopic", [ {
+                                        message: message,
+                                        type: "fatal",
+                                        duration: 8000
+                }]);
+            })
         }
         else {
             var exception = xmlEvent.contextInfo.exception;
@@ -1148,7 +1196,7 @@ define(["dojo/_base/declare",
        if(registry.byId(xfControlId) != undefined){
             registry.byId(xfControlId).show();
        }else {
-            console.error("error during betterform-dialog-show-event: targetId '",xmlEvent.contextInfo.targetId, "', xfControlId: '", xfControlId,"' does not exist");
+            console.error("XFProcessor: error during betterform-dialog-show-event: targetId '",xmlEvent.contextInfo.targetId, "', xfControlId: '", xfControlId,"' does not exist");
        }
     },
 
@@ -1160,23 +1208,30 @@ define(["dojo/_base/declare",
        if(registry.byId(xfControlId) != undefined){
             registry.byId(xfControlId).hide();
        }else {
-            console.error("error during betterform-dialog-hide-event: targetId '",xmlEvent.contextInfo.targetId,"' does not exist");
+            console.error("XFProcessor: error during betterform-dialog-hide-event: targetId '",xmlEvent.contextInfo.targetId,"' does not exist");
        }
     },
 
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
-        console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " xmlEvent: " , xmlEvent);
-        var parentId = xmlEvent.contextInfo.parentId;
+        var contextInfo = xmlEvent.contextInfo;
+        // IMPORTANT: DOJO/READY MUST NOT BE REMOVED!
+        //  Otherwise _handleBetterFormStateChanged will be called before _handleBetterFORMInsert is finished!
+        require(["dojo/ready"], function(ready){
+            ready(function(){
+                console.debug("XFProcessor._handleBetterFormStateChanged: contextInfo: " + contextInfo);
+                var parentId = contextInfo.parentId;
 
-        // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
-        if(parentId) {
-            connect.publish("bf-state-change-"+ parentId, xmlEvent.contextInfo);
+                // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
+                if(parentId) {
+                    connect.publish("bf-state-change-"+ parentId, contextInfo);
 
-        }
-        else {
-            connect.publish("bf-state-change-"+ xmlEvent.contextInfo.targetId,xmlEvent.contextInfo);
-        }
+                }
+                else {
+                    connect.publish("bf-state-change-"+ contextInfo.targetId,contextInfo);
+                }
+            });
+        })
     },
 
     _handleBetterFormItemChanged:function(/*XMLEvent*/ xmlEvent) {
@@ -1190,7 +1245,7 @@ define(["dojo/_base/declare",
             var selectParentId = domAttr.get(parentDOMNode, "id");
             connect.publish("xforms-item-changed-"+ selectParentId, xmlEvent.contextInfo);
         } catch(e) {
-            console.error("XFProcessor._handleBetterFormItemChanged: No Select(1) found for item: ", xmlEvent.contextInfo.parentId, " error:",e);
+            console.warn("XFProcessor._handleBetterFormItemChanged: Select(1) or  item [", xmlEvent.contextInfo.parentId, "] not found! Error:",e);
         }
     },
 
@@ -1198,123 +1253,36 @@ define(["dojo/_base/declare",
     //todo: should be moved to a behavior
     //todo: note that xforms-insert might not target repeat or itemset
     _handleBetterFormInsertRepeatItem:function(xmlEvent) {
-        console.debug("XFProcessor.betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
-        var repeatToInsertIntoDOM = query("*[repeatId='" + xmlEvent.contextInfo.targetId + "']");
-
-        var repeatObject = this._getRepeatObject(xmlEvent.contextInfo.targetId);
-        if (repeatObject == undefined) {
-            // console.debug("XFProcessor._handleBetterFormInsertRepeatItem ",repeatToInsertIntoDOM);
-            // console.dirxml(repeatToInsertIntoDOM[0]);
-            // TODO: Lars: new implementation needed
-            // dojo.require("betterform.ui.container.Repeat");
-            // repeatObject = new betterform.ui.container.Repeat({}, repeatToInsertIntoDOM[0]);
-        }
-        repeatObject.handleInsert(xmlEvent.contextInfo);
-
+        // console.debug("XFProcessor.betterform-insert-repeatitem [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:",xmlEvent);
+        connect.publish("betterform-insert-repeatitem-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
     },
 
-    //todo: should be moved to a behavior
     _handleBetterFormInsertItemset:function(xmlEvent) {
-        console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / contextInfo:",xmlEvent.contextInfo,']' );
-        var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
-        console.debug("betterform-insert-itemset [selectDijit: '", selectDijit ,']' );
-
-        if (selectDijit != undefined) {
-            selectDijit.handleInsertItem(xmlEvent.contextInfo);
-        }
-        // OLD CODE
-/*
-        if (registry.byId(xmlEvent.contextInfo.targetId) != undefined) {
-            // console.debug("betterform-insert-itemset handle Insert [id: '", xmlEvent.contextInfo.targetId, " / dijit:",registry.byId(xmlEvent.contextInfo.targetId),']' );
-            registry.byId(xmlEvent.contextInfo.targetId).handleInsert(xmlEvent.contextInfo);
-        } else {
-            var itemsetDOM = dom.byId(xmlEvent.contextInfo.targetId);
-            // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dom:'",dom.byId(xmlEvent.contextInfo.targetId),"']");
-            var itemsetType = domAttr.get(itemsetDOM, "dojoType");
-            // Prototypes don't have a dojoType, search for controlType instead
-            if(itemsetType == undefined) {
-                var controlType = domAttr.get(itemsetDOM, "controlType");
-                if(controlType == "optGroup") {
-                    itemsetType = "betterform.ui.select.OptGroup";
-                }
-            }
-
-            var itemsetDijit;
-            if(itemsetType != undefined) {
-                if (itemsetType == "betterform.ui.select.OptGroup") {
-                    itemsetDijit = new betterform.ui.select.OptGroup({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-                }
-                else if (itemsetType == "betterform.ui.select1.RadioItemset") {
-                    itemsetDijit = new betterform.ui.select1.RadioItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-                }
-                else if (itemsetType == "betterform.ui.select.CheckBoxItemset") {
-                    itemsetDijit = new betterform.ui.select.CheckBoxItemset({contextInfo:xmlEvent.contextInfo}, itemsetDOM);
-                }
-                else {
-                    console.warn("XFProcessor apply betterform-insert-itemset: Itemset Type " + itemsetType + " not supported yet");
-                }
-            } else {
-                console.warn("XFProcessor apply betterform-insert-itemset: ItemSet Type is null");
-                return;
-            }
-            // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.targetId, " / dojotype:'",itemsetType,"']");
-            if (itemsetDijit != undefined) {
-                itemsetDijit.handleInsert(xmlEvent.contextInfo);
-            } else {
-                console.warn("XFProcessor apply betterform-insert-itemset: Error during itemset creation: ItemsetId " + xmlEvent.contextInfo.targetId + " itemsetType: " + itemsetType + " not supported yet");
-            }
-        }
-*/
-
+        // console.debug("betterform-insert-itemset [id: '", xmlEvent.contextInfo.parentId+"-value", " / contextInfo:",xmlEvent.contextInfo,']' );
+        connect.publish("betterform-insert-item-"+ xmlEvent.contextInfo.parentId + "-value", xmlEvent.contextInfo);
     },
     _handleBetterFormItemDeleted:function(xmlEvent) {
-        console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
+        // console.debug("handle betterform-item-deleted for ", xmlEvent.contextInfo.targetName, " [id: '", xmlEvent.contextInfo.targetId, "'] xmlEvent:", xmlEvent);
         if (xmlEvent.contextInfo.targetName == "itemset") {
-            var selectDijit = registry.byId(xmlEvent.contextInfo.parentId + "-value");
-            console.debug("handle betterform-item-deleted [selectDijit: '", selectDijit ,']' );
-            if (selectDijit != undefined) {
-                selectDijit.handleDeleteItem(xmlEvent.contextInfo);
-            }
+            connect.publish("betterform-delete-item-"+ xmlEvent.contextInfo.parentId + "-value", xmlEvent.contextInfo);
+        }else {
+            connect.publish("betterform-item-deleted-"+ xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
         }
-
-        // OLD CODE
-/*
-        if (xmlEvent.contextInfo.targetName == "itemset") {
-            registry.byId(xmlEvent.contextInfo.targetId).handleDelete(xmlEvent.contextInfo);
-        }
-        else if (xmlEvent.contextInfo.targetName == "repeat" || xmlEvent.contextInfo.targetName == "tbody") {
-            var repeatObject = _getRepeatObject(xmlEvent);
-            repeatObject.handleDelete(xmlEvent.contextInfo);
-            var positionOfDeletedItem = xmlEvent.contextInfo.position;
-            if(positionOfDeletedItem <= repeatObject._getSize()){
-                repeatObject._handleSetRepeatIndex(positionOfDeletedItem);
-            }
-        }
-*/
     },
 
     //todo: move to repeat behavior
     _handleBetterFormIndexChanged:function(xmlEvent) {
-        console.debug("XFProcessor._handleBetterFormIndexChanged xmlEvent:",xmlEvent);
-        var repeat = this._getRepeatObject(xmlEvent.contextInfo.targetId);
-        console.debug("XFProcessor.betterform-index-changed Repeat: ", repeat, " targetId: ", xmlEvent.contextInfo.targetId);
-        repeat.handleSetRepeatIndex(xmlEvent.contextInfo);
-    },
+        // console.debug("XFProcessor._handleBetterFormIndexChanged xmlEvent:",xmlEvent);
+        connect.publish("betterform-index-changed-"+xmlEvent.contextInfo.targetId, xmlEvent.contextInfo);
 
-
-    _getRepeatObject: function (targetId){
-        console.debug("XFProcessor._getRepeatObject targetId:",targetId);        
-        var repeatElement = query("*[repeatId='" + targetId + "']");
-        var repeatObject = registry.byId(domAttr.get(repeatElement[0], "id"));
-        return repeatObject;
     },
 
     _handleUploadProgressEvent:function(xmlEvent) {
         console.debug("XFProcessor._handleUploadProgressEvent: xmlEvent:",xmlEvent);
         var xfControlId = xmlEvent.contextInfo.targetid;
         // if XForms Control Dijit allready exists call handleStateChanged on selected control
-        if (registry.byId(xfControlId) != undefined) {
-            registry.byId(xfControlId).updateProgress(xmlEvent.contextInfo.progress);
+        if (registry.byId(xfControlId+"-value") != undefined) {
+            registry.byId(xfControlId+"-value").updateProgress(xmlEvent.contextInfo.progress);
         } else {
             console.error("error during upload-progress-event: targetId " + xmlEvent.contextInfo.targetId + " does not exist");
         }
@@ -1325,11 +1293,11 @@ define(["dojo/_base/declare",
             var targetName = xmlEvent.contextInfo.targetName;
             if (targetName != "group" && targetName != "repeat" && targetName != "switch" && targetName != "case") {
                 var controlToFocus = registry.byId(xmlEvent.contextInfo.targetId + "-value");
+                if(!controlToFocus){
+                    controlToFocus = dom.byId(xmlEvent.contextInfo.targetId + "-value");
+                }
                 if(controlToFocus && controlToFocus.focus){
                    controlToFocus.focus();
-                }else if(dom.byId(xmlEvent.contextInfo.targetId)){
-                    console.warn("Control is no dijit, focusing domNode: " + xmlEvent.contextInfo.targetId );
-                    controlToFocus.domNode.focus();
                 }else {
                     console.warn("Control " + xmlEvent.contextInfo.targetId + " does not exist");
                 }
@@ -1374,18 +1342,6 @@ define(["dojo/_base/declare",
         console.debug("XFProcessor._handleLinkException xmlEvent:",xmlEvent);
         console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
         //        fluxProcessor.closeSession();
-    },
-
-    _handleSwitchToggled:function(xmlEvent) {
-        console.debug("XFProcessor._handleSwitchToggled xmlEvent:", xmlEvent);
-        var tmpSwitch = registry.byId(xmlEvent.contextInfo.targetId);
-        if (tmpSwitch == undefined && dom.byId(xmlEvent.contextInfo.targetId) != undefined) {
-            // console.debug("create new switch: ", xmlEvent);
-            // TODO: Lars: new implementation needed
-            // dojo.require("betterform.ui.container.Switch");
-            // tmpSwitch = new betterform.ui.container.Switch({}, dom.byId(xmlEvent.contextInfo.targetId));
-        }
-        tmpSwitch.toggleCase(xmlEvent.contextInfo);
     },
 
     fetchProgress:function(id, fileName) {

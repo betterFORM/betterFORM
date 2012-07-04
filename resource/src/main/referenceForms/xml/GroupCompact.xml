@@ -51,6 +51,7 @@
                 <code class="ui">
 <xf:group id="group1" ref="grouped-data/group" appearance="compact">
     <xf:label>Group with compact appearance</xf:label>
+    <xf:alert>invalid group</xf:alert>
     <xf:input id="input1" ref="a">
         <xf:label>A-label</xf:label>
     </xf:input>

@@ -86,18 +86,18 @@
                </tr>
                <tr>
                   <td id="d4e162" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div dojoType="dijit.Tooltip" connectId="d4e162">matches an Element that represents a XForms input element</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d4e162">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
                   <td id="d4e171" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
-                     <div dojoType="dijit.Tooltip" connectId="d4e171">matches an Element that represents a XForms alert element</div>
+                     <div data-dojo-type="dijit.Tooltip" connectId="d4e171">matches an Element that represents a XForms alert element</div>
                   </td>
                </tr>
                <tr>
                   <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfcontrol">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
                         matches an Element that represents a XForms control
                         
                      </div>
@@ -106,7 +106,7 @@
                <tr>
                   <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
                      
-                     <div dojoType="dijit.Tooltip" connectId="xflabel">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
                         matches the label part of an XForms control
                         
                      </div>
@@ -115,7 +115,7 @@
                <tr>
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfvalue">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
                         matches the widget part of an XForms control
                         
                      </div>
@@ -227,7 +227,7 @@
             </xf:trigger>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:bind nodeset="grouped-data"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:bind nodeset="grouped-data"&gt;
     &lt;xf:bind nodeset="group"&gt;
         &lt;xf:bind nodeset="a" constraint="string-length(.) &gt; 5"&gt;&lt;/xf:bind&gt;
         &lt;xf:bind nodeset="b" constraint="string-length(.) &gt; 5"&gt;&lt;/xf:bind&gt;
@@ -292,21 +292,34 @@
                
             </p>
             
-         </div><script type="text/javascript">
-                    function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+         </div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        // console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
-                        });
-                    }                    
-                </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
+                );
             </script></body>
    
 </html>

@@ -5,11 +5,9 @@
 
 <project name="Installer-War" default="create-war" basedir=".">
     <property name="web.dir" value="${basedir}/../../../web"/>
-    <property name="temp" value="${basedir}/temp"/>
+    <property name="temp" value="${basedir}/../target/temp"/>
 
     <xmlproperty file="../../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
-
-    <include file="./build-utils.xml" as="utils"/>
 
     <target name="create-war" description="Creates a WAR-File suitable for the Installer. No version-number is appended!">
         <echo>
@@ -18,21 +16,18 @@
 
         <mkdir dir="${temp}"/>
 
-        <!-- Cleaning web-module -->
-        <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
-
         <!-- Create webapp for deployment -->
-        <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="false">
+        <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="true">
             <property name="webapp.dir" value="${temp}/webapp"/>
             <property name="target" value="${temp}"/>
         </ant>
 
         <!-- Create war of webapp -->
-        <ant antfile="${web.dir}/build.xml" target="create-war" inheritall="false">
+        <ant antfile="${web.dir}/build.xml" target="create-war" usenativebasedir="true" inheritall="true">
             <property name="webapp.dir" value="${temp}/webapp"/>
             <property name="targetname" value="${installer.target}/${web.app.name}"/>
         </ant>
 
-        <antcall target="utils.clean"/>
+        <delete dir="${temp}" includeemptydirs="true"/>
     </target>
 </project>

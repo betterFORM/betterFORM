@@ -7,13 +7,13 @@
 <installation version="1.0">
     <info>
         <appname>betterFORM</appname>
-        <appversion>limeGreen</appversion>
+        <appversion>springBud</appversion>
         <authors>
                  <author email="info@betterform.de" name="betterFORM"/>
         </authors>
         <url>http://www.betterform.de</url>
         <uninstaller name="Uninstaller.jar" write="yes"/>
-        <javaversion>1.5</javaversion>
+        <javaversion>1.6</javaversion>
         <pack200/>
         <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
         <webdir>http://www.betterform.de/packs</webdir>
@@ -43,12 +43,12 @@
         <res id="Heading.image" src="../resource/bf_logo_145x59.png"/>
         <res id="Installer.image" src="../resource/logo.png" />
         <res id="Installer.image" src="../resource/info-border.png" />
+<!--
         <res id="shortcutSpec.xml"          src="../resource/configs/shortcutSpec.xml" />
         <res id="Unix_shortcutSpec.xml"      src="../resource/configs/UnixShortcutSpec.xml"/>
+-->
         <res id="HTMLInfoPanel.readme" src="../resource/readme.html"/>
         <res id="HTMLHelloPanel.welcome" src="../resource/welcome.html"/>
-        <res id="userInputSpec.xml" src="../resource/userInput.xml"/>
-        <res id="ProcessPanel.Spec.xml" src="../resource/jobs.xml"/>
         <res id="CustomLangpack.xml_eng" src="../resource/custom.eng.xml"/>
         <res id="LicencePanel.licence" src="BSD-license.txt"/>
         <res src="../resource/info-border.png" id="Installer.image.0"/>
@@ -75,16 +75,9 @@
     -->
 
     <variables>
-        <variable name="JETTY_HOME" value="$EXIST_HOME/tools/jetty"/>
         <variable name="JDKPathPanel.skipIfValid" value="yes"/>
-        <variable name="JDKPathPanel.minVersion" value="1.5"/>
+        <variable name="JDKPathPanel.minVersion" value="1.6"/>
     </variables>
-
-    <dynamicvariables>
-      <variable name="DATA_DIR" condition="izpack.windowsinstall" value="$USER_HOME/eXist/data"/>
-      <variable name="DATA_DIR" condition="izpack.macinstall" value="/Users/Shared/eXist/data"/>
-      <variable name="DATA_DIR" condition="!izpack.macinstall+!izpack.windowsinstall" value="$INSTALL_PATH/webapp/WEB-INF/data"/>
-    </dynamicvariables>
 
     <panels labelFontSize="2.0">
         <panel classname="HTMLHelloPanel" id="welcome"/>
@@ -93,10 +86,8 @@
         <panel classname="HTMLInfoPanel" id="readme" />
         <panel classname="TargetPanel"/>
         <panel classname="PacksPanel"/>
-        <panel classname="UserInputPanel" id="UserInputPanel.0" condition="XRX"/>
         <panel classname="InstallPanel"/>
-        <panel classname="ProcessPanel" condition="XRX"/>
-        <panel classname="ShortcutPanel"/>
+        <!--<panel classname="ShortcutPanel"/>-->
         <panel classname="FinishPanel"/>
     </panels>
 
@@ -107,46 +98,14 @@
         <condition id="bf" type="packselection">
             <packid>betterForm</packid>
         </condition>
-        <condition id="XRX" type="packselection">
-            <packid>betterFORM-XRX-bundle</packid>
+
+        <condition id="jetty-install" type="not">
+            <condition type="ref" refid="bf"/>
         </condition>
-        <condition id="XRX-install" type="and">
-            <condition type="not">
-                <condition type="ref" refid="bf"/>
-            </condition>
-            <condition type="not">
-                <condition type="ref" refid="jetty"/>
-            </condition>
-        </condition>
-        <condition id="jetty-install" type="and">
-            <condition type="not">
-                <condition type="ref" refid="bf"/>
-            </condition>
-            <condition type="not">
-                <condition type="ref" refid="XRX"/>
-            </condition>
-        </condition>
-        <condition id="bf-install" type="and">
-            <condition type="not">
-                <condition type="ref" refid="jetty"/>
-            </condition>
-            <condition type="not">
-                <condition type="ref" refid="XRX"/>
-            </condition>
-        </condition>
-        <condition id="container" type="or">
-                <condition type="ref" refid="container-1"/>
-                <condition type="ref" refid="XRX"/>
-        </condition>
-        <condition id="container-1" type="or">
-                <condition type="ref" refid="bf"/>
-                <condition type="ref" refid="jetty"/>
+        <condition id="bf-install" type="not">
+            <condition type="ref" refid="jetty"/>
         </condition>
     </conditions>
-
-
-
-
 
 
 	<listeners>
@@ -156,61 +115,7 @@
 	</listeners>
 
 
-
-
-
-
-
-
     <packs>
-
-        <pack name="betterFORM XML Suite" id="betterFORM-XRX-bundle" required="no" preselected="yes" condition="XRX-install">
-            <description>betterFORM XML Suite is the betterFORM XForms Toolkit and eXist XML database bundled together as a ready to go XRX framework</description>
-
-            <fileset targetdir="$INSTALL_PATH" dir="bf-XRX"/>
-
-            <parsable type="shell" targetfile="$INSTALL_PATH/bin/client.sh"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/bin/startup.sh"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/bin/server.sh"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/bin/shutdown.sh"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/bin/backup.sh"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/build.sh"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/bin/setup.sh"/>
-
-            <parsable targetfile="$INSTALL_PATH/bin/client.bat"/>
-            <parsable targetfile="$INSTALL_PATH/bin/startup.bat"/>
-            <parsable targetfile="$INSTALL_PATH/bin/server.bat"/>
-            <parsable targetfile="$INSTALL_PATH/bin/shutdown.bat"/>
-            <parsable targetfile="$INSTALL_PATH/bin/backup.bat"/>
-            <parsable targetfile="$INSTALL_PATH/bin/setup.bat"/>
-            <parsable targetfile="$INSTALL_PATH/build.bat"/>
-
-            <parsable type="xml" targetfile="$INSTALL_PATH/conf.xml"/>
-
-
-            <executable targetfile="$INSTALL_PATH/bin/client.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/setup.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/startup.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/server.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/shutdown.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/backup.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/build.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/functions.d/eXist-settings.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/functions.d/getopt-settings.sh" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/bin/functions.d/jmx-settings.sh" stage="never" os="unix"/>
-
-            <!-- Service -->
-            <parsable targetfile="$INSTALL_PATH/tools/wrapper/conf/wrapper.conf"/>
-            <executable targetfile="$INSTALL_PATH/tools/wrapper/bin/wrapper" stage="never" os="unix"/>
-            <executable targetfile="$INSTALL_PATH/tools/wrapper/bin/exist.sh" stage="never" os="unix"/>
-
-            <!-- Shortcuts -->
-            <singlefile src="../resource/start.bat" target="$INSTALL_PATH/start.bat" override="true"/>
-            <parsable targetfile="$INSTALL_PATH/start.bat"/>
-            <singlefile src="../resource/start.sh" target="$INSTALL_PATH/start.sh" override="true"/>
-            <parsable type="shell" targetfile="$INSTALL_PATH/start.sh"/>
-            <executable targetfile="$INSTALL_PATH/start.sh" stage="never" os="unix"/>
-        </pack>
 
         <pack id="jetty" name="betterFORM XForms Toolkit (standalone)" required="no" preselected="no" condition="jetty-install">
             <description>betterFORM XForms Toolkit bundled with the jetty webcontainer</description>
@@ -223,36 +128,28 @@
             <file src="betterform.war" unpack="true" targetdir="$INSTALL_PATH/betterform"/>
         </pack>
 
-        <pack name="Forms" required="no" preselected="no" condition="container-1">
+        <pack name="Forms" required="no" preselected="no" >
             <description>betterFORM demos, reference and test forms</description>
             <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
                   condition="bf"/>
             <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms/reference"
                   condition="bf"/>
-            <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/betterform/forms/incubator/editor"
-                  condition="bf"/>
+<!--        <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/betterform/forms/incubator/editor" condition="bf"/> -->
             <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/betterform/forms/FeatureExplorer.xhtml" condition="bf"/>
             <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/betterform/forms/Status.xhtml" condition="bf"/>
 
 
-            <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo"
-                  condition="jetty"/>
-            <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference"
-                  condition="jetty"/>
-            <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/web/root/forms/incubator/editor"
-                  condition="jetty"/>
+            <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo" condition="jetty"/>
+            <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference" condition="jetty"/>
+            <!--<fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/web/root/forms/incubator/editor" condition="jetty"/>-->
             <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/web/root/forms/FeatureExplorer.xhtml" condition="jetty"/>
             <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/web/root/forms/Status.xhtml" condition="jetty"/>
         </pack>
 
-        <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no" condition="container-1">
+        <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no">
             <description>official XForms 1.1 Conformance Test Suite</description>
-
-            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1"
-                  condition="bf"/>
-
-            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1"
-                  condition="jetty"/>
+            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1" condition="bf"/>
+            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1" condition="jetty"/>
         </pack>
     </packs>
 
