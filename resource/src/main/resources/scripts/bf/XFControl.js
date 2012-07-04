@@ -88,7 +88,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
         handleStateChanged:function(contextInfo) {
             this.inherited(arguments);
             if (this.value != null) {
-                console.debug("XFControl.handleStateChange this.value:",this.value);
+                // console.debug("XFControl.handleStateChange this.value:",this.value);
                 this.currentValue = this.value;
                 this.setValue(this.value, contextInfo["schemaValue"]);
             }

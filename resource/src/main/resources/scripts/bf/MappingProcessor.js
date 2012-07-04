@@ -27,7 +27,7 @@ define(["dojo/_base/declare"],
                                     // a string telling the factory which widget to create
                                     var param= mapping[2];
                                     // console.debug("FOUND: ", n);
-                                    // console.debug("map to: ", JS_CLASS_NAME, " param: ", param);
+                                    // console.debug("MappingProcessor: map to: ", JS_CLASS_NAME, " param: ", param);
                                     require([JS_CLASS_NAME],
                                         function(JS_CLASS_NAME){
                                             // if a factory is used, a 'param' must be given, otherwise the behavior will
@@ -36,7 +36,7 @@ define(["dojo/_base/declare"],
                                                 // check if an instance of the factory is already present
                                                 var factory = undefined;
                                                 if(widgetFactories[mapping[1]]){
-                                                    // console.debug("use existing factory: ",mapping[1]);
+                                                    // console.debug("MappingProcessor: use existing factory: ",mapping[1]);
                                                     factory = widgetFactories[mapping[1]];
                                                 }else {
                                                     // console.debug("create new factory: ",mapping[1]);
@@ -44,10 +44,11 @@ define(["dojo/_base/declare"],
                                                         factory = new JS_CLASS_NAME({},n);
                                                         widgetFactories[mapping[1]] = factory;
                                                     }catch(err) {
-                                                        console.error("Could not create factory ",JS_CLASS_NAME, " Mapping: ",mapping);
+                                                        console.error("MappingProcessor: Could not create factory ",JS_CLASS_NAME, " Mapping: ",mapping);
                                                     }
                                                 }
                                                 // call the create function of the factory
+                                                // console.debug("MappingProcessor: factory.create: ",factory);
                                                 factory.create(param,n);
                                             }else {
                                                 try {

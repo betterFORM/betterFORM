@@ -21,9 +21,8 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         id:"",
         bfFocus:false,
 
-
-        constructor:function(properties, node) {
-            // console.debug("XFBinding.constructor");
+        constructor:function(properties, node){
+            // console.debug("XFBinding.constructor properties:",properties, " node:" ,node);
             this.srcNodeRef = node;
             this.id = node.id;
             // console.debug("XFBinding.constructor setDefaultClasses");
@@ -39,7 +38,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 connect.publish("xforms-invalid", [this.id,"init"]);
             }
             // console.debug("XFBinding.constructor subscribe state change");
-            // console.debug("connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
+            // console.debug("XFBinding.constructor: connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
             connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
         },
 
@@ -72,7 +71,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                     // TODO: existing types must be removed in case of type switch
                     // console.debug("apply new type: ",xsdType, " to Control Widget");
                     if(!domClass.contains(this.srcNodeRef, xsdType)){
-                        console.debug("XFBinding.handleStateChange behavior.apply");
+                        // console.debug("XFBinding.handleStateChange behavior.apply");
                         domClass.add(this.srcNodeRef, xsdType);
                         behavior.apply();
                     }

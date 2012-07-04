@@ -1214,17 +1214,24 @@ define(["dojo/_base/declare",
 
 
     _handleBetterFormStateChanged:function(/*XMLEvent*/ xmlEvent) {
-        console.debug("XFProcessor._handleBetterFormStateChanged: targetId: " + xmlEvent.contextInfo.targetId , " xmlEvent: " , xmlEvent);
-        var parentId = xmlEvent.contextInfo.parentId;
+        var contextInfo = xmlEvent.contextInfo;
+        // IMPORTANT: DOJO/READY MUST NOT BE REMOVED!
+        //  Otherwise _handleBetterFormStateChanged will be called before _handleBetterFORMInsert is finished!
+        require(["dojo/ready"], function(ready){
+            ready(function(){
+                console.debug("XFProcessor._handleBetterFormStateChanged: contextInfo: " + contextInfo);
+                var parentId = contextInfo.parentId;
 
-        // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
-        if(parentId) {
-            connect.publish("bf-state-change-"+ parentId, xmlEvent.contextInfo);
+                // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
+                if(parentId) {
+                    connect.publish("bf-state-change-"+ parentId, contextInfo);
 
-        }
-        else {
-            connect.publish("bf-state-change-"+ xmlEvent.contextInfo.targetId,xmlEvent.contextInfo);
-        }
+                }
+                else {
+                    connect.publish("bf-state-change-"+ contextInfo.targetId,contextInfo);
+                }
+            });
+        })
     },
 
     _handleBetterFormItemChanged:function(/*XMLEvent*/ xmlEvent) {

@@ -6,7 +6,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
             constructor:function(properties, node){
                 // console.debug("Repeat.constructor created new instace node:", node, "\n\n");
-                this.inherited(arguments);
+                // this.inherited(arguments);
                 this.id = domAttr.get(this.srcNodeRef,"id");
 
                 this.appearance = undefined;
@@ -31,10 +31,22 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 // console.debug("Repeat.handleStateChanged: contextInfo:",contextInfo);
                 var repeatItem = dom.byId(contextInfo.targetId);
                 // console.debug("found repeatItem:",repeatItem);
-                if(contextInfo["readonly"] == "true"){
-                    domClass.replace(repeatItem, "xfReadOnly","xfReadWrite");
-                }else {
-                    domClass.replace(repeatItem, "xfReadWrite","xfReadOnly");
+
+                var readonly = contextInfo["readonly"];
+                if(readonly != undefined) {
+                    if(readonly == "true"){
+                        domClass.replace(repeatItem, "xfReadOnly","xfReadWrite");
+                    }else {
+                        domClass.replace(repeatItem, "xfReadWrite","xfReadOnly");
+                    }
+                }
+                var enabled = contextInfo["enabled"];
+                if(enabled != undefined) {
+                    if(enabled == "true"){
+                        domClass.replace(repeatItem,"xfEnabled","xfDisabled");
+                    }else {
+                        domClass.replace(repeatItem, "xfDisabled", "xfEnabled");
+                    }
                 }
             },
 
@@ -132,7 +144,9 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     }
                     item.removeAttribute("data-bf-class");
                 });
+                // console.debug("Repeat.handleInsert before applyBehavior:", behavior);
                 behavior.apply();
+                // console.debug("Repeat.handleInsert after applyBehavior:", behavior);
 
                 if(domStyle.get(repeatItemNode,"display") == "none"){
                     repeatItemNode.removeAttribute("style");
