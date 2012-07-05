@@ -618,6 +618,7 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
                             case "xforms-in-range"               : fluxProcessor._handleInRange(xmlEvent);break;
                             case "xforms-invalid"                :
                             case "xforms-valid"                  :validityEvents[index] = xmlEvent; index++;break;
+                            case "betterform-custom-mip-changed" : fluxProcessor._handleCustomMIPChanged(xmlEvent);break;
 
                             /* default handling for known events */
                             case "betterform-id-generated"       :
@@ -1105,6 +1106,38 @@ dojo.declare("betterform.FluxProcessor", betterform.XFormsProcessor,
             dojo.addClass(uiControl, "xfInRange");
         }
     },
+    
+    _handleCustomMIPChanged:function(xmlEvent) {
+    	//console.debug("FluxProcessor._handleCustomMIPChanged xlmEvent:", xmlEvent);
+    	
+    	// Put classes on the container? Yes, not on the value. That way you can allways decide to just style the value.
+    	// The other way around is not possible in css... You cannot style an ancestor based on e.g. classes on a child
+    	// So not
+    	//    var uiControl = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
+    	// but
+    	var uiControl = dojo.byId(xmlEvent.contextInfo.targetId);
+        if (uiControl != undefined) {
+        	var classes = uiControl.className;
+        	var customMIPs = xmlEvent.contextInfo;
+        	
+        	for (var key in customMIPs) {
+        		// targetId and targetName are in the contextInfo, but are NOT custom MIPs :-)
+        		if (key != "targetId" && key !="targetName") {
+    
+        			// check if an existing class is present with the prefix
+        			var replaceString = key+"\\\w*";
+        			var match = classes.match(replaceString);
+        			// if so, remove it
+        			if (match != null) {
+        				dojo.removeClass(uiControl,match);
+        			}
+        			// and add the new class
+        			dojo.addClass(uiControl, key+customMIPs[key]);
+        		}
+        	}
+        }
+        
+    },    
 
     /*
      * function for testing purpose to avoid usage of JS alerts that can cause problems with Selenium
