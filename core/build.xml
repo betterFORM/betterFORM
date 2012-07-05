@@ -93,7 +93,7 @@
             debug="${properties.javac.debug}"
             deprecation="${properties.javac.deprecation}"
             optimize="${properties.javac.optimize}"
-            includeantruntime="true"
+            includeantruntime="false"
             nowarn="true"/>
     </target>
 
