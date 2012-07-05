@@ -233,22 +233,29 @@ public abstract class XFormsElement implements XFormsConstants {
     }
     
     /**
-     * returns the list of BetterForm attributes
+     * returns the list of all attributes that are not in 'known' namespaces and do not have the null (default?) namespace
      *
      * 
      * @return the key-value-pair of the attributes
      */
-    public Map<String, String> getBFAttributes() {
+    public Map<String, String> getCustomMIPAttributes() {
     	
-    	 HashMap<String, String> bfAttributes = new HashMap<String, String>(); 
+    	 HashMap<String, String> customMIPAttributes = new HashMap<String, String>(); 
     	 NamedNodeMap nnm = element.getAttributes();
     	 for (int i = 0; i < nnm.getLength(); i++) {
 			Node attribute = nnm.item(i);
-		   	if (NamespaceConstants.BETTERFORM_NS.equals(attribute.getNamespaceURI()) ) {
-		   		bfAttributes.put(attribute.getPrefix() + WordUtils.capitalize(attribute.getLocalName()), attribute.getTextContent());
+		   	if (attribute.getNamespaceURI() != null &&
+		   			!NamespaceConstants.BETTERFORM_NS.equals(attribute.getNamespaceURI()) &&
+		   			!NamespaceConstants.XFORMS_NS.equals(attribute.getNamespaceURI()) &&
+		   			!NamespaceConstants.XHTML_NS.equals(attribute.getNamespaceURI()) &&
+		   			!NamespaceConstants.XMLNS_NS.equals(attribute.getNamespaceURI()) &&
+		   			!NamespaceConstants.XMLSCHEMA_INSTANCE_NS.equals(attribute.getNamespaceURI()) &&
+		   			!NamespaceConstants.XMLEVENTS_NS.equals(attribute.getNamespaceURI())
+		   			) {
+		   		customMIPAttributes.put(attribute.getPrefix() + WordUtils.capitalize(attribute.getLocalName()), attribute.getTextContent());
 		   	}
 		}
-    	 return bfAttributes;
+    	 return customMIPAttributes;
     	 
     }
 

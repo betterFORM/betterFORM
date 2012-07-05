@@ -20,6 +20,8 @@ import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.UIElementState;
+
+import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -321,7 +323,7 @@ public class UIElementStateUtil {
 		Map<String, String> customMIP = new HashMap<String, String>();
 		for (String key : keySet) {
 			if (hasPropertyChanged(currentCustomProperties, newCustomProperties, key)) {
-				customMIP.put(key, ""+newCustomProperties.get(key));
+				customMIP.put(key, ""+WordUtils.capitalize(newCustomProperties.get(key)));
 			}
 		}
 		if (!customMIP.isEmpty()) {

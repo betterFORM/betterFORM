@@ -37,7 +37,6 @@ public class UIElementStateTest extends TestCase {
     private TestEventListener enabledListener;
     private TestEventListener disabledListener;
     private TestEventListener stateChangedListener;
-    private TestEventListener customMIPToggledListener;
     private Document host;
 
     /**
@@ -52,7 +51,6 @@ public class UIElementStateTest extends TestCase {
         assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:required"));
         assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:enabled"));
         assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:type"));
-        //assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:diff"));
 
 
 /*
@@ -83,7 +81,6 @@ public class UIElementStateTest extends TestCase {
         assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:required"));
         assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:enabled"));
         assertEquals("false", XPathUtil.evaluateAsString(host, "boolean(//*[@id='input-missing']/bf:data/@bf:type)"));
-        //assertEquals(null, XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:diff"));
 
 /*
         assertEquals(null, this.valueChangedListener.getId());
@@ -118,7 +115,6 @@ public class UIElementStateTest extends TestCase {
         assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:required"));
         assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:enabled"));
         assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:type"));
-        //assertEquals(null, XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@bf:diff"));
 
 /*
         assertEquals(null, this.valueChangedListener.getId());
@@ -137,8 +133,6 @@ public class UIElementStateTest extends TestCase {
         assertEquals("item", this.stateChangedListener.getContext("value"));
         assertEquals("true", this.stateChangedListener.getContext("enabled"));
         assertEquals("xs:token", this.stateChangedListener.getContext("type"));
-        // default not present
-        //assertEquals(null, this.stateChangedListener.getContext("diff"));
     }
 
     /**
@@ -195,7 +189,6 @@ public class UIElementStateTest extends TestCase {
         assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:required"));
         assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:enabled"));
         assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:type"));
-        //assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:diff"));
 
         assertEquals("input-existing", this.valueChangedListener.getId());
         assertEquals("input-existing", this.validListener.getId());
@@ -517,32 +510,6 @@ public class UIElementStateTest extends TestCase {
         assertEquals(1, this.stateChangedListener.getPropertyNames().size());
         assertEquals("false", this.stateChangedListener.getContext("enabled"));
     }
-    
-    /**
-     * Tests custom MIP changed notification.
-     *
-     * @throws Exception if any error occurred during the test.
-     */
-//    public void testDiffNotification() throws Exception {
-//        EventTarget eventTarget = this.xformsProcesssorImpl.getContainer().lookup("input-existing").getTarget();
-//        register(eventTarget, false);
-//        this.xformsProcesssorImpl.setControlValue("input-diff", "false");
-//        deregister(eventTarget, false);
-//
-//        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-//        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:valid"));
-//        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:readonly"));
-//        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:required"));
-//        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:enabled"));
-//        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:type"));
-//        //assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@bf:diff"));
-//
-//        assertEquals("input-existing", this.customMIPToggledListener.getId());
-//        
-//        assertEquals(1, this.customMIPToggledListener.getPropertyNames().size());
-//        assertEquals(1, ((Map) this.customMIPToggledListener.getContext()).size());
-//        assertEquals("toggle", this.customMIPToggledListener.getContext("diff"));
-//    }
 
     /**
      * Sets up the test.
@@ -560,7 +527,6 @@ public class UIElementStateTest extends TestCase {
         this.enabledListener = new TestEventListener();
         this.disabledListener = new TestEventListener();
         this.stateChangedListener = new TestEventListener();
-        this.customMIPToggledListener = new TestEventListener();
 
         this.xformsProcesssorImpl = new XFormsProcessorImpl();
         this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("UIElementStateTest.xhtml"));
@@ -594,7 +560,6 @@ public class UIElementStateTest extends TestCase {
         this.enabledListener = null;
         this.disabledListener = null;
         this.stateChangedListener = null;
-        this.customMIPToggledListener = null;
     }
 
     private void register(EventTarget eventTarget, boolean bubbles) {
@@ -608,7 +573,6 @@ public class UIElementStateTest extends TestCase {
         eventTarget.addEventListener(XFormsEventNames.ENABLED, this.enabledListener, bubbles);
         eventTarget.addEventListener(XFormsEventNames.DISABLED, this.disabledListener, bubbles);
         eventTarget.addEventListener(BetterFormEventNames.STATE_CHANGED, this.stateChangedListener, bubbles);
-        eventTarget.addEventListener(BetterFormEventNames.CUSTOM_MIP_CHANGED, this.customMIPToggledListener, bubbles);
     }
 
     private void deregister(EventTarget eventTarget, boolean bubbles) {
@@ -622,7 +586,6 @@ public class UIElementStateTest extends TestCase {
         eventTarget.removeEventListener(XFormsEventNames.ENABLED, this.enabledListener, bubbles);
         eventTarget.removeEventListener(XFormsEventNames.DISABLED, this.disabledListener, bubbles);
         eventTarget.removeEventListener(BetterFormEventNames.STATE_CHANGED, this.stateChangedListener, bubbles);
-        eventTarget.removeEventListener(BetterFormEventNames.CUSTOM_MIP_CHANGED, this.customMIPToggledListener, bubbles);
     }
 
 }

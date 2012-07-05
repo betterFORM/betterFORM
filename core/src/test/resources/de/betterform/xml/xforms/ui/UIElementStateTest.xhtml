@@ -8,8 +8,7 @@
     xmlns:xf="http://www.w3.org/2002/xforms"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ev="http://www.w3.org/2001/xml-events"
-    xmlns:bfc="http://betterform.sourceforge.net/xforms/customMIPs">
+    xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
         <meta name="author" content="unl at users.sourceforge.net"/>
         <meta name="description" content="test form for the ui element state"/>
@@ -26,16 +25,13 @@
                     <trigger>trigger</trigger>
                     <calculate>calculate</calculate>
                     <date>2008-12-12</date>
-                    <diff>true</diff>
                 </data>                
             </xf:instance>
             <xf:bind id="bind-existing" nodeset="item[1]"
                 constraint="../constraint='true'"
                 readonly="../readonly='true'"
                 required="../required='true'"
-                relevant="../relevant='true'"
-            	bfc:diff="../diff='true'"
-            />
+                relevant="../relevant='true'"/>
             <xf:bind id="bind-date" nodeset="date[1]" type="date"/>
             <xf:bind id="bind-missing" nodeset="item[2]"/>
 
@@ -43,7 +39,6 @@
             <xf:bind id="bind-readonly" nodeset="readonly"/>
             <xf:bind id="bind-required" nodeset="required"/>
             <xf:bind id="bind-relevant" nodeset="relevant"/>
-            <xf:bind id="bind-diff" nodeset="diff"/>
 
             <xf:bind id="bind-trigger" nodeset="trigger"/>
             <xf:bind id="bind-calculate" nodeset="calculate" calculate="../trigger"/>
@@ -59,7 +54,6 @@
             <xf:input id="input-readonly" bind="bind-readonly"/>
             <xf:input id="input-required" bind="bind-required"/>
             <xf:input id="input-relevant" bind="bind-relevant"/>
-            <xf:input id="input-diff" bind="bind-diff"/>
 
             <xf:input id="input-trigger" bind="bind-trigger"/>
             <xf:input id="input-calculate" bind="bind-calculate"/>

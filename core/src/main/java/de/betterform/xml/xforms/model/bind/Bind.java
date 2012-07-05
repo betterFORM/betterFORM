@@ -419,7 +419,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 	            this.constraintReferences = this.referenceFinder.getReferences(this.constraint, getPrefixMapping(), this.container);
 	        }
 
-	        this.customMIPs = getBFAttributes();
+	        this.customMIPs = getCustomMIPAttributes();
 	        if (!this.customMIPs.isEmpty()) {
 	        	this.customMIPReferences = new HashMap<String, Set>();
 	           	for (String key : this.customMIPs.keySet()) {
@@ -457,6 +457,8 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 
                     // 4.2.1 - 4.b applying model item properties to each node
                     initializeModelItemProperties(modelItem);
+                    
+                    
                 }
             }
         }

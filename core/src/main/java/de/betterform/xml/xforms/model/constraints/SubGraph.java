@@ -63,8 +63,12 @@ public class SubGraph extends DependencyGraph {
 
             if (index < 0) {
                 // not visited yet ...
-                clonedVertex = createSubVertex(originalVertex.relativeContext, originalVertex.instanceNode, originalVertex.xpathExpression, originalVertex.getVertexType());
-                this.vertices.add(clonedVertex);
+            	if (originalVertex.getVertexType() == Vertex.CUSTOM_VERTEX) {
+            		clonedVertex = createSubVertex(originalVertex.relativeContext, originalVertex.instanceNode, originalVertex.xpathExpression, originalVertex.getVertexType(), ((CustomVertex) originalVertex).getPrefix());	
+            	} else {
+            		clonedVertex = createSubVertex(originalVertex.relativeContext, originalVertex.instanceNode, originalVertex.xpathExpression, originalVertex.getVertexType(), null);
+            	}
+            	this.vertices.add(clonedVertex);
 
                 if (clonedParent != null) {
                     clonedParent.addDep(clonedVertex);
@@ -92,7 +96,7 @@ public class SubGraph extends DependencyGraph {
      * @return a new vertex of specified type
      */
     private Vertex createSubVertex(BetterFormXPathContext relativeContext, Node instanceNode, String expression,
-                                   short property) {
+                                   short property, String prefix) {
         Vertex v = null;
 
         switch (property) {
@@ -118,6 +122,11 @@ public class SubGraph extends DependencyGraph {
 
             case Vertex.REQUIRED_VERTEX:
                 v = new RequiredVertex(relativeContext, instanceNode, expression);
+
+                break;
+                
+            case Vertex.CUSTOM_VERTEX:
+                v = new CustomVertex(relativeContext, instanceNode, expression, prefix);
 
                 break;
         }
