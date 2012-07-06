@@ -137,21 +137,20 @@
         <!-- for DWR AJAX -->
 
         <!--todo: the resource path is hardcoded here - should be passed in as param to this stylesheet -->
-        <!--
+
         <script type="text/javascript" src="{concat($contextroot,'/bfResources/scripts/dwr.js')}">&#160;</script><xsl:text>
         </xsl:text>
-        -->
 
+        <!--
         <script type="text/javascript" src="{concat($contextroot,'/Flux/engine.js')}">&#160;</script><xsl:text>
 </xsl:text>
-        <!-- for DWR AJAX -->
         <script type="text/javascript" src="{concat($contextroot,'/Flux/interface/Flux.js')}">&#160;</script><xsl:text>
 </xsl:text>
         <script type="text/javascript" src="{concat($contextroot,'/Flux/interface/XFormsModelElement.js')}">&#160;</script><xsl:text>
 </xsl:text>
-        <!-- for DWR AJAX -->
         <script type="text/javascript" src="{concat($contextroot,'/Flux/util.js')}">&#160;</script><xsl:text>
 </xsl:text>
+        -->
     </xsl:template>
 
     <xsl:template name="copyInlineScript">
@@ -182,11 +181,12 @@
     <xsl:template name="addDojoRequires"/>
 
     <xsl:template name="assemble-control-classes">
-
+        <xsl:param name="appearance"/>
+        <!-- TODO: JT: if meadiatype is set appearance should not be present  -->
         <xsl:variable name="name-classes">
             <xsl:call-template name="get-name-classes">
                 <!--todo: check this-->
-                <!--<xsl:with-param name="appearance" select="$appearance"/>-->
+                <xsl:with-param name="appearance" select="$appearance"/>
             </xsl:call-template>
         </xsl:variable>
 
@@ -200,6 +200,10 @@
 
         <xsl:variable name="author-classes">
             <xsl:call-template name="get-author-classes"/>
+        </xsl:variable>
+
+        <xsl:variable name="mediatype-classes" >
+            <xsl:call-template name="get-mediatype-classes"/>
         </xsl:variable>
 
         <xsl:variable name="incremental">
@@ -221,7 +225,7 @@
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses))"/>
+        <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
     </xsl:template>
 
     <xsl:template name="getXSDType">
@@ -241,7 +245,6 @@
             <xsl:when test="bf:data/@bf:type">
                 <xsl:value-of select="bf:data/@bf:type"/>
             </xsl:when>
-            <xsl:otherwise/>
         </xsl:choose>
     </xsl:template>
 
@@ -250,17 +253,32 @@
         <xsl:param name="appearance" />
 
         <xsl:variable name="fullName"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$name"/></xsl:call-template></xsl:variable>
-        <xsl:variable name="displayAppearance"><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$appearance"/></xsl:call-template></xsl:variable>
+        <xsl:variable name="displayAppearance">
+            <xsl:choose>
+                <xsl:when test="contains($appearance,':')">
+                    <xsl:variable name="namespacePart">
+                        <xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="substring-before($appearance, ':')"/></xsl:call-template>
+                    </xsl:variable>
+                    <xsl:variable name="namePart">
+                        <xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="substring-after($appearance,':')"/></xsl:call-template>
+                    </xsl:variable>
+                    <xsl:value-of select="concat($namespacePart,$namePart)"/>
+                </xsl:when>
+                <xsl:otherwise><xsl:call-template name="toUpperCaseFirstLetter"><xsl:with-param name="name" select="$appearance"/></xsl:call-template></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <!--<xsl:message>fullName:<xsl:value-of select="$fullName"/> appearance:<xsl:value-of select="$appearance"/> DisplayAppearance:<xsl:value-of select="$displayAppearance"/></xsl:message>-->
         <xsl:choose>
+            <xsl:when test="@appearance and $name = 'group'">
+                <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>
+            </xsl:when>
             <xsl:when test="@appearance">
                 <!--<xsl:value-of select="concat($xf,$name, ' ', $appearance, '-',$name)"/>-->
-                <!--<xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/>-->
-                <xsl:value-of select="concat($xf,$displayAppearance,$fullName, ' app',$displayAppearance)"/>
+                <xsl:value-of select="concat($xf,$fullName, ' a',$displayAppearance)"/>
                 <!--<xsl:message>computedClassAppearance : <xsl:value-of select="concat($xf,$fullName, ' ', $xf,$displayAppearance,$fullName)"/></xsl:message>-->
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($xf,$fullName, ' appDefault')"/>
+                <xsl:value-of select="concat($xf,$fullName, ' aDefault')"/>
                 <!--<xsl:message>computedClass : <xsl:value-of select="concat($xf,$fullName)"/></xsl:message>-->
             </xsl:otherwise>
         </xsl:choose>
@@ -366,6 +384,15 @@
         <xsl:if test="@class">
             <xsl:value-of select="@class"/>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="get-mediatype-classes">
+        <xsl:choose>
+            <xsl:when test="starts-with(@mediatype, 'image/')">mediatypeImage</xsl:when>
+            <xsl:when test="starts-with(@mediatype, 'text/')">mediatype<xsl:call-template name="toUpperCaseFirstLetter">
+                <xsl:with-param name="name" select="substring-after(@mediatype,'/')"/></xsl:call-template></xsl:when>
+            <xsl:otherwise>mediatypeText</xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 

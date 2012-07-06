@@ -82,7 +82,7 @@
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
-    <!--<xsl:variable name="include-betterform-css" select="if(contains(//body/@class,'no-bf-css')) then 'false' else 'true'" />-->
+    <xsl:variable name="include-betterform-css" select="if(contains(//xhtml:body/@class,'no-bf-css')) then 'false' else 'true'"  />
 
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
@@ -98,7 +98,7 @@
     <!-- ####################################################################################################### -->
     <xsl:template match="head">
 
-        <xsl:comment> *** powered by betterFORM, &amp;copy; 2011 *** </xsl:comment>
+        <xsl:comment> *** powered by betterFORM, &amp;copy; 2012 *** </xsl:comment>
 
         <head>
             <title>
@@ -138,11 +138,20 @@
         </head>
     </xsl:template>
 
+    <!--
+    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    include-xforms-css imports the default stylesheets.
+    This template can be overwritten when additional files are needed.
+    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    -->
     <xsl:template name="include-xforms-css">
         <!-- include betterForm default stylesheet -->
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
         <!--<xsl:if test="$include-betterform-css='true'">-->
+        <xsl:message>no bf css:<xsl:value-of select="$include-betterform-css"/></xsl:message>
+        <xsl:if test="$include-betterform-css!='false'">
             <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        </xsl:if>
         <!--</xsl:if>-->
     </xsl:template>
 
@@ -297,7 +306,19 @@
                              This option allows to mix HTML forms with XForms markup. -->
                             <!-- todo: issue to revisit: this obviously does not work in case there's only one xforms control in the document. In that case the necessary form tag is not written. -->
                             <!-- hack solution: add an output that you style invisible to the form to make it work again. -->
-                            <xsl:apply-templates mode="inline"/>
+                            <!-- hack to enable xforms controls without surrounding xf:group -->
+                            <xsl:variable name="inlineContent"><xsl:apply-templates mode="inline"/></xsl:variable>
+                            <xsl:choose>
+                                <xsl:when test="exists($inlineContent//xf:*)">
+                                    <xsl:element name="form">
+                                        <xsl:call-template name="createFormAttributes"/>
+                                        <xsl:apply-templates select="*"/>
+                                    </xsl:element>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:copy-of select="$inlineContent"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </xsl:when>
                         <xsl:otherwise>
                             <!-- in case there are multiple outermost xforms elements we are forced to create
@@ -394,14 +415,17 @@
                 <div id="openclose">
                     <a href="javascript:toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
+                    <!-- todo: won't work with new xhtml.xsl: id changed to 'bfDebug' instead of 'debug-pane' -->
                     <div id="debug-pane" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
                         <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
                             <a href="http://www.betterform.de">
                                 <img style="vertical-align:text-bottom; margin-right:5px;"
                                      src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
                             </a>
-                            <span>&#xA9; 2011 betterFORM</span>
+                            <span>&#xA9; 2012 betterFORM</span>
                         </div>
+
+                        <!-- todo: won't work with new xhtml.xsl: id changed to 'bfDebugLinks' instead of 'debug-pane-links' -->
                         <div id="debug-pane-links">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                         </div>

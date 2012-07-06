@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+Copyright (c) 2010, Nick Van den Bleeken
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this
+      list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, 
+      this list of conditions and the following disclaimer in the documentation 
+      and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY 
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT 
+SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT 
+OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner" xmlns:runner="http://www.w3c.org/MarkUp/Forms/XForms/Test/Runner">
+    <xs:element name="test-case">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+
+
+
+                <xs:element name="open">
+                    <xs:complexType>
+                        <xs:attribute name="href" use="required" type="xs:anyURI"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-title">
+                    <xs:complexType>
+                        <xs:attribute name="title" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-present">
+                    <xs:complexType>
+                        <xs:attribute name="type" use="required">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:token">
+                                    <xs:enumeration value="input"/>
+                                    <xs:enumeration value="secret"/>
+                                    <xs:enumeration value="textarea"/>
+                                    <xs:enumeration value="output"/>
+                                    <xs:enumeration value="upload"/>
+                                    <xs:enumeration value="range"/>
+                                    <xs:enumeration value="trigger"/>
+                                    <xs:enumeration value="submit"/>
+                                    <xs:enumeration value="select"/>
+                                    <xs:enumeration value="select1"/>
+                                    <xs:enumeration value="group"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-not-present">
+                    <xs:complexType>
+                        <xs:attribute name="type" use="required">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:token">
+                                    <xs:enumeration value="input"/>
+                                    <xs:enumeration value="secret"/>
+                                    <xs:enumeration value="textarea"/>
+                                    <xs:enumeration value="output"/>
+                                    <xs:enumeration value="upload"/>
+                                    <xs:enumeration value="range"/>
+                                    <xs:enumeration value="trigger"/>
+                                    <xs:enumeration value="submit"/>
+                                    <xs:enumeration value="select"/>
+                                    <xs:enumeration value="select1"/>
+                                    <xs:enumeration value="group"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-valid">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-invalid">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-readonly">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-readwrite">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-required">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-optional">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-selection-options">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="options" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="select-option">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="option" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="deselect-by-value">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-inner-html">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-inner-html-contains">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-value">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                        <xs:attribute name="trim" type="xs:boolean" use="optional" default="false"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-value-contains">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-control-value-in-range">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="start" use="required" type="xs:decimal"/>
+                        <xs:attribute name="end" use="required" type="xs:decimal"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-exception">
+                    <xs:complexType>
+                        <xs:attribute name="type" use="required">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:token">
+                                    <xs:enumeration value="xforms-binding-exception"/>
+                                    <xs:enumeration value="xforms-compute-exception"/>
+                                    <xs:enumeration value="xforms-version-exception"/>
+                                    <xs:enumeration value="xforms-link-exception"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-message">
+                    <xs:complexType>
+                        <xs:attribute name="message" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-message-or-exception">
+                    <xs:complexType>
+                        <xs:attribute name="message" use="required"/>
+                        <xs:attribute name="exception" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-messages">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="message" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-no-messages"/>
+                <xs:element name="type-input">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                        <xs:attribute name="incremental" use="optional" default="false"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="type-secret">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="type-textarea">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                        <xs:attribute name="value" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="click">
+                    <xs:complexType>
+                        <xs:attribute name="locator" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="wait-for-page-to-load" type="xs:string"/>
+                <xs:element name="assert-text-present">
+                    <xs:complexType>
+                        <xs:attribute name="text" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="assert-text-not-present">
+                    <xs:complexType>
+                        <xs:attribute name="text" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="fail">
+                    <xs:complexType>
+                        <xs:attribute name="msg" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

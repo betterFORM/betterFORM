@@ -491,6 +491,34 @@ public class InsertActionTest extends BetterFormTestCase {
         assertEquals("model-1", this.refreshListener.getId());
     }
 
+
+    public void testInsertRepeatedRange() throws Exception {
+        assertEquals(1, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat)"));
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat/range)"));
+
+        this.processor.dispatch("insert-repeated-range", DOMEventNames.ACTIVATE);
+
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat)"));
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat[1]/range)"));
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat[2]/range)"));
+        assertEquals("3",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[1]/range[1])"));
+        assertEquals("4",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[1]/range[2])"));
+        assertEquals("3",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[2]/range[1])"));
+        assertEquals("4",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[2]/range[2])"));
+
+        this.processor.dispatch("insert-repeated-range", DOMEventNames.ACTIVATE);
+
+        assertEquals(3, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat)"));
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat[1]/range)"));
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat[2]/range)"));
+        assertEquals(2, (int)evaluateInInstanceAsDouble("instance-range-integer", "count(/data/repeat[3]/range)"));
+        assertEquals("3",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[1]/range[1])"));
+        assertEquals("4",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[1]/range[2])"));
+        assertEquals("3",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[2]/range[1])"));
+        assertEquals("4",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[2]/range[2])"));
+        assertEquals("3",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[3]/range[1])"));
+        assertEquals("4",  evaluateInInstanceAsString("instance-range-integer", "string(/data/repeat[3]/range[2])"));
+    }
     /**
      * Sets up the test.
      *

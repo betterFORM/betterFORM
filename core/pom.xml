@@ -1,8 +1,7 @@
 <!--
   ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
@@ -12,15 +11,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.betterform</groupId>
-    <artifactId>betterform-core</artifactId>
-    <version>4.1</version>
+    <artifactId xmlns="">betterform-core</artifactId>
+    <version xmlns="">5.0</version>
 
     <packaging>jar</packaging>
 
     <name>betterFORM Core</name>
     <description>betterForm Core Project</description>
-    <inceptionYear>2010</inceptionYear>
-    <url>http://betterform.sourceforge.net</url>
+    <inceptionYear>2012</inceptionYear>
+    <url>http://betterform.de</url>
 
 
     <build>
@@ -28,6 +27,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -90,119 +90,119 @@
     and execute ant update-maven-poms
     -->
 
-    <dependencies>
-<dependency>
-<groupId>net.sf.saxon</groupId>
-<artifactId>saxon</artifactId>
-<version>9.2.1.5</version>
-</dependency>
-<dependency>
-<groupId>commons-codec</groupId>
-<artifactId>commons-codec</artifactId>
-<version>1.4</version>
-</dependency>
-<dependency>
-<groupId>commons-fileupload</groupId>
-<artifactId>commons-fileupload</artifactId>
-<version>1.2.1</version>
-</dependency>
-<dependency>
-<groupId>httpcomponents</groupId>
-<artifactId>httpcomponents-core</artifactId>
-<version>4.1</version>
-</dependency>
-<dependency>
-<groupId>httpcomponents</groupId>
-<artifactId>httpcomponents-client</artifactId>
-<version>4.1.1</version>
-</dependency>
-<dependency>
-<groupId>httpcomponents</groupId>
-<artifactId>httpcomponents-mime</artifactId>
-<version>4.1.1</version>
-</dependency>
-<dependency>
-<groupId>commons-io</groupId>
-<artifactId>commons-io</artifactId>
-<version>1.4</version>
-</dependency>
-<dependency>
-<groupId>commons-lang</groupId>
-<artifactId>commons-lang</artifactId>
-<version>2.4</version>
-</dependency>
-<dependency>
-<groupId>commons-logging</groupId>
-<artifactId>commons-logging</artifactId>
-<version>1.1.1</version>
-</dependency>
-<dependency>
-<groupId>javax.activation</groupId>
-<artifactId>activation</artifactId>
-<version>1.1.1</version>
-</dependency>
-<dependency>
-<groupId>javax.mail</groupId>
-<artifactId>mail</artifactId>
-<version>1.4.2</version>
-</dependency>
-<dependency>
-<groupId>log4j</groupId>
-<artifactId>log4j</artifactId>
-<version>1.2.15</version>
-<exclusions>
-<exclusion>
-<artifactId>jmxtools</artifactId>
-<groupId>com.sun.jdmk</groupId>
-</exclusion>
-<exclusion>
-<artifactId>jmxri</artifactId>
-<groupId>com.sun.jmx</groupId>
-</exclusion>
-</exclusions>
-</dependency>
-<dependency>
-<groupId>xerces</groupId>
-<artifactId>xercesImpl</artifactId>
-<version>2.11.02</version>
-</dependency>
-<dependency>
-<groupId>xml-apis</groupId>
-<artifactId>xml-apis</artifactId>
-<version>1.4.01</version>
-</dependency>
-<dependency>
-<groupId>org.apache.xmlrpc</groupId>
-<artifactId>xmlrpc-common</artifactId>
-<version>3.1.2</version>
-</dependency>
-<dependency>
-<groupId>org.apache.xmlrpc</groupId>
-<artifactId>xmlrpc-client</artifactId>
-<version>3.1.2</version>
-</dependency>
-<dependency>
-<groupId>org.apache.xmlrpc</groupId>
-<artifactId>xmlrpc-server</artifactId>
-<version>3.1.2</version>
-</dependency>
-<dependency>
-<groupId>net.sf.ehcache</groupId>
-<artifactId>ehcache</artifactId>
-<version>1.6.2</version>
-</dependency>
-<dependency>
-<groupId>org.apache.ant</groupId>
-<artifactId>ant</artifactId>
-<version>1.8.2</version>
-</dependency>
-<dependency>
-<groupId>junit</groupId>
-<artifactId>junit</artifactId>
-<version>4.10</version>
-<scope>test</scope>
-</dependency>
-</dependencies>
+    <dependencies xmlns="">
+      <dependency>
+         <groupId>net.sf.saxon</groupId>
+         <artifactId>saxon</artifactId>
+         <version>9.2.1.5</version>
+      </dependency>
+      <dependency>
+         <groupId>commons-codec</groupId>
+         <artifactId>commons-codec</artifactId>
+         <version>1.6</version>
+      </dependency>
+      <dependency>
+         <groupId>commons-fileupload</groupId>
+         <artifactId>commons-fileupload</artifactId>
+         <version>1.2.1</version>
+      </dependency>
+      <dependency>
+         <groupId>httpcomponents</groupId>
+         <artifactId>httpcomponents-core</artifactId>
+         <version>4.1</version>
+      </dependency>
+      <dependency>
+         <groupId>httpcomponents</groupId>
+         <artifactId>httpcomponents-client</artifactId>
+         <version>4.1.1</version>
+      </dependency>
+      <dependency>
+         <groupId>httpcomponents</groupId>
+         <artifactId>httpcomponents-mime</artifactId>
+         <version>4.1.1</version>
+      </dependency>
+      <dependency>
+         <groupId>commons-io</groupId>
+         <artifactId>commons-io</artifactId>
+         <version>2.1</version>
+      </dependency>
+      <dependency>
+         <groupId>commons-lang</groupId>
+         <artifactId>commons-lang</artifactId>
+         <version>3.1</version>
+      </dependency>
+      <dependency>
+         <groupId>commons-logging</groupId>
+         <artifactId>commons-logging</artifactId>
+         <version>1.1.1</version>
+      </dependency>
+      <dependency>
+         <groupId>javax.activation</groupId>
+         <artifactId>activation</artifactId>
+         <version>1.1.1</version>
+      </dependency>
+      <dependency>
+         <groupId>javax.mail</groupId>
+         <artifactId>mail</artifactId>
+         <version>1.4.2</version>
+      </dependency>
+      <dependency>
+         <groupId>log4j</groupId>
+         <artifactId>log4j</artifactId>
+         <version>1.2.15</version>
+         <exclusions>
+            <exclusion>
+               <artifactId>jmxtools</artifactId>
+               <groupId>com.sun.jdmk</groupId>
+            </exclusion>
+            <exclusion>
+               <artifactId>jmxri</artifactId>
+               <groupId>com.sun.jmx</groupId>
+            </exclusion>
+         </exclusions>
+      </dependency>
+      <dependency>
+         <groupId>xerces</groupId>
+         <artifactId>xercesImpl</artifactId>
+         <version>2.11.02</version>
+      </dependency>
+      <dependency>
+         <groupId>xml-apis</groupId>
+         <artifactId>xml-apis</artifactId>
+         <version>1.4.01</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.xmlrpc</groupId>
+         <artifactId>xmlrpc-common</artifactId>
+         <version>3.1.2</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.xmlrpc</groupId>
+         <artifactId>xmlrpc-client</artifactId>
+         <version>3.1.2</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.xmlrpc</groupId>
+         <artifactId>xmlrpc-server</artifactId>
+         <version>3.1.2</version>
+      </dependency>
+      <dependency>
+         <groupId>net.sf.ehcache</groupId>
+         <artifactId>ehcache</artifactId>
+         <version>1.6.2</version>
+      </dependency>
+      <dependency>
+         <groupId>org.apache.ant</groupId>
+         <artifactId>ant</artifactId>
+         <version>1.8.2</version>
+      </dependency>
+      <dependency>
+         <groupId>junit</groupId>
+         <artifactId>junit</artifactId>
+         <version>4.10</version>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
     <!-- END OF GENERATED DEPENDENCIES - configure libs in ../build.properties.xml -->
 
     <developers>

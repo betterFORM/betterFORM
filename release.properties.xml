@@ -1,0 +1,70 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!--
+###################################################################################
+    betterFORM RELEASE PROPERTIES
+
+    These properties must only be used in combination with web/build-release.xml
+
+    Ant properties utilized during development can be found in build.properties.xml
+        in the same directory
+###################################################################################
+-->
+<root>
+    <properties>
+        <javac>
+            <deprecation>off</deprecation>
+            <debug>off</debug>
+            <optimize>on</optimize>
+            <version>1.6</version>
+        </javac>
+    </properties>
+
+    <config>
+
+        <!--+ web.xml configuration
+            +   caching: enables caching of all resources served by the ResourceServlet (scripts / css / images)
+            +   debugDWR: enable / disable dwr logging -->
+        <webinf>
+            <caching>true</caching>
+            <debugDWR>false</debugDWR>
+        </webinf>
+
+
+        <!--+ betterform-config configuration
+            +   generateDefaultAlerts: if enabled default alerts are generated for all ui controls
+            +   debugComponents: enables the betterform debug bar and event logger
+            +   enableEventOptimization if enabled, only events present within the current form are processed
+            +   initLogging if set to false logging is not enabled at all
+            +   doIncludes: if enabled forms are scanned for bf:include tags and transformed accordingly
+            +   mailadmin: email address of the Server Admin -->
+        <bfconfig>
+            <generateDefaultAlerts>false</generateDefaultAlerts>
+            <debugComponents>false</debugComponents>
+            <enableEventOptimization>true</enableEventOptimization>
+            <initLogging>true</initLogging>
+            <doIncludes>false</doIncludes>
+            <mailadmin>foo@bar.de</mailadmin>
+        </bfconfig>
+
+
+        <!--+ log4j.xml Configuration
+            +   appender: log4j appender, decides where the log output goes to
+            +           possible values are: 'SHELL' or 'ROLLING_FILE'
+            +   loglevel define log levels for root,betterform,ehcache and drw
+            +           common log levels are: 'DEBUG', 'INFO', 'WARN','DEBUG','TRACE' -->
+        <log4j>
+            <appender>SHELL</appender>
+            <loglevel>
+                <root>ERROR</root>
+                <betterform>ERROR</betterform>
+                <ehcache>ERROR</ehcache>
+                <dwr>ERROR</dwr>
+            </loglevel>
+        </log4j>
+    </config>
+</root>
+

@@ -629,7 +629,7 @@
         </javadoc>
 
         <!--set version filter-->
-        <filter token="app.version" value="${app.version}"/>
+        <filter token="app.version" value="${app.version.number}"/>
     </target>
 
     <!-- **************************************** DOJO TARGETS **************************************** -->

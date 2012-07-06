@@ -87,7 +87,7 @@
             </div>
             <!--<xf:group appearance="bf:verticalTable" id="environment">-->
                 <!--<xf:label>Environment Parameters</xf:label>-->
-                <div class="xfGroupLabel">Request Parameters</div>
+                <div class="xfGroupLabel">Request Parameters and Headers</div>
                 <xf:output value="bf:appContext('webapp.realpath')">
                     <xf:label>Webapp Realpath</xf:label>
                     <xf:hint>bf:appContext('webapp.realpath')</xf:hint>
@@ -133,6 +133,46 @@
                 <xf:output value="bf:appContext('betterform.locale', 'uk')">
                     <xf:label>Locale</xf:label>
                     <xf:hint>bf:appContext('betterform.locale')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/host')">
+                    <xf:label>Host</xf:label>
+                    <xf:hint>bf:appContext('betterform.locale')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/user-agent')">
+                    <xf:label>User agent</xf:label>
+                    <xf:hint>bf:appContext('http-headers/user-agent')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/referer')">
+                    <xf:label>Referer</xf:label>
+                    <xf:hint>bf:appContext('http-headers/referer')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/accept')">
+                    <xf:label>accept</xf:label>
+                    <xf:hint>bf:appContext('http-headers/accept')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/accept-language')">
+                    <xf:label>accept-language</xf:label>
+                    <xf:hint>bf:appContext('http-headers/accept-language')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/accept-encoding')">
+                    <xf:label>accept-encoding</xf:label>
+                    <xf:hint>bf:appContext('http-headers/accept-encoding')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/connection')">
+                    <xf:label>connection</xf:label>
+                    <xf:hint>bf:appContext('http-headers/connection')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/cookie')">
+                    <xf:label>cookie</xf:label>
+                    <xf:hint>bf:appContext('http-headers/cookie')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/pragma')">
+                    <xf:label>pragma</xf:label>
+                    <xf:hint>bf:appContext('http-headers/pragma')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/cache-control')">
+                    <xf:label>cache-control</xf:label>
+                    <xf:hint>bf:appContext('http-headers/cache-control')</xf:hint>
                 </xf:output>
             <!--</xf:group>-->
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <meta name="author" content="lars.windauer at betterform.de"/>
+        <meta name="description" content="test form for copy control"/>
+        <meta name="version" content="$Id: CopyAttributeTest.xhtml$"/>
+
+        <xf:model id="list_items">
+            <xf:instance xmlns="">
+                <options>
+                    <email label="work" name="Someone" lastname="Anywhere" role="admin">someone@anywhere.de</email>
+                </options>
+            </xf:instance>
+        </xf:model>
+        
+        <xf:model id="form_data">
+            <xf:instance xmlns="">
+                <user_selection>
+                	<email/>
+                </user_selection>
+            </xf:instance>
+        </xf:model>
+        
+    </head>
+    <body>
+        <xf:group>
+            <xf:select1 ref="email" model="form_data">
+                <xf:label>Copy Desc Attribute</xf:label>
+                <xf:itemset nodeset="email/@*" model="list_items">
+                    <xf:label><xf:output value="concat('Attr: ', local-name(.))"/></xf:label>
+                    <xf:copy ref="."/>
+                </xf:itemset>
+            </xf:select1>
+        </xf:group>
+    </body>
+</html>

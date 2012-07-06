@@ -28,3 +28,31 @@ Open issues
 Component mapping with dojo.behavior solves some problems we had with extending controls but is not an
 answer to importing JS and CSS resources. Adding these still requires changing the xslt transform. We should
 add a declarative way of adding these.
+
+ * Using Output within Labels (e.g. of a trigger) does not work yet
+ * Switching a RepeatFull to readonly does not work correctly, handleStateChanged events are only present for
+    repeat items but not the repeat itself.
+ * if behaviours are bound to datatypes like '.xfOutput.xsdString.mediatypeText .xfValue' we are missing a kind of
+   default behaviour or we have to write behaviour matches for all kind of possible datatypes
+   (listing of basic schema datatypes: http://www.w3.org/TR/xmlschema-2/#built-in-datatypes)
+ * xforms-select events within itemsets do not work
+ * validation of DropDownDate (if bf:dropdowndata=xyz is used there must be a corresponding constraint on the bind)
+ * Repeat: the RepeatIndex does not get changed correctly if the index('repeatId') function is used for insert / delete actions
+ * EventOptimization
+    * ClientSide: if not absolut needed, don't send events to the server for every change but in packages
+    * if DOMFocus (in/out) is not used, don't send the events
+
+
+
+To use it
+--------------------------------
+- change betterform-config to use xhtml.xsl instead of dojo.xsl
+- redeploy
+
+The relevant JS classes to be worked on are:
+-XFControl
+-Component
+-XFProcessor
+
+todo: change name of useragent - 'dojo' is not appropriate any more
+todo: check for diffs between XFProcessor and FluxProcessor

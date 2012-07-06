@@ -144,7 +144,10 @@ public class XSLTSubmissionHandler extends AbstractConnector implements Submissi
 
             DOMSource domSource;
             //check for 'parse' param
-            String parseParam = (String) parameters.get("parseString");
+            String parseParam=null;
+            if(parameters.containsKey("parseString")) {
+                parseParam = (String) parameters.get("parseString");
+            }
             if(parseParam != null && parseParam.equalsIgnoreCase("true")){
                 String xmlString = DOMUtil.getTextNodeAsString(instance);
                 domSource = new DOMSource(DOMUtil.parseString(xmlString,true,false));

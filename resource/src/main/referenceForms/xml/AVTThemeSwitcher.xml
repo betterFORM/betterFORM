@@ -66,14 +66,18 @@
     <body class="{theme}">...</body>   
 </html>
                 </code>
-                <xf:model id="model-1">
+                <xf:model>
                     <code>
 <xf:instance id="instance-1" xmlns="">
     <avt>
         <theme>tundra</theme>
+        <date>2012-01-01</date>
+        <time>11:12:23</time>
     </avt>
 </xf:instance>
                     </code>
+                    <xf:bind nodeset="date" type="date"/>
+                    <xf:bind nodeset="time" type="time"/>
                 </xf:model>
                 <code class="ui">
 <xf:group id="outer" appearance="bf:verticalTable">
@@ -93,13 +97,17 @@
         </xf:item>
     </xf:select1>
 
-    <xf:trigger>
-        <xf:label>a sample trigger</xf:label>
-        <xf:message>button clicked</xf:message>
-    </xf:trigger>
-    <xf:input id="input1" ref="theme">
-        <xf:label>current theme</xf:label>
+    <xf:input ref="date">
+        <xf:label>Date:</xf:label>
     </xf:input>
+    <xf:input ref="time" appearance="bf:timetextbox">
+        <xf:label>Time:</xf:label>
+    </xf:input>
+
+    <xf:output id="input1" ref="theme">
+        <xf:label>current theme</xf:label>
+    </xf:output>
+
 </xf:group>
                 </code>
             </div>

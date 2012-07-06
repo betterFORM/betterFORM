@@ -27,9 +27,9 @@
 						<input></input>
 					</data>
                 </xf:instance>
-				<xf:bind nodeset="input[1]" type="date"/>
-				<xf:bind nodeset="input[2]" type="dateTime"/>
-				<xf:bind nodeset="input[3]" type="time"/>
+				<xf:bind nodeset="input[1]" type="xf:date"/>
+				<xf:bind nodeset="input[2]" constraint="false()"/>
+				<xf:bind nodeset="input[3]" type="xf:time"/>
             </xf:model>
         </div>
 
@@ -44,6 +44,10 @@
 				<xf:label>DateTime: </xf:label>
 			</xf:input>
 -->
+			<xf:input ref="input[2]" >
+				<xf:label>Test:</xf:label>
+				<xf:alert>No valid date time</xf:alert>
+			</xf:input>
 			<xf:input ref="input[3]" appearance="bf:dropdowntime">
 				<xf:label>Time:</xf:label>
 				<xf:alert>No valid date time</xf:alert>
@@ -52,6 +56,10 @@
 				<xf:label>Time Result:</xf:label>
 				<xf:alert>No valid date time</xf:alert>
 			</xf:output>
+            <xf:trigger>
+                <xf:label>Set time to 23:23:23</xf:label>
+                <xf:setvalue ref="input[3]" value="'23:23:23'"/>
+            </xf:trigger>
         </xf:group>
     </body>
 </html>

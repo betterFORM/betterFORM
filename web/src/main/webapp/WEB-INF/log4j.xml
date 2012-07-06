@@ -16,7 +16,6 @@
 
     -->
     <!-- LOG4J Default Appenders (Tomat / Jetty) -->
-<!--
     <appender name="ROLLING_FILE" class="org.apache.log4j.RollingFileAppender">
         <param name="File" value="betterform.log"/>
         <param name="MaxFileSize" value="10MB"/>
@@ -25,18 +24,18 @@
         </layout>
     </appender>
 
+<!--
     <appender name="FILE" class="org.apache.log4j.FileAppender">
         <param name="File" value="betterform.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p %c %x: %m%n"/>
         </layout>
     </appender>
-
     <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
         <appender-ref ref="SHELL"/>
     </appender>
-
 -->
+
     <!-- LOG4J JBoss Appender
         (copy JBOSS_HOME/lib/jboss-common.jar to betterform/WEB-INF/lib to use JBoss appenders)
     -->
@@ -56,12 +55,15 @@
         <priority value="ERROR"/>
     </category>
 
+    <!-- custom log level -->
+<!--
     <category name="de.betterform.xml.xforms.action">
-        <priority value="DEBUG"/>
+        <priority value="ERROR"/>
     </category>
+-->
 
     <category name="de.betterform">
-        <priority value="DEBUG"/>
+        <priority value="ERROR"/>
     </category>
 
     <logger name="net.sf.ehcache">

@@ -152,7 +152,7 @@ public class Instance extends XFormsElement {
      * Returns an iterator over all existing model items.
      *
      * @return an iterator over all existing model items.
-     * @throws XPathException
+     * @throws XFormsException
      */
     public Iterator iterateModelItems() throws XFormsException {
         return iterateModelItems(getInstanceNodeset(), 1, "/", Collections.EMPTY_MAP, null, true);
@@ -162,7 +162,6 @@ public class Instance extends XFormsElement {
      * Returns an iterator over the specified model items.
      *
      * @param nodeset from which the model items should be retrieved
-     * @throws XPathException
      */
     public Iterator iterateModelItems(List nodeset, boolean deep) {
         // create list, fill and iterate it
@@ -346,6 +345,11 @@ public class Instance extends XFormsElement {
 
         String[] canonicalParts = XPathUtil.getNodesetAndPredicates(canonicalPath);
 
+        if (originNode.hasChildNodes()) {
+            setDatatypeOnChilds(originNode, insertedNode);
+        }
+
+
         // dispatch internal betterform event (for instant repeat updating)
         HashMap map = new HashMap();
         map.put("nodeset", canonicalParts[0]);
@@ -358,6 +362,27 @@ public class Instance extends XFormsElement {
         }
         
         return insertedNode;
+    }
+    
+    private void setDatatypeOnChilds(Node originNode, Node insertedNode) {
+        NodeList originChilds = originNode.getChildNodes();
+        NodeList insertedChilds = insertedNode.getChildNodes();
+        if (insertedChilds.getLength() == originChilds.getLength()) {
+            for (int i = 0; i < originChilds.getLength(); i++) {
+                Node originChild = originChilds.item(i);
+                Node insertedChild = insertedChilds.item(i);
+
+                ModelItem modelItemOrigin = getModelItem(originChild);
+                ModelItem modelItemInserted = getModelItem(insertedChild);
+                modelItemInserted.getDeclarationView().setDatatype(modelItemOrigin.getDeclarationView().getDatatype());
+
+                if (originChild.hasChildNodes()) {
+                    setDatatypeOnChilds(originChild, insertedChild);
+                }
+            }
+        } else {
+            LOGGER.debug(this + " inserted node has fewer child than origin.");
+        }
     }
 
     /**
@@ -451,7 +476,7 @@ public class Instance extends XFormsElement {
      *
      * @param document the instance document.
      */
-    public void setInstanceDocument(Document document) {
+    public void setInstanceDocument(Document document) throws XFormsException {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("setInstanceDocument");
             LOGGER.debug("former instance:");
@@ -515,13 +540,17 @@ public class Instance extends XFormsElement {
      * This is needed for resetting an instance to its initial state when no
      * initial instance exists.
      */
-    public void storeInitialInstance() {
+    void storeInitialInstance() throws XFormsException {
         if (this.initialInstance == null) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(this + " store initial instance");
                 // DOMUtil.prettyPrintDOM((this.instanceDocument.getDocumentElement()));
             }
-            this.initialInstance = (Element) this.instanceDocument.getDocumentElement().cloneNode(true);
+            try{
+                this.initialInstance = (Element) this.instanceDocument.getDocumentElement().cloneNode(true);                
+            }catch(Exception e){
+                throw new XFormsException("Instance '" + this.id + "' has no root element",e);
+            }
             NamespaceResolver.applyNamespaces(this.element, this.initialInstance);
 
 /*
@@ -758,12 +787,12 @@ public class Instance extends XFormsElement {
         if (deep) {
             NamedNodeMap attributes = node.getAttributes();
             for (int index = 0; attributes != null && index < attributes.getLength(); index++) {
-                listModelItems(list, (Node) attributes.item(index), deep);
+                listModelItems(list, attributes.item(index), deep);
             }
             if(node.getNodeType() !=  Node.ATTRIBUTE_NODE){
                 NodeList children = node.getChildNodes();
                 for (int index = 0; index < children.getLength(); index++) {
-                    listModelItems(list, (Node) children.item(index), deep);
+                    listModelItems(list, children.item(index), deep);
                 }
             }            
         }

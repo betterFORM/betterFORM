@@ -4,29 +4,74 @@
   -->
 
 <root>
+    <app>
+        <name>betterform</name>
+        <version>
+            <name>springBud</name>
+            <number>5.0</number>
+        </version>
+    </app>
     <properties>
-        <!-- path to forms for modules (actual: src/main/xforms src/main/html)-->
-        <rootDir>..</rootDir>
-        <!-- optional variable if user wants to deploy betterform to a different path-->
-        <webappPath>/Applications/apache-tomcat-5.5.26/webapps</webappPath>
         <javac>
             <deprecation>off</deprecation>
             <debug>on</debug>
             <optimize>off</optimize>
-            <version>1.5</version>
+            <version>1.6</version>
         </javac>
-        <dojo>dojo-release-1.6.1-src</dojo>
+
+        <dojo>dojo-release-1.7.2-src-patched</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
+        <ckeditor>ckeditor_3.6.3</ckeditor>
         <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
     </properties>
-    <app>
-        <name>betterform</name>
-        <version>4.1</version>
-    </app>
+
+    <config>
+        <!--+ web.xml configuration
+            +   caching: enables caching of all resources served by the ResourceServlet (scripts / css / images)
+            +   debugDWR: enable / disable dwr logging
+        -->
+        <webinf>
+            <caching>false</caching>
+            <debugDWR>false</debugDWR>
+        </webinf>
+        <!--+ betterform-config configuration
+            +   generateDefaultAlerts: if enabled default alerts are generated for all ui controls
+            +   debugComponents: enables the betterform debug bar and event logger
+            +   enableEventOptimization if enabled, only events present within the current form are processed
+            +   initLogging if set to false logging is not enabled at all
+            +   doIncludes: if enabled forms are scanned for bf:include tags and transformed accordingly
+            +   mailadmin: email address of the Server Admin
+        -->
+        <bfconfig>
+            <generateDefaultAlerts>false</generateDefaultAlerts>
+            <debugComponents>true</debugComponents>
+            <enableEventOptimization>true</enableEventOptimization>
+            <initLogging>true</initLogging>
+            <doIncludes>false</doIncludes>
+            <mailadmin>foo@bar.de</mailadmin>
+        </bfconfig>
+        <!--+ log4j.xml Configuration
+            +   appender: log4j appender, decides where the log output goes to
+            +           possible values are: 'SHELL' or 'ROLLING_FILE'
+            +   loglevel define log levels for root,betterform,ehcache and drw
+            +           common log levels are: 'DEBUG', 'INFO', 'WARN','DEBUG','TRACE'
+        -->
+        <log4j>
+            <appender>SHELL</appender>
+            <loglevel>
+                <root>ERROR</root>
+                <betterform>DEBUG</betterform>
+                <ehcache>ERROR</ehcache>
+                <dwr>ERROR</dwr>
+            </loglevel>
+        </log4j>
+    </config>
+    <!-- release properties -->
+
     <core>
         <app>
             <name>betterform-core</name>
-            <version>4.1</version>
+            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -37,8 +82,8 @@
             <classpath pathid="compile.class.path" description="classpath for compiling core classes">
                 <pathelement path="${core.dir}/target/classes"/>
                 <path refid="transform.class.path"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.4.jar" groupid="commons-codec"
-                             version="1.4" artifactId="commons-codec"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec"
+                             version="1.6" artifactId="commons-codec"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar"
                              groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
                 <!-- <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/> -->
@@ -48,10 +93,10 @@
                              version="4.1.1" artifactId="httpcomponents-client"/>
                 <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="httpcomponents" version="4.1.1"
                              artifactId="httpcomponents-mime"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-io-1.4.jar" groupid="commons-io" version="1.4"
+                <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1"
                              artifactId="commons-io"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-lang-2.4.jar" groupid="commons-lang"
-                             version="2.4" artifactId="commons-lang"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="commons-lang"
+                             version="3.1" artifactId="commons-lang"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging"
                              version="1.1.1" artifactId="commons-logging"/>
                 <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation"
@@ -60,10 +105,6 @@
                              artifactId="mail"/>
                 <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15"
                              artifactId="log4j"/>
-                <!--
-                <pathelement location="${core.dir}/src/main/lib/saxon-dom-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon-dom"/>
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.1.0.8.jar" groupid="net.sf.saxon" version="9.1.0.8" artifactId="saxon"/>
-                -->
                 <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.11.02.jar" groupid="xerces" version="2.11.02" artifactId="xercesImpl"/>
                 <pathelement location="${core.dir}/src/main/lib/xml-apis-1.4.01.jar" groupid="xml-apis" artifactId="xml-apis" version="1.4.01"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
@@ -71,13 +112,6 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
                 <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
-
-                <!--
-                <pathelement location="${core.dir}/../tools/AppEngine/GAE.jar"
-                             groupid="GoogleAppEngine" version="0.0.1"
-                             artifactId="gae"/>
-                             -->
-
             </classpath>
         </compile>
         <test>
@@ -93,7 +127,7 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>4.1</version>
+            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -116,7 +150,6 @@
               <url-to-test-forms>/betterform/forms</url-to-test-forms>
               <!--server properties -->
               <server>
-<!--                <jar>${basedir}/src/main/lib/selenium-server-1.0.1.jar</jar> -->
                 <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
                 <host>localhost</host>
                 <port>4444</port>
@@ -244,54 +277,16 @@
             <version>1.0</version>
         </app>
     </xapp>
-    <gae>
-        <compile>
-            <classpath pathid="gae.class.path" description="classpath for compiling web classes">
-                <path refid="web.class.path"/>
-                <pathelement location="${gae.dir}/lib/appengine-api.jar" groupid="google-appengine"
-                             version="1.4.2" artifactId="gae"/>
-                <pathelement path="${gae.dir}/target/classes"/>
 
-            </classpath>
-        </compile>
-
-    </gae>
-
-    <!-- TODO: check if needed
-    <webtest>
-        <server>http://localhost:8080</server>
-        <url>/betterform/forms</url>
-    </webtest>
-    -->
     <installer>
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
-        <exist>
-            <version>1.4</version>
-        </exist>
-        <compile>
-            <classpath pathid="installer.class.path" description="classpath for compiling installer classes">
-                <!-- Use libs provided by eXist Installer -->
-                <!--
-                <pathelement location="${installer.dir}/src/main/lib/exist-1.4.jar" groupid="org.exist" version="1.4"
-                             artifactId="exist"/>
-                <pathelement location="${installer.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="11112001"
-                             artifactId="xmldb"/>
-                -->
-                <pathelement location="${installer.dir}/target/bf-XRX/exist.jar" groupid="org.exist" version="1.4" artifactId="exist"/>
-                <pathelement location="${installer.dir}/target/bf-XRX/lib/core/xmldb.jar" groupid="org.xmldb" version="11112001" artifactId="xmldb"/>
-            </classpath>
-        </compile>
-        <izPack>
-            <dir>/opt/izPack-4.3.4</dir>
-        </izPack>
-        <launch4j>
-            <dir>/opt/launch4j-3.0.2</dir>
-        </launch4j>
+        <izPack>/home/zwobit/Development/bin/IzPack-4.3.4</izPack>
+        <launch4j>/home/zwobit/Development/bin/launch4j-3.0.2</launch4j>
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Applications/betterFORM-4.0</home>
+        <home>/Users/windauer/dev/eXist/exist-trunk</home>
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
         <context>/exist</context>

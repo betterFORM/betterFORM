@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms">
 <head>
-    <title></title>
+    <title>Select Insert Itemset Test</title>
     <!--
     ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
     ~ Licensed under the terms of BSD License
@@ -56,12 +56,6 @@
 					   ref="instance('i-data')"
 					   instance="i-select"/>
 
-		<xf:submission id="s-debug"
-					   action="{$contextroot}/jsp/debug-instance.jsp"
-					   method="post"
-					   replace="all"
-					   validate="false"/>
-
 
 	</xf:model>
     <style type="text/css">
@@ -111,75 +105,77 @@
 		}
     </style>
 
-	<link rel="stylesheet" type="text/css"  href="../../bfResources/scripts/release/dojo/dojox/layout/resources/FloatingPane.css"/>
-	<link rel="stylesheet" type="text/css"  href="../../bfResources/scripts/release/dojo/dojox/layout/resources/ResizeHandle.css"/>
-	<link rel="stylesheet" type="text/css"  href="../../bfResources/scripts/release/dojo/dojox/layout/resources/ExpandoPane.css"/>
 
-	<script type="text/javascript">
-
-		dojo.require("dijit.layout.AccordionContainer");
-		dojo.require("dijit.layout.TabContainer");
-		dojo.require("dijit.layout.BorderContainer");
-		dojo.require("dojox.layout.FloatingPane");
-
-		dojo.require("dijit.TitlePane");
-		dojo.require("dijit.Toolbar");
-
-		dojo.require("dojox.layout.FloatingPane");
-		dojo.require("dojox.layout.ExpandoPane");
-
-		dojo.require("dojo.fx.easing");
-
-		dojo.require("dojo.data.ItemFileReadStore");
-
-		dojo.require("dojox.rpc.Service");
-		dojo.require("dojo.io.script");
-	</script>
 
 </head>
 <body>
-<div dojoType="dijit.layout.BorderContainer"
-	 design="headline" id="main">
-
-	<div id="top"
-		 dojoType="dijit.layout.ContentPane"
-		 region="top">
+<div>
+	<div>
 		<div style="font-size:large;font-style:oblique;">Select Itemset Tests</div>
 		<table id="ctrls">
 			<tr>
 				<td valign="top" class="insert">
 					<xf:trigger>
-						<xf:label>add item</xf:label>
+						<xf:label>add [1]</xf:label>
+						<xf:action>
+							<xf:insert nodeset="items/item" at="1" position="before"
+									   origin="instance('i-controller')/item[2]"/>
+						</xf:action>
+					</xf:trigger>
+					<xf:trigger>
+						<xf:label>add [2]</xf:label>
+						<xf:action>
+							<xf:insert nodeset="items/item" at="1" position="after"
+									   origin="instance('i-controller')/item[2]"/>
+						</xf:action>
+					</xf:trigger>
+					<xf:trigger>
+						<xf:label>add after</xf:label>
+						<xf:action>
+							<xf:insert nodeset="items/item" at="last()" position="after"
+									   origin="instance('i-controller')/item[2]"/>
+						</xf:action>
+					</xf:trigger>
+
+					<xf:trigger>
+						<xf:label>add custom</xf:label>
 						<xf:action
-								if="string-length(instance('i-controller')/item) &gt; 0 and string-length(instance('i-controller')/item/@value) &gt; 0">
+								if="string-length(instance('i-controller')/item[1]) &gt; 0 and string-length(instance('i-controller')/item[1]/@value) &gt; 0">
 							<xf:insert bind="b-table"
 									   at="index('r-items')"
 									   position="after"
-									   origin="instance('i-controller')/item"/>
+									   origin="instance('i-controller')/item[1]"/>
 						</xf:action>
 
-						<xf:action if="string-length(instance('i-controller')/item) = 0">
+						<xf:action if="string-length(instance('i-controller')/item[1]) = 0">
 							<xf:message>Label of new item must no be empty</xf:message>
 						</xf:action>
 
-						<xf:action if="string-length(instance('i-controller')/item/@value) = 0">
+						<xf:action if="string-length(instance('i-controller')/item[1]/@value) = 0">
 							<xf:message>Value of new item must no be empty</xf:message>
 						</xf:action>
 					</xf:trigger>
 
-					<xf:input ref="instance('i-controller')/item">
+					<xf:input ref="instance('i-controller')/item[1]">
 						<xf:label>Label</xf:label>
 					</xf:input>
 
-					<xf:input ref="instance('i-controller')/item/@value">
+					<xf:input ref="instance('i-controller')/item[1]/@value">
 						<xf:label>Value</xf:label>
 					</xf:input>
 				</td>
 				<td valign="top">
 					<xf:trigger>
-						<xf:label>delete selected item</xf:label>
-						<xf:delete bind="b-table"
-								   at="index('r-items')"/>
+						<xf:label>delete 1</xf:label>
+                            <xf:delete nodeset="items/item" at="1" />
+                    </xf:trigger>
+					<xf:trigger>
+						<xf:label>delete 1</xf:label>
+                            <xf:delete nodeset="items/item" at="2" />
+                    </xf:trigger>
+					<xf:trigger>
+						<xf:label>delete last</xf:label>
+						<xf:delete nodeset="items/item" at="last()"/>
 					</xf:trigger>
 				</td>
 				<td valign="top">
@@ -188,59 +184,61 @@
 						<xf:send submission="s-load-data"/>
 					</xf:trigger>
 				</td>
-				<td valign="top">
-					<xf:trigger>
-						<xf:label>Show Instance</xf:label>
-						<xf:send submission="s-debug"/>
-					</xf:trigger>
-				</td>
 			</tr>
 		</table>
 
 	</div>
 
+<!--
 	<div id="center" dojoType="dijit.layout.ContentPane" region="center">
 		<div dojoType="dijit.layout.AccordionContainer" style="width:400px; height:400px; overflow: hidden">
 			<div dojoType="dijit.layout.AccordionPane" title="Select1">
-	<xf:group appearance="full">
-					<xf:label>Select1 appearance="minimal"</xf:label>
-					<xf:select1 appearance="minimal" ref="select1">
-						<xf:label/>
-						<xf:item>
-							<xf:label>First label</xf:label>
-							<xf:value>FirstValue</xf:value>
-						</xf:item>
-						<xf:itemset nodeset="instance('i-select')/items/item">
-							<xf:label ref="."/>
-							<xf:value ref="@value"/>
-						</xf:itemset>
-						<xf:item>
-							<xf:label>Last label</xf:label>
-							<xf:value>LastValue</xf:value>
-						</xf:item>
-						<xf:choices>
-							<xf:item>
-								<xf:label>Male</xf:label>
-								<xf:value>male</xf:value>
-							</xf:item>
-							<xf:item>
-								<xf:label>Female</xf:label>
-								<xf:value>female</xf:value>
-							</xf:item>
-							<xf:choices>
-								<xf:item>
-									<xf:label>Android</xf:label>
-									<xf:value>Android</xf:value>
-								</xf:item>
-								<xf:item>
-									<xf:label>Human</xf:label>
-									<xf:value>Human</xf:value>
-								</xf:item>
-							</xf:choices>
-						</xf:choices>
-					</xf:select1>
-				</xf:group>
+-->
+                <xf:group appearance="full">
+                    <xf:label>Select1 appearance="minimal"</xf:label>
+                    <xf:select1 appearance="minimal" ref="select1">
+                        <xf:label/>
+                        <xf:item>
+                            <xf:label>First Item</xf:label>
+                            <xf:value>FirstValue</xf:value>
+                        </xf:item>
+                        <xf:itemset nodeset="instance('i-select')/items/item" label="optgroup">
+                            <xf:label ref="."/>
+                            <xf:value ref="@value"/>
+                        </xf:itemset>
+                        <xf:item>
+                            <xf:label>Last Item</xf:label>
+                            <xf:value>LastValue</xf:value>
+                        </xf:item>
+                        <xf:choices>
+                            <xf:label>Choices</xf:label>
+                            <xf:item>
+                                <xf:label>Male</xf:label>
+                                <xf:value>male</xf:value>
+                            </xf:item>
+                            <xf:item>
+                                <xf:label>Female</xf:label>
+                                <xf:value>female</xf:value>
+                            </xf:item>
+                            <xf:choices>
+                                <xf:label>Sub Choice</xf:label>
+                                <xf:item>
+                                    <xf:label>Android</xf:label>
+                                    <xf:value>Android</xf:value>
+                                </xf:item>
+                                <xf:item>
+                                    <xf:label>Human</xf:label>
+                                    <xf:value>Human</xf:value>
+                                </xf:item>
+                            </xf:choices>
+                        </xf:choices>
+                    </xf:select1>
+                </xf:group>
 				<hr/>
+                <xf:output ref="select1">
+                    <xf:label>Selected Value: </xf:label>
+                </xf:output>
+<!--
 				<xf:group appearance="full">
 					<xf:label>Select1 appearance="compact"</xf:label>
 					<xf:select1 appearance="compact" ref="select1">
@@ -279,7 +277,9 @@
 						</xf:choices>
 					</xf:select1>
 				</xf:group>
+-->
 				<hr/>
+<!--
 				<xf:group appearance="full">
 					<xf:label>Select1 appearance="full"</xf:label>
 					<xf:select1 appearance="full" ref="select1">
@@ -400,6 +400,7 @@
 			</div>
 		</div>
 	</div>
+-->
 </div>
 </body>
 </html>

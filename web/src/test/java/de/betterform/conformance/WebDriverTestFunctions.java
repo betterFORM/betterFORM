@@ -82,15 +82,21 @@ public class WebDriverTestFunctions extends WebDriverTest {
         WebElement webElement = webDriver.findElement(By.id(id));
         webElement.click();
     }
+    
+    public void typeInput(String id, String value){
+        typeInput(id, value, false);
+    }
 
-    public void typeInput(String id, String value) {
+    public void typeInput(String id, String value, boolean incremental) {
         WebElement webElement = webDriver.findElement(By.id(id));
-        webElement.clear();
-        webElement.click();
+        if (!incremental){
+            webElement.clear();
+            webElement.click();
+        }
         webElement.sendKeys(value);
 
         //Step out of control
-        if (id.contains("-value")) {
+        if (!incremental && id.contains("-value")) {
             WebElement parent = webDriver.findElement(By.id(id.substring(0, id.indexOf("-value"))));
             parent.click();
         }
@@ -296,18 +302,23 @@ public class WebDriverTestFunctions extends WebDriverTest {
     public void hasException() {
         (new WebDriverWait(webDriver, 30)).until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver d) {
-                return "Error Page".equals(d.getTitle());
+                return "Error".equals(d.getTitle());
             }
         });
     }
 
     public String getExceptionType() {
-      return webDriver.findElement(By.id("msg")).getText();
+      return webDriver.findElement(By.className("message2")).getText();
     }
 
 
     public Alert getAlert() {
         try {
+            (new WebDriverWait(webDriver, 30)).until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver d) {
+                    return null != webDriver.switchTo().alert();
+                }
+            });
             return webDriver.switchTo().alert();
         } catch (NoAlertPresentException nape) {
             return null;

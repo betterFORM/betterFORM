@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>betterForm</display-name>
+    <context-param>
+		<param-name>betterform.configfile</param-name>
+		<param-value>WEB-INF/betterform-config.xml</param-value>
+	</context-param>
+
+<!--
+	This is an example mapping for XFormsServlet that can be used in applications that like to
+	use a Servlet to process XForms. This was the standard approach up to version 2.1 which introduced
+	the XFormsFilter.
+    <servlet>
+        <servlet-name>XFormsServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsServlet</servlet-class>
+
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+-->
+
+	<!--  XForms Filter -->
+	<filter>
+		<filter-name>XFormsFilter</filter-name>
+		<filter-class>de.betterform.agent.web.filter.XFormsFilter</filter-class>
+    </filter>
+
+	<!--
+	<filter>
+		<filter-name>XSLTFilter</filter-name>
+		<filter-class>de.betterform.agent.web.filter.XSLTFilter</filter-class>
+        <init-param>
+            <param-name>xsltHome</param-name>
+            <param-value>resources/xslt</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xsltFile</param-name>
+            <param-value>highlight.xsl</param-value>
+        </init-param>
+    </filter>
+    -->
+
+
+	<!--  XForms filter mapping
+		maps the XFormsFilter to a specified Servlet or url-pattern. This example uses a
+		url-pattern that matches all document under the forms directory. Other examples would be:
+		- <url-pattern>*.xhtml</url-pattern> to match all xhtml files
+		- <servlet-name>XFormsRequest</servlet-name> to match all requests to Servlet XFormsRequest
+	-->
+	<filter-mapping>
+		<filter-name>XFormsFilter</filter-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
+<!--
+	<filter-mapping>
+		<filter-name>XFormsFilter</filter-name>
+		<url-pattern>/en/support.html</url-pattern>
+	</filter-mapping>
+-->
+
+<!--
+    <filter-mapping>
+        <filter-name>XSLTFilter</filter-name>
+        <servlet-name>inspector</servlet-name>
+    </filter-mapping>
+-->
+
+    <!--
+    	Chains the XFormsFilter with the XFormsPostServlet. The XFormsPostServlet parses the form from
+    	the request and passes it to the XFormsFilter (via request attribute)
+     -->
+<!--
+	<filter-mapping>
+		<filter-name>XFormsFilter</filter-name>
+		<servlet-name>XFormsPostServlet</servlet-name>
+	</filter-mapping>
+-->
+
+<!--
+    alternative mapping if binding the Filter to a servlet.
+	<filter-mapping>
+		<filter-name>XFormsFilter</filter-name>
+		<servlet-name>XFormsRequest</servlet-name>
+	</filter-mapping>
+-->
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.ErrorServlet</servlet-class>
+    </servlet>
+
+
+
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error/*</url-pattern>
+    </servlet-mapping>
+
+<!--
+    <servlet>
+        <servlet-name>XFormsServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsServlet</servlet-class>
+    </servlet>
+-->
+
+<!--
+    <servlet>
+        <servlet-name>XFormsRequestServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsRequestServlet</servlet-class>
+    </servlet>
+-->
+
+
+
+    <servlet>
+        <servlet-name>Flux</servlet-name>
+        <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>@DWR_DEBUG@</param-value>
+        </init-param>
+
+        <!-- DEPRECATED -->
+<!--
+		This entry may be uncommented to use relative paths in the served html-forms. Remember change the
+		betterform.forms.uri.relative parameter of XFormsServlet as well.
+        <init-param>
+            <param-name>activeReverseAjaxEnabled</param-name>
+            <param-value>true</param-value>
+        </init-param>
+-->
+    </servlet>
+
+
+<!--
+    <servlet-mapping>
+        <servlet-name>XFormsRequestServlet</servlet-name>
+        <url-pattern>/XFormsRequestServlet</url-pattern>
+    </servlet-mapping>
+-->
+
+<!--
+     <servlet>
+        <servlet-name>CsrfTestServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.CsrfTestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CsrfTestServlet</servlet-name>
+        <url-pattern>/CSRF</url-pattern>
+    </servlet-mapping>
+-->
+
+
+
+	<!-- XFormsPostServlet
+		Servlet to handle HTTP Post requests containing XForms. See XFormsFilter mapping comments for further
+		 information
+	 -->
+<!--
+    <servlet>
+        <servlet-name>XFormsPostServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsPostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>XFormsPostServlet</servlet-name>
+        <url-pattern>/XFormsPost</url-pattern>
+    </servlet-mapping>
+-->
+
+    <servlet>
+        <servlet-name>inspector</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsInspectorServlet</servlet-class>
+    </servlet>
+
+    
+
+    <servlet-mapping>
+        <servlet-name>inspector</servlet-name>
+        <url-pattern>/inspector/*</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>bfEditor</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XSLTServlet</servlet-class>
+        <init-param>
+            <param-name>editorHome</param-name>
+            <param-value>/forms/incubator/editor/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>xsltFile</param-name>
+            <param-value>bfEditor.xsl</param-value>
+        </init-param>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>bfEditor</servlet-name>
+        <url-pattern>/bfEditor/*</url-pattern>
+    </servlet-mapping>
+    <!--
+    <servlet>
+        <servlet-name>foo</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>readonly</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+-->
+
+<!--
+	<servlet-mapping>
+        <servlet-name>foo</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+-->
+
+
+    <!--
+    de.betterform.agent.web.resources.ResourceServlet is responsible for loading
+    all CSS, Script, XSLT and image files that are used by betterFORM.
+
+    To turn caching off please the value of the init-param 'caching' to 'false'.
+    Otherwise caching will always be turned on and to see changes to resources
+    the Java VM needs to be restarted!
+    -->
+    <servlet>
+        <servlet-name>ResourceServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.resources.ResourceServlet</servlet-class>
+        <init-param>
+            <param-name>caching</param-name>
+            <param-value>@CACHING@</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>PlainHtml</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.PlainHtmlServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.ViewServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.UploadServlet</servlet-class>
+    </servlet>
+
+<!--
+    <servlet>
+        <servlet-name>XFormsServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.XFormsRepeater</servlet-class>
+        <init-param>
+            <param-name>useragent</param-name>
+            <param-value>dojo</param-value>
+        </init-param>
+    </servlet>
+-->
+	<servlet-mapping>
+        <servlet-name>Flux</servlet-name>
+        <url-pattern>/Flux/*</url-pattern>
+    </servlet-mapping>
+
+	<servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/FileUpload</url-pattern>
+    </servlet-mapping>
+
+
+<!--
+	Umcomment the respective entries when using XFormsServlet or XFormsRequestServlet.
+
+    <servlet-mapping>
+        <servlet-name>XFormsServlet</servlet-name>
+        <url-pattern>/XFormsServlet</url-pattern>
+    </servlet-mapping>
+
+        <servlet-mapping>
+            <servlet-name>XFormsServlet</servlet-name>
+            <url-pattern>/XFormsServlet</url-pattern>
+        </servlet-mapping>
+-->
+
+<!--
+        <servlet-mapping>
+            <servlet-name>XFormsRequest</servlet-name>
+            <url-pattern>/xfrequest</url-pattern>
+        </servlet-mapping>
+-->
+
+    <servlet-mapping>
+        <servlet-name>ResourceServlet</servlet-name>
+        <url-pattern>/bfResources/*</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>PlainHtml</servlet-name>
+        <url-pattern>/PlainHtml/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewServlet</servlet-name>
+        <url-pattern>/view</url-pattern>
+    </servlet-mapping>
+<!--
+    <servlet-mapping>
+        <servlet-name>XFormsServlet</servlet-name>
+        <url-pattern>/repeater/*</url-pattern>
+    </servlet-mapping>
+-->
+    <welcome-file-list>
+        <welcome-file>dashboard.html</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>FormsServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.FormsServlet</servlet-class>
+        <init-param>
+            <param-name>ignores</param-name>
+            <param-value>css</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FormsServlet</servlet-name>
+        <url-pattern>/FormBrowser</url-pattern>
+    </servlet-mapping>
+
+      <servlet>
+        <servlet-name>FileStoreServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.FileStoreServlet</servlet-class>
+    </servlet>
+
+     <servlet-mapping>
+        <servlet-name>FileStoreServlet</servlet-name>
+        <url-pattern>/FileStore</url-pattern>
+    </servlet-mapping>
+<!--
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>betterForm Member Area</web-resource-name>
+            <url-pattern>/jsp/*</url-pattern>
+            <http-method>DELETE</http-method>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>tomcat</role-name>
+            <role-name>role1</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>Example Form-Based Authentication Area</realm-name>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/login_error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+-->
+
+</web-app>
+
+
+
+

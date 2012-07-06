@@ -53,7 +53,7 @@
                </tr>
                <tr>
                   <td id="d45e182" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div dojoType="dijit.Tooltip" connectId="d45e182">matches any Element that represents a XForms
+                     <div data-dojo-type="dijit.Tooltip" connectId="d45e182">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -66,7 +66,7 @@
                </tr>
                <tr>
                   <td id="d45e200" onmouseover="showClass('xfSwitch');" onmouseout="hideClass('xfSwitch');">xfSwitch
-                     <div dojoType="dijit.Tooltip" connectId="d45e200">matches an Element that represents a XForms
+                     <div data-dojo-type="dijit.Tooltip" connectId="d45e200">matches an Element that represents a XForms
                         switch
                         element
                         
@@ -75,7 +75,7 @@
                </tr>
                <tr>
                   <td id="d45e212" onmouseover="showClass('xfCase');" onmouseout="hideClass('xfCase');">xfCase
-                     <div dojoType="dijit.Tooltip" connectId="d45e212">matches an Element that represents a XForms
+                     <div data-dojo-type="dijit.Tooltip" connectId="d45e212">matches an Element that represents a XForms
                         case
                         element
                         
@@ -84,7 +84,7 @@
                </tr>
                <tr>
                   <td id="d45e224" onmouseover="showClass('bfTabContainer');" onmouseout="hideClass('bfTabContainer');">bfTabContainer
-                     <div dojoType="dijit.Tooltip" connectId="d45e224">matches an Element that represents a XForms
+                     <div data-dojo-type="dijit.Tooltip" connectId="d45e224">matches an Element that represents a XForms
                         switch
                         element and is rendered as a Dojo TabContainer
                         
@@ -94,7 +94,7 @@
                <tr>
                   <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfcontrol">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
                         matches an Element that represents a XForms control
                         
                      </div>
@@ -103,7 +103,7 @@
                <tr>
                   <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
                      
-                     <div dojoType="dijit.Tooltip" connectId="xflabel">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
                         matches the label part of an XForms control
                         
                      </div>
@@ -112,7 +112,7 @@
                <tr>
                   <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
                      
-                     <div dojoType="dijit.Tooltip" connectId="xfvalue">
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
                         matches the widget part of an XForms control
                         
                      </div>
@@ -290,7 +290,7 @@
             </xf:group>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;xf:group&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:group&gt;
     &lt;xf:label&gt;Switch / Case&lt;/xf:label&gt;
     &lt;div style="display:none;"&gt;
         &lt;xf:trigger id="t-case1"&gt;
@@ -347,21 +347,34 @@
             'bfTabContainer' class sets a fixed width in betterform.css. I you like to change the size you should
             overwrite this rule. E.g. the example above sets a height of 300px.
             
-         </div><script type="text/javascript">
-                    function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+         </div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        // console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
-                        });
-                    }                    
-                </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
+                );
             </script></body>
    
 </html>

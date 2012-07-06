@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>betterFORM-install.jar</jar>
+  <outfile>betterFORM-install.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://www.oracle.com/technetwork/java/javase/downloads/jdk-6u27-download-440405.html</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <icon>resource/betterform.ico</icon>
+  <jre>
+    <path></path>
+    <minVersion>@JAVA_VERSION@.0</minVersion>
+    <maxVersion></maxVersion>
+    <initialHeapSize>0</initialHeapSize>
+    <maxHeapSize>0</maxHeapSize>
+	<jdkPreference>jdkOnly</jdkPreference>
+  </jre>
+  <splash>
+    <file>resource/bf_logo_145x59.bmp</file>
+    <waitForWindow>true</waitForWindow>
+    <timeout>60</timeout>
+    <timeoutErr>true</timeoutErr>
+  </splash>
+  <versionInfo>
+	<fileVersion>@APP_VERSION_NUMBER@.0.0</fileVersion>
+	<txtFileVersion>@APP_VERSION_NUMBER@.0</txtFileVersion>
+	<fileDescription>betterFORM Installer</fileDescription>
+	<copyright>betterFORM Project</copyright>
+	<productVersion>@APP_VERSION_NUMBER@.0.0</productVersion>
+	<txtProductVersion>@APP_VERSION_NUMBER@.0</txtProductVersion>
+	<productName>betterFORM @APP_VERSION_NAME@</productName>
+	<internalName>betterFORM</internalName>
+	<originalFilename>betterFORM-install.exe</originalFilename>
+  </versionInfo>
+</launch4jConfig>

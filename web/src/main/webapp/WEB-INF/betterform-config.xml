@@ -45,7 +45,7 @@
                    [4] if above not present use accept-language header sent by browser
                -->
         <property name="preselect-language" value="en"/>
-        <property name="enable.l10n" value="true"/>
+        <property name="enable.l10n" value="false"/>
 
         <!--
            Property the XForms filter listens on, only if the pattern is present on the accept header
@@ -101,7 +101,7 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="true" description="if true enables debug bar and event log viewer"/>
+        <property name="betterform.debug-allowed" value="false" description="if true enables debug bar and event log viewer"/>
         <!-- WARNING: not ready for production use -->
         <property name="betterform.event-optimization-enabled" value="true" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
@@ -169,7 +169,9 @@
     </useragents>
 
     <ui-generators>
-        <ui-generator useragent="dojo" stylesheet="dojo.xsl"/>
+        <!-- todo: deprecate unscripted processing?-->
+        <!-- todo: we probably shouldn't use the term 'useragent' here to avoid confusion with other meanings throughout betterform -->
+        <ui-generator useragent="dojo" stylesheet="xhtml.xsl"/>
         <ui-generator useragent="html" stylesheet="html4.xsl"/>
     </ui-generators>
 

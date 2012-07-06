@@ -59,12 +59,24 @@ public class EventQueue {
 	        String targetName = target.getLocalName();
 	        clonedEvent.addProperty("targetName", targetName);
 	
-	        if (BetterFormEventNames.STATE_CHANGED.equals(clonedEvent.getType()) && HELPER_ELEMENTS.contains(targetName)) {
+	        if ((BetterFormEventNames.ITEM_CHANGED.equals(clonedEvent.getType()) ||
+                    BetterFormEventNames.STATE_CHANGED.equals(clonedEvent.getType()) && HELPER_ELEMENTS.contains(targetName)) ||
+                    BetterFormEventNames.PROTOTYPE_CLONED.equals(clonedEvent.getType()) ||
+                    BetterFormEventNames.ITEM_DELETED.equals(clonedEvent.getType())) {
 	            // parent id is needed for updating all helper elements cause they
 	            // are identified by '<parentId>-label' etc. rather than their own id
 	            String parentId = ((Element) target.getParentNode()).getAttributeNS(null, "id");
 	            clonedEvent.addProperty("parentId", parentId);
 	        }
+            else if(BetterFormEventNames.STATE_CHANGED.equals(clonedEvent.getType()) &&
+                    XFormsConstants.OUTPUT.equals(targetName) &&
+                    XFormsConstants.LABEL.equals(target.getParentNode().getLocalName()) &&
+                    XFormsConstants.TRIGGER.equals(target.getParentNode().getParentNode().getLocalName())) {
+                // for outputs within labels of triggers add the trigger id as parentId and 'label' as targetName to the event
+                String parentId = ((Element) target.getParentNode().getParentNode()).getAttributeNS(null, "id");
+                clonedEvent.addProperty("parentId", parentId);
+                clonedEvent.addProperty("targetName", XFormsConstants.LABEL);
+            }
 	
 	        ((XercesXMLEvent) clonedEvent).target=null;
 	        ((XercesXMLEvent) clonedEvent).currentTarget=null;
@@ -176,6 +188,9 @@ public class EventQueue {
             else if(xmlEvent.getType().equals(XFormsEventNames.FOCUS)){
                 aggregatedFocusList.push(xmlEvent);
             }
+            /* else if(xmlEvent.getType().equals(BetterFormEventNames.INDEX_CHANGED)){
+                aggregatedFocusList.push(xmlEvent);
+            }*/
             // all other events within eventList are simply copied to the new eventlist
             else {
                 aggregatedEventList.add(xmlEvent);

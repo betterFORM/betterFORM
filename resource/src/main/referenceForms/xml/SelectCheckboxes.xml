@@ -32,7 +32,7 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <xf:model id="model-1">
+                <xf:model>
                     <!--<code>-->
 <xf:instance id="instance-1">
     <data xmlns="">

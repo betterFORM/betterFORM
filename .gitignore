@@ -38,4 +38,4 @@ zaphod/target/*
 
 ## files to ignore
 tools/installer/betterform-*install*
-
+tools/installer/release/*

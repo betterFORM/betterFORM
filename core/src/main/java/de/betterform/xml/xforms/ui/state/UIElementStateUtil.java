@@ -18,19 +18,21 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
+import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.UIElementState;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.xerces.xs.XSModel;
+import org.apache.xerces.xs.XSNamespaceItem;
+import org.apache.xerces.xs.XSSimpleTypeDefinition;
+import org.apache.xerces.xs.XSTypeDefinition;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.EventTarget;
 
 import java.text.*;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * State keeper utility methods.
@@ -283,7 +285,12 @@ public class UIElementStateUtil {
             // dispatch internal betterform event to update presentation context
             Container container = bindingElement.getContainerObject();
             EventTarget eventTarget = bindingElement.getTarget();
-            container.dispatch(eventTarget, BetterFormEventNames.STATE_CHANGED, context);
+            if(bindingElement.getParentObject() instanceof Item){
+                container.dispatch(eventTarget, BetterFormEventNames.ITEM_CHANGED, context);
+            }else {
+                container.dispatch(eventTarget, BetterFormEventNames.STATE_CHANGED, context);
+            }
+
         }
     }
 
@@ -400,6 +407,57 @@ public class UIElementStateUtil {
             return state.getAttributeNS(NamespaceConstants.BETTERFORM_NS, attributeName);
         }
         return null;
+    }
+
+    static String getBaseType(List schemas, String typeName, String namespace) {
+        String namespacePrefix = null;
+
+        if (typeName.contains(":")) {
+            namespacePrefix = typeName.substring(0, typeName.indexOf(':'));
+            typeName = typeName.substring(typeName.indexOf(':')+1, typeName.length());
+        }
+
+        if (namespace == null && namespacePrefix != null) {
+            namespace = namespacePrefix;
+        }
+
+        for (int i = 0; i < schemas.size(); i++) {
+            XSModel schema = (XSModel) schemas.get(i);
+            String baseType = getBaseType(schema, typeName, namespace);
+            if (! "".equals(baseType)) {
+                return baseType;
+            }
+        }
+
+        return "";
+    }
+
+    static String getBaseType(XSModel schema, String typeName, String namespace) {
+        Iterator<XSNamespaceItem> xsNamespaceItemList = schema.getNamespaceItems().listIterator();
+
+        //Search schema with correct namespace
+        while (xsNamespaceItemList.hasNext()) {
+            String schemaNamespace = xsNamespaceItemList.next().getSchemaNamespace();
+            if (schemaNamespace.equals(namespace) || schemaNamespace.contains(namespace)) {
+
+                //Search type
+                XSTypeDefinition xsTypeDefinition = schema.getTypeDefinition(typeName, schemaNamespace);
+
+                if (xsTypeDefinition != null) {
+                    //Search BaseType/PrimitiveType
+                    while (xsTypeDefinition.getBaseType() != null) {
+                        xsTypeDefinition = xsTypeDefinition.getBaseType();
+
+                        if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
+                            XSSimpleTypeDefinition xsSimpleTypeDefinition = (XSSimpleTypeDefinition) xsTypeDefinition;
+                            return xsSimpleTypeDefinition.getPrimitiveType().getName();
+                        }
+                    }
+                }
+            }
+        }
+
+        return "";
     }
 }
 

@@ -109,7 +109,7 @@
 		<xsl:text></xsl:text>
 	</xsl:variable>
 	<xsl:variable name="indent-increment" select="''"/>
-	
+
 	<xsl:template name="write-starttag">
 		<xsl:text>&lt;</xsl:text>
 		<xsl:value-of select="name()"/>
@@ -119,13 +119,13 @@
 		<xsl:if test="not(*|text()|comment()|processing-instruction())">/</xsl:if>
 		<xsl:text>&gt;</xsl:text>
 	</xsl:template>
-	
+
 	<xsl:template name="write-endtag">
 		<xsl:text>&lt;/</xsl:text>
 		<xsl:value-of select="name()"/>
 		<xsl:text>&gt;</xsl:text>
 	</xsl:template>
-	
+
 	<xsl:template name="write-attribute">
 		<xsl:text> </xsl:text>
 		<xsl:value-of select="name()"/>
@@ -133,7 +133,7 @@
 		<xsl:value-of select="."/>
 		<xsl:text>"</xsl:text>
 	</xsl:template>
-	
+
 	<xsl:template match="*">
 		<xsl:param name="indent-string" select="$indent-increment"/>
 		<xsl:value-of select="$indent-string"/>
@@ -152,7 +152,7 @@
 		</xsl:if>
 		<xsl:value-of select="$nl"/>
 	</xsl:template>
-	
+
 	<xsl:template match="comment()"/>
 	<xsl:template match="@*|text()">
         <xsl:copy>

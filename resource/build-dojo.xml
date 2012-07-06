@@ -15,6 +15,8 @@
     <property name="src.dir" value="${basedir}/src"/>
     <property name="dojo.version" value="${properties.dojo}"/>
     <property name="timeline.version" value="${properties.timeline}" />
+    <property name="ckeditor.name" value="ckeditor" />
+    <property name="ckeditor.version" value="${properties.ckeditor}" />
     <property name="syntaxhighlighter.version" value="${properties.timeline}" />
 
     <property name="scripts.target" value="${target.dir}/scripts"/>
@@ -34,6 +36,11 @@
         <unzip src="src/main/lib/${timeline.version}.zip" dest="${scripts.target}/simile/timeline">
             <cutdirsmapper dirs="1"/>
         </unzip>
+
+        <untar src="src/main/lib/${ckeditor.version}.tar.gz" dest="${scripts.target}/${ckeditor.name}" compression="gzip">
+            <cutdirsmapper dirs="1"/>
+        </untar>
+
         <!-- TODO: integrate sytaxhighlighter into build
              TODO: check for changed files in resources/src/../syntaxhighlighter ...
          -->
@@ -42,7 +49,7 @@
             <cutdirsmapper dirs="1"/>
         </unzip>
         -->
-        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/dwr.js"/>
+        <copy file="${src.dir}/main/lib/dwr/dwr.js" tofile="${scripts.target}/dwr.js"/>
     </target>
 
     <!-- check if Dojo is allready unpacked and call unpack target if not -->
@@ -121,47 +128,67 @@
         </condition>
     </target>
 
-    <!-- Do we need this depends: unpack-betterform-js-release, ?? -->
     <target name="build-dojo"
             description="create a custom Javascript build of betterFORM"
-            depends="prepare-dojo, copy-src-resources-scripts,  check-if-js-is-up-to-date"
+            depends="clean, prepare-dojo, copy-src-resources-scripts,  check-if-js-is-up-to-date"
             unless="build-js-required" >
+
+        <copy file="${script.src}/util/buildscripts/profiles/release.profile.js" todir="${scripts.target}"/>
+
         <java classname="org.mozilla.javascript.tools.shell.Main"
               dir="${scripts.target}/util/buildscripts"
-              classpath="${scripts.target}/util/shrinksafe/js.jar:${scripts.target}/util/shrinksafe/shrinksafe.jar"
-              jvmversion="1.5"
               fork="true"
-              maxmemory="512m">
-            <arg value="build.js"/>
-            <arg value="profile=betterform"/>
-            <arg value="localeList=de,de-at,de-be,de-ch,de-de,de-li,de-lu,en,en-au,en-be,en-bw,en-bz,en-ca,en-gb,en-hk,en-ie,en-in,en-jm,en-mt,en-na,en-nz,en-ph,en-pk,en-sg,en-tt,en-us,en-za,en-zw,es,es-ar,es-cl,es-co,es-do,es-ec,es-es,es-gt,es-hn,es-mx,es-ni,es-pa,es-pe,es-pr,es-py,es-sv,es-us,es-uy,es-ve,et,eu,fr,fr-be,fr-ca,fr-ch,fr-lu"/>
-            <arg value="log=1"/>
-            <arg value="optimize=shrinksafe"/>
-            <arg value="mini=true "/>
-            <arg value="copyTests=false"/>
-            <arg value="internStrings=true"/>
-            <arg value="stripConsole=warn"/>
-            <arg value="cssOptimize=comments"/>
-            <arg value="action=clean,release"/>
-            <arg value="symbol=short"/>
-            <arg value="layerOptimize=shrinksafe"/>
+              maxmemory="1024m">
 
-            <arg value="version=1.6"/>
+            <classpath>
+                <pathelement location="${scripts.target}/util/shrinksafe/js.jar"/>
+                <pathelement location="${scripts.target}/util/closureCompiler/compiler.jar"/>
+                <pathelement location="${scripts.target}/util/shrinksafe/shrinksafe.jar"/>
+            </classpath>
+
+            <arg value="${scripts.target}/dojo/dojo.js"/>
+            <arg value="baseUrl=${scripts.target}/dojo"/>
+            <arg value="load=build"/>
+            <arg value="profile=${scripts.target}/release.profile.js"/>
         </java>
-        <!-- cleanup JS/CSS resources of betterform dojo release -->
-        <antcall target="cleanup-js-release"/>
-        <copy file="${src.dir}/main/lib/dwr.js.optimized" tofile="${scripts.target}/release/dojo/dwr.js"/>
+
+<!--
+        <copy todir="${scripts.target}/releaseBackup">
+            <fileset dir="${scripts.target}/release"/>
+        </copy>
+-->
+
+        <!--<delete dir="${scripts.target}/release" excludes="dojo/dojo.js bf/bfRelease.js bf/debug.js bf/dashboard.js bf/featureExplorer.js **/*.css **/*.gif **/*.png dojo/cldr/** build-report.txt" includeemptydirs="true"/>-->
+
+        <copy todir="${scripts.target}/release">
+            <fileset file="${src.dir}/main/lib/dwr/dwr.js"/>
+        </copy>
+
+        <copy todir="${scripts.target}/release/syntaxhighlighter" flatten="false">
+            <fileset dir="${script.src}/syntaxhighlighter" includes="**/*"/>
+        </copy>
+        <copy todir="${scripts.target}/release/${ckeditor.name}" flatten="false">
+            <fileset dir="${scripts.target}/${ckeditor.name}" includes="**/*"/>
+        </copy>
+
         <zip description="create optimized JavaScript zip"
              zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
-             basedir="${scripts.target}/release/dojo"/>
+             basedir="${scripts.target}/release"/>
+
     </target>
 
     <target name="clean">
-        <delete dir="${scripts.target}"/>
+        <delete dir="${target.dir}"/>
+    </target>
+    <target name="zip">
+        <zip description="create optimized JavaScript zip"
+             zipfile="${src.dir}/main/lib/${app.name}-js-optimized.zip"
+             basedir="${scripts.target}/release"/>
     </target>
 
     <!-- delete all uncalled JavaScript resources from betterFORM / JavaScript release
         (only resources beneath ${scripts.target}/release are deleted  -->
+<!--
     <target name="cleanup-js-release">
         <echo message="************************************************************************************"/>
         <echo message="clean up not needed dojo files..."/>
@@ -170,18 +197,22 @@
 
         <property name="bfReleaseSrc" value="${scripts.target}/release/bfReleaseSrc"/>
 
-        <move file="${scripts.target}/release/dojo"
-              tofile="${bfReleaseSrc}"/>
+        <mkdir dir="${bfReleaseSrc}" />
+
+        <move todir="${bfReleaseSrc}" file="${scripts.target}/release"/>
 
         <property name="bfJSRelease"  value="${scripts.target}/release/dojo"/>
 
         <mkdir dir="${bfJSRelease}" />
-        <!-- TODO: integrate sytaxhighlighter into build -->
+        &lt;!&ndash; TODO: integrate sytaxhighlighter into build &ndash;&gt;
         <copy todir="${bfJSRelease}/syntaxhighlighter" flatten="false">
             <fileset dir="${scripts.target}/syntaxhighlighter" includes="**/*"/>
         </copy>
+        <copy todir="${bfJSRelease}/${ckeditor.name}" flatten="false">
+            <fileset dir="${scripts.target}/${ckeditor.name}" includes="**/*"/>
+        </copy>
 
-        <!-- copy betterFORM JS resources -->
+        &lt;!&ndash; copy betterFORM JS resources &ndash;&gt;
         <property name="bfRelease" value="${bfJSRelease}/betterform"/>
         <copy todir="${bfRelease}" flatten="false">
              <fileset dir="${bfReleaseSrc}/betterform" includes="nls/**/*"/>
@@ -193,7 +224,7 @@
         </copy>
 
 
-        <!-- copy required dojo js resources -->
+        &lt;!&ndash; copy required dojo js resources &ndash;&gt;
         <property name="dojoRelease" value="${bfJSRelease}/dojo"/>
         <copy todir="${dojoRelease}" flatten="false">
             <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.png"/>
@@ -201,7 +232,7 @@
             <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.jpeg"/>
             <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.gif"/>
             <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.css"/>
-           <!-- <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.html"/> -->
+           &lt;!&ndash; <fileset dir="${bfReleaseSrc}/dojo" includes="**/*.html"/> &ndash;&gt;
             <fileset dir="${bfReleaseSrc}/dojo" includes="_base/_loader/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="_firebug/**/*"/>
              <fileset dir="${bfReleaseSrc}/dojo" includes="resources/**/*"/>
@@ -214,7 +245,7 @@
              </fileset>
         </copy>
 
-        <!-- copy required dijit js resources -->
+        &lt;!&ndash; copy required dijit js resources &ndash;&gt;
         <property name="dijitRelease" value="${bfJSRelease}/dijit"/>
         <copy todir="${dijitRelease}" flatten="false">
             <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.png"/>
@@ -222,7 +253,7 @@
             <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.jpeg"/>
             <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.gif"/>
             <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.css"/>
-            <!-- <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.html"/> -->
+            &lt;!&ndash; <fileset dir="${bfReleaseSrc}/dijit" includes="**/*.html"/> &ndash;&gt;
             <fileset dir="${bfReleaseSrc}/dijit" includes="nls/**/*"/>
             <fileset dir="${bfReleaseSrc}/dijit" includes="themes/**/"/>
             <fileset dir="${bfReleaseSrc}/dijit" includes="dijit.js"/>
@@ -237,13 +268,14 @@
             <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.jpeg"/>
             <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.gif"/>
             <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.css"/>
-         <!--   <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.html"/> -->
+         &lt;!&ndash;   <fileset dir="${bfReleaseSrc}/dojox" includes="**/*.html"/> &ndash;&gt;
         </copy>
 
 
 
-        <!-- delete compiled js -->
-        <delete dir="${bfReleaseSrc}"/>
+        &lt;!&ndash; delete compiled js &ndash;&gt;
+        &lt;!&ndash;<delete dir="${bfReleaseSrc}"/>&ndash;&gt;
     </target>
+-->
 
 </project>

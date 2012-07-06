@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
+ * Author: Tobi Krebs (tobias.krebs AT betterform.de)
  */
 
 package de.betterform.connector.ant;
@@ -30,6 +31,59 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * A Submissionhandler which allows one to run Ant-Files on the Server. The ant-build-file has to be accessible by the server for this two work.
+ *
+ * Basic syntax for the submissionhandler is :
+ *  ant://<PATH-To-BUILD-FILE>[#TARGET]
+ *
+ * There exist two ways of invoking a target inside an ant-file via the submission handler:
+ *
+ * 1. As Fragment-Parameter:
+ *   You can specify the desired target as part of the resource URI via an Fragment-Attribute:
+ *
+ *   e.g. to run the target "test" for the build-file "build-test.xml" (absolute path: /opt/tomcat/webapps/betterform/build-files/build-test.xml) you would specify an resource-URI like this:
+ *      ant://{$webapp.realpath}/build-files/build-test.xml#test
+ *   a submission declaration could look like this:
+ *         <xf:submission id="s-ant-uri-target"
+ *              method="get"
+ *              replace="none"
+ *              ref="instance()"
+ *              validate="false"
+ *              resource="ant://{$webapp.realpath}/build-files/build-test.xml#test">
+ *
+ * 2. Via an instance-element "target".
+ *   As alternative you can specify the target via an "target"-element (<target/>) inside an instance.
+ *   You can only specify one target per instance right now.
+ *
+ *   Sample instance:
+ *   <xf:instance id="i-target">
+ *      <data xmlns="">
+ *          <target>test</target>
+ *      </data>
+ *  </xf:instance>
+ *
+ *  The resource-URI would then look like this:
+ *      ant://{$webapp.realpath}/build-files/build-test.xml
+ *
+ *  And the Submission :
+ *         <xf:submission id="s-ant-uri-target"
+ *              method="get"
+ *              replace="none"
+ *              ref="instance('i-target')"
+ *              validate="false"
+ *              resource="ant://{$webapp.realpath}/build-files/build-test.xml">
+ *
+ *
+ *  The results form the "ant-run" will be return by the submission-handler inside the SUBMISSION_RESPONSE_STREAM in the following format:
+ *
+ *  <ant>
+ *      <buildFile>PATH-TO-BUILD-FILE</buildFile>
+ *      <target>TARGET-WHICH-HAS-BEEN-RUN</target>
+ *      <output-stream>OUTPUT-OF-SYSTEM-OUT</output-stream>
+ *      <error-stream>OUTPUT-OF-SYSTEM-ERROR</error-stream>
+ *  </ant>
+ */
 public class AntSubmissionHandler extends AbstractConnector implements SubmissionHandler {
       /**
      * The logger.

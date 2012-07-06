@@ -896,7 +896,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
     /**
      * Implements <code>xforms-ready</code> default action.
      */
-    private void ready() {
+    private void ready() throws XFormsException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " ready");
         }

@@ -47,8 +47,6 @@
         <delete dir="${basedir}/XRX/target-utils"/>
         <delete dir="${basedir}/tools/ProjectAssistant/target"/>
         <delete dir="${basedir}/tools/installer/target"/>
-        <delete dir="${basedir}/tools/installer/target"/>
-        <delete dir="${basedir}/tools/installer/target-utils"/>
     </target>
 
 

@@ -105,6 +105,7 @@
 
                 <xsl:if test="$debug-enabled='true'">
                     <!-- z-index of 1000 so it is also in front of shim for modal dialogs -->
+                    <!-- todo: won't work with new xhtml.xsl: id changed to 'bfDebug' instead of 'debug-pane' -->
                     <div id="debug-pane" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
                         <div style="float:right;margin-right:20px;text-align:right;" id="copyright">
                             <a href="http://www.betterform.de">
@@ -113,6 +114,8 @@
                             </a>
                             <span>&#xA9; 2011 betterFORM</span>
                         </div>
+
+                        <!-- todo: won't work with new xhtml.xsl: id changed to 'bfDebugLinks' instead of 'debug-pane-links' -->
                         <span id="debug-pane-links" style="float:left;width:80%;">
                             <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
                         </span>

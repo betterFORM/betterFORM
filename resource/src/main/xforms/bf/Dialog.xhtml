@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bfc="http://betterform.sourceforge.net/xforms/controls">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      <title>The Dialog Element</title>
+   </head>
+   
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               <xf:instance id="instance-1">
+                  <data xmlns="">
+                     <login></login>
+                     <password></password>
+                  </data>
+               </xf:instance>
+            </xf:model>
+         </div>
+
+         <div class="pageintro">
+            <h1>The Dialog Element</h1>
+            <div class="description">
+               <p>A Dialog element is a container form control to aggregate various form controls.</p>
+               
+               <p>The Dialog is unbound and rendered above the main form. betterFORM provides a <span class="keyword">show</span> and a <span class="keyword">hide</span> action to
+                  display and hide the dialog.</p>
+               
+               <p>XForms 1.1 does not provide any Dialog control, but the 1.2 recommendation will probably contain a <a href="http://www.w3.org/MarkUp/Forms/wiki/The_XForms_Dialog_Module" target="_blank">XForms Dialog Module</a>.</p>
+            </div>
+         </div>
+         <h2>Example</h2>
+         <div class="Section sample">
+            <xf:trigger id="trigger1">
+               <xf:label>show dialog</xf:label>
+               <bfc:show dialog="loginDialog" ev:event="DOMActivate"></bfc:show>
+            </xf:trigger>
+            <bfc:dialog id="loginDialog">
+               <xf:label>Login Dialog</xf:label>
+               <xf:group appearance="full">
+                  <xf:input>
+                     <xf:label>Username</xf:label>
+                     <xf:value ref="login"></xf:value>
+                  </xf:input>
+                  <xf:input>
+                     <xf:label>Password</xf:label>
+                     <xf:value ref="password"></xf:value>
+                  </xf:input>
+                  <table>
+                     <tr>
+                        <td>
+                           <xf:trigger style="float:left;margin-right:4px;">
+                              <xf:label>Login</xf:label>
+                              <bfc:hide dialog="loginDialog" ev:event="DOMActivate"></bfc:hide>
+                           </xf:trigger>
+                        </td>
+                        <td>
+                           <xf:trigger>
+                              <xf:label>Cancel</xf:label>
+                              <bfc:hide dialog="loginDialog" ev:event="DOMActivate"></bfc:hide>
+                           </xf:trigger>
+                        </td>
+                     </tr>
+                  </table>
+               </xf:group>
+            </bfc:dialog>
+         </div>
+     </div>
+   </body>
+</html>

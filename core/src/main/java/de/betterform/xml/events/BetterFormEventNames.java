@@ -80,6 +80,11 @@ public interface BetterFormEventNames {
     /**
      * betterForm notification event constant.
      */
+    String ITEM_CHANGED = "betterform-item-changed";
+
+    /**
+     * betterForm notification event constant.
+     */
     String INDEX_CHANGED = "betterform-index-changed";
 
     /**
@@ -117,4 +122,5 @@ public interface BetterFormEventNames {
     String AVT_CHANGED = "betterform-AVT-changed";
     String INSTANCE_CREATED="betterform-instance-created";
     static final String MODEL_REMOVED = "betterform-model-removed";
-}                                                   
+
+}

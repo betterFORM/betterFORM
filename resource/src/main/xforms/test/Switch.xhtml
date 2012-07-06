@@ -73,6 +73,12 @@
                     <xf:delete nodeset="item" at="index('repeat')"/>
                 </xf:action>
             </xf:trigger>
+            <xf:trigger>
+                <xf:label>Switch case</xf:label>
+                <xf:toggle>
+                    <xf:case value="concat('ed','it')"/>
+                </xf:toggle>
+            </xf:trigger>
         </xf:group>
     </body>
 </html>

@@ -41,7 +41,7 @@
    <body class="{theme} InlineAlert bf" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
-            <xf:model id="model-1">
+            <xf:model>
                
                
                <xf:instance xmlns="" id="instance-1">
@@ -50,10 +50,18 @@
                      
                      <theme>tundra</theme>
                      
+                     <date>2012-01-01</date>
+                     
+                     <time>11:12:23</time>
+                     
                   </avt>
                   
                </xf:instance>
                
+               
+               <xf:bind nodeset="date" type="date"></xf:bind>
+               
+               <xf:bind nodeset="time" type="time"></xf:bind>
                
             </xf:model>
          </div>
@@ -118,30 +126,38 @@
                </xf:select1>
                
                
-               <xf:trigger>
+               <xf:input ref="date">
                   
-                  <xf:label>a sample trigger</xf:label>
+                  <xf:label>Date:</xf:label>
                   
-                  <xf:message>button clicked</xf:message>
-                  
-               </xf:trigger>
+               </xf:input>
                
-               <xf:input id="input1" ref="theme">
+               <xf:input ref="time" appearance="bf:timetextbox">
+                  
+                  <xf:label>Time:</xf:label>
+                  
+               </xf:input>
+               
+               
+               <xf:output id="input1" ref="theme">
                   
                   <xf:label>current theme</xf:label>
                   
-               </xf:input>
+               </xf:output>
+               
                
             </xf:group>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" dojoType="dojox.highlight.Code">&lt;html bf:evalAVTs="class style"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;html bf:evalAVTs="class style"&gt;
     &lt;body class="{theme}"&gt;...&lt;/body&gt;   
 &lt;/html&gt;
 
 &lt;xf:instance id="instance-1"&gt;
     &lt;avt&gt;
         &lt;theme&gt;tundra&lt;/theme&gt;
+        &lt;date&gt;2012-01-01&lt;/date&gt;
+        &lt;time&gt;11:12:23&lt;/time&gt;
     &lt;/avt&gt;
 &lt;/xf:instance&gt;
 
@@ -162,13 +178,17 @@
         &lt;/xf:item&gt;
     &lt;/xf:select1&gt;
 
-    &lt;xf:trigger&gt;
-        &lt;xf:label&gt;a sample trigger&lt;/xf:label&gt;
-        &lt;xf:message&gt;button clicked&lt;/xf:message&gt;
-    &lt;/xf:trigger&gt;
-    &lt;xf:input id="input1" ref="theme"&gt;
-        &lt;xf:label&gt;current theme&lt;/xf:label&gt;
+    &lt;xf:input ref="date"&gt;
+        &lt;xf:label&gt;Date:&lt;/xf:label&gt;
     &lt;/xf:input&gt;
+    &lt;xf:input ref="time" appearance="bf:timetextbox"&gt;
+        &lt;xf:label&gt;Time:&lt;/xf:label&gt;
+    &lt;/xf:input&gt;
+
+    &lt;xf:output id="input1" ref="theme"&gt;
+        &lt;xf:label&gt;current theme&lt;/xf:label&gt;
+    &lt;/xf:output&gt;
+
 &lt;/xf:group&gt;
 </code></pre></div>
          <h2>Limitations</h2>
@@ -186,21 +206,34 @@
                
             </p>
             
-         </div><script type="text/javascript">
-                    function showClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.addClass(item,'showClass');
+         </div>
+      </div><script type="text/javascript">
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        // console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
                         });
                     }
-                    function hideClass(cssClass){
-                        dojo.query('.sample .'+ cssClass).forEach(function(item){
-                            dojo.removeClass(item,'showClass');
-                        });
-                    }                    
-                </script></div><script type="text/javascript">
-                dojo.subscribe("/xf/ready", function(){
-                    fluxProcessor.skipshutdown=true;
-                });
+                );
             </script></body>
    
 </html>

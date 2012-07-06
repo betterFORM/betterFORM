@@ -15,14 +15,15 @@
         <meta name="version" content="$Id: LoadActionTest.xhtml 3460 2008-08-14 09:11:58Z joern $"/>
     </head>
     <body>
-    <form action="../test">
-        <xf:model id="model">
-            <xf:instance xmlns="">
-                <data>
-                </data>
-            </xf:instance>
-        </xf:model>
-
+    <!--<form action="../test">-->
+        <div style="display:none;">
+            <xf:model id="model">
+                <xf:instance xmlns="">
+                    <data>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
         <xf:group>
             <xf:label>Basic example of using the load action with @show="embed"</xf:label>
             <div id="embeddedForm"/>
@@ -43,7 +44,7 @@
                 </xf:action>
             </xf:trigger>
         </xf:group>
-    </form>
+    <!--</form>-->
 
     </body>
 </html>

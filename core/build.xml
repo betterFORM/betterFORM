@@ -71,17 +71,25 @@
 
     <target name="compile" depends="prepare" description="compile all core sources">
 
-        <filter token="app.name" value="${web.app.name}"/>
-        <filter token="app.version" value="${web.app.version}"/>
+
+        <filter token="app.name" value="${core.app.name}"/>
+        <filter token="app.version" value="${core.app.version}"/>
+        <filter token="timestamp" value="''"/>
 
         <copy todir="${basedir}/src/main/resources/META-INF"
               file="src/main/java/version.info"
               filtering="true"
               overwrite="true"/>
-
         <echo level="info">
         ************************************************************************************
         compiling Core classes
+        ************************************************************************************
+            JavaOptions:
+                version:     ${properties.javac.version}
+                debug:       ${properties.javac.debug}
+                deprecation: ${properties.javac.deprecation}
+                optimize:    ${properties.javac.optimize}
+
         ************************************************************************************
         </echo>
         

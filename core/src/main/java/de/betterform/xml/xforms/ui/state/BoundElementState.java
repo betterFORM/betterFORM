@@ -98,6 +98,15 @@ public class BoundElementState implements UIElementState {
 
                     // keep datatype
                     this.currentType = datatype;
+
+                    //Set base-type
+                    if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
+                        if (modelItem.getNode() instanceof Element) {
+                            UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
+                        } else {
+                            UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                        }
+                    }
                 }
 
                 //set value
@@ -124,6 +133,14 @@ public class BoundElementState implements UIElementState {
            modelItem = UIElementStateUtil.getModelItem(this.owner);
            if (modelItem != null) {
                this.currentType = modelItem.getDeclarationView().getDatatype();
+               //Set base-type
+               if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
+                   if (modelItem.getNode() instanceof Element) {
+                       UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
+                   } else {
+                       UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                   }
+               }
            } else {
                LOGGER.debug("ModelItem = null");
            }
@@ -179,6 +196,12 @@ public class BoundElementState implements UIElementState {
             String p3ptype = modelItem != null ? modelItem.getDeclarationView().getP3PType() : null;
             UIElementStateUtil.setStateAttribute(this.state, TYPE_ATTRIBUTE, datatype);
             UIElementStateUtil.setStateAttribute(this.state, P3PTYPE_ATTRIBUTE, p3ptype);
+
+            if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
+                if (modelItem.getNode() instanceof Element) {
+                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
+                }
+            }
         }
 
         // update value
@@ -194,6 +217,7 @@ public class BoundElementState implements UIElementState {
                     //otherwise fallback to a string value
                     value = modelItem != null ? modelItem.getValue() : null;
                     UIElementStateUtil.setStateAttribute(this.state, SCHEMA_VALUE, (String) value);
+
                     value = UIElementStateUtil.localiseValue(this.owner, this.state, this.currentType, (String) value);
                     DOMUtil.setElementValue(this.state, (String) value);
                 }
@@ -216,6 +240,14 @@ public class BoundElementState implements UIElementState {
             }
             UIElementStateUtil.dispatchBetterFormEvents(this.owner, this.currentProperties, this.currentValue, this.currentType, properties, value, datatype);
             this.currentType = datatype;
+            //Set base-type
+            if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
+                if (modelItem.getNode() instanceof Element) {
+                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
+                } else {
+                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                }
+            }
         }
         else{
             // don't dispatch value and type change events because the owner's external value change caused this update
