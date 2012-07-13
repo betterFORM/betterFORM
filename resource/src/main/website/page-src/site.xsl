@@ -94,93 +94,6 @@
                 <xsl:copy-of select="//html:head/html:style"/><xsl:text>
 </xsl:text>
 
-                <xsl:if test="//html:body/@id='index'">
-<!--
-                    <link href="../js/jquery.bubblepopup.v2.3.1.css" rel="stylesheet" type="text/css" /><xsl:text>
-</xsl:text>
--->
-                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
-</xsl:text>
-                    <!-- JQuery Twitter resources -->
-                    <script type="text/javascript" src="../js/jquery.juitter.js"></script><xsl:text>
-</xsl:text>
-<!--
-                    <script type="text/javascript" src="../js/juitter/js/system.js"></script><xsl:text>
-</xsl:text>
--->
-<!--
-                    <link type="text/css" href="../js/juitter/css/main.css"/><xsl:text>
-</xsl:text>
--->
-<!--
-                    <script src="../js/jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
-</xsl:text>
--->
-
-                     <!-- Anything Slider optional plugins -->
-                     <script src="../js/jquery.easing.1.2.js" type="text/javascript"></script><xsl:text>
-</xsl:text>
-
-                     <!-- Anything Slider -->
-                     <link href="../styles/anythingslider.css" type="text/css" rel="stylesheet" /><xsl:text>
-</xsl:text>
-
-                     <script src="../js/jquery.anythingslider.min.js" type="text/javascript"></script><xsl:text>
-</xsl:text>
-                    <script src="jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
-</xsl:text>
-
-                     <!-- Anything Slider optional FX extension -->
-                     <!--<script src="js/jquery.anythingslider.fx.min.js" type="text/javascript"></script>-->
-                    <script type="text/javascript">
-                        $(document).ready(function(){
-                             $('#slider2')
-                              .anythingSlider({
-                               width               : 900,
-                               height              : 500,
-                               resizeContents      : true ,
-                               animationTime       : 500,
-                               pauseOnHover        : false,
-                               delay               : 5000,
-                               buildArrows         : true,
-                               buildNavigation     : false,
-                               navigationFormatter : null,
-                               startStopped        : false
-                              });
-
-                        $.Juitter.start({
-                            searchType:"fromUser",
-                            searchObject:"betterFORM2010",
-                            placeHolder:"juitterContainer",
-                            loadMSG: "Loading messages...",
-                            imgName: "loader.gif", // Loading image, to enable it, go to the loadMSG var above and change it to "image/gif"
-                            total: 2, // number of tweets to be show - max 100
-                            readMore: "blablb",
-                            nameUser:"none",
-                            openExternalLinks:"newWindow"
-                        });
-
-                            //create a bubble popup for each DOM element with class attribute as "text", "button" or "link" and LI, P, IMG elements.
-                        /*
-                            $('#xformsToolkit').CreateBubblePopup({
-
-                                position : 'top',
-                                align	 : 'center',
-
-                                innerHtml: 'Take a look to the HTML source of this page <br /> \
-                                            to learn how the plugin works!',
-
-                                innerHtmlStyle: {
-                                    'text-align':'center'
-                                },
-
-                            });
-                        */
-              });
-
-                    </script>
-
-                </xsl:if>
                 <xsl:if test="//html:body/@id='solutions'">
                     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"> </script><xsl:text>
 </xsl:text>
@@ -215,14 +128,6 @@
                     </script>
                 </xsl:if>
 
-                <script type="text/javascript">
-                    var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-15044944-1']); _gaq.push (['_gat._anonymizeIp']); _gaq.push(['_trackPageview']);
-                    (function() {
-                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                    })();
-                </script>
 
             </head>
             <body id="{//html:body/@id}">
@@ -390,7 +295,104 @@
                 <xsl:copy-of select="//*[@id='import']"/>
 
 
+                <xsl:if test="//html:body/@id='index'">
+                    <!--
+                                        <link href="../js/jquery.bubblepopup.v2.3.1.css" rel="stylesheet" type="text/css" /><xsl:text>
+                    </xsl:text>
+                    -->
+                    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+                    <!-- JQuery Twitter resources -->
+                    <script type="text/javascript" src="../js/jquery.juitter.js"></script><xsl:text>
+</xsl:text>
+                    <!--
+                                        <script type="text/javascript" src="../js/juitter/js/system.js"></script><xsl:text>
+                    </xsl:text>
+                    -->
+                    <!--
+                                        <link type="text/css" href="../js/juitter/css/main.css"/><xsl:text>
+                    </xsl:text>
+                    -->
+                    <!--
+                                        <script src="../js/jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
+                    </xsl:text>
+                    -->
 
+                    <!-- Anything Slider optional plugins -->
+                    <script src="../js/jquery.easing.1.2.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+
+                    <!-- Anything Slider -->
+                    <link href="../styles/anythingslider.css" type="text/css" rel="stylesheet" /><xsl:text>
+</xsl:text>
+
+                    <script src="../js/jquery.anythingslider.min.js" type="text/javascript"></script><xsl:text>
+</xsl:text>
+                    <!--
+                                        <script src="jquery.bubblepopup.v2.3.1.min.js" type="text/javascript"></script><xsl:text>
+                    </xsl:text>
+                    -->
+
+                    <!-- Anything Slider optional FX extension -->
+                    <!--<script src="js/jquery.anythingslider.fx.min.js" type="text/javascript"></script>-->
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                        $('#slider2')
+                        .anythingSlider({
+                        width               : 900,
+                        height              : 500,
+                        resizeContents      : true ,
+                        animationTime       : 500,
+                        pauseOnHover        : false,
+                        delay               : 5000,
+                        buildArrows         : true,
+                        buildNavigation     : false,
+                        navigationFormatter : null,
+                        startStopped        : false
+                        });
+
+                        $.Juitter.start({
+                        searchType:"fromUser",
+                        searchObject:"betterFORM2010",
+                        placeHolder:"juitterContainer",
+                        loadMSG: "Loading messages...",
+                        imgName: "loader.gif", // Loading image, to enable it, go to the loadMSG var above and change it to "image/gif"
+                        total: 2, // number of tweets to be show - max 100
+                        readMore: "blablb",
+                        nameUser:"none",
+                        openExternalLinks:"newWindow"
+                        });
+
+                        //create a bubble popup for each DOM element with class attribute as "text", "button" or "link" and LI, P, IMG elements.
+                        /*
+                        $('#xformsToolkit').CreateBubblePopup({
+
+                        position : 'top',
+                        align	 : 'center',
+
+                        innerHtml: 'Take a look to the HTML source of this page <br /> \
+                        to learn how the plugin works!',
+
+                        innerHtmlStyle: {
+                        'text-align':'center'
+                        },
+
+                        });
+                        */
+                        });
+
+                    </script>
+
+                </xsl:if>
+
+                <script type="text/javascript">
+                    var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-15044944-1']); _gaq.push (['_gat._anonymizeIp']); _gaq.push(['_trackPageview']);
+                    (function() {
+                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                    })();
+                </script>
 
             </body>
         </html>
