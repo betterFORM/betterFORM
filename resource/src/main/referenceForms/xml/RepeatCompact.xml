@@ -76,7 +76,11 @@
         <xf:label>Boolean:</xf:label>
     </xf:input>
 </xf:repeat>
-                </code>
+<xf:trigger>
+    <xf:label>append line</xf:label>
+    <xf:insert nodeset="repeat/items[last()]"/>
+</xf:trigger>
+</code>
             </div>
             <div class="MIPS">
                 <xf:group appearance="full">
