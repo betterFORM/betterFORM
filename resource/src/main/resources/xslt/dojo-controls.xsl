@@ -365,7 +365,7 @@
                             name="{$name}"
                             type="button"
                             class="xfValue"
-                            title=""
+                            title="{if (exists(xforms:hint)) then xforms:hint else ''}"
                             navindex="{$navindex}"
                             accesskey="{@accesskey}"
                             source="{$source}"/>

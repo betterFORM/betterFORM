@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:xf="http://www.w3.org/2002/xforms">
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
 	<link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
     <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
 		
         <title>Status</title>
-        <!--
-        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
-        ~ Licensed under the terms of BSD License
-        -->
-
         <style type="text/css">
             .welcome {
                 font-size: 14pt;
@@ -66,15 +62,31 @@
 */
         </style>
     </head>
-    <body>
+    <body class="no-bf-css">
         <div style="display:none;">
             <xf:model>
                 <xf:instance xmlns="">
                     <data/>
                 </xf:instance>
 
-                <xf:instance id="webxml" src="{$webapp.realpath}/WEB-INF/web.xml"/>
+                <!--<xf:instance id="webxml" src="{$webapp.realpath}/WEB-INF/web.xml"/>-->
+                <xf:instance id="webxml">
+                    <data/>
+                </xf:instance>
                 <xf:instance id="i-config" src="{$webapp.realpath}/WEB-INF/betterform-config.xml"/>
+
+                <xf:submission id="load-web-xml"
+                               ref="instance()"
+                               method="get"
+                               replace="instance"
+                               resource="{$webapp.realpath}/WEB-INF/web.xml"
+                               serialization="none">
+                    <xf:message>Loading of web.xml failed - <xf:output value="event('response-reason-phrase')"/></xf:message>
+               </xf:submission>
+
+                <xf:action ev:event="xforms-model-construct-done">
+                    <xf:send submission="load-web-xml" />
+                </xf:action>
             </xf:model>
         </div>
 

@@ -110,6 +110,13 @@ betterform.ui.util.setDefaultClasses = function (element) {
     }
 };
 
+betterform.ui.util.setRelevance = function(element){
+    if(!dojo.hasClass(element,"xfEnabled") && !dojo.hasClass(element,"xfDisabled")){
+        dojo.addClass(element,"xfEnabled");
+    }
+}
+
+
 betterform.ui.util.removeStyle = function(element,styleToRemove) {
     if(element == undefined || styleToRemove == undefined) {
         return false;

@@ -3,9 +3,9 @@
   Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   Licensed under the terms of BSD License
 
-    todo:jt: add app group button somewhere to create a new app group
-    todo:jt: add dnd to reorder apps and allow installation when repo view is active
     todo:jt: add escape key handler when in repo view to switch back
+    todo:jt: add listeners for all buttons - should call focus() to make it the current
+    todo:jt: add app group button somewhere to create a new app group - allow to install into a group
   -->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -78,7 +78,7 @@
                                 var isRunning = running;
                                 var anim1 = dojo.fadeIn({
                                     node:selectTag,
-                                    duration:500,
+                                    duration:300,
                                     onBegin:function(){
                                         dojo.style(selectTag, {
                                             height: "150px",
@@ -125,7 +125,7 @@
                                         marginTop:{start:15,end:0, unit:"px"},
                                         marginBottom:{start:15,end:10, unit:"px"}
                                     },
-                                    duration: 550  ,
+                                    duration: 300  ,
                                     onEnd:function(){
                                         running=false;
                                     }
@@ -326,7 +326,10 @@ todo:global close handler for open group
 -->
                         <button id="repoConfigIcon"><img src="config-gear.png" /></button>
                         <!--<button id="repoConfigIcon"><img src="configuration.png" /></button>-->
-                        <button id="addAppIcon" onclick="toggleRepoView(this);"><img src="plusss.png"/></button>
+                        <button id="addAppIcon" onclick="toggleRepoView(this);">
+                            <img src="plusss.png"/>
+                            <img style="display: none;" src="close_exit.png"/>
+                        </button>
                         <!--<button id="addAppIcon" onclick="toggleRepoView(this);"><img src="add.png"/></button>-->
                     </div>
                     <div id="existIconBack">

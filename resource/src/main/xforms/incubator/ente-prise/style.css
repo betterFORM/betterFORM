@@ -66,45 +66,91 @@ body #content #inlineAppArea img {
   height: 24px;
   float: right;
 }
-body #content ul {
+body #content #appList {
   margin: 0;
   padding: 0;
   display: inline-block;
+  /*
+            ul li{
+                margin: @gutter - 5;
+            }
+/*        ul li{
+            list-style-type: none;
+            float: left;
+            position: relative;
+            width: @block-width;
+            height: 150px;
+            margin: @gutter;
+            font-size: 1em;
+            border-radius: 5px;
+            color: #353535;
+
+            background-color: #fff;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.25), 0 0 50px rgba(0,0,0,0.1) inset;
+            border-radius: 1%     1%     1%     1% /     1%     1%     1%     1%;
+
+            #exide{
+                font-size:5.0em;
+                padding-top: 35px;
+                text-align: center;
+                width: 100%;
+                position:relative;
+            }
+
+            button{
+                margin:0;
+                color: #777777;
+                border:none;
+                width: @block-width;
+                height:@block-height;
+            }
+            > button:focus{
+                border:solid 3px #4682b4;
+                border-radius: 5px;
+            }
+            span{
+                float:right;
+                width: 130px;
+                color:#444444;
+                position: absolute;
+                bottom:10px;
+                right: 10px;
+
+            }
+            img{
+                float: left;
+                width: 69%;
+                margin: 5px 0 0 5px;
+            }
+
+        } */
+
+  /*
+         ul li:after{
+                position: absolute;
+                left: 100px;
+                bottom: 0px;
+                width: 99%;
+                height: 20%;
+                border-radius: 0% 0 0 0;
+                z-index: -1;
+                content: "";
+                box-shadow: -97px 0 19px rgba(0,0,0,0.18);
+                -webkit-transform: skew(43deg);
+                -moz-transform: skew(43deg);
+                -ms-transform: skew(43deg);
+                -o-transform: skew(43deg);
+                transform: skew(43deg);
+                -webkit-transform-origin: 0% 100%;
+                -moz-transform-origin: 0% 100%;
+                -ms-transform-origin: 0% 100%;
+                -o-transform-origin: 0% 100%;
+                transform-origin: 0% 100%;
+            }
+            */
+
 }
-body #content ul .appGroup {
-  width: auto;
-  height: auto !important;
-  border: thin solid #888888;
-  background: -moz-linear-gradient(top, #cccccc 0%, #eeeeee 100%);
-  /* FF3.6+ */
-
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7d7e7d), color-stop(100%, #0e0e0e));
-  /* Chrome,Safari4+ */
-
-  background: -webkit-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%);
-  /* Chrome10+,Safari5.1+ */
-
-  background: -o-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%);
-  /* Opera 11.10+ */
-
-  background: -ms-linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%);
-  /* IE10+ */
-
-  background: linear-gradient(top, #7d7e7d 0%, #0e0e0e 100%);
-  /* W3C */
-
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#0e0e0e', GradientType=0);
-  /* IE6-9 */
-
-}
-body #content ul .appGroupIcon span {
-  color: #4682b4;
-  font-style: italic;
-}
-body #content ul ul li {
-  margin: 10px;
-}
-body #content ul li {
+body #content #appList li {
   list-style-type: none;
   float: left;
   position: relative;
@@ -118,32 +164,18 @@ body #content ul li {
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25), 0 0 50px rgba(0, 0, 0, 0.1) inset;
   border-radius: 1% 1% 1% 1% 1% 1% 1%;
 }
-body #content ul li a {
-  height: 100%;
-  text-decoration: none;
-  margin: 10px;
-  color: #777777;
-  text-align: right;
-}
-body #content ul li a #exide {
-  font-size: 5.0em;
-  padding-top: 35px;
-  text-align: center;
-  width: 100%;
-  position: relative;
-}
-body #content ul li button {
+body #content #appList li button {
   margin: 0;
   color: #777777;
   border: none;
   width: 150px;
   height: 150px;
 }
-body #content ul li > button:focus {
+body #content #appList li > button:focus {
   border: solid 3px #4682b4;
   border-radius: 5px;
 }
-body #content ul li span {
+body #content #appList li span {
   float: right;
   width: 130px;
   color: #444444;
@@ -151,33 +183,57 @@ body #content ul li span {
   bottom: 10px;
   right: 10px;
 }
-body #content ul li img {
+body #content #appList li img {
   float: left;
   width: 69%;
   margin: 5px 0 0 5px;
 }
-body #content ul li:after {
-  position: absolute;
-  left: 100px;
-  bottom: 0px;
-  width: 99%;
-  height: 20%;
-  border-radius: 0% 0 0 0;
-  z-index: -1;
-  content: "";
-  box-shadow: -97px 0 19px rgba(0, 0, 0, 0.18);
-  -webkit-transform: skew(43deg);
-  -moz-transform: skew(43deg);
-  -ms-transform: skew(43deg);
-  -o-transform: skew(43deg);
-  transform: skew(43deg);
-  -webkit-transform-origin: 0% 100%;
-  -moz-transform-origin: 0% 100%;
-  -ms-transform-origin: 0% 100%;
-  -o-transform-origin: 0% 100%;
-  transform-origin: 0% 100%;
+body #content #appList .appGroup {
+  width: auto;
+  height: auto !important;
+  /*border: thin solid #888888;*/
+
+  margin: 0;
+  /*background: -moz-linear-gradient(top, #CCCCCC 0%,  rgb(238, 238, 238) 100%); */
+  /* FF3.6+ */
+
+  /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(125, 126, 125, 1)), color-stop(100%, rgba(14, 14, 14, 1))); */
+  /* Chrome,Safari4+ */
+
+  /*background: -webkit-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); */
+  /* Chrome10+,Safari5.1+ */
+
+  /*background: -o-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); */
+  /* Opera 11.10+ */
+
+  /*background: -ms-linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); */
+  /* IE10+ */
+
+  /*background: linear-gradient(top, rgba(125, 126, 125, 1) 0%, rgba(14, 14, 14, 1) 100%); */
+  /* W3C */
+
+  /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#7d7e7d', endColorstr = '#0e0e0e', GradientType = 0); */
+  /* IE6-9 */
+
 }
-body #content #logo {
+body #content #appList .appGroup ul {
+  padding: 0;
+}
+body #content #appList .appGroup ul li {
+  margin: 15px;
+}
+body #content #appList .appGroupIcon span {
+  color: #4682b4;
+  font-style: italic;
+}
+body #content #appList #exide {
+  font-size: 5.0em;
+  padding-top: 35px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+body #content #appList #existIcon #logo {
   /*background: url("existdb.gif") no-repeat center center #bdbdbd;*/
 
   width: 330px;
@@ -185,14 +241,14 @@ body #content #logo {
   opacity: 0.7;
   background: #cccccc;
 }
-body #content #existIcon #existIconFront button {
+body #content #appList #existIcon #existIconFront button {
   cursor: pointer;
 }
-body #content #existIcon #existIconFront button img {
+body #content #appList #existIcon #existIconFront button img {
   margin: 0;
   opacity: 0.5;
 }
-body #content #existIcon #existIconFront #repoConfigIcon {
+body #content #appList #existIcon #existIconFront #repoConfigIcon {
   width: 40px;
   height: 34px;
   position: absolute;
@@ -200,11 +256,11 @@ body #content #existIcon #existIconFront #repoConfigIcon {
   left: 5px;
   background: transparent;
 }
-body #content #existIcon #existIconFront #repoConfigIcon img {
+body #content #appList #existIcon #existIconFront #repoConfigIcon img {
   width: 36px;
   height: 36px;
 }
-body #content #existIcon #existIconFront #addAppIcon {
+body #content #appList #existIcon #existIconFront #addAppIcon {
   /*width: 40px;*/
 
   /*height: 32px;*/
@@ -219,17 +275,17 @@ body #content #existIcon #existIconFront #addAppIcon {
   width: 22px;
   opacity: 0.8;
 }
-body #content #existIcon #existIconFront #addAppIcon img {
+body #content #appList #existIcon #existIconFront #addAppIcon img {
   width: 28px;
   height: 28px;
 }
-body #content #existIconBack {
+body #content #appList #existIconBack {
   display: none;
 }
-body #content .backside #logo {
+body #content #appList .backside #logo {
   display: none;
 }
-body #content .backside #existIconBack {
+body #content #appList .backside #existIconBack {
   display: block;
   width: 330px;
   height: 150px;
@@ -237,13 +293,13 @@ body #content .backside #existIconBack {
   color: #666666;
   font-size: .8em;
 }
-body #content .twoColumn {
+body #content #appList .twoColumn {
   width: 330px;
 }
-body #content .twoColumn button {
+body #content #appList .twoColumn button {
   width: 330px;
 }
-body #content #availableApps {
+body #content #appList #availableApps {
   display: none;
   background: #aaaaaa;
   border-radius: 5px;
@@ -256,25 +312,25 @@ body #content #availableApps {
   opacity: 0.9;
   border-top: thin solid #888888;
 }
-body #content #availableApps li {
+body #content #appList #availableApps li {
   width: 50px;
   height: 50px;
 }
-body #content #availableApps button {
+body #content #appList #availableApps button {
   width: 50px;
   height: 50px;
   margin: 0;
 }
-body #content #availableApps .twoColumn {
+body #content #appList #availableApps .twoColumn {
   width: 100px;
 }
-body #content #availableApps .twoColumn button {
+body #content #appList #availableApps .twoColumn button {
   width: 100px;
 }
-body #content #availableApps span {
+body #content #appList #availableApps span {
   display: none;
 }
-body #content #availableApps #closeRepo {
+body #content #appList #availableApps #closeRepo {
   position: absolute;
   right: 2px;
   top: 0;

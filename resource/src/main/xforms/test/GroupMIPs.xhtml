@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <group/>
+                    </data>
+                </xf:instance>
+                <xf:bind nodeset="group" constraint="exists(child)"/>
+            </xf:model>
+        </div>
+		<xf:group ref="group">
+            <xf:label>a group</xf:label>
+            <xf:alert>group alert</xf:alert>
+		</xf:group>
+    </body>
+</html>
