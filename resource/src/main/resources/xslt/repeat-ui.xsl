@@ -16,6 +16,7 @@
     <!-- ####################################################################################################### -->
     <!-- This stylesheet handles the XForms UI constructs 'repeat'                                               -->
     <!-- author: joern turner                                                                                    -->
+    <!-- author: lars windauer                                                                                   -->
     <!-- ####################################################################################################### -->
 
     <!-- ############################################ PARAMS ################################################### -->
@@ -550,7 +551,7 @@
     </xsl:template>
 
     <xsl:template
-            match="xf:input|xf:output|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload"
+            match="xf:input|xf:output|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload|xf:trigger|xf:submit"
             mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
@@ -912,41 +913,6 @@
                 <xsl:call-template name="processCompactHeader"/>
             </tr>
         </table>
-    </xsl:template>
-
-    <xsl:template match="xf:trigger" mode="repeated-compact-prototype" priority="10">
-        <xsl:variable name="id" select="@id"/>
-        <xsl:variable name="appearance">
-            <xsl:choose>
-                <xsl:when test="string-length(@appearance) &gt;0">
-                    <xsl:value-of select="@appearance"/>
-                </xsl:when>
-                <xsl:otherwise>full</xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="control-classes">
-            <xsl:call-template name="assemble-control-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
-            </xsl:call-template>
-
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="exists(@ref) or exists(@bind)">
-                <div id="{$id}" class="{$control-classes} xfRepeated" controlType="{local-name()}"
-                     appearance="{$appearance}">
-                    <xsl:call-template name="create-label">
-                        <xsl:with-param name="label-elements" select="xf:label"/>
-                    </xsl:call-template>
-                </div>
-            </xsl:when>
-            <xsl:otherwise>
-                <div id="{$id}" class="{$control-classes} xfRepeated" unbound="true">
-                    <div id="{$id}-value" class="xfValue" appearance="{$appearance}" controlType="trigger"
-                         label="{xf:label}" name="d_{$id}" title="" navindex="" accesskey="" source=""></div>
-                </div>
-            </xsl:otherwise>
-        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="processCompactChildren">

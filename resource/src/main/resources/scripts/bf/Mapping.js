@@ -87,6 +87,7 @@ require(['dojo/_base/declare'],
             // this matcher handles several types of triggers like standard button, image button and link at once
             ['.xfTrigger.aMinimal .xfValue',   "bf/factory/FactoryTrigger", "link"],
             ['.xfTrigger:not(.aMinimal) .xfValue',   "bf/factory/FactoryTrigger", "button"],
+            ['.xfSubmit:not(.aMinimal)  .xfValue',   "bf/factory/FactoryTrigger", "button"],
 
             // UPLOAD
             ['.xfUpload.xsdAnyURI .widgetContainer',    "bf/factory/FactoryUpload", "fileUpload"],

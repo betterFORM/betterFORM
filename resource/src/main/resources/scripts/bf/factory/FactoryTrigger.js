@@ -11,7 +11,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry"],
                  */
                 create:function(type, node){
                     var parentId = node.id.substring(0,node.id.lastIndexOf("-"));
-                    connect.connect(node, "onclick", function(){
+                    connect.connect(node, "onclick", function(evt){
+                        // console.debug("FactoryTrigger: node: ", node, " onclick function. Dispatch Event to: ", parentId, " evt: ", evt);
                         fluxProcessor.dispatchEvent(parentId);
                     });
                     var xfId = bf.util.getXfId(node);

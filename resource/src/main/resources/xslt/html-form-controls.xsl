@@ -425,7 +425,7 @@
                 </span>
                 <!-- handle itemset prototype -->
 <!--
-                <xsl:if test="not(ancestor::xf:repeat)">
+            <xsl:if test="not(ancestor::xf:repeat)">
                     <xsl:for-each select="xf:itemset/bf:data/xf:item">
                         <xsl:call-template name="build-checkbox-prototype">
                             <xsl:with-param name="item-id" select="@id"/>
@@ -556,7 +556,7 @@
             </xsl:when>
             <xsl:when test="@appearance='minimal'">
                 <a      id="{$id}-value"
-                        href="javascript:return false;"
+                        href="javascript:void('');"
                         name="{$name}"
                         class="xfValue"
                         tabindex="{$navindex}"
