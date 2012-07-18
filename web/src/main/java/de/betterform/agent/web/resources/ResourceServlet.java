@@ -67,7 +67,8 @@ public class ResourceServlet extends HttpServlet {
             }
         }
         this.lastModified = getLastModifiedValue();
-        if (new File(config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources")).exists()) {
+        final String path = config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources");
+        if (path != null && new File(path).exists()) {
             exploded = true;
         }
 

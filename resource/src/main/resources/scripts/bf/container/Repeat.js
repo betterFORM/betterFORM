@@ -162,7 +162,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 var itemToRemove = this._getRepeatItems()[position - 1];
                 var repeatNode = this.srcNodeRef;
                 if (this.appearance == "compact") {
-                    dojo.query("> tbody", repeatNode)[0].removeChild(itemToRemove);
+                    query("> tbody", repeatNode)[0].removeChild(itemToRemove);
                 } else {
                     repeatNode.removeChild(itemToRemove);
                 }

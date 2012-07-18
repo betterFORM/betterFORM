@@ -1181,7 +1181,7 @@ define(["dojo/_base/declare",
         //  Otherwise _handleBetterFormStateChanged will be called before _handleBetterFORMInsert is finished!
         require(["dojo/ready"], function(ready){
             ready(function(){
-                console.debug("XFProcessor._handleBetterFormStateChanged: contextInfo: " + contextInfo);
+                console.debug("XFProcessor._handleBetterFormStateChanged: contextInfo: ", contextInfo);
                 var parentId = contextInfo.parentId;
 
                 // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
