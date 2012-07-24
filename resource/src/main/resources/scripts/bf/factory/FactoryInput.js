@@ -21,7 +21,6 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     //INPUT TYPE STRING
                         case "text":
                             this._createText(xfControlDijit,node);
-                            xfControlDijit.setCurrentValue(domAttr.get(node,"value"));
                             break;
                     //INPUT TYPE BOOLEAN
                         case "checkbox":
@@ -69,6 +68,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     // console.debug("FactoryInput.createInputPlain");
                     /* Overwriten "abstract" API function on XFControl to handle updating of control values */
                     xfControlDijit.setValue = function(value, schemavalue) {
+                        // console.debug("FactoryInput._createText xfControlDijit.setValue:",value);
                         domAttr.set(node, "value", value);
                     };
 
@@ -101,6 +101,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         // console.debug("xf:input text got focus");
                         xfControlDijit.handleOnFocus();
                     });
+                    xfControlDijit.setCurrentValue(domAttr.get(node,"value"));
 
                 },
 
@@ -161,6 +162,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
                         var dateFormat = dataObj.date;
                         var value = dataObj.value;
+                        if(!value) {
+                            value = domAttr.get(n,"value");
+                        }
                         xfControlDijit.setCurrentValue(value);
                         var dateWidget = new DropDownDate({
                             value:value,
@@ -187,14 +191,17 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         }
                         // console.debug("input type=date datePattern:",datePattern);
                         var value = dataObj.value;
+                        if(!value) {
+                            value = domAttr.get(n,"value");
+                        }
                         xfControlDijit.setCurrentValue(value);
                         var dateWidget = new DateTextBox({
-                                value:new Date(value),
                                 required:false,
                                 constraints:{
                                     selector:'date',
                                     datePattern:datePattern
                                 } },n);
+                        dateWidget.set("value",value);
                         dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
                         self._connectControlDijit(xfControlDijit, dateWidget);
                     });
@@ -202,11 +209,20 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                 _createDateTime:function(controlDijit, node){
                     var n = node;
+                    // console.debug("_createDateTime: node value: ",domAttr.get(node,"value"));
                     var xfControlDijit = controlDijit;
                     var controlId =domAttr.get(n,"id");
+
                     var dataObj = bf.util.parseDataAttribute(n,"data-bf-params");
-                    // console.debug("createDateTime: dataObj:",dataObj);
-                    var xfValue = this._getISODate(dataObj.value);
+                    console.debug("createDateTime: dataObj:",dataObj);
+                    var tmpValue = dataObj.value;
+                    if(!tmpValue) {
+                        tmpValue = domAttr.get(n,"value");
+                    }
+                    // console.debug("FactoryInput._createDateTime: tmpValue:",tmpValue);
+                    var xfValue = this._getISODate(tmpValue);
+                    // console.debug("FactoryInput._createDateTime: xfValue:",xfValue);
+
                     xfControlDijit.setCurrentValue(xfValue);
                     var self = this;
                     var xfId = bf.util.getXfId(n);
@@ -247,6 +263,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         });
 
                         xfControlDijit.setValue = function(value,schemavalue) {
+                            // console.debug("FactoryInput._createDateTime xfControlDijit.setValue: ",value,schemavalue );
                             dateTimeWidget.set('value', schemavalue);
                         };
 
@@ -272,7 +289,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             value = "T"+value
                         }
                         // console.debug("FactoryInput TimeValue2:",value, " node:",node);
-                        var timeTextBox = new TimeTextBox({ value:value,
+                        var timeTextBox = new TimeTextBox({
+                            value:value,
                             constraints: {
                                 timePattern:'HH:mm:ss',
                                 clickableIncrement: 'T00:15:00',
@@ -383,7 +401,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         }else if(type=="time"){
                             value = self._getMobileTime(value);
                         }
-                        console.debug("send: (keyup)"+ value);
+                        // console.debug("send: (keyup)"+ value);
                         // console.debug("dateTime.send: (blur) "+ value);
                         xfControlDijit.sendValue(value, true);
                     });
@@ -431,6 +449,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         }
                     });
                     xfControlDijit.setValue = function(value,schemavalue) {
+                        //console.debug("FactoryInput (date) xfControlDijit.setValue value:",value, " schemavalue:",schemavalue);
                         controlWidget.set('value', schemavalue);
                     };
                     this._overwriteReadonly(xfControlDijit, controlWidget);
@@ -455,13 +474,22 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             timezone = timezone.replace(":","");
                         }
                     }
+                    // console.debug("FactoryInput._getISODate: value:",value);
                     var zulu = (value.indexOf("Z") !=-1);
-                    if(timezone == undefined && !zulu){
+                    if(timezone == undefined && value != undefined && value != "" && !zulu){
                         value = value + "Z";
                     }
-                    var date = new Date(value);
-                    return date.toISOString();
+
+                    if(value) {
+                        var date = new Date(value);
+                        // console.debug("FactoryInput._getISODate: date:",date);
+                        return date.toISOString();
+                    }else {
+                        // console.debug("FactoryInput._getISODate: date is undefined");
+                        return "";
+                    }
                 },
+
                 _getISODateTime:function(value){
                     var datePart = value.substring(0,value.indexOf('T'));
                     // console.debug("datePart:" + datePart);

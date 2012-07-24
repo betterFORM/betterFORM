@@ -77,6 +77,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                     }
                 }
 
+                // console.debug("XFBinding: this.value:",this.value, " this.readonly:",this.readonly);
                 // Validity handling
                 if(this.valid != undefined){
                     if (this.valid == "true") {

@@ -86,7 +86,7 @@ define(["dojo/_base/declare",
 
 
     handleUnload:function(evt) {
-        console.debug("XFProcessor.handleUnload Event: ", evt);
+        // console.debug("XFProcessor.handleUnload Event: ", evt);
         if (this.isDirty && !this.skipshutdown) {
             event.stopEvent(evt);
             // console.debug(this.unloadMsg);
@@ -128,7 +128,7 @@ define(["dojo/_base/declare",
      * ... changed references are updated. (e.g. xf:repeat items)
      */
     eventFifoReader: function() {
-        console.debug("XFProcessor.eventFifoReader: this.clientServerEventQueue:",this.clientServerEventQueue);
+        // console.debug("XFProcessor.eventFifoReader: this.clientServerEventQueue:",this.clientServerEventQueue);
         var nextPendingClientServerEvent = null;
         var dojoObject = null;
         var dijitObject = null;
@@ -263,7 +263,7 @@ define(["dojo/_base/declare",
      * Triggers the FIFO-Reader for trying to process the next pending events at the FIFO-Buffer.
      */
     eventFifoWriter: function(clientServerEvent) {
-        console.debug("XFProcessor.eventFifoWriter clientServerEvent:",clientServerEvent);
+        // console.debug("XFProcessor.eventFifoWriter clientServerEvent:",clientServerEvent);
 
         //insert the new clientServerEvent at the beginning of the Buffer
         this.clientServerEventQueue.push(clientServerEvent);
@@ -291,7 +291,7 @@ define(["dojo/_base/declare",
 
     //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
     _dispatchEvent: function (targetId) {
-        console.debug("XFProcessor.dispatch(",targetId,") this: ", this);
+        // console.debug("XFProcessor.dispatch(",targetId,") this.xfProcessor: ", this);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -299,8 +299,6 @@ define(["dojo/_base/declare",
         } catch(ex) {
             fluxProcessor._handleExceptions("Failure executing Flux.dispatchEvent", ex);
         }
-        // TODO: TBR: Lars really needed?
-        // return false;
     },
 
     dispatchEventType:function(targetId, eventType, contextInfo) {
@@ -315,7 +313,7 @@ define(["dojo/_base/declare",
         if(eventType == "xformsSelect"){
             eventType = "DOMActivate";
         }
-        console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
+        // console.debug("XFProcessor.dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         var newClientServerEvent = new ClientServerEvent();
         newClientServerEvent.setTargetId(targetId);
         newClientServerEvent.setEventType(eventType);
@@ -325,7 +323,7 @@ define(["dojo/_base/declare",
     },
 
     _dispatchEventType:function(targetId, eventType, contextInfo) {
-        console.debug("XFProcessor._dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
+        // console.debug("XFProcessor._dispatchEventType(",targetId,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         try {
             dwr.engine.setErrorHandler(this._handleExceptions);
             dwr.engine.setOrdered(true);
@@ -408,7 +406,7 @@ define(["dojo/_base/declare",
 
 
     _fifoProcessingFinished: function() {
-        console.debug("XFProcessor._fifoProcessingFinished");
+        // console.debug("XFProcessor._fifoProcessingFinished");
         domClass.remove(this.indicatorTargetObject, "bfPending");
         // Don't iterate through all items ... only use the last one and skip the rest
         var currentItem = this.lastServerClientFocusEvent;
@@ -424,7 +422,7 @@ define(["dojo/_base/declare",
     },
 
     _useLoadingMessage:function(dojoObject) {
-        console.debug("XFProcessor._useLoadingMessage dojoObject:", dojoObject);
+        // console.debug("XFProcessor._useLoadingMessage dojoObject:", dojoObject);
         if (fluxProcessor.indicatorObjectTimer) {
             clearTimeout(fluxProcessor.indicatorObjectTimer);
         }
@@ -624,12 +622,12 @@ define(["dojo/_base/declare",
     },
 
     _handleAVTChanged:function(xmlEvent){
-        console.debug("XFProcessor._handleAVTChanged xmlEvent:",xmlEvent);
+        // console.debug("XFProcessor._handleAVTChanged xmlEvent:",xmlEvent);
         domAttr.set(xmlEvent.contextInfo.targetId, xmlEvent.contextInfo.attribute, xmlEvent.contextInfo.value);
     },
 
     _handleInstanceCreated:function(xmlEvent){
-        console.debug("XFProcessor._handleInstanceCreated xmlEvent:",xmlEvent);
+        // console.debug("XFProcessor._handleInstanceCreated xmlEvent:",xmlEvent);
         // TODO: Lars: add animation again
         // dojo.require("dojox.fx");
         var debugPane = dom.byId("bfDebugLinks");
@@ -648,7 +646,7 @@ define(["dojo/_base/declare",
     },
 
     _handleModelRemoved:function(xmlEvent){
-        console.debug("XFProcessor._handleModelRemoved xmlEvent:",xmlEvent);
+        // console.debug("XFProcessor._handleModelRemoved xmlEvent:",xmlEvent);
         var modelId = xmlEvent.contextInfo.modelId;
         require(["dojo/query", "dojo/NodeList-manipulate"], function(query){
             query("#bfDebug a[modelId='" + modelId +"']").remove();
@@ -656,7 +654,7 @@ define(["dojo/_base/declare",
     },
 
     _handleValidity:function(validityEvents) {
-        console.debug("XFProcessor._handleValidity validityEvents:",validityEvents);
+        // console.debug("XFProcessor._handleValidity validityEvents:",validityEvents);
         array.forEach(validityEvents, function(xmlEvent) {
             var control = registry.byId(xmlEvent.contextInfo.targetId);
             if (control != undefined) {
@@ -811,90 +809,92 @@ define(["dojo/_base/declare",
                 // console.debug("htmlEntryPoint:",nodesToEmbed);
                 behavior.apply();
             });
+            var contextInfo = xmlEvent.contextInfo;
+            require(["dojo/ready"], function (ready) {
+                ready(function () {
+                    var utilizedEvents = contextInfo.utilizedEvents;
+                    // console.debug("xmlEvent.contextInfo.utilizedEvents:",xmlEvent.contextInfo.utilizedEvents);
+                    if(utilizedEvents && utilizedEvents != ""){
+                        var utilizedEventsObj =  json.fromJson("{" + utilizedEvents +  "}");
+                        // console.debug("utilizedEventsObj:",utilizedEventsObj);
+                        if(utilizedEventsObj.useXFSelect){
+                            this.useXFSelect = true;
+                        }
+                        if(utilizedEventsObj.useDOMFocusIN){
+                            this.useDOMFocusIN = true;
+                        }
+                        if(utilizedEventsObj.useDOMFocusOUT){
+                            this.useDOMFocusOUT = true;
+                        }
+                    }
 
-
-            var utilizedEvents = xmlEvent.contextInfo.utilizedEvents;
-            // console.debug("xmlEvent.contextInfo.utilizedEvents:",xmlEvent.contextInfo.utilizedEvents);
-            if(utilizedEvents && utilizedEvents != ""){
-                var utilizedEventsObj =  json.fromJson("{" + utilizedEvents +  "}");
-                // console.debug("utilizedEventsObj:",utilizedEventsObj);
-                if(utilizedEventsObj.useXFSelect){
-                    this.useXFSelect = true;
-                }
-                if(utilizedEventsObj.useDOMFocusIN){
-                    this.useDOMFocusIN = true;
-                }
-                if(utilizedEventsObj.useDOMFocusOUT){
-                    this.useDOMFocusOUT = true;
-                }
-            }
-
-            // finally dynamically load the CSS (if some) form the embedded form
-            var cssToLoad = xmlEvent.contextInfo.inlineCSS;
+                    // finally dynamically load the CSS (if some) form the embedded form
+                    var cssToLoad = contextInfo.inlineCSS;
 //            console.debug("css to load: ", cssToLoad);
-            var headID = document.getElementsByTagName("head")[0];
-            var mountpoint = dom.byId(xlinkTarget);
+                    var headID = document.getElementsByTagName("head")[0];
+                    var mountpoint = dom.byId(xlinkTarget);
 
-            if(cssToLoad != undefined && cssToLoad != ""){
-                //console.debug("adding Style: ", cssToLoad);
-                var stylesheet1 = document.createElement('style');
-                domAttr.set(stylesheet1,"type", "text/css");
-                domAttr.set(stylesheet1,"name", xlinkTarget);
-                var head1 = document.getElementsByTagName('head')[0];
-                head1.appendChild(stylesheet1);
-                if (stylesheet1.styleSheet) {   // IE
-                        stylesheet1.styleSheet.cssText = cssToLoad;
-                } else {                // the world
-                        var textNode1 = document.createTextNode(cssToLoad);
-                        stylesheet1.appendChild(textNode1);
-                }
-            }
-
-            var externalCssToLoad = xmlEvent.contextInfo.externalCSS;
-
-            if (externalCssToLoad != undefined && externalCssToLoad != "") {
-                var styles = externalCssToLoad.split('#');
-                var head2 = document.getElementsByTagName('head')[0];
-                for (var i = 0; i <= styles.length; i = i+1) {
-                    if (styles[i] != undefined && styles[i] != "") {
-                        // console.debug("adding Style: ", styles[i]);
-                        var stylesheet2 = document.createElement('link');
-                        domAttr.set(stylesheet2,"rel","stylesheet");
-                        domAttr.set(stylesheet2,"type","text/css");
-                        domAttr.set(stylesheet2,"href",styles[i]);
-                        domAttr.set(stylesheet2,"name",xlinkTarget);
-                        head2.appendChild(stylesheet2);
+                    if(cssToLoad != undefined && cssToLoad != ""){
+                        //console.debug("adding Style: ", cssToLoad);
+                        var stylesheet1 = document.createElement('style');
+                        domAttr.set(stylesheet1,"type", "text/css");
+                        domAttr.set(stylesheet1,"name", xlinkTarget);
+                        var head1 = document.getElementsByTagName('head')[0];
+                        head1.appendChild(stylesheet1);
+                        if (stylesheet1.styleSheet) {   // IE
+                            stylesheet1.styleSheet.cssText = cssToLoad;
+                        } else {                // the world
+                            var textNode1 = document.createTextNode(cssToLoad);
+                            stylesheet1.appendChild(textNode1);
+                        }
                     }
-                }
-            }
 
-            var inlineJavaScriptToLoad = xmlEvent.contextInfo.inlineJavascript;
-            if (inlineJavaScriptToLoad != undefined && inlineJavaScriptToLoad != "") {
-                //console.debug("adding script: ", inlineJavaScriptToLoad);
-                var javascript1 = document.createElement('script');
-                domAttr.set(javascript1,"type", "text/javascript");
-                domAttr.set(javascript1,"name", xlinkTarget);
-                var head3 = document.getElementsByTagName('head')[0];
-                head3.appendChild(javascript1);
-                javascript1.text = inlineJavaScriptToLoad;
-            }
+                    var externalCssToLoad = contextInfo.externalCSS;
 
-            var externalJavaScriptToLoad = xmlEvent.contextInfo.externalJavascript;
-            if (externalJavaScriptToLoad != undefined && externalJavaScriptToLoad != "") {
-                var scripts = externalJavaScriptToLoad.split('#');
-                var head4 = document.getElementsByTagName("head")[0];
-                for (var z = 0; z <= scripts.length; z = z+1) {
-                    if (scripts[z] != undefined && scripts[z] != "") {
-                        //console.debug("adding script: ", scripts[z]);
-                        var javascript2 = document.createElement('script');
-                        domAttr.set(javascript2,"type","text/javascript");
-                        domAttr.set(javascript2,"src",scripts[z]);
-                        domAttr.set(javascript2,"name",xlinkTarget);
-                        head4.appendChild(javascript2);
+                    if (externalCssToLoad != undefined && externalCssToLoad != "") {
+                        var styles = externalCssToLoad.split('#');
+                        var head2 = document.getElementsByTagName('head')[0];
+                        for (var i = 0; i <= styles.length; i = i+1) {
+                            if (styles[i] != undefined && styles[i] != "") {
+                                // console.debug("adding Style: ", styles[i]);
+                                var stylesheet2 = document.createElement('link');
+                                domAttr.set(stylesheet2,"rel","stylesheet");
+                                domAttr.set(stylesheet2,"type","text/css");
+                                domAttr.set(stylesheet2,"href",styles[i]);
+                                domAttr.set(stylesheet2,"name",xlinkTarget);
+                                head2.appendChild(stylesheet2);
+                            }
+                        }
                     }
-                }
-            }
 
+                    var inlineJavaScriptToLoad = contextInfo.inlineJavascript;
+                    if (inlineJavaScriptToLoad != undefined && inlineJavaScriptToLoad != "") {
+                        //console.debug("adding script: ", inlineJavaScriptToLoad);
+                        var javascript1 = document.createElement('script');
+                        domAttr.set(javascript1,"type", "text/javascript");
+                        domAttr.set(javascript1,"name", xlinkTarget);
+                        var head3 = document.getElementsByTagName('head')[0];
+                        head3.appendChild(javascript1);
+                        javascript1.text = inlineJavaScriptToLoad;
+                    }
+
+                    var externalJavaScriptToLoad = contextInfo.externalJavascript;
+                    if (externalJavaScriptToLoad != undefined && externalJavaScriptToLoad != "") {
+                        var scripts = externalJavaScriptToLoad.split('#');
+                        var head4 = document.getElementsByTagName("head")[0];
+                        for (var z = 0; z <= scripts.length; z = z+1) {
+                            if (scripts[z] != undefined && scripts[z] != "") {
+                                //console.debug("adding script: ", scripts[z]);
+                                var javascript2 = document.createElement('script');
+                                domAttr.set(javascript2,"type","text/javascript");
+                                domAttr.set(javascript2,"src",scripts[z]);
+                                domAttr.set(javascript2,"name",xlinkTarget);
+                                head4.appendChild(javascript2);
+                            }
+                        }
+                    }
+                })
+            })
         }
         /*  xf:load show=none
          to unload (loaded) subforms

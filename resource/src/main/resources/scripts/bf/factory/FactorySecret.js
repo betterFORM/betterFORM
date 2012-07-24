@@ -16,7 +16,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                         case "password":
                             // console.debug("FactorySecret: secret input: ",n);
-                            xfControlDijit.setCurrentValue(domAttr.get(n,"value"));
+
+                            xfControlDijit.setValue = function(value, schemavalue) {
+                                // console.debug("FactoryInput._createText xfControlDijit.setValue:",value);
+                                domAttr.set(node, "value", value);
+                            };
 
                             connect.connect(n,"onkeyup",function(evt){
                                 if(xfControlDijit.isIncremental()){
@@ -31,7 +35,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             connect.connect(node,"onfocus",function(evt){
                                 xfControlDijit.handleOnFocus();
                             });
-
+                            xfControlDijit.setCurrentValue(domAttr.get(n,"value"));
                             break;
                         default:
                             console.warn();
