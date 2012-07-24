@@ -155,7 +155,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                 _createDropDownDate:function(xfControlDijit, node){
                     var n = node;
                     var self = this;
-                    require(["dojo/query","bf/input/DropDownDate","dojo/_base/json"],function(query,DropDownDate,json){
+                    require(["dojo/query","bf/input/DropDownDate"],function(query,DropDownDate){
                         n = query(".xfValue",node)[0];
                         var xfId = bf.util.getXfId(n);
                         var xfControlDijit = registry.byId(xfId);
@@ -165,11 +165,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         if(!value) {
                             value = domAttr.get(n,"value");
                         }
-                        xfControlDijit.setCurrentValue(value);
                         var dateWidget = new DropDownDate({
                             value:value,
                             dateFormat:dateFormat
                         },n);
+                        xfControlDijit.setCurrentValue(value);
                         self._connectControlDijit(xfControlDijit, dateWidget);
                     });
                 },

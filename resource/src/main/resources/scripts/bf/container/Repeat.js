@@ -132,7 +132,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 }else {
                     repeatItemNode = this._createRepeatItem(insertedNode, position);
                 }
-                // console.debug("repeatItemNode:",repeatItemNode);
+                console.debug("repeatItemNode:",repeatItemNode);
                 // console.debug("handleInsert fix inserted controls repeatItemNode:",repeatItemNode);
 
                 // rename data-bf-class to class
@@ -147,13 +147,18 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 // console.debug("Repeat.handleInsert before applyBehavior:", behavior);
                 behavior.apply();
                 // console.debug("Repeat.handleInsert after applyBehavior:", behavior);
-
-                if(domStyle.get(repeatItemNode,"display") == "none"){
-                    repeatItemNode.removeAttribute("style");
-                }
-                domClass.add(repeatItemNode,"xfRepeatIndex");
-                on(repeatItemNode, "click", lang.hitch(this,this._onClickRepeatItem));
-                connect.subscribe("bf-state-change-"+ domAttr.get(repeatItemNode,"id"), this.handleStateChanged);
+                var self = this;
+                require(["dojo/ready"],function(ready){
+                    ready(function(){
+                        console.debug("Repeat: set CSS styles");
+                        if(domStyle.get(repeatItemNode,"display") == "none"){
+                            repeatItemNode.removeAttribute("style");
+                        }
+                        domClass.add(repeatItemNode,"xfRepeatIndex");
+                        on(repeatItemNode, "click", lang.hitch(this,self._onClickRepeatItem));
+                        connect.subscribe("bf-state-change-"+ domAttr.get(repeatItemNode,"id"), self.handleStateChanged);
+                    })
+                })
             },
 
             handleDelete:function(/*Map*/ contextInfo) {

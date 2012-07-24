@@ -4,7 +4,7 @@
  */
 
 define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
-        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","dojo/behavior","bf/util"],
+        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","dojo/behavior", "bf/util"],
     function(declare, dom, domClass,query,domAttr,connect,domConstruct,registry,behavior){
         return declare(null, {
 
@@ -76,47 +76,51 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                         behavior.apply();
                     }
                 }
+                var self = this;
+                require(["dojo/ready"],function(ready){
+                    ready(function(){
 
-                // console.debug("XFBinding: this.value:",this.value, " this.readonly:",this.readonly);
-                // Validity handling
-                if(this.valid != undefined){
-                    if (this.valid == "true") {
-                        this.setValid();
-                    }else if(!domClass.contains(this.srcNodeRef,"bfInvalidControl")){
-                        /*
-                         todo: got the feeling that this case should be handled elsewhere....
-                         if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
-                         during init and somehow the subscriber won't be called then (too early???)
+                        // console.debug("XFBinding: self.value:",self.value, " self.readonly:",self.readonly);
+                        // Validity handling
+                        if(self.valid != undefined){
+                            if (self.valid == "true") {
+                                self.setValid();
+                            }else if(!domClass.contains(self.srcNodeRef,"bfInvalidControl")){
+                                /*
+                                 todo: got the feeling that this case should be handled elsewhere....
+                                 if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
+                                 during init and somehow the subscriber won't be called then (too early???)
 
-                         Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
-                         actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
-                         */
-                        this.setInvalid();
-                    }
-                }
-                if(this.readonly != undefined) {
-                    if (this.readonly == "true") {
-                        this.setReadonly();
-                    }else {
-                        this.setReadwrite();
-                    }
-                }
+                                 Ok, for now: if control is not valid (has 'xfInvalid' class) and not has 'bfInvalidControl' (which
+                                 actually shows an alert) it must nevertheless publish invalid event for the alerts to work correctly.
+                                 */
+                                self.setInvalid();
+                            }
+                        }
+                        if(self.readonly != undefined) {
+                            if (self.readonly == "true") {
+                                self.setReadonly();
+                            }else {
+                                self.setReadwrite();
+                            }
+                        }
 
-                if(this.required != undefined) {
-                    if (this.required == "true") {
-                        this.setRequired();
-                    }else {
-                        this.setOptional();
-                    }
-                }
-                if(this.relevant != undefined) {
-                    if (this.relevant == "true") {
-                        this.setEnabled();
-                    }else {
-                        this.setDisabled();
-                    }
-                }
-
+                        if(self.required != undefined) {
+                            if (self.required == "true") {
+                                self.setRequired();
+                            }else {
+                                self.setOptional();
+                            }
+                        }
+                        if(self.relevant != undefined) {
+                            if (self.relevant == "true") {
+                                self.setEnabled();
+                            }else {
+                                self.setDisabled();
+                            }
+                        }
+                    });
+                })
             }
         },
 

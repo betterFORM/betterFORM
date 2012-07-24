@@ -131,7 +131,7 @@ define(["dojo/_base/declare",
                     return;
                 }
 
-                if (value != undefined) {
+                if(value != undefined && value != "") {
 
                     var splittedValue = value.split("-");
                     if (splittedValue.length != 3) {
@@ -149,6 +149,10 @@ define(["dojo/_base/declare",
                     this.monthDijit.set('value', this.monthsArray[parseInt(this.months, "10") - 1]);
                     //this.monthDijit.set('displayValue', this.monthsArray[parseInt(months)-1]);
                     this.yearDijit.set('value', this.years);
+                }else {
+                    this.daysDijit.set('value', "");
+                    this.monthDijit.set('value', "");
+                    this.yearDijit.set('value', "");
                 }
             },
 
