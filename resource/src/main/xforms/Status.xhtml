@@ -58,12 +58,18 @@
 			.xfRepeatHeader{
 				font-size:0.9em;
 			}
-			.xfContainer
-/*
-            .caVerticalTable .caVerticalTable{
-                display:block;
+            .bf .bfVerticalTable .bfVerticalTableLabel{
+                white-space: nowrap;
             }
-*/
+            .bf .bfVerticalTable .bfVerticalTableLabel .xfLabel{
+                padding-top: 0;
+            }
+            td{
+                padding: 6px;
+            }
+            #version{
+                text-align: right;
+            }
         </style>
     </head>
     <body>
@@ -79,12 +85,15 @@
         </div>
 
 
+        <xf:output id="version" value="bf:appContext('versionInfo')"/>
         <xf:group appearance="bf:verticalTable" id="main">
             <xf:label>betterFORM Configuration</xf:label>
+<!--
             <div style="font-style: italic;color: orangered;text-align: center;width: 100%;">
                 Caution: if you change things here you should know what you are doing. Wrong configuration may
                 cause server malfunction.
             </div>
+-->
             <!--<xf:group appearance="bf:verticalTable" id="environment">-->
                 <!--<xf:label>Environment Parameters</xf:label>-->
                 <div class="xfGroupLabel">Request Parameters and Headers</div>

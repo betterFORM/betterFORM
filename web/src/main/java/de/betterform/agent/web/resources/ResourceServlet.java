@@ -232,8 +232,7 @@ public class ResourceServlet extends HttpServlet {
         if(this.lastModified == 0){
             long bfTimestamp;
             try {
-                String path = this.getServletContext().getRealPath("WEB-INF/betterform-version.info");
-
+                String path = ResourceServlet.class.getResource("/META-INF/version.info").getPath();
                 StringBuilder versionInfo = new StringBuilder();
                 String NL = System.getProperty("line.separator");
                 Scanner scanner = new Scanner(new FileInputStream(path), "UTF-8");
@@ -244,6 +243,9 @@ public class ResourceServlet extends HttpServlet {
                 }
                 finally{
                     scanner.close();
+                }
+                if(LOG.isDebugEnabled()){
+                    LOG.debug("VersionInfo: " + versionInfo);
                 }
                 // String APP_NAME = APP_INFO.substring(0, APP_INFO.indexOf(" "));
                 // String APP_VERSION = APP_INFO.substring(APP_INFO.indexOf(" ") + 1, APP_INFO.indexOf("-") - 1);

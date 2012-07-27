@@ -35,7 +35,7 @@
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <!--<property name="resources.dir" value="${webapp.dir}/resources"/>-->
     <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
-    <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
+    <property name="targetname" value="${target}/${web.app.name}-${app.version.number}"/>
 
     <antversion property="antversion" atleast="${properties.antversion}"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -254,20 +254,11 @@
 
         </copy>
 
-        <!-- copy version.info to betterform-version.config -->
-        <filter token="app.name" value="${web.app.name}"/>
-        <filter token="app.version" value="${web.app.version}"/>
-        <tstamp>
-            <format property="current.time"
-                    pattern="yyyy-MM-dd HH:mm:ss"
-                    unit="millisecond"/>
-        </tstamp>
-        <filter token="timestamp" value="${current.time}"/>
-
         <copy tofile="${src.webinf.dir}/betterform-version.info"
-              file="${core.dir}/src/main/java/version.info"
-              filtering="true"
-              overwrite="true"/>
+                file="../core/src/main/resources/META-INF/version.info"
+                filtering="true"
+                overwrite="true"/>
+
 
         <!--TODO: URGENT: webapp dir should be urgently be cleaned up!!!! -->
         <copy description="copy WEB-INF dir"
@@ -302,7 +293,7 @@
             <!-- todo: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
                 Therefore only needed libs are copied directly here.
 			-->
-            <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${core.app.version}.jar">
+            <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${app.version}.jar">
                 <include name="**/dwr*"/>
             </fileset>
         </copy>

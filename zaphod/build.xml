@@ -33,7 +33,7 @@
     <property name="lib.dir" value="${basedir}/src/main/lib"/>
     <property name="target" value="${basedir}/target"/>
     <property name="webapp.dir" value="${target}/${zaphod.app.name}"/>
-    <property name="targetname" value="${target}/${zaphod.app.name}-${zaphod.app.version}"/>
+    <property name="targetname" value="${target}/${zaphod.app.name}-${app.version.number}"/>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->

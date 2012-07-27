@@ -95,6 +95,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
             LOGGER.debug(getAppInfo());
         }
         this.context = new HashMap(10);
+        this.context.put("versionInfo",getAppInfo());
         this.eventList = new ArrayList();
     }
 
@@ -108,7 +109,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
             if (APP_INFO == null) {
                 try {
                     BufferedInputStream stream = new BufferedInputStream(XFormsProcessorImpl.class.getResourceAsStream("/META-INF/version.info"));
-                    StringBuffer buffer = new StringBuffer("betterForm/");
+                    StringBuffer buffer = new StringBuffer();
                     int c;
 
                     while ((c = stream.read()) > -1) {
@@ -119,7 +120,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
                     stream.close();
                     APP_INFO = buffer.toString();
                 } catch (IOException e) {
-                    APP_INFO = "betterForm";
+                    APP_INFO = "betterFORM";
                 }
             }
             return APP_INFO;

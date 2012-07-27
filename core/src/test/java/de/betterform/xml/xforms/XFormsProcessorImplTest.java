@@ -30,11 +30,9 @@ import java.net.URI;
  * @version $Id: XFormsProcessorImplTest.java 3251 2008-07-08 09:26:03Z lasse $
  */
 public class XFormsProcessorImplTest extends TestCase {
-/*
     static {
         org.apache.log4j.BasicConfigurator.configure();
     }
-*/
 
     private XFormsProcessorImpl processor;
     private Document form;
@@ -238,6 +236,15 @@ public class XFormsProcessorImplTest extends TestCase {
         DOMUtil.prettyPrintDOM(this.processor.getContainer().getDocument(),System.out);
     }
 */
+    public void testVersionInfo() throws Exception {
+        String s = (String) this.processor.getContextParam("versionInfo");
+        assertNotNull(s);
+        assertTrue(s.indexOf("betterFORM") != -1);
+        assertTrue(s.indexOf("buildNumber") != -1);
+        assertTrue(s.indexOf("Timestamp") != -1);
+        String s1 = s.substring(s.indexOf("Timestamp:") +10);
+        assertTrue(s1.length() == 19);
+    }
 
     /**
      * Sets up the test.

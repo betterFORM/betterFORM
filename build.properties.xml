@@ -5,10 +5,10 @@
 
 <root>
     <app>
-        <name>betterform</name>
+        <name>betterFORM</name>
         <version>
             <name>springBud</name>
-            <number>5.0</number>
+            <number>5.0rc1</number>
         </version>
     </app>
     <properties>
@@ -72,7 +72,6 @@
     <core>
         <app>
             <name>betterform-core</name>
-            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -134,7 +133,6 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
@@ -263,7 +261,6 @@
     <betty>
         <app>
             <name>betty</name>
-            <version>1.0</version>
         </app>
         <compile>
             <classpath pathid="betty.class.path" description="classpath for compiling web classes">
@@ -275,13 +272,11 @@
     <zaphod>
         <app>
             <name>zaphod</name>
-            <version>1.0</version>
         </app>
     </zaphod>
     <xapp>
         <app>
             <name>xApplication</name>
-            <version>1.0</version>
         </app>
     </xapp>
 

@@ -19,7 +19,7 @@
     <property name="target.classes" value="${basedir}/target/classes"/>
 
     <property name="dist.path" value="${basedir}/target/${core.app.name}"/>
-    <property name="dist.name" value="${core.app.name}-${core.app.version}"/>
+    <property name="dist.name" value="${core.app.name}-${app.version.number}"/>
     <antversion property="antversion" atleast="${properties.antversion}"/>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -72,14 +72,25 @@
     <target name="compile" depends="prepare" description="compile all core sources">
 
 
-        <filter token="app.name" value="${core.app.name}"/>
-        <filter token="app.version" value="${core.app.version}"/>
-        <filter token="timestamp" value="''"/>
+        <tstamp>
+            <format property="current.time"
+                    pattern="yyyy-MM-dd HH:mm:ss"
+                    unit="millisecond"/>
+        </tstamp>
+        <buildnumber/>
+        <filter token="app.name" value="${app.name}"/>
+        <filter token="app.version" value="${app.version.number}"/>
+        <filter token="timestamp" value="${current.time}"/>
+        <filter token="build.number" value="${build.number}"/>
 
-        <copy todir="${basedir}/src/main/resources/META-INF"
-              file="src/main/java/version.info"
+
+        <copy
+              tofile="${basedir}/src/main/resources/META-INF/version.info"
+              file="src/main/java/version.info.tmpl"
               filtering="true"
               overwrite="true"/>
+
+
         <echo level="info">
         ************************************************************************************
         compiling Core classes
@@ -90,6 +101,8 @@
                 deprecation: ${properties.javac.deprecation}
                 optimize:    ${properties.javac.optimize}
 
+            Build number: ${build.number}
+            Current Time: ${current.time}
         ************************************************************************************
         </echo>
         
@@ -298,7 +311,7 @@
          </javadoc>
 
          <!--set version filter-->
-         <filter token="core.app.version" value="${core.app.version}"/>
+         <filter token="app.version" value="${app.version}"/>
      </target>
 
     <target name="check-ant-version" unless="antversion">

@@ -68,7 +68,7 @@
                          <filter token="app.version" value="${project.version}"/>
                          <filter token="app.build" value="${buildNumber}"/>
                          <filter token="revision.number" value="${Revision}"/>
-                         <copy todir="${basedir}/src/main/resources/META-INF" file="${basedir}/src/main/java/version.info" filtering="true" overwrite="true"/>
+                         <copy todir="${basedir}/src/main/resources/META-INF" file="${basedir}/src/main/java/version.info.tmpl" filtering="true" overwrite="true"/>
                          <echo/>
                     </tasks>
                   </configuration>
