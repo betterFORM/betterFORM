@@ -250,27 +250,28 @@ public class LoadAction extends AbstractBoundAction {
             DOMUtil.copyAttributes(targetElem, embeddedNode, null);
             targetElem.getParentNode().replaceChild(embeddedNode, targetElem);
 
-
-            map.put("uri", absoluteURI);
-            map.put("show", this.showAttribute);
-            map.put("targetElement", embeddedNode);
-            map.put("nameTarget", evaluatedTarget);
-            map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
-            map.put("inlineCSS", inlineCssRules);
-            map.put("externalCSS", externalCssRules);
-            map.put("inlineJavascript", inlineJavaScript);
-            map.put("externalJavascript", externalJavaScript);
-            map.put("utilizedEvents", utilizedEvents);
-
-            this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
             //create model for it
             this.container.createEmbeddedForm((Element) embeddedNode);
-
             // dispatch internal betterform event
             this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED_DONE, map);
 
+            if(getModel().isReady()){
+                map.put("uri", absoluteURI);
+                map.put("show", this.showAttribute);
+                map.put("targetElement", embeddedNode);
+                map.put("nameTarget", evaluatedTarget);
+                map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
+                map.put("inlineCSS", inlineCssRules);
+                map.put("externalCSS", externalCssRules);
+                map.put("inlineJavascript", inlineJavaScript);
+                map.put("externalJavascript", externalJavaScript);
+                map.put("utilizedEvents", utilizedEvents);
 
-            this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
+                this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
+                this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
+            }
+
+
     //        storeInContext(absoluteURI, this.showAttribute);
         } else {
             String message = "Element reference for targetid: " + this.targetAttribute + " not found. " + DOMUtil.getCanonicalPath(this.element);
