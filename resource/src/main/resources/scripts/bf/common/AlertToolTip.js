@@ -6,7 +6,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
         hideSpeed:1000,
 
         _show:function(id, commonChild, action) {
-            console.debug("ToolTipAlert._show: [id:" + id , " commonChild: " + commonChild + "]");
+            // console.debug("AlertToolTip._show: [id:" + id , " commonChild: " + commonChild + "]");
             var commonChildNode = dom.byId(id + '-' + commonChild);
 
 
@@ -16,7 +16,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
             }
 
             else if(commonChildNode != undefined && commonChild == this.alert) {
-                console.debug("ToolTipAlert._show: [id:" + id , " commonChildNode: ", commonChildNode ,"]");
+                // console.debug("AlertToolTip._show: [id:" + id , " commonChildNode: ", commonChildNode ,"]");
                 var commonChildId = domAttr.get(commonChildNode,"id");
                 var alertTooltip = registry.byId(domAttr.get(commonChildNode,"id"));
                 //var alertTooltip = undefined;
@@ -52,7 +52,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
                     }));
                 }
 
-                console.debug("ToolTipAlert: alertTooltip:",alertTooltip);
+                // console.debug("AlertToolTip: alertTooltip:",alertTooltip);
                 alertTooltip.open(valueNode);
 
                 domStyle.set(alertTooltip.domNode, "opacity", "1");
@@ -78,27 +78,29 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
 
 
         _hide:function(id, commonChild,action) {
-            console.debug("ToolTipAlert._hide: [id:" + id , " commonChild: " + commonChild + "]");
+            // console.debug("AlertToolTip._hide: [id:" + id , " commonChild: " + commonChild + "]");
             var commonChildNode = dom.byId(id + '-' + commonChild);
-
+            // console.debug("AlertToolTip._hide commonChildNode:",commonChildNode);
 
             if (commonChildNode != undefined && commonChild == this.alert) {
                 var controlValue = query('.xfValue', dom.byId(id))[0];
                 var alertDijit = registry.byId(domAttr.get(commonChildNode,"id"));
+                // console.debug("AlertToolTip._hide alertDijit: ",alertDijit);
                 if (alertDijit != undefined && controlValue != undefined) {
+                    // console.debug("AlertToolTip._hide alertDijit not undefiend: ",alertDijit);
                     alertDijit.close(controlValue);
                 }
-                if(domClass.contains(controlValue,"bfInvalidControl")) {
+                if(controlValue != undefined && domClass.contains(controlValue,"bfInvalidControl")) {
                     domClass.remove(controlValue,"bfInvalidControl");
                 }
-
             } else if (commonChild != undefined && commonChild == this.hint) {
                 this._render(id, commonChild,"none");
             }
+            // console.debug("AlertToolTip._hide END");
         },
 
         _render:function(id, commonChild, show) {
-            console.debug("ToolTipAlert._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
+            // console.debug("AlertToolTip._render [id:'",id,"' commonChild:'", commonChild," ' show:'",show, "']");
             var mip = dom.byId(id + "-" + commonChild);
             if (mip != undefined && mip.innerHTML != '') {
                 domStyle.set(mip, "display", show);
@@ -113,7 +115,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom", "dojo/dom-style","doj
             var alertTooltip = registry.byId(id+"-MasterToolTip-" +commonChild);
             // No need to check if tooltip exists since this function is only called if (after a check before) it exists
             var valueNode = query('.xfValue', dom.byId(id))[0];
-            console.debug("ToolTipAlert._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
+            // console.debug("AlertToolTip._fadeOutAndHide  [id: " + id + " - alertTooltip:" , alertTooltip ,"]");
             var speed = this.hideSpeed;
             nodeListFx.fadeOut({
                 node:alertTooltip.domNode,

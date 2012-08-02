@@ -59,13 +59,14 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 this.readonly = contextInfo["readonly"];
                 this.required = contextInfo["required"];
                 this.relevant = contextInfo["enabled"];
+                var formerType = this.type;
                 this.type = contextInfo["type"];
 
                 // console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
-
-                if(this.type != undefined && this.type != ""){
+                // console.debug("XFBinding.handleStateChanged this.type: ", this.type, " formerType:",formerType);
+                if(this.type != undefined && this.type != "" && this.type != formerType){
                     // console.warn("XFControl.handleStateChange type changed");
                     var xsdType = "xsd" + this.type.replace(/^[a-z]/, this.type.substring(0, 1).toUpperCase());
                     // TODO: existing types must be removed in case of type switch

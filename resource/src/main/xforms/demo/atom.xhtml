@@ -46,7 +46,7 @@
 				</xf:action>
 			</xf:model>
 		</div>
-		<xf:group id="repeatOuter" appearance="full">
+		<xf:group id="repeatOuter">
 			<div class="Section">
 				<div class="Headline">Atom Feed Reader</div>
 
@@ -58,51 +58,54 @@
 
 			<div class="Section">
 				<div class="Sample">
-					<xf:select1 appearance="minimal" ref="feedURL">
-						<xf:label>FeedURL:</xf:label>
-						<xf:choices>
-							<xf:item selected="True">
-								<xf:label>Golem</xf:label>
-								<xf:value>http://rss.golem.de/rss.php?feed=ATOM1.0</xf:value>
-							</xf:item>
-							<xf:item selected="False">
-								<xf:label>heise Online</xf:label>
-								<xf:value>http://www.heise.de/newsticker/heise-atom.xml</xf:value>
-							</xf:item>
-							<xf:item selected="False">
-								<xf:label>heise Security</xf:label>
-								<xf:value>http://www.heise.de/security/news/news-atom.xml</xf:value>
-							</xf:item>
-							<xf:item selected="False">
-								<xf:label>heise mobil</xf:label>
-								<xf:value>http://www.heise.de/mobil/newsticker/heise-atom.xml</xf:value>
-							</xf:item>
-							<xf:item selected="False">
-								<xf:label>heise Open</xf:label>
-								<xf:value>http://www.heise.de/open/news/news-atom.xml</xf:value>
-							</xf:item>
-							<xf:item selected="False">
-								<xf:label>iX</xf:label>
-								<xf:value>http://www.heise.de/ix/news/news-atom.xml</xf:value>
-							</xf:item>
-						</xf:choices>
-						<xf:action ev:event="xforms-value-changed">
-							<xf:send submission="s-get-data"/>
-						</xf:action>
-					</xf:select1>
+                    <xf:group appearance="minimal">
+                        <xf:select1 appearance="minimal" ref="feedURL">
+                            <xf:label>FeedURL:</xf:label>
+                            <xf:choices>
+                                <xf:item selected="True">
+                                    <xf:label>Golem</xf:label>
+                                    <xf:value>http://rss.golem.de/rss.php?feed=ATOM1.0</xf:value>
+                                </xf:item>
+                                <xf:item selected="False">
+                                    <xf:label>heise Online</xf:label>
+                                    <xf:value>http://www.heise.de/newsticker/heise-atom.xml</xf:value>
+                                </xf:item>
+                                <xf:item selected="False">
+                                    <xf:label>heise Security</xf:label>
+                                    <xf:value>http://www.heise.de/security/news/news-atom.xml</xf:value>
+                                </xf:item>
+                                <xf:item selected="False">
+                                    <xf:label>heise mobil</xf:label>
+                                    <xf:value>http://www.heise.de/mobil/newsticker/heise-atom.xml</xf:value>
+                                </xf:item>
+                                <xf:item selected="False">
+                                    <xf:label>heise Open</xf:label>
+                                    <xf:value>http://www.heise.de/open/news/news-atom.xml</xf:value>
+                                </xf:item>
+                                <xf:item selected="False">
+                                    <xf:label>iX</xf:label>
+                                    <xf:value>http://www.heise.de/ix/news/news-atom.xml</xf:value>
+                                </xf:item>
+                            </xf:choices>
+                            <xf:action ev:event="xforms-value-changed">
+                                <xf:send submission="s-get-data"/>
+                            </xf:action>
+                        </xf:select1>
+                        <xf:trigger class="atomReload">
+                            <xf:label/>
+                            <xf:hint>Click to reload this feed</xf:hint>
+                            <xf:action>
+                                <xf:send submission="s-get-data"/>
+                            </xf:action>
+                        </xf:trigger>
+
+                    </xf:group>
 
 
-					<xf:trigger class="atomReload">
-						<xf:label></xf:label>
-						<xf:hint>Click to reload this feed</xf:hint>
-						<xf:action>
-							<xf:send submission="s-get-data"/>
-						</xf:action>
-					</xf:trigger>
 					<br/>
 
 					<xf:group appearance="full" class="atomData">
-						<xf:label></xf:label>
+						<xf:label/>
 						<xf:output ref="instance('i-atom-entries')/atom:title" class="atomSubtitle">
 							<xf:label>Feed:</xf:label>
 						</xf:output>

@@ -121,16 +121,15 @@
 }
 
 /* Atom Demo */
-.atomReload {
-    height: 25px;
-    width: 25px;
-    padding: 10px;
-    float: right;
+#xforms .xfContainer .atomReload {
+    height: 30px;
+    width: 30px;
+    display:inline-block!important;
 }
 
-.atomReload .dijitButtonContents {
-    height: 24px;
-    width: 27px;
+#xforms .xfContainer .atomReload .xfValue {
+    height: 29px;
+    width: 32px;
     background: url(../images/001_39.png) no-repeat 2px 2px;
 }
 
@@ -231,7 +230,7 @@
     padding-right: 15px;
 }
 
-.contactsMasterTrigger .dijitButtonContents {
+.contactsMasterTrigger .xfValue {
     background: url(../images/001_22.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -248,7 +247,7 @@
     padding-right: 15px;
 }
 
-.contactsSubTrigger .dijitButtonContents {
+.contactsSubTrigger .xfValue {
     background: url(../images/001_22.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -267,7 +266,7 @@
     margin-left: 10px;
 }
 
-.contactsUpdateMasterTrigger .dijitButtonContents {
+.contactsUpdateMasterTrigger .xfValue {
     background: url(../images/001_24.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -344,7 +343,7 @@
     padding-right: 15px;
 }
 
-.orderListNewTrigger .dijitButtonContents {
+.orderListNewTrigger .xfValue {
     background: url(../images/001_47.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -361,7 +360,7 @@
     padding-right: 15px;
 }
 
-.orderListAddTrigger .dijitButtonContents {
+.orderListAddTrigger .xfValue {
     background: url(../images/001_03.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -379,7 +378,7 @@
     padding-right: 15px;
 }
 
-.orderListDelTrigger .dijitButtonContents {
+.orderListDelTrigger .xfValue {
     background: url(../images/001_04.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -397,7 +396,7 @@
     padding-right: 15px;
 }
 
-.orderListResetTrigger .dijitButtonContents {
+.orderListResetTrigger .xfValue {
     background: url(../images/001_39.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -414,7 +413,7 @@
     padding-right: 15px;
 }
 
-.orderListOKTrigger .dijitButtonContents {
+.orderListOKTrigger .xfValue {
     background: url(../images/001_06.png) no-repeat 5px 5px;
     display: inline;
     height: 30px;
@@ -431,7 +430,7 @@
     width: 150px;
 }
 
-.orderListAbortTrigger .dijitButtonContents {
+.orderListAbortTrigger .xfValue {
     background: url(../images/001_05.png) no-repeat 5px 5px;
     display: block;
     height: 30px;
@@ -470,7 +469,7 @@
     padding-left:207px;
 }
 
-.twitterReload .dijitButtonContents {
+.twitterReload .xfValue {
     background: url(../images/001_39.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
@@ -486,7 +485,7 @@
    display: inline-block;
 }
 
-.twitterGo .dijitButtonContents {
+.twitterGo .xfValue {
     background: url(../images/001_60.png) no-repeat 1px 1px;
     display: block;
     height: 23px;
@@ -575,7 +574,7 @@
     font-size: 8pt;
 }
 
-.twitterPublic .dijitButtonContents {
+.twitterPublic .xfValue {
     background: url(../images/001_60-r.png) no-repeat 5px 5px;
     display: block;
     height: 32px;
