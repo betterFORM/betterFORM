@@ -1,8 +1,9 @@
 <!--
   ~ Copyright (c) 2011. betterForm Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
-  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  --><project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
@@ -91,7 +92,7 @@
     and execute ant update-maven-poms
     -->
 
-    <dependencies xmlns="">
+    <dependencies >
       <dependency>
          <groupId>net.sf.saxon</groupId>
          <artifactId>saxon</artifactId>
@@ -203,6 +204,21 @@
          <version>1.8.2</version>
       </dependency>
       <dependency>
+         <groupId>commons-pool</groupId>
+         <artifactId>commons-pool</artifactId>
+         <version>1.5.6</version>
+      </dependency>
+      <dependency>
+         <groupId>org.exist</groupId>
+         <artifactId>exist</artifactId>
+         <version>2.1-trunk</version>
+      </dependency>
+      <dependency>
+         <groupId>org.xmldb</groupId>
+         <artifactId>xmldb</artifactId>
+         <version>1.0</version>
+      </dependency>
+    <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
          <version>4.10</version>

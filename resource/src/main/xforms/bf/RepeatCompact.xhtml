@@ -17,31 +17,10 @@
                     <data xmlns="">
                         <repeat readonly="false" relevant="true">
                             <items>
-                                <item>text 1</item>
-                                <item>2009-01-20</item>
-                                <item>2009-01-20</item>
-                                <item>true</item>
-                            </items>
-
-                            <items>
-                                <item>text 2</item>
-                                <item>2010-03-17</item>
-                                <item>2010-03-17</item>
-                                <item>false</item>
-                            </items>
-
-                            <items>
-                                <item>text 3</item>
-                                <item>2011-05-22</item>
-                                <item>2011-05-22</item>
-                                <item>true</item>
-                            </items>
-
-                            <items>
                                 <item>text 4</item>
                                 <item>2008-06-13</item>
                                 <item>2008-06-13</item>
-                                <item>false</item>
+                                <item>true</item>
                             </items>
                         </repeat>
                     </data>
@@ -51,29 +30,38 @@
                     <xf:bind nodeset="item[3]" type="date"/>
                     <xf:bind nodeset="item[4]" type="boolean"/>
                 </xf:bind>
+
+                <xf:instance id="i-label" xmlns="">
+                    <labels>
+                        <label>String</label>
+                        <label>Date</label>
+                        <label>DropDownDate</label>
+                        <label>Boolean</label>
+                    </labels>
+                </xf:instance>
             </xf:model>
         </div>
-        <div>
-            <span>Insert Actions:</span>
-            <xf:trigger>
-                <xf:label>Before [index]</xf:label>
-                <xf:action>
-                    <xf:insert nodeset="repeat/items" at="index('repeat1')" position="before"/>
-                </xf:action>
-            </xf:trigger>
-            <xf:trigger>
-                <xf:label>Add [first]</xf:label>
-                <xf:action>
-                    <xf:insert nodeset="repeat/items" at="1" position="before"/>
-                </xf:action>
-            </xf:trigger>
-            <xf:trigger>
-                <xf:label>Add [last]</xf:label>
-                <xf:action>
-                    <xf:insert nodeset="repeat/items" at="last()" position="after"/>
-                </xf:action>
-            </xf:trigger>
-        </div>
+                <div>
+                    <span>Insert Actions:</span>
+                    <xf:trigger>
+                        <xf:label>Before [index]</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeat/items" at="index('repeat1')" position="before"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Add [first]</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeat/items" at="1" position="before"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Add [last]</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeat/items" at="last()" position="after"/>
+                        </xf:action>
+                    </xf:trigger>
+                </div>
         <div>
             <span>Delete Actions:</span>
             <xf:trigger>
@@ -111,18 +99,19 @@
             </xf:trigger>
         </div>
 
-        <xf:repeat id="repeat1" nodeset="repeat/items" appearance="compact">
+
+        <xf:repeat id="repeat1" nodeset="repeat/items[position() != last()]" appearance="compact">
             <xf:input ref="item[1]">
-                <xf:label>String:</xf:label>
+                <xf:label ref="instance('i-label')/label[1]"/>
             </xf:input>
             <xf:input ref="item[2]">
-                <xf:label>Date:</xf:label>
+                <xf:label ref="instance('i-label')/label[2]"/>
             </xf:input>
             <xf:input ref="item[3]" appearance="bf:dropdowndate">
-                <xf:label>DropDownDate:</xf:label>
+                <xf:label ref="instance('i-label')/label[3]"/>
             </xf:input>
             <xf:input ref="item[4]">
-                <xf:label>Boolean:</xf:label>
+                <xf:label ref="instance('i-label')/label[4]"/>
             </xf:input>
         </xf:repeat>
         <br/>

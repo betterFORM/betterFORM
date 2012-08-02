@@ -86,17 +86,19 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
         Extends XFBinding.handleStateChanged
          */
         handleStateChanged:function(contextInfo) {
+            // console.debug("XFControl.handleStateChanged contextInfo:",contextInfo);
+            var tmpContextInfo = contextInfo;
             this.inherited(arguments);
-            var tmpContextInfo = contextInfo
             var self = this;
             require(["dojo/ready"], function (ready) {
                 ready(function () {
-                    // console.debug("XFControl.handleStateChanged");
-                    if (self.value != null) {
-                        // console.debug("XFControl.handleStateChange contextInfo:", contextInfo);
-                        self.currentValue = tmpContextInfo["value"];
+                    // console.debug("XFControl.handleStateChanged after super call self.value:",self.value, " tmpContextInfo['value']: ", tmpContextInfo["value"]);
+                    var value = tmpContextInfo["value"];
+                    if (value != null && contextInfo["targetName"] != "label") {
+                        // console.debug("XFControl.handleStateChange value != null: contextInfo:", contextInfo);
+                        self.currentValue = value;
                         // console.debug("XFControl.handleStateChanged: calling self.setValue with value:",self.value ," and this.schemavalue:",tmpContextInfo["schemaValue"]);
-                        self.setValue(self.currentValue, tmpContextInfo["schemaValue"]);
+                        self.setValue(value, tmpContextInfo["schemaValue"]);
                     }
                 })
             });
