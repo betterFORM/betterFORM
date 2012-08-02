@@ -64,6 +64,21 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
 
             },
 
+            setReadOnly:function(){
+                // console.debug("SelectCheckBox.setReadOnly");
+                query(".xfCheckBoxValue",this.domNode).forEach(function(item){
+                    domAttr.set(item, "disabled","disabled");
+                });
+            },
+
+            setReadWrite:function(){
+                // console.debug("SelectCheckBox.setReadWrite");
+                query(".xfCheckBoxValue",this.domNode).forEach(function(item){
+                    domAttr.remove(item, "disabled");
+                });
+            },
+
+
 
             _getSelectedValue:function(){
                 var selectedValue = "";

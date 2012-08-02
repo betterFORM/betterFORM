@@ -102,6 +102,20 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 }else {
                     console.warn("Select1Radio.handleStateChanged: no action taken for contextInfo: ",contextInfo);
                 }
+            },
+
+            setReadOnly:function(){
+                // console.debug("Select1Radio.setReadOnly");
+                query(".xfRadioValue", this.domNode).forEach(function(item) {
+                    domAttr.set(item, "disabled","disabled");
+                });
+            },
+
+            setReadWrite:function(){
+                // console.debug("Select1Radio.setReadWrite");
+                query(".xfRadioValue", this.domNode).forEach(function(item) {
+                    domAttr.remove(item, "disabled");
+                });
             }
         });
     }

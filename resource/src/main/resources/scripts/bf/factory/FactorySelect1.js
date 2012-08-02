@@ -83,6 +83,20 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                 connect.connect(select1RadioWidget, "onFocus",function() {
                                     xfControlDijit.handleOnFocus();
                                 });
+                                xfControlDijit.setReadonly = function() {
+                                    // console.debug("FactorySelect (Checkbox).setReadonly xfControlDijit:",xfControlDijit);
+                                    domClass.replace(xfControlDijit.srcNodeRef, "xfReadOnly", "xfReadWrite");
+                                    select1RadioWidget.setReadOnly();
+                                };
+
+                                xfControlDijit.setReadwrite = function() {
+                                    // console.debug("FactorySelect (Checkbox).setReadwrite xfControlDijit",xfControlDijit);
+                                    domClass.replace(xfControlDijit.srcNodeRef,"xfReadWrite", "xfReadOnly");
+                                    select1RadioWidget.setReadWrite();
+                                };
+
+
+
                             });
                             break;
                         case "open":

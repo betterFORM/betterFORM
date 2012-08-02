@@ -182,14 +182,18 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         setReadonly:function() {
+            // console.debug("XFBinding.setReadonly widget:",this.getWidget());
             domClass.replace(this.srcNodeRef, "xfReadOnly", "xfReadWrite");
             domAttr.set(this.getWidget(), "readonly","readonly");
+            domAttr.set(this.getWidget(), "disabled","disabled");
         },
 
         setReadwrite:function() {
-            // console.debug("this.getWidget():",this.getWidget(), " this.srcNodeRef:",this.srcNodeRef);
+            // console.debug("XFBinding.setReadwrite widget:",this.getWidget());
+
             domClass.replace(this.srcNodeRef,"xfReadWrite", "xfReadOnly");
             this.getWidget().removeAttribute("readonly");
+            this.getWidget().removeAttribute("disabled");
         },
 
         setRequired:function() {

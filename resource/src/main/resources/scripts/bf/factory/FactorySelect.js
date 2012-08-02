@@ -90,6 +90,18 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                         item.checked = value.indexOf(item.value) != -1;
                                     });
                                 };
+                                xfControlDijit.setReadonly = function() {
+                                    // console.debug("FactorySelect (Checkbox).setReadonly xfControlDijit:",xfControlDijit);
+                                    domClass.replace(xfControlDijit.srcNodeRef, "xfReadOnly", "xfReadWrite");
+                                    selectFull.setReadOnly();
+                                };
+
+                                xfControlDijit.setReadwrite = function() {
+                                    // console.debug("FactorySelect (Checkbox).setReadwrite xfControlDijit",xfControlDijit);
+                                    domClass.replace(xfControlDijit.srcNodeRef,"xfReadWrite", "xfReadOnly");
+                                    selectFull.setReadWrite();
+                                };
+
 
                             });
                             break;
