@@ -47,6 +47,7 @@ define(["dojo/_base/declare",
         mappingProcessor:null,
         _uiReady:false,
         initialEvents:new Array(),
+        subscribers:new Object(),
 
 
         /*
@@ -60,7 +61,7 @@ define(["dojo/_base/declare",
          */
 
         constructor:function() {
-            console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
+            // console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
 
             // initialize DWR
 
@@ -173,7 +174,7 @@ define(["dojo/_base/declare",
 
                 }else if(callerFunction != "setRepeatIndex"){
                     // Test if this dijit-control has an isReadonly() method
-                    console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
+                    // console.debug("XFProcessor.eventFifoReader: check if Object is readonly:",dijitObject, " reaondly: ",dijitObject.isReadonly());
 
                     if (dijitObject && dijitObject.isReadonly()) {
                         console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: READ-ONLY");
@@ -191,7 +192,7 @@ define(["dojo/_base/declare",
                         if (this.clientServerEventQueue[0].getTargetId() == nextPendingTargetId) {
                             // Test if the CallerFunction of the next Event is also setControlValue
                             if (this.clientServerEventQueue[0].getCallerFunction() == "setControlValue") {
-                                console.debug("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
+                                // console.debug("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: superseeded by following value-change of same Control");
                                 continue;
                             }
                             else {
@@ -281,7 +282,7 @@ define(["dojo/_base/declare",
 
         //eventually an 'activate' method still makes sense to provide a simple DOMActivate of a trigger Element
         dispatchEvent: function (targetId) {
-            console.debug("XFProcessor.dispatchEvent targetId:",targetId);
+            // console.debug("XFProcessor.dispatchEvent targetId:",targetId);
 
             var newClientServerEvent = new ClientServerEvent();
             newClientServerEvent.setTargetId(targetId);
@@ -342,7 +343,7 @@ define(["dojo/_base/declare",
          Sends a value from a widget to the server. Will be called after any user interaction.
          */
         sendValue: function(id, value) {
-            console.debug("XFProcessor.sendValue", id, value);
+            // console.debug("XFProcessor.sendValue", id, value);
             var newClientServerEvent = new ClientServerEvent();
             newClientServerEvent.setTargetId(id);
             newClientServerEvent.setValue(value);
@@ -978,16 +979,22 @@ define(["dojo/_base/declare",
              destroy all child dijits within subform tree
              */
             var widgets = query("*[" + widgetID + "]", htmlEntryPoint);
+            var self = this;
             array.forEach(widgets,
                 function(item) {
+                    // console.debug("XFProcessor._unloadDOM item:",item);
                     if (item != undefined) {
-                        var childDijit = registry.byId(domAttr.get(item, 'id'));
+                        var itemId = domAttr.get(item, 'id');
+                        var childDijit = registry.byId(itemId);
                         if (childDijit != undefined) {
-                            console.debug("XFProcessor._unloadDOM: destroy ", childDijit);
+                            // console.debug("XFProcessor._unloadDOM: destroy itemId: ",itemId, " dijit:", childDijit);
+                            self.removeSubscribers(itemId);
                             childDijit.destroy();
                         } else {
-                            console.debug("XFProcessor._unloadDOM: ChildDijit is null ");
-                            childDijit = registry.byId(domAttr.get(item, widgetID));
+                            var dijitId = domAttr.get(item, widgetID);
+                            // console.debug("XFProcessor._unloadDOM: ChildDijit is null; dijitId:",dijitId);
+                            self.removeSubscribers(dijitId);
+                            childDijit = registry.byId(dijitId);
                             if (childDijit != undefined) {
                                 childDijit.destroy();
                             }
@@ -996,7 +1003,11 @@ define(["dojo/_base/declare",
                     }
                 }
             );
+            // console.info("XFProcessor._unloadDOM AFTER REMOVING SUBSCRIBERS: :",this.subscribers);
             while (htmlEntryPoint.hasChildNodes()) {
+                // console.debug("XFProcessor._unloadDOM: hasChildNodes START");
+                // console.dirxml(htmlEntryPoint.firstChild);
+                // console.debug("XFProcessor._unloadDOM: hasChildNodes END");
                 htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
             }
         },
@@ -1180,15 +1191,17 @@ define(["dojo/_base/declare",
             //  Otherwise _handleBetterFormStateChanged will be called before _handleBetterFORMInsert is finished!
             require(["dojo/ready"], function(ready){
                 ready(function(){
-                    console.debug("XFProcessor._handleBetterFormStateChanged: contextInfo: ", contextInfo);
+                    // console.debug("XFProcessor._handleBetterFormStateChanged: contextInfo: ", contextInfo);
                     var parentId = contextInfo.parentId;
 
                     // if contextInfo.parentId is present dojo must publish to this id instead of targetid (e.g. used for value changes of labels)
                     if(parentId) {
+                        // console.debug("XFProcessor._handleBetterFormStateChanged: publish (parent): bf-state-change- ", parentId, " contextInfo:",contextInfo);
                         connect.publish("bf-state-change-"+ parentId, contextInfo);
 
                     }
                     else {
+                        // console.debug("XFProcessor._handleBetterFormStateChanged: publish: bf-state-change- ", contextInfo.targetId, " contextInfo:",contextInfo);
                         connect.publish("bf-state-change-"+ contextInfo.targetId,contextInfo);
                     }
                 });
@@ -1359,6 +1372,24 @@ define(["dojo/_base/declare",
             console.debug("XFProcessor.printInstance data:", data);
             // console.dirxml(data);
             dom.byId("debugFrame").innerHTML=data;
+        },
+
+        addSubscriber:function(id, handle){
+            if(this.subscribers[id] == undefined) {
+                this.subscribers[id] = new Array();
+            }
+            this.subscribers[id].push(handle);
+        },
+        removeSubscribers:function(id){
+            // console.warn("removing subscribers for id: ", id, " subcribers: ",this.subscribers[id]);
+            if(this.subscribers[id]!=undefined){
+                array.forEach(this.subscribers[id], function(handle) {
+                    // console.debug("removing handle:",handle);
+                    connect.unsubscribe(handle);
+                });
+                delete this.subscribers[id];
+            }
+
         }
     })
 });

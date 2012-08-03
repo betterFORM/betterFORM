@@ -39,7 +39,10 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             }
             // console.debug("XFBinding.constructor subscribe state change");
             // console.debug("XFBinding.constructor: connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
-            connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
+
+            var bfStateChangedHandle = connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
+            fluxProcessor.addSubscriber(this.id, bfStateChangedHandle);
+
         },
 
         /*
@@ -48,12 +51,13 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         between client and server.
          */
         handleStateChanged:function(contextInfo) {
-            // console.debug("BoundElement.handleStateChanged: ",contextInfo);
+            // console.debug("XFBinding.handleStateChanged: ",contextInfo);
 
             if (contextInfo["parentId"]) {
-                // console.debug("Control._handleHelperChanged: ",contextInfo);
+                // console.debug("XFBinding.handleStateChanged: calling _handleHelperChanged");
                 this._handleHelperChanged(contextInfo);
             } else {
+                // console.debug("XFBinding.handleStateChanged: adjust properties");
                 this.value = contextInfo["value"];
                 this.valid = contextInfo["valid"];
                 this.readonly = contextInfo["readonly"];
@@ -62,12 +66,12 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 var formerType = this.type;
                 this.type = contextInfo["type"];
 
-                // console.debug("XFControl.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
+                // console.debug("XFBinding.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
                 // console.debug("XFBinding.handleStateChanged this.type: ", this.type, " formerType:",formerType);
                 if(this.type != undefined && this.type != "" && this.type != formerType){
-                    // console.warn("XFControl.handleStateChange type changed");
+                    // console.warn("XFBinding.handleStateChange type changed");
                     var xsdType = "xsd" + this.type.replace(/^[a-z]/, this.type.substring(0, 1).toUpperCase());
                     // TODO: existing types must be removed in case of type switch
                     // console.debug("apply new type: ",xsdType, " to Control Widget");
@@ -81,12 +85,16 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 require(["dojo/ready"],function(ready){
                     ready(function(){
 
-                        // console.debug("XFBinding: self.value:",self.value, " self.readonly:",self.readonly);
+                        // console.debug("XFBinding.handleStateChanged (ready): self.value:",self.value, " self.readonly:",self.readonly, " self.srcNodeRef:",self.srcNodeRef);
                         // Validity handling
-                        if(self.valid != undefined){
+                        // console.debug("XFBinding.handleStateChanged handle Valid");
+                        if (self.valid != undefined) {
                             if (self.valid == "true") {
+                                // console.debug("XFBinding.handleStateChanged setValid");
                                 self.setValid();
-                            }else if(!domClass.contains(self.srcNodeRef,"bfInvalidControl")){
+                            }
+                            else if (!domClass.contains(self.srcNodeRef, "bfInvalidControl")) {
+                                // console.debug("XFBinding.handleStateChanged setInvalid");
                                 /*
                                  todo: got the feeling that this case should be handled elsewhere....
                                  if a control is intially invalid it just has xfInvalid but not bfInvalidControl. This may happen
@@ -98,6 +106,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                                 self.setInvalid();
                             }
                         }
+                        // console.debug("XFBinding.handleStateChanged handle ReadOnly");
                         if(self.readonly != undefined) {
                             if (self.readonly == "true") {
                                 self.setReadonly();
@@ -105,7 +114,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                                 self.setReadwrite();
                             }
                         }
-
+                        // console.debug("XFBinding.handleStateChanged handle Required");
                         if(self.required != undefined) {
                             if (self.required == "true") {
                                 self.setRequired();
@@ -113,6 +122,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                                 self.setOptional();
                             }
                         }
+                        // console.debug("XFBinding.handleStateChanged handle Relevant");
                         if(self.relevant != undefined) {
                             if (self.relevant == "true") {
                                 self.setEnabled();
@@ -120,6 +130,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                                 self.setDisabled();
                             }
                         }
+                        // console.debug("XFBinding.handleStateChanged END ready()");
                     });
                 })
             }
@@ -159,7 +170,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         isValid:function() {
-            // console.debug("XFControl.isValid",this.srcNodeRef);
+            // console.debug("XFBinding.isValid",this.srcNodeRef);
 
             if (domClass.contains(this.srcNodeRef, "xfInvalid")) {
                 return false;
@@ -240,7 +251,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         _handleHelperChanged: function(properties) {
-           // console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
+            // console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
             switch (properties["targetName"]) {
                 case "label":
                     this.setLabel(properties["value"]);

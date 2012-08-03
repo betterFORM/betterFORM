@@ -17,13 +17,19 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 }
                 // console.debug("Repeat.postCreate appearance:",this.appearance);
 
-                connect.subscribe("betterform-insert-repeatitem-"+ this.id, this, "handleInsert");
-                connect.subscribe("betterform-item-deleted-"+ this.id,      this, "handleDelete");
-                connect.subscribe("betterform-index-changed-"+ this.id,     this, "handleSetRepeatIndex");
+                var bfInsertRepeatItemHandle = connect.subscribe("betterform-insert-repeatitem-"+ this.id, this, "handleInsert");
+                fluxProcessor.addSubscriber(this.id, bfInsertRepeatItemHandle);
+                var bfItemDeleteHandle = connect.subscribe("betterform-item-deleted-"+ this.id,      this, "handleDelete");
+                fluxProcessor.addSubscriber(this.id, bfItemDeleteHandle);
+                var bfIndexChanged = connect.subscribe("betterform-index-changed-"+ this.id,     this, "handleSetRepeatIndex");
+                fluxProcessor.addSubscriber(this.id, bfIndexChanged);
                 var self = this;
                 this._getRepeatItems().forEach(function(repeatItem){
                     on(repeatItem, "click", lang.hitch(self, self._onClickRepeatItem));
-                    connect.subscribe("bf-state-change-"+ domAttr.get(repeatItem,"id"), self.handleStateChanged);
+                    var repeatItemId = domAttr.get(repeatItem,"id");
+                    // console.debug("Repeat.constructor connect.subscribe('bf-state-change-"+ repeatItemId, " self.handleStateChanged)");
+                    var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
+                    fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
                 });
 
             },
@@ -156,7 +162,9 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                         }
                         domClass.add(repeatItemNode,"xfRepeatIndex");
                         on(repeatItemNode, "click", lang.hitch(this,self._onClickRepeatItem));
-                        connect.subscribe("bf-state-change-"+ domAttr.get(repeatItemNode,"id"), self.handleStateChanged);
+                        var repeatItemId = domAttr.get(repeatItemNode,"id");
+                        var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
+                        fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
                     })
                 })
             },

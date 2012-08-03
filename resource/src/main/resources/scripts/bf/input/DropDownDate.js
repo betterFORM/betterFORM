@@ -22,6 +22,7 @@ define(["dojo/_base/declare",
             monthsArray:null,
 
             postMixInProperties:function() {
+                // console.debug("DropDownDate.postMixInProperties");
                 this.monthsArray = new Array(resources.january, resources.february, resources.march, resources.april,
                                              resources.may, resources.june, resources.july, resources.august,
                                              resources.september, resources.october, resources.november,
@@ -132,7 +133,6 @@ define(["dojo/_base/declare",
                 }
 
                 if(value != undefined && value != "") {
-
                     var splittedValue = value.split("-");
                     if (splittedValue.length != 3) {
                         console.warn("DropDownDate.applyValues: value: ", value ," can't be applied");
@@ -144,10 +144,9 @@ define(["dojo/_base/declare",
                     this.months = splittedValue[1];
                     this.days = splittedValue[2];
 
-                    // console.debug("DropDownDate.applyValues this.daysDijit:", this.daysDijit);
+                    // console.debug("DropDownDate.applyValues this.days:", this.days, " this.months:",this.months, " this.years:",this.years);
                     this.daysDijit.set('value', this.days);
                     this.monthDijit.set('value', this.monthsArray[parseInt(this.months, "10") - 1]);
-                    //this.monthDijit.set('displayValue', this.monthsArray[parseInt(months)-1]);
                     this.yearDijit.set('value', this.years);
                 }else {
                     this.daysDijit.set('value', "");

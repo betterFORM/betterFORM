@@ -86,24 +86,25 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
         Extends XFBinding.handleStateChanged
          */
         handleStateChanged:function(contextInfo) {
-            // console.debug("XFControl.handleStateChanged contextInfo:",contextInfo);
+            // console.debug("XFControl.handleStateChanged this:", this, " contextInfo:",contextInfo);
             var tmpContextInfo = contextInfo;
             this.inherited(arguments);
-            var self = this;
-            require(["dojo/ready"], function (ready) {
-                ready(function () {
-                    // console.debug("XFControl.handleStateChanged after super call self.value:",self.value, " tmpContextInfo['value']: ", tmpContextInfo["value"]);
-                    var value = tmpContextInfo["value"];
-                    if (value != null && contextInfo["targetName"] != "label") {
-                        // console.debug("XFControl.handleStateChange value != null: contextInfo:", contextInfo);
-                        self.currentValue = value;
-                        // console.debug("XFControl.handleStateChanged: calling self.setValue with value:",self.value ," and this.schemavalue:",tmpContextInfo["schemaValue"]);
-                        self.setValue(value, tmpContextInfo["schemaValue"]);
-                    }
-                })
-            });
 
-
+            if (contextInfo["parentId"] == undefined) {
+                var self = this;
+                require(["dojo/ready"], function (ready) {
+                    ready(function () {
+                        // console.debug("XFControl.handleStateChanged after super call self.value:",self.value, " tmpContextInfo['value']: ", tmpContextInfo["value"]);
+                        var value = tmpContextInfo["value"];
+                        if (value != null && contextInfo["targetName"] != "label") {
+                            // console.debug("XFControl.handleStateChange value != null: contextInfo:", contextInfo);
+                            self.currentValue = value;
+                            // console.debug("XFControl.handleStateChanged: calling self.setValue with value:",self.value ," and this.schemavalue:",tmpContextInfo["schemaValue"]);
+                            self.setValue(value, tmpContextInfo["schemaValue"]);
+                        }
+                    })
+                });
+            }
         },
 
         isIncremental:function(){
@@ -122,7 +123,7 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
 
         // TODO: Lars: implement new (if needed), controlValue does not exist anymore
         _checkForDataTypeChange:function(dataType) {
-            // console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
+             // console.debug("_checkForDataTypeChange: old dataType: " + this.dataType + " new dataType: ", dataType, " contextInfo:",contextInfo);
 
             if (this.controlValue == undefined) {
                 var controlValueTemplate = query("*[id ='" + this.id + "-value']", this.domNode)[0];

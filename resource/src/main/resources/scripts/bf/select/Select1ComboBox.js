@@ -6,9 +6,12 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
 
             postCreate:function() {
                 // console.debug("Select1ComboBox postCreate id:",this.id);
-                connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
-                connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
-                connect.subscribe("betterform-delete-item-" + this.id , this, "handleDeleteItem");
+                var bfHandleStateChanged = connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
+                fluxProcessor.addSubscriber(this.id, bfHandleStateChanged);
+                var bfHandleInsertItem = connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
+                fluxProcessor.addSubscriber(this.id, bfHandleInsertItem);
+                var bfHandleDeleteItem = connect.subscribe("betterform-delete-item-" + this.id , this, "handleDeleteItem");
+                fluxProcessor.addSubscriber(this.id, bfHandleDeleteItem);
 
                 this.currentValue = this.domNode.value;
             },
@@ -44,7 +47,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             handleDeleteItem:function(contextInfo) {
-                console.debug("Select1Minimal.handleDeleteItem:  contextInfo:",contextInfo);
+                // console.debug("Select1Minimal.handleDeleteItem:  contextInfo:",contextInfo);
                 var position = contextInfo.position;
                 var itemsetId = contextInfo.targetId;
 
@@ -85,7 +88,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 while(counter != 0) {
                     counter -= 1;
                     siblingNode = siblingNode.nextSibling;
-                    console.debug("getNthSiblingOption: siblingNode:",   siblingNode, " position: ",counter);
+                    // console.debug("getNthSiblingOption: siblingNode:",   siblingNode, " position: ",counter);
                 }
                 return siblingNode;
             }

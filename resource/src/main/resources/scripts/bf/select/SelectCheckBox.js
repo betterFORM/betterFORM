@@ -5,12 +5,13 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
             currentValue:null,
 
             postCreate:function() {
-                // console.debug("Select1CheckBox postCreate id:",this.id);
-                connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
-                connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
-                connect.subscribe("betterform-delete-item-" + this.id , this, "handleDeleteItem");
-
-
+                // console.debug("SelectCheckBox. postCreate id:",this.id);
+                var bfHandleStateChanged = connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
+                fluxProcessor.addSubscriber(this.id, bfHandleStateChanged);
+                var bfHandleInsertItem = connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
+                fluxProcessor.addSubscriber(this.id, bfHandleInsertItem);
+                var bfHandleDeleteItem = connect.subscribe("betterform-delete-item-" + this.id , this, "handleDeleteItem");
+                fluxProcessor.addSubscriber(this.id, bfHandleDeleteItem);
             },
 
             _onBlur:function() {
@@ -91,6 +92,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
                         }
                     }
                 });
+                // console.debug("SelectCheckBox._getSelectedValue value:",selectedValue);
                 return selectedValue;
             }
     });
