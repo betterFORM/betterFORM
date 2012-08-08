@@ -309,7 +309,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             if (valueNode != undefined) {
                 try {
                     // Try to retrieve the title attribute of the according value-node
-                    var titleAttribute = valueNode.attr("title");
+                    var titleAttribute = domAttr.get(valueNode, "title");
                     // Test if the retrieved title-attribute is defined and has a non-empty value
                     titleAttributeFound = titleAttribute != undefined && titleAttribute != "";
                 }
@@ -327,7 +327,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             // If a title-attribute was found
             if (titleAttributeFound) {
                 // Update the title-attribute
-                valueNode.attr("title", value);
+                domAttr.set(valueNode, "title", value);
             }
 
             // If no hint-node was found and no title-attribute was found
