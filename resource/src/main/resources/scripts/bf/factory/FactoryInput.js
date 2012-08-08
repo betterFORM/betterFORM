@@ -180,7 +180,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     var self = this;
                     require(["dojo/query","dijit/form/DateTextBox"],function(query,DateTextBox){
                         n = query(".xfValue",node)[0];
-                        // console.debug("found date value node: n:",n);
+                        console.debug("found date value node: n:",n);
                         var xfId = bf.util.getXfId(n);
                         var xfControlDijit = registry.byId(xfId);
 
@@ -189,11 +189,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         if(!datePattern || datePattern == ""){
                             datePattern = "MM/dd/yyyy"
                         }
-                        // console.debug("input type=date datePattern:",datePattern);
+                        console.debug("input type=date datePattern:",datePattern);
                         var value = dataObj.value;
+                        console.debug("input type=date 1. value:", value);
                         if(!value) {
                             value = domAttr.get(n,"value");
                         }
+                        console.debug("input type=date 2. value:", value);
                         xfControlDijit.setCurrentValue(value);
                         var dateWidget = new DateTextBox({
                                 required:false,
