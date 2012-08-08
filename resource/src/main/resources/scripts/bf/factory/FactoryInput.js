@@ -202,7 +202,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         var hint = dom.byId(xfId+"-hint");
                         var dateWidget = new DateTextBox({
                                 required:false,
-                                placeHolder: hint != undefined ? hint.innerHTML : "",
+                                placeHolder: (hint != undefined && !hint.hasChildNodes())? hint.innerHTML : "",
                                 constraints:{
                                     selector:'date',
                                     datePattern:datePattern
@@ -427,7 +427,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     }
 
                     connect.connect(controlWidget, "set", function (attrName, value) {
-                        // console.debug("controlWidget.set attrName:",attrName, " value:",value, " incremental: ",xfControlDijit.isIncremental());
+                        console.debug("controlWidget.set attrName:",attrName, " value:",value, " incremental: ",xfControlDijit.isIncremental());
                         if((attrName == "focused" &&  !value) || attrName == "value") {
                             var controlValue;
                             if(controlWidget.serialize){
@@ -458,6 +458,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     });
                     xfControlDijit.setValue = function(value,schemavalue) {
                         //console.debug("FactoryInput (date) xfControlDijit.setValue value:",value, " schemavalue:",schemavalue);
+                        if(schemavalue == ""){
+                            schemavalue = undefined;
+                        }
                         controlWidget.set('value', schemavalue);
                     };
                     this._overwriteReadonly(xfControlDijit, controlWidget);
