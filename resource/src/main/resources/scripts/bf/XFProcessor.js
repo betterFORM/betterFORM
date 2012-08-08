@@ -811,6 +811,7 @@ define(["dojo/_base/declare",
                     behavior.apply();
                 });
                 var contextInfo = xmlEvent.contextInfo;
+                var self = this;
                 require(["dojo/ready"], function (ready) {
                     ready(function () {
                         var utilizedEvents = contextInfo.utilizedEvents;
@@ -819,13 +820,13 @@ define(["dojo/_base/declare",
                             var utilizedEventsObj =  json.fromJson("{" + utilizedEvents +  "}");
                             // console.debug("utilizedEventsObj:",utilizedEventsObj);
                             if(utilizedEventsObj.useXFSelect){
-                                this.useXFSelect = true;
+                                self.useXFSelect = true;
                             }
                             if(utilizedEventsObj.useDOMFocusIN){
-                                this.useDOMFocusIN = true;
+                                self.useDOMFocusIN = true;
                             }
                             if(utilizedEventsObj.useDOMFocusOUT){
-                                this.useDOMFocusOUT = true;
+                                self.useDOMFocusOUT = true;
                             }
                         }
 
