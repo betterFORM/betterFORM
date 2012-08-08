@@ -178,7 +178,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                 _createDate:function(xfControlDijit, node){
                     var n = node;
                     var self = this;
-                    require(["dojo/query","dijit/form/DateTextBox"],function(query,DateTextBox){
+                    require(["dojo/dom","dojo/query","dijit/form/DateTextBox"],function(dom, query,DateTextBox){
                         n = query(".xfValue",node)[0];
                         // console.debug("found date value node: n:",n);
                         var xfId = bf.util.getXfId(n);
@@ -194,14 +194,22 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         if(!value) {
                             value = domAttr.get(n,"value");
                         }
-                        xfControlDijit.setCurrentValue(value);
+                        if(value == ""){
+                            value = undefined;
+                        }else {
+                            xfControlDijit.setCurrentValue(value);
+                        }
+                        var hint = dom.byId(xfId+"-hint");
                         var dateWidget = new DateTextBox({
                                 required:false,
+                                placeHolder: hint != undefined ? hint.innerHTML : "",
                                 constraints:{
                                     selector:'date',
                                     datePattern:datePattern
-                                } },n);
-                        dateWidget.set("value",value);
+                        } },n);
+                        if(value != undefined) {
+                            dateWidget.set("value",value);
+                        }
                         dateWidget.validate = function(/*Boolean*/ isFocused){ return true; };
                         self._connectControlDijit(xfControlDijit, dateWidget);
                     });
