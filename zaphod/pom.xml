@@ -4,13 +4,16 @@
   ~ Licensed under the terms of BSD License
   -->
 
+<!--
+ATTENTION - THIS FILE IS NOT INTEGRATED WITHIN THE AUTOMATED POM GENERATION - MUST BE ADAPTED BY HAND !!!!
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>4.1</version>
+        <version>5.0rc1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -49,7 +52,6 @@
                     <groupId>com.sun.jmx</groupId>
                 </exclusion>
             </exclusions>
-
         </dependency>
         <dependency>
             <groupId>junit</groupId>

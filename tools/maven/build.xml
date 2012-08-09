@@ -32,6 +32,20 @@
         <exec command="ant -p" dir="${basedir}" />
     </target>
 
+    <target name="update-project-pom"
+            description="update the Core pom.xml file with dependencies from build.properties.xml">
+        <echo message="Ant Module: ${app.name}"/>
+        <xslt in="${project.dir}/pom.xml"
+              out="${project.dir}/pom.new.xml"
+              style="${project.dir}/tools/maven/updatePOM.xsl"
+              force="true">
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="module" expression="betterform-project"/>
+        </xslt>
+        <move file="${project.dir}/pom.xml" tofile="${project.dir}/pom.xml.old"/>
+        <move file="${project.dir}/pom.new.xml" tofile="${project.dir}/pom.xml"/>
+    </target>
+
     <target name="update-core-pom"
             description="update the Core pom.xml file with dependencies from build.properties.xml">
         <echo message="Ant Module: ${core.app.name}"/>
@@ -48,6 +62,7 @@
 
     <target name="update-web-pom"
             description="update the web pom.xml file with dependencies from build.properties.xml">
+        <echo message="Ant Module: ${web.app.name}"/>
         <xslt in="${project.dir}/web/pom.xml"
               out="${project.dir}/web/pom.new.xml"
               style="${project.dir}/tools/maven/updatePOM.xsl"
@@ -61,6 +76,7 @@
 
     <target name="update-betty-pom"
             description="update the betty pom.xml file with dependencies from build.properties.xml">
+        <echo message="Ant Module: ${betty.app.name}"/>
         <xslt in="${project.dir}/betty/pom.xml"
               out="${project.dir}/betty/pom.new.xml"
               style="${project.dir}/tools/maven/updatePOM.xsl"
