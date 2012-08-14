@@ -232,7 +232,7 @@ public class ResourceServlet extends HttpServlet {
         if(this.lastModified == 0){
             long bfTimestamp;
             try {
-                String path = ResourceServlet.class.getResource("/META-INF/version.info").getPath();
+                String path = this.getServletContext().getRealPath("/WEB-INF/betterform-version.info");
                 StringBuilder versionInfo = new StringBuilder();
                 String NL = System.getProperty("line.separator");
                 Scanner scanner = new Scanner(new FileInputStream(path), "UTF-8");
