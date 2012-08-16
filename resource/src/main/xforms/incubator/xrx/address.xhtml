@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>A simple xCard editor</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <!--
+          Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+          by a xforms load action.
+          -->
+    </head>
+    <body>
+        <div id="xforms">
+            <div style="display:none">
+                <xf:model id="m-xCard">
+                    <!-- todo: add logic to show initially non-relevant fields -->
+
+                    <!--
+                        This instance is inspired by vCard, xCard and hCard but takes a pragmatic approach
+                        with respect to the data format. It uses many of the proposed elements but esp.
+                        simplifies the format esp. for the repeated entries.
+                    -->
+                    <!-- reference: http://microformats.org/wiki/hcard#Root_Class_Name -->
+                    <!-- reference: http://tools.ietf.org/html/rfc6350 -->
+                    <!-- reference: http://tools.ietf.org/html/rfc6351 -->
+                    <xf:instance id="i-xCard">
+                        <data xmlns="">
+                            <xCard>
+                                <!-- e.g. urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af - generated -->
+                                <uid/>
+                                <!-- one of 'individual', 'group' or 'org' -->
+                                <kind/>
+                                <!-- full name e.g. Sally Ride-->
+                                <fn/>
+                                <!-- structured name -->
+                                <n>
+                                    <!--
+                                    Instead of using dozens of different country-specifc templates the 'label'
+                                    element can be used if a custom format is needed that cannot be expressed with
+                                    the structured elements. In that case the whole address is put into the 'label'
+                                    element.
+                                    -->
+                                    <label/>
+                                    <!-- e.g. Mr., Mrs., Dr. - called 'honorific prefix' in vCard -->
+                                    <prefix/>
+                                    <surname>Perreault</surname>
+                                    <given>Simon</given>
+                                    <additional/>
+                                    <suffix/>
+                                </n>
+                                <adr>
+                                    <street-address/>
+                                    <!-- city or village -->
+                                    <locality/>
+                                    <!-- state or province -->
+                                    <region/>
+                                    <postal-code/>
+                                    <country-name/>
+                                </adr>
+                                <org>
+                                    <title/>
+                                    <role/>
+                                    <logo/>
+                                    <member/>
+                                </org>
+
+                                <!-- custom -->
+                                <!-- for instant messaging:
+                                     @name - name of service e.g. Skype or IRC
+                                -->
+                                <im name="">
+                                    <nickname/>
+                                </im>
+
+                                <!-- company or organisation - might be repeated also ??? not for now -->
+                                <photo/>
+
+                                <!-- custom -->
+                                <!-- for homepages, blogs, profile pages etc. -->
+                                <urls>
+                                    <url/>
+                                </urls>
+
+                                <!-- custom -->
+                                <emails>
+                                    <!--
+                                        @type is optional here to allow distinction
+                                        between 'private' and 'work' addresses
+                                    -->
+                                    <email type=""/>
+                                </emails>
+
+                                <!-- @type - mobile, home, work ... -->
+                                <phones>
+                                    <tel type="">
+                                        <number/>
+                                    </tel>
+                                </phones>
+                                <!-- birthday -->
+                                <bday/>
+
+                                <categories>
+                                    <tag/>
+                                </categories>
+
+                                <note/>
+
+                                <sort-string/>
+                                <!--
+                                    For linking to other data. URI schemes can be used
+                                    to qualify the type of related resource and its handling
+                                 -->
+                                <related>
+                                    <uri/>
+                                </related>
+                                <!-- taken from vCard spec. -->
+                                <utc-offset/>
+                            </xCard>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="instance('i-xCard')/xCard">
+                        <xf:bind nodeset="adr">
+                            <xf:bind nodeset="region" relevant="boolean-from-string(instance('i-customisation')/showRegion)"/>
+                        </xf:bind>
+                    </xf:bind>
+
+                    <xf:instance id="i-customisation">
+                        <data xmlns="">
+                            <showRegion>false</showRegion>
+                        </data>
+                    </xf:instance>
+                </xf:model>
+            </div>
+            <xf:group model="m-xCard" ref="xCard">
+
+                <xf:select1 ref="kind" appearance="full">
+                    <xf:label></xf:label>
+                    <xf:item>
+                        <xf:label>Individual</xf:label>
+                        <xf:value>individual</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Group</xf:label>
+                        <xf:value>group</xf:value>
+                    </xf:item>
+                    <xf:item>
+                        <xf:label>Organisation</xf:label>
+                        <xf:value>organisation</xf:value>
+                    </xf:item>
+                </xf:select1>
+
+                <xf:group>
+                    <xf:input ref="n/surname">
+                        <xf:label>Surname:</xf:label>
+                    </xf:input>
+                    <xf:input ref="n/given">
+                        <xf:label>Lastname:</xf:label>
+                    </xf:input>
+                </xf:group>
+
+                <xf:group ref="adr" appearance="compact">
+                    <xf:input ref="street-address">
+                        <xf:label>Street:</xf:label>
+                    </xf:input>
+                    <xf:input ref="locality">
+                        <xf:label>Locality</xf:label>
+                    </xf:input>
+                    <!-- might or might ot be shown -->
+                    <xf:input ref="region">
+                        <xf:label>Region:</xf:label>
+                    </xf:input>
+                </xf:group>
+            </xf:group>
+        </div>
+    </body>
+</html>
