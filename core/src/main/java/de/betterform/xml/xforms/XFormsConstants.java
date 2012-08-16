@@ -32,6 +32,7 @@ public interface XFormsConstants {
     String CANCELABLE_ATTRIBUTE = "cancelable";
     String CASE = "case";
     String CASE_ATTRIBUTE = "case";
+    String CASEREF_ATTRIBUTE = "caseref";
     String CDATA_SECTION_ELEMENTS_ATTRIBUTE = "cdata-section-elements";
 
     // common selection elements

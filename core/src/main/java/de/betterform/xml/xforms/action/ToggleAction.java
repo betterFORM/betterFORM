@@ -98,13 +98,21 @@ public class ToggleAction extends AbstractAction {
             toSelect.select();
         }
 
-        // dispatch xforms-deselect and xforms-select events
-        if(!toSelect.getId().equals(isSelected.getId())){
-            this.container.dispatch(isSelected.getTarget(), XFormsEventNames.DESELECT, null);
-        }
-        if(!isSelected.getId().equals(toSelect.getId())) {
-            this.container.dispatch(toSelect.getTarget(), XFormsEventNames.SELECT, null);
-        }
+        //todo: ignore spec here for the moment - do not perform this toggle if switch is bound
+        if(switchElement.isBound()){
+            if(LOGGER.isWarnEnabled()){
+                LOGGER.warn("toggle will not be performed cause switch is bound");
+            }
+        }/*else{
+            // dispatch xforms-deselect and xforms-select events
+            if(!toSelect.getId().equals(isSelected.getId())){
+                this.container.dispatch(isSelected.getTarget(), XFormsEventNames.DESELECT, null);
+            }
+            if(!isSelected.getId().equals(toSelect.getId())) {
+                this.container.dispatch(toSelect.getTarget(), XFormsEventNames.SELECT, null);
+            }
+        }*/
+
 
         // dispatch internal betterform event
         HashMap map = new HashMap();

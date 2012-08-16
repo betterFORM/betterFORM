@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.xforms.ui;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
@@ -61,6 +62,7 @@ public class SwitchTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testSwitchUIBinding() throws Exception {
+        DOMUtil.prettyPrintDOM(xformsProcesssorImpl.getXForms());
         assertEquals("4", XPathUtil.evaluateAsString(host, "count(//xf:switch[@id='switch-ui-binding']/*)"));
 
         assertEquals("xf:case", XPathUtil.evaluateAsString(host, "name(//xf:switch[@id='switch-ui-binding']/*[1])"));

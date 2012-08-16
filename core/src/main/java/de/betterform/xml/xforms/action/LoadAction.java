@@ -215,6 +215,8 @@ public class LoadAction extends AbstractBoundAction {
             externalJavaScript = getExternalJavaScript(embed);
         }
         embed = extractFragment(absoluteURI, embed);
+        embed = rewriteIds(embed);
+
         if(LOGGER.isDebugEnabled()){
             DOMUtil.prettyPrintDOM(embed);
         }
@@ -495,6 +497,10 @@ public class LoadAction extends AbstractBoundAction {
             embed = ((Document) embed).getDocumentElement();
         }
         return embed;
+    }
+
+    private Node rewriteIds(Node node){
+        return node;
     }
 
     private void destroyembeddedModels(Element targetElem) throws XFormsException {

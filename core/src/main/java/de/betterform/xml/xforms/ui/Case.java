@@ -81,7 +81,9 @@ public class Case extends AbstractUIElement {
         // update state
         this.selected = false;
         UIElementStateUtil.setStateAttribute(this.state, SELECTED_ATTRIBUTE, String.valueOf(this.selected));
+        //todo: why do we fire 'disabled' - is this really necessary?
         container.dispatch(this.target, XFormsEventNames.DISABLED ,null);
+
     }
 
     // lifecycle methods

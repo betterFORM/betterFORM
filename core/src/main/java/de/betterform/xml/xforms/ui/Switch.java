@@ -5,11 +5,14 @@
 
 package de.betterform.xml.xforms.ui;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
+import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.state.BoundElementState;
+import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -36,7 +39,7 @@ public class Switch extends BindingElement {
      * Creates a new switch element handler.
      *
      * @param element the host document element.
-     * @param model the context model.
+     * @param model   the context model.
      */
     public Switch(Element element, Model model) {
         super(element, model);
@@ -62,6 +65,9 @@ public class Switch extends BindingElement {
         this.selected = selected;
     }
 
+    public boolean isBound(){
+        return this.getXFormsAttribute(CASEREF_ATTRIBUTE) != null ? true: false;
+    }
     // lifecycle methods
 
     /**
@@ -106,6 +112,12 @@ public class Switch extends BindingElement {
         disposeSelf();
     }
 
+/*
+    public String getBindingExpression() {
+        return getXFormsAttribute(CASEREF_ATTRIBUTE);
+    }
+*/
+
     // lifecycle template methods
 
     /**
@@ -116,6 +128,13 @@ public class Switch extends BindingElement {
      * becomes selected.
      */
     protected final void initializeSwitch() throws XFormsException {
+        performCaseSelection();
+        // set state for updateSwitch()
+        this.initAfterReady = this.model.isReady();
+    }
+
+
+    private void performCaseSelection() throws XFormsException {
         NodeList childNodes = getElement().getChildNodes();
         List cases = new ArrayList(childNodes.getLength());
 
@@ -124,8 +143,18 @@ public class Switch extends BindingElement {
         String selectedAttribute;
         int selection = -1;
 
-        for (int index = 0; index < childNodes.getLength(); index++) {
-            node = childNodes.item(index);
+        String caseref = this.getXFormsAttribute(CASEREF_ATTRIBUTE);
+        String caserefValue = null;
+        if (caseref != null) {
+            //evaluate against nodeset
+            caserefValue = XPathCache.getInstance().evaluateAsString(this.getNodeset(), getPosition(), caseref, getPrefixMapping(), xpathFunctionContext);
+            //todo: spec says that a xforms-binding-exception must be thrown if the target node has child nodes - is this really worth the effort?
+        }
+
+        NodeList nl = this.element.getElementsByTagNameNS(NamespaceConstants.XFORMS_NS,CASE);
+        int len = nl.getLength();
+        for (int index = 0; index < len; index++) {
+            node = nl.item(index);
 
             if (node.getNodeType() == Node.ELEMENT_NODE &&
                     NamespaceConstants.XFORMS_NS.equals(node.getNamespaceURI()) &&
@@ -133,21 +162,32 @@ public class Switch extends BindingElement {
                 caseElement = (Case) ((Node) node).getUserData("");
                 cases.add(caseElement);
 
-                selectedAttribute = caseElement.getXFormsAttribute(SELECTED_ATTRIBUTE);
-                if ((selection == -1) && ("true").equals(selectedAttribute)) {
-                    // keep *first* selected case position
-                    selection = cases.size() - 1;
+                if (caseref != null) {
+                    String caseId = getXFormsAttribute(caseElement.getElement(),"id");
+                    if (caserefValue != null && caserefValue.equals(caseId)){
+                        selection = index;
+                    }
+                } else {
+                    selectedAttribute = caseElement.getXFormsAttribute(SELECTED_ATTRIBUTE);
+                    if ((selection == -1) && ("true").equals(selectedAttribute)) {
+                        // keep *first* selected case position
+                        selection = cases.size() - 1;
+                    }
                 }
             }
         }
 
         if (selection == -1) {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug(this + " init: choosing first case for selection by default");
+                getLogger().debug(this + " choosing first case for selection by default");
             }
 
-            // select first case if none is selected
-            selection = 0;
+            if(this.selected != null){
+                selection = cases.indexOf(this.selected);
+            } else{
+                // select first case if none is selected
+                selection = 0;
+            }
         }
 
         // perform selection/deselection
@@ -156,26 +196,27 @@ public class Switch extends BindingElement {
 
             if (index == selection) {
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(this + " init: selecting case '" + caseElement.getId() + "'");
+                    getLogger().debug(this + " selecting case '" + caseElement.getId() + "'");
                 }
                 caseElement.select();
-            }
-            else {
+                this.container.dispatch(caseElement.getTarget(), XFormsEventNames.SELECT, null);
+
+            } else {
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(this + " init: deselecting case '" + caseElement.getId() + "'");
+                    getLogger().debug(this + " deselecting case '" + caseElement.getId() + "'");
                 }
                 caseElement.deselect();
+                this.container.dispatch(caseElement.getTarget(), XFormsEventNames.DESELECT, null);
             }
         }
-
-        // set state for updateSwitch()
-        this.initAfterReady = this.model.isReady();
     }
 
     /**
      * Updates the Switch element.
      */
     protected final void updateSwitch() throws XFormsException {
+        performCaseSelection();
+
         // if init happened after xforms-ready we are are part of repeat insert
         // processing so we have to dispatch an event to propagate the initial
         // selection state

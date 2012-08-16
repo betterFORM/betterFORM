@@ -42,8 +42,8 @@
     <!--
         change to WARN in production environments
     -->
-    <category name="de.betterform">
-        <priority value="ERROR"/>
+    <category name="de.betterform.xml.xforms">
+        <priority value="DEBUG"/>
     </category>
 
     <root>
