@@ -160,7 +160,7 @@
 
 
     <xsl:template
-            match="xf:input|xf:output|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload"
+            match="xf:input|xf:output|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload|xf:trigger|xf:submit"
             mode="repeated-full-prototype"
             priority="20">
         <xsl:variable name="id" select="@id"/>
@@ -177,11 +177,13 @@
             <xsl:if test="exists(@mediatype)">
                 <xsl:attribute name="mediatype" select="@mediatype"/>
             </xsl:if>
-            <label class="xfLabel">
-                <xsl:call-template name="create-label">
-                    <xsl:with-param name="label-elements" select="xf:label"/>
-                </xsl:call-template>
-            </label>
+            <xsl:if test="local-name() != 'trigger' and local-name() != 'submit'">
+                <label class="xfLabel">
+                    <xsl:call-template name="create-label">
+                        <xsl:with-param name="label-elements" select="xf:label"/>
+                    </xsl:call-template>
+                </label>
+            </xsl:if>
 
             <!--<xsl:apply-templates select="xf:alert"/>-->
             <span class="widgetContainer">
@@ -278,6 +280,7 @@
         </div>
     </xsl:template>
 
+<!--
     <xsl:template match="xf:trigger" mode="repeated-full-prototype" priority="10">
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="appearance">
@@ -302,14 +305,14 @@
                 </div>
             </xsl:when>
             <xsl:otherwise>
-                <div id="{$id}" class="{$control-classes} xfRepeated" unbound="true">
-                    <div id="{$id}-value" class="xfValue" appearance="{$appearance}" controlType="trigger"
-                         label="{xf:label}" name="d_{$id}" title="" navindex="" accesskey="" source=""></div>
-                </div>
+                <xsl:call-template name="trigger">
+                    <xsl:with-param name="classes" select="$control-classes"/>
+                </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
     </xsl:template>
+-->
 
     <!-- copys non xform nodes into the full protoype -->
     <xsl:template match="xhtml:*"
