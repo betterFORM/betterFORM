@@ -10,7 +10,8 @@
     xmlns:bf="http://betterform.sourceforge.net/xforms"
     xmlns:xf="http://www.w3.org/2002/xforms"
     exclude-result-prefixes="xf bf xsl"
-    xpath-default-namespace="http://www.w3.org/1999/xhtml">
+    xpath-default-namespace="http://www.w3.org/1999/xhtml"
+        >
 
     <!-- ### this url will be used to build the form action attribute ### -->
     <xsl:param name="sessionKey" select="''"/>
@@ -123,13 +124,22 @@
 
 
     <xsl:template name="getLinkAndStyle"><xsl:text>
-</xsl:text><xsl:for-each select="link|style">
+</xsl:text><xsl:for-each select="link">
             <xsl:element name="{local-name()}">
-                <xsl:copy-of select="@*"/>
-                <xsl:apply-templates/>
+                <xsl:copy-of select="@*" />
             </xsl:element>
         </xsl:for-each><xsl:text>
 </xsl:text>
+
+    </xsl:template>
+
+    <xsl:template name="copyStyles">
+        <xsl:for-each select="style">
+            <xsl:variable name="content" select="text()"/>
+            <xsl:element name="style">
+                <xsl:value-of select="$content" disable-output-escaping="yes"/>
+            </xsl:element>
+        </xsl:for-each>
     </xsl:template>
 
     <!-- #### Note - the whitespace in this template shouldn't be touched to produce line breaks in the output -->
