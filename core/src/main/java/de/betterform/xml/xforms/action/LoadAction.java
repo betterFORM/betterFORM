@@ -196,6 +196,13 @@ public class LoadAction extends AbstractBoundAction {
             LOGGER.debug("targetid evaluated to: " + evaluatedTarget);
         }
         Node embed = getEmbeddedDocument(absoluteURI);
+        if (embed == null) {
+            //todo: review: context info params containing a '-' fail during access in javascript!
+            //todo: the following property should have been 'resource-uri' according to spec
+            map.put("resourceUri", absoluteURI);
+            this.container.dispatch(this.target, XFormsEventNames.LINK_EXCEPTION, map);
+            return;
+        }
 
         // Check for 'ClientSide' events (DOMFocusIN / DOMFocusOUT / xforms-select)
         String utilizedEvents = this.getEventsInSubform(embed);
@@ -217,14 +224,6 @@ public class LoadAction extends AbstractBoundAction {
         embed = extractFragment(absoluteURI, embed);
         if(LOGGER.isDebugEnabled()){
             DOMUtil.prettyPrintDOM(embed);
-        }
-
-        if (embed == null) {
-            //todo: review: context info params containing a '-' fail during access in javascript!
-            //todo: the following property should have been 'resource-uri' according to spec
-            map.put("resourceUri", absoluteURI);
-            this.container.dispatch(this.target, XFormsEventNames.LINK_EXCEPTION, map);
-            return;
         }
 
         Element embeddedNode;
