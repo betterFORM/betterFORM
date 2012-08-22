@@ -82,7 +82,7 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
                 throw new XFormsException(e);
             }
         }else{
-            LOGGER.warn("WARN: Contenttype of response can not be handled. contentype:" + contentType);
+            LOGGER.warn("WARN WARN WARN WARN WARN WARN WARN: Contenttype of response can not be handled. contentype:" + contentType);
             return null;
         }
     }
