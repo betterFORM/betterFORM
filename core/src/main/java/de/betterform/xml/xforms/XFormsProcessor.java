@@ -6,6 +6,7 @@
 package de.betterform.xml.xforms;
 
 import de.betterform.xml.xforms.exception.XFormsException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
@@ -182,7 +183,7 @@ public interface XFormsProcessor {
      *
      * @return the complete host document.
      */
-    Node getXForms() throws XFormsException;
+    Document getXForms() throws XFormsException;
 
     /**
      * Returns the XForms Model Element with given id.

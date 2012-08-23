@@ -76,6 +76,7 @@ public class ResourceServlet extends HttpServlet {
         initResourceStreamers();
     }
 
+    // todo: shouldn't we move these definitions to web.xml and use servletContext.getMimeType?
     private void initMimeTypes() {
         mimeTypes = new HashMap<String, String>();
         mimeTypes.put("css", "text/css");
@@ -87,6 +88,7 @@ public class ResourceServlet extends HttpServlet {
         mimeTypes.put("gif", "image/gif");
         mimeTypes.put("html", "text/html");
         mimeTypes.put("swf", "application/x-shockwave-flash");
+        mimeTypes.put("xsl","application/xml+xslt");
     }
 
     private void initResourceStreamers() {
@@ -123,7 +125,7 @@ public class ResourceServlet extends HttpServlet {
                 if (LOG.isWarnEnabled()) {
                     LOG.warn("Resource \"{0}\" not found - " + resourcePath);
                 }
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource " + resourcePath + " not found" );
                 return;
             }
 
@@ -145,13 +147,17 @@ public class ResourceServlet extends HttpServlet {
             }else{
                 inputStream = ResourceServlet.class.getResourceAsStream(resourcePath);
             }
+
             String mimeType = getResourceContentType(resourcePath);
+            if(mimeType == null){
+                mimeType = getServletContext().getMimeType(resourcePath);
+            }
 
             if (mimeType == null) {
                 if(LOG.isTraceEnabled()){
                     LOG.trace("MimeType for \"{0}\" not found. Sending 'not found' response - " + resourcePath);
                 }
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "MimeType for " + resourcePath + " not found. Sending 'not found' response");
                 return;
             }
 

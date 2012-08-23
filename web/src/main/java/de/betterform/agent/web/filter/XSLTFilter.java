@@ -15,6 +15,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 public class XSLTFilter implements Filter {
@@ -48,8 +49,8 @@ public class XSLTFilter implements Filter {
         PrintWriter out = response.getWriter();
         CharResponseWrapper wrapper = new CharResponseWrapper((HttpServletResponse) response);
         try {
-            XSLTGenerator generator = WebFactory.setupTransformer(xsltPath,xslFile,servletContext);
-//        Source styleSource = new StreamSource(styleFile);
+            URI uri = new File(WebFactory.resolvePath(xsltPath, servletContext)).toURI().resolve(new URI(xslFile));
+            XSLTGenerator generator = WebFactory.setupTransformer(uri,servletContext);
 
             wrapper.setContentType("text/html");
             chain.doFilter(request, wrapper);

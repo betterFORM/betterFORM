@@ -10,6 +10,7 @@ import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.exception.XFormsException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -295,7 +296,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         return this.xformsProcessor.removeContextParam(s);
     }
 
-    public Node getXForms() throws XFormsException {
+    public Document getXForms() throws XFormsException {
         return this.xformsProcessor.getXForms();
     }
 

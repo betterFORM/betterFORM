@@ -188,7 +188,7 @@ public class WebFactory {
                 URI highlightingErrorTransformer = getXsltURI(xsltPath,"highlightError.xsl");
                 transformerService.getTransformer(highlightingErrorTransformer);
 
-                if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                    if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
                     URI highlightingDocument = getXsltURI(xsltPath,"highlightDocument.xsl");
                     transformerService.getTransformer(highlightingDocument);
                 }
@@ -203,9 +203,8 @@ public class WebFactory {
         servletContext.setAttribute(TransformerService.TRANSFORMER_SERVICE, transformerService);
     }
 
-     public static XSLTGenerator setupTransformer(String xsltPath, String xslFile, ServletContext context) throws URISyntaxException {
+     public static XSLTGenerator setupTransformer(URI uri, ServletContext context) throws URISyntaxException {
         TransformerService transformerService = (TransformerService) context.getAttribute(TransformerService.TRANSFORMER_SERVICE);
-        URI uri = new File(WebFactory.resolvePath(xsltPath, context)).toURI().resolve(new URI(xslFile));
 
         XSLTGenerator generator = new XSLTGenerator();
         generator.setTransformerService(transformerService);
