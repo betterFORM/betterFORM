@@ -47,7 +47,7 @@ define(["dojo/_base/declare",
         mappingProcessor:null,
         _uiReady:false,
         initialEvents:new Array(),
-        subscribers:new Object(),
+        bfDialogs:[],
 
 
         /*
@@ -805,13 +805,18 @@ define(["dojo/_base/declare",
 
                 htmlEntryPoint.parentNode.removeChild(htmlEntryPoint);
 
-
+                var self = this;
+                // console.debug("\n\nTarget ID: ",targetid);
                 require(["dojo/behavior"],function(behavior) {
                     // console.debug("htmlEntryPoint:",nodesToEmbed);
+                    self.bfDialogs[targetid] = new Array();
+                    query(".bfcDialog", nodesToEmbed).forEach(function(item) {
+                        // console.debug("\n\nAdd Dialog:",domAttr.get(item,"id"));
+                        self.bfDialogs[targetid].push(domAttr.get(item,"id"));
+                    });
                     behavior.apply();
                 });
                 var contextInfo = xmlEvent.contextInfo;
-                var self = this;
                 require(["dojo/ready"], function (ready) {
                     ready(function () {
                         var utilizedEvents = contextInfo.utilizedEvents;
@@ -1004,6 +1009,19 @@ define(["dojo/_base/declare",
                     }
                 }
             );
+            // console.debug("Target id: ",target);
+            if(this.bfDialogs && this.bfDialogs[target] && this.bfDialogs[target].length > 0){
+                // console.debug("dialogs to remove: ",this.bfDialogs[target]);
+                array.forEach(this.bfDialogs[target],function(id){
+                    // console.debug("dialog to find and delete: ", id);
+                    var dialogDijit = registry.byId(id);
+                    if(dialogDijit){
+                        // console.debug("destroy dialogDijit: ",dialogDijit);
+                        dialogDijit.destroy();
+                    }
+                });
+                delete this.bfDialogs[target];
+            }
             // console.info("XFProcessor._unloadDOM AFTER REMOVING SUBSCRIBERS: :",this.subscribers);
             while (htmlEntryPoint.hasChildNodes()) {
                 // console.debug("XFProcessor._unloadDOM: hasChildNodes START");

@@ -47,7 +47,7 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <span id="{$dialog-id}" class="{$dialog-classes}" title="{$dialog-label}">
+        <span id="{$dialog-id}" class="{$dialog-classes} bfcDialog" title="{$dialog-label}">
 
             <xsl:call-template name="copy-style-attribute"/>
 
@@ -282,9 +282,9 @@
         </xsl:variable>
 
         <span id="{@id}"
-             class="{$control-classes}">
+              class="{$control-classes}">
             <xsl:call-template name="trigger">
-            <!--<xsl:with-param name="classes" select="$control-classes"/>-->
+                <!--<xsl:with-param name="classes" select="$control-classes"/>-->
             </xsl:call-template>
         </span>
     </xsl:template>
@@ -301,7 +301,7 @@
         </xsl:variable>
 
         <span id="{$id}"
-             class="{$control-classes}">
+              class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
             <span class="widgetContainer">
                 <xsl:call-template name="buildControl"/>
@@ -330,10 +330,10 @@
         </xsl:variable>
 
         <xsl:message>$$$$$$$$$$$$ Count of children: <xsl:value-of select="bf:childCount(.)"/></xsl:message>
-<!--
-        <xsl:message>$$$$$$$$$$$$ Count of label childs: <xsl:value-of select="count(child::xf:label)"/> </xsl:message>
-        <xsl:message>$$$$$$$$$$$$ Count of text() childs: <xsl:value-of select="count(child::text())"/> </xsl:message>
--->
+        <!--
+                <xsl:message>$$$$$$$$$$$$ Count of label childs: <xsl:value-of select="count(child::xf:label)"/> </xsl:message>
+                <xsl:message>$$$$$$$$$$$$ Count of text() childs: <xsl:value-of select="count(child::text())"/> </xsl:message>
+        -->
 
         <!-- todo: should we really have appBFHorizontalTable AND bfHorizontalTable ? -->
         <table id="{@id}" class="xfContainer xfGroup appBfHorizontalTable bfHorizontalTable {$mip-classes}">
@@ -382,7 +382,7 @@
         <xsl:choose>
             <xsl:when test="bf:hasGroupLabel($parent)">
                 <xsl:value-of select="count($parent/*) - count($parent/bf:*) -1"/>
-            "</xsl:when>
+                "</xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="count($parent/xf:*) - count($parent/bf:*)"/>
             </xsl:otherwise>
@@ -534,21 +534,21 @@
 
     <xsl:template match="xf:switch[@appearance='dijit:TabContainer']">
         <xsl:variable name="switch-id" select="@id"/>
-<!--
-        <xsl:variable name="switch-classes">
-            <xsl:call-template name="assemble-compound-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
-            </xsl:call-template>
-        </xsl:variable>
--->
+        <!--
+                <xsl:variable name="switch-classes">
+                    <xsl:call-template name="assemble-compound-classes">
+                        <xsl:with-param name="appearance" select="@appearance"/>
+                    </xsl:call-template>
+                </xsl:variable>
+        -->
 
-<!--
-        <div style="display:none" class="switch-toggles">
-            <xsl:for-each select="xf:case[@name='switch-toggles']/xf:trigger">
-                <xsl:call-template name="trigger"/>
-            </xsl:for-each>
-        </div>
--->
+        <!--
+                <div style="display:none" class="switch-toggles">
+                    <xsl:for-each select="xf:case[@name='switch-toggles']/xf:trigger">
+                        <xsl:call-template name="trigger"/>
+                    </xsl:for-each>
+                </div>
+        -->
         <div id="{$switch-id}" class="xfSwitch bfTabContainer">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:for-each select="xf:case[./xf:label]">
