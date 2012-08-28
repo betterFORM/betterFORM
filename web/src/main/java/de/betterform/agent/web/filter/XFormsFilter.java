@@ -203,6 +203,7 @@ public class XFormsFilter implements Filter {
                         webProcessor.setResponse(response);
                         webProcessor.setHttpSession(session);
                         webProcessor.setBaseURI(request.getRequestURL().toString());
+                        webProcessor.setContext(webFactory.getServletContext());
                         webProcessor.configure();
                         webProcessor.setXForms();
                         webProcessor.init();
