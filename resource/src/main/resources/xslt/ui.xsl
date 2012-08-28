@@ -329,7 +329,7 @@
             <xsl:call-template name="get-mip-classes"/>
         </xsl:variable>
 
-        <xsl:message>$$$$$$$$$$$$ Count of children: <xsl:value-of select="bf:childCount(.)"/></xsl:message>
+        <!--<xsl:message>$$$$$$$$$$$$ Count of children: <xsl:value-of select="bf:childCount(.)"/></xsl:message>-->
         <!--
                 <xsl:message>$$$$$$$$$$$$ Count of label childs: <xsl:value-of select="count(child::xf:label)"/> </xsl:message>
                 <xsl:message>$$$$$$$$$$$$ Count of text() childs: <xsl:value-of select="count(child::text())"/> </xsl:message>
@@ -338,7 +338,7 @@
         <!-- todo: should we really have appBFHorizontalTable AND bfHorizontalTable ? -->
         <table id="{@id}" class="xfContainer xfGroup appBfHorizontalTable bfHorizontalTable {$mip-classes}">
 
-            <xsl:message>$$$$$$$$ has group label:<xsl:value-of select="bf:hasGroupLabel(.)"/></xsl:message>
+            <!--<xsl:message>$$$$$$$$ has group label:<xsl:value-of select="bf:hasGroupLabel(.)"/></xsl:message>-->
 
             <!-- todo: need a hook to integrate xf:alert for horizontal group -->
             <xsl:if test="bf:hasGroupLabel(.)=true()">

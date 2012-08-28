@@ -481,7 +481,7 @@
                     name="{$name}"
                     class="xfValue"
                     tabindex="{$navindex}"
-                    title="{xf:hint/text()}"
+                    placeholder="{normalize-space(xf:hint)}"
                     rows="{$rows}"
                     cols="{$cols}">
             <xsl:if test="bf:data/@bf:readonly='true'">
