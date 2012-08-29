@@ -39,3 +39,5 @@ zaphod/target/*
 ## files to ignore
 tools/installer/betterform-*install*
 
+
+build.properties.local.xml
