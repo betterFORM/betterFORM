@@ -155,19 +155,22 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     behavior.apply();
                     // console.debug("Repeat.handleInsert after applyBehavior:", behavior);
                     var self = this;
-                    require(["dojo/ready"],function(ready){
+
+                    require(["dojo/ready","dojo/dom-style","dojo/dom-attr"],function(ready,domStyle, domAttr){
                         ready(function(){
                             console.debug("Repeat: set CSS styles");
-                            if(domStyle.get(repeatItemNode,"display") == "none"){
-                                repeatItemNode.removeAttribute("style");
-                            }
                             domClass.add(repeatItemNode,"xfRepeatIndex");
                             on(repeatItemNode, "click", lang.hitch(self ,self._onClickRepeatItem));
                             var repeatItemId = domAttr.get(repeatItemNode,"id");
                             var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
                             fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
+                            if(domStyle.get(repeatItemNode,"display") == "none"){
+        //                                repeatItemNode.removeAttribute("style");
+                                //todo: this is save enough? If an repeatitem can have a style then this wouldn't be sufficient
+                                domAttr.remove(repeatItemNode,"style");
+                            }
                         })
-                    })
+                    });
                 },
 
                 handleDelete:function(/*Map*/ contextInfo) {
