@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+        <style type="text/css">
+            .controlStyle{
+                width: 300px;
+                color:white;
+                background: #32cd32;
+                padding:5px;
+            }
+            .dummy{
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <input1>foo</input1>
+                        <input2>true</input2>
+                        <input3></input3>
+                        <input4></input4>
+                        <range>5</range>
+                        <secret></secret>
+                        <select11>foo</select11>
+                        <upload></upload>
+                        <bar/>
+                    </data>
+                </xf:instance>
+                <xf:bind nodeset="input2" type="xf:boolean"/>
+                <xf:bind nodeset="input3" type="xf:date"/>
+                <xf:bind nodeset="input4" type="xf:integer"/>
+                <xf:bind nodeset="range" type="xf:integer"/>
+                <xf:bind nodeset="upload" type="anyURI"/>
+            </xf:model>
+        </div>
+		<xf:group appearance="compact">
+            <xf:label>custom widget classes. It does not work for all types of controls. Native controls
+            are fine but Dijits fail.</xf:label>
+            <p>
+                This form shows how to assign a custom CSS class to widgets.
+            </p>
+            <xf:input ref="input1" class="-controlStyle">
+                <xf:label>An input</xf:label>
+            </xf:input>
+            <xf:input ref="input2" class="-dummy">
+                <xf:label>This is just a test control</xf:label>
+            </xf:input>
+            <xf:input ref="input3" class="-controlStyle">
+                <xf:label>Does not really work good with Dijits - good reason to change</xf:label>
+            </xf:input>
+            <xf:input ref="input4" class="-controlStyle">
+                <xf:label>a numerical input</xf:label>
+            </xf:input>
+
+            <xf:output ref="foo" class="-controlStyle">
+                <xf:label>An output</xf:label>
+            </xf:output>
+
+            <xf:range ref="range" start="1" end="10" step="1" class="-controlStyle">
+                <xf:label>a range - dijits fail</xf:label>
+            </xf:range>
+            <xf:secret ref="secret" class="-controlStyle">
+                <xf:label>a secret</xf:label>
+            </xf:secret>
+
+            <xf:select1 ref="select11" appearance="minimal" class="-controlStyle">
+                <xf:label>select1 minimal - not quite what you might expect</xf:label>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+            </xf:select1>
+            <xf:select1 ref="select11" appearance="compact" class="-controlStyle">
+                <xf:label>select1 compact</xf:label>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+            </xf:select1>
+            <xf:select1 ref="select11" appearance="full" class="-controlStyle">
+                <xf:label>select1 compact</xf:label>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+            </xf:select1>
+            <xf:select ref="select11" appearance="minimal" class="-controlStyle">
+                <xf:label>select minimal</xf:label>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+            </xf:select>
+            <xf:select ref="select11" appearance="compact" class="-controlStyle">
+                <xf:label>select compact</xf:label>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+            </xf:select>
+            <xf:select ref="select11" appearance="full" class="-controlStyle">
+                <xf:label>select full</xf:label>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>foo</xf:label>
+                    <xf:value>foo</xf:value>
+                </xf:item>
+            </xf:select>
+            <xf:textarea ref="input1" class="-controlStyle">
+                <xf:label>a textarea</xf:label>
+            </xf:textarea>
+
+            <xf:trigger class="-controlStyle">
+                <xf:label>a trigger</xf:label>
+            </xf:trigger>
+
+            <xf:upload ref="upload" class="-controlStyle">
+                <xf:label>this is broken as upload use a js template</xf:label>
+            </xf:upload>
+		</xf:group>
+    </body>
+</html>

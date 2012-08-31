@@ -391,10 +391,22 @@
 
     <!-- ### CSS CLASS ASSEMBLY HELPERS ### -->
     <xsl:template name="get-author-classes">
-        <xsl:if test="@class">
+        <xsl:if test="@class and not(starts-with(@class,'-'))">
             <xsl:value-of select="@class"/>
         </xsl:if>
     </xsl:template>
+
+    <xsl:template name="get-control-classes">
+        <xsl:variable name="customClasses">
+            <xsl:for-each select="tokenize(@class,' ')">
+                <xsl:if test="starts-with(.,'-')">
+                    <xsl:sequence select="substring-after(.,'-')"/>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:value-of select="$customClasses"/>
+    </xsl:template>
+
 
     <xsl:template name="get-mediatype-classes">
         <xsl:choose>

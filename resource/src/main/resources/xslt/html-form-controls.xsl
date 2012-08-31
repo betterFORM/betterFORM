@@ -17,6 +17,7 @@
     <xsl:variable name="data-prefix" select="'d_'"/>
     <xsl:variable name="trigger-prefix" select="'t_'"/>
     <xsl:variable name="remove-upload-prefix" select="'ru_'"/>
+    <xsl:variable name="widgetClass" select="'xfValue'"/>
 
     <!-- ####################################################################################################### -->
     <!-- This stylesheet serves as a 'library' for HTML form controls. It contains only named templates and may  -->
@@ -37,6 +38,10 @@
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="type"><xsl:call-template name="getType"/></xsl:variable>
 
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         For input only the datatypes 'boolean' and 'string' are supported in the basic
@@ -48,7 +53,7 @@
                 <input  id="{$id}-value"
                         name="{$name}"
                         type="checkbox"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}">
                     <xsl:if test="bf:data/@bf:readonly='true'">
@@ -67,29 +72,13 @@
                 </input>
             </xsl:when>
             <xsl:when test="$type='date' or $type='dateTime' or $type='time'">
-                <xsl:variable name="dataBfParams">
-                    <xsl:choose>
-                        <xsl:when test="exists(@data-bf-params) and string-length(@data-bf-params) &gt; 0"><xsl:value-of select="@data-bf-params"/>,value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:when>
-                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
-                    </xsl:choose>
-                </xsl:variable>
-                <input  id="{$id}-value"
-                        name="{$name}"
-                        type="{$type}"
-                        class="xfValue"
-                        tabindex="{$navindex}"
-                        data-bf-params="{$dataBfParams}"
-                        placeholder="{xf:hint/text()}"
-                        value="{bf:data/text()}">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
-                        <xsl:attribute name="disabled">disabled</xsl:attribute>
-                    </xsl:if>
-<!--
-                    <xsl:if test="bf:data/text()='true'">
-                        <xsl:attribute name="checked">true</xsl:attribute>
-                    </xsl:if>
--->
-                </input>
+                <xsl:call-template name="InputDateAndTime">
+                    <xsl:with-param name="id" select="$id"/>
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="type" select="$type"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                    <xsl:with-param name="classes" select="$widgetClasses"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:when test="$type='byte' or $type='decimal'
                             or $type='int' or $type='integer'
@@ -102,7 +91,7 @@
                 <input  id="{$id}-value"
                         name="{$name}"
                         type="number"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         placeholder="{xf:hint}"
                         value="{bf:data/text()}">
@@ -115,19 +104,62 @@
 
             </xsl:when>
             <xsl:otherwise>
-                <input  id="{$id}-value"
-                        name="{$name}"
-                        type="text"
-                        class="xfValue"
-                        tabindex="{$navindex}"
-                        placeholder="{xf:hint}"
-                        value="{bf:data/text()}">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
-                        <xsl:attribute name="disabled">disabled</xsl:attribute>
-                    </xsl:if>
-                </input>
+                <xsl:call-template name="InputDefault">
+                    <xsl:with-param name="id" select="$id"/>
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                    <xsl:with-param name="classes" select="$widgetClasses"/>
+                </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="InputDefault">
+        <xsl:param name="id"/>
+        <xsl:param name="name"/>
+        <xsl:param name="navindex"/>
+        <xsl:param name="classes"/>
+        <input id="{$id}-value"
+                name="{$name}"
+                type="text"
+                class="{$classes}"
+                tabindex="{$navindex}"
+                placeholder="{xf:hint}"
+                value="{bf:data/text()}">
+            <xsl:if test="bf:data/@bf:readonly='true'">
+                <xsl:attribute name="disabled">disabled</xsl:attribute>
+            </xsl:if>
+        </input>
+    </xsl:template>
+
+    <xsl:template name="InputDateAndTime">
+        <xsl:param name="id"/>
+        <xsl:param name="name"/>
+        <xsl:param name="type"/>
+        <xsl:param name="navindex"/>
+        <xsl:param name="classes"/>
+
+        <xsl:variable name="dataBfParams">
+            <xsl:choose>
+                <xsl:when test="exists(@data-bf-params) and string-length(@data-bf-params) &gt; 0">
+                    <xsl:value-of select="@data-bf-params"/>,value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'
+                </xsl:when>
+                <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <input id="{$id}-value"
+                name="{$name}"
+                type="{$type}"
+                class="{$classes}"
+                tabindex="{$navindex}"
+                data-bf-params="{$dataBfParams}"
+                placeholder="{xf:hint/text()}"
+                value="{bf:data/text()}">
+            <xsl:if test="bf:data/@bf:readonly='true'">
+                <xsl:attribute name="disabled">disabled</xsl:attribute>
+            </xsl:if>
+        </input>
     </xsl:template>
 
     <!-- ############################## OUTPUT ############################## -->
@@ -138,6 +170,10 @@
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="type"><xsl:call-template name="getType"/></xsl:variable>
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
         <xsl:choose>
             <!--
@@ -150,7 +186,7 @@
                         name="{$name}"
                         src="{bf:data/text()}"
                         alt="{xf:label}"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         title="{xf:hint/text()}">
                     <!--
                     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -167,7 +203,7 @@
             -->
             <xsl:when test="contains(@mediatype,'text/html')">
                 <span   id="{$id}-value"
-                        class="xfValue mediatype-text-html">
+                        class="{$widgetClasses} mediatype-text-html">
                     <xsl:value-of select="bf:data/text()" disable-output-escaping="yes"/>
                 </span>
             </xsl:when>
@@ -179,7 +215,7 @@
             <xsl:when test="$type='anyURI' and (not(@mediatype))">
                 <a  id="{$id}-value"
                     href="{bf:data/text()}"
-                    class="xfValue"
+                    class="{$widgetClasses}"
                     tabindex="{$navindex}"
                     title="{xf:hint/text()}">
                     <xsl:value-of select="bf:data/text()"/>
@@ -201,7 +237,7 @@
             <xsl:otherwise>
                 <span   id="{$id}-value"
                         tabindex="{$navindex}"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         title="{xf:hint/text()}">
                     <xsl:value-of select="bf:data/text()"/>
                 </span>
@@ -221,9 +257,14 @@
         todo: review: start and end are optional attributes in XForms but how can we make sense of that?
         -->
         <xsl:variable name="dataBfParam" select="concat('start:',@start,',end:',@end,',step:',@step,',value:',bf:data/text())"/>
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
+
         <input  id="{$id}-value"
                 name="{$name}"
-                class="xfValue"
+                class="{$widgetClasses}"
                 type="range"
                 data-bf-params="{$dataBfParam}"
                 tabindex="{$navindex}"
@@ -251,10 +292,14 @@
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="incremental" select="@incremental"/>
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
         <input  id="{$id}-value"
                 name="{$name}"
-                class="xfValue"
+                class="{$widgetClasses}"
                 tabindex="{$navindex}"
                 type="password"
                 value="{bf:data/text()}"
@@ -288,6 +333,10 @@
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="size" select="if(exists(@size)) then @size else 5"/>
         <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
         <xsl:if test="exists(.//xf:itemset)"><xsl:text>
 </xsl:text>
@@ -309,7 +358,7 @@
                 <select id="{$id}-value"
                         name="{$name}"
                         size="{$size}"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         title="{xf:hint/text()}"
                         tabindex="{$navindex}"
                         data-bf-params="{$dataBfParam}">
@@ -337,7 +386,7 @@
             -->
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
-                      class="xfValue"
+                      class="{$widgetClasses}"
                       data-bf-params="value:'{bf:data/@bf:schema-value}'">
                     <xsl:call-template name="build-radiobuttons">
                         <xsl:with-param name="id" select="$id"/>
@@ -380,7 +429,7 @@
 
                 <select id="{$id}-value"
                             name="{$name}"
-                            class="xfValue"
+                            class="{$widgetClasses}"
                             size="1"
                             title="{xf:hint/text()}"
                             tabindex="{$navindex}"
@@ -405,13 +454,18 @@
         <xsl:variable name="parent" select="."/>
         <xsl:variable name="incremental" select="if (exists(@incremental)) then @incremental else 'true'"/>
         <xsl:variable name="isOpenSelection" select="@selection='open'" as="xsd:boolean"/>
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
+
         <xsl:choose>
             <!-- only 'full' is supported as explicit case and renders a group of checkboxes. All other values
             of appearance will be matched and represented as a list control. -->
             <xsl:when test="@appearance='full'">
                 <span id="{$parent/@id}-value"
                       name="{$name}"
-                      class="xfValue bfCheckBoxGroup"
+                      class="{$widgetClasses} bfCheckBoxGroup"
                       title="{xf:hint/text()}"
                       data-bf-params="value:'{bf:data/@bf:schema-value}'"
                       tabindex="{$navindex}">
@@ -454,7 +508,7 @@
                         name="{$name}"
                         size="{$size}"
                         multiple="true"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         title="{xf:hint/text()}"
                         tabindex="{$navindex}"
                         data-bf-params="{$dataBfParam}">
@@ -475,11 +529,15 @@
         <xsl:variable name="navindex" select="if (exists(@navindex)) then @navindex else '0'"/>
         <xsl:variable name="rows" select="if (exists(@rows)) then @rows else '5'"/>
         <xsl:variable name="cols" select="if (exists(@cols)) then @cols else '30'"/>
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
 
         <textarea   id="{$id}-value"
                     name="{$name}"
-                    class="xfValue"
+                    class="{$widgetClasses}"
                     tabindex="{$navindex}"
                     placeholder="{normalize-space(xf:hint)}"
                     rows="{$rows}"
@@ -509,11 +567,15 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="name" select="concat($trigger-prefix,$id)"/>
         <xsl:variable name="navindex" select="@navindex" />
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
         <span id="{$id}" class="{$classes}">
             <input  id="{$id}-value"
                     name="{$name}"
-                    class="xfValue"
+                    class="{$widgetClasses}"
                     tabindex="{$navindex}"
                     title="{xf:hint/text()}"
                     type="submit"
@@ -541,13 +603,17 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="name" select="concat($trigger-prefix,$id)"/>
         <xsl:variable name="navindex" select="@navindex" />
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
 
         <xsl:choose>
             <xsl:when test="exists(@src)">
                 <button id="{$id}-value"
                         name="{$name}"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
                         type="button">
@@ -558,7 +624,7 @@
                 <a      id="{$id}-value"
                         href="javascript:void('');"
                         name="{$name}"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}">
                     <xsl:value-of select="xf:label"/>
@@ -567,7 +633,7 @@
             <xsl:otherwise>
                 <input  id="{$id}-value"
                         name="{$name}"
-                        class="xfValue"
+                        class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
                         type="button"
@@ -606,15 +672,19 @@
         <xsl:variable name="id" select="@id"/>
         <xsl:variable name="name" select="concat($data-prefix,$id)"/>
         <xsl:variable name="navindex" select="@navindex" />
+        <xsl:variable name="authorClasses">
+            <xsl:call-template name="get-control-classes"/>
+        </xsl:variable>
+        <xsl:message>######################## <xsl:value-of select="$authorClasses"/></xsl:message>
+        <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
 
         <input  id="{$id}-value"
                 name="{$name}"
-                class="xfValue"
+                class="{$widgetClasses}"
                 tabindex="{$navindex}"
                 title="{xf:hint/text()}"
                 type="file"
-                value=""
-                >
+                value="">
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
             </xsl:if>
@@ -912,7 +982,7 @@
         <xsl:param name="parent"/>
 
         <span id="{$itemset-id}-prototype" class="xfSelectorPrototype">
-            <input id="{$item-id}-value" class="xfValue" type="checkbox" name="{$name}">
+            <input id="{$item-id}-value" class="{$widgetClass}" type="checkbox" name="{$name}">
                 <xsl:choose>
 	       			<xsl:when test="xf:copy">
 		   				<xsl:attribute name="value"><xsl:value-of select="xf:copy/@id"/></xsl:attribute>
@@ -1084,8 +1154,9 @@
         <xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
+        <xsl:param name="classes"/>
         <span id="{$itemset-id}-prototype" class="xfSelectorPrototype">
-            <input id="{$item-id}-value" class="xfValue" type="radio" name="{$name}">
+            <input id="{$item-id}-value" class="{$classes}" type="radio" name="{$name}">
                 <xsl:if test="string-length($navindex) != 0">
                     <xsl:attribute name="tabindex">
                         <xsl:value-of select="$navindex"/>
