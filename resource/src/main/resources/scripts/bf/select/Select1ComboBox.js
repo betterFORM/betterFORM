@@ -17,13 +17,17 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             handleInsertItem:function(contextInfo) {
-                // console.debug("bf.Select1Minimal.handleInsertItem: ", contextInfo, " currentValue: ", this.domNode.value);
+                console.debug("Select1ComboBox.handleInsertItem: ", contextInfo, " currentValue: ", this.domNode.value);
                 this.currentValue = this.domNode.value;
                 var position = contextInfo.position;
                 var itemsetId = contextInfo.targetId;
                 var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
 
                 var referenzedNode = query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
+                //TODO: Quick Fix this needs to be fixed properly!!!!
+                if (referenzedNode == undefined) {
+                    referenzedNode = query('option[data-bf-itemset=\"'+ contextInfo.originalId + '\"]',this.id)[0];
+                }
                 if(referenzedNode){
                     var item = undefined;
                     if(position == 1){
