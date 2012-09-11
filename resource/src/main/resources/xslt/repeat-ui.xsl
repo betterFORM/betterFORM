@@ -920,6 +920,15 @@
 
     <xsl:template name="processCompactChildren">
         <xsl:for-each select="xf:*|bfc:*">
+            <!--
+            Seems that setting the 'xfDisabled' class here is wrong as this should be handled on the level
+            of the XFControl itself. Further tests are necessary to verify that.
+
+            The purpose of the author seems to have been to allow complete cols to become non-relevant but
+            cols have no MIPs of their own so this is problematic as it requires the client side code to handle
+            specific cases for 'compact' repeats.
+            -->
+<!--
             <xsl:variable name="col-classes">
                 <xsl:choose>
                     <xsl:when test="./bf:data/@bf:enabled='false'">
@@ -929,6 +938,10 @@
                         <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position())"/>
                     </xsl:otherwise>
                 </xsl:choose>
+            </xsl:variable>
+-->
+            <xsl:variable name="col-classes">
+                <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position())"/>
             </xsl:variable>
 
             <td valign="top" class="{$col-classes}">
