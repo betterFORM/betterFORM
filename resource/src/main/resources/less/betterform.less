@@ -42,7 +42,7 @@
 body {
     background: url("@{image-url}/bgOne.gif") repeat-x scroll;
     margin: 30px;
-    font-family: san-serif;
+    font-family: sans-serif;
     padding: 0; /*overflow: hidden;*/
     font-size: 100%;
 }
@@ -134,7 +134,6 @@ a:active {
     .xfControl {
         position:relative;
         font-family: sans-serif;
-        font-size: 10pt;
     }
 
     /* ################### some theme-specific (Dojo tundra) styles ################### */
@@ -535,9 +534,10 @@ alert + hints should always be aligned with the control.
     .xfContainer{
 	    display:inline-block;
     }
-    .xfGroupLabel {
+    >.xfGroupLabel {
         display: block;
         width: 100%;
+        clear: left;
     }
 
     .xfControl{
@@ -563,7 +563,7 @@ alert + hints should always be aligned with the control.
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
 .xfFullGroup {
-    .xfGroupLabel {
+    >.xfGroupLabel {
          display: block;
     }
 
