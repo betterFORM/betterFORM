@@ -86,7 +86,7 @@
                                             <antcall target="mvn">
                                                 <xsl:element name="param">
                                                     <xsl:attribute name="name">goal</xsl:attribute>
-                                                    <xsl:attribute name="value">install:install-file -DgroupId=de.betterform -DartifactId=<xsl:value-of select="document($buildprops)/root/core/app/name"/> -Dversion=<xsl:value-of select="document($buildprops)/root/core/app/version"/> -Dpackaging=jar -Dfile=${core.dir}/target/<xsl:value-of select="document($buildprops)/root/core/app/name"/>-<xsl:value-of select="document($buildprops)/root/core/app/version"/>.jar</xsl:attribute>
+                                                    <xsl:attribute name="value">install:install-file -DgroupId=de.betterform -DartifactId=<xsl:value-of select="document($buildprops)/root/core/app/name"/> -Dversion=<xsl:value-of select="document($buildprops)/root/app/version/number"/> -Dpackaging=jar -Dfile=${core.dir}/target/<xsl:value-of select="document($buildprops)/root/core/app/name"/>-<xsl:value-of select="document($buildprops)/root/app/version/number"/>.jar</xsl:attribute>
                                                 </xsl:element>
                                             </antcall>
                                         </xsl:when>
@@ -105,7 +105,7 @@
                             <antcall target="mvn">
                                 <xsl:element name="param">
                                     <xsl:attribute name="name">goal</xsl:attribute>
-                                    <xsl:attribute name="value">install:install-file -DgroupId=de.betterform -DartifactId=<xsl:value-of select="document($buildprops)/root/core/app/name"/> -Dversion=<xsl:value-of select="document($buildprops)/root/core/app/version"/> -Dpackaging=jar -Dfile=${core.dir}/target/<xsl:value-of select="document($buildprops)/root/core/app/name"/>-<xsl:value-of select="document($buildprops)/root/core/app/version"/>.jar</xsl:attribute>
+                                    <xsl:attribute name="value">install:install-file -DgroupId=de.betterform -DartifactId=<xsl:value-of select="document($buildprops)/root/core/app/name"/> -Dversion=<xsl:value-of select="document($buildprops)/root/app/version/number"/> -Dpackaging=jar -Dfile=${core.dir}/target/<xsl:value-of select="document($buildprops)/root/core/app/name"/>-<xsl:value-of select="document($buildprops)/root/app/version/number"/>.jar</xsl:attribute>
                                 </xsl:element>
                             </antcall>
                         </xsl:when>
