@@ -8,6 +8,7 @@ package de.betterform.xml.xforms.action;
 
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.URIResolver;
+import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
@@ -41,6 +42,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -302,6 +305,7 @@ public class LoadAction extends AbstractBoundAction {
     private Node doIncludes(Node embed, String absoluteURI) {
 
         try {
+            if (Config.getInstance().getProperty("resource.dir.name") != null) {
             String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
 
             CachingTransformerService transformerService  = (CachingTransformerService) this.container.getProcessor().getContext().get(TransformerService.TRANSFORMER_SERVICE);
@@ -313,6 +317,11 @@ public class LoadAction extends AbstractBoundAction {
             transformer.transform(source, result);
 
             return result.getNode();
+            } else {
+                    LOGGER.debug("LoadAction.doInclude: doIncludes activated but 'resource.dir.name' is not set in config file.");
+            }
+        } catch (XFormsException e) {
+            LOGGER.debug("LoadAction.doInclude: XFormsException", e);
         } catch (TransformerException e) {
             LOGGER.debug("LoadAction.doInclude: TransformerException:", e);
         }
