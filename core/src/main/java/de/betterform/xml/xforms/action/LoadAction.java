@@ -23,6 +23,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import de.betterform.xml.xslt.TransformerService;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
 import net.sf.saxon.dom.NodeWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,6 +36,10 @@ import org.w3c.dom.events.EventTarget;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -221,6 +227,11 @@ public class LoadAction extends AbstractBoundAction {
             inlineJavaScript = getInlineJavaScript(embed);
             externalJavaScript = getExternalJavaScript(embed);
         }
+
+        if (Config.getInstance().getProperty("webprocessor.doIncludes", "false").equals("true")) {
+            embed = doIncludes(embed, absoluteURI);
+        }
+
         embed = extractFragment(absoluteURI, embed);
         if(LOGGER.isDebugEnabled()){
             DOMUtil.prettyPrintDOM(embed);
@@ -332,6 +343,28 @@ public class LoadAction extends AbstractBoundAction {
         }
         return events.toString();
     }
+
+
+    private Node doIncludes(Node embed, String absoluteURI) {
+
+        try {
+            String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
+
+            CachingTransformerService transformerService  = (CachingTransformerService) this.container.getProcessor().getContext().get(TransformerService.TRANSFORMER_SERVICE);
+            Transformer transformer = transformerService.getTransformerByName("include.xsl");
+
+            DOMSource source = new DOMSource(embed);
+            DOMResult result = new DOMResult();
+            transformer.setParameter("root",uri);
+            transformer.transform(source, result);
+
+            return result.getNode();
+        } catch (TransformerException e) {
+            LOGGER.debug("LoadAction.doInclude: TransformerException:", e);
+        }
+        return embed;
+    }
+
     private String getInlineCSS(Node embed) throws XFormsException {
         //fetch style element(s) from Node to embed
         String cssRules = "";
