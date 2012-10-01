@@ -812,7 +812,11 @@ define(["dojo/_base/declare",
                     self.bfDialogs[targetid] = new Array();
                     query(".bfcDialog", nodesToEmbed).forEach(function(item) {
                         // console.debug("\n\nAdd Dialog:",domAttr.get(item,"id"));
-                        self.bfDialogs[targetid].push(domAttr.get(item,"id"));
+                        var id = domAttr.get(item,"id");
+                        self.bfDialogs[targetid].push(id);
+                        if (registry.byId(id) !=  undefined) {
+                            item.parentNode.removeChild(item);
+                        }
                     });
                     behavior.apply();
                 });

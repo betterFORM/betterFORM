@@ -93,6 +93,8 @@
                              version="4.1.1" artifactId="httpcomponents-client"/>
                 <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="httpcomponents" version="4.1.1"
                              artifactId="httpcomponents-mime"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-net-3.1.jar" groupid="commons-net" version="3.1"
+                             artifactId="commons-net"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1"
                              artifactId="commons-io"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="commons-lang"
