@@ -346,7 +346,7 @@ public class LoadAction extends AbstractBoundAction {
 
 
     private Node doIncludes(Node embed, String absoluteURI) {
-
+        LOGGER.debug("LoadAction.doInclude: Node to embed: " + embed.toString()+ " URI: " + absoluteURI);
         try {
             String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
 

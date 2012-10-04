@@ -48,7 +48,7 @@
             <debugComponents>true</debugComponents>
             <enableEventOptimization>true</enableEventOptimization>
             <initLogging>true</initLogging>
-            <doIncludes>false</doIncludes>
+            <doIncludes>true</doIncludes>
             <mailadmin>foo@bar.de</mailadmin>
         </bfconfig>
         <!--+ log4j.xml Configuration

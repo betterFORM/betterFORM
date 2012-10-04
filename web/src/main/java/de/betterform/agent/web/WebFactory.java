@@ -188,9 +188,13 @@ public class WebFactory {
                 URI highlightingErrorTransformer = getXsltURI(xsltPath,"highlightError.xsl");
                 transformerService.getTransformer(highlightingErrorTransformer);
 
-                    if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
                     URI highlightingDocument = getXsltURI(xsltPath,"highlightDocument.xsl");
                     transformerService.getTransformer(highlightingDocument);
+                }
+                if(Config.getInstance().getProperty("webprocessor.doIncludes", "false").equals("true")){
+                    URI IncludeDocument = getXsltURI(xsltPath,"include.xsl");
+                    transformerService.getTransformer(IncludeDocument);
                 }
             }
             catch (Exception e) {
