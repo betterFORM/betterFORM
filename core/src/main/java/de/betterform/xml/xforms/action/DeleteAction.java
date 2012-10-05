@@ -79,7 +79,7 @@ public class DeleteAction extends AbstractBoundAction {
     // implementation of 'de.betterform.xml.xforms.action.XFormsAction'
 
     /**
-     * Performs the <code>delete</code> action.
+     * Performs the <code>delete</code> action as specified by XForms 1.1.
      *
      * @throws XFormsException if an error occurred during <code>delete</code>
      * processing.
@@ -128,16 +128,23 @@ public class DeleteAction extends AbstractBoundAction {
 	            
 	            
 	            long position = Math.round(d);
-	
+
+                /*
+                if @at evaluated on the nodeset returns NaN or delete position is bigger than
+                the actual nodeset then new position is equal to the size of the nodeset
+                */
 	            if (Double.isNaN(d) || position > nrOfNodesInNodeset) {
 	            	position = nrOfNodesInNodeset;
 	            }
+                /*
+                if evaluated position is 0 or smaller then new position is 1
+                 */
 	            else if(position < 1) {
 	            	position = 1;
 	            }
 	            
 	            deleteNodes = Collections.singletonList(this.nodeset.get((int)position - 1));
-	            target = (Node) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(this.nodeset, (int)position);
+	            target = de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(this.nodeset, (int)position);
 	            positionInNodeset = Long.toString(position);
 	        }
 	

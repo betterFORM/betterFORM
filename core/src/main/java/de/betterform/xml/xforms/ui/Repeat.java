@@ -88,6 +88,7 @@ public class Repeat extends BindingElement implements EventListener {
                     handleNodeInserted(event);
                     return;
                 }
+                // event is dispatched by Instance
                 if (BetterFormEventNames.NODE_DELETED.equals(event.getType())) {
                     handleNodeDeleted(event);
                     return;

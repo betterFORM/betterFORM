@@ -131,6 +131,8 @@ public interface XFormsEventNames {
 
     /**
      * XForms notification event constant.
+     *
+     * This event is not used for internal processing and just provided for use by XForms authors.
      */
     static final String DELETE = "xforms-delete";
 
