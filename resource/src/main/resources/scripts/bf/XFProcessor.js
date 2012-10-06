@@ -136,20 +136,24 @@ define(["dojo/_base/declare",
 
             //Loop as long as Pending Events are being skipped (as long as no Request is being initiated)
             while ((!this.requestPending) && (this.clientServerEventQueue.length != 0)) {
-                nextPendingClientServerEvent = this.clientServerEventQueue.shift();
+                var setRepeatIndexEvent = undefined;
+                for(var i = 0; i < this.clientServerEventQueue.length;i++) {
+                    var clientServerEvent = this.clientServerEventQueue[i];
+                    if(clientServerEvent.callerFunction=="setRepeatIndex"){
+                        setRepeatIndexEvent = clientServerEvent;
+                        this.clientServerEventQueue.splice(i, 1);
+                        break;
+                    }
+                }
+                if(setRepeatIndexEvent != undefined) {
+                    nextPendingClientServerEvent = setRepeatIndexEvent;
+                }else {
+                    nextPendingClientServerEvent = this.clientServerEventQueue.shift();
+                }
 
+                // console.debug("nextPendingClientServerEvent: ",nextPendingClientServerEvent);
                 var callerFunction = nextPendingClientServerEvent.getCallerFunction();
                 var nextPendingTargetId = nextPendingClientServerEvent.getTargetId();
-                // TODO: Lars: not need anymore due to devtool!?!
-                /*
-                 switch (callerFunction) {
-                 case "dispatchEvent":       console.info("FIFO-READ:  dispatchEvent(" + nextPendingTargetId + ")"); break;
-                 case "dispatchEventType":   console.info("FIFO-READ:  dispatchEventType(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getEventType() + ", " + nextPendingClientServerEvent.getContextInfo() + ")"); break;
-                 case "setControlValue":     console.info("FIFO-READ:  setControlValue(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                 case "setRepeatIndex":      console.info("FIFO-READ: setRepeatIndex(" + nextPendingTargetId + ", " + nextPendingClientServerEvent.getValue() + ")"); break;
-                 default:break;
-                 }
-                 */
 
                 //*****************************************************************************
                 // START: skip this pending Event, if one of the following conditions occurred:
@@ -214,17 +218,20 @@ define(["dojo/_base/declare",
                 // Further processing of setRepeatIndex events
                 // TODO: check if really not needed anymore
                 /*
-                 if (callerFunction == "setRepeatIndex") {
-                 if (nextPendingClientServerEvent.getRepeatItem() == null) {
-                 console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
-                 continue;
-                 }
+                if (callerFunction == "setRepeatIndex") {
+                 var repeatItems = query("#" + nextPendingClientServerEvent.targetId +" > tbody > .xfRepeatItem");
+                 console.debug("repeatItems: " ,repeatItems," repeatitem position: ",repeatItems[(nextPendingClientServerEvent.getValue -1)]);
 
-                 if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
-                 console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
-                 // Update the changed Position of this XForms-Repeat-Item
-                 nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
-                 }
+                 if (nextPendingClientServerEvent.getRepeatItem() == null) {
+                         console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
+                         continue;
+                     }
+
+                     if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
+                         console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
+                         // Update the changed Position of this XForms-Repeat-Item
+                        nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
+                     }
                  }
                  */
 
@@ -249,6 +256,7 @@ define(["dojo/_base/declare",
             // console.debug("XFProcessor after Event is dispatched ");
             //Check if there are still more events pending
             if (this.clientServerEventQueue.length != 0) {
+                // console.debug("XFProcessor after: this.clientServerEventQueue: ",this.clientServerEventQueue);
                 clearTimeout(this.fifoReaderTimer);
                 // Just to be sure, that the FIFO Buffer is being checked even in case, that an AJAX-response got lost
                 this.fifoReaderTimer = setTimeout("fluxProcessor.eventFifoReader()", 2000);
