@@ -11,7 +11,7 @@
         <xforms:model xforms:id="model_0">
             <xforms:instance xforms:id="instance_0">
                 <optional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xsi:noNamespaceSchemaLocation="xsd/optional.xsd"
+                    xsi:noNamespaceSchemaLocation="optional.xsd"
                     xmlns="">
                     <simple-mandatory-string>test</simple-mandatory-string>
                     <simple-optional-string/>
@@ -57,7 +57,7 @@
                     <xforms:bind id="bind_16" nodeset="field2-optional-string" required="false()" type="string"/>
                 </xforms:bind>
             </xforms:bind>
-            <xforms:submission action="{$contextroot}/jsp/debug-instance.jsp" id="submission_0" method="post"/>
+            <xforms:submission action="echo:foo" id="submission_0" method="post"/>
         </xforms:model>
     </head>
     <body>

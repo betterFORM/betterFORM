@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xf="http://www.w3.org/2002/xforms"
-      xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+       xmlns:my="http://my.schema.com/schema">
     <head>
         <title>Schema</title>
         <!--
@@ -25,16 +26,16 @@
                     <birthday></birthday>
                     <login></login>
                     <password></password>
-                    <email></email>
+                    <my:email xmlns:my="http://my.schema.com/schema"></my:email>
                 </data>
             </xf:instance>
             <xf:bind id="b-name" nodeset="name" constraint="string-length(.) &gt; 3"/>
             <xf:bind id="b-birthday" nodeset="birthday" type="xf:date"/>
             <xf:bind id="b-login" nodeset="login" type="login"/>
             <xf:bind id="b-password" nodeset="password" type="password"/>
-            <xf:bind id="b-email" nodeset="email" type="my:email"/>
+            <xf:bind id="b-email" nodeset="my:email" type="my:email"/>
         </xf:model>
-		<xs:schema id="g-schema" >
+		<xs:schema id="g-schema">
 			<xs:import schemaLocation="http://localhost:8080/betterform/forms/incubator/xsd/generic.xsd" namespace="http://my.schema.com/schema" />
 		</xs:schema>
         <xs:schema id="s-schema">
