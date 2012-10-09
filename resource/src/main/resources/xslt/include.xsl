@@ -47,7 +47,14 @@
                 <xsl:otherwise><xsl:value-of select="@src"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <!--<xsl:message>File is <xsl:value-of select="$file"/></xsl:message>-->
+
+        <!--
+        <xsl:message>######################################</xsl:message>
+        <xsl:message>File is <xsl:value-of select="$file"/></xsl:message>
+        <xsl:message>File is <xsl:value-of select="$file"/></xsl:message>
+        <xsl:message>File is <xsl:value-of select="$file"/></xsl:message>
+        <xsl:message>######################################</xsl:message>
+        -->
 
         <xsl:variable name="resource">
             <xsl:choose>
@@ -63,11 +70,34 @@
             </xsl:choose>
         </xsl:variable>
 
-        <!--<xsl:message>including URI:<xsl:value-of select="$resource"/></xsl:message>-->
+        <!--
+        <xsl:message>######################################</xsl:message>
+        <xsl:message>Resource is <xsl:value-of select="$resource"/></xsl:message>
+        <xsl:message>Resource is <xsl:value-of select="$resource"/></xsl:message>
+        <xsl:message>Resource is <xsl:value-of select="$resource"/></xsl:message>
+        <xsl:message>######################################</xsl:message>
+        -->
 
         <xsl:variable name="fragmentId" select="substring-after(@src,'#')"/>
+
+        <!--
+        <xsl:message>######################################</xsl:message>
+        <xsl:message>FragmentId is <xsl:value-of select="$fragmentId"/></xsl:message>
+        <xsl:message>FragmentId is <xsl:value-of select="$fragmentId"/></xsl:message>
+        <xsl:message>FragmentId is <xsl:value-of select="$fragmentId"/></xsl:message>
+        <xsl:message>######################################</xsl:message>
+        -->
         <xsl:choose>
             <xsl:when test="string-length($fragmentId) &gt;0">
+                <!--
+                <xsl:message>######################################</xsl:message>
+                <xsl:message>Including fragment.</xsl:message>
+                <xsl:message>Including fragment.</xsl:message>
+                <xsl:message>Including fragment.</xsl:message>
+                <xsl:message><xsl:value-of select="doc($resource)//*[@id=$fragmentId]"/></xsl:message>
+                <xsl:message>######################################</xsl:message>
+                -->
+
                 <xsl:apply-templates select="doc($resource)//*[@id=$fragmentId]"/>
             </xsl:when>
             <xsl:when test="string-length($resource) &gt;0">

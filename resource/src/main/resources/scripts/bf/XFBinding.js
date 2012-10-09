@@ -69,12 +69,17 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 // console.debug("XFBinding.handleStateChanged value:",this.value," valid:", this.valid, " readonly:",this.readonly," required:",this.required, " relevant:",this.relevant, " targetName:",contextInfo["targetName"]," type:",contextInfo["type"], " contextInfo:",contextInfo);
 
                 // check xsd type and adjust if needed
-                // console.debug("XFBinding.handleStateChanged this.type: ", this.type, " formerType:",formerType);
+                //console.debug("XFBinding.handleStateChanged this.type: ", this.type, " formerType:",formerType);
                 if(this.type != undefined && this.type != "" && this.type != formerType){
+                    var index = this.type.indexOf(":");
+                    if (index != -1) {
+                        this.type = this.type.substring(index+1, this.type.length);
+                    }
+                    //console.info("XFBinding.handleStateChange: removed namespace from type:" , this.type);
                     // console.warn("XFBinding.handleStateChange type changed");
                     var xsdType = "xsd" + this.type.replace(/^[a-z]/, this.type.substring(0, 1).toUpperCase());
                     // TODO: existing types must be removed in case of type switch
-                    // console.debug("apply new type: ",xsdType, " to Control Widget");
+                    //console.debug("apply new type: ",xsdType, " to Control Widget");
                     if(!domClass.contains(this.srcNodeRef, xsdType)){
                         // console.debug("XFBinding.handleStateChange behavior.apply");
                         domClass.add(this.srcNodeRef, xsdType);

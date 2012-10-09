@@ -94,12 +94,18 @@ define(["dojo/_base/declare","bf/util"],
                             });
                             break;
                         case "dialog":
-                            require(["dojo/dom","dojo/dom-attr","dijit/Dialog"], function(dom,domAttr,Dialog) {
+                            require(["dojo/dom","dojo/dom-attr","dijit/Dialog", "dijit/registry"], function(dom,domAttr,Dialog, registry) {
                                 console.debug("create new Dialog",n);
-                                new Dialog({
-                                    id:domAttr.get(n,"id"),
-                                    title: domAttr.get(n,"title")
-                                },n);
+                                var id = domAttr.get(n,"id");
+                                var widget = registry.byId(id);
+                                if (widget == undefined) {
+                                    new Dialog({
+                                        id:id,
+                                        title: domAttr.get(n,"title")
+                                    },n);
+                                } else {
+                                    console.warn("Dialog already present skipping initialization.")
+                                }
                             });
                             break;
                         default:
