@@ -733,19 +733,20 @@ define(["dojo/_base/declare",
          ******************************************************************************************************
          */
         _handleSubmitError:function(xmlEvent) {
-            console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
+            // console.warn("xforms-submit-error at ", xmlEvent.contextInfo);
             query(".xfInvalid", win.body()).forEach(function(control) {
                 // console.debug("_handleSubmitError: invalid control: ", control);
                 connect.publish("xforms-invalid", [domAttr.get(control, "id"),"submitError"]);
             });
             query(".xfRequired", win.body()).forEach(function(control) {
                 //if control has no value add CSS class xfRequiredEmpty
+                // console.debug("check required: control: ", control);
                 var xfControl = registry.byId(control.id);
-                if(xfControl != undefined && xfControl.getControlValue === 'function'){
+                // console.debug("found Control Widget: xfControl: ", xfControl, " typeof xfControl.getControlValue  == 'function'': ", typeof xfControl.getControlValue == 'function');
+                if(xfControl != undefined && typeof xfControl.getControlValue == 'function'){
                     var xfValue = xfControl.getControlValue();
                     if(xfValue == undefined || xfValue == ''){
                         domClass.add(xfControl.domNode,"xfRequiredEmpty");
-
                     }
                 }
             });

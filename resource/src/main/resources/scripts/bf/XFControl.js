@@ -117,6 +117,8 @@ define(["dojo/_base/declare", "dijit/_Widget","bf/XFBinding","dojo/dom", "dojo/d
         getControlValue:function() {
             if(this.currentValue != undefined){
                 return this.currentValue;
+            }else {
+                return "";
             }
         },
 
