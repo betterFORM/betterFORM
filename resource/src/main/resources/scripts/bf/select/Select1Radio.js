@@ -5,6 +5,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             currentValue:null,
 
             postCreate:function() {
+                // console.debug("Select1Radio.postCreate");
                 connect.subscribe("xforms-item-changed-" + this.id , this, "handleStateChanged");
                 connect.subscribe("betterform-insert-item-" + this.id , this, "handleInsertItem");
                 connect.subscribe("betterform-delete-item-" + this.id , this, "handleDeleteItem");
@@ -98,6 +99,8 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     if(this.currentValue == contextInfo.value){
                         // console.debug("\n\nverify that value is the same as before the insert this.currentValue: ",this.currentValue);
                         domAttr.set(radioValue,"checked", true);
+                    }else {
+                        domAttr.set(radioValue,"checked", false);
                     }
                 }else {
                     console.warn("Select1Radio.handleStateChanged: no action taken for contextInfo: ",contextInfo);

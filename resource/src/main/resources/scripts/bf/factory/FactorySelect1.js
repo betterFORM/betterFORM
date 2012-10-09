@@ -77,6 +77,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     query(".xfRadioValue", n).forEach(function(radioValue){
                                         if(radioValue.value == value){
                                             domAttr.set(radioValue,"checked", true);
+                                        }else {
+                                            domAttr.set(radioValue,"checked", false);
                                         }
                                     });
                                 };
