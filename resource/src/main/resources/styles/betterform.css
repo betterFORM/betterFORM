@@ -523,6 +523,12 @@ alert + hints should always be aligned with the control.
   text-align: left;
   padding-right: 10px;
 }
+
+/* style to fix select1 appearance */
+.bf .xfSelect1 .xfValue {
+    padding:0px;
+}
+
 .xfSelect1 .xfOptGroupLabelFull {
   padding-left: 5px;
 }

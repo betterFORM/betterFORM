@@ -16,18 +16,20 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
 
             _onBlur:function() {
                 // console.debug("bf.SelectFull._onBlur arguments:",arguments, " control:",this.xfControl);
-                var selectedValue = this._getSelectedValue();
+                var selectedValue = this._getSelectedValueAsString();
                 this.xfControl.sendValue(selectedValue,true);
             },
 
             handleStateChanged:function(contextInfo){
                 // console.debug("SelectCheckBox.handleStateChanged");
+                var value = contextInfo.value;
                 if(contextInfo.targetName == "label"){
-                    dom.byId(contextInfo.parentId+"-label").innerHTML = contextInfo.value;
+                    dom.byId(contextInfo.parentId+"-label").innerHTML = value;
                 }else if(contextInfo.targetName == "value"){
                     var checkBox = dom.byId(contextInfo.parentId+"-value");
-                    domAttr.set(checkBox,"value",contextInfo.value);
-                    if(this.currentValue.indexOf(contextInfo.value) != -1){
+                    domAttr.set(checkBox,"value",value);
+                    // console.debug("check if value ", value, " is selected: selectedValues: ",this.currentValue);
+                    if(this.currentValue.indexOf(value) != -1){
                         checkBox.checked = true;
                     }else {
                         checkBox.checked = false;
@@ -43,7 +45,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
              */
             handleInsertItem:function(contextInfo) {
                 // console.debug("SelectCheckBox.handleInsert [id: ",this.id, " / contextInfo:",contextInfo,"]");
-                this.currentValue = this._getSelectedValue();
+                // this.currentValue = this._getSelectedValue();
                 var currentItemset = dom.byId(contextInfo.targetId);
                 // console.debug("SelectCheckBox.handleInsert itemset: ",currentItemset);
                 var generatedIds= contextInfo.generatedIds;
@@ -79,17 +81,17 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/query","dojo/_base/connect",
                 });
             },
 
-
+            _getSelectedValueAsString:function() {
+                var resultString = this._getSelectedValue().join(" ");
+                // console.debug("SelectCheckBox._getSelectedValueAsString: ", resultString);
+                return resultString;
+            },
 
             _getSelectedValue:function(){
-                var selectedValue = "";
+                var selectedValue = new Array();
                 query(".xfCheckBoxValue",this.domNode).forEach(function(item){
                     if(item.checked){
-                        if(selectedValue  == ""){
-                            selectedValue = item.value;
-                        }else {
-                            selectedValue += " " + item.value;
-                        }
+                        selectedValue.push(item.value);
                     }
                 });
                 // console.debug("SelectCheckBox._getSelectedValue value:",selectedValue);
