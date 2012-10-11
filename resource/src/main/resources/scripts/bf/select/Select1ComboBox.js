@@ -18,7 +18,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
 
             handleInsertItem:function(contextInfo) {
                 console.debug("Select1ComboBox.handleInsertItem: ", contextInfo, " currentValue: ", this.domNode.value);
-                this.currentValue = this.domNode.value;
                 var position = contextInfo.position;
                 var itemsetId = contextInfo.targetId;
                 var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
@@ -70,16 +69,21 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
             },
 
             handleStateChanged:function(contextInfo) {
-                // console.debug("Select1Minimal.handleStateChanged contextInfo:",contextInfo);
+                // console.debug("Select1Minimal.handleStateChanged contextInfo:",contextInfo, " this: " , this);
                 var targetName = contextInfo.targetName;
                 var option = dom.byId(contextInfo.parentId);
+                var value = contextInfo.value;
+                // label changed
                 if(targetName == "label" && option){
-                    option.innerHTML = contextInfo.value;
-                }else if(targetName == "value" && option){
-                    domAttr.set(option,"value",contextInfo.value);
+                    option.innerHTML = value;
+                }
+                // value changed
+                else if(targetName == "value" && option){
+                    domAttr.set(option,"value",value);
                     // verify that value is the same as before the insert
-                    if(this.currentValue == contextInfo.value){
-                        domAttr.set(this.domNode,"value", contextInfo.value);
+                    // console.debug("Select1Minimal.handleStateChanged this.currentValue:",this.currentValue, " value: ",value);
+                    if(this.currentValue == value){
+                        domAttr.set(this.domNode,"value", value);
                     }
                 }else {
                     console.warn("OptGroup.handleStateChanged: no action taken for contextInfo: ",contextInfo);
@@ -96,7 +100,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 }
                 return siblingNode;
             }
-
         });
 
     }

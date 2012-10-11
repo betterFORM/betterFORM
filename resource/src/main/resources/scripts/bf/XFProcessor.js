@@ -1247,7 +1247,7 @@ define(["dojo/_base/declare",
                 while(!domClass.contains(parentDOMNode, "xfValue")){
                     parentDOMNode = parentDOMNode.parentNode;
                 }
-                console.debug("XFProcessor._handleBetterFormItemChanged: id: ", domAttr.get(parentDOMNode, "id"), " parentNode: ",parentDOMNode);
+                // console.debug("XFProcessor._handleBetterFormItemChanged: id: ", domAttr.get(parentDOMNode, "id"), " parentNode: ",parentDOMNode);
                 var selectParentId = domAttr.get(parentDOMNode, "id");
                 connect.publish("xforms-item-changed-"+ selectParentId, xmlEvent.contextInfo);
             } catch(e) {

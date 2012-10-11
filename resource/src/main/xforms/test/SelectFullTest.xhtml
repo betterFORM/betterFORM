@@ -23,6 +23,12 @@
                         <item value="3">3</item>
                         <item value="4">4</item>
                     </select>
+                    <select1 value="3">
+                        <item value="1">1</item>
+                        <item value="2">2</item>
+                        <item value="3">3</item>
+                        <item value="4">4</item>
+                    </select1>
                 </data>
 			</xf:instance>
 
@@ -42,20 +48,39 @@
                 <xf:send submission="s-replace-instance"/>
             </xf:trigger>
 
+        <xf:group appearance="full">
 
             <xf:select appearance="full" ref="select/@value">
+                    <xf:itemset nodeset="instance()/select/item">
+                        <xf:label ref="."/>
+                        <xf:value ref="."/>
+                    </xf:itemset>
+                </xf:select>
+
+                <xf:input ref="instance()/select/@value">
+                    <xf:label>Select Values:</xf:label>
+                </xf:input>
+                <xf:output ref="instance()/select/@value">
+                    <xf:label>Select Values:</xf:label>
+                </xf:output>
+
+
+		</xf:group>
+        <xf:group appearance="full">
+            <xf:select1  ref="select1/@value">
                 <xf:itemset nodeset="instance()/select/item">
                     <xf:label ref="."/>
                     <xf:value ref="."/>
                 </xf:itemset>
-            </xf:select>
-
-            <xf:input ref="instance()/select/@value">
-                <xf:label>Select Values:</xf:label>
+            </xf:select1>
+            <xf:input ref="instance()/select1/@value">
+                <xf:label>Select1 Values:</xf:label>
             </xf:input>
-            <xf:output ref="instance()/select/@value">
-                <xf:label>Select Values:</xf:label>
+            <xf:output ref="instance()/select1/@value">
+                <xf:label>Select1 Values:</xf:label>
             </xf:output>
-		</xf:group>
-	</body>
+
+        </xf:group>
+    </xf:group>
+</body>
 </html>
