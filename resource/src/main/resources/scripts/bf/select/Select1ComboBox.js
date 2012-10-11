@@ -21,18 +21,31 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 var position = contextInfo.position;
                 var itemsetId = contextInfo.targetId;
                 var generatedItemId =  contextInfo.generatedIds[contextInfo.prototypeId];
-
+                // console.debug("generatedItemId: ",generatedItemId, " itemsetId: ",itemsetId);;
                 var referenzedNode = query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
                 //TODO: Quick Fix this needs to be fixed properly!!!!
                 if (referenzedNode == undefined) {
                     referenzedNode = query('option[data-bf-itemset=\"'+ contextInfo.originalId + '\"]',this.id)[0];
                 }
+
+                if (referenzedNode == undefined) {
+                    // console.info("referenced node is sill undefined");
+                    var emptyNode = query('option',this.domNode)[0];
+                    // console.debug("emptyNode",emptyNode, " id:generatedItemId ",generatedItemId);
+                    var emptyOption = domConstruct.create("option", {id:generatedItemId}, emptyNode, "after");
+                    domAttr.set(emptyOption, "data-bf-itemset", itemsetId);
+                    // console.debug("emptyOption: ",emptyOption);
+
+                }
+
                 if(referenzedNode){
                     var item = undefined;
                     if(position == 1){
                         item = domConstruct.create("option", {id:generatedItemId}, referenzedNode, "before");
                         domAttr.set(item, "data-bf-itemset", itemsetId);
-                        domAttr.remove(referenzedNode, "data-bf-itemset");
+                        // domAttr.remove(referenzedNode, "data-bf-itemset");
+                        this.domNode.removeChild(referenzedNode);
+
                     }
                     else {
                         var option = undefined;
@@ -55,6 +68,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 var itemsetId = contextInfo.targetId;
 
                 var referenzedNode = query('option[data-bf-itemset=\"'+ itemsetId + '\"]',this.id)[0];
+                // console.debug("handleDeleteItem: ",referenzedNode, " position:", position);
                 var option2remove = undefined;
                 if(referenzedNode){
                     if(position == 1){
@@ -66,6 +80,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 }else {
                     console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
                 }
+                // console.debug("handleDeleteItem: this.domNode",this.domNode);
             },
 
             handleStateChanged:function(contextInfo) {
