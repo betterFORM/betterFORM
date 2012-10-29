@@ -86,6 +86,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/query",
                                 });
 
                                 xfControlDijit.setValue=function(value) {
+                                    // console.debug("FactorySelect checkboxes: setValue:",value);
+                                    selectFull.currentValue = value.split(" ");
+
                                     query(".xfCheckBoxValue",node).forEach(function(item){
                                         item.checked = value.indexOf(item.value) != -1;
                                     });

@@ -444,13 +444,33 @@ public class UIElementStateUtil {
                 XSTypeDefinition xsTypeDefinition = schema.getTypeDefinition(typeName, schemaNamespace);
 
                 if (xsTypeDefinition != null) {
-                    //Search BaseType/PrimitiveType
-                    while (xsTypeDefinition.getBaseType() != null) {
-                        xsTypeDefinition = xsTypeDefinition.getBaseType();
+                    if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
+                        XSSimpleTypeDefinition xsSimpleTypeDefinition = (XSSimpleTypeDefinition) xsTypeDefinition;
+                        if (xsSimpleTypeDefinition.getVariety() == XSSimpleTypeDefinition.VARIETY_UNION) {
+                            Iterator itemTypeIterator = xsSimpleTypeDefinition.getMemberTypes().listIterator();
 
-                        if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
-                            XSSimpleTypeDefinition xsSimpleTypeDefinition = (XSSimpleTypeDefinition) xsTypeDefinition;
-                            return xsSimpleTypeDefinition.getPrimitiveType().getName();
+                            if (itemTypeIterator.hasNext()) {
+                                Object item = itemTypeIterator.next();
+                                if (item instanceof XSSimpleTypeDefinition) {
+                                    XSSimpleTypeDefinition xsSimpleTypeDefinition2 = (XSSimpleTypeDefinition) item;
+                                    if (xsSimpleTypeDefinition2.getBaseType() != null) {
+                                        return xsSimpleTypeDefinition2.getBaseType().getName();
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            //Search BaseType/PrimitiveType
+                            while (xsTypeDefinition.getBaseType() != null) {
+                                xsTypeDefinition = xsTypeDefinition.getBaseType();
+
+                                if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
+                                    XSSimpleTypeDefinition xsSimpleTypeDefinition3 = (XSSimpleTypeDefinition) xsTypeDefinition;
+                                    if ( xsSimpleTypeDefinition3.getVariety() == XSSimpleTypeDefinition.VARIETY_ATOMIC) {
+                                        return xsSimpleTypeDefinition3.getPrimitiveType().getName();
+                                    }
+                                }
+                            }
                         }
                     }
                 }

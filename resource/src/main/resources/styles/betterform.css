@@ -276,9 +276,6 @@ a:active {
   z-index: 300;
   color: #666666;
 }
-.xfRequiredEmpty:after {
-  content: 'Please fill in a value';
-}
 /*
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
 alert + hints should always be aligned with the control.
@@ -526,6 +523,12 @@ alert + hints should always be aligned with the control.
   text-align: left;
   padding-right: 10px;
 }
+
+/* style to fix select1 appearance */
+.bf .xfSelect1 .xfValue {
+    padding:0px;
+}
+
 .xfSelect1 .xfOptGroupLabelFull {
   padding-left: 5px;
 }

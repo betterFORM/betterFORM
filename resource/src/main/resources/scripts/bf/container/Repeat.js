@@ -134,7 +134,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     // console.debug("InsertedNode: " + insertedNode.id );
                     var repeatItemNode = undefined;
                     if (dom.byId(insertedNode.id) != null ) {
-                        console.warn("Repeat.handleInsert Skipping already present repeatItem: ", repeatItemExists);
+                        console.warn("Repeat.handleInsert Skipping already present repeatItem: ");
                         repeatItemNode = dom.byId(insertedNode.id);
                     }else {
                         repeatItemNode = this._createRepeatItem(insertedNode, position);

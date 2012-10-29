@@ -23,14 +23,16 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         console.warn("selection = 'open' not support for xf:select with appearance='full'");
                     }
 
-
+                    // console.debug("FactorySelect1 type: ", type);
                     switch(type){
                         case "combobox":
                             require(["bf/select/Select1ComboBox"], function(Select1ComboBox) {
-                                // console.debug("FactorySelect (minimal/compact) id:",xfId);
+                                console.debug("FactorySelect (minimal/compact) id:",xfId);
                                 var select1Widget = new Select1ComboBox({id:n.id,value:initialValue}, n);
 
                                 xfControlDijit.setValue = function(value, schemavalue) {
+                                    // console.debug("FactorySelect1.setValue for combobox value: ", value, " this: ", this, " select1Widget:",select1Widget);
+                                    select1Widget.currentValue =  value;
                                     domAttr.set(n, "value", value);
                                 };
 
@@ -77,6 +79,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     query(".xfRadioValue", n).forEach(function(radioValue){
                                         if(radioValue.value == value){
                                             domAttr.set(radioValue,"checked", true);
+                                        }else {
+                                            domAttr.set(radioValue,"checked", false);
                                         }
                                     });
                                 };
@@ -134,6 +138,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                                 // override xfControl.setValue
                                 xfControlDijit.setValue = function(value) {
+                                    // console.debug("FactorySelect.setValue: ", value);
+                                    comboBox.currentValue = value;
+
                                     var items = comboBox.store.query({ value: value });
                                     // console.debug("items:",items);
                                     if(items[0]){
