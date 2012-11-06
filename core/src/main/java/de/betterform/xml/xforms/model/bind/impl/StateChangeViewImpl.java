@@ -5,6 +5,8 @@
 
 package de.betterform.xml.xforms.model.bind.impl;
 
+import java.util.Map;
+
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.StateChangeView;
 
@@ -23,7 +25,8 @@ public class StateChangeViewImpl implements StateChangeView {
     private boolean required;
     private boolean enabled;
     private boolean valueChanged;
-
+    private Map<String, String> customMIPS;
+    
     /**
      * Creates a new state change viewport implementation.
      *
@@ -38,6 +41,8 @@ public class StateChangeViewImpl implements StateChangeView {
         this.enabled = true;
 
         this.valueChanged = false;
+        
+        this.customMIPS = modelItem.getLocalUpdateView().getCustomMIPValues();
     }
 
     // implementation of 'de.betterform.xml.xforms.model.bind.StateChangeView'
@@ -87,6 +92,10 @@ public class StateChangeViewImpl implements StateChangeView {
         return this.valueChanged;
     }
 
+    public boolean hasCustomMIPChanged(String key) {
+    	return this.customMIPS.get(key) != this.modelItem.getLocalUpdateView().getCustomMIPValues().get(key);
+    }
+    
     /**
      * Resets all state changes so that no changes are reported.
      */
@@ -95,6 +104,8 @@ public class StateChangeViewImpl implements StateChangeView {
         this.readonly = this.modelItem.isReadonly();
         this.required = this.modelItem.isRequired();
         this.enabled = this.modelItem.isRelevant();
+
+        this.customMIPS = this.modelItem.getLocalUpdateView().getCustomMIPValues();
 
         this.valueChanged = false;
     }

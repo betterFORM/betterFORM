@@ -569,6 +569,7 @@ define(["dojo/_base/declare",
                                 case "xforms-in-range"               : fluxProcessor._handleInRange(xmlEvent);break;
                                 case "xforms-invalid"                : break;
                                 case "xforms-valid"                  : validityEvents[index] = xmlEvent; index++;break;
+                                case "betterform-custom-mip-changed" : fluxProcessor._handleCustomMIPChanged(xmlEvent);break;
                                 case "betterform-id-generated"       : break;
                                 case "DOMActivate"                   : break;
                                 case "xforms-select"                 : break;
@@ -1043,6 +1044,39 @@ define(["dojo/_base/declare",
                 htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
             }
         },
+
+        _handleCustomMIPChanged:function(xmlEvent) {
+            //console.debug("FluxProcessor._handleCustomMIPChanged xlmEvent:", xmlEvent);
+
+            // Put classes on the container? Yes, not on the value. That way you can allways decide to just style the value.
+            // The other way around is not possible in css... You cannot style an ancestor based on e.g. classes on a child
+            // So not
+            //    var uiControl = dojo.byId(xmlEvent.contextInfo.targetId + "-value");
+            // but
+            var uiControl = dom.byId(xmlEvent.contextInfo.targetId);
+            if (uiControl != undefined) {
+                var classes = uiControl.className;
+                var customMIPs = xmlEvent.contextInfo;
+
+                for (var key in customMIPs) {
+                    // targetId and targetName are in the contextInfo, but are NOT custom MIPs :-)
+                    if (key != "targetId" && key !="targetName") {
+
+                        // check if an existing class is present with the prefix
+                        var replaceString = key+"\\\w*";
+                        var match = classes.match(replaceString);
+                        // if so, remove it
+                        if (match != null) {
+                            domClass.remove(uiControl,match);
+                        }
+                        // and add the new class
+                        domClass.add(uiControl, key+customMIPs[key]);
+                    }
+                }
+            }
+
+        },
+
         /*
          ******************************************************************************************************
          * handles XForms xforms-submit-done events

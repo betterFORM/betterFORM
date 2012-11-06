@@ -20,6 +20,8 @@ import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.UIElementState;
+
+import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.xs.XSModel;
@@ -87,6 +89,17 @@ public class UIElementStateUtil {
         return (currentProperties == null && newProperties != null) ||
                 (currentProperties != null && newProperties == null) ||
                 (currentProperties != null && currentProperties[index] != newProperties[index]);
+    }
+    
+    public static boolean hasPropertyChanged(Map<String, String> currentCustomProperties, Map<String, String> newCustomProperties, String key) {
+    	boolean hasChanged = false;
+        if ((currentCustomProperties == null && newCustomProperties != null) ||
+                (currentCustomProperties != null && newCustomProperties == null)) { 
+        	hasChanged = true;
+        } else {
+    	hasChanged  = (currentCustomProperties != null && currentCustomProperties.containsKey(key) && currentCustomProperties.get(key) != newCustomProperties.get(key));
+        }
+    	return hasChanged;
     }
 
     public static boolean hasValueChanged(Object currentValue, Object newValue) {
@@ -253,7 +266,7 @@ public class UIElementStateUtil {
 
     public static void dispatchBetterFormEvents(BindingElement bindingElement, boolean[] currentProperties, Object currentValue, String currentType, boolean[] newProperties, Object newValue, String newType) throws XFormsException {
         // determine changes
-        Map context = new HashMap();
+        Map<String, Object> context = new HashMap<String, Object>();
         if (hasPropertyChanged(currentProperties, newProperties, VALID)) {
             context.put(UIElementState.VALID_PROPERTY, String.valueOf(newProperties[VALID]));
         }
@@ -293,6 +306,33 @@ public class UIElementStateUtil {
 
         }
     }
+    
+	public static void dispatchBetterFormCustomMIPEvents(BindingElement bindingElement,
+			Map<String, String> currentCustomProperties,
+			Map<String, String> newCustomProperties)
+			throws XFormsException {
+
+		Set<String> keySet = new HashSet<String>(); 
+		if (currentCustomProperties != null) {
+			keySet.addAll(currentCustomProperties.keySet());
+		}
+		if (newCustomProperties != null) {
+			keySet.addAll(newCustomProperties.keySet());
+		}
+		Map<String, String> customMIP = new HashMap<String, String>();
+		for (String key : keySet) {
+			if (hasPropertyChanged(currentCustomProperties, newCustomProperties, key)) {
+				customMIP.put(key, ""+WordUtils.capitalize(newCustomProperties.get(key)));
+			}
+		}
+		if (!customMIP.isEmpty()) {
+			Container container = bindingElement.getContainerObject();
+			EventTarget eventTarget = bindingElement.getTarget();
+			container.dispatch(eventTarget,
+				BetterFormEventNames.CUSTOM_MIP_CHANGED, customMIP);
+		}
+
+	}
 
     /**
      * localize a string value depending on datatype and locale
