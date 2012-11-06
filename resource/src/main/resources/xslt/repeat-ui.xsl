@@ -1005,8 +1005,71 @@
     <!-- ######################################################################################################## -->
     <!-- ####################################### REPEAT ATTRIBUTES ############################################## -->
     <!-- ######################################################################################################## -->
-    <xsl:template match="*[@xf:repeat-bind]|*[@xf:repeat-nodeset]|@repeat-bind|@repeat-nodeset"
-                  name="generic-repeat">
+    <!--
+        this template handles complex tables with several tr elements in *one* repeat item.
+    -->
+    <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-nodeset]/xf:group[count(xhtml:tr) &gt; 1])]" priority="10">
+        <xsl:variable name="repeat-id" select="xhtml:tbody/@id"/>
+        <xsl:variable name="repeat-index" select="xhtml:tbody/bf:data/@bf:index"/>
+        <xsl:variable name="repeat-classes">
+            <xsl:call-template name="assemble-compound-classes"/>
+        </xsl:variable>
+
+        <table>
+            <xsl:copy-of select="@*"/>
+            <xsl:attribute name="id"><xsl:value-of select="$repeat-id"/></xsl:attribute>
+            <xsl:attribute name="jsId"><xsl:value-of select="@id"/></xsl:attribute>
+            <xsl:attribute name="class">xfRepeat <xsl:value-of select="$repeat-classes"/></xsl:attribute>
+
+            <xsl:if test="exists(xhtml:thead)">
+                <xsl:copy-of select="xhtml:thead"/>
+            </xsl:if>
+
+            <xsl:for-each select="xhtml:tbody/bf:data/xf:group[@appearance='repeated'][1]">
+                <tbody>
+                    <xsl:attribute name="id"><xsl:value-of select="$repeat-id"/>-prototype</xsl:attribute>
+                    <xsl:attribute name="class">xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid</xsl:attribute>
+                    <xsl:apply-templates select="*" />
+                </tbody>
+            </xsl:for-each>
+            <!-- todo: review the lines below - can this work? -->
+            <xsl:for-each select="xhtml:tbody/bf:data/xf:group[@appearance='repeated']//xf:repeat">
+                <xsl:call-template name="processRepeatPrototype"/>
+            </xsl:for-each>
+            <xsl:for-each select="xhtml:tbody/bf:data/xf:group[@appearance='repeated']//xf:itemset">
+                <xsl:call-template name="processItemsetPrototype"/>
+            </xsl:for-each>
+
+            <xsl:for-each select="xhtml:tbody/xf:group[@appearance='repeated']">
+                <xsl:variable name="id" select="@id"/>
+
+                <xsl:variable name="repeat-item-classes">
+                    <xsl:call-template name="assemble-repeat-item-classes">
+                        <xsl:with-param name="selected" select="$repeat-index=position()"/>
+                    </xsl:call-template>
+                </xsl:variable>
+
+
+                <tbody>
+                    <xsl:attribute name="class" select="$repeat-item-classes"/>
+                    <xsl:for-each select="xhtml:*">
+
+                        <xsl:element name="{name(.)}">
+                            <!--<xsl:attribute name="id"><xsl:value-of select="generate-id()"/></xsl:attribute>-->
+
+                            <xsl:apply-templates select="*" />
+
+                        </xsl:element>
+                    </xsl:for-each>
+                </tbody>
+            </xsl:for-each>
+
+        </table>
+    </xsl:template>
+
+
+
+    <xsl:template match="*[@xf:repeat-bind|@xf:repeat-nodeset|@repeat-bind|@repeat-nodeset]">
         <xsl:variable name="repeat-id" select="@id"/>
         <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">
@@ -1016,15 +1079,19 @@
         <xsl:element name="{local-name(.)}" namespace="">
             <xsl:attribute name="id"><xsl:value-of select="$repeat-id"/></xsl:attribute>
             <xsl:attribute name="jsId"><xsl:value-of select="@id"/></xsl:attribute>
-            <xsl:attribute name="class"><xsl:value-of select="$repeat-classes"/></xsl:attribute>
+            <xsl:attribute name="class">xfRepeat <xsl:value-of select="$repeat-classes"/></xsl:attribute>
             <xsl:copy-of select="@*"/>
 
             <xsl:if test="not(ancestor::xf:repeat)">
                 <!-- generate prototype(s) for scripted environment -->
-                <xsl:for-each select="bf:data/xf:group[@appearance='repeated']">
-                    <xsl:call-template name="processTableRepeatPrototype">
-                        <xsl:with-param name="id" select="$repeat-id"/>
-                    </xsl:call-template>
+                <xsl:for-each select="bf:data/xf:group[@appearance='repeated'][1]">
+                    <xsl:for-each select="*">
+                        <xsl:element name="{local-name(.)}" namespace="">
+                            <xsl:attribute name="id"><xsl:value-of select="$repeat-id"/>-prototype</xsl:attribute>
+                            <xsl:attribute name="class">xfRepeatPrototype xfDisabled xfReadWrite xfOptional xfValid</xsl:attribute>
+                            <xsl:apply-templates select="*" />
+                        </xsl:element>
+                    </xsl:for-each>
                 </xsl:for-each>
                 <xsl:for-each select="bf:data/xf:group[@appearance='repeated']//xf:repeat">
                     <xsl:call-template name="processRepeatPrototype"/>
@@ -1043,14 +1110,16 @@
                     </xsl:call-template>
                 </xsl:variable>
 
-                <xsl:for-each select="xhtml:tr">
+                <xsl:for-each select="xhtml:*">
 
-                    <tr id="{$id}"
-                        class="{$repeat-item-classes}"
-                        appearance="appCompact compact">
-                        <xsl:apply-templates select="*" mode="compact-repeat"/>
-                    </tr>
+                    <xsl:element name="{name(.)}">
+                        <!--<xsl:attribute name="id"><xsl:value-of select="generate-id()"/></xsl:attribute>-->
+                        <xsl:attribute name="class" select="$repeat-item-classes"/>
+                        <xsl:apply-templates select="*" />
+
+                    </xsl:element>
                 </xsl:for-each>
+
             </xsl:for-each>
         </xsl:element>
     </xsl:template>
