@@ -516,7 +516,11 @@ public class LoadAction extends AbstractBoundAction {
 
     private Node extractFragment(String absoluteURI, Node embed) throws XFormsException {
         if (embed instanceof Document && absoluteURI.indexOf("#") != -1) {
+
             String s = absoluteURI.substring(absoluteURI.indexOf("#") + 1);
+            if(s.indexOf("?") != -1){
+                s = s.substring(0,s.indexOf("?"));
+            }
             embed = DOMUtil.getById((Document) embed, s);
         }
 

@@ -11,6 +11,7 @@ import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.events.impl.XercesXMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.XFormsElementFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
@@ -604,7 +605,7 @@ public class Repeat extends BindingElement implements EventListener {
         Node copy = prototype.cloneNode(false);
         if (copy.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) copy;
-            if (element.getAttributeNS(null, "id").length() == 0) {
+            if (element.getAttributeNS(null, "id").length() == 0 && XFormsElementFactory.isUIElement(element)) {
                 element.setAttributeNS(null, "id", this.container.generateId());
             }
 

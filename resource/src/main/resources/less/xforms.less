@@ -62,11 +62,12 @@
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
 
-.xfRequired .xfLabel {
+.xfRequired > .xfLabel {
 }
 
-.xfRequired .xfLabel:after,
-.xfRequired .bfTableLabel:after {
+//todo: fix this - if an required element has attributes these can get the required character by error
+.xfRequired > .xfLabel:after,
+.xfRequired > .bfTableLabel:after {
     content: '*';
     color: @requiredColor;
 }
