@@ -1,0 +1,1 @@
+Copy of net.sf.saxon.sxpath wich makes getXPathContextObject of XPathDynamicContext public.
