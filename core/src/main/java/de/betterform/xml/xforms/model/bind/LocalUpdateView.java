@@ -5,6 +5,8 @@
 
 package de.betterform.xml.xforms.model.bind;
 
+import java.util.Map;
+
 /**
  * Local Update viewport to model items. Provides access to local values of a
  * model item's properties.
@@ -88,5 +90,10 @@ public interface LocalUpdateView {
      * model item.
      */
     void setConstraintValid(boolean constraintValid);
+        
+	public Map<String, String> getCustomMIPValues();
+	
+	public void setCustomMIPValues(Map<String, String> customMIPValues);
+    
 
 }

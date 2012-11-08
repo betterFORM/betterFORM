@@ -7,6 +7,9 @@ package de.betterform.xml.xforms.model.bind.impl;
 
 import de.betterform.xml.xforms.model.bind.LocalUpdateView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Local Update viewport implementation.
  *
@@ -20,6 +23,7 @@ public class LocalUpdateViewImpl implements LocalUpdateView {
     private boolean localRequired;
     private boolean localRelevant;
     private boolean constraintValid;
+    private Map<String, String> customMIPValues;
 
     /**
      * Creates a new local update viewport implementation.
@@ -31,6 +35,7 @@ public class LocalUpdateViewImpl implements LocalUpdateView {
         this.localRequired = false;
         this.localRelevant = true;
         this.constraintValid = true;
+        this.customMIPValues = new HashMap<String, String>();
     }
 
     // implementation of 'de.betterform.xml.xforms.model.bind.LocalUpdateView'
@@ -129,5 +134,13 @@ public class LocalUpdateViewImpl implements LocalUpdateView {
     public void setConstraintValid(boolean constraintValid) {
         this.constraintValid = constraintValid;
     }
+
+	public Map<String, String> getCustomMIPValues() {
+		return this.customMIPValues;
+	}
+	
+	public void setCustomMIPValues(Map<String, String> customMIPValues) {
+		this.customMIPValues = customMIPValues;
+	}
 
 }

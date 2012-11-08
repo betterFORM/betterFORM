@@ -270,7 +270,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 this.changed = new Vector();
             }
 
-            Vertex vertex = this.mainGraph.getVertex(changedNode, Vertex.CALCULATE_VERTEX);
+            Vertex vertex = this.mainGraph.getVertex(changedNode, Vertex.CALCULATE_VERTEX, null);
 
             if (vertex != null) {
                 if (getLogger().isDebugEnabled()) {

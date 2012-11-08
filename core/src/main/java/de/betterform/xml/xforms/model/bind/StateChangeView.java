@@ -48,6 +48,8 @@ public interface StateChangeView {
      * @return the value change state of a model item.
      */
     boolean hasValueChanged();
+        
+    boolean hasCustomMIPChanged(String key);
 
     /**
      * Resets all state changes so that no changes are reported.

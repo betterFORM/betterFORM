@@ -14,6 +14,7 @@ import de.betterform.xml.xforms.model.bind.impl.DeclarationViewImpl;
 import de.betterform.xml.xforms.model.bind.impl.LocalUpdateViewImpl;
 import de.betterform.xml.xforms.model.bind.impl.RefreshViewImpl;
 import de.betterform.xml.xforms.model.bind.impl.StateChangeViewImpl;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -150,6 +151,10 @@ class XercesNodeImpl implements ModelItem {
      */
     public boolean isValid() {
         return this.localUpdateView.isConstraintValid() && this.localUpdateView.isDatatypeValid();
+    }
+    
+    public Map<String, String> getCustomMIPValues() {
+    	return this.localUpdateView.getCustomMIPValues();
     }
 
     /**

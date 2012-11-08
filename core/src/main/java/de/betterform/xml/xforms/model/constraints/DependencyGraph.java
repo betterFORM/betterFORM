@@ -51,7 +51,7 @@ public class DependencyGraph {
      * @param property     the wanted Model Item Property
      * @return returns the matching Vertex object or null if not found
      */
-    public Vertex getVertex(Node instanceNode, short property) {
+    public Vertex getVertex(Node instanceNode, short property, String key) {
         Enumeration enumeration = vertices.elements();
 
         while (enumeration.hasMoreElements()) {
@@ -60,7 +60,11 @@ public class DependencyGraph {
             boolean equalTypes = v.getVertexType() == property;
 
             if (equalNodes && equalTypes) {
-                return v;
+            	if (v.getVertexType() == Vertex.CUSTOM_VERTEX && !((CustomVertex) v).getPrefix().equals(key)) {
+            	 	// No identical 'key' for custom vertex so continue loop
+            	} else {
+            		return v;
+            	}
             }
         }
 
@@ -123,9 +127,10 @@ public class DependencyGraph {
      * - if v.bind == null, then update v.bind = bind
      * This is called by MainDependencyGraph.addBind()
      */
-    public Vertex addVertex(BetterFormXPathContext relativeContext, Node instanceNode, String xpathExpression, short property) {
-        Vertex v = this.getVertex(instanceNode, property);
-
+    public Vertex addVertex(BetterFormXPathContext relativeContext, Node instanceNode, String xpathExpression, short property, String customMIP) {
+    	// CustomMIP is 'null' in case of 'normal' vertices
+        Vertex v = this.getVertex(instanceNode, property, customMIP);
+        
         if (v != null) {
             String s = v.toString();
             v.wasAlreadyInGraph = true;
@@ -136,10 +141,17 @@ public class DependencyGraph {
                 v.relativeContext = relativeContext;
                 v.xpathExpression = xpathExpression;
             }
-
+            
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("addVertex: found vertex " + s + ", changed to " + v);
             }
+            
+            if(customMIP != null) {
+            	if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("         : customMIP " + customMIP);
+                }
+            }
+
 
             return v;
         }
@@ -167,6 +179,11 @@ public class DependencyGraph {
 
             case Vertex.REQUIRED_VERTEX:
                 v = new RequiredVertex(relativeContext, instanceNode, xpathExpression);
+
+                break;
+                
+            case Vertex.CUSTOM_VERTEX:
+                v = new CustomVertex(relativeContext, instanceNode, xpathExpression, customMIP);
 
                 break;
         }

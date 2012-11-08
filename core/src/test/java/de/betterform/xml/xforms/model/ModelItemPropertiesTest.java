@@ -4,6 +4,9 @@
  */
 package de.betterform.xml.xforms.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.TestCase;
 
 /**
@@ -177,6 +180,19 @@ public class ModelItemPropertiesTest extends TestCase {
         assertEquals(false, this.modelItem.isReadonly());
         assertEquals(false, this.modelItem.isRequired());
         assertEquals(true, this.modelItem.isRelevant());
+    }
+    
+    public void testCustomMIP() throws Exception {
+    	
+    	Map<String, String> customMIPValues = new HashMap<String, String>();
+    	customMIPValues.put("diff", "true");
+        this.modelItem.getLocalUpdateView().setCustomMIPValues(customMIPValues);
+        assertEquals("true", this.modelItem.getLocalUpdateView().getCustomMIPValues().get("diff"));
+
+    	customMIPValues.put("diff", "false");
+        this.modelItem.getLocalUpdateView().setCustomMIPValues(customMIPValues);
+        assertEquals("false", this.modelItem.getLocalUpdateView().getCustomMIPValues().get("diff"));  
+        
     }
 
     /**
