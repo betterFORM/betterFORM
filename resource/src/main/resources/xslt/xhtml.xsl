@@ -267,24 +267,24 @@
     <xsl:template name="addDojoCSS"><xsl:text>
 </xsl:text>
         <xsl:variable name="cssTheme">
-                    <xsl:choose>
-                        <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
-                        <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
-                        <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
-                    </xsl:choose>
-                </xsl:variable>
-                <style type="text/css">
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
-<!--
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
-                    @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
+            <xsl:choose>
+                <xsl:when test="contains(//body/@class, 'tundra')">tundra</xsl:when>
+                <xsl:when test="contains(//body/@class, 'soria')">soria</xsl:when>
+                <xsl:when test="contains(//body/@class, 'nihilo')">nihilo</xsl:when>
+                <xsl:when test="contains(//body/@class, 'claro')">claro</xsl:when>
+                <xsl:when test="contains(//body/@class, 'a11y')">a11y</xsl:when>
+                <xsl:otherwise><xsl:value-of select="$defaultTheme"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <style type="text/css">
+            @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dijit/themes/', $cssTheme, '/', $cssTheme,'.css')"/>";
+            <!--
+                                @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojox/widget/Toaster/Toaster.css')"/>";
+                                @import "<xsl:value-of select="concat($contextroot,$scriptPath, 'dojo/resources/dojo.css')"/>";
 
 
--->
-                </style><xsl:text>
+            -->
+        </style><xsl:text>
 </xsl:text>
     </xsl:template>
 
@@ -320,7 +320,7 @@
         <body class="{$theme} bf {$client-device} {$alert}">
             <!-- TODO: Lars: keep original CSS classes on body-->
             <xsl:copy-of select="@*[name() != 'class']"/>
-           <!-- <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>-->
+            <!-- <xsl:message>Useragent is <xsl:value-of select="$user-agent"/></xsl:message>-->
             <!--<xsl:message>Client Device: <xsl:value-of select="$client-device"/></xsl:message>-->
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -368,65 +368,65 @@
                 creates the client-side processor
                 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 -->
-<!--
-                <div    id="fluxProcessor"
-                        jsId="fluxProcessor"
-                        dojotype="bf.XFProcessor"
-                        sessionkey="{$sessionKey}"
-                        contextroot="{$contextroot}"
-                        usesDOMFocusIN="{$uses-DOMFocusIn}"
-                        dataPrefix="{$data-prefix}"
-                        logEvents="{$isDebugEnabled}">
--->
+                <!--
+                                <div    id="fluxProcessor"
+                                        jsId="fluxProcessor"
+                                        dojotype="bf.XFProcessor"
+                                        sessionkey="{$sessionKey}"
+                                        contextroot="{$contextroot}"
+                                        usesDOMFocusIN="{$uses-DOMFocusIn}"
+                                        dataPrefix="{$data-prefix}"
+                                        logEvents="{$isDebugEnabled}">
+                -->
 
 
-                    <!--
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    look for outermost UI elements (the ones having no ancestors in the xforms namespace
-                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    -->
-                    <xsl:variable name="outermostNodeset"
-                                  select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])]
+                <!--
+                >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                look for outermost UI elements (the ones having no ancestors in the xforms namespace
+                <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                -->
+                <xsl:variable name="outermostNodeset"
+                              select=".//xf:*[not(ancestor::*[namespace-uri()='http://www.w3.org/2002/xforms'])]
                                           [not(namespace-uri()='http://www.w3.org/2002/xforms' and local-name()='model')]"/>
 
-                    <!-- detect how many outermost XForms elements we have in the body -->
-                    <xsl:choose>
-                        <xsl:when test="count($outermostNodeset) = 1">
-                            <!-- match any body content and defer creation of form tag for XForms processing.
-                             This option allows to mix HTML forms with XForms markup. -->
-                            <!-- todo: issue to revisit: this obviously does not work in case there's only one xforms control in the document. In that case the necessary form tag is not written. -->
-                            <!-- hack solution: add an output that you style invisible to the form to make it work again. -->
+                <!-- detect how many outermost XForms elements we have in the body -->
+                <xsl:choose>
+                    <xsl:when test="count($outermostNodeset) = 1">
+                        <!-- match any body content and defer creation of form tag for XForms processing.
+              This option allows to mix HTML forms with XForms markup. -->
+                        <!-- todo: issue to revisit: this obviously does not work in case there's only one xforms control in the document. In that case the necessary form tag is not written. -->
+                        <!-- hack solution: add an output that you style invisible to the form to make it work again. -->
 
-                            <!--possible solution -->
-                            <!--<xsl:when test="count($outermostNodeset)=1 and count($outermostNodeset/xf:*) != 0">-->
-                            <xsl:variable name="inlineContent"><xsl:apply-templates mode="inline"/></xsl:variable>
-                            <xsl:choose>
-                                <xsl:when test="exists($inlineContent//xf:*)">
-                                    <xsl:element name="form">
-                                        <xsl:call-template name="createFormAttributes"/>
-                                        <xsl:apply-templates select="*"/>
-                                    </xsl:element>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:copy-of select="$inlineContent"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <!-- in case there are multiple outermost xforms elements we are forced to create
-                             the form tag for the XForms processing.-->
-                            <xsl:call-template name="createForm"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    <div id="helpWindow" style="display:none"/>
+                        <!--possible solution -->
+                        <!--<xsl:when test="count($outermostNodeset)=1 and count($outermostNodeset/xf:*) != 0">-->
+                        <xsl:variable name="inlineContent"><xsl:apply-templates mode="inline"/></xsl:variable>
+                        <xsl:choose>
+                            <xsl:when test="exists($inlineContent//xf:*)">
+                                <xsl:element name="form">
+                                    <xsl:call-template name="createFormAttributes"/>
+                                    <xsl:apply-templates select="*"/>
+                                </xsl:element>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:copy-of select="$inlineContent"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- in case there are multiple outermost xforms elements we are forced to create
+                  the form tag for the XForms processing.-->
+                        <xsl:call-template name="createForm"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <div id="helpWindow" style="display:none"/>
 
-<!--
-                    <div id="bfCopyright">
-                        <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2011</xsl:text>
-                    </div>
+                <!--
+                                    <div id="bfCopyright">
+                                        <xsl:text disable-output-escaping="yes">powered by betterFORM, &amp;copy; 2011</xsl:text>
+                                    </div>
 
-                </div>
--->
+                                </div>
+                -->
             </div>
             <!--
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -453,18 +453,18 @@
                 <div id="bfDebugOpenClose">
                     <a href="javascript:bf.util.toggleDebug();" ><img class="debug-icon" src="{concat($contextroot,'/bfResources/images/collapse.png')}" alt=""/></a>
                 </div>
-                    <div id="bfDebug" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
-                        <div id="bfCopyright">
-                            <a href="http://www.betterform.de">
-                                <img style="vertical-align:text-bottom; margin-right:5px;"
-                                     src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
-                            </a>
-                            <span>&#xA9; 2012 betterFORM</span>
-                        </div>
-                        <div id="bfDebugLinks">
-                            <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
-                        </div>
+                <div id="bfDebug" class="open" context="{concat($contextroot,'/inspector/',$sessionKey,'/')}">
+                    <div id="bfCopyright">
+                        <a href="http://www.betterform.de">
+                            <img style="vertical-align:text-bottom; margin-right:5px;"
+                                 src="{concat($contextroot,'/bfResources/images/betterform_icon16x16.png')}" alt="betterFORM project"/>
+                        </a>
+                        <span>&#xA9; 2012 betterFORM</span>
                     </div>
+                    <div id="bfDebugLinks">
+                        <a href="{concat($contextroot,'/inspector/',$sessionKey,'/','hostDOM')}" target="_blank">Host Document</a>
+                    </div>
+                </div>
             </xsl:if>
 
             <span id="templates" style="display:none;">
@@ -565,7 +565,7 @@
     <xsl:template match="xf:input|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload">
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
-                    <xsl:with-param name="appearance" select="@appearance"/>
+                <xsl:with-param name="appearance" select="@appearance"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="label-classes"><xsl:call-template name="assemble-label-classes"/></xsl:variable>
@@ -578,7 +578,7 @@
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
-            	<xsl:attribute name="bf:incremental-delay" select="@bf:incremental-delay"/>
+                <xsl:attribute name="bf:incremental-delay" select="@bf:incremental-delay"/>
             </xsl:if>
 
             <xsl:if test="exists(@bf:name)">
@@ -640,7 +640,7 @@
 
     <!-- todo: review - what was the intend here? is never used within the stylesheets - remove? -->
     <xsl:template match="xf:output" mode="prototype">
-       <xsl:variable name="id" select="@id"/>
+        <xsl:variable name="id" select="@id"/>
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
                 <xsl:with-param name="appearance" select="@appearance"/>
@@ -652,16 +652,16 @@
 
         <span id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
-                <xsl:if test="exists(@bf:name)">
-                    <xsl:attribute name="data-bf-name" select="@bf:name"/>
-                </xsl:if>
+            <xsl:if test="exists(@bf:name)">
+                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            </xsl:if>
 
 
-                <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
+            <label for="{$id}-value" id="{$id}-label" class="{$label-classes}">
                 <xsl:call-template name="create-label">
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
-                </label>
+            </label>
             <xsl:call-template name="buildControl"/>
             <span id="{$id}-alertAttachPoint" style="display:none;" class="alertAttachPoint"/>
             <xsl:apply-templates select="xf:hint"/>
@@ -712,7 +712,7 @@
                             <xsl:apply-templates select="." mode="prototype"/>
                         </xsl:when>
                         <xsl:otherwise>
-                          <xsl:copy-of select="."/>
+                            <xsl:copy-of select="."/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:for-each>
@@ -752,8 +752,13 @@
 
             <!-- if help exists we output the linking icon here -->
             <xsl:if test="exists(../xf:help)">
-                <a tabindex="-1" onmouseover="dojo.style(dom.byId('{$parentId}'+'-help-text'),'display','inline-block');"
-                                 onmouseout="dojo.style(dom.byId('{$parentId}'+'-help-text'),'display','none');"
+                <xsl:variable name="requireValues">"dojo/dom","dojo/dom-style"</xsl:variable>
+                <a tabindex="-1" onmouseover="require([{$requireValues}], function(dom, domStyle){{
+                        domStyle.set(dom.byId('{$parentId}'+'-help-text'),'display','inline-block');
+                    }})"
+                   onmouseout="require([{$requireValues}], function(dom, domStyle){{
+                        domStyle.set(dom.byId('{$parentId}'+'-help-text'),'display','none');
+                    }})"
                    href=""
                    id="{$parentId}-help"
                    class="xfHelp">
@@ -837,20 +842,20 @@
             </xsl:when>
 
             <!--todo: JT: check if these can ever be reached -->
-<!--
-            <xsl:when test="local-name()='repeat'">
-                <xsl:apply-templates select="."/>
-            </xsl:when>
-            <xsl:when test="local-name()='group'">
-                <xsl:apply-templates select="."/>
-                <xsl:apply-templates select="xf:hint"/>
-                <xsl:apply-templates select="xf:help"/>
-                <xsl:apply-templates select="xf:alert"/>
-            </xsl:when>
-            <xsl:when test="local-name()='switch'">
-                <xsl:apply-templates select="."/>
-            </xsl:when>
--->
+            <!--
+                        <xsl:when test="local-name()='repeat'">
+                            <xsl:apply-templates select="."/>
+                        </xsl:when>
+                        <xsl:when test="local-name()='group'">
+                            <xsl:apply-templates select="."/>
+                            <xsl:apply-templates select="xf:hint"/>
+                            <xsl:apply-templates select="xf:help"/>
+                            <xsl:apply-templates select="xf:alert"/>
+                        </xsl:when>
+                        <xsl:when test="local-name()='switch'">
+                            <xsl:apply-templates select="."/>
+                        </xsl:when>
+            -->
         </xsl:choose>
     </xsl:template>
 
@@ -874,8 +879,8 @@
         <!-- todo: use locale again -->
         <xsl:variable name="dojoConfig">
             has: {
-                "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
-                "dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
+            "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
+            "dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
             },
             isDebug:<xsl:value-of select="$isDebugEnabled"/>,
             locale:'en',
@@ -886,21 +891,21 @@
             async:true,
 
             packages: [
-                'dojo',
-                'dijit',
-                'dojox',
-                'bf'
+            'dojo',
+            'dijit',
+            'dojox',
+            'bf'
             ],
 
             bf:{
-                sessionkey: "<xsl:value-of select="$sessionKey"/>",
-                contextroot:"<xsl:value-of select="$contextroot"/>",
-                fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
-                useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
-                useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
-                useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
-                logEvents:<xsl:value-of select="$isDebugEnabled"/>,
-                unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
+            sessionkey: "<xsl:value-of select="$sessionKey"/>",
+            contextroot:"<xsl:value-of select="$contextroot"/>",
+            fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
+            useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
+            useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
+            useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
+            logEvents:<xsl:value-of select="$isDebugEnabled"/>,
+            unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
             }
         </xsl:variable>
         <xsl:text>
@@ -924,17 +929,17 @@
         <script type="text/javascript">
             require([<xsl:value-of select="$requires"/>],
                 function(XFProcessor, XFormsModelElement, connect){
-                        // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
-                        <!-- create a XForms Processor for the form -->
-                        fluxProcessor = new XFProcessor();
-                        <!-- create a XFormsModelElement class for each model in the form -->
-                        <xsl:for-each select="//xf:model">
-                            <xsl:variable name="modelName">
-                                <xsl:value-of select="if(contains(@id,'-')) then replace(@id,'-','_') else @id"/>
-                            </xsl:variable>
-                            <xsl:value-of select="$modelName"/> = new XFormsModelElement({id:"<xsl:value-of select="$modelName"/>"});
-                        </xsl:for-each>
-                }
+            // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
+            <!-- create a XForms Processor for the form -->
+            fluxProcessor = new XFProcessor();
+            <!-- create a XFormsModelElement class for each model in the form -->
+            <xsl:for-each select="//xf:model">
+                <xsl:variable name="modelName">
+                    <xsl:value-of select="if(contains(@id,'-')) then replace(@id,'-','_') else @id"/>
+                </xsl:variable>
+                <xsl:value-of select="$modelName"/> = new XFormsModelElement({id:"<xsl:value-of select="$modelName"/>"});
+            </xsl:for-each>
+            }
             );
         </script><xsl:text>
 </xsl:text>
