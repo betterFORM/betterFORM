@@ -17,7 +17,7 @@
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
    
-   <body class="soria" style="margin:30px">
+   <body class="ToolTipAlert" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
@@ -85,13 +85,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d4e162" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d4e162">matches an Element that represents a XForms input element</div>
+                  <td id="d1e166" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d1e166">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d4e171" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
-                     <div data-dojo-type="dijit.Tooltip" connectId="d4e171">matches an Element that represents a XForms alert element</div>
+                  <td id="d1e175" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
+                     <div data-dojo-type="dijit.Tooltip" connectId="d1e175">matches an Element that represents a XForms alert element</div>
                   </td>
                </tr>
                <tr>
@@ -173,7 +173,9 @@
                </xf:bind>
                
             </xf:bind>
-            <xf:group ref="grouped-data/group" appearance="compact" class="ToolTipAlert">
+            <xf:group ref="grouped-data/group" appearance="compact">
+               
+               <p>To enabled the Tooltip Alerts the CSS class 'ToolTipAlert' must be added to the html:body element</p>
                
                <xf:label>Each field must have more than 5 characters to become valid</xf:label>
                
@@ -236,7 +238,8 @@
     &lt;/xf:bind&gt;
 &lt;/xf:bind&gt;
 
-&lt;xf:group ref="grouped-data/group" appearance="compact" class="ToolTipAlert"&gt;
+&lt;xf:group ref="grouped-data/group" appearance="compact"&gt;
+    &lt;p&gt;To enabled the Tooltip Alerts the CSS class 'ToolTipAlert' must be added to the html:body element&lt;/p&gt;
     &lt;xf:label&gt;Each field must have more than 5 characters to become valid&lt;/xf:label&gt;
     &lt;xf:input id="input1" ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;

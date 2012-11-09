@@ -35,7 +35,6 @@ define(["dojo/_base/declare",
         unloadMsg:"You are about to leave this XForms application",
         isReady:false,
         contextroot:dojo.config.bf.contextroot,
-        defaultAlertHandler:null,//todo: change to use behavior
         subscribers:[], //todo:see line above
         clientServerEventQueue:[],
         requestPending:false,

@@ -11,7 +11,7 @@
 
 
     </head>
-    <body>
+    <body class="ToolTipAlert">
         <div class="description">
             <p>
             This form shows the usage of the Tooltip alert handler.
@@ -57,7 +57,8 @@
                     </code>
                 </xf:model>
                 <code class="ui">
-<xf:group ref="grouped-data/group" appearance="compact" class="ToolTipAlert">
+<xf:group ref="grouped-data/group" appearance="compact">
+    <p>To enabled the Tooltip Alerts the CSS class 'ToolTipAlert' must be added to the html:body element</p>
     <xf:label>Each field must have more than 5 characters to become valid</xf:label>
     <xf:input id="input1" ref="a">
         <xf:label>A-label</xf:label>
