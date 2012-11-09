@@ -44,13 +44,25 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:input id="input1" ref="input1/value" incremental="true">
-    <xf:label>a text</xf:label>
+<xf:input id="input1" ref="input1/value" appearance="bf:dropdowntime" incremental="true">
+    <xf:label>time1:</xf:label>
+    <xf:hint>Hint for this input</xf:hint>
+    <xf:help>help for input1</xf:help>
+    <xf:alert>invalid</xf:alert>
+</xf:input>
+<xf:input id="input2" ref="input1/value" appearance="bf:timetextbox" incremental="true">
+    <xf:label>time2:</xf:label>
     <xf:hint>Hint for this input</xf:hint>
     <xf:help>help for input1</xf:help>
     <xf:alert>invalid</xf:alert>
 </xf:input>
                 </code>
+                <div class="output">
+                    <xf:output ref="input1/value">
+                        <xf:label>CurrentValue: </xf:label>
+                    </xf:output>
+                </div>
+
             </div>
             <div class="MIPS">
                 <xf:group appearance="full">
@@ -67,6 +79,11 @@
                     <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
+                    <xf:trigger>
+                        <xf:label>now</xf:label>
+                        <xf:setvalue ref="input1/value" value="substring-before(current-time(),'.')"/>
+                    </xf:trigger>
+
                 </xf:group>
             </div>
         </div>

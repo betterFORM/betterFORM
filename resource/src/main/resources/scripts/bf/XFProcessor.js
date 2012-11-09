@@ -15,7 +15,7 @@ define(["dojo/_base/declare",
     "dojo/has",
     "dojo/_base/json",
     "dojo/_base/event"], function(declare, XFormsProcessor,ClientServerEvent,
-                                 dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json,event){
+                                 dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json, dojoEvent){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
         /**
@@ -89,7 +89,11 @@ define(["dojo/_base/declare",
         handleUnload:function(evt) {
             // console.debug("XFProcessor.handleUnload Event: ", evt);
             if (this.isDirty && !this.skipshutdown) {
-                event.stopEvent(evt);
+                // console.debug("dojoEvent:",dojoEvent)
+                if(dojoEvent){
+                    dojoEvent.stop(evt);
+                }
+
                 // console.debug(this.unloadMsg);
                 // For IE
                 evt.returnValue = this.unloadMsg;

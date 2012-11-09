@@ -28,7 +28,13 @@
         <xsl:copy>
             <xsl:apply-templates/>
             <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
-            <link rel="stylesheet" type="text/css" href="../reference/reference.css"/>
+            <link rel="stylesheet" type="text/css"
+                  href="{$webContext}/bfResources/scripts/dojox/highlight/resources/highlight.css"/>
+            <!--
+                        <link rel="stylesheet" type="text/css"
+                              href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
+            -->
+            <link rel="stylesheet" type="text/css" href="reference.css"/>
         </xsl:copy>
     </xsl:template>
 

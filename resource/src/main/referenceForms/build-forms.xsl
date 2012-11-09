@@ -31,7 +31,7 @@
             <xsl:apply-templates/>
             <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
             <link rel="stylesheet" type="text/css"
-                  href="{$webContext}/bfResources/scripts/dojox/highlight/resources/highlight.css"/>
+                  href="../../bfResources/scripts/dojox/highlight/resources/highlight.css"/>
             <!--
                         <link rel="stylesheet" type="text/css"
                               href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
@@ -200,7 +200,10 @@
         <div class="Section sample">
             <xsl:copy-of select=".//code[@class='ui']/*"/>
             <!--<xsl:apply-templates select=".//code[@class='ui']/*"/>-->
+            <xsl:copy-of select=".//div[@class='output']/*"/>
         </div>
+
+
     </xsl:template>
 
     <!--

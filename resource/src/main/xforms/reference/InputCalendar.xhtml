@@ -63,13 +63,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d16e117" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d16e117">matches an Element that represents a XForms input element</div>
+                  <td id="d16e135" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d16e135">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d16e126" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
-                     <div data-dojo-type="dijit.Tooltip" connectId="d16e126">matches an Element that is bound to a node widht datatype
+                  <td id="d16e144" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
+                     <div data-dojo-type="dijit.Tooltip" connectId="d16e144">matches an Element that is bound to a node widht datatype
                         date
                         
                      </div>
@@ -232,6 +232,11 @@
                <xf:alert>invalid</xf:alert>
                
             </xf:input>
+            <xf:output ref="input1/value">
+               
+               <xf:label>CurrentValue: </xf:label>
+               
+            </xf:output>
          </div>
          <div class="MIPS">
             
@@ -262,6 +267,14 @@
                   <xf:label>valid</xf:label>
                   
                </xf:input>
+               
+               <xf:trigger>
+                  
+                  <xf:label>today</xf:label>
+                  
+                  <xf:setvalue ref="input1/value" value="substring-before(current-date(),'+')"></xf:setvalue>
+                  
+               </xf:trigger>
                
             </xf:group>
             

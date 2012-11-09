@@ -61,13 +61,19 @@
 
                 </xf:model>
                 <code class="ui">
-<xf:input id="input1" ref="input1/value" appearance="iso8601:dd.MMMM.yyyy" incremental="true" >
+<xf:input id="input1" ref="input1/value" appearance="bf:iso8601" data-bf-params="date:'dd.MMMM.yyyy'" incremental="true" >
     <xf:label>a calendar with a date pattern</xf:label>
     <xf:hint>a Hint for this control</xf:hint>
     <xf:help>help for input1</xf:help>
     <xf:alert>invalid</xf:alert>
 </xf:input>
                 </code>
+                <div class="output">
+                    <xf:output ref="input1/value">
+                        <xf:label>CurrentValue: </xf:label>
+                    </xf:output>
+                </div>
+
             </div>
             <div class="MIPS">
                 <xf:group appearance="full">
@@ -84,6 +90,11 @@
                     <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
                         <xf:label>valid</xf:label>
                     </xf:input>
+                    <xf:trigger>
+                        <xf:label>now</xf:label>
+                        <xf:setvalue ref="input1/value" value="substring-before(current-date(),'+')"/>
+                    </xf:trigger>
+
                 </xf:group>
             </div>
         </div>

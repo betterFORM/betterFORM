@@ -130,6 +130,12 @@
                 <xf:resource value="'InputCalendar.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
+        <xf:trigger id="inputTimeTrigger">
+            <xf:label/>
+            <xf:load show="embed" targetid="xforms">
+                <xf:resource value="'InputTime.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
         <xf:trigger id="inputCalendarAndTimeTrigger">
             <xf:label/>
             <xf:load show="embed" targetid="xforms">
@@ -140,6 +146,12 @@
             <xf:label/>
             <xf:load show="embed" targetid="xforms">
                 <xf:resource value="'InputCalendarWithDatePattern.xhtml#xforms'"/>
+            </xf:load>
+        </xf:trigger>
+        <xf:trigger id="inputCalendarDropwdownTrigger">
+            <xf:label/>
+            <xf:load show="embed" targetid="xforms">
+                <xf:resource value="'InputDropDownDate.xhtml#xforms'"/>
             </xf:load>
         </xf:trigger>
 
@@ -510,9 +522,13 @@
                         <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarTrigger');" label="Calendar"/>
                         <div data-dojo-type="dijit.MenuItem"
+                             onClick="hideStatic();fluxProcessor.dispatchEvent('inputTimeTrigger');" label="Time"/>
+                        <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarAndTimeTrigger');" label="Date and Time"/>
                         <div data-dojo-type="dijit.MenuItem"
                              onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarPatternTrigger');" label="Calendar with date pattern"/>
+                        <div data-dojo-type="dijit.MenuItem"
+                             onClick="hideStatic();fluxProcessor.dispatchEvent('inputCalendarDropwdownTrigger');" label="Calendar with different appearance"/>
                     </div>
                 </div>
 

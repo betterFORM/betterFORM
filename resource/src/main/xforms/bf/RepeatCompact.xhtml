@@ -17,10 +17,40 @@
                     <data xmlns="">
                         <repeat readonly="false" relevant="true">
                             <items>
+                                <item>text 1</item>
+                                <item>2008-06-13</item>
+                                <item>2008-06-13</item>
+                                <item>true</item>
+                            </items>
+                            <items>
+                                <item>text 2</item>
+                                <item>2008-06-13</item>
+                                <item>2008-06-13</item>
+                                <item>true</item>
+                            </items>
+                            <items>
+                                <item>text 3</item>
+                                <item>2008-06-13</item>
+                                <item>2008-06-13</item>
+                                <item>true</item>
+                            </items>
+                            <items>
                                 <item>text 4</item>
                                 <item>2008-06-13</item>
                                 <item>2008-06-13</item>
                                 <item>true</item>
+                            </items>
+                            <items>
+                                <item>text 5</item>
+                                <item>2008-06-13</item>
+                                <item>2008-06-13</item>
+                                <item>true</item>
+                            </items>
+                            <items>
+                                <item>text 6</item>
+                                <item>2008-06-13</item>
+                                <item>2008-06-13</item>
+                                <item>false</item>
                             </items>
                         </repeat>
                     </data>
@@ -113,8 +143,17 @@
             <xf:input ref="item[4]">
                 <xf:label ref="instance('i-label')/label[4]"/>
             </xf:input>
+            <xf:trigger>
+                <xf:label>Delete [index]</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="instance()/repeat/items" at="index('repeat1')"/>
+                </xf:action>
+            </xf:trigger>
         </xf:repeat>
         <br/>
+        <xf:output value="index('repeat1')">
+            <xf:label>Repeat Index: </xf:label>
+        </xf:output>
         <br/>
         <xf:trigger>
             <xf:label>Apply Behaviour</xf:label>
