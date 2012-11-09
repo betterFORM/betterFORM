@@ -233,7 +233,7 @@
 .contactsMasterTrigger .xfValue {
     background: url(../images/001_22.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 210px;
@@ -250,7 +250,7 @@
 .contactsSubTrigger .xfValue {
     background: url(../images/001_22.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 210px;
@@ -269,11 +269,11 @@
 .contactsUpdateMasterTrigger .xfValue {
     background: url(../images/001_24.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 210px;
-    text-indent: 15px;
+    text-indent:30px;
 }
 
 /* Order List */
@@ -346,7 +346,7 @@
 .orderListNewTrigger .xfValue {
     background: url(../images/001_47.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 150px;
@@ -363,7 +363,7 @@
 .orderListAddTrigger .xfValue {
     background: url(../images/001_03.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 150px;
@@ -381,7 +381,7 @@
 .orderListDelTrigger .xfValue {
     background: url(../images/001_04.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 150px;
@@ -399,7 +399,7 @@
 .orderListResetTrigger .xfValue {
     background: url(../images/001_39.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 150px;
@@ -416,7 +416,7 @@
 .orderListOKTrigger .xfValue {
     background: url(../images/001_06.png) no-repeat 5px 5px;
     display: inline;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 150px;
@@ -433,7 +433,7 @@
 .orderListAbortTrigger .xfValue {
     background: url(../images/001_05.png) no-repeat 5px 5px;
     display: block;
-    height: 30px;
+    height: 36px;
     line-height: 29px;
     text-decoration: none;
     width: 150px;
