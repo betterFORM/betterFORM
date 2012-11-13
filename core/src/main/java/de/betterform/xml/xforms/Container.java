@@ -711,8 +711,8 @@ public class Container {
             embeddedModels.add(model);
         }
 
+        boolean isCompatible= false;
         for (int i = 0; i < nrOfModels; i++) {
-        	boolean isCompatible= false;
         	if (i == 0) {
 	            isCompatible = checkVersionCompatibility();
         	}
