@@ -115,7 +115,7 @@
                                 <xf:select1 ref="vra:name/@type">
                                     <xf:label>Type</xf:label>
 
-                                    <xf:itemset nodeset="instance('i-itemset')/item">
+                                    <xf:itemset ref="instance('i-itemset')/item">
                                         <xf:label ref="@label"/>
                                         <xf:value ref="."/>
                                     </xf:itemset>
@@ -125,7 +125,7 @@
                             <td rowspan="5">
                                 <xf:trigger>
                                     <xf:label>x</xf:label>
-                                    <xf:delete nodeset="instance('i-agentSet')/vra:agent[index('r-vraAgent')]"/>
+                                    <xf:delete ref="instance('i-agentSet')/vra:agent[index('r-vraAgent')]"/>
                                 </xf:trigger>
                             </td>
                         </tr>
