@@ -180,6 +180,7 @@ structural elements
 				<xsd:element ref="xforms:bind"/>
 			</xsd:sequence>
 			<xsd:attributeGroup ref="xforms:Common.Attributes"/>
+			<xsd:attribute name="ref" type="xforms:XPathExpression" use="optional"/>
 			<xsd:attribute name="nodeset" type="xforms:XPathExpression" use="optional"/>
 			<xsd:attribute name="type" type="xsd:QName" use="optional"/>
 			<xsd:attribute name="readonly" type="xforms:XPathExpression" use="optional"/>
@@ -215,6 +216,7 @@ User Interface form controls
 	</xsd:attributeGroup>
 	<xsd:attributeGroup name="Nodeset.Binding.Attributes">
 		<xsd:attribute name="model" type="xsd:IDREF" use="optional"/>
+		<xsd:attribute name="ref" type="xforms:XPathExpression" use="optional"/>
 		<xsd:attribute name="nodeset" type="xforms:XPathExpression" use="optional"/>
 		<xsd:attribute name="bind" type="xsd:IDREF" use="optional"/>
 	</xsd:attributeGroup>
@@ -699,6 +701,7 @@ XForms Actions
 	<!--
 Advanced User Interface
 -->
+	<xsd:attribute name="repeat-ref" type="xforms:XPathExpression"/>
 	<xsd:attribute name="repeat-nodeset" type="xforms:XPathExpression"/>
 	<xsd:attribute name="repeat-model" type="xsd:IDREF"/>
 	<xsd:attribute name="repeat-bind" type="xsd:IDREF"/>

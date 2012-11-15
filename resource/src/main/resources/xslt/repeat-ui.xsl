@@ -1008,7 +1008,11 @@
     <!--
         this template handles complex tables with several tr elements in *one* repeat item.
     -->
-    <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-nodeset]/xf:group[count(xhtml:tr) &gt; 1])]" priority="10">
+    <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-ref]/xf:group[count(xhtml:tr) &gt; 1])]" priority="10">
+        <xsl:call-template name="repeat-attribute"/>
+    </xsl:template>
+
+    <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-nodeset]/xf:group[count(xhtml:tr) &gt; 1])]" priority="10" name="repeat-attribute">
         <xsl:variable name="repeat-id" select="xhtml:tbody/@id"/>
         <xsl:variable name="repeat-index" select="xhtml:tbody/bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">
@@ -1069,7 +1073,7 @@
 
 
 
-    <xsl:template match="*[@xf:repeat-bind|@xf:repeat-nodeset|@repeat-bind|@repeat-nodeset]">
+    <xsl:template match="*[@xf:repeat-bind|@xf:repeat-ref|@xf:repeat-nodeset|@repeat-bind|@repeat-ref|@repeat-nodeset]">
         <xsl:variable name="repeat-id" select="@id"/>
         <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">

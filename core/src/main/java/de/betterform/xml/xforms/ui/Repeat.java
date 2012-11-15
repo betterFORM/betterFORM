@@ -206,8 +206,10 @@ public class Repeat extends BindingElement implements EventListener {
      *         <code>false</code>.
      */
     public boolean hasUIBinding() {
-        return getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE) != null ||
-                getXFormsAttribute(NODESET_ATTRIBUTE) != null;
+        return getXFormsAttribute(REPEAT_REF_ATTRIBUTE) != null ||
+               getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE) != null ||
+               getXFormsAttribute(REF_ATTRIBUTE) != null ||
+               getXFormsAttribute(NODESET_ATTRIBUTE) != null;
     }
 
     /**
