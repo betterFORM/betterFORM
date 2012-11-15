@@ -20,6 +20,7 @@ import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
+import de.betterform.xml.xforms.model.bind.BindingUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.apache.commons.logging.Log;
@@ -222,9 +223,12 @@ public abstract class BindingElement extends AbstractUIElement implements Bindin
     public String getBindingExpression() {
         if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
+        } else if(BindingUtil.hasRef(this.element)){
+            return getXFormsAttribute(REF_ATTRIBUTE);
         }
-        return getXFormsAttribute(REF_ATTRIBUTE);
+        return getXFormsAttribute(NODESET_ATTRIBUTE);
     }
+
 
     /**
      * Returns the id of the binding element.

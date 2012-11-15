@@ -60,13 +60,15 @@ public class DeleteAction extends AbstractBoundAction {
      *
      * @return the binding expression.
      */
+/*
     public String getBindingExpression() {
-	if (hasModelBinding()) {
+	    if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
         }
         return getXFormsAttribute(NODESET_ATTRIBUTE);
     }
-    
+*/
+
     /**
      * Returns the context expression.
      *

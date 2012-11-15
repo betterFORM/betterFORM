@@ -131,6 +131,9 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
      * @return the binding expression.
      */
     public String getBindingExpression() {
+        if(BindingUtil.hasRef(this.element)){
+            return getXFormsAttribute(REF_ATTRIBUTE);
+        }
         return getXFormsAttribute(NODESET_ATTRIBUTE);
     }
 

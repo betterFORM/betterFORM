@@ -145,12 +145,14 @@ public class Itemset extends BindingElement {
      *
      * @return the binding expression.
      */
+/*
     public String getBindingExpression() {
 	if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
         }
         return getXFormsAttribute(NODESET_ATTRIBUTE);
     }
+*/
 
     // lifecycle template methods
 

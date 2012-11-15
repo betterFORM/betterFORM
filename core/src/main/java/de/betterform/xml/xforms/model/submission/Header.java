@@ -67,10 +67,12 @@ public class Header extends  BindingElement {
         }
     }
     
+/*
     @Override
     public String getBindingExpression() {
     	return getXFormsAttribute(NODESET_ATTRIBUTE);
     }
+*/
 
     public String getName() throws XFormsException {
         return this.name.getValue();

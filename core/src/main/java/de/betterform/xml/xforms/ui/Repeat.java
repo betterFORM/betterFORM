@@ -233,6 +233,14 @@ public class Repeat extends BindingElement implements EventListener {
         if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
         }
+        String refAttribute = getXFormsAttribute(REF_ATTRIBUTE);
+        if(refAttribute != null){
+            return refAttribute;
+        }
+        refAttribute = getXFormsAttribute(REPEAT_REF_ATTRIBUTE);
+        if(refAttribute != null){
+            return refAttribute;
+        }
 
         String nodesetAttribute = getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE);
         if (nodesetAttribute != null) {
