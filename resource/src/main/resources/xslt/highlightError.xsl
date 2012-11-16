@@ -153,10 +153,9 @@
 		<xsl:value-of select="$nl"/>
 	</xsl:template>
 
-	<xsl:template match="comment()"/>
-	<xsl:template match="@*|text()">
+	<xsl:template match="@*|text()|comment()">
         <xsl:copy>
-            <xsl:apply-templates select="*|@*|text()"/>
+            <xsl:apply-templates select="*|@*|text()|comment()"/>
         </xsl:copy>
     </xsl:template>
 

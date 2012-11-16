@@ -1142,7 +1142,8 @@ public class DOMUtil {
             StreamResult result = new StreamResult(writer);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.transform(domSource, result);
             writer.flush();
             return writer.toString();

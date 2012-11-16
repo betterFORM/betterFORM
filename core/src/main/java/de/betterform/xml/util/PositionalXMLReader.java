@@ -1,6 +1,7 @@
 package de.betterform.xml.util;
 
 
+import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -8,6 +9,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
+import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.*;
@@ -82,8 +84,14 @@ public class PositionalXMLReader {
             }
 
             @Override
-            public void comment(char[] chars, int i, int i1) throws SAXException {
-                super.comment(chars, i, i1);    //To change body of overridden methods use File | Settings | File Templates.
+            public void comment(char[] chars, int start, int length) throws SAXException {
+                Comment comment = doc.createComment(String.valueOf(chars, start, length));
+                if (elementStack.isEmpty()) {
+                    doc.appendChild(comment);
+                } else {
+                    final Element parentEl = elementStack.peek();
+                    parentEl.appendChild(comment);
+                }
             }
 
             // Outputs text accumulated under the current node
@@ -95,7 +103,9 @@ public class PositionalXMLReader {
                     textBuffer.delete(0, textBuffer.length());
                 }
             }
+
         };
+        parser.setProperty("http://xml.org/sax/properties/lexical-handler", handler);
         parser.parse(is, handler);
 
         return doc;

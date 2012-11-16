@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.util;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;
@@ -41,11 +42,8 @@ public class PositionalXMLReaderTest extends TestCase {
         super.tearDown();
     }
 
-    public void testgetLineNumber() throws Exception {
-        getClass().getResourceAsStream("5.2.4.a-Duration.xhtml");
-        InputStream is = getClass().getResourceAsStream("5.2.4.a-Duration.xhtml");
-        Document doc = PositionalXMLReader.readXML(is);
-        is.close();
+    public void testGetLineNumber() throws Exception {
+        Document doc = readResourceWithPositionalXMLReader("5.2.4.a-Duration.xhtml");
 
         Node n = XPathUtil.evaluateAsSingleNode(doc, "/xhtml:html//xforms:bind[@id='dayTime_bind']");
         assertEquals("19",n.getUserData("lineNumber"));
@@ -53,18 +51,35 @@ public class PositionalXMLReaderTest extends TestCase {
     }
 
     public void testNamespaces() throws Exception {
-        getClass().getResourceAsStream("5.2.4.a-Duration.xhtml");
-        InputStream is = getClass().getResourceAsStream("PositionalReaderTest.xhtml");
-        Document doc = PositionalXMLReader.readXML(is);
-        is.close();
+        Document doc = readResourceWithPositionalXMLReader("PositionalReaderTest.xhtml");
 
         Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='foo']");
         assertEquals("29",n.getUserData("lineNumber"));
         n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='t-changeValue']");
         assertEquals("30",n.getUserData("lineNumber"));
+    }
 
+    public void testGetLineNumberWithMultilineComments() throws Exception {
+        Document doc = readResourceWithPositionalXMLReader("brokenform.xhtml");
 
+        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='ui']");
+        assertEquals("30", n.getUserData("lineNumber"));
+    }
 
+    public void testGetLineNumber2() throws Exception {
+        Document doc = readResourceWithPositionalXMLReader("BindError.xhtml");
+
+        Node n = XPathUtil.evaluateAsSingleNode(doc, "/html:html[1]/html:body[1]/html:div[1]/xf:model[1]/xf:bind[1]");
+        assertEquals("15", n.getUserData("lineNumber"));
+    }
+
+    private Document readResourceWithPositionalXMLReader(String filePath) throws Exception {
+        InputStream is = getClass().getResourceAsStream(filePath);
+        Document doc = PositionalXMLReader.readXML(is);
+        is.close();
+
+        //DOMUtil.prettyPrintDOM(doc);
+        return doc;
     }
 
 }
