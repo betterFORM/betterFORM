@@ -1,49 +1,35 @@
-betterForm Project Quickstart Guide
-===================================
+# betterForm springBud Quickstart Guide
 
-Minimal Requirements for betterFORM springBud
----------------------------------------------
+## Minimal Requirements to run betterFORM  
 
+   * [Java JDK 1.6 or newer](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+
+
+## Build from the Source  
+
+Apache Ant 1.8.2 or is needed to build betterFORM from the sources. 
+
+[Building betterFORM](http://betterform.wordpress.com/building-betterform/) provides a quick overview about the available build targets. 
+
+Checkout the [master](https://github.com/betterFORM/betterFORM) branch to get the source of previous and current betterFORM releases. Or lift off at the [development](https://github.com/betterFORM/betterFORM/tree/development) branch where the daily work takes place.
+
+##Documentation
+
+For more detailed information see the [documentation](http://betterform.wordpress.com/documentation/) or read the latest news at our [blog](http://betterform.wordpress.com).
+
+## Getting professional help and more
+Take a look at the our [homepage](http://www.betterform.de) to get to know more about professional services & support betterFORM provides
+
+Get in touch with betterFORM [directly](http://www.betterform.de/en/whoweare.html), via [Twitter](https://twitter.com/betterform2010) or [Facebook](http://www.facebook.com/pages/betterFORM/110961888926581)
+
+## Minimal Requirements for older Versions
+
+### betterFORM limeGreen
    * JDK 1.6
    * Apache Ant 1.8.2 or newer
    * [Optional: Apache Maven 2.0.5 or newer]
 
-
-Minimal Requirements for betterFORM limeGreen
----------------------------------------------
-
+###lightSteelBlue
    * JDK 1.6
    * Apache Ant 1.8.2 or newer
    * [Optional: Apache Maven 2.0.5 or newer]
-
-
-Minimal Requirements for betterFORM lightSteelBlue
---------------------------------------------------
-
-   * JDK 1.5
-   * Apache Ant 1.7.0 or newer
-   * [Optional: Apache Maven 2.0.5 or newer] 
-
-
-
-build betterFORM Web Application Archive
-----------------------------------------
-
-  * to compile betterFORM and package it as a Web Application Archive switch to the directory web and execute:
-   
-        ant package
-
-    The created WAR file will be available at ./web/target/betterform-3.1.0
-    see web/README.txt for further information about available ant targets
-
-    For more detailed information on building see betterFORM Developer Guide.
-
-Further Information
---------------------
-
-For more detailed information see
-
-   * [betterFORM Blog](http://betterform.wordpress.com)
-   * [User Guide](web/src/main/webapp/doc/betterFormUserGuide)
-   * [Developer Guide](web/src/main/webapp/doc/betterFormDeveloperGuide)
-   * [Wiki](https://betterform.de/trac)

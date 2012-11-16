@@ -36,15 +36,15 @@
                             </agent>
                         </agentSet>
                     </xf:instance>
-                    <xf:bind nodeset="instance()">
-                        <xf:bind nodeset="vra:agent">
-                            <xf:bind nodeset="@pref" type="boolean"/>
+                    <xf:bind ref="instance()">
+                        <xf:bind ref="vra:agent">
+                            <xf:bind ref="@pref" type="boolean"/>
 
-                            <xf:bind nodeset="vra:name" required="true()">
+                            <xf:bind ref="vra:name" required="true()">
                                 <!--<xf:bind nodeset="@type" type="vra:agentNameTypeType"/>-->
                             </xf:bind>
 
-                            <xf:bind nodeset="vra:dates/*/@circa" type="boolean"/>
+                            <xf:bind ref="vra:dates/*/@circa" type="boolean"/>
                         </xf:bind>
                     </xf:bind>
                     <xf:instance id="i-templates">
@@ -90,7 +90,7 @@
             <div class="toolbar">
                 <xf:trigger class="t-plus" model="m-child-model" title="Add Agent">
                     <xf:label>+</xf:label>
-                    <xf:insert nodeset="instance()/vra:agent[last()]" origin="instance('i-templates')/vra:agent"
+                    <xf:insert ref="instance()/vra:agent[last()]" origin="instance('i-templates')/vra:agent"
                                model="m-child-model"/>
                 </xf:trigger>
             </div>
@@ -100,7 +100,7 @@
                 <xf:label/>
 
                 <table class="table table-condensed" border="1">
-                    <tbody  id="r-vraAgent" xf:repeat-nodeset="vra:agent" model="m-child-model">
+                    <tbody  id="r-vraAgent" xf:repeat-ref="vra:agent" model="m-child-model">
                         <!-- ### the name element ### -->
                         <tr>
                             <td rowspan="5">
@@ -115,7 +115,7 @@
                                 <xf:select1 ref="vra:name/@type">
                                     <xf:label>Type</xf:label>
 
-                                    <xf:itemset nodeset="instance('i-itemset')/item">
+                                    <xf:itemset ref="instance('i-itemset')/item">
                                         <xf:label ref="@label"/>
                                         <xf:value ref="."/>
                                     </xf:itemset>
@@ -125,7 +125,7 @@
                             <td rowspan="5">
                                 <xf:trigger>
                                     <xf:label>x</xf:label>
-                                    <xf:delete nodeset="instance('i-agentSet')/vra:agent[index('r-vraAgent')]"/>
+                                    <xf:delete ref="instance('i-agentSet')/vra:agent[index('r-vraAgent')]"/>
                                 </xf:trigger>
                             </td>
                         </tr>

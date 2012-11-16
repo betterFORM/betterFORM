@@ -109,6 +109,7 @@ public interface XFormsConstants {
     String REPEAT_BIND_ATTRIBUTE = "repeat-bind";
     String REPEAT_MODEL_ATTRIBUTE = "repeat-model";
     String REPEAT_NODESET_ATTRIBUTE = "repeat-nodeset";
+    String REPEAT_REF_ATTRIBUTE = "repeat-ref";
     String REPEAT_NUMBER_ATTRIBUTE = "repeat-number";
     String REPEAT_STARTINDEX_ATTRIBUTE = "repeat-startindex";
     String REPLACE_ATTRIBUTE = "replace";

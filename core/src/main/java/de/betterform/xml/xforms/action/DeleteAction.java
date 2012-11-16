@@ -56,18 +56,6 @@ public class DeleteAction extends AbstractBoundAction {
     // implementation of 'de.betterform.xml.xforms.model.bind.Binding'
 
     /**
-     * Returns the binding expression.
-     *
-     * @return the binding expression.
-     */
-    public String getBindingExpression() {
-	if (hasModelBinding()) {
-            return getModelBinding().getBindingExpression();
-        }
-        return getXFormsAttribute(NODESET_ATTRIBUTE);
-    }
-    
-    /**
      * Returns the context expression.
      *
      * @return the context expression.

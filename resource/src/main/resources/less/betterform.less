@@ -620,8 +620,23 @@ alert + hints should always be aligned with the control.
     text-align:	left;
     padding-right:10px;
 }
-.xfSelect1 .xfOptGroupLabelFull {
-    padding-left:5px;
+.xfSelect1 {
+    .xfOptGroupLabelFull {
+        padding-left:5px;
+    }
+    .dijitArrowButton  {
+        width:13px;
+        height:22px;
+    }
+
+    .dijitArrowButton .dijitInputField {
+        padding-top:5px;
+    }
+
+    .dijitInputContainer .xfValue {
+        border:0;
+        padding-top:3px;
+    }
 }
 
 /* remove styles from select element to apply custom style */

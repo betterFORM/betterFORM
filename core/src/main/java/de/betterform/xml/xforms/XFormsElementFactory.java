@@ -383,6 +383,7 @@ public class XFormsElementFactory implements XFormsConstants {
     public static boolean hasRepeatAttributes(Element element) {
         return element.hasAttributeNS(NamespaceConstants.XFORMS_NS, REPEAT_MODEL_ATTRIBUTE) ||
                 element.hasAttributeNS(NamespaceConstants.XFORMS_NS, REPEAT_BIND_ATTRIBUTE) ||
+                element.hasAttributeNS(NamespaceConstants.XFORMS_NS, REPEAT_REF_ATTRIBUTE) ||
                 element.hasAttributeNS(NamespaceConstants.XFORMS_NS, REPEAT_NODESET_ATTRIBUTE);
     }
 
