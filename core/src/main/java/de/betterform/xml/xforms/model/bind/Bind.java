@@ -9,6 +9,7 @@ import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.Initializer;
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsElement;
@@ -24,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
@@ -64,6 +66,25 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     private HashMap<String, Set> customMIPReferences;
 
     protected List nodeset;
+
+    private static final short TYPE = 0;
+    private static final short READONLY = 1;
+    private static final short REQUIRED = 2;
+    private static final short RELEVANT = 3;
+    private static final short CONSTRAINT = 4;
+    private static final short CALCULATE = 5;
+
+    private static final String COMBINE_NOT_SUPPORTED = null;
+    private static final String COMBINE_ALL ="and";
+    private static final String COMBINE_ONE ="or";
+
+    private static final String TYPE_COMBINE=COMBINE_ALL;
+    private static final String CONSTRAINT_COMBINE=COMBINE_ALL;
+    private static final String RELEVANT_COMBINE =COMBINE_ALL;
+
+    private static final String REQUIRED_COMBINE=COMBINE_ONE;
+    private static final String READONLY_COMBINE=COMBINE_ONE;
+
 
     /**
      * Creates a new Bind object.
@@ -261,6 +282,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
      * Returns the <code>p3ptype</code> attribute.
      *
      * @return the <code>p3ptype</code> attribute.
+     * @deprecated deprecated without replacement
      */
     public String getP3PType() {
         return this.p3ptype;
@@ -392,32 +414,35 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
         }
 
         // get type attributes
-        this.type = getXFormsAttribute(TYPE_ATTRIBUTE);
+        //todo:support combination
         this.p3ptype = getXFormsAttribute(P3PTYPE_ATTRIBUTE);
 
         try {
-	        // get model item attributes and analyze path structure
-	        this.readonly = getXFormsAttribute(READONLY_ATTRIBUTE);
+//            this.type = getXFormsAttribute(TYPE_ATTRIBUTE);
+            this.type = getMIP(TYPE);
+
+            // get model item attributes and analyze path structure
+	        this.readonly = getMIP(READONLY);
 	        if (this.readonly != null) {
 	            this.readonlyReferences = this.referenceFinder.getReferences(this.readonly, getPrefixMapping(), this.container);
 	        }
 	
-	        this.required = getXFormsAttribute(REQUIRED_ATTRIBUTE);
-	        if (this.required != null) {
+            this.required = getMIP(REQUIRED);
+            if (this.required != null) {
 	            this.requiredReferences = this.referenceFinder.getReferences(this.required, getPrefixMapping(), this.container);
 	        }
 	
-	        this.relevant = getXFormsAttribute(RELEVANT_ATTRIBUTE);
+	        this.relevant = getMIP(RELEVANT);
 	        if (this.relevant != null) {
 	            this.relevantReferences = this.referenceFinder.getReferences(this.relevant, getPrefixMapping(), this.container);
 	        }
 	
-	        this.calculate = getXFormsAttribute(CALCULATE_ATTRIBUTE);
+	        this.calculate = getMIP(CALCULATE);
 	        if (this.calculate != null) {
 	            this.calculateReferences = this.referenceFinder.getReferences(this.calculate, getPrefixMapping(), this.container);
 	        }
 	
-	        this.constraint = getXFormsAttribute(CONSTRAINT_ATTRIBUTE);
+	        this.constraint = getMIP(CONSTRAINT);
 	        if (this.constraint != null) {
 	            this.constraintReferences = this.referenceFinder.getReferences(this.constraint, getPrefixMapping(), this.container);
 	        }
@@ -493,25 +518,28 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 
         if (this.readonly != null) {
             if (declaration.getReadonly() != null) {
-                throw new XFormsBindingException("property 'readonly' already present at model item", this.target, this.id);
+                this.readonly = declaration.getReadonly()+ " " + COMBINE_ONE + " " + this.readonly;
+//                throw new XFormsBindingException("property 'readonly' already present at model item", this.target, this.id);
             }
-
+            this.readonlyReferences = this.referenceFinder.getReferences(this.readonly, getPrefixMapping(), this.container);
             declaration.setReadonly(this.readonly);
         }
 
         if (this.required != null) {
             if (declaration.getRequired() != null) {
-                throw new XFormsBindingException("property 'required' already present at model item", this.target, this.id);
+                this.required = declaration.getRequired()+ " " + COMBINE_ONE + " " + this.required;
+//                throw new XFormsBindingException("property 'required' already present at model item", this.target, this.id);
             }
-
+            this.requiredReferences = this.referenceFinder.getReferences(this.required, getPrefixMapping(), this.container);
             declaration.setRequired(this.required);
         }
 
         if (this.relevant != null) {
             if (declaration.getRelevant() != null) {
-                throw new XFormsBindingException("property 'relevant' already present at model item", this.target, this.id);
+                this.relevant = declaration.getRelevant()+ " " + COMBINE_ONE + " " + this.relevant;
+//                throw new XFormsBindingException("property 'relevant' already present at model item", this.target, this.id);
             }
-
+            this.relevantReferences = this.referenceFinder.getReferences(this.relevant, getPrefixMapping(), this.container);
             declaration.setRelevant(this.relevant);
         }
 
@@ -529,6 +557,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
             }
 
             declaration.setConstraint(this.constraint);
+            //should be: declaration.addConstraint(this.
         }
 
         if (this.p3ptype != null) {
@@ -538,6 +567,8 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 
             declaration.setP3PType(this.p3ptype);
         }
+        updateXPathContext();
+
     }
 
     /**
@@ -556,6 +587,94 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
         return LOGGER;
     }
 
+
+    private String getMIP(short MIPType){
+        String s=null;
+        switch (MIPType){
+            case TYPE:
+                s = getXFormsAttribute(TYPE_ATTRIBUTE);
+                if (s == null){
+                    s = getValueForMip("type",null);
+                }
+                return s;
+            case READONLY:
+                return getValueForMip("readonly","or");
+            case REQUIRED:
+//                s = getXFormsAttribute(REQUIRED_ATTRIBUTE);
+//                if (s == null){
+//                    s = getValueForMip("required","or");
+//                }
+                return getValueForMip("required","or");
+            case RELEVANT:
+                return getValueForMip("relevant","or");
+            case CALCULATE:
+                s = getXFormsAttribute(CALCULATE_ATTRIBUTE);
+                if (s == null){
+                    s = getValueForMip("calculate","no");
+                }
+                return s;
+            case CONSTRAINT:
+                s = getXFormsAttribute(CONSTRAINT_ATTRIBUTE);
+                if (s == null){
+                    s =  getValueForMip("constraint","and");
+                }
+                return s;
+/*
+            case TYPE:
+*/
+            default:
+                return null;
+        }
+    }
+
+    private String getValueForMip(String mip, String combine){
+        StringBuffer buf = new StringBuffer("");
+
+
+        Element e;
+        int len = 0;
+        NodeList nl = null;
+        if(combine == null){
+            nl = this.element.getElementsByTagNameNS(NamespaceConstants.BETTERFORM_NS, mip);
+            len = nl.getLength();
+            if(len == 0){
+                return null;
+            }else if(len == 1){
+                e = (Element) nl.item(0);
+                return e.getAttribute("value");
+            }else {
+                if(LOGGER.isWarnEnabled()){
+                    LOGGER.warn("combining is not supported for MIP: '" + mip + "' at " + DOMUtil.getCanonicalPath(this.element));
+                }
+            }
+        }else{
+            //check for existence of standard xforms mip attribute
+            String s = getXFormsAttribute(mip);
+            if(s != null){
+                buf.append(s);
+            }
+
+            nl = this.element.getElementsByTagNameNS(NamespaceConstants.BETTERFORM_NS, mip);
+            len = nl.getLength();
+
+            for (int i = 0;i<len;i++){
+                e = (Element) nl.item(i);
+                if(s != null){
+                    buf.append(" ").append(combine).append(" ");
+                }
+                buf.append(e.getAttribute(XFormsConstants.VALUE_ATTRIBUTE));
+                if(i < len-1){
+                    buf.append(" ").append(combine).append(" ");
+                }
+            }
+            if(buf.length() != 0){
+                return buf.toString();
+            }
+
+        }
+
+        return null;
+    }
 }
 
 // end of class

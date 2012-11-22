@@ -59,6 +59,7 @@ public class ConstraintVertex extends Vertex {
             modelItem.getRefreshView().setValidMarker();
         }else{
             modelItem.getRefreshView().setInvalidMarker();
+            //modelItem.getRefreshView().setInvalidMarker(index);
         }
 
         if (LOGGER.isDebugEnabled()) {

@@ -620,6 +620,7 @@ public class DOMUtil {
      * @param nsuri   the namespace uri of the child node
      * @param tagName the local name part of the child node
      * @return the found child casted to Element or null if no such child was found.
+     * todo: change name to 'findFirstChildElementNS'
      */
     public static Element findFirstChildNS(Node parent, String nsuri, String tagName) {
         if (tagName == null) {

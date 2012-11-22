@@ -41,6 +41,7 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
      */
     public Set getReferences(String xpath, Map prefixMapping, Container container) throws XFormsException {
         try {
+            //we need this expression to remember the number
             Expression expression = XPathCache.getInstance().getXPathExpression(xpath, prefixMapping, container.getConfiguration()).getInternalExpression();
             HashSet references = new HashSet();
             addExpressionReferences(references, null, expression, prefixMapping);

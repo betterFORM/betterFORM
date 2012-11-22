@@ -75,6 +75,8 @@ public class MainDependencyGraph extends DependencyGraph {
         // Analyze the Xpath Expression 'calculate'. Read nodeset RefNS
         // (the nodes this XPAth references)
         String xpath = vertex.getXPathExpression();
+//        String xpath = expression;
+        vertex.setXpathExpression(expression);
 
         if ((xpath == null) || (xpath.length() == 0)) {
             // bind without xpath, remove vertex

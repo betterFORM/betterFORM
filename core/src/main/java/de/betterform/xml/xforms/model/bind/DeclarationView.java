@@ -105,6 +105,7 @@ public interface DeclarationView {
      * Returns the <code>p3ptype</code> declaration of a model item.
      *
      * @return the <code>p3ptype</code> declaration of a model item.
+     * @deprecated without replacement
      */
     String getP3PType();
 
@@ -112,6 +113,7 @@ public interface DeclarationView {
      * Sets the <code>p3ptype</code> declaration of a model item.
      *
      * @param p3ptype the <code>p3ptype</code> declaration of a model item.
+     * @deprecated without replacement
      */
     void setP3PType(String p3ptype);
         
