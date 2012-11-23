@@ -16,6 +16,7 @@ import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.bind.Constraint;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.Item;
@@ -162,6 +163,7 @@ public class UIElementStateUtil {
     }
 
     public static void dispatchXFormsEvents(BindingElement bindingElement, ModelItem modelItem) throws XFormsException {
+
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("dispatching refresh events for " + DOMUtil.getCanonicalPath(bindingElement.getElement()));
         }
@@ -182,7 +184,13 @@ public class UIElementStateUtil {
                 }
                 container.dispatch(eventTarget, properties[ENABLED] ? XFormsEventNames.ENABLED : XFormsEventNames.DISABLED, null);
                 container.dispatch(eventTarget, XFormsEventNames.VALUE_CHANGED, null);
-                container.dispatch(eventTarget, properties[VALID] ? XFormsEventNames.VALID : XFormsEventNames.INVALID, null);
+                if(properties[VALID]){
+                    container.dispatch(eventTarget,XFormsEventNames.VALID,null);
+                }else {
+                    Map<String, String> context = buildConstraintContextInfo(modelItem, refreshView);
+                    container.dispatch(eventTarget,XFormsEventNames.INVALID,context);
+                }
+//                container.dispatch(eventTarget, properties[VALID] ? XFormsEventNames.VALID : XFormsEventNames.INVALID, null);
                 container.dispatch(eventTarget, properties[READONLY] ? XFormsEventNames.READONLY : XFormsEventNames.READWRITE, null);
                 container.dispatch(eventTarget, properties[REQUIRED] ? XFormsEventNames.REQUIRED : XFormsEventNames.OPTIONAL, null);
                 somethingChanged = true;
@@ -203,10 +211,8 @@ public class UIElementStateUtil {
                     }
                 }
                 if (refreshView.isInvalidMarked()) {
-                    container.dispatch(eventTarget, XFormsEventNames.INVALID, null);
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");
-                    }
+                    Map<String, String> context = buildConstraintContextInfo(modelItem, refreshView);
+                    container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
                 }
                 if (refreshView.isReadonlyMarked()) {
                     container.dispatch(eventTarget, XFormsEventNames.READONLY, null);
@@ -250,6 +256,32 @@ public class UIElementStateUtil {
             }
 
         }
+    }
+
+    private static Map<String, String> buildConstraintContextInfo(ModelItem modelItem, RefreshView refreshView) {
+        Map<String, String > context = new HashMap<String, String>();
+        List<Constraint> invalids = refreshView.getInvalids();
+//        String[] invalidConstraints = new String[10];
+        StringBuffer alerts = new StringBuffer();
+        for(int i=0;i < invalids.size();i++){
+            alerts.append(invalids.get(i).getAlert());
+            alerts.append(";"); //dump separator for now
+//            invalidConstraints[i]=invalids.get(i).getAlert();
+        }
+//        if(invalidConstraints.length != 0){
+//            context.put("alerts",invalidConstraints);
+//        }
+        if(alerts.length() !=0){
+            context.put("alerts",alerts.toString());
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");
+            for(int i=0;i < invalids.size();i++){
+                LOGGER.debug("invalid constraint:" + invalids.get(i).getXPathExpr());
+            }
+        }
+        return context;
     }
 
     public static void dispatchBetterFormEvents(BindingElement bindingElement, boolean[] currentProperties, boolean[] newProperties) throws XFormsException {

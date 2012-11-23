@@ -7,11 +7,17 @@ package de.betterform.xml.xforms.model.constraints;
 
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.bind.Constraint;
+import de.betterform.xml.xforms.model.bind.DeclarationView;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The <code>constraint</code> vertex implementation used in the recalculation
@@ -51,19 +57,47 @@ public class ConstraintVertex extends Vertex {
      * @throws XFormsException 
      */
     public void compute() throws XFormsException {
-        boolean result = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
-        ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
-        modelItem.getLocalUpdateView().setConstraintValid(result);
 
-        if(result){
+        ModelItem modelItem = (ModelItem) this.instanceNode.getUserData("");
+        DeclarationView declarationView = modelItem.getDeclarationView();
+
+        boolean finalResult=true;
+        String expr=null;
+        boolean evaluates=true;
+        List <Constraint> results=new ArrayList();
+        List <Constraint> constraints = declarationView.getConstraints();
+        for (int i = 0; i < constraints.size(); i++) {
+            Constraint c =  constraints.get(i);
+            expr = c.getXPathExpr();
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("computing constraint for: " + expr);
+            }
+            evaluates= XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + expr + ")");
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("computed:" + evaluates);
+            }
+            if(!evaluates){
+                c.setInvalid();
+                results.add(c);  //store failed Constraint for later usage during refresh to build alerts
+            }
+        }
+
+        if(results.size() != 0){
+            finalResult = false; //if any of the Constraints failed the final result is 'false' (ALL constraints must be true)
+        }
+
+//        boolean result = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
+        modelItem.getLocalUpdateView().setConstraintValid(finalResult);
+
+        if(finalResult){
             modelItem.getRefreshView().setValidMarker();
         }else{
             modelItem.getRefreshView().setInvalidMarker();
-            //modelItem.getRefreshView().setInvalidMarker(index);
+            modelItem.getRefreshView().setInvalids(results);
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + result + "'");
+            LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + finalResult + "'");
         }
     }
 

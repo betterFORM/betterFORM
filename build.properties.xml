@@ -46,7 +46,7 @@
         <bfconfig>
             <generateDefaultAlerts>false</generateDefaultAlerts>
             <debugComponents>true</debugComponents>
-            <enableEventOptimization>true</enableEventOptimization>
+            <enableEventOptimization>false</enableEventOptimization>
             <initLogging>true</initLogging>
             <doIncludes>true</doIncludes>
             <mailadmin>foo@bar.de</mailadmin>

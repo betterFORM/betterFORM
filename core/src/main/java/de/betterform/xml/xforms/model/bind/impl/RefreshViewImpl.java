@@ -12,6 +12,10 @@ import de.betterform.xml.xforms.model.bind.RefreshView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
+import de.betterform.xml.xforms.model.bind.Constraint;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Refresh viewport implementation.
@@ -33,6 +37,8 @@ public class RefreshViewImpl implements RefreshView {
     private boolean enabledMarker;
     private boolean disabledMarker;
 
+    private List invalids;
+
     /**
      * marks events for dispatch during xforms-refresh processing
      *
@@ -40,6 +46,7 @@ public class RefreshViewImpl implements RefreshView {
      */
     public RefreshViewImpl(ModelItem modelItem) {
         this.modelItem = modelItem;
+        this.invalids = new ArrayList(5);
     }
 
 
@@ -115,6 +122,14 @@ public class RefreshViewImpl implements RefreshView {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("invalid MIP marked for dispatching for " + DOMUtil.getCanonicalPath((Node) this.modelItem.getNode()));
         }
+    }
+
+    public List<Constraint> getInvalids() {
+        return this.invalids;
+    }
+
+    public void setInvalids(List <Constraint> invalids) {
+        this.invalids = invalids;
     }
 
     /**

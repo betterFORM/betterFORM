@@ -736,10 +736,23 @@
     <!-- ############################## ALERT ############################## -->
     <!-- ############################## ALERT ############################## -->
     <xsl:template match="xf:alert">
-        <span id="{../@id}-alert" class="xfAlert" style="display:none;">
-            <xsl:apply-templates/>
-            <span class="closeAlertIcon"> </span>
-        </span>
+        <xsl:choose>
+            <xsl:when test="exists(@srcBind)">
+                <xsl:variable name="id" select="@id"/>
+                <xsl:variable name="src" select="@srcBind"/>
+                <xsl:message>######## alert with src - <xsl:value-of select="@srcBind"/></xsl:message>
+                <span id="{../@id}-alert" class="xfAlert" style="display:none;">
+                    <xsl:copy-of select="//*[@id=$src]//xf:alert"/>
+                    <span class="closeAlertIcon"> </span>
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <span id="{../@id}-alert" class="xfAlert" style="display:none;">
+                    <xsl:apply-templates/>
+                    <span class="closeAlertIcon"> </span>
+                </span>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- ############################## HINT ############################## -->

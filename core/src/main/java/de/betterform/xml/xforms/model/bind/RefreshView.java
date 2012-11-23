@@ -5,6 +5,8 @@
 
 package de.betterform.xml.xforms.model.bind;
 
+import java.util.List;
+
 /**
  * Refresh Viewport to model items. Provides access to changes of a model
  * item's properties.
@@ -21,6 +23,8 @@ public interface RefreshView {
     void setRequiredMarker();
     void setValidMarker();
     void setInvalidMarker();
+    void setInvalids(List<Constraint> invalids);
+    List<Constraint> getInvalids();
 
     void reset();
 

@@ -141,7 +141,7 @@ public class MainDependencyGraph extends DependencyGraph {
         final List nodeset = bind.getNodeset();
         for (int i = 0; i < nodeset.size(); i++) {
             BetterFormXPathContext relativeContext = new BetterFormXPathContext(nodeset, i + 1, bind.getPrefixMapping(), bind.getXPathFunctionContext());
-            Node node = (Node) XPathUtil.getAsNode(nodeset, i + 1);
+            Node node = XPathUtil.getAsNode(nodeset, i + 1);
             ModelItem modelItem = instance.getModelItem(node);
             
 
@@ -171,6 +171,7 @@ public class MainDependencyGraph extends DependencyGraph {
 
             property = bind.getConstraint();
             if (property != null) {
+
                 modelItem.getDeclarationView().setConstraint(property);
                 this.addReferredNodesToGraph(relativeContext, node, property, Vertex.CONSTRAINT_VERTEX, bind.getConstraintReferences());
             }

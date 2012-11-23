@@ -20,7 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author Ulrich Nicolas Liss&eacute;
  * @version $Id: BindingTest.java 3251 2008-07-08 09:26:03Z lasse $
  */
-public class ReadonlyCombineTest extends XMLTestBase {
+public class TypeCombineTest extends XMLTestBase {
 	static {
 		org.apache.log4j.BasicConfigurator.configure();
 	}
@@ -28,48 +28,49 @@ public class ReadonlyCombineTest extends XMLTestBase {
     private XFormsProcessorImpl xformsProcesssorImpl;
     private Document doc;
 
-    public ReadonlyCombineTest(String name) {
+    public TypeCombineTest(String name) {
         super(name);
     }
 
-    public void testReadonlySameParent() throws Exception{
+    public void testTypeSameParent() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getReadonly());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:readonly"));
+        assertNull(bind.getDatatype());
+        DOMUtil.prettyPrintDOM(doc);
+        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:type"));
 
     }
 
-    public void testReadonlyCombination() throws Exception{
+    public void testTypeCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind1");
         assertNotNull(bind);
         assertEquals("false()",bind.getReadonly());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind2");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getReadonly());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@bf:readonly"));
+        assertNull(bind.getDatatype());
+        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@bf:type"));
     }
-    public void testReadonlyMixedCombination() throws Exception{
+    public void testTypeMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
         assertNotNull(bind);
         assertEquals("false()",bind.getReadonly());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind2");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getReadonly());
+        assertNull(bind.getDatatype());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:readonly"));
+        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:type"));
     }
 
-    public void testReadonlyMixedOneParentCombination() throws Exception{
+    public void testTypeMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getReadonly());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:readonly"));
+        assertEquals("date",bind.getReadonly());
+        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:type"));
     }
 
-    public void testReadonlyCombineStandard() throws Exception{
+    public void testTypeCombineStandard() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind1");
         assertNotNull(bind);
         assertEquals("false()",bind.getReadonly());
@@ -78,7 +79,7 @@ public class ReadonlyCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getReadonly());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:type"));
     }
 
     protected void setUp() throws Exception {

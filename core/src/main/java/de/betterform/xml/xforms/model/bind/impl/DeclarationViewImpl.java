@@ -6,6 +6,9 @@
 package de.betterform.xml.xforms.model.bind.impl;
 
 import de.betterform.xml.xforms.model.bind.DeclarationView;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +28,7 @@ public class DeclarationViewImpl implements DeclarationView {
     private String relevant;
     private String calculate;
     private String constraint;
+    private List constraints;
     private Map<String,String> customMIPs;
     private String p3ptype;
 
@@ -33,6 +37,7 @@ public class DeclarationViewImpl implements DeclarationView {
      */
     public DeclarationViewImpl() {
         // NOP
+        this.constraints=new ArrayList();
     }
 
     // implementation of 'de.betterform.xml.xforms.model.bind.DeclarationView'
@@ -139,6 +144,10 @@ public class DeclarationViewImpl implements DeclarationView {
         return this.constraint;
     }
 
+    public List getConstraints() {
+        return this.constraints;
+    }
+
     /**
      * Sets the <code>constraint</code> declaration of a model item.
      *
@@ -147,6 +156,14 @@ public class DeclarationViewImpl implements DeclarationView {
      */
     public void setConstraint(String constraint) {
         this.constraint = constraint;
+    }
+
+    public void setConstraints(List constraints) {
+        this.constraints = constraints;
+    }
+
+    public void addConstraint(String constraintId) {
+        this.constraints.add(constraint);
     }
 
     /**

@@ -17,7 +17,7 @@
         <xf:model id="model1">
             <xf:instance xmlns="">
                 <data>
-                    <a>1</a>
+                    <a>false</a>
                     <b>1</b>
                     <c>1</c>
                     <d></d>
@@ -27,30 +27,34 @@
             </xf:instance>
             <!-- test with multiple MIP in one parent -->
             <xf:bind ref="a" id="aBind">
-                <bf:readonly    value="false()"/>
-                <bf:readonly    value="true()"/>
+                <bf:constraint  value="true()">
+                    <xf:alert>first constraint failed</xf:alert>
+                </bf:constraint>
+                <bf:constraint  value="boolean-from-string(.)">
+                    <xf:alert>second constraint failed</xf:alert>
+                </bf:constraint>
             </xf:bind>
 
             <xf:bind id="bBind1" ref="b">
-                <bf:readonly    value="false()"/>
+                <bf:constraint    value="true()"/>
             </xf:bind>
 
             <xf:bind id="bBind2" ref="b">
-                <bf:readonly    value="true()"/>
+                <bf:constraint    value="false()"/>
             </xf:bind>
 
-            <xf:bind id="cBind1" ref="c" readonly="false()"/>
+            <xf:bind id="cBind1" ref="c" constraint="true()"/>
 
             <xf:bind id="cBind2" ref="c">
-                <bf:readonly    value="true()"/>
+                <bf:constraint    value="false()"/>
             </xf:bind>
 
-            <xf:bind id="dBind" ref="d" readonly="false()">
-                <bf:readonly    value="true()"/>
+            <xf:bind id="dBind" ref="d" constraint="true()">
+                <bf:constraint    value="false()"/>
             </xf:bind>
 
-            <xf:bind id="eBind1" ref="e" readonly="false()"/>
-            <xf:bind id="eBind2" ref="e" readonly="true()"/>
+            <xf:bind id="eBind1" ref="e" constraint="true()"/>
+            <xf:bind id="eBind2" ref="e" constraint="false()"/>
         </xf:model>
     </head>
 
@@ -58,18 +62,21 @@
         <xf:group id="outergroup">
             <xf:input id="a" ref="a">
                 <xf:label>A</xf:label>
+                <xf:alert></xf:alert>
             </xf:input>
             <xf:input id="b" ref="b">
                 <xf:label>B</xf:label>
             </xf:input>
             <xf:input id="c" ref="c">
                 <xf:label>C</xf:label>
+                <xf:alert>invalid</xf:alert>
             </xf:input>
             <xf:input id="d" ref="d">
                 <xf:label>D</xf:label>
             </xf:input>
             <xf:input id="e" ref="e">
                 <xf:label>E</xf:label>
+                <xf:alert>invalid</xf:alert>
             </xf:input>
         </xf:group>
     </body>

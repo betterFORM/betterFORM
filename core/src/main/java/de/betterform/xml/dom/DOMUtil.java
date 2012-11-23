@@ -316,6 +316,7 @@ public class DOMUtil {
      * @param nsuri       the namespace uri
      * @param tag         the local name part of the wanted child
      * @return the first child found under the contextnode
+     * todo: should return Element instead of Node
      */
     public static Node getFirstChildByTagNameNS(Node contextNode, String nsuri, String tag) {
         Node n = null;

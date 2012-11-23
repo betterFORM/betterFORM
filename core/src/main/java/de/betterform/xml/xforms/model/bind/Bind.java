@@ -54,6 +54,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     private String relevant;
     private String calculate;
     private String constraint;
+    private List constraints;
     private String p3ptype;
     private Map<String,String> customMIPs;
 
@@ -94,7 +95,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
      */
     public Bind(Element element, Model model) {
         super(element, model);
-
+        this.constraints = new ArrayList();
         // register with model
         getModel().addBindElement(this);
     }
@@ -273,7 +274,11 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     public String getConstraint() {
         return this.constraint;
     }
-    
+
+    public List getConstraints(){
+        return this.constraints;
+    }
+
     public Map<String,String> getCustomMIPs() {
     	return this.customMIPs;
     }
@@ -441,11 +446,16 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 	        if (this.calculate != null) {
 	            this.calculateReferences = this.referenceFinder.getReferences(this.calculate, getPrefixMapping(), this.container);
 	        }
-	
+
+
+            registerConstraints();
+
 	        this.constraint = getMIP(CONSTRAINT);
 	        if (this.constraint != null) {
 	            this.constraintReferences = this.referenceFinder.getReferences(this.constraint, getPrefixMapping(), this.container);
 	        }
+
+
 
 	        this.customMIPs = getCustomMIPAttributes();
 	        if (!this.customMIPs.isEmpty()) {
@@ -551,13 +561,17 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
             declaration.setCalculate(this.calculate);
         }
 
+        //should be: declaration.addConstraint(this.
+//        if(this.constraints.size() != 0){
+//
+//        }
         if (this.constraint != null) {
             if (declaration.getConstraint() != null) {
-                throw new XFormsBindingException("property 'constraint' already present at model item", this.target, this.id);
+                this.constraint = declaration.getConstraint()+ " " + COMBINE_ALL + " " + this.constraint;
             }
 
             declaration.setConstraint(this.constraint);
-            //should be: declaration.addConstraint(this.
+            declaration.setConstraints(this.constraints);
         }
 
         if (this.p3ptype != null) {
@@ -587,67 +601,55 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
         return LOGGER;
     }
 
+    private void registerConstraints(){
+        String s = getXFormsAttribute("constraint");
+        if(s != null){
+            this.constraints.add(new Constraint(this.element,this.model));
+        }
+        NodeList nl = this.element.getElementsByTagNameNS(NamespaceConstants.BETTERFORM_NS, "constraint");
+        int len = nl.getLength();
+        Element e;
+        String id;
+        for (int i = 0;i<len;i++){
+            e = (Element) nl.item(i);
+            id = this.container.generateId();
+            e.setAttribute("id",id);
+            this.constraints.add(new Constraint(e,this.model));
+        }
+
+    }
 
     private String getMIP(short MIPType){
         String s=null;
         switch (MIPType){
             case TYPE:
-                s = getXFormsAttribute(TYPE_ATTRIBUTE);
-                if (s == null){
-                    s = getValueForMip("type",null);
-                }
-                return s;
+                return getValueForMip("type",null);
             case READONLY:
                 return getValueForMip("readonly","or");
             case REQUIRED:
-//                s = getXFormsAttribute(REQUIRED_ATTRIBUTE);
-//                if (s == null){
-//                    s = getValueForMip("required","or");
-//                }
                 return getValueForMip("required","or");
             case RELEVANT:
                 return getValueForMip("relevant","or");
             case CALCULATE:
-                s = getXFormsAttribute(CALCULATE_ATTRIBUTE);
-                if (s == null){
-                    s = getValueForMip("calculate","no");
-                }
-                return s;
+                return getValueForMip("calculate","no");
             case CONSTRAINT:
-                s = getXFormsAttribute(CONSTRAINT_ATTRIBUTE);
-                if (s == null){
-                    s =  getValueForMip("constraint","and");
-                }
-                return s;
-/*
-            case TYPE:
-*/
+                return getValueForMip("constraint","and");
             default:
                 return null;
         }
     }
 
     private String getValueForMip(String mip, String combine){
-        StringBuffer buf = new StringBuffer("");
-
-
         Element e;
         int len = 0;
         NodeList nl = null;
         if(combine == null){
-            nl = this.element.getElementsByTagNameNS(NamespaceConstants.BETTERFORM_NS, mip);
-            len = nl.getLength();
-            if(len == 0){
-                return null;
-            }else if(len == 1){
-                e = (Element) nl.item(0);
-                return e.getAttribute("value");
-            }else {
-                if(LOGGER.isWarnEnabled()){
-                    LOGGER.warn("combining is not supported for MIP: '" + mip + "' at " + DOMUtil.getCanonicalPath(this.element));
-                }
+            String s = getXFormsAttribute(mip);
+            if(s != null){
+                return s;
             }
         }else{
+            StringBuffer buf = new StringBuffer("");
             //check for existence of standard xforms mip attribute
             String s = getXFormsAttribute(mip);
             if(s != null){
@@ -670,7 +672,6 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
             if(buf.length() != 0){
                 return buf.toString();
             }
-
         }
 
         return null;

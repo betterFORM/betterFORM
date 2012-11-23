@@ -27,30 +27,31 @@
             </xf:instance>
             <!-- test with multiple MIP in one parent -->
             <xf:bind ref="a" id="aBind">
-                <bf:readonly    value="false()"/>
-                <bf:readonly    value="true()"/>
+                <bf:type    value="date"/>
+                <bf:type    value="integer"/>
             </xf:bind>
 
             <xf:bind id="bBind1" ref="b">
-                <bf:readonly    value="false()"/>
+                <bf:type    value="date"/>
             </xf:bind>
 
             <xf:bind id="bBind2" ref="b">
-                <bf:readonly    value="true()"/>
+                <bf:type    value="date"/>
             </xf:bind>
 
-            <xf:bind id="cBind1" ref="c" readonly="false()"/>
+            <xf:bind id="cBind1" ref="c" type="date"/>
 
             <xf:bind id="cBind2" ref="c">
-                <bf:readonly    value="true()"/>
+                <bf:type    value="date"/>
             </xf:bind>
 
-            <xf:bind id="dBind" ref="d" readonly="false()">
-                <bf:readonly    value="true()"/>
+            <xf:bind id="dBind" ref="d" type="date">
+                <bf:type    value="integer"/>
             </xf:bind>
 
-            <xf:bind id="eBind1" ref="e" readonly="false()"/>
-            <xf:bind id="eBind2" ref="e" readonly="true()"/>
+            <xf:bind id="eBind1" ref="e" type="date"/>
+            <xf:bind id="eBind2" ref="e" type="dateTime"/>
+
         </xf:model>
     </head>
 
@@ -67,9 +68,6 @@
             </xf:input>
             <xf:input id="d" ref="d">
                 <xf:label>D</xf:label>
-            </xf:input>
-            <xf:input id="e" ref="e">
-                <xf:label>E</xf:label>
             </xf:input>
         </xf:group>
     </body>

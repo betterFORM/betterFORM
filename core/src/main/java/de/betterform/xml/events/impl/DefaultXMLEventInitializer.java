@@ -57,7 +57,7 @@ public class DefaultXMLEventInitializer implements XMLEventInitializer {
         INITIALIZATION_RULES.put(XFormsEventNames.INSERT, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(XFormsEventNames.DELETE, new boolean[]{true, false, true   });
         INITIALIZATION_RULES.put(XFormsEventNames.VALID, new boolean[]{true, false, false});
-        INITIALIZATION_RULES.put(XFormsEventNames.INVALID, new boolean[]{true, false, false});
+        INITIALIZATION_RULES.put(XFormsEventNames.INVALID, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(DOMEventNames.FOCUS_IN, new boolean[]{true, false, false});
         INITIALIZATION_RULES.put(DOMEventNames.FOCUS_OUT, new boolean[]{true, false, false});
         INITIALIZATION_RULES.put(XFormsEventNames.READONLY, new boolean[]{true, false, false});
