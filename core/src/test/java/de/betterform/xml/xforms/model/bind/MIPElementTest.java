@@ -35,7 +35,7 @@ public class MIPElementTest extends XMLTestBase {
     public void testMIPElements() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
-        assertEquals("true()",bind.getReadonly());
+        assertEquals("string-length(.) gt 1 or ../b = 1",bind.getReadonly());
         assertEquals("true()",bind.getRequired());
         assertEquals("true()",bind.getRelevant());
         assertEquals(". + ../b",bind.getCalculate());
@@ -44,7 +44,7 @@ public class MIPElementTest extends XMLTestBase {
     public void testTypeCombination()throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("fBind");
         assertNotNull(bind);
-        assertEquals("xf:integer",bind.getDatatype());
+        assertNull(bind.getDatatype());
     }
 
     public void testConstraintCombination() throws Exception{
@@ -53,14 +53,6 @@ public class MIPElementTest extends XMLTestBase {
         assertEquals("number(.) lt 20 and number(.) gt 5",bind.getConstraint());
     }
 
-
-    public void testReadonlytCombination() throws Exception{
-//        Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind");
-//        assertNotNull(bind);
-//        assertEquals("string-length(.) gt 1 or ../b = 1",bind.getReadonly());
-        DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getXForms());
-
-    }
 
     public void testStandardSyntax() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind");

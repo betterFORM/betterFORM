@@ -8,11 +8,11 @@ package de.betterform.xml.xforms.model.bind.impl;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.bind.Constraint;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
-import de.betterform.xml.xforms.model.bind.Constraint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +124,7 @@ public class RefreshViewImpl implements RefreshView {
         }
     }
 
-    public List<Constraint> getInvalids() {
+    public List <Constraint> getInvalids() {
         return this.invalids;
     }
 

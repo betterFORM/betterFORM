@@ -28,11 +28,10 @@
             <xf:bind ref="a" id="aBind">
                 <bf:readonly    value="string-length(.) gt 1"/>
                 <bf:readonly value="../b = 1"/>
-
-                                <bf:relevant    value="true()"/>
-                                <bf:constraint  value="true()"/>
-                                <bf:required    value="true()"/>
-                                <bf:calculate   value=". + ../b"/>
+                <bf:relevant    value="true()"/>
+                <bf:constraint  value="true()"/>
+                <bf:required    value="true()"/>
+                <bf:calculate   value=". + ../b"/>
             </xf:bind>
 
                         <xf:bind ref="B" id="bBind">

@@ -264,8 +264,9 @@ public class UIElementStateUtil {
 //        String[] invalidConstraints = new String[10];
         StringBuffer alerts = new StringBuffer();
         for(int i=0;i < invalids.size();i++){
+            alerts.append("<span>");
             alerts.append(invalids.get(i).getAlert());
-            alerts.append(";"); //dump separator for now
+            alerts.append("</span>"); //dump separator for now
 //            invalidConstraints[i]=invalids.get(i).getAlert();
         }
 //        if(invalidConstraints.length != 0){

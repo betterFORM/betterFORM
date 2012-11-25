@@ -46,16 +46,15 @@ public class ConstraintCombineTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertEquals("true() and boolean-from-string(.)", bind.getConstraint());
-
-        DOMUtil.prettyPrintDOM(doc);
-
-        this.xformsProcesssorImpl.setControlValue("a", "false");
-
         assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:valid"));
 
-        this.xformsProcesssorImpl.setControlValue("a", "true");
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:valid"));
+        EventTarget eventTarget = this.xformsProcesssorImpl.getContainer().lookup("a").getTarget();
 
+        register(eventTarget, false);
+        this.xformsProcesssorImpl.setControlValue("a", "false");
+        deregister(eventTarget,false);
+        assertEquals("a",this.invalidListener.getId());
+        assertEquals("<span>second constraint failed</span>", this.invalidListener.getContext("alerts"));
 
     }
 
@@ -72,34 +71,35 @@ public class ConstraintCombineTest extends XMLTestBase {
     }
 
     public void testConstraintMixedCombination() throws Exception{
-        Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
+        XFormsElement xfe = xformsProcesssorImpl.getContainer().lookup("cBind1");
+        Bind bind = (Bind) xfe;
         assertNotNull(bind);
-        assertEquals("false()",bind.getConstraint());
+        assertEquals("true()",bind.getConstraint());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind2");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getConstraint());
+        assertEquals("true() and false()",bind.getConstraint());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:constraint"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:valid"));
     }
 
     public void testConstraintMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getConstraint());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:constraint"));
+        assertEquals("true() and false()",bind.getConstraint());
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:valid"));
     }
 
     public void testConstraintCombineStandard() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getConstraint());
+        assertEquals("true()",bind.getConstraint());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind2");
         assertNotNull(bind);
-        assertEquals("false() or true()",bind.getConstraint());
+        assertEquals("true() and false()",bind.getConstraint());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:constraint"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:valid"));
     }
 
     protected void setUp() throws Exception {
@@ -111,7 +111,8 @@ public class ConstraintCombineTest extends XMLTestBase {
 
         this.invalidListener = new TestEventListener();
         this.stateChangedListener = new TestEventListener();
-
+//        EventTarget eventTarget = (EventTarget) this.xformsProcesssorImpl.getXForms().getDocumentElement();
+//        register(eventTarget,true);
 
         this.xformsProcesssorImpl = new XFormsProcessorImpl();
         this.xformsProcesssorImpl.setXForms(document);

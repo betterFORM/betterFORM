@@ -16,7 +16,6 @@ import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -64,7 +63,7 @@ public class ConstraintVertex extends Vertex {
         boolean finalResult=true;
         String expr=null;
         boolean evaluates=true;
-        List <Constraint> results=new ArrayList();
+        List <Constraint> failed=new ArrayList();
         List <Constraint> constraints = declarationView.getConstraints();
         for (int i = 0; i < constraints.size(); i++) {
             Constraint c =  constraints.get(i);
@@ -78,11 +77,11 @@ public class ConstraintVertex extends Vertex {
             }
             if(!evaluates){
                 c.setInvalid();
-                results.add(c);  //store failed Constraint for later usage during refresh to build alerts
+                failed.add(c);  //store failed Constraint for later usage during refresh to build alerts
             }
         }
 
-        if(results.size() != 0){
+        if(failed.size() != 0){
             finalResult = false; //if any of the Constraints failed the final result is 'false' (ALL constraints must be true)
         }
 
@@ -93,7 +92,7 @@ public class ConstraintVertex extends Vertex {
             modelItem.getRefreshView().setValidMarker();
         }else{
             modelItem.getRefreshView().setInvalidMarker();
-            modelItem.getRefreshView().setInvalids(results);
+            modelItem.getRefreshView().setInvalids(failed);
         }
 
         if (LOGGER.isDebugEnabled()) {

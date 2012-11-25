@@ -17,7 +17,7 @@
         <xf:model id="model1">
             <xf:instance xmlns="">
                 <data>
-                    <a>false</a>
+                    <a>1</a>
                     <b>1</b>
                     <c>1</c>
                     <d></d>
@@ -26,61 +26,48 @@
 
             </xf:instance>
             <!-- test with multiple MIP in one parent -->
-
             <xf:bind ref="a" id="aBind">
-                <bf:constraint  value="true()">
-                    <xf:alert>first constraint failed</xf:alert>
-                </bf:constraint>
-                <bf:constraint  value="boolean-from-string(.)">
-                    <xf:alert>second constraint failed</xf:alert>
-                </bf:constraint>
-                <bf:constraint value="false()">
-                    <xf:alert>third constraint failed</xf:alert>
-                </bf:constraint>
+                <bf:calculate    value="date"/>
+                <bf:calculate    value="integer"/>
             </xf:bind>
 
             <xf:bind id="bBind1" ref="b">
-                <bf:constraint    value="true()"/>
+                <bf:calculate    value="date"/>
             </xf:bind>
 
             <xf:bind id="bBind2" ref="b">
-                <bf:constraint    value="false()"/>
+                <bf:calculate    value="date"/>
             </xf:bind>
 
-            <xf:bind id="cBind1" ref="c" constraint="true()"/>
+            <xf:bind id="cBind1" ref="c" calculate="date"/>
 
             <xf:bind id="cBind2" ref="c">
-                <bf:constraint    value="false()"/>
+                <bf:calculate    value="date"/>
             </xf:bind>
 
-            <xf:bind id="dBind" ref="d" constraint="true()">
-                <bf:constraint    value="false()"/>
+            <xf:bind id="dBind" ref="d" calculate="date">
+                <bf:calculate    value="integer"/>
             </xf:bind>
 
-            <xf:bind id="eBind1" ref="e" constraint="true()"/>
-            <xf:bind id="eBind2" ref="e" constraint="false()"/>
+            <xf:bind id="eBind1" ref="e" calculate="date"/>
+            <xf:bind id="eBind2" ref="e" calculate="dateTime"/>
+
         </xf:model>
     </head>
 
     <body>
-        <xf:group id="outergroup" appearance="compact">
+        <xf:group id="outergroup">
             <xf:input id="a" ref="a">
                 <xf:label>A</xf:label>
-                <xf:alert srcBind="aBind"></xf:alert>
             </xf:input>
             <xf:input id="b" ref="b">
                 <xf:label>B</xf:label>
             </xf:input>
             <xf:input id="c" ref="c">
                 <xf:label>C</xf:label>
-                <xf:alert>invalid</xf:alert>
             </xf:input>
             <xf:input id="d" ref="d">
                 <xf:label>D</xf:label>
-            </xf:input>
-            <xf:input id="e" ref="e">
-                <xf:label>E</xf:label>
-                <xf:alert>invalid</xf:alert>
             </xf:input>
         </xf:group>
     </body>

@@ -742,7 +742,12 @@
                 <xsl:variable name="src" select="@srcBind"/>
                 <xsl:message>######## alert with src - <xsl:value-of select="@srcBind"/></xsl:message>
                 <span id="{../@id}-alert" class="xfAlert" style="display:none;">
-                    <xsl:copy-of select="//*[@id=$src]//xf:alert"/>
+                    <!-- no alerts as direct children of bind for now!!! -->
+                    <xsl:for-each select="//*[@id=$src]/bf:constraint[@initial='true']/xf:alert">
+                        <span style="display:block;">
+                            <xsl:copy-of select="."/>
+                        </span>
+                    </xsl:for-each>
                     <span class="closeAlertIcon"> </span>
                 </span>
             </xsl:when>
@@ -927,7 +932,7 @@
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
-        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
+            <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/bfRelease.js')}">&#160;</script><xsl:text>
 </xsl:text>
         <xsl:if test="$isDebugEnabled">

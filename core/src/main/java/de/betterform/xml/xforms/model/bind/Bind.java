@@ -604,7 +604,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
     private void registerConstraints(){
         String s = getXFormsAttribute("constraint");
         if(s != null){
-            this.constraints.add(new Constraint(this.element,this.model));
+            this.constraints.add(new ConstraintAttribute(this.element));
         }
         NodeList nl = this.element.getElementsByTagNameNS(NamespaceConstants.BETTERFORM_NS, "constraint");
         int len = nl.getLength();
@@ -614,7 +614,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
             e = (Element) nl.item(i);
             id = this.container.generateId();
             e.setAttribute("id",id);
-            this.constraints.add(new Constraint(e,this.model));
+            this.constraints.add(new ConstraintElement(e,this.model));
         }
 
     }

@@ -20,7 +20,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author Ulrich Nicolas Liss&eacute;
  * @version $Id: BindingTest.java 3251 2008-07-08 09:26:03Z lasse $
  */
-public class TypeCombineTest extends XMLTestBase {
+public class CalculateCombineTest extends XMLTestBase {
 	static {
 		org.apache.log4j.BasicConfigurator.configure();
 	}
@@ -28,33 +28,33 @@ public class TypeCombineTest extends XMLTestBase {
     private XFormsProcessorImpl xformsProcesssorImpl;
     private Document doc;
 
-    public TypeCombineTest(String name) {
+    public CalculateCombineTest(String name) {
         super(name);
     }
 
-    public void testTypeSameParent() throws Exception{
+    public void testCalculateSameParent() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
-        assertNull(bind.getDatatype());
+        assertNull(bind.getCalculate());
         DOMUtil.prettyPrintDOM(doc);
         assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:type"));
 
     }
 
-    public void testTypeCombination() throws Exception{
+    public void testCalculateCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getDatatype());
+        assertEquals("false()",bind.getCalculate());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind2");
         assertNotNull(bind);
         assertNull(bind.getDatatype());
         assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@bf:type"));
     }
-    public void testTypeMixedCombination() throws Exception{
+    public void testCalculateMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getDatatype());
+        assertEquals("false()",bind.getCalculate());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind2");
         assertNotNull(bind);
@@ -63,14 +63,14 @@ public class TypeCombineTest extends XMLTestBase {
         assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:type"));
     }
 
-    public void testTypeMixedOneParentCombination() throws Exception{
+    public void testCalculateMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
-        assertEquals("date",bind.getDatatype());
+        assertEquals("date",bind.getCalculate());
         assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:type"));
     }
 
-    public void testTypeCombineStandard() throws Exception{
+    public void testCalculateCombineStandard() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind1");
         assertNotNull(bind);
         assertEquals("false()",bind.getCalculate());
@@ -87,7 +87,7 @@ public class TypeCombineTest extends XMLTestBase {
         factory.setNamespaceAware(true);
         factory.setValidating(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(getClass().getResourceAsStream("TypeCombineTest.xhtml"));
+        Document document = builder.parse(getClass().getResourceAsStream("CalculateCombineTest.xhtml"));
 
         this.xformsProcesssorImpl = new XFormsProcessorImpl();
         this.xformsProcesssorImpl.setXForms(document);
