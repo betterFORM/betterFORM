@@ -25,28 +25,9 @@
                 </data>
 
             </xf:instance>
-            <!-- test with multiple MIP in one parent -->
-            <xf:bind ref="a" id="aBind">
-                <bf:type    value="date"/>
-                <bf:type    value="integer"/>
-            </xf:bind>
 
-            <xf:bind id="bBind1" ref="b">
-                <bf:type    value="date"/>
-            </xf:bind>
-
-            <xf:bind id="bBind2" ref="b">
-                <bf:type    value="date"/>
-            </xf:bind>
-
-            <xf:bind id="cBind1" ref="c" type="date"/>
-
-            <xf:bind id="cBind2" ref="c">
-                <bf:type    value="date"/>
-            </xf:bind>
-
-            <xf:bind id="dBind" ref="d" type="date">
-            </xf:bind>
+            <xf:bind id="eBind1" ref="e" type="date"/>
+            <xf:bind id="eBind2" ref="e" type="dateTime"/>
 
         </xf:model>
     </head>

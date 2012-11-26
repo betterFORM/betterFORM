@@ -44,17 +44,20 @@ public class TypeCombineTest extends XMLTestBase {
     public void testTypeCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getDatatype());
+        //bf:type is ignored so default will apply. If nothing is specified via @type it returns null and later in processing defaults to 'string'
+        assertNull(bind.getDatatype());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind2");
         assertNotNull(bind);
         assertNull(bind.getDatatype());
+
+        //nothing was specified via a valid bind/@type so type is defaulting to 'string'
         assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@bf:type"));
     }
     public void testTypeMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getDatatype());
+        assertEquals("date",bind.getDatatype());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind2");
         assertNotNull(bind);
@@ -68,18 +71,6 @@ public class TypeCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("date",bind.getDatatype());
         assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:type"));
-    }
-
-    public void testTypeCombineStandard() throws Exception{
-        Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind1");
-        assertNotNull(bind);
-        assertEquals("false()",bind.getCalculate());
-
-        bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind2");
-        assertNotNull(bind);
-        assertEquals("false() or true()",bind.getReadonly());
-
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:type"));
     }
 
     protected void setUp() throws Exception {

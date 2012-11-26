@@ -38,7 +38,7 @@ public class MIPElementTest extends XMLTestBase {
         assertEquals("string-length(.) gt 1 or ../b = 1",bind.getReadonly());
         assertEquals("true()",bind.getRequired());
         assertEquals("true()",bind.getRelevant());
-        assertEquals(". + ../b",bind.getCalculate());
+        assertNull(bind.getCalculate());
     }
 
     public void testTypeCombination()throws Exception{

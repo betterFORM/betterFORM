@@ -36,7 +36,6 @@ public class CalculateCombineTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertNull(bind.getCalculate());
-        DOMUtil.prettyPrintDOM(doc);
         assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:type"));
 
     }
@@ -44,42 +43,26 @@ public class CalculateCombineTest extends XMLTestBase {
     public void testCalculateCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getCalculate());
+        assertNull(bind.getCalculate());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind2");
         assertNotNull(bind);
-        assertNull(bind.getDatatype());
-        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@bf:type"));
+        assertNull(bind.getCalculate());
     }
     public void testCalculateMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
         assertNotNull(bind);
-        assertEquals("false()",bind.getCalculate());
+        assertEquals("1+2",bind.getCalculate());
 
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind2");
         assertNotNull(bind);
-        assertNull(bind.getDatatype());
-
-        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:type"));
+        assertNull(bind.getCalculate());
     }
 
     public void testCalculateMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
-        assertEquals("date",bind.getCalculate());
-        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:type"));
-    }
-
-    public void testCalculateCombineStandard() throws Exception{
-        Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind1");
-        assertNotNull(bind);
-        assertEquals("false()",bind.getCalculate());
-
-        bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind2");
-        assertNotNull(bind);
-        assertEquals("false() or true()",bind.getReadonly());
-
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:type"));
+        assertEquals("1+2",bind.getCalculate());
     }
 
     protected void setUp() throws Exception {

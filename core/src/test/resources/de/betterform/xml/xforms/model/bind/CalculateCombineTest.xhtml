@@ -32,25 +32,27 @@
             </xf:bind>
 
             <xf:bind id="bBind1" ref="b">
-                <bf:calculate    value="date"/>
+                <bf:calculate    value="1+2"/>
             </xf:bind>
 
             <xf:bind id="bBind2" ref="b">
-                <bf:calculate    value="date"/>
+                <bf:calculate    value="2+3"/>
             </xf:bind>
 
-            <xf:bind id="cBind1" ref="c" calculate="date"/>
+            <xf:bind id="cBind1" ref="c" calculate="1+2"/>
 
             <xf:bind id="cBind2" ref="c">
                 <bf:calculate    value="date"/>
             </xf:bind>
 
-            <xf:bind id="dBind" ref="d" calculate="date">
-                <bf:calculate    value="integer"/>
+            <xf:bind id="dBind" ref="d" calculate="1+2">
+                <bf:calculate    value="2+3"/>
             </xf:bind>
 
+<!--
             <xf:bind id="eBind1" ref="e" calculate="date"/>
             <xf:bind id="eBind2" ref="e" calculate="dateTime"/>
+-->
 
         </xf:model>
     </head>

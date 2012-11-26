@@ -426,6 +426,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 //            this.type = getXFormsAttribute(TYPE_ATTRIBUTE);
             this.type = getMIP(TYPE);
 
+
             // get model item attributes and analyze path structure
 	        this.readonly = getMIP(READONLY);
 	        if (this.readonly != null) {
@@ -631,7 +632,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
             case RELEVANT:
                 return getValueForMip("relevant","or");
             case CALCULATE:
-                return getValueForMip("calculate","no");
+                return getValueForMip("calculate",null);
             case CONSTRAINT:
                 return getValueForMip("constraint","and");
             default:
@@ -647,6 +648,11 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
             String s = getXFormsAttribute(mip);
             if(s != null){
                 return s;
+            }
+            if(LOGGER.isWarnEnabled()){
+                if(this.element.getElementsByTagNameNS(NamespaceConstants.BETTERFORM_NS, mip).getLength() != 0){
+                    LOGGER.warn("<bf:" + mip + "> is not supported. Use @" + mip + " on bind element instead");
+                }
             }
         }else{
             StringBuffer buf = new StringBuffer("");
