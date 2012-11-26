@@ -36,7 +36,7 @@ public class ConstraintAttribute implements Constraint {
     }
 
     public String getXPathExpr(){
-        return XFormsElement.getXFormsAttribute(this.element,"value");
+        return XFormsElement.getXFormsAttribute(this.element,"constraint");
     }
 
     public String getAlert(){

@@ -331,6 +331,7 @@ public class Instance extends XFormsElement {
 
         ModelItem insertedModelItem = getModelItem(insertedNode);
         insertedModelItem.getDeclarationView().setDatatype(miOrigin.getDeclarationView().getDatatype());
+        insertedModelItem.getDeclarationView().setConstraints(miOrigin.getDeclarationView().getConstraints());
 
 
         // get canonical path for inserted node

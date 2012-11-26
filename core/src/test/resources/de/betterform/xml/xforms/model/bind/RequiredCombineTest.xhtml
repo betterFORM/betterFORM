@@ -27,7 +27,11 @@
             <!-- test with multiple MIP in one parent -->
             <xf:bind ref="a" id="aBind">
                 <bf:required    value="false()"/>
-                <bf:required    value="true()"/>
+                <bf:required>
+                    <bf:value>
+                        true()
+                    </bf:value>
+                </bf:required>
             </xf:bind>
 
             <xf:bind id="bBind1" ref="b">

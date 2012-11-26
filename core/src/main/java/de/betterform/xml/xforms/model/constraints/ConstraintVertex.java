@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms.model.constraints;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.Constraint;
@@ -96,7 +97,7 @@ public class ConstraintVertex extends Vertex {
         }
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("evaluated expression '" + this.xpathExpression + "' to '" + finalResult + "'");
+            LOGGER.debug("evaluated expression '" + this.xpathExpression + "' for XPath:" + DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " to '" + finalResult + "'");
         }
     }
 

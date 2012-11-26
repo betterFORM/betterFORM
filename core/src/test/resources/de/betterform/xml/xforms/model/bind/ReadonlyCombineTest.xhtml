@@ -28,7 +28,9 @@
             <!-- test with multiple MIP in one parent -->
             <xf:bind ref="a" id="aBind">
                 <bf:readonly    value="false()"/>
-                <bf:readonly    value="true()"/>
+                <bf:readonly>
+                    <bf:value>true()</bf:value>
+                </bf:readonly>
             </xf:bind>
 
             <xf:bind id="bBind1" ref="b">

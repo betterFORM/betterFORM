@@ -644,6 +644,7 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
         Element e;
         int len = 0;
         NodeList nl = null;
+        // calculate and type cannot be combined
         if(combine == null){
             String s = getXFormsAttribute(mip);
             if(s != null){
@@ -670,7 +671,8 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
                 if(s != null){
                     buf.append(" ").append(combine).append(" ");
                 }
-                buf.append(e.getAttribute(XFormsConstants.VALUE_ATTRIBUTE));
+//                buf.append(e.getAttribute(XFormsConstants.VALUE_ATTRIBUTE));
+                buf.append(getMIPAttributeOrElement(e));
                 if(i < len-1){
                     buf.append(" ").append(combine).append(" ");
                 }
@@ -681,6 +683,17 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
         }
 
         return null;
+    }
+
+    private String getMIPAttributeOrElement(Element e){
+        String mipValue =  e.getAttribute(XFormsConstants.VALUE_ATTRIBUTE);
+        if(mipValue != ""){
+            //value attribute takes precedence if present
+            return mipValue;
+        }else{
+            Element valueElem = DOMUtil.findFirstChildNS(e,NamespaceConstants.BETTERFORM_NS,"value");
+            return DOMUtil.getElementValue(valueElem).trim();
+        }
     }
 }
 

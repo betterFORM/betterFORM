@@ -30,7 +30,10 @@
                 <bf:constraint  value="true()">
                     <xf:alert>first constraint failed</xf:alert>
                 </bf:constraint>
-                <bf:constraint  value="boolean-from-string(.)">
+                <bf:constraint>
+                    <bf:value>
+                        boolean-from-string(.)
+                    </bf:value>
                     <xf:alert>second constraint failed</xf:alert>
                 </bf:constraint>
             </xf:bind>
