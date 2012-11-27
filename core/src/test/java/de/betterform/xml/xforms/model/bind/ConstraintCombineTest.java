@@ -20,6 +20,7 @@ import org.w3c.dom.events.EventTarget;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.List;
 
 /**
  * Test cases for binding contexts.
@@ -54,7 +55,8 @@ public class ConstraintCombineTest extends XMLTestBase {
         this.xformsProcesssorImpl.setControlValue("a", "false");
         deregister(eventTarget,false);
         assertEquals("a",this.invalidListener.getId());
-        assertEquals("<span>second constraint failed</span>", this.invalidListener.getContext("alerts"));
+        List l = (List) this.invalidListener.getContext("alerts");
+        assertEquals("second constraint failed",l.get(0) );
 
     }
 
