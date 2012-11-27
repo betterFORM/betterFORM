@@ -649,8 +649,13 @@ define(["dojo/_base/declare",
                 console.debug("alert " + i + " is " + xmlEvent.contextInfo.alerts[i]);
                 domConstruct.create("span",{class:'bfAlertMsg',innerHTML:xmlEvent.contextInfo.alerts[i]},alertContainer);
             }
-            connect.publish("xforms-invalid", [targetid,"applyChanges"]);
 
+            /*
+            jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
+            made it work.
+            */
+//            connect.publish("xforms-invalid", [targetid,"invalid"]);
+            domStyle.set(alertContainer, "display", "inline-block");
         },
 
         _handleAVTChanged:function(xmlEvent){
