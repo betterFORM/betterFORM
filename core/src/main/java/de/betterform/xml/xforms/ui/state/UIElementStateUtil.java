@@ -187,10 +187,9 @@ public class UIElementStateUtil {
                 if(properties[VALID]){
                     container.dispatch(eventTarget,XFormsEventNames.VALID,null);
                 }else {
-                    Map<String, String> context = buildConstraintContextInfo(modelItem, refreshView);
+                    Map<String, Object> context = buildConstraintContextInfo(modelItem, refreshView);
                     container.dispatch(eventTarget,XFormsEventNames.INVALID,context);
                 }
-//                container.dispatch(eventTarget, properties[VALID] ? XFormsEventNames.VALID : XFormsEventNames.INVALID, null);
                 container.dispatch(eventTarget, properties[READONLY] ? XFormsEventNames.READONLY : XFormsEventNames.READWRITE, null);
                 container.dispatch(eventTarget, properties[REQUIRED] ? XFormsEventNames.REQUIRED : XFormsEventNames.OPTIONAL, null);
                 somethingChanged = true;
@@ -211,7 +210,7 @@ public class UIElementStateUtil {
                     }
                 }
                 if (refreshView.isInvalidMarked()) {
-                    Map<String, String> context = buildConstraintContextInfo(modelItem, refreshView);
+                    Map<String, Object> context = buildConstraintContextInfo(modelItem, refreshView);
                     container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
                 }
                 if (refreshView.isReadonlyMarked()) {
@@ -258,23 +257,14 @@ public class UIElementStateUtil {
         }
     }
 
-    private static Map<String, String> buildConstraintContextInfo(ModelItem modelItem, RefreshView refreshView) {
-        Map<String, String > context = new HashMap<String, String>();
+    private static Map<String, Object> buildConstraintContextInfo(ModelItem modelItem, RefreshView refreshView) {
+        Map<String, Object> context = new HashMap<String, Object>();
         List<Constraint> invalids = refreshView.getInvalids();
-//        String[] invalidConstraints = new String[10];
-        StringBuffer alerts = new StringBuffer();
+        List invalidConstraints = new ArrayList(10);
         for(int i=0;i < invalids.size();i++){
-            alerts.append("<span>");
-            alerts.append(invalids.get(i).getAlert());
-            alerts.append("</span>"); //dump separator for now
-//            invalidConstraints[i]=invalids.get(i).getAlert();
+            invalidConstraints.add(invalids.get(i).getAlert());
         }
-//        if(invalidConstraints.length != 0){
-//            context.put("alerts",invalidConstraints);
-//        }
-        if(alerts.length() !=0){
-            context.put("alerts",alerts.toString());
-        }
+        context.put("alerts",invalidConstraints);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");

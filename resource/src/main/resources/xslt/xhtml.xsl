@@ -744,16 +744,18 @@
                 <span id="{../@id}-alert" class="xfAlert" style="display:none;">
                     <!-- no alerts as direct children of bind for now!!! -->
                     <xsl:for-each select="//*[@id=$src]/bf:constraint[@initial='true']/xf:alert">
-                        <span style="display:block;">
-                            <xsl:copy-of select="."/>
+                        <span class="bfAlertMsg" style="display:block;">
+                            <xsl:copy-of select="./text()"/>
                         </span>
                     </xsl:for-each>
-                    <span class="closeAlertIcon"> </span>
+                    <!--<button class="closeAlertIcon" tabindex="-1">&#215;</button>-->
                 </span>
             </xsl:when>
             <xsl:otherwise>
                 <span id="{../@id}-alert" class="xfAlert" style="display:none;">
-                    <xsl:apply-templates/>
+                    <span class="bfAlertMsg">
+                        <xsl:apply-templates/>
+                    </span>
                     <span class="closeAlertIcon"> </span>
                 </span>
             </xsl:otherwise>

@@ -571,7 +571,7 @@ define(["dojo/_base/declare",
                                 case "DOMFocusIn"                    : fluxProcessor.lastServerClientFocusEvent = {postponedFunction:fluxProcessor._handleDOMFocusIn, postponedXmlEvent:xmlEvent}; break;    //cache the xmlEvent for being processed later
                                 case "xforms-out-of-range"           : fluxProcessor._handleOutOfRange(xmlEvent);break;
                                 case "xforms-in-range"               : fluxProcessor._handleInRange(xmlEvent);break;
-                                case "xforms-invalid"                : break;
+                                case "xforms-invalid"                : fluxProcessor._handleInvalid(xmlEvent);break;
                                 case "xforms-valid"                  : validityEvents[index] = xmlEvent; index++;break;
                                 case "betterform-custom-mip-changed" : fluxProcessor._handleCustomMIPChanged(xmlEvent);break;
                                 case "betterform-id-generated"       : break;
@@ -633,6 +633,24 @@ define(["dojo/_base/declare",
                     domStyle.set(formWrapper,"display","block");
                 });
             });
+        },
+
+
+        _handleInvalid:function(xmlEvent){
+            console.debug("XFProcessor._handleInvalid xmlEvent:",xmlEvent);
+            var targetid = xmlEvent.contextInfo.targetId;
+            var alertContainer = dom.byId(targetid + "-alert");
+
+            //remove old ones
+            dojo.query(".bfAlertMsg",alertContainer).forEach(domConstruct.destroy);
+
+            //add incoming ones
+            for (var i=0; i<xmlEvent.contextInfo.alerts.length;i++){
+                console.debug("alert " + i + " is " + xmlEvent.contextInfo.alerts[i]);
+                domConstruct.create("span",{class:'bfAlertMsg',innerHTML:xmlEvent.contextInfo.alerts[i]},alertContainer);
+            }
+            connect.publish("xforms-invalid", [targetid,"applyChanges"]);
+
         },
 
         _handleAVTChanged:function(xmlEvent){

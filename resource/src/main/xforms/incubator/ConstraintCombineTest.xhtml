@@ -18,7 +18,7 @@
             <xf:instance xmlns="">
                 <data>
                     <a>false</a>
-                    <b>1</b>
+                    <b>false</b>
                     <c>1</c>
                     <d></d>
                     <e></e>
@@ -27,24 +27,24 @@
             </xf:instance>
             <!-- test with multiple MIP in one parent -->
 
-            <xf:bind ref="a" id="aBind">
+            <xf:bind ref="a" id="aBind" type="boolean">
                 <bf:constraint  value="true()">
-                    <xf:alert>first constraint failed</xf:alert>
+                    <xf:alert>first constraint always fails :(</xf:alert>
                 </bf:constraint>
                 <bf:constraint  value="boolean-from-string(.)">
-                    <xf:alert>second constraint failed</xf:alert>
+                    <xf:alert>this field is not checked - sorry</xf:alert>
                 </bf:constraint>
-                <bf:constraint value="false()">
-                    <xf:alert>third constraint failed</xf:alert>
+                <bf:constraint value="boolean-from-string(../b)">
+                    <xf:alert>B is not checked - what a pitty</xf:alert>
                 </bf:constraint>
             </xf:bind>
 
-            <xf:bind id="bBind1" ref="b">
+            <xf:bind id="bBind1" ref="b" type="boolean">
                 <bf:constraint    value="true()"/>
             </xf:bind>
 
             <xf:bind id="bBind2" ref="b">
-                <bf:constraint    value="false()"/>
+                <bf:constraint    value="boolean-from-string(.)"/>
             </xf:bind>
 
             <xf:bind id="cBind1" ref="c" constraint="true()"/>
@@ -73,7 +73,7 @@
             </xf:input>
             <xf:input id="c" ref="c">
                 <xf:label>C</xf:label>
-                <xf:alert>invalid</xf:alert>
+                <xf:alert srcBind="cBind1">invalid</xf:alert>
             </xf:input>
             <xf:input id="d" ref="d">
                 <xf:label>D</xf:label>

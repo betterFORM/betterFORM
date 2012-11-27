@@ -8,6 +8,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom","dojo/dom-style","dojo
 
         // @Override
         _show:function(id, commonChild) {
+//            this.inherited(arguments);
             //console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
             var commonChildNode = dom.byId(id + '-' + commonChild);
             if(commonChildNode == undefined || commonChild == this.info) {
@@ -43,6 +44,7 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom","dojo/dom-style","dojo
                     });
                 }
                 domStyle.set(mip, "display", show);
+//                document.getElementById(id + "-value").focus();
             } else {
                 console.info(id + "-" + commonChild + " is not defined for Control " + id);
             }
