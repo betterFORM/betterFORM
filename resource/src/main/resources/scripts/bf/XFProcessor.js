@@ -176,7 +176,7 @@ define(["dojo/_base/declare",
 
                 // console.debug("EventFifoReader dijitObject:",dijitObject, " targetId: ",nextPendingTargetId);
 
-                if (dijitObject == null && callerFunction != "setRepeatIndex") {
+                if (dojoObject == null && dijitObject == null && callerFunction != "setRepeatIndex") {
                     console.warn("XFProcessor.eventFifoReader: Event (Client to Server) for Dijit Control " + dijitObject + " skipped. CAUSE: OBJECT is NULL");
                     continue;
 

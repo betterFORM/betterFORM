@@ -1048,6 +1048,10 @@ public class DOMUtil {
         transformer.transform(new DOMSource(node), new StreamResult(stream));
     }
 
+
+    /*
+    * TODO: Lars: function looks wrong, Node output is not used at all, anyway: function is never called
+    */
     public static void prettyPrintDOM(Node node, Node output) throws TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
