@@ -159,8 +159,12 @@
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 
+<!--
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
+-->
+
+    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
 
     <xsl:preserve-space elements="*"/>
     <xsl:strip-space elements="xf:action"/>
@@ -186,6 +190,8 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
+
+
 
     <!-- ############################## HEAD ############################## -->
     <!-- ############################## HEAD ############################## -->
@@ -754,7 +760,7 @@
             <xsl:otherwise>
                 <span id="{../@id}-alert" class="xfAlert" style="display:none;">
                     <span class="bfAlertMsg">
-                        <xsl:apply-templates/>
+                        <xsl:copy-of select="./text()"/>
                     </span>
                     <span class="closeAlertIcon"> </span>
                 </span>

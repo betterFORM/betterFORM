@@ -631,13 +631,11 @@
                 </a>
             </xsl:when>
             <xsl:otherwise>
-                <input  id="{$id}-value"
+                <button  id="{$id}-value"
                         name="{$name}"
                         class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
-                        type="button"
-                        value="{xf:label}"
                         >
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="readonly">readonly</xsl:attribute>
@@ -651,7 +649,8 @@
                             <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
                         </xsl:attribute>
                     </xsl:if>
-                </input>
+                    <xsl:value-of select="xf:label"/>
+                </button>
             </xsl:otherwise>
         </xsl:choose>
             <!-- minimal appearance only supported in scripted mode -->
