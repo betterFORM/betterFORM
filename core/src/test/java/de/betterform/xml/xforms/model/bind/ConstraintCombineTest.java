@@ -93,15 +93,29 @@ public class ConstraintCombineTest extends XMLTestBase {
     }
 
     public void testConstraintCombineStandard() throws Exception{
+        //test bind 1 static expression
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind1");
         assertNotNull(bind);
         assertEquals("true()",bind.getConstraint());
 
+        //test bind 2 static expression
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind2");
         assertNotNull(bind);
-        assertEquals("true() and false()",bind.getConstraint());
-
+        assertEquals("true() and boolean-from-string(.)",bind.getConstraint());
         assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@bf:valid"));
+
+        //test modification
+        EventTarget eventTarget = this.xformsProcesssorImpl.getContainer().lookup("e").getTarget();
+        register(eventTarget, false);
+        this.xformsProcesssorImpl.setControlValue("e", "false");
+        deregister(eventTarget,false);
+
+        //assert alert messages
+        assertEquals("e",this.invalidListener.getId());
+        List l = (List) this.invalidListener.getContext("alerts");
+        assertEquals("invalid",l.get(0) );
+
+
     }
 
     protected void setUp() throws Exception {

@@ -184,11 +184,11 @@ public class UIElementStateUtil {
                 }
                 container.dispatch(eventTarget, properties[ENABLED] ? XFormsEventNames.ENABLED : XFormsEventNames.DISABLED, null);
                 container.dispatch(eventTarget, XFormsEventNames.VALUE_CHANGED, null);
-                if(properties[VALID]){
-                    container.dispatch(eventTarget,XFormsEventNames.VALID,null);
-                }else {
-                    Map<String, Object> context = buildConstraintContextInfo(modelItem, refreshView);
-                    container.dispatch(eventTarget,XFormsEventNames.INVALID,context);
+                if (properties[VALID]) {
+                    container.dispatch(eventTarget, XFormsEventNames.VALID, null);
+                } else {
+                    Map<String, Object> context = getAlertInfo(bindingElement, modelItem, refreshView);
+                    container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
                 }
                 container.dispatch(eventTarget, properties[READONLY] ? XFormsEventNames.READONLY : XFormsEventNames.READWRITE, null);
                 container.dispatch(eventTarget, properties[REQUIRED] ? XFormsEventNames.REQUIRED : XFormsEventNames.OPTIONAL, null);
@@ -210,7 +210,7 @@ public class UIElementStateUtil {
                     }
                 }
                 if (refreshView.isInvalidMarked()) {
-                    Map<String, Object> context = buildConstraintContextInfo(modelItem, refreshView);
+                    Map<String, Object> context = getAlertInfo(bindingElement, modelItem, refreshView);
                     container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
                 }
                 if (refreshView.isReadonlyMarked()) {
@@ -257,8 +257,27 @@ public class UIElementStateUtil {
         }
     }
 
-    private static Map<String, Object> buildConstraintContextInfo(ModelItem modelItem, RefreshView refreshView) {
-        Map<String, Object> context = new HashMap<String, Object>();
+    private static Map<String, Object> getAlertInfo(BindingElement bindingElement, ModelItem modelItem, RefreshView refreshView) {
+        Element alertElem = (Element) DOMUtil.getFirstChildByTagNameNS(bindingElement.getElement(), NamespaceConstants.XFORMS_NS, "alert");
+        Map<String, Object> context=new HashMap<String, Object>();
+        ;
+        if (alertElem != null) {
+            if (alertElem.hasAttribute("srcBind")) {
+                buildConstraintContextInfo(context, modelItem, refreshView);
+            } else {
+//                Element e = XFormsUtil.getFirstXFormsElement(bindingElement.getElement(), XFormsConstants.ALERT);
+                String alertMsg = DOMUtil.getTextNodeAsString(alertElem);
+                //use standard alert element from UI
+                List invalidConstraints = new ArrayList(1);
+                invalidConstraints.add(alertMsg);
+                context.put("alerts", invalidConstraints);
+            }
+
+        }
+        return context;
+    }
+
+    private static void buildConstraintContextInfo(Map context,ModelItem modelItem, RefreshView refreshView) {
         List<Constraint> invalids = refreshView.getInvalids();
         List invalidConstraints = new ArrayList(10);
         for(int i=0;i < invalids.size();i++){
@@ -272,7 +291,6 @@ public class UIElementStateUtil {
                 LOGGER.debug("invalid constraint:" + invalids.get(i).getXPathExpr());
             }
         }
-        return context;
     }
 
     public static void dispatchBetterFormEvents(BindingElement bindingElement, boolean[] currentProperties, boolean[] newProperties) throws XFormsException {

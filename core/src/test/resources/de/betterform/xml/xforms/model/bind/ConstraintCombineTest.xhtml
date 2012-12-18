@@ -21,7 +21,7 @@
                     <b>1</b>
                     <c>1</c>
                     <d></d>
-                    <e></e>
+                    <e>false</e>
                 </data>
 
             </xf:instance>
@@ -57,7 +57,7 @@
             </xf:bind>
 
             <xf:bind id="eBind1" ref="e" constraint="true()"/>
-            <xf:bind id="eBind2" ref="e" constraint="false()"/>
+            <xf:bind id="eBind2" ref="e" constraint="boolean-from-string(.)"/>
         </xf:model>
     </head>
 
@@ -65,7 +65,7 @@
         <xf:group id="outergroup">
             <xf:input id="a" ref="a">
                 <xf:label>A</xf:label>
-                <xf:alert refBind="aBind"></xf:alert>
+                <xf:alert srcBind="aBind"></xf:alert>
             </xf:input>
             <xf:input id="b" ref="b">
                 <xf:label>B</xf:label>

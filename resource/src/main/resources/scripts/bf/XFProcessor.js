@@ -641,21 +641,23 @@ define(["dojo/_base/declare",
             var targetid = xmlEvent.contextInfo.targetId;
             var alertContainer = dom.byId(targetid + "-alert");
 
-            //remove old ones
-            dojo.query(".bfAlertMsg",alertContainer).forEach(domConstruct.destroy);
+            if(alertContainer != null){
+                //remove old ones
+                dojo.query(".bfAlertMsg",alertContainer).forEach(domConstruct.destroy);
 
-            //add incoming ones
-            for (var i=0; i<xmlEvent.contextInfo.alerts.length;i++){
-                console.debug("alert " + i + " is " + xmlEvent.contextInfo.alerts[i]);
-                domConstruct.create("span",{class:'bfAlertMsg',innerHTML:xmlEvent.contextInfo.alerts[i]},alertContainer);
+                //add incoming ones
+                for (var i=0; i<xmlEvent.contextInfo.alerts.length;i++){
+                    console.debug("alert " + i + " is " + xmlEvent.contextInfo.alerts[i]);
+                    domConstruct.create("span",{class:'bfAlertMsg',innerHTML:xmlEvent.contextInfo.alerts[i]},alertContainer);
+                }
+
+                /*
+                jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
+                made it work.
+                */
+    //            connect.publish("xforms-invalid", [targetid,"invalid"]);
+                domStyle.set(alertContainer, "display", "inline-block");
             }
-
-            /*
-            jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
-            made it work.
-            */
-//            connect.publish("xforms-invalid", [targetid,"invalid"]);
-            domStyle.set(alertContainer, "display", "inline-block");
         },
 
         _handleAVTChanged:function(xmlEvent){
