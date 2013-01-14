@@ -5,7 +5,6 @@
 
 package de.betterform.xml.xforms.ui;
 
-import com.sun.xml.internal.rngom.digested.DPattern;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.ns.NamespaceResolver;

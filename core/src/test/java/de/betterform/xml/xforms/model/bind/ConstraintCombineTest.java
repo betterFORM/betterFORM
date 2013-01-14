@@ -123,7 +123,7 @@ public class ConstraintCombineTest extends XMLTestBase {
         factory.setNamespaceAware(true);
         factory.setValidating(false);
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(getClass().getResourceAsStream("constraintCombineTest.xhtml"));
+        Document document = builder.parse(getClass().getResourceAsStream("ConstraintCombineTest.xhtml"));
 
         this.invalidListener = new TestEventListener();
         this.stateChangedListener = new TestEventListener();
