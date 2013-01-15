@@ -15,7 +15,7 @@ define(["dojo/_base/declare",
     "dojo/has",
     "dojo/_base/json",
     "dojo/_base/event"], function(declare, XFormsProcessor,ClientServerEvent,
-                                 dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json, dojoEvent){
+                                  dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json, dojoEvent){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
         /**
@@ -222,20 +222,20 @@ define(["dojo/_base/declare",
                 // Further processing of setRepeatIndex events
                 // TODO: check if really not needed anymore
                 /*
-                if (callerFunction == "setRepeatIndex") {
+                 if (callerFunction == "setRepeatIndex") {
                  var repeatItems = query("#" + nextPendingClientServerEvent.targetId +" > tbody > .xfRepeatItem");
                  console.debug("repeatItems: " ,repeatItems," repeatitem position: ",repeatItems[(nextPendingClientServerEvent.getValue -1)]);
 
                  if (nextPendingClientServerEvent.getRepeatItem() == null) {
-                         console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
-                         continue;
-                     }
+                 console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
+                 continue;
+                 }
 
-                     if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
-                         console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
-                         // Update the changed Position of this XForms-Repeat-Item
-                        nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
-                     }
+                 if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
+                 console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
+                 // Update the changed Position of this XForms-Repeat-Item
+                 nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
+                 }
                  }
                  */
 
@@ -652,10 +652,10 @@ define(["dojo/_base/declare",
                 }
 
                 /*
-                jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
-                made it work.
-                */
-    //            connect.publish("xforms-invalid", [targetid,"invalid"]);
+                 jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
+                 made it work.
+                 */
+                //            connect.publish("xforms-invalid", [targetid,"invalid"]);
                 domStyle.set(alertContainer, "display", "inline-block");
             }
         },
@@ -961,7 +961,7 @@ define(["dojo/_base/declare",
         },
 
         _unloadDOM:function(target) {
-
+            // console.debug("_unloadDOM: target:",target);
             //delete CSS specific to subform
             var htmlEntryPoint = dom.byId(target);
             if (htmlEntryPoint == undefined) {
