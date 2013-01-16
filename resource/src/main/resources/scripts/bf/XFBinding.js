@@ -4,51 +4,51 @@
  */
 
 define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
-        "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","dojo/behavior", "bf/util"],
+    "dojo/dom-attr","dojo/_base/connect","dojo/dom-construct","dijit/registry","dojo/behavior", "bf/util"],
     function(declare, dom, domClass,query,domAttr,connect,domConstruct,registry,behavior){
         return declare(null, {
 
 
-    /**
-     * All Rights Reserved.
-     * @author Joern Turner
-     *
-     * BoundElement is a superclass for all controls and container but also for those elements bound by an AVT. It
-     * contains all functions dealing with state changes except the handling of the value.
-     *
-     **/
+            /**
+             * All Rights Reserved.
+             * @author Joern Turner
+             *
+             * BoundElement is a superclass for all controls and container but also for those elements bound by an AVT. It
+             * contains all functions dealing with state changes except the handling of the value.
+             *
+             **/
 
-        id:"",
-        bfFocus:false,
+            id:"",
+            bfFocus:false,
 
-        constructor:function(properties, node){
-            // console.debug("XFBinding.constructor properties:",properties, " node:" ,node);
-            this.srcNodeRef = node;
-            this.id = node.id;
-            // console.debug("XFBinding.constructor setDefaultClasses");
-            bf.util.setDefaultClasses(this.srcNodeRef);
+            constructor:function(properties, node){
+                // console.debug("XFBinding.constructor properties:",properties, " node:" ,node);
+                this.srcNodeRef = node;
+                this.id = node.id;
+                // console.debug("XFBinding.constructor setDefaultClasses");
+                bf.util.setDefaultClasses(this.srcNodeRef);
 
-            /*
-             Controls publish their validity state to the processor which will pass it to the selected alertHandler
-             */
-            // console.debug("XFBinding.constructor handleValid");
-            if (this.isValid()) {
-                connect.publish("xforms-valid", [this.id,"init"]);
-            } else {
-                connect.publish("xforms-invalid", [this.id,"init"]);
-            }
-            // console.debug("XFBinding.constructor subscribe state change");
-            // console.debug("XFBinding.constructor: connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
+                /*
+                 Controls publish their validity state to the processor which will pass it to the selected alertHandler
+                 */
+                // console.debug("XFBinding.constructor handleValid");
+                if (this.isValid()) {
+                    connect.publish("xforms-valid", [this.id,"init"]);
+                } else {
+                    connect.publish("xforms-invalid", [this.id,"init"]);
+                }
+                // console.debug("XFBinding.constructor subscribe state change");
+                // console.debug("XFBinding.constructor: connect.subscribe('bf-state-change-"+ this.id + "', this, 'handleStateChanged')");
 
-            var bfStateChangedHandle = connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
-            fluxProcessor.addSubscriber(this.id, bfStateChangedHandle);
+                var bfStateChangedHandle = connect.subscribe("bf-state-change-"+ this.id, this, "handleStateChanged");
+                fluxProcessor.addSubscriber(this.id, bfStateChangedHandle);
 
-        },
+        },   
 
         /*
-        handles state changes (value and MIP changes) send by the server and applies them to the control. State
-        changes are received from the client side xforms processor (XFProcessor) which handles all communication
-        between client and server.
+         handles state changes (value and MIP changes) send by the server and applies them to the control. State
+         changes are received from the client side xforms processor (XFProcessor) which handles all communication
+         between client and server.
          */
         handleStateChanged:function(contextInfo) {
             // console.debug("XFBinding.handleStateChanged: ",contextInfo);
@@ -274,14 +274,14 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
         },
 
         setLabel:function(value) {
-             // console.debug("Control.setLabel value:"+ value);
+            // console.debug("Control.setLabel value:"+ value);
 
             var labelNode = dom.byId(this.id + "-label");
             if (labelNode != undefined) {
                 labelNode.innerHTML = value;
             }
             else {
-                console.warn("XFBinding.setLabel Failure updating label for Control '" + this.id + "-help' with value: " + value);
+                console.warn("XFBinding.setLabel Failure updating label for Control '" + this.id + "-label' with value: " + value);
             }
         },
         setHelp:function(value) {
