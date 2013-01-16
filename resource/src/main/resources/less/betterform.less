@@ -98,12 +98,13 @@ debug bar at bottom of screen if debug is enabled by betterform config
         padding:2px 10px 2px 10px;
         font-weight:bold;
         display:inline-block;
-        font-size:  0.8em;
+        font-size: 100%;
         .border-radius(5px);
         color:@debugPaneFontColor;
     }
     #bfDebugLinks{
         padding-left: 30px;
+        font-size: 100%;
     }
 }
 #bfDebugOpenClose{
@@ -312,6 +313,16 @@ a:active {
 	min-width:150px;
 	max-width:300px;
    .border-radius(5px);
+
+   >span{
+       max-width: 140px;
+   }
+   .bfAlertMsg {
+       border: thin solid #E5A3A3;
+       margin: 1px;
+       padding: 3px !important;
+       display: block;
+   }
 }
 .xfHint {
     display:none;
@@ -343,7 +354,12 @@ alert + hints should always be aligned with the control.
     z-index:200;
 }
 .xfAlert .closeAlertIcon{
-	background:#F2F2F2 url("@{image-url}/tabClose.gif") right center no-repeat;
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    font-size: 1.2em;
+    position: absolute;
+    right: -4px;
+    top: 0;
 }
 
 .xfCompactGroup .xfHint,

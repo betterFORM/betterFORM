@@ -21,12 +21,15 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry"],
                     switch(type){
                         case "link":
                             xfControlDijit.setLabel = function(value) {
+                                // console.debug("FactoryTrigger.setLabel for link: value: ",value);
                                 node.innerHTML = value;
                             };
                             break;
                         case "button":
                             xfControlDijit.setLabel = function(value) {
+                                // console.debug("FactoryTrigger.setLabel for button: value: ",value);
                                 node.value = value;
+                                node.innerHTML = value;
                             };
                             break;
                         default:

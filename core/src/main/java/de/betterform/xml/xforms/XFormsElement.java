@@ -270,6 +270,10 @@ public abstract class XFormsElement implements XFormsConstants {
         if (element.hasAttributeNS(NamespaceConstants.BETTERFORM_NS, name)) {
             return element.getAttributeNS(NamespaceConstants.BETTERFORM_NS, name);
         }
+        if (element.hasAttributeNS(null, name)) {
+            return element.getAttributeNS(null, name);
+        }
+
         return null;
     }
 

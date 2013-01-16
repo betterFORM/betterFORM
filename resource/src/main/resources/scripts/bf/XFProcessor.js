@@ -15,7 +15,7 @@ define(["dojo/_base/declare",
     "dojo/has",
     "dojo/_base/json",
     "dojo/_base/event"], function(declare, XFormsProcessor,ClientServerEvent,
-                                 dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json, dojoEvent){
+                                  dom,query,domClass,win,domStyle,domAttr,connect,lang,domConstruct,array,registry,has, json, dojoEvent){
     return declare("bf.XFProcessor",XFormsProcessor, {
 
         /**
@@ -222,20 +222,20 @@ define(["dojo/_base/declare",
                 // Further processing of setRepeatIndex events
                 // TODO: check if really not needed anymore
                 /*
-                if (callerFunction == "setRepeatIndex") {
+                 if (callerFunction == "setRepeatIndex") {
                  var repeatItems = query("#" + nextPendingClientServerEvent.targetId +" > tbody > .xfRepeatItem");
                  console.debug("repeatItems: " ,repeatItems," repeatitem position: ",repeatItems[(nextPendingClientServerEvent.getValue -1)]);
 
                  if (nextPendingClientServerEvent.getRepeatItem() == null) {
-                         console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
-                         continue;
-                     }
+                 console.warn("Event (Client to Server) for Dijit Control " + nextPendingTargetId + " skipped. CAUSE: Repeat-Item for being selected has disappeared");
+                 continue;
+                 }
 
-                     if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
-                         console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
-                         // Update the changed Position of this XForms-Repeat-Item
-                        nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
-                     }
+                 if (nextPendingClientServerEvent.getValue() != dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition()) {
+                 console.warn("Original Position: " + nextPendingClientServerEvent.getValue + " New Position: " + nextPendingClientServerEvent.getRepeatItem()._getXFormsPosition());
+                 // Update the changed Position of this XForms-Repeat-Item
+                 nextPendingclientServerEvent.setValue(dijit.byNode(nextPendingClientServerEvent.getRepeatItem())._getXFormsPosition());
+                 }
                  }
                  */
 
@@ -571,7 +571,7 @@ define(["dojo/_base/declare",
                                 case "DOMFocusIn"                    : fluxProcessor.lastServerClientFocusEvent = {postponedFunction:fluxProcessor._handleDOMFocusIn, postponedXmlEvent:xmlEvent}; break;    //cache the xmlEvent for being processed later
                                 case "xforms-out-of-range"           : fluxProcessor._handleOutOfRange(xmlEvent);break;
                                 case "xforms-in-range"               : fluxProcessor._handleInRange(xmlEvent);break;
-                                case "xforms-invalid"                : break;
+                                case "xforms-invalid"                : fluxProcessor._handleInvalid(xmlEvent);break;
                                 case "xforms-valid"                  : validityEvents[index] = xmlEvent; index++;break;
                                 case "betterform-custom-mip-changed" : fluxProcessor._handleCustomMIPChanged(xmlEvent);break;
                                 case "betterform-id-generated"       : break;
@@ -633,6 +633,31 @@ define(["dojo/_base/declare",
                     domStyle.set(formWrapper,"display","block");
                 });
             });
+        },
+
+
+        _handleInvalid:function(xmlEvent){
+            console.debug("XFProcessor._handleInvalid xmlEvent:",xmlEvent);
+            var targetid = xmlEvent.contextInfo.targetId;
+            var alertContainer = dom.byId(targetid + "-alert");
+
+            if(alertContainer != null){
+                //remove old ones
+                dojo.query(".bfAlertMsg",alertContainer).forEach(domConstruct.destroy);
+
+                //add incoming ones
+                for (var i=0; i<xmlEvent.contextInfo.alerts.length;i++){
+                    console.debug("alert " + i + " is " + xmlEvent.contextInfo.alerts[i]);
+                    domConstruct.create("span",{class:'bfAlertMsg',innerHTML:xmlEvent.contextInfo.alerts[i]},alertContainer);
+                }
+
+                /*
+                 jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
+                 made it work.
+                 */
+                //            connect.publish("xforms-invalid", [targetid,"invalid"]);
+                domStyle.set(alertContainer, "display", "inline-block");
+            }
         },
 
         _handleAVTChanged:function(xmlEvent){
@@ -936,7 +961,7 @@ define(["dojo/_base/declare",
         },
 
         _unloadDOM:function(target) {
-
+            // console.debug("_unloadDOM: target:",target);
             //delete CSS specific to subform
             var htmlEntryPoint = dom.byId(target);
             if (htmlEntryPoint == undefined) {

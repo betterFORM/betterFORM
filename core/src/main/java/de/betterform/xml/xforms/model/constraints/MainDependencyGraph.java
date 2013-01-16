@@ -75,6 +75,8 @@ public class MainDependencyGraph extends DependencyGraph {
         // Analyze the Xpath Expression 'calculate'. Read nodeset RefNS
         // (the nodes this XPAth references)
         String xpath = vertex.getXPathExpression();
+//        String xpath = expression;
+        vertex.setXpathExpression(expression);
 
         if ((xpath == null) || (xpath.length() == 0)) {
             // bind without xpath, remove vertex
@@ -139,7 +141,7 @@ public class MainDependencyGraph extends DependencyGraph {
         final List nodeset = bind.getNodeset();
         for (int i = 0; i < nodeset.size(); i++) {
             BetterFormXPathContext relativeContext = new BetterFormXPathContext(nodeset, i + 1, bind.getPrefixMapping(), bind.getXPathFunctionContext());
-            Node node = (Node) XPathUtil.getAsNode(nodeset, i + 1);
+            Node node = XPathUtil.getAsNode(nodeset, i + 1);
             ModelItem modelItem = instance.getModelItem(node);
             
 
@@ -169,6 +171,7 @@ public class MainDependencyGraph extends DependencyGraph {
 
             property = bind.getConstraint();
             if (property != null) {
+
                 modelItem.getDeclarationView().setConstraint(property);
                 this.addReferredNodesToGraph(relativeContext, node, property, Vertex.CONSTRAINT_VERTEX, bind.getConstraintReferences());
             }

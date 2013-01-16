@@ -16,6 +16,7 @@ import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.bind.Constraint;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.Item;
@@ -162,6 +163,7 @@ public class UIElementStateUtil {
     }
 
     public static void dispatchXFormsEvents(BindingElement bindingElement, ModelItem modelItem) throws XFormsException {
+
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("dispatching refresh events for " + DOMUtil.getCanonicalPath(bindingElement.getElement()));
         }
@@ -182,7 +184,12 @@ public class UIElementStateUtil {
                 }
                 container.dispatch(eventTarget, properties[ENABLED] ? XFormsEventNames.ENABLED : XFormsEventNames.DISABLED, null);
                 container.dispatch(eventTarget, XFormsEventNames.VALUE_CHANGED, null);
-                container.dispatch(eventTarget, properties[VALID] ? XFormsEventNames.VALID : XFormsEventNames.INVALID, null);
+                if (properties[VALID]) {
+                    container.dispatch(eventTarget, XFormsEventNames.VALID, null);
+                } else {
+                    Map<String, Object> context = getAlertInfo(bindingElement, modelItem, refreshView);
+                    container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
+                }
                 container.dispatch(eventTarget, properties[READONLY] ? XFormsEventNames.READONLY : XFormsEventNames.READWRITE, null);
                 container.dispatch(eventTarget, properties[REQUIRED] ? XFormsEventNames.REQUIRED : XFormsEventNames.OPTIONAL, null);
                 somethingChanged = true;
@@ -203,10 +210,8 @@ public class UIElementStateUtil {
                     }
                 }
                 if (refreshView.isInvalidMarked()) {
-                    container.dispatch(eventTarget, XFormsEventNames.INVALID, null);
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");
-                    }
+                    Map<String, Object> context = getAlertInfo(bindingElement, modelItem, refreshView);
+                    container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
                 }
                 if (refreshView.isReadonlyMarked()) {
                     container.dispatch(eventTarget, XFormsEventNames.READONLY, null);
@@ -249,6 +254,42 @@ public class UIElementStateUtil {
                 refreshView.reset();
             }
 
+        }
+    }
+
+    private static Map<String, Object> getAlertInfo(BindingElement bindingElement, ModelItem modelItem, RefreshView refreshView) {
+        Element alertElem = (Element) DOMUtil.getFirstChildByTagNameNS(bindingElement.getElement(), NamespaceConstants.XFORMS_NS, "alert");
+        Map<String, Object> context=new HashMap<String, Object>();
+        ;
+        if (alertElem != null) {
+            if (alertElem.hasAttribute("srcBind")) {
+                buildConstraintContextInfo(context, modelItem, refreshView);
+            } else {
+//                Element e = XFormsUtil.getFirstXFormsElement(bindingElement.getElement(), XFormsConstants.ALERT);
+                String alertMsg = DOMUtil.getTextNodeAsString(alertElem);
+                //use standard alert element from UI
+                List invalidConstraints = new ArrayList(1);
+                invalidConstraints.add(alertMsg);
+                context.put("alerts", invalidConstraints);
+            }
+
+        }
+        return context;
+    }
+
+    private static void buildConstraintContextInfo(Map context,ModelItem modelItem, RefreshView refreshView) {
+        List<Constraint> invalids = refreshView.getInvalids();
+        List invalidConstraints = new ArrayList(10);
+        for(int i=0;i < invalids.size();i++){
+            invalidConstraints.add(invalids.get(i).getAlert());
+        }
+        context.put("alerts",invalidConstraints);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");
+            for(int i=0;i < invalids.size();i++){
+                LOGGER.debug("invalid constraint:" + invalids.get(i).getXPathExpr());
+            }
         }
     }
 

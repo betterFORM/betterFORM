@@ -103,6 +103,9 @@ public class Common extends BindingElement {
         initializeChildren();
     }
 
+    public String getElementValue(){
+        return DOMUtil.getElementValue(this.element);
+    }
 /*
     public void setGeneratedId(String generatedId) throws XFormsException {
         //suppress id generation

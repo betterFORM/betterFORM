@@ -472,14 +472,7 @@
     <xsl:template name="processCompactHeader">
         <xsl:for-each select="xf:*|bfc:*">
             <xsl:variable name="col-classes">
-                <xsl:choose>
-                    <xsl:when test="./bf:data/@bf:enabled='false'">
-                        <xsl:value-of select="concat('appBfTableCol-', position(),' bfTableCol-',position(),' ','xfDisabled')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="concat('appBfTableCol-',position(),' bfTableCol-',position())"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="concat('appBfTableCol-',position(),' bfTableCol-',position())"/>
             </xsl:variable>
             <td class="{$col-classes}">
 

@@ -97,7 +97,7 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                 return;
             }
             //##### SHOW ALERT #######
-            else if(action == "onFocus" || action == "xfDisabled"|| action =="onBlur" || action =="applyChanges" || action == "submitError"){
+            else if(action == "onFocus" || action == "xfDisabled"|| action =="onBlur" || action =="applyChanges" || action == "invalid" || action == "submitError"){
                 this._displayAlert(id,action);
             }
 

@@ -28,13 +28,13 @@
                      
                      <output constraint="true" readonly="false" required="false" relevant="true">
                         
-                        <value>../../images/bf_logo_482x195.png</value>
+                        <value>../bfResources/bfResources/images/delete-file.png</value>
                         
                      </output>
                      
                      <output constraint="true" readonly="false" required="false" relevant="true">
                         
-                        <value>../../images/betterform_icon_118x118.png</value>
+                        <value>../bfResources/bfResources/images/delete-file.png</value>
                         
                      </output>
                      
@@ -69,8 +69,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d53e130" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div data-dojo-type="dijit.Tooltip" connectId="d53e130">matches an Element that represents a XForms input element</div>
+                  <td id="d46e124" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div data-dojo-type="dijit.Tooltip" connectId="d46e124">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -220,25 +220,16 @@
          <div class="Section sample">
             <xf:trigger id="trigger1">
                
-               <xf:label>
-                  
-                  <xf:output ref="output[1]/value" mediatype="image/png"></xf:output>
-                  
-               </xf:label>
+               <xf:label ref="output[1]/value" mediatype="image/png"></xf:label>
                
                <xf:message>The trigger1 was clicked</xf:message>
                
             </xf:trigger>
             <xf:trigger id="trigger2">
                
-               <xf:label>
-                  
-                  <xf:output ref="output[2]/value" mediatype="image/png"></xf:output>
-                  
-               </xf:label>
+               <xf:label ref="output[2]/value" mediatype="image/png"></xf:label>
                
                <xf:message>The trigger2 was clicked</xf:message>
-               
                
             </xf:trigger>
          </div>
@@ -277,18 +268,13 @@
          </div>
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:trigger id="trigger1"&gt;
-    &lt;xf:label&gt;
-        &lt;xf:output ref="output[1]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
-    &lt;/xf:label&gt;
+    &lt;xf:label ref="output[1]/value" mediatype="image/png"&gt;&lt;/xf:label&gt;
     &lt;xf:message&gt;The trigger1 was clicked&lt;/xf:message&gt;
 &lt;/xf:trigger&gt;
 
 &lt;xf:trigger id="trigger2"&gt;
-    &lt;xf:label&gt;
-        &lt;xf:output ref="output[2]/value" mediatype="image/png"&gt;&lt;/xf:output&gt;
-    &lt;/xf:label&gt;
+    &lt;xf:label ref="output[2]/value" mediatype="image/png"&gt;&lt;/xf:label&gt;
     &lt;xf:message&gt;The trigger2 was clicked&lt;/xf:message&gt;
-
 &lt;/xf:trigger&gt;
 </code></pre></div>
       </div><script type="text/javascript">

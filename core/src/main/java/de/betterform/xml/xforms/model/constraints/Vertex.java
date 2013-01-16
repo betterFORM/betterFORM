@@ -133,6 +133,9 @@ public abstract class Vertex {
         return this.xpathExpression;
     }
 
+    public void setXpathExpression(String expr){
+        this.xpathExpression = expr;
+    }
     /**
      * adds a dependent Vertex to the depList
      *

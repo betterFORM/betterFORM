@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.xforms.model.constraints;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.BetterFormTestCase;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;

@@ -24,6 +24,7 @@
     </xsl:template>
 
     <xsl:template match="html">
+        <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text><xsl:text>&#10;</xsl:text>
         <html>
             <xsl:apply-templates/>
         </html>

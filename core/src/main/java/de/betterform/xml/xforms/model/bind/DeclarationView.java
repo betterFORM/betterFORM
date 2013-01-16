@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms.model.bind;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -93,6 +94,8 @@ public interface DeclarationView {
      */
     String getConstraint();
 
+    List getConstraints();
+
     /**
      * Sets the <code>constraint</code> declaration of a model item.
      *
@@ -101,10 +104,13 @@ public interface DeclarationView {
      */
     void setConstraint(String constraint);
 
+    void addConstraint(String constraint);
+
     /**
      * Returns the <code>p3ptype</code> declaration of a model item.
      *
      * @return the <code>p3ptype</code> declaration of a model item.
+     * @deprecated without replacement
      */
     String getP3PType();
 
@@ -112,11 +118,13 @@ public interface DeclarationView {
      * Sets the <code>p3ptype</code> declaration of a model item.
      *
      * @param p3ptype the <code>p3ptype</code> declaration of a model item.
+     * @deprecated without replacement
      */
     void setP3PType(String p3ptype);
         
     Map<String, String> getCustomMIPs();
     
     void setCustomMIPs(Map<String, String> customMIPs);
-    
+
+    void setConstraints(List constraints);
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <meta name="author" content="PMiniato at cucbc.com"/>
+        <meta name="author" content="joernt at users.sourceforge.net"/>
+        <meta name="author" content="etspambox at synclude.com"/>
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for binding contexts"/>
+        <meta name="version" content="$Id: BindingTest.xhtml 3251 2008-07-08 09:26:03Z lasse $"/>
+        <xf:model id="model1">
+            <xf:instance xmlns="">
+                <data>
+                    <a>1</a>
+                    <b>1</b>
+                    <c>1</c>
+                    <d></d>
+                </data>
+
+            </xf:instance>
+            <!-- test with multiple MIP in one parent -->
+            <xf:bind ref="a" id="aBind">
+                <bf:required    value="false()"/>
+                <bf:required>
+                    <bf:value>
+                        true()
+                    </bf:value>
+                </bf:required>
+            </xf:bind>
+
+            <xf:bind id="bBind1" ref="b">
+                <bf:required    value="false()"/>
+            </xf:bind>
+
+            <xf:bind id="bBind2" ref="b">
+                <bf:required    value="true()"/>
+            </xf:bind>
+
+            <xf:bind id="cBind1" ref="c" required="false()"/>
+
+            <xf:bind id="cBind2" ref="c">
+                <bf:required    value="true()"/>
+            </xf:bind>
+
+            <xf:bind id="dBind" ref="d" required="false()">
+                <bf:required    value="true()"/>
+            </xf:bind>
+        </xf:model>
+    </head>
+
+    <body>
+        <xf:group id="outergroup">
+            <xf:input id="a" ref="a">
+                <xf:label>A</xf:label>
+            </xf:input>
+            <xf:input id="b" ref="b">
+                <xf:label>B</xf:label>
+            </xf:input>
+            <xf:input id="c" ref="c">
+                <xf:label>C</xf:label>
+            </xf:input>
+            <xf:input id="d" ref="d">
+                <xf:label>D</xf:label>
+            </xf:input>
+        </xf:group>
+    </body>
+</html>
+

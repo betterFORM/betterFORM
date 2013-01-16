@@ -159,8 +159,12 @@
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 
+<!--
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
                 doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
+-->
+
+    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
 
     <xsl:preserve-space elements="*"/>
     <xsl:strip-space elements="xf:action"/>
@@ -186,6 +190,8 @@
     <!-- ####################################################################################################### -->
     <!-- ##################################### TEMPLATES ####################################################### -->
     <!-- ####################################################################################################### -->
+
+
 
     <!-- ############################## HEAD ############################## -->
     <!-- ############################## HEAD ############################## -->
@@ -736,10 +742,30 @@
     <!-- ############################## ALERT ############################## -->
     <!-- ############################## ALERT ############################## -->
     <xsl:template match="xf:alert">
-        <span id="{../@id}-alert" class="xfAlert" style="display:none;">
-            <xsl:apply-templates/>
-            <span class="closeAlertIcon"> </span>
-        </span>
+        <xsl:choose>
+            <xsl:when test="exists(@srcBind)">
+                <xsl:variable name="id" select="@id"/>
+                <xsl:variable name="src" select="@srcBind"/>
+                <xsl:message>######## alert with src - <xsl:value-of select="@srcBind"/></xsl:message>
+                <span id="{../@id}-alert" class="xfAlert" style="display:none;">
+                    <!-- no alerts as direct children of bind for now!!! -->
+                    <xsl:for-each select="//*[@id=$src]/bf:constraint[@initial='true']/xf:alert">
+                        <span class="bfAlertMsg" style="display:block;">
+                            <xsl:copy-of select="./text()"/>
+                        </span>
+                    </xsl:for-each>
+                    <!--<button class="closeAlertIcon" tabindex="-1">&#215;</button>-->
+                </span>
+            </xsl:when>
+            <xsl:otherwise>
+                <span id="{../@id}-alert" class="xfAlert" style="display:none;">
+                    <span class="bfAlertMsg">
+                        <xsl:copy-of select="./text()"/>
+                    </span>
+                    <span class="closeAlertIcon"> </span>
+                </span>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- ############################## HINT ############################## -->
@@ -914,7 +940,7 @@
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
-        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
+            <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/bfRelease.js')}">&#160;</script><xsl:text>
 </xsl:text>
         <xsl:if test="$isDebugEnabled">

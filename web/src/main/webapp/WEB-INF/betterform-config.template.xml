@@ -94,7 +94,7 @@
        <!-- <property name="betterform.ui.initializeDeselectedCases" value="true"/>-->
 
         <!-- generate default alert Elements for UI controls. default is false -->
-        <property name="betterform.ui.generateDefaultAlerts" value="@DEFAULT_ALERT@"/>
+        <property name="betterform.ui.generateDefaultAlerts" value="false"/>
 
         <!--
             allows the define the default error-message for automatically generated alert elements.

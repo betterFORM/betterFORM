@@ -8,12 +8,13 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom","dojo/dom-style","dojo
 
         // @Override
         _show:function(id, commonChild) {
+//            this.inherited(arguments);
             //console.debug("InlineAlert._show [id:'",id,"' commonChild:'", commonChild,"']");
             var commonChildNode = dom.byId(id + '-' + commonChild);
             if(commonChildNode == undefined || commonChild == this.info) {
                 return;
             }
-            this._render(id, commonChild,"inline");
+            this._render(id, commonChild,"inline-block");
         },
 
 
@@ -36,13 +37,16 @@ define(["dojo/_base/declare","bf/common/Alert","dojo/dom","dojo/dom-style","dojo
                 // add onclick handler to alerts to close them by mouse click
                 if(commonChild == "alert" && show=="inline") {
                     domStyle.set(mip, "cursor", "pointer");
+/*
                     mip.onclick = lang.hitch(this, function(evt) {
                         // console.debug("Alert clicked id: ", id, " commonChild: ", commonChild, " show: " , show);
                         this._hide(id,commonChild);
                        // this._show(id,"hint");
                     });
+*/
                 }
                 domStyle.set(mip, "display", show);
+//                document.getElementById(id + "-value").focus();
             } else {
                 console.info(id + "-" + commonChild + " is not defined for Control " + id);
             }
