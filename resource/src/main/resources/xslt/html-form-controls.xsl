@@ -149,13 +149,13 @@
             </xsl:choose>
         </xsl:variable>
         <input id="{$id}-value"
-                name="{$name}"
-                type="{$type}"
-                class="{$classes}"
-                tabindex="{$navindex}"
-                data-bf-params="{$dataBfParams}"
-                placeholder="{xf:hint/text()}"
-                value="{bf:data/text()}">
+               name="{$name}"
+               type="{$type}"
+               class="{$classes}"
+               tabindex="{$navindex}"
+               data-bf-params="{$dataBfParams}"
+               placeholder="{xf:hint/text()}"
+               value="{bf:data/text()}">
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
@@ -273,13 +273,13 @@
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
             </xsl:if>
         </input>
-            <!--
-            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            the hint will be applied as html title attribute and additionally output
-            as a span
-            The hint span will be put outside of the anchor
-            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            -->
+        <!--
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        the hint will be applied as html title attribute and additionally output
+        as a span
+        The hint span will be put outside of the anchor
+        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        -->
     </xsl:template>
 
     <!-- ############################## SECRET ############################## -->
@@ -367,16 +367,16 @@
                     </xsl:call-template>
                 </select>
                 <!-- handle itemset prototype -->
-<!--
-                <xsl:if test="not(ancestor::xf:repeat)">
-                    <xsl:for-each select="xf:itemset/bf:data/xf:item">
-                        <xsl:call-template name="build-item-prototype">
-                            <xsl:with-param name="item-id" select="@id"/>
-                            <xsl:with-param name="itemset-id" select="../../@id"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:if>
--->
+                <!--
+                                <xsl:if test="not(ancestor::xf:repeat)">
+                                    <xsl:for-each select="xf:itemset/bf:data/xf:item">
+                                        <xsl:call-template name="build-item-prototype">
+                                            <xsl:with-param name="item-id" select="@id"/>
+                                            <xsl:with-param name="itemset-id" select="../../@id"/>
+                                        </xsl:call-template>
+                                    </xsl:for-each>
+                                </xsl:if>
+                -->
 
             </xsl:when>
             <!--
@@ -395,31 +395,31 @@
                         <xsl:with-param name="navindex" select="$navindex"/>
                     </xsl:call-template>
                 </span>
-                    <!-- handle itemset prototype -->
-<!--
-                    <xsl:if test="not(ancestor::xf:repeat)">
-                        <xsl:for-each select="xf:itemset/bf:data/xf:item">
-                            <xsl:call-template name="build-radiobutton-prototype">
-                                <xsl:with-param name="item-id" select="@id"/>
-                                <xsl:with-param name="itemset-id" select="../../@id"/>
-                                <xsl:with-param name="name" select="$name"/>
-                                <xsl:with-param name="parent" select="$parent"/>
-                                <xsl:with-param name="navindex" select="$navindex"/>
-                            </xsl:call-template>
-                        </xsl:for-each>
-                    </xsl:if>
--->
+                <!-- handle itemset prototype -->
+                <!--
+                                    <xsl:if test="not(ancestor::xf:repeat)">
+                                        <xsl:for-each select="xf:itemset/bf:data/xf:item">
+                                            <xsl:call-template name="build-radiobutton-prototype">
+                                                <xsl:with-param name="item-id" select="@id"/>
+                                                <xsl:with-param name="itemset-id" select="../../@id"/>
+                                                <xsl:with-param name="name" select="$name"/>
+                                                <xsl:with-param name="parent" select="$parent"/>
+                                                <xsl:with-param name="navindex" select="$navindex"/>
+                                            </xsl:call-template>
+                                        </xsl:for-each>
+                                    </xsl:if>
+                -->
 
                 <!-- create hidden parameter for identification and deselection -->
             </xsl:when>
             <xsl:otherwise>
                 <!-- No appearance or appearance='minimal'-->
-                    <!--
-                    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                    a minimal select1 is rendered as a DROPDOWN
-                    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    -->
-<!--            <span class="select1wrapper">-->
+                <!--
+                >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                a minimal select1 is rendered as a DROPDOWN
+                <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                -->
+                <!--            <span class="select1wrapper">-->
                 <xsl:variable name="dataBfParam">
                     <xsl:choose>
                         <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
@@ -428,17 +428,17 @@
                 </xsl:variable>
 
                 <select id="{$id}-value"
-                            name="{$name}"
-                            class="{$widgetClasses}"
-                            size="1"
-                            title="{xf:hint/text()}"
-                            tabindex="{$navindex}"
-                            data-bf-params="{$dataBfParam}">
-                        <xsl:call-template name="build-items">
-                            <xsl:with-param name="parent" select="$parent"/>
-                        </xsl:call-template>
-                    </select>
-<!--            </span>-->
+                        name="{$name}"
+                        class="{$widgetClasses}"
+                        size="1"
+                        title="{xf:hint/text()}"
+                        tabindex="{$navindex}"
+                        data-bf-params="{$dataBfParam}">
+                    <xsl:call-template name="build-items">
+                        <xsl:with-param name="parent" select="$parent"/>
+                    </xsl:call-template>
+                </select>
+                <!--            </span>-->
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -478,18 +478,18 @@
                     </xsl:for-each>
                 </span>
                 <!-- handle itemset prototype -->
-<!--
-            <xsl:if test="not(ancestor::xf:repeat)">
-                    <xsl:for-each select="xf:itemset/bf:data/xf:item">
-                        <xsl:call-template name="build-checkbox-prototype">
-                            <xsl:with-param name="item-id" select="@id"/>
-                            <xsl:with-param name="itemset-id" select="../../@id"/>
-                            <xsl:with-param name="name" select="$name"/>
-                            <xsl:with-param name="parent" select="$parent"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:if>
--->
+                <!--
+                            <xsl:if test="not(ancestor::xf:repeat)">
+                                    <xsl:for-each select="xf:itemset/bf:data/xf:item">
+                                        <xsl:call-template name="build-checkbox-prototype">
+                                            <xsl:with-param name="item-id" select="@id"/>
+                                            <xsl:with-param name="itemset-id" select="../../@id"/>
+                                            <xsl:with-param name="name" select="$name"/>
+                                            <xsl:with-param name="parent" select="$parent"/>
+                                        </xsl:call-template>
+                                    </xsl:for-each>
+                                </xsl:if>
+                -->
             </xsl:when>
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -617,6 +617,9 @@
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
                         type="button">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
                     <img src="{@src}" alt="image"/>
                 </button>
             </xsl:when>
@@ -627,18 +630,21 @@
                         class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
                     <xsl:value-of select="xf:label"/>
                 </a>
             </xsl:when>
             <xsl:otherwise>
                 <button  id="{$id}-value"
-                        name="{$name}"
-                        class="{$widgetClasses}"
-                        tabindex="{$navindex}"
-                        title="{xf:hint/text()}"
+                         name="{$name}"
+                         class="{$widgetClasses}"
+                         tabindex="{$navindex}"
+                         title="{xf:hint/text()}"
                         >
                     <xsl:if test="bf:data/@bf:readonly='true'">
-                        <xsl:attribute name="readonly">readonly</xsl:attribute>
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <!-- todo: does this still apply? -->
                     <xsl:if test="@accesskey">
@@ -653,7 +659,7 @@
                 </button>
             </xsl:otherwise>
         </xsl:choose>
-            <!-- minimal appearance only supported in scripted mode -->
+        <!-- minimal appearance only supported in scripted mode -->
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         the hint will be applied as html title attribute and additionally output
@@ -692,11 +698,11 @@
             <input type="hidden" id="{xf:filename/@id}" value="{xf:filename/bf:data}"/>
         </xsl:if>
         <!-- create hidden parameter for destination -->
-<!--
-        <xsl:if test="@bf:destination">
-            <input type="hidden" id="{$id}-destination" value="{@bf:destination}"/>
-        </xsl:if>
--->
+        <!--
+                <xsl:if test="@bf:destination">
+                    <input type="hidden" id="{$id}-destination" value="{@bf:destination}"/>
+                </xsl:if>
+        -->
         <!--
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         the hint will be applied as html title attribute and additionally output
@@ -736,36 +742,36 @@
                 </option>
             </xsl:if>
         </xsl:if>
-		<!-- add an empty item, because otherwise deselection is not possible -->
-<!--
-        <xsl:if test="$parent/bf:data/@bf:required='false'">
-		<option value="">
-			<xsl:if test="string-length($parent/bf:data/text()) = 0">
-				<xsl:attribute name="selected">selected</xsl:attribute>
-			</xsl:if>
-		</option>
-        </xsl:if>
--->
+        <!-- add an empty item, because otherwise deselection is not possible -->
+        <!--
+                <xsl:if test="$parent/bf:data/@bf:required='false'">
+                <option value="">
+                    <xsl:if test="string-length($parent/bf:data/text()) = 0">
+                        <xsl:attribute name="selected">selected</xsl:attribute>
+                    </xsl:if>
+                </option>
+                </xsl:if>
+        -->
         <xsl:for-each select="$parent/xf:itemset|$parent/xf:item|$parent/xf:choices">
-			<xsl:call-template name="build-items-list"/>
-		</xsl:for-each>
+            <xsl:call-template name="build-items-list"/>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="build-items-list">
-    	<xsl:choose>
-    		<xsl:when test="local-name(.) = 'choices'">    		    
-    		    <xsl:call-template name="build-items-choices"/>
-    		</xsl:when>
-    		<xsl:when test="local-name(.) = 'itemset'">
-    			<xsl:call-template name="build-items-itemset"/>
-    		</xsl:when>
-    		<xsl:when test="local-name(.) = 'item'">
-    			<xsl:call-template name="build-items-item"/>
-    		</xsl:when>
-    	</xsl:choose>
+        <xsl:choose>
+            <xsl:when test="local-name(.) = 'choices'">
+                <xsl:call-template name="build-items-choices"/>
+            </xsl:when>
+            <xsl:when test="local-name(.) = 'itemset'">
+                <xsl:call-template name="build-items-itemset"/>
+            </xsl:when>
+            <xsl:when test="local-name(.) = 'item'">
+                <xsl:call-template name="build-items-item"/>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
-	<xsl:template name="build-items-choices">
+    <xsl:template name="build-items-choices">
         <xsl:variable name="label">
             <xsl:call-template name="create-label">
                 <xsl:with-param name="label-elements" select="xf:label"/>
@@ -780,12 +786,12 @@
                 </optgroup>
             </xsl:when>
             <xsl:otherwise>
-            <xsl:for-each select="xf:itemset|xf:item|xf:choices">
+                <xsl:for-each select="xf:itemset|xf:item|xf:choices">
                     <xsl:call-template name="build-items-list"/>
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
-	</xsl:template>
+    </xsl:template>
 
     <xsl:template name="build-items-itemset">
         <!-- create first option with data-bf-itemset attribute -->
@@ -833,16 +839,16 @@
 
         <select id="{$itemset-id}-prototype" class="xfSelectorPrototype">
             <option id="{$item-id}-value" class="xfSelectorPrototype">
-	           	<xsl:choose>
-    	       		<xsl:when test="xf:copy">
-	    	   			<xsl:attribute name="value" select="xf:copy/@id"/>
-	              		<xsl:attribute name="title" select="''"/>
-    	          	</xsl:when>
-        	      	<xsl:otherwise>
-            	   		<xsl:attribute name="value" select="normalize-space(xf:value)"/>
-              			<xsl:attribute name="title" select="''"/>
-                	</xsl:otherwise>
-				</xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="xf:copy">
+                        <xsl:attribute name="value" select="xf:copy/@id"/>
+                        <xsl:attribute name="title" select="''"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="value" select="normalize-space(xf:value)"/>
+                        <xsl:attribute name="title" select="''"/>
+                    </xsl:otherwise>
+                </xsl:choose>
                 <xsl:if test="@selected='true'">
                     <xsl:attribute name="selected">selected</xsl:attribute>
                 </xsl:if>
@@ -855,37 +861,37 @@
 
 
     <xsl:template name="build-checkboxes-list">
-    	<xsl:param name="name"/>
+        <xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
-    	<xsl:choose>
-    		<xsl:when test="local-name(.) = 'choices'">
-    			<xsl:call-template name="build-checkboxes-choices">
-            		<xsl:with-param name="name" select="$name"/>
-            		<xsl:with-param name="parent" select="$parent"/>
-            		<xsl:with-param name="navindex" select="$navindex"/>
-            	</xsl:call-template>
-    		</xsl:when>
-    		<xsl:when test="local-name(.) = 'itemset'">
-    			<xsl:call-template name="build-checkboxes-itemset">
-            		<xsl:with-param name="name" select="$name"/>
-            		<xsl:with-param name="parent" select="$parent"/>
-            		<xsl:with-param name="navindex" select="$navindex"/>
-            	</xsl:call-template>
-    		</xsl:when>
-    		<xsl:when test="local-name(.) = 'item'">
-    			<xsl:call-template name="build-checkboxes-item">
-            		<xsl:with-param name="name" select="$name"/>
-            		<xsl:with-param name="parent" select="$parent"/>
-            		<xsl:with-param name="navindex" select="$navindex"/>
-            	</xsl:call-template>
-    		</xsl:when>
-    	</xsl:choose>
+        <xsl:choose>
+            <xsl:when test="local-name(.) = 'choices'">
+                <xsl:call-template name="build-checkboxes-choices">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="local-name(.) = 'itemset'">
+                <xsl:call-template name="build-checkboxes-itemset">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="local-name(.) = 'item'">
+                <xsl:call-template name="build-checkboxes-item">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
 
-	<xsl:template name="build-checkboxes-choices">
-		<xsl:param name="name"/>
+    <xsl:template name="build-checkboxes-choices">
+        <xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
 
@@ -917,25 +923,25 @@
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
-	</xsl:template>
+    </xsl:template>
 
     <xsl:template name="build-checkboxes-itemset">
-    	<xsl:param name="name"/>
+        <xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
-		<span id="{@id}" class="xfItemset">
-			<xsl:for-each select="xf:item">
-				<xsl:call-template name="build-checkboxes-item">
-	           		<xsl:with-param name="name" select="$name"/>
-	           		<xsl:with-param name="parent" select="$parent"/>
-	           		<xsl:with-param name="navindex" select="$navindex"/>
-				</xsl:call-template>
-			</xsl:for-each>
-		</span>
-	</xsl:template>
+        <span id="{@id}" class="xfItemset">
+            <xsl:for-each select="xf:item">
+                <xsl:call-template name="build-checkboxes-item">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </span>
+    </xsl:template>
 
-	<xsl:template name="build-checkboxes-item">
-    	<xsl:param name="name"/>
+    <xsl:template name="build-checkboxes-item">
+        <xsl:param name="name"/>
         <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
         <span id="{@id}" class="xfSelectorItem">
@@ -951,13 +957,13 @@
                 </xsl:if>
 
                 <xsl:choose>
-        			<xsl:when test="xf:copy">
-           				<xsl:attribute name="value" select="xf:copy/@id"/>
-	            	</xsl:when>
-    	        	<xsl:otherwise>
-	    	    		<xsl:attribute name="value" select="xf:value"/>
-    	    		</xsl:otherwise>
-        	    </xsl:choose>
+                    <xsl:when test="xf:copy">
+                        <xsl:attribute name="value" select="xf:copy/@id"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="value" select="xf:value"/>
+                    </xsl:otherwise>
+                </xsl:choose>
                 <xsl:attribute name="title"/>
                 <xsl:text> </xsl:text>
 
@@ -972,7 +978,7 @@
                 </xsl:call-template>
             </label>
         </span>
-	</xsl:template>
+    </xsl:template>
 
     <xsl:template name="build-checkbox-prototype">
         <xsl:param name="item-id"/>
@@ -983,13 +989,13 @@
         <span id="{$itemset-id}-prototype" class="xfSelectorPrototype">
             <input id="{$item-id}-value" class="{$widgetClass}" type="checkbox" name="{$name}">
                 <xsl:choose>
-	       			<xsl:when test="xf:copy">
-		   				<xsl:attribute name="value"><xsl:value-of select="xf:copy/@id"/></xsl:attribute>
-	              	</xsl:when>
-    	        	<xsl:otherwise>
-      	 	    		<xsl:attribute name="value"><xsl:value-of select="xf:value"/></xsl:attribute>
-            		</xsl:otherwise>
-           	    </xsl:choose>
+                    <xsl:when test="xf:copy">
+                        <xsl:attribute name="value"><xsl:value-of select="xf:copy/@id"/></xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="value"><xsl:value-of select="xf:value"/></xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
                 <xsl:attribute name="title"/>
                 <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
@@ -1018,50 +1024,50 @@
         <xsl:param name="navindex"/>
         <!-- handle items, choices and itemsets -->
         <xsl:for-each select="$parent/xf:item|$parent/xf:choices|$parent/xf:itemset">
-        	<xsl:call-template name="build-radiobuttons-list">
-        		<xsl:with-param name="name" select="$name"/>
-        		<xsl:with-param name="parent" select="$parent"/>
-        		<xsl:with-param name="navindex" select="$navindex"/>
+            <xsl:call-template name="build-radiobuttons-list">
+                <xsl:with-param name="name" select="$name"/>
+                <xsl:with-param name="parent" select="$parent"/>
+                <xsl:with-param name="navindex" select="$navindex"/>
 
-        	</xsl:call-template>
+            </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
     <xsl:template name="build-radiobuttons-list">
-    	<xsl:param name="name"/>
-    	<xsl:param name="parent"/>
-    	<xsl:param name="navindex"/>
+        <xsl:param name="name"/>
+        <xsl:param name="parent"/>
+        <xsl:param name="navindex"/>
 
         <!-- todo: refactor to handle xf:choice / xf:itemset by matching -->
         <xsl:choose>
-    		<xsl:when test="local-name(.) = 'choices'">
-    			<xsl:call-template name="build-radiobuttons-choices">
-            		<xsl:with-param name="name" select="$name"/>
-            		<xsl:with-param name="parent" select="$parent"/>
-            		<xsl:with-param name="navindex" select="$navindex"/>
-            	</xsl:call-template>
-    		</xsl:when>
-    		<xsl:when test="local-name(.) = 'itemset'">
-    			<xsl:call-template name="build-radiobuttons-itemset">
-            		<xsl:with-param name="name" select="$name"/>
-            		<xsl:with-param name="parent" select="$parent"/>
-            		<xsl:with-param name="navindex" select="$navindex"/>
-            	</xsl:call-template>
-    		</xsl:when>
-    		<xsl:when test="local-name(.) = 'item'">
-    			<xsl:call-template name="build-radiobuttons-item">
-            		<xsl:with-param name="name" select="$name"/>
-            		<xsl:with-param name="parent" select="$parent"/>
-            		<xsl:with-param name="navindex" select="$navindex"/>
-            	</xsl:call-template>
-    		</xsl:when>
-    	</xsl:choose>
+            <xsl:when test="local-name(.) = 'choices'">
+                <xsl:call-template name="build-radiobuttons-choices">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="local-name(.) = 'itemset'">
+                <xsl:call-template name="build-radiobuttons-itemset">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="local-name(.) = 'item'">
+                <xsl:call-template name="build-radiobuttons-item">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
-	<xsl:template name="build-radiobuttons-choices">
-		<xsl:param name="name"/>
-		<xsl:param name="parent"/>
-		<xsl:param name="navindex"/>
+    <xsl:template name="build-radiobuttons-choices">
+        <xsl:param name="name"/>
+        <xsl:param name="parent"/>
+        <xsl:param name="navindex"/>
 
         <xsl:variable name="label">
             <xsl:call-template name="create-label">
@@ -1092,27 +1098,27 @@
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
-	</xsl:template>
+    </xsl:template>
 
     <xsl:template name="build-radiobuttons-itemset">
-    	<xsl:param name="name"/>
-    	<xsl:param name="parent"/>
-    	<xsl:param name="navindex"/>
+        <xsl:param name="name"/>
+        <xsl:param name="parent"/>
+        <xsl:param name="navindex"/>
 
-		<span id="{@id}" class="xfRadioItemset">
-			<xsl:for-each select="xf:item">
-				<xsl:call-template name="build-radiobuttons-item">
-	           		<xsl:with-param name="name" select="$name"/>
-	           		<xsl:with-param name="parent" select="$parent"/>
-	           		<xsl:with-param name="navindex" select="$navindex"/>
-				</xsl:call-template>
-			</xsl:for-each>
-		</span>
-	</xsl:template>
+        <span id="{@id}" class="xfRadioItemset">
+            <xsl:for-each select="xf:item">
+                <xsl:call-template name="build-radiobuttons-item">
+                    <xsl:with-param name="name" select="$name"/>
+                    <xsl:with-param name="parent" select="$parent"/>
+                    <xsl:with-param name="navindex" select="$navindex"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </span>
+    </xsl:template>
 
-	<xsl:template name="build-radiobuttons-item">
-    	<xsl:param name="name"/>
-    	<xsl:param name="parent"/>
+    <xsl:template name="build-radiobuttons-item">
+        <xsl:param name="name"/>
+        <xsl:param name="parent"/>
         <xsl:param name="navindex"/>
         <xsl:variable name="parentId" select="$parent/@id"/>
         <xsl:variable name="label">
@@ -1126,8 +1132,8 @@
                    class="xfRadioValue"
                    type="radio"
                    parentId="{$parentId}"
-                   name="{$name}"                   
-                   >
+                   name="{$name}"
+                    >
                 <xsl:if test="@selected = 'true'">
                     <xsl:attribute name="checked">true</xsl:attribute>
                 </xsl:if>
@@ -1145,7 +1151,7 @@
                 <xsl:value-of select="$label"/>
             </label>
         </span>
-	</xsl:template>
+    </xsl:template>
 
     <xsl:template name="build-radiobutton-prototype">
         <xsl:param name="item-id"/>
@@ -1170,7 +1176,7 @@
                 <xsl:attribute name="title"/>
 
 
-              <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:if test="@selected='true'">
