@@ -75,7 +75,7 @@
 	    </xf:trigger>
 	    <xf:trigger>
 	      <xf:label>Remove current 'children'</xf:label>
-	      <xf:delete nodeset="." at="index('children_ux')"/>
+	      <xf:delete nodeset="./oda:row[index('children_ux')]" at="index('children_ux')"/>
 	    </xf:trigger>
 	  </xf:group>
 	</xf:repeat>

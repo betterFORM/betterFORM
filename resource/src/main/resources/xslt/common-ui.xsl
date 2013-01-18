@@ -193,6 +193,7 @@
 
     <xsl:template name="assemble-control-classes">
         <xsl:param name="appearance"/>
+	<xsl:param name="isContainer"/>
         <!-- TODO: JT: if meadiatype is set appearance should not be present  -->
         <xsl:variable name="name-classes">
             <xsl:call-template name="get-name-classes">
@@ -236,7 +237,14 @@
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
+	<xsl:choose>
+	    <xsl:when test="$isContainer">
+		<xsl:value-of select="normalize-space(concat('xfContainer ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+		<xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
+	    </xsl:otherwise>
+	</xsl:choose>
     </xsl:template>
 
     <xsl:template name="getXSDType">
