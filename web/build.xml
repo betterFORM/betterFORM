@@ -145,7 +145,7 @@
         unpacking optimized javascript library
         ************************************************************************************
         </echo>
-        <unzip src="${resource.src.dir}/main/lib/betterform-js-optimized.zip"
+        <unzip src="${resource.src.dir}/main/lib/${app.name}-js-optimized.zip"
                dest="${target}/classes/META-INF/resources/scripts"/>
         <echo>
         ************************************************************************************
