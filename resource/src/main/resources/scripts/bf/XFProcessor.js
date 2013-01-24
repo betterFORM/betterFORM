@@ -46,8 +46,12 @@ define(["dojo/_base/declare",
         logEvents:dojo.config.bf.logEvents,
         mappingProcessor:null,
         _uiReady:false,
-        initialEvents:new Array(),
+	    initialEvents:[],
         bfDialogs:[],
+        indicatorObjectTimer: null,
+        indicatorContainer: null,
+        indicatorImage: null,
+        indicatorTargetObject: null,
 
 
         /*
@@ -75,7 +79,7 @@ define(["dojo/_base/declare",
             this.indicatorImage = dom.byId('indicator');
             this.indicatorImage.className = 'xfDisabled';
             // Initialize the clientServerEventQueue for immediately being able to append Elements
-            this.clientServerEventQueue = new Array();
+            this.clientServerEventQueue = [];
 
             connect.connect(window, "onbeforeunload", this, "handleUnload");
             connect.connect(window, "onunload", this, "close");
@@ -121,7 +125,7 @@ define(["dojo/_base/declare",
         },
 
         ignoreExceptions: function (msg) {
-            console.warn("XFProcessor.ignoreExceptions():");
+	        console.warn("XFProcessor.ignoreExceptions: msg:",msg);
         },
 
 
@@ -354,24 +358,24 @@ define(["dojo/_base/declare",
         /*
          Sends a value from a widget to the server. Will be called after any user interaction.
          */
-        sendValue: function(id, value) {
+	    sendValue: function(controlId, value) {
             // console.debug("XFProcessor.sendValue", id, value);
             var newClientServerEvent = new ClientServerEvent();
-            newClientServerEvent.setTargetId(id);
+	        newClientServerEvent.setTargetId(controlId);
             newClientServerEvent.setValue(value);
             newClientServerEvent.setCallerFunction("setControlValue");
             this.eventFifoWriter(newClientServerEvent);
         },
 
-        _setControlValue: function (id, value) {
-            console.debug("XFProcessor.setControlValue", id, value);
+	    _setControlValue: function (controlId, value) {
+	        console.debug("XFProcessor.setControlValue", controlId, value);
             this.isDirty = true;
             try {
                 dwr.engine.setErrorHandler(this._handleExceptions);
                 dwr.engine.setOrdered(true);
                 dwr.engine.setErrorHandler(this._handleExceptions);
                 //        Flux.setUIControlValue(id, value, this.sessionKey,this.changeManager.applyChanges);
-                Flux.setUIControlValue(id, value, this.sessionKey, this.applyChanges);
+		        Flux.setUIControlValue(controlId, value, this.sessionKey, this.applyChanges);
             }
             catch(ex) {
                 fluxProcessor._handleExceptions("Failure executing Flux.setControlValue", ex);
@@ -402,21 +406,6 @@ define(["dojo/_base/declare",
         //################################################################################################
         //################################################################################################
         //################################################################################################
-
-        /*
-         setRange: function (id, value) {
-         dwr.engine.setErrorHandler(this._handleExceptions);
-         Flux.setXFormsValue( id, value, this.sessionKey,this.changeManager.applyChanges);
-         },
-
-
-         */
-
-        indicatorObjectTimer: null,
-        indicatorContainer: null,
-        indicatorImage: null,
-        indicatorTargetObject: null,
-
 
         _fifoProcessingFinished: function() {
             // console.debug("XFProcessor._fifoProcessingFinished");
@@ -476,7 +465,7 @@ define(["dojo/_base/declare",
 
         applyChanges: function(data) {
             try {
-                var validityEvents = new Array();
+		        var validityEvents = [];
                 var index = 0;
 
                 //eventLog writing
@@ -504,8 +493,8 @@ define(["dojo/_base/declare",
                                 //iterate contextinfo
                                 var contextInfo = xmlEvent.contextInfo;
                                 var tableCells = "";
-
-                                for (dataItem in contextInfo){
+                				// console.warn("ContextInfo.dataItem: ",contextInfo);
+				                for (var dataItem in contextInfo){
                                     var funcArg = contextInfo[dataItem];
 
                                     //suppressing empty default info
@@ -643,18 +632,18 @@ define(["dojo/_base/declare",
 
             if(alertContainer != null){
                 //remove old ones
-                dojo.query(".bfAlertMsg",alertContainer).forEach(domConstruct.destroy);
+                query(".bfAlertMsg",alertContainer).forEach(function(bfAlertMsg) {
+                    domConstruct.destroy(bfAlertMsg);
+                });
 
                 //add incoming ones
-                for (var i=0; i<xmlEvent.contextInfo.alerts.length;i++){
-                    console.debug("alert " + i + " is " + xmlEvent.contextInfo.alerts[i]);
-                    domConstruct.create("span",{class:'bfAlertMsg',innerHTML:xmlEvent.contextInfo.alerts[i]},alertContainer);
-                }
 
-                /*
-                 jt: i had expected i will need to publish the event - instead the unexpected happened and removing this
-                 made it work.
-                 */
+                array.forEach(xmlEvent.contextInfo.alerts, function(alert,index) {
+                    // console.debug("alert " + index + " is " + alert);
+                    //domConstruct.create("span",{class:'bfAlertMsg',innerHTML:alert},alertContainer);
+                    var alertNode = domConstruct.create("span",{innerHTML:alert},alertContainer);
+                    domClass.add(alertNode, "bfAlertMsg");
+                });
                 //            connect.publish("xforms-invalid", [targetid,"invalid"]);
                 domStyle.set(alertContainer, "display", "inline-block");
             }
@@ -771,7 +760,7 @@ define(["dojo/_base/declare",
             query(".xfRequired", win.body()).forEach(function(control) {
                 //if control has no value add CSS class xfRequiredEmpty
                 // console.debug("check required: control: ", control);
-                var xfControl = registry.byId(control.id);
+		        var xfControl = registry.byId(domAttr.get(control, "id"));
                 // console.debug("found Control Widget: xfControl: ", xfControl, " typeof xfControl.getControlValue  == 'function'': ", typeof xfControl.getControlValue == 'function');
                 if(xfControl != undefined && typeof xfControl.getControlValue == 'function'){
                     var xfValue = xfControl.getControlValue();
@@ -817,7 +806,7 @@ define(["dojo/_base/declare",
                     // if we reach here the xlinkTarget is no idref but the value of a name Attrbute that needs resolving
                     // to an id.
                     var tmp = query("*[name='" + xlinkTarget + "']")[0];
-                    targetid = tmp.id;
+		            targetid = domAttr.get(tmp, "id");
                     console.debug("target id for embedding is: ", targetid);
                 }
 
@@ -851,9 +840,9 @@ define(["dojo/_base/declare",
                     self.bfDialogs[targetid] = new Array();
                     query(".bfcDialog", nodesToEmbed).forEach(function(item) {
                         // console.debug("\n\nAdd Dialog:",domAttr.get(item,"id"));
-                        var id = domAttr.get(item,"id");
-                        self.bfDialogs[targetid].push(id);
-                        if (registry.byId(id) !=  undefined) {
+                    var dialogId = domAttr.get(item,"id");
+                    self.bfDialogs[targetid].push(dialogId);
+                    if (registry.byId(dialogId) !=  undefined) {
                             item.parentNode.removeChild(item);
                         }
                     });
@@ -1055,9 +1044,9 @@ define(["dojo/_base/declare",
             // console.debug("Target id: ",target);
             if(this.bfDialogs && this.bfDialogs[target] && this.bfDialogs[target].length > 0){
                 // console.debug("dialogs to remove: ",this.bfDialogs[target]);
-                array.forEach(this.bfDialogs[target],function(id){
+                array.forEach(this.bfDialogs[target],function(dialogId){
                     // console.debug("dialog to find and delete: ", id);
-                    var dialogDijit = registry.byId(id);
+		            var dialogDijit = registry.byId(dialogId);
                     if(dialogDijit){
                         // console.debug("destroy dialogDijit: ",dialogDijit);
                         dialogDijit.destroy();
@@ -1141,7 +1130,7 @@ define(["dojo/_base/declare",
                     // if we reach here the target is no idref but the value of a name Attrbute that needs resolving
                     // to an id.
                     var tmp = query("*[name='" + target + "']")[0];
-                    targetid = tmp.id;
+		            targetid = domAttr.get(tmp,"id");
                     console.debug("target id for embedding is: ", targetid);
                 }
 
@@ -1171,18 +1160,19 @@ define(["dojo/_base/declare",
             if (level == "ephemeral") {
                 require(["dojox/widget/Toaster"],function(Toaster) {
                     if(registry.byId("betterformMessageToaster") == undefined) {
-                        new Toaster({id:"betterformMessageToaster",
-                            positionDirection:"bl-up",
-                            duration:"8000",
-                            messageTopic:'bfMessageTopic'
-                        },"betterformMessageToaster");
-                    }
-                    connect.publish("bfMessageTopic", [ {
-                        message: message,
-                        type: "fatal",
-                        duration: 8000
-                    }]);
-                })
+			    new Toaster({
+                    id:"betterformMessageToaster",
+                                positionDirection:"bl-up",
+                                duration:"8000",
+                                messageTopic:'bfMessageTopic'
+                            },"betterformMessageToaster");
+                        }
+                        connect.publish("bfMessageTopic", [ {
+                            message: message,
+                            type: "fatal",
+                            duration: 8000
+                        }]);
+                    })
             }
             else {
                 var exception = xmlEvent.contextInfo.exception;
@@ -1348,7 +1338,7 @@ define(["dojo/_base/declare",
 
         _handleUploadProgressEvent:function(xmlEvent) {
             console.debug("XFProcessor._handleUploadProgressEvent: xmlEvent:",xmlEvent);
-            var xfControlId = xmlEvent.contextInfo.targetid;
+            var xfControlId = xmlEvent.contextInfo.targetId;
             // if XForms Control Dijit allready exists call handleStateChanged on selected control
             if (registry.byId(xfControlId+"-value") != undefined) {
                 registry.byId(xfControlId+"-value").updateProgress(xmlEvent.contextInfo.progress);
@@ -1413,11 +1403,11 @@ define(["dojo/_base/declare",
             //        fluxProcessor.closeSession();
         },
 
-        fetchProgress:function(id, fileName) {
-            console.debug("XFProcessor.fetchProgress id:", id);
+    	fetchProgress:function(fetchProgressId, fileName) {
+	        console.debug("XFProcessor.fetchProgress id:", fetchProgressId);
             try {
-                console.debug("XFProcessor.fetchProgress id:", id, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
-                Flux.fetchProgress(id, fileName, this.sessionKey, this.applyChanges);
+        		console.debug("XFProcessor.fetchProgress id:", fetchProgressId, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
+        		Flux.fetchProgress(fetchProgressId, fileName, this.sessionKey, this.applyChanges);
             }
             catch(ex) {
                 fluxProcessor._handleExceptions("Failure executing Flux.fetchProgress", ex);
@@ -1438,14 +1428,14 @@ define(["dojo/_base/declare",
             }
         },
 
-        showHelp:function(id) {
-            console.debug("showng help for:", id);
-            var helpCtrl = dom.byId(id + '-help');
+	    showHelp:function(controlId) {
+    	    console.debug("showng help for:", controlId);
+	        var helpCtrl = dom.byId(controlId + '-help');
             if (helpCtrl == undefined) {
-                console.warn("No help available for Control Id: '" + id + "'");
+		        console.warn("No help available for Control Id: '" + controlId + "'");
                 return;
             }
-            var helpText = dom.byId(id + "-help-text");
+	        var helpText = dom.byId(controlId + "-help-text");
             var currentState = domStyle.get(helpText,"display");
 
             if(currentState == "none"){
@@ -1453,8 +1443,6 @@ define(["dojo/_base/declare",
             }else{
                 domStyle.set(helpText, "display","none");
             }
-            //make sure that the input control at work does not loose the focus
-//        dom.byId(id).focus();
         },
 
         getInstanceDocument:function(modelId, instanceId){
@@ -1469,22 +1457,21 @@ define(["dojo/_base/declare",
             dom.byId("debugFrame").innerHTML=data;
         },
 
-        addSubscriber:function(id, handle){
-            if(this.subscribers[id] == undefined) {
-                this.subscribers[id] = new Array();
-            }
-            this.subscribers[id].push(handle);
-        },
-        removeSubscribers:function(id){
-            // console.warn("removing subscribers for id: ", id, " subcribers: ",this.subscribers[id]);
-            if(this.subscribers[id]!=undefined){
-                array.forEach(this.subscribers[id], function(handle) {
-                    // console.debug("removing handle:",handle);
+        addSubscriber:function(subscriberID, handle){
+            if(this.subscribers[subscriberID] == undefined) {
+            this.subscribers[subscriberID] = new Array();
+                }
+            this.subscribers[subscriberID].push(handle);
+            },
+        removeSubscribers:function(subscriberID){
+                // console.warn("removing subscribers for id: ", id, " subcribers: ",this.subscribers[id]);
+            if(this.subscribers[subscriberID]!=undefined){
+                array.forEach(this.subscribers[subscriberID], function(handle) {
+                        // console.debug("removing handle:",handle);
                     connect.unsubscribe(handle);
                 });
-                delete this.subscribers[id];
+                delete this.subscribers[subscriberID];
             }
-
         }
     })
 });
