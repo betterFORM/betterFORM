@@ -494,8 +494,8 @@ define(["dojo/_base/declare",
                                 //iterate contextinfo
                                 var contextInfo = xmlEvent.contextInfo;
                                 var tableCells = "";
-				console.warn("ContextInfo.dataItem: ",contextInfo);
-				for (var dataItem in contextInfo){
+				                //console.warn("ContextInfo.dataItem: ",contextInfo);
+				                for (var dataItem in contextInfo){
                                     var funcArg = contextInfo[dataItem];
 
                                     //suppressing empty default info
