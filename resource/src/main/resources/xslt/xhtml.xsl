@@ -905,8 +905,8 @@
         <!-- todo: use locale again -->
         <xsl:variable name="dojoConfig">
             has: {
-            "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
-            "dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
+		"dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
+		"dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
             },
             isDebug:<xsl:value-of select="$isDebugEnabled"/>,
             locale:'en',
@@ -917,21 +917,21 @@
             async:true,
 
             packages: [
-            'dojo',
-            'dijit',
-            'dojox',
-            'bf'
+		'dojo',
+		'dijit',
+		'dojox',
+		'bf'
             ],
 
             bf:{
-            sessionkey: "<xsl:value-of select="$sessionKey"/>",
-            contextroot:"<xsl:value-of select="$contextroot"/>",
-            fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
-            useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
-            useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
-            useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
-            logEvents:<xsl:value-of select="$isDebugEnabled"/>,
-            unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
+		sessionkey: "<xsl:value-of select="$sessionKey"/>",
+		contextroot:"<xsl:value-of select="$contextroot"/>",
+		fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
+		useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
+		useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
+		useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
+		logEvents:<xsl:value-of select="$isDebugEnabled"/>,
+		unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
             }
         </xsl:variable>
         <xsl:text>
@@ -951,21 +951,21 @@
     </xsl:template>
 
     <xsl:template name="addLocalScript">
-        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
+	<xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
         <script type="text/javascript">
             require([<xsl:value-of select="$requires"/>],
-                function(XFProcessor, XFormsModelElement, connect){
-            // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
-            <!-- create a XForms Processor for the form -->
-            fluxProcessor = new XFProcessor();
-            <!-- create a XFormsModelElement class for each model in the form -->
-            <xsl:for-each select="//xf:model">
-                <xsl:variable name="modelName">
-                    <xsl:value-of select="if(contains(@id,'-')) then replace(@id,'-','_') else @id"/>
-                </xsl:variable>
-                <xsl:value-of select="$modelName"/> = new XFormsModelElement({id:"<xsl:value-of select="$modelName"/>"});
-            </xsl:for-each>
-            }
+		function(XFProcessor, XFormsModelElement){
+		    // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
+		    <!-- create a XForms Processor for the form -->
+		    fluxProcessor = new XFProcessor();
+		    <!-- create a XFormsModelElement class for each model in the form -->
+		    <xsl:for-each select="//xf:model">
+			<xsl:variable name="modelName">
+			    <xsl:value-of select="if(contains(@id,'-')) then replace(@id,'-','_') else @id"/>
+			</xsl:variable>
+			<xsl:value-of select="$modelName"/> = new XFormsModelElement({id:"<xsl:value-of select="$modelName"/>"});
+		    </xsl:for-each>
+		    }
             );
         </script><xsl:text>
 </xsl:text>

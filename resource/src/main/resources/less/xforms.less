@@ -34,22 +34,31 @@
     display: none;
 }
 
-.xfReadWrite .xfValue a:hover,
-.xfReadWrite .xfValue a:focus,
-.xfReadWrite .xfValue a:link,
-.xfReadWrite .xfValue a:visited,
-.xfReadWrite .xfValue a:active  {
-	color:@linkColor;
+.xfReadWrite {
+  .xfValue {
+    a:hover,
+    a:focus,
+    a:link,
+    a:visited,
+    a:active  {
+      color:@linkColor;
 
+    }
+  }
 }
 
-.xfReadOnly .xfValue a:focus,
-.xfReadOnly .xfValue a:hover,
-.xfReadOnly .xfValue a:link,
-.xfReadOnly .xfValue a:visited,
-.xfReadOnly .xfValue a:active  {
-	color:@readonlyColor;
-	border:0;
+.xfReadOnly  {
+  .xfValue {
+    a:focus,
+    a:hover,
+    a:link,
+    a:visited,
+    a:active  {
+      color:@readonlyColor;
+      border:0;
+
+    }
+  }
 }
 
 .xfReadOnly > .widgetContainer > .xfValue a,
