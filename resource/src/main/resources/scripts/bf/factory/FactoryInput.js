@@ -18,21 +18,21 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                      */
 
                     switch(type){
-                    //INPUT TYPE STRING
+                        //INPUT TYPE STRING
                         case "text":
                             this._createText(xfControlDijit,node);
                             break;
-                    //INPUT TYPE BOOLEAN
+                        //INPUT TYPE BOOLEAN
                         case "checkbox":
                             this._createCheckbox(xfControlDijit, node);
 
                             break;
-                    //INPUT TYPE DATE
-                       case "date":
+                        //INPUT TYPE DATE
+                        case "date":
                             // console.debug("FactoryInput: found: .uaDesktop .xfInput.xsdDate .widgetContainer",node);
                             this._createDate(xfControlDijit, node);
                             break;
-                       case "dropDownDate":
+                        case "dropDownDate":
                             // console.debug("FactoryInput: found: .uaDesktop .xfInput.xsdDate .widgetContainer",node);
                             this._createDropDownDate(xfControlDijit, node);
                             break;
@@ -56,10 +56,17 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         case "mobileTime":
                             this._createMobileTime(xfControlDijit, node);
                             break;
+                        case "timeline":
+                            this._createTimeline(xfControlDijit, node);
+                            break;
+                        case "linechart":
+                            this._createLinechart(xfControlDijit, node);
+                            break;
+
                         case "tbd":
                             console.warn("No handler for node", node, " yet");
                         default:
-                            console.warn("FactoryInput.default");
+                            console.warn("FactoryInput unknown type for node:", node);
 
                     }
                 },
@@ -107,8 +114,8 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
 
                 _createCheckbox:function(xfControlDijit, node){
-                     // console.debug("FactoryInput.createInputBoolean");
-                     // console.debug("FOUND: boolean input field: ",node, " node.checked:",node.checked);
+                    // console.debug("FactoryInput.createInputBoolean");
+                    // console.debug("FOUND: boolean input field: ",node, " node.checked:",node.checked);
                     xfControlDijit.setCurrentValue(node.checked);
                     if(domAttr.get(node,"type") != "checkbox"){
                         domAttr.set(node,"type","checkbox");
@@ -140,7 +147,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     });
 
                     connect.connect(node,"onclick",function(evt){
-                         // console.debug("FactoryInput (boolean) onclick node.checked:",node.checked);
+                        // console.debug("FactoryInput (boolean) onclick node.checked:",node.checked);
                         xfControlDijit.sendValue(node.checked,false);
                     });
 
@@ -201,12 +208,12 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         }
                         var hint = dom.byId(xfId+"-hint");
                         var dateWidget = new DateTextBox({
-                                required:false,
-                                placeHolder: (hint != undefined && !hint.hasChildNodes())? hint.innerHTML : "",
-                                constraints:{
-                                    selector:'date',
-                                    datePattern:datePattern
-                        } },n);
+                            required:false,
+                            placeHolder: (hint != undefined && !hint.hasChildNodes())? hint.innerHTML : "",
+                            constraints:{
+                                selector:'date',
+                                datePattern:datePattern
+                            } },n);
                         if(value != undefined) {
                             dateWidget.set("value",value);
                         }
@@ -323,7 +330,7 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                                     xfControlDijit.sendValue(textboxTime,true);
                                 }else if(attrName == "value" && xfControlDijit.isIncremental())
                                     xfControlDijit.sendValue(textboxTime,false);
-                             }
+                            }
                         });
 
                         xfControlDijit.setValue = function(value,schemavalue) {
@@ -341,6 +348,42 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
 
                     });
                 },
+
+                _createTimeline:function(controlDijit, n){
+                    var xfControlDijit = controlDijit;
+                    var node = n;
+                    var self = this;
+                    require(["bf/input/Timeline"],function(Timeline){
+                        var value = domAttr.get(node,"value");
+                        xfControlDijit.setCurrentValue(value);
+                        var timeline = new Timeline({ value:value}, node);
+                        console.debug("created new timeline: " , timeline );
+
+                        xfControlDijit.setValue = function(value,schemavalue) {
+                            // console.debug("value:",value);
+                            timeline.set('value', value);
+                        };
+                    });
+                },
+
+                _createLinechart:function(controlDijit, n){
+                    var xfControlDijit = controlDijit;
+                    var node = n;
+                    var self = this;
+                    require(["bf/input/Linechart"],function(Linechart){
+                        var value = domAttr.get(node,"value");
+                        xfControlDijit.setCurrentValue(value);
+                        var linechart= new Linechart({ value:value}, node);
+                        console.debug("created new Linechart: " , linechart);
+
+                        xfControlDijit.setValue = function(value,schemavalue) {
+                            // console.debug("value:",value);
+                            linechart.set('value', value);
+                        };
+                    });
+                },
+
+
 
                 _createDropDownTime:function(controlDijit, n){
                     var xfControlDijit = controlDijit;

@@ -5,12 +5,12 @@
   -->
 
 <xsl:stylesheet version="2.0"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:bf="http://betterform.sourceforge.net/xforms"
-    xmlns:xf="http://www.w3.org/2002/xforms"
-    exclude-result-prefixes="xf bf xsl"
-    xpath-default-namespace="http://www.w3.org/1999/xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:bf="http://betterform.sourceforge.net/xforms"
+                xmlns:xf="http://www.w3.org/2002/xforms"
+                exclude-result-prefixes="xf bf xsl"
+                xpath-default-namespace="http://www.w3.org/1999/xhtml"
         >
 
     <!-- ### this url will be used to build the form action attribute ### -->
@@ -42,7 +42,7 @@
 
     <xsl:template match="xf:model" mode="inline"/>
 
-        <!-- ### handle extensions ### -->
+    <!-- ### handle extensions ### -->
     <xsl:template match="xf:extension">
         <xsl:apply-templates/>
     </xsl:template>
@@ -126,10 +126,10 @@
 
     <xsl:template name="getLinkAndStyle"><xsl:text>
 </xsl:text><xsl:for-each select="link">
-            <xsl:element name="{local-name()}">
-                <xsl:copy-of select="@*" />
-            </xsl:element>
-        </xsl:for-each><xsl:text>
+        <xsl:element name="{local-name()}">
+            <xsl:copy-of select="@*" />
+        </xsl:element>
+    </xsl:for-each><xsl:text>
 </xsl:text>
 
     </xsl:template>
@@ -307,19 +307,19 @@
         <xsl:param name="name"/>
         <xsl:variable name="start" select="upper-case(substring($name,1,1))"/>
         <xsl:variable name="end" select="substring($name,2)"/>
-<!--
-        <xsl:message>start:<xsl:value-of select="$start"/></xsl:message>
-        <xsl:message>end:<xsl:value-of select="$end"/></xsl:message>
--->
+        <!--
+                <xsl:message>start:<xsl:value-of select="$start"/></xsl:message>
+                <xsl:message>end:<xsl:value-of select="$end"/></xsl:message>
+        -->
         <xsl:value-of select="concat($start,$end)"/>
     </xsl:template>
 
     <xsl:template name="assemble-label-classes">
-            <xsl:variable name="mip-classes">
-                <xsl:call-template name="get-mip-classes">
-                    <xsl:with-param name="limited" select="true()"/>
-                </xsl:call-template>
-            </xsl:variable>
+        <xsl:variable name="mip-classes">
+            <xsl:call-template name="get-mip-classes">
+                <xsl:with-param name="limited" select="true()"/>
+            </xsl:call-template>
+        </xsl:variable>
         <xsl:for-each select="xf:label[1]">
             <xsl:variable name="name-classes">
                 <xsl:call-template name="get-name-classes"/>
@@ -516,18 +516,18 @@
 
     <!-- Create label value and take xml:lang attribute into account -->
     <xsl:template name="create-label">
-    	<xsl:param name="label-elements"/>
-            	<xsl:choose>
-            	    <xsl:when test="$label-elements[@lang=$locale]">
-                        <xsl:apply-templates select="$label-elements[@lang=$locale]"/>
-                    </xsl:when>
-            	    <xsl:when test="$label-elements[not(@lang)]">
-                        <xsl:apply-templates select="$label-elements[not(@lang)]"/>
-                    </xsl:when>
-            	    <xsl:otherwise>
-                        <xsl:apply-templates select="$label-elements[1]"/>
-                    </xsl:otherwise>
-		</xsl:choose>
+        <xsl:param name="label-elements"/>
+        <xsl:choose>
+            <xsl:when test="$label-elements[@lang=$locale]">
+                <xsl:apply-templates select="$label-elements[@lang=$locale]"/>
+            </xsl:when>
+            <xsl:when test="$label-elements[not(@lang)]">
+                <xsl:apply-templates select="$label-elements[not(@lang)]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="$label-elements[1]"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- ########################## ACTIONS ####################################################### -->

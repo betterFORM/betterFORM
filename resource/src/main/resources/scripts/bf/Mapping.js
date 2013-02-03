@@ -33,13 +33,13 @@ require(['dojo/_base/declare'],
 
             // INPUTS
             ['.xfControl', "bf/XFControl"],
-            ['.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean) .xfValue',     "bf/factory/FactoryInput", "text"],
+            ['.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean):not(.aBfTimeline):not(.aBfLinechart)  .xfValue',     "bf/factory/FactoryInput", "text"],
             ['.xfInput.xsdBoolean > * >  .xfValue',                                                 "bf/factory/FactoryInput", "checkbox"],
             /*
-            the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
-            for this is the behavior of Dojo Dijits that replace the DOM Node they are applied to. But this creates
-            problems with state handling which relies on the existence of these classes which Dojo does not preserver.
-            Therefore here the Dijit is created as a child of 'widgetContainer'.
+             the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
+             for this is the behavior of Dojo Dijits that replace the DOM Node they are applied to. But this creates
+             problems with state handling which relies on the existence of these classes which Dojo does not preserver.
+             Therefore here the Dijit is created as a child of 'widgetContainer'.
              */
             //todo: use descriptive names for the different types of controls
             ['body.uaDesktop .xfInput.xsdDate:not(.aBfDropdowndate) .widgetContainer', "bf/factory/FactoryInput", "date"],
@@ -96,8 +96,11 @@ require(['dojo/_base/declare'],
 
             // COMMON CHILDS
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],
-            ['body.InlineAlert',      "bf/common/AlertInline"]
+            ['body.InlineAlert',      "bf/common/AlertInline"],
 
+            // CUSTOM ENHANCEMENT
+            ['.xfInput.aBfTimeline  .xfValue',  "bf/factory/FactoryInput", "timeline"],
+            ['.xfInput.aBfLinechart .xfValue',  "bf/factory/FactoryInput", "linechart"]
 
         ];
     }

@@ -159,10 +159,10 @@
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 
-<!--
-    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
-                doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
--->
+    <!--
+        <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
+                    doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
+    -->
 
     <xsl:output method="xhtml" omit-xml-declaration="yes"/>
 
@@ -920,7 +920,12 @@
             'dojo',
             'dijit',
             'dojox',
-            'bf'
+            'bf',
+            { name: 'jquery', location: '/exist/apps/shared-resources/resources/scripts/jquery', main: 'jquery-1.7.1.min' },
+            { name: 'jplot',            location: '/exist/apps/gesetze/resources/scripts', main: 'jquery.jqplot.min' },
+            { name: 'dateAxisRenderer', location: '/exist/apps/gesetze/resources/scripts', main: 'jqplot.dateAxisRenderer.min' },
+            { name: 'cursor',           location: '/exist/apps/gesetze/resources/scripts', main: 'jqplot.cursor.min' },
+            { name: 'highlighter',      location: '/exist/apps/gesetze/resources/scripts', main: 'jqplot.highlighter.min' }
             ],
 
             bf:{
@@ -940,7 +945,7 @@
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
-            <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
+        <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/bfRelease.js')}">&#160;</script><xsl:text>
 </xsl:text>
         <xsl:if test="$isDebugEnabled">
@@ -951,10 +956,10 @@
     </xsl:template>
 
     <xsl:template name="addLocalScript">
-        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
+        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
         <script type="text/javascript">
             require([<xsl:value-of select="$requires"/>],
-                function(XFProcessor, XFormsModelElement, connect){
+            function(XFProcessor, XFormsModelElement){
             // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
             <!-- create a XForms Processor for the form -->
             fluxProcessor = new XFProcessor();
