@@ -266,6 +266,13 @@
     <xsl:template name="include-xforms-css">
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
         <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <xsl:variable name="timelineActive" select="count(//*[@appearance eq 'bf:timeline']) gt 0" />
+        <xsl:if test="$timelineActive">
+            <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'simile/timeline/timeline_js/timeline-bundle.css')}"/>
+            <script src="{concat($contextroot,$scriptPath,'simile/timeline/timeline_ajax/simile-ajax-api.js?bundle=true')}" type="text/javascript"/>
+            <script src="{concat($contextroot,$scriptPath,'simile/timeline/timeline_js/timeline-api.js?bundle=true')}" type="text/javascript"/>
+        </xsl:if>
+
     </xsl:template>
 
 
@@ -903,6 +910,12 @@
         -->
         <!-- todo: should we use explicit package locations and a baseUrl ? -->
         <!-- todo: use locale again -->
+
+        <xsl:variable name="linechartActive" select="count(//*[@appearance eq 'bf:linechart']) gt 0" />
+        <xsl:if test="$linechartActive">
+            <link class="include" rel="stylesheet" type="text/css" href="/exist/apps/gesetze/resources/css/jquery.jqplot.min.css"/>
+        </xsl:if>
+
         <xsl:variable name="dojoConfig">
             has: {
             "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
@@ -920,12 +933,16 @@
             'dojo',
             'dijit',
             'dojox',
-            'bf',
-            { name: 'jquery', location: '/exist/apps/shared-resources/resources/scripts/jquery', main: 'jquery-1.7.1.min' },
-            { name: 'jplot',            location: '/exist/apps/gesetze/resources/scripts', main: 'jquery.jqplot.min' },
-            { name: 'dateAxisRenderer', location: '/exist/apps/gesetze/resources/scripts', main: 'jqplot.dateAxisRenderer.min' },
-            { name: 'cursor',           location: '/exist/apps/gesetze/resources/scripts', main: 'jqplot.cursor.min' },
-            { name: 'highlighter',      location: '/exist/apps/gesetze/resources/scripts', main: 'jqplot.highlighter.min' }
+            'bf'
+            <xsl:if test="$linechartActive">
+                ,
+                { name: 'jquery',           location: '<xsl:value-of select="concat($contextroot,'/apps/shared-resources/resources/scripts/jquery')"/>', main: 'jquery-1.7.1.min' },
+                { name: 'jplot',            location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jquery.jqplot.min' },
+                { name: 'dateAxisRenderer', location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.dateAxisRenderer.min' },
+                { name: 'cursor',           location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.cursor.min' },
+                { name: 'highlighter',      location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.highlighter.min' }
+            </xsl:if>
+
             ],
 
             bf:{
@@ -941,10 +958,32 @@
         </xsl:variable>
         <xsl:text>
 </xsl:text>
+        <!-- xsl:if test="$linechartActive">
+            ,
+            { name: 'jQuery',           location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jquery-1.7.1.min' },            
+            { name: 'jplot',            location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jquery.jqplot.min' },
+            { name: 'dateAxisRenderer', location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.dateAxisRenderer.min' },
+            { name: 'cursor',           location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.cursor.min' },
+            { name: 'highlighter',      location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.highlighter.min' }		                  
+        </xsl:if-->
+
+
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>
 </xsl:text>
+
+        <xsl:if test="$linechartActive">
+            <script type="text/javascript">
+                define.amd.jQuery = true;
+                define.amd.jplot = true;
+                define.amd.dateAxisRenderer = true;
+                define.amd.cursor = true;
+                define.amd.highlighter = true;
+            </script><xsl:text>
+</xsl:text>
+        </xsl:if>
+
         <!--<script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/core.js')}">&#160;</script><xsl:text>-->
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'bf/bfRelease.js')}">&#160;</script><xsl:text>
 </xsl:text>

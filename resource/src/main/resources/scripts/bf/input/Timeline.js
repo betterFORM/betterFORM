@@ -6,12 +6,12 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
             timeline:null,
 
             constructor:function() {
-                console.debug("Timeline.constructor: this: ", this);
+                // console.debug("Timeline.constructor: this: ", this);
                 this.srcNodeRef = arguments[1];
                 this.dataSource = domAttr.get(this.srcNodeRef, "data-bf");
                 var origId = domAttr.get(this.srcNodeRef, "id");
-                this.id = origId.substring(0,origId.length -6) + "Timeline";
-                console.debug("Timeline: dataSource:", this.dataSource, " origId: ",origId);
+                this.id = origId.substring(0,origId.length -5) + "tlcontainer";
+                // console.debug("Timeline: dataSource:", this.dataSource, " origId: ",origId);
 
                 this.timelineNode = domConstruct.toDom("<div class='xfTimeline timeline-default' id='"+ this.id+"' style='width:1000px; height:350px;border:1px solid #aaa' ></div>");
                 domConstruct.place(this.timelineNode, origId, "after");
@@ -20,9 +20,9 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
             },
 
             initTimeline:function() {
-                console.debug("this.initTimeline()");
+                // console.debug("this.initTimeline()");
                 var eventSource = new Timeline.DefaultEventSource();
-                console.debug("eventSource:",eventSource );
+                // console.debug("eventSource:",eventSource );
 
                 var d = Timeline.DateTime.parseGregorianDateTime("1900")
 
@@ -31,14 +31,14 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
                         width:          "80%",
                         date:           d,
                         intervalUnit:   Timeline.DateTime.MONTH,
-                        intervalPixels: 100,
+                        intervalPixels: 300,
                         eventSource:    eventSource
                     }),
                     Timeline.createBandInfo({
                         overview:       true,
                         width:          "10%",
                         intervalUnit:   Timeline.DateTime.YEAR,
-                        intervalPixels: 200,
+                        intervalPixels: 100,
                         eventSource:    eventSource
                     }),
                     Timeline.createBandInfo({
@@ -57,13 +57,6 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
                 bandInfos[2].highlight = true;
                 console.debug("bandInfos:",bandInfos);
                 // create the Timeline
-                var timeline = Timeline.create(this.timelineNode, bandInfos,Timeline.HORIZONTAL);
-                Timeline.loadXML(this.dataSource, function(xml,url) {
-                    eventSource.loadXML(xml,url);
-                    timeline.layout();
-
-                });
-                console.debug("this.timeline:",this.timeline );
 
                 this.timeline = Timeline.create(this.timelineNode, bandInfos,Timeline.HORIZONTAL);
                 var tl = this.timeline;
@@ -72,15 +65,15 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
                     tl.layout();
 
                 });
-                console.debug("this.timeline:",this.timeline);
+                // console.debug("this.timeline:",this.timeline);
                 this.resize();
             },
 
             resize:function() {
-                console.debug("Timeline.resize: this.timeline",this.timeline);
+                // console.debug("Timeline.resize: this.timeline",this.timeline);
                 var tl = this.timeline;
                 window.setTimeout(function() {
-                    console.debug("layout Timeline: : this.timeline",tl);
+                    // console.debug("layout Timeline: : this.timeline",tl);
                     tl.layout();
                 }, 500);
             }
