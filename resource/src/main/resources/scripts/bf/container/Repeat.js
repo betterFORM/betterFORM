@@ -5,7 +5,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 id:null,
 
                 constructor:function(properties, node){
-                    // console.debug("Repeat.constructor created new instace node:", node, "\n\n");
+		            // console.debug("Repeat.constructor created new instace node:", node, "\n\n");
                     // this.inherited(arguments);
                     this.id = domAttr.get(this.srcNodeRef,"id");
 
@@ -15,8 +15,18 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     } else {
                         this.appearance = "full";
                     }
+                    var repeatId = this.id;
                     // console.debug("Repeat.postCreate appearance:",this.appearance);
-
+                    // TODO: review needed!!!!
+                    // remove existing handlers for this id
+                    if(fluxProcessor.subscribers[repeatId] != undefined) {
+                        array.forEach(fluxProcessor.subscribers[repeatId], function(handle) {
+                            console.debug("removing handle:",handle);
+                            connect.unsubscribe(handle);
+                        });
+                        console.debug("delete subscriber: :",repeatId);
+                        delete fluxProcessor.subscribers[repeatId];
+                    }
                     var bfInsertRepeatItemHandle = connect.subscribe("betterform-insert-repeatitem-"+ this.id, this, "handleInsert");
                     fluxProcessor.addSubscriber(this.id, bfInsertRepeatItemHandle);
                     var bfItemDeleteHandle = connect.subscribe("betterform-item-deleted-"+ this.id,      this, "handleDelete");
@@ -27,9 +37,11 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     this._getRepeatItems().forEach(function(repeatItem){
                         on(repeatItem, "click", lang.hitch(self, self._onClickRepeatItem));
                         var repeatItemId = domAttr.get(repeatItem,"id");
-                        // console.debug("Repeat.constructor connect.subscribe('bf-state-change-"+ repeatItemId, " self.handleStateChanged)");
-                        var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
-                        fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
+                        if(fluxProcessor.subscribers[repeatItemId] == undefined) {
+                            // console.debug("Repeat.constructor connect.subscribe('bf-state-change-"+ repeatItemId, " self.handleStateChanged)");
+                            var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
+                            fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
+                        }
                     });
 
                 },
@@ -62,7 +74,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                         return;
                     }
                     var repeatItem = (evt.currentTarget) ? evt.currentTarget : evt.srcElement;
-                // console.debug("onClickRepeatItem: repeatItem:",repeatItem);
+                    // console.debug("onClickRepeatItem: repeatItem:",repeatItem);
                     if(domClass.contains(repeatItem,"xfReadOnly")){
                         console.warn("Repeat._onClickRepeatItem: repeatItem ", repeatItem, " is readonly");
                         return;
@@ -88,7 +100,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                 },
 
                 handleSetRepeatIndex:function(/*Map*/ contextInfo) {
-                // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
+                    // console.debug("Repeat.handleSetRepeatIndex: contextInfo'",contextInfo, " for Repeat id: ", this.id);
                     var intIndex = parseInt(contextInfo.index,"10");
 
                     var repeatNode = this.srcNodeRef;
@@ -165,7 +177,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                             var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
                             fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
                             if(domStyle.get(repeatItemNode,"display") == "none"){
-        //                                repeatItemNode.removeAttribute("style");
+                                //                                repeatItemNode.removeAttribute("style");
                                 //todo: this is save enough? If an repeatitem can have a style then this wouldn't be sufficient
                                 domAttr.remove(repeatItemNode,"style");
                             }
@@ -175,14 +187,19 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
                 handleDelete:function(/*Map*/ contextInfo) {
                     // console.debug("Repeat.handleDelete contextInfo:",contextInfo);
-                    var position = parseInt(contextInfo.position,"10");
+                    var position = parseInt(contextInfo.position,"10");                    
                     var itemToRemove = this._getRepeatItems()[position - 1];
-                    var repeatNode = this.srcNodeRef;
+                    if(itemToRemove == undefined){
+                        console.warn("itemToRemove: ", itemToRemove, " is undefined");
+                    }                    
+                    var repeatNode = this.srcNodeRef;                    
+                    var parentOfItemToRemove = undefined;
                     if (this.appearance == "compact") {
-                        query("> tbody", repeatNode)[0].removeChild(itemToRemove);
+                        parentOfItemToRemove = query("> tbody", repeatNode)[0];
                     } else {
-                        repeatNode.removeChild(itemToRemove);
+                        parentOfItemToRemove = repeatNode;
                     }
+                    parentOfItemToRemove.removeChild(itemToRemove);
                 },
 
                 _removeRepeatIndexClasses:function() {
@@ -264,7 +281,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
 
                 },
                 _createRepeatItem:function(node, /* int */position) {
-                // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
+                    // console.debug("RepeatItem._createRepeatItem node:",node, " at position " + position);
                     var repeatItemCount = this._getSize();
                     domStyle.set(node, "display","none");
 
@@ -297,7 +314,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                         //  2. Default Insert happens after the targetNode
 
                         targetNode = this._getRepeatItems()[position - 2];
-                    // console.debug("RepeatItem._createRepeatItem targetNode: ", targetNode , " repeatItem: ", repeatItemDijit);
+                        // console.debug("RepeatItem._createRepeatItem targetNode: ", targetNode , " repeatItem: ", repeatItemDijit);
                         domConstruct.place(node, targetNode, "after");
                     }
                     // console.debug("RepeatItem._createRepeatItem Insert at Position "+ position + " of  :"+(repeatItemCount+1));

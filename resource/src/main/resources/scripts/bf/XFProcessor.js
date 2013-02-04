@@ -48,10 +48,10 @@ define(["dojo/_base/declare",
         _uiReady:false,
 	    initialEvents:[],
         bfDialogs:[],
-        indicatorObjectTimer: null,
-        indicatorContainer: null,
-        indicatorImage: null,
-        indicatorTargetObject: null,
+	    indicatorObjectTimer: null,
+	    indicatorContainer: null,
+	    indicatorImage: null,
+	    indicatorTargetObject: null,
 
 
         /*
@@ -125,7 +125,7 @@ define(["dojo/_base/declare",
         },
 
         ignoreExceptions: function (msg) {
-	        console.warn("XFProcessor.ignoreExceptions: msg:",msg);
+	    console.warn("XFProcessor.ignoreExceptions: msg:",msg);
         },
 
 
@@ -840,9 +840,9 @@ define(["dojo/_base/declare",
                     self.bfDialogs[targetid] = new Array();
                     query(".bfcDialog", nodesToEmbed).forEach(function(item) {
                         // console.debug("\n\nAdd Dialog:",domAttr.get(item,"id"));
-                    var dialogId = domAttr.get(item,"id");
-                    self.bfDialogs[targetid].push(dialogId);
-                    if (registry.byId(dialogId) !=  undefined) {
+                        var dialogId = domAttr.get(item,"id");
+                        self.bfDialogs[targetid].push(dialogId);
+                        if (registry.byId(dialogId) !=  undefined) {
                             item.parentNode.removeChild(item);
                         }
                     });
@@ -1398,15 +1398,15 @@ define(["dojo/_base/declare",
         },
 
         _handleLinkException:function(xmlEvent) {
-            console.debug("XFProcessor._handleLinkException xmlEvent:",xmlEvent);
+            // console.debug("XFProcessor._handleLinkException xmlEvent:",xmlEvent);
             console.error("Fatal error - " + xmlEvent.type + ": Failed to load resource: " + xmlEvent.contextInfo.resourceUri);
             //        fluxProcessor.closeSession();
         },
 
     	fetchProgress:function(fetchProgressId, fileName) {
-	        console.debug("XFProcessor.fetchProgress id:", fetchProgressId);
+	        // console.debug("XFProcessor.fetchProgress id:", fetchProgressId);
             try {
-        		console.debug("XFProcessor.fetchProgress id:", fetchProgressId, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
+        		// console.debug("XFProcessor.fetchProgress id:", fetchProgressId, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
         		Flux.fetchProgress(fetchProgressId, fileName, this.sessionKey, this.applyChanges);
             }
             catch(ex) {
@@ -1431,6 +1431,9 @@ define(["dojo/_base/declare",
 	    showHelp:function(controlId) {
     	    console.debug("showng help for:", controlId);
 	        var helpCtrl = dom.byId(controlId + '-help');
+	showHelp:function(controlId) {
+	    console.debug("showng help for:", controlId);
+	    var helpCtrl = dom.byId(controlId + '-help');
             if (helpCtrl == undefined) {
 		        console.warn("No help available for Control Id: '" + controlId + "'");
                 return;
@@ -1462,7 +1465,7 @@ define(["dojo/_base/declare",
             this.subscribers[subscriberID] = new Array();
                 }
             this.subscribers[subscriberID].push(handle);
-            },
+        },
         removeSubscribers:function(subscriberID){
                 // console.warn("removing subscribers for id: ", id, " subcribers: ",this.subscribers[id]);
             if(this.subscribers[subscriberID]!=undefined){

@@ -159,10 +159,10 @@
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 
-    <!--
-        <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
-                    doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
-    -->
+<!--
+    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
+                doctype-system="/resources/xsd/xhtml1-transitional.dtd"/>
+-->
 
     <xsl:output method="xhtml" omit-xml-declaration="yes"/>
 
@@ -918,8 +918,8 @@
 
         <xsl:variable name="dojoConfig">
             has: {
-            "dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
-            "dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
+		"dojo-firebug": <xsl:value-of select="$isDebugEnabled"/>,
+		"dojo-debug-messages": <xsl:value-of select="$isDebugEnabled"/>
             },
             isDebug:<xsl:value-of select="$isDebugEnabled"/>,
             locale:'en',
@@ -946,28 +946,18 @@
             ],
 
             bf:{
-            sessionkey: "<xsl:value-of select="$sessionKey"/>",
-            contextroot:"<xsl:value-of select="$contextroot"/>",
-            fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
-            useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
-            useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
-            useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
-            logEvents:<xsl:value-of select="$isDebugEnabled"/>,
-            unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
+		sessionkey: "<xsl:value-of select="$sessionKey"/>",
+		contextroot:"<xsl:value-of select="$contextroot"/>",
+		fluxPath:"<xsl:value-of select="concat($contextroot,'/Flux')"/>",
+		useDOMFocusIN:<xsl:value-of select="$uses-DOMFocusIn"/>,
+		useDOMFocusOUT:<xsl:value-of select="$uses-DOMFocusOut"/>,
+		useXFSelect:<xsl:value-of select="$uses-xforms-select"/>,
+		logEvents:<xsl:value-of select="$isDebugEnabled"/>,
+		unloadingMessage:"<xsl:value-of select="$unloadingMessage"/>"
             }
         </xsl:variable>
         <xsl:text>
 </xsl:text>
-        <!-- xsl:if test="$linechartActive">
-            ,
-            { name: 'jQuery',           location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jquery-1.7.1.min' },            
-            { name: 'jplot',            location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jquery.jqplot.min' },
-            { name: 'dateAxisRenderer', location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.dateAxisRenderer.min' },
-            { name: 'cursor',           location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.cursor.min' },
-            { name: 'highlighter',      location: '<xsl:value-of select="concat($contextroot,$scriptPath,'jplot')"/>', main: 'jqplot.highlighter.min' }		                  
-        </xsl:if-->
-
-
         <script type="text/javascript" src="{concat($contextroot,$scriptPath,'dojo/dojo.js')}">
             <xsl:attribute name="data-dojo-config"><xsl:value-of select="normalize-space($dojoConfig)"/></xsl:attribute>
         </script><xsl:text>

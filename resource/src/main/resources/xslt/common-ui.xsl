@@ -237,14 +237,14 @@
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="$isContainer">
-                <xsl:value-of select="normalize-space(concat('xfContainer ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
-            </xsl:otherwise>
-        </xsl:choose>
+	<xsl:choose>
+	    <xsl:when test="$isContainer">
+		<xsl:value-of select="normalize-space(concat('xfContainer ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
+	    </xsl:when>
+	    <xsl:otherwise>
+		<xsl:value-of select="normalize-space(concat('xfControl ',$name-classes, ' ', $type ,' ',$mip-classes, ' ', $author-classes,' ',$incremental,' ',$repeatClasses,' ',$mediatype-classes))"/>
+	    </xsl:otherwise>
+	</xsl:choose>
     </xsl:template>
 
     <xsl:template name="getXSDType">

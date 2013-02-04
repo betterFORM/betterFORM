@@ -41,6 +41,10 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}getSubnetID", GetSubnetID.class, 0, 2, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}isInIPRange", IsInIPRange.class, 0, 3, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
