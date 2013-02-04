@@ -1428,12 +1428,9 @@ define(["dojo/_base/declare",
             }
         },
 
-	    showHelp:function(controlId) {
-    	    console.debug("showng help for:", controlId);
+    	showHelp:function(controlId) {
+	        console.debug("showng help for:", controlId);
 	        var helpCtrl = dom.byId(controlId + '-help');
-	showHelp:function(controlId) {
-	    console.debug("showng help for:", controlId);
-	    var helpCtrl = dom.byId(controlId + '-help');
             if (helpCtrl == undefined) {
 		        console.warn("No help available for Control Id: '" + controlId + "'");
                 return;
