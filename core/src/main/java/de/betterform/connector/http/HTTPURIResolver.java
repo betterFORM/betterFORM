@@ -72,7 +72,7 @@ public class HTTPURIResolver extends AbstractHTTPConnector implements URIResolve
             } catch (IOException e) {
                 throw new XFormsException(e);
             }
-        } else if ("application/xml".equalsIgnoreCase(contentType) || "text/xml".equalsIgnoreCase(contentType) || "application/xhtml+xml".equalsIgnoreCase(contentType) ) {
+        } else if ("application/xml".equalsIgnoreCase(contentType) || "text/xml".equalsIgnoreCase(contentType) || "application/xhtml+xml".equalsIgnoreCase(contentType) ||  "application/xml+xslt".equalsIgnoreCase(contentType)) {
             try {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("converting response stream to XML");
