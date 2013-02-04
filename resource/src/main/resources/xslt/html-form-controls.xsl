@@ -127,7 +127,9 @@
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
-            <xsl:apply-templates select="@*" mode="copy-foreign-attributes"/>
+            <xsl:for-each select="@*[not(local-name(.) = 'ref' or local-name(.) = 'style' or local-name(.) = 'id' or local-name(.) = 'class' or local-name(.) = 'placeholder')]">
+                <xsl:copy/>
+            </xsl:for-each>
         </input>
     </xsl:template>
 
