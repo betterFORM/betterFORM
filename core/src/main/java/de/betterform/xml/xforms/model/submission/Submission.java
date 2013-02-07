@@ -1018,15 +1018,21 @@ public class Submission extends BindingElement implements DefaultAction {
 
 
         Element embeddedNode = null;
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("get target element for id: " + targetid);
+        }
         Element targetElem =  this.container.getElementById(targetid);
         DOMResult domResult = new DOMResult();
         //Test if targetElem exist.
         if (targetElem != null) {
             // destroy existing embedded form within targetNode
             if ( targetElem.hasChildNodes()) {
-                destroyembeddedModels(targetElem);
                 Initializer.disposeUIElements(targetElem);
             }
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("destroyed any existing ui elements for target elem");
+            }
+
             // import referenced embedded form into host document
             embeddedNode = (Element) this.container.getDocument().importNode(embedElement, true);
 
@@ -1055,9 +1061,9 @@ public class Submission extends BindingElement implements DefaultAction {
                 generator.setOutput(domResult);
                 generator.generate();
             } catch (TransformerException e) {
-                throw new XFormsException(e);
+                throw new XFormsException("Transformation error while executing 'Submission.submitReplaceEmbedXForms'", e);
             } catch (URISyntaxException e) {
-                throw new XFormsException(e);
+                throw new XFormsException("Malformed URI throwed URISyntaxException in 'Submission.submitReplaceEmbedXForms'", e);
             }
         }
 
