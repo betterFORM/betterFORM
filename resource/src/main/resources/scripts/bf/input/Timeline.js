@@ -8,7 +8,7 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
             constructor:function() {
                 // console.debug("Timeline.constructor: this: ", this);
                 this.srcNodeRef = arguments[1];
-                this.dataSource = domAttr.get(this.srcNodeRef, "data-bf");
+                this.dataSource = domAttr.get(this.srcNodeRef, "data-bf-url");
                 var origId = domAttr.get(this.srcNodeRef, "id");
                 this.id = origId.substring(0,origId.length -5) + "tlcontainer";
                 // console.debug("Timeline: dataSource:", this.dataSource, " origId: ",origId);
@@ -61,6 +61,7 @@ define(["dojo/_base/declare","dojo/dom","dojo/dom-attr","dojo/dom-construct", "d
                 this.timeline = Timeline.create(this.timelineNode, bandInfos,Timeline.HORIZONTAL);
                 var tl = this.timeline;
                 Timeline.loadXML(this.dataSource, function(xml,url) {
+                    // console.debug("Load XML: ", url);                   
                     eventSource.loadXML(xml,url);
                     tl.layout();
 
