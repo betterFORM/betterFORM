@@ -3,6 +3,8 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
         return declare(_Widget, {
 
             currentValue:null,
+            lastItem:null,
+            itemSetLength:0,
 
             postCreate:function() {
                 // console.debug("Select1ComboBox postCreate id:",this.id);
@@ -52,10 +54,18 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                         if(position == 2){
                             option = referenzedNode;
                         }else {
-                            option = this.getNthSiblingOption(position-2, referenzedNode);
+			                if (position>this.itemSetLength) { // Append to the end
+	                    	    option = this.lastItem;
+                            } else {
+                                option = this.getNthSiblingOption(position-2, referenzedNode);
+			                }
                         }
                         item = domConstruct.create("option", {id:generatedItemId}, option, "after");
                     }
+                    if (position>this.itemSetLength) {
+                        this.lastItem = item;
+                    }
+                    this.itemSetLength++;
                     domClass.add(item, "xfSelectorItem");
                 }else {
                     console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
@@ -80,6 +90,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 }else {
                     console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
                 }
+                this.itemSetLength--;
                 // console.debug("handleDeleteItem: this.domNode",this.domNode);
             },
 
