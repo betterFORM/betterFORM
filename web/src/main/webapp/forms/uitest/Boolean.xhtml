@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>Test form for Boolean controls</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+
+		<style type="text/css">
+			.xfFullGroup .xfControl .xfLabel  {
+				width:30px;
+			}
+			.xfGroupLabel {
+				font-size:large;
+				font-weight:bold;
+				margin-bottom:16px;
+			}
+			.testdesc {
+				margin:6px;
+			}
+			.controls {
+				margin-top:10px;
+			}
+		</style>
+        <xf:model>
+            <xf:instance id="i-1" xmlns="">
+                <data>
+                    <item>true</item>
+                    <item>true</item>
+                    <item>true</item>
+                    <item>true</item>
+                    <item>true</item>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="i-2" xmlns="">
+                <data>
+                    <item>false</item>
+                    <item>false</item>
+                    <item>false</item>
+                    <item>false</item>
+                    <item>false</item>
+                </data>
+            </xf:instance>
+
+            <xf:bind nodeset="item[1]" type="boolean" />
+            <xf:bind nodeset="item[2]" type="boolean" readonly="not(boolean-from-string(../item[1]))" />
+            <xf:bind nodeset="item[3]" type="boolean" />
+            <xf:bind nodeset="item[4]" type="boolean" relevant="boolean-from-string(../item[3])" constraint="boolean-from-string(.)"/>
+            <xf:bind nodeset="item[5]" type="boolean" constraint="boolean-from-string(.)"/>
+
+
+            <xf:submission id="s-debug" action="{$contextroot}/jsp/debug-instance.jsp"
+                           method="post" replace="all"
+                           validate="false"/>
+
+            <xf:submission id="s-replace-instance"
+                           ref="instance('i-2')"
+						   resource="echo:foo"
+                           method="post"
+                           replace="instance"
+                           instance="i-1"
+						   validate="false"/>
+        </xf:model>
+		
+    </head>
+    <body>
+        <xf:group appearance="full">
+            <xf:label>Boolean Tests (cross dependency test between boolean controls)</xf:label>
+
+				<div class="testdesc">Boolean 1 controls readonly state of Boolean 2 (initial value is checked)</div>
+				<div class="testdesc">Boolean 3 controls relevant state of Boolean 4 (initial value is checked)</div>
+				<div class="testdesc">Boolean 5 becomes invalid if not checked (initial value is checked)</div>
+				<div class="testdesc">Triggering 'Replace Instance' unchecks all Boolean controls. Boolean 2 becomes readonly and Boolean 4 gets disabled</div>
+				<xf:group appearance="full" class="controls">
+                <xf:input ref="item[1]" id="input-1">
+                    <xf:label><b>1</b></xf:label>
+                    <xf:help>Must be false to make <i>2</i> readonly</xf:help>
+                    <xf:hint>Must be false to make <i>2</i> readonly</xf:hint>
+                </xf:input>
+                <xf:input ref="item[2]" id="input-2">
+                    <xf:label><b>2</b></xf:label>
+                </xf:input>
+                <xf:input ref="item[3]" id="input-3">
+                    <xf:label><b>3</b></xf:label>
+					<xf:help>Must be true to make <i>4</i> relevant</xf:help>
+					<xf:hint>Must be true to make <i>4</i> relevant</xf:hint>
+                </xf:input>
+                <xf:input ref="item[4]" id="input-4">
+                    <xf:label><b>4</b></xf:label>
+					<xf:alert>Must be true</xf:alert>
+                </xf:input>
+                <xf:input ref="item[5]" id="input-5">
+                    <xf:label><b>5</b></xf:label>
+                    <xf:alert>Must be true</xf:alert>
+                </xf:input>
+			</xf:group>
+			<xf:trigger id="trigger-1">
+				<xf:label>Replace Instance</xf:label>
+				<xf:send submission="s-replace-instance"/>
+				<xf:refresh/>
+			</xf:trigger>			
+		</xf:group>
+    </body>
+</html>

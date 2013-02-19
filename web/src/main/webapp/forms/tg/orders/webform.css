@@ -1,0 +1,488 @@
+#container {
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	z-index: -1;
+}
+
+#header h1 {
+	display: none;
+}
+
+#xforms {
+	margin: 0px 10px 0px;
+}
+
+#logo {
+    /*background: url("Retourmanager.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: right;
+    height: 125px;
+    margin-right: 20px;
+    position: relative;
+    top: -65px;
+    width: 242px;*/
+}
+
+#flags img {
+        opacity: 0.7;
+        filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=70)';
+}
+
+#flags img:hover {
+        opacity: 1;
+        filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';
+}
+
+/* FIXES FOR xforms.css */
+
+
+
+/* Overrides for betterform.css */
+
+.xfGroup {
+	display: inline-block;
+	padding-top: 10px;
+}
+
+.xfControl {
+	margin-top: 5px !important;
+	margin-bottom: 0px !important;
+	padding-left: 10px;
+}
+
+
+/* Changes to adapt the 'default' webform look and feel */
+
+.xfGroupLabel {
+	font-weight: bold;
+	font-size: 14px padding-left : 10px;
+}
+
+/*  Make sure labels that are to wide get ... */
+.xfCompactRepeat .xfLabel,.xfControl .xfLabel {
+            text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            -moz-binding: url( 'ellipsis.xml#ellipsis' );
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            max-width: 100%;
+}
+
+/* TG does not have the last selector... !!! */
+.xfFullGroup, .xfCompactGroup, .xfMinimalGroup, .xfGroup > .xfFullGroup {
+	border: 1px solid #CCCCCC;
+	margin-top: 35px;
+	padding: 10px 10px 10px 10px;
+	display: block;
+}
+
+.xfFullGroup>.xfGroupLabel,
+.xfCompactGroup>.xfGroupLabel,
+.xfMinimalGroup>.xfGroupLabel {
+	font-size: 18px;
+	position: relative;
+	top: -20px;
+	margin-right: auto;
+	border: 1px solid #CCCCCC;
+	background-color: #174A59;
+	padding-left: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	color: #FFFFFF;
+}
+
+.xfFullGroup * .xfFullGroup,
+.xfFullGroup * .xfMinimalGroup,
+.xfFullGroup * .xfCompactGroup,
+.xfFullGroup > .xfMinimalGroup,
+.xfCompactGroup>.xfMinimalGroup {
+	border: 0px none;
+	margin-top: 15px;
+	padding: 0px;
+	display: inline;
+}
+
+.xfFullGroup * .xfFullGroup {
+	display: block;
+}
+
+.xfFullGroup * .xfFullGroup>.xfGroupLabel,
+.xfFullGroup * .xfCompactGroup>.xfGroupLabel,
+.xfFullGroup * .xfMinimalGroup>.xfGroupLabel {
+	font-size: 15px;
+	position: relative;
+	top: 0px;
+	background-color: transparent;
+	margin-right: auto;
+	border: 0px none;
+	width: 200px;
+	color: #515151;
+	font-style: italic;
+	/*text-decoration: underline;*/
+	text-shadow: 1px 1px 4px #AAAAAA;
+}
+
+.xfFullGroup * .xfInvalid>.xfGroupLabel{
+	color: red !important;
+}
+
+.xfFullGroup * .xfReadOnly.xfInvalid > .xfGroupLabel {
+    color: #515151 !important;
+}
+
+.xfSwitch {
+	padding-top: 10px;
+	min-height: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+	height: 250px;
+}
+
+.xfCase .xfFullGroup {
+	/* We do not want a border right within a case. That is a border beside a border, yuck */
+	border: none;
+}
+
+.xfCompactRepeat {
+	margin-top: 5px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	width: 0px;
+}
+
+.xfCompactRepeat+.xfTrigger {
+	clear: none;
+	margin-bottom: 20px;
+	padding-left: 20px;
+}
+
+.xfCompactRepeat .xfFullGroup, .xfCompactRepeat .xfGroup {
+	margin-top: 0px !important;
+	padding: 0px;
+}
+
+.xfCompactRepeat .xfRepeatItem .xfControl {
+	padding-left: 0px;
+	padding-right: 5px;
+	width: 150px;
+}
+
+.xfCompactRepeat .xfRepeatItem .xfControl.xfOutput {
+	display: inline-block;
+}
+
+.xfCompactRepeat .xfRepeatItem .xfControl.xfTrigger {
+	margin-top: 0px !important;
+	width: auto;
+}
+
+.xfCompactRepeat .xfRepeatItem .xfInput .xfValue {
+	width: 100%;
+}
+
+.xfCompactRepeat .xfRepeatItem .xfOutput .xfValue {
+	width: 100%;
+	display: inline-block;
+	height: 1.2em;
+}
+
+/* special css so compact repeat column names show up if one of the colums on the first line has no value */ 
+.xfCompactRepeat [class|=bfTableCol].xfDisabled, .xfCompactRepeat [class|=bfTableCol].xfDisabled label.xfDisabled {
+    /*display: inline-block!important;*/
+    visibility: visible;
+}
+
+.xfCompactRepeat > tbody > .xfRepeatItem > td > .xfRepeated > .dijitTextArea {
+	width: inherit;	
+}
+
+.xfFullGroup .xfControl.xfOutput .xfValue {
+	display: inline-block;
+    height: 17px;
+    min-width: 40px;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 0px;
+}
+	
+
+.xfOutput .xfValue {
+	cursor: not-allowed !important;
+}
+
+.xfControl.xfTrigger {
+	margin-top: 0px;
+	display: inline-block;
+}
+
+.xfControl.xfInvalid .xfValue { 
+	border: 1px solid red !important;
+}
+ 
+.xfOutOfRange:not(.xfRequiredEmpty) .xfValue,
+.xfInvalid > .xfDateTimeControl > .xfValue { 
+	border: 1px solid red !important;
+}
+
+/*
+.bfInvalidControl .xfValue,
+.bfInvalidControl .xfDateTextBox,
+.bfInvalidControl .xfValue,
+.bfInvalidControl .xfTimeTextBox {
+    border: 1px solid #D3D3D3 !important;
+}
+
+.xfReadOnly .xfInvalid > .xfValue,
+.xfReadOnly .xfOutOfRange:not(.xfRequiredEmpty) > .xfValue,
+.xfReadOnly .xfInvalid > .xfDateTimeControl > .xfValue {
+    border: 1px solid #D3D3D3 !important;
+}
+*/
+
+.xfRequired > .xfLabel {
+	padding-left: 0px;
+	font-weight: normal;
+}
+
+
+.xfRequired > .xfLabel:after {
+	content: " *";
+}
+
+/* if you want to style the value as well */
+.xfRequired .xfValue {
+	
+}
+
+.xfRequiredEmpty .xfLabel {
+	color: inherit;
+}
+
+.xfRequiredEmpty input.xfValue,
+.xfRequiredEmpty .xfDateTimeControl .xfValue {
+	border-color: #D3D3D3 !important;
+}
+
+
+/* tabcontainer */
+
+.nihilo .dijitTab {
+	color: #007836;
+	font-weight: bold;
+	margin: 0px;
+	min-width: 120px;
+	text-align: center;
+}
+
+.nihilo .dijitTabContainerBottom-spacer,
+.nihilo .dijitTabContainerTop-spacer {
+	border-top: 2px solid #CCCCCC;
+	border-bottom: 0px solid #CCCCCC;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	height: 7px;
+}
+
+.nihilo .dijitTabContainerTop-tabs {
+	margin-bottom: -2px;
+	border-bottom: none;
+	padding-left: 0px;
+}
+
+.nihilo .dijitTabContainerTop-tabs .dijitTab {
+    top: 5px;
+}
+
+.nihilo .dijitTabChecked .dijitTabInnerDiv .dijitTabContent span {
+	display: inline-block;
+	padding-top: 10px;
+	text-decoration: none;
+}
+
+.nihilo .dijitTabContainerTop-tabs .dijitTabChecked {
+	background-color: #F4F4F4;
+	height: 28px;
+	padding-bottom: 6px;
+	top: 0px;
+}
+
+.nihilo .dijitTabChecked .dijitTabInnerDiv .dijitTabContent {
+	margin-left: -3px;
+	margin-right: -2px;
+	padding-left: 6px;
+	padding-right: 5px;
+}
+
+.nihilo .dijitTabContent span {
+	outline: medium none;
+	text-decoration: none;
+}
+
+.dijitTextBox,.dijitComboBox,.dijitSpinner {
+	width: inherit;
+}
+
+/* style the first group */
+#xforms>.xfFullGroup,
+#xforms>form>.xfFullGroup {
+	border: none; 
+	margin-top : 0px;
+	padding: 0px;
+	margin-top: 0px;
+}
+
+/* and hide the first label*/
+#xforms>.xfFullGroup>.xfGroupLabel,
+#xforms>form>.xfFullGroup>.xfGroupLabel {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    display: inline-block;
+    font-size: xx-large;
+    left: 40px;
+    padding: 20px;
+}
+
+.xfGroupLabel span {
+    display: inline-block!important;
+}
+
+#xforms .xfGroupLabel span .xfValue {
+    font-size: xx-large;
+}
+
+.xfRepeatIndex.xfReadOnly {
+    -moz-box-shadow: none;
+    background-color: transparent !important;
+}
+
+/* special markup so textarea's in a repeat get special styling if shown in a dialog */
+.xfBfTextAreaDialog * .xfFullGroup {
+	margin-top: 0px;
+}
+
+.xfBfTextAreaDialog * .xfFullGroup .xfLabel {
+	display: none;
+}
+
+.xfBfTextAreaDialog * .xfFullGroup .xfMinimalGroup {
+	display: inline-block;
+}
+
+.xfDialog .xfFullGroup {
+	border: none;
+	margin-top: 0px;
+}
+
+/* to make the tool-tip hints visible outside box*/
+.xfDialog {
+	overflow: visible;
+}
+
+/* hide labels of complex types if they are part of a choice. Label is in the select */
+/* hide labels of complex types in a dialog. Label is in title */
+.bfChoice .xfContainer .xfContainer .xfGroupLabel,
+.xfDialog div > .xfContainer>.xfContainer>.xfGroupLabel,
+.xfDialog div > .xfContainer>.xfControl>.xfLabel {
+	display: none;
+}
+
+.xfReadOnly .bfChoice .xfContainer .xfContainer .xfGroupLabel{
+	display: inline-block !important;
+	padding-left: 10px;
+}
+
+.xfReadOnly .bfChoice .xfSelect1 {
+	display: none !important;
+}
+
+
+/* Make the progressbar show small and under the label of the file selector */
+.bfProgressbar {
+	height: 5px !important;
+    float: left;
+    clear: both;
+    width: 200px;
+}
+
+.bfProgressbar .border {
+	height: 5px !important;
+}
+
+.bfProgressbar .background {
+    height: 5px !important;
+    /*background: url("ajax-loader.gif") repeat-x scroll -8px -4px transparent;*/
+}
+
+
+#debug-pane {
+	z-index: 3000;
+}
+
+#openclose {
+	z-index: 3001;
+}
+
+/* is this used for a textarea in a dialog from a repaeat? To hide the label? */
+.noLabel > .xfLabel,
+.noLabel > .xfGroupLabel,
+.xfCase * .xfGroupLabel {
+	display: none !important;
+}
+
+/* But DO show lower level labels*/
+.xfCase .xfContainer .xfContainer .xfGroupLabel {
+    display: inline-block !important;
+}
+
+/* And hide them again if not needed*/
+.xfCase .xfContainer .noLabel > .xfGroupLabel	{
+	display: none !important;
+}
+/* interesting customizable things */
+
+.xfRepeatIndex {
+	/*background-color: #EEEEEE;
+	-moz-box-shadow: 2px 2px 2px #666666;*/
+}
+
+.xfValue:focus {
+    /*-moz-box-shadow: 2px 2px 2px #666666;
+    background-color: #EEEEEE;*/
+}
+
+
+/* What does this one do? */
+.xfOutput.xfReadOnly .dijitTextBox {
+	background: url("../../../resources/images/buttonDisabled.png") repeat-x scroll left top #FFFFFF;
+}
+
+/* Why is this needed */
+
+.xfDisabled .xfGroupLabel {
+	display: none;
+}
+
+/* autogrow please */
+.xfHint {
+	height: auto;
+}
+
+.xfCompactRepeat .xfRepeatItem .xfControl .xfHint {
+	margin-top: 25px;
+}
+
+.growlMessage {
+	color:#B0C700;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 95%, from(rgba(250, 250, 250, 1.0)), to(rgba(200, 200, 200, 1.0)));
+    background-image: -moz-linear-gradient(-90deg, rgba(250, 250, 250, 1.0), rgba(200, 200, 200, 1.0));
+}
+
+.growlMessage:hover,
+.growlMessage.hover {
+    border: 2px solid orange;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 95%, from(rgba(250, 250, 250, 1.0)), to(rgba(200, 200, 200, 1.0)));
+    background-image: -moz-linear-gradient(-90deg, rgba(250, 250, 250, 1.0), rgba(200, 200, 200, 1.0));
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Test Insert item in repeat on document-load</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <xf:model>
+        <xf:instance id="i-default" xmlns="">
+            <form>
+                <repeat>
+                    <item value="1">One</item>
+                </repeat>
+            </form>
+        </xf:instance>
+        <xf:bind nodeset="repeat" id="repeat-bind">
+            <xf:bind nodeset="item"
+					 id="inputfield-id"
+					 readonly="false()"
+					 required="false()"
+					 relevant="true()"
+					 constraint="true()"
+					 type="xforms:string"/>
+        </xf:bind>
+		
+        <xf:action ev:event="xforms-ready">
+            <xf:insert position="after" at="index('r-1')" nodeset="repeat"/>
+        </xf:action>
+    </xf:model>
+</head>
+<body>
+    <xf:group appearance="full">
+        <xf:label>You should see 2 entries</xf:label>
+        <xf:repeat id="r-1" bind="repeat-bind">
+            <xf:input bind="inputfield-id">
+                <xf:label/>
+            </xf:input>
+        </xf:repeat>
+    </xf:group>
+</body>
+</html>

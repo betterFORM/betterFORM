@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<envelope>
+		<document>
+			<documentId>010350145KG        000120110300556</documentId>
+			<hierarchyInformation>
+				<informationProviderGLN>8710317000007</informationProviderGLN>
+				<targetMarket>NL</targetMarket>
+				<documentStatus>ORIGINAL</documentStatus>
+				<operation>NEW</operation>
+			</hierarchyInformation>
+			<item>
+				<itemId>010350145KG        000120110300556</itemId>
+				<gtin>08712199003718</gtin>
+				<gtinName lang="nl">Pineapple gold 05      PA</gtinName>
+				<informationProviderGLN>8710317000007</informationProviderGLN>
+				<informationProviderName>The Greenery</informationProviderName>
+				<targetMarket>NL</targetMarket>
+				<productType>EA</productType>
+				<lastModifiedDate>2010-10-25T15:47:58.629+02:00</lastModifiedDate>
+				<isInvoiceUnit>true</isInvoiceUnit>
+				<isDispatchUnit>true</isDispatchUnit>
+				<netContent uom="KG">12</netContent>
+				<brandName>PACIFI</brandName>
+				<alternateItemIdentification>
+					<agency>ZG</agency>
+					<id>10350145</id>
+				</alternateItemIdentification>
+				<functionalName lang="nl">Pineapple</functionalName>
+				<productDescription lang="nl">Pineapple gold 05      PA</productDescription>
+				<startAvailabilityDate>2010-10-25T15:47:58.629+02:00</startAvailabilityDate>
+				<effectiveDate>2010-10-25T15:47:58.629+02:00</effectiveDate>
+				<itemExtensions>
+					<ext1:theGreeneryItemExtension>
+						<ext1:package>
+							<ext1:packageId>110300556</ext1:packageId>
+							<ext1:packageDescription>Carton</ext1:packageDescription>
+						</ext1:package>
+						<ext1:pallet>
+							<ext1:palletId>110500022</ext1:palletId>
+							<ext1:palletDescription>Pallet</ext1:palletDescription>
+							<ext1:numberOfItems>80</ext1:numberOfItems>
+						</ext1:pallet>
+					</ext1:theGreeneryItemExtension>
+				</itemExtensions>
+			</item>
+			<documentExtensions>
+				<ext1:theGreeneryDocumentExtension>
+					<ext1:id>024668</ext1:id>
+					<ext1:gln>8713702246684</ext1:gln>
+					<ext1:name>CORP.FRUTERA DEL PACIFICO SA</ext1:name>
+					<ext1:street>DAVID,CHIRIQUI,APARTADO 0426-00098</ext1:street>
+					<ext1:postalCode></ext1:postalCode>
+					<ext1:city>PANAMA</ext1:city>
+					<ext1:country>PA</ext1:country>
+					<ext1:deliveryType>227</ext1:deliveryType>
+					<ext1:deliveryLocation>
+						<ext1:gln>8712199000205</ext1:gln>
+						<ext1:name>HAGE INTERNATIONAL BV</ext1:name>
+						<ext1:city>BARENDRECHT</ext1:city>
+					</ext1:deliveryLocation>
+				</ext1:theGreeneryDocumentExtension>
+			</documentExtensions>
+		</document>
+</envelope>
+

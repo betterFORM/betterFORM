@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xforms="http://www.w3.org/2002/xforms"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        >
+<html:head>
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+    -->
+	<xforms:model>
+	
+		<xforms:instance id="main">
+			<root xmlns="">
+				<decimal1>1</decimal1>
+				<decimal2>1234567.123</decimal2>
+				<decimal3>1234567.1234567890</decimal3>
+				<decimal4>12345678.123</decimal4>
+			</root>
+		</xforms:instance>
+		
+	
+		<xforms:bind id="bind_decimal1" nodeset="/root/decimal1" type="xs:decimal"/>
+		<xforms:bind id="bind_decimal2" nodeset="/root/decimal2" type="xs:decimal"/>
+		<xforms:bind id="bind_decimal3" nodeset="/root/decimal3" type="xs:decimal"/>
+		<xforms:bind id="bind_decimal4" nodeset="/root/decimal4" type="xs:decimal"/>
+		
+	</xforms:model>
+
+</html:head>
+
+<html:body>
+<xforms:group id="g1">
+	<xforms:input id="input1" bind="bind_decimal1">
+		<xforms:label>decimal1</xforms:label>
+	</xforms:input>
+	<xforms:input id="input2" bind="bind_decimal2">
+		<xforms:label>decimal2</xforms:label>
+	</xforms:input>
+	<xforms:input id="input3" bind="bind_decimal3">
+		<xforms:label>decimal3</xforms:label>
+	</xforms:input>
+	<xforms:input id="input4" bind="bind_decimal4">
+		<xforms:label>decimal4</xforms:label>
+	</xforms:input>
+</xforms:group>
+</html:body>
+
+</html:html>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <title>Internationalization &amp; Localization</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <xf:model>
+        <xf:instance id="internal">
+            <data xmlns="">
+                <select-1>1</select-1>
+                <select-2>2</select-2>
+                <select-3>3</select-3>
+                <select-4>4</select-4>
+                <items>
+                    <item value="1">One</item>
+                    <item value="2">Two</item>
+                    <item value="3">Three</item>
+                    <item value="4">Four</item>
+                </items>
+
+            </data>
+        </xf:instance>
+
+        <xf:submission id="debug"
+                       method="post"
+                       action="{$contextroot}/jsp/debug-instance.jsp"
+                       validate="false"/>
+
+    </xf:model>
+
+    <style type="text/css">
+
+        .xfGroupLabel {
+            font-weight: bold;
+            font-size: 14pt;
+            margin-bottom: 10px;
+        }
+
+        .xfLabel {
+            display: block;
+            float: left;
+            width: 100px;
+        }
+        #lang-selector .xfLabel {
+            width:70px;
+        }
+        .xfControl {
+            display: block;
+            height: 38px;
+        }
+
+
+        .dijitDropDownButton {
+            display : block;
+            margin: 0.2em;
+            position: relative;
+            top: -8px;
+        }
+
+        #outergroup {
+            border:1px solid black;
+        }
+        #group-1 {
+            border:2px solid red;
+        }
+        #group-2 {
+            border:2px solid blue;
+        }
+        #group-3 {
+            border:2px solid yellow;
+        }
+        #case1 {
+            background-color: #add8e6;
+        }
+        #case2 {
+            background-color: #ffb6c1;
+        }
+    </style>
+
+</head>
+<body class="tundra" style="padding:50px;">
+<xf:group appearance="full" id="outergroup">
+    <xf:label>Switch / Case Events</xf:label>
+    <xf:group appearance="full" id="group-1">
+        <xf:label>Before Switch / Case</xf:label>
+        <xf:select1 id="select1" ref="select-1">
+                <xf:label>Select 1 (outer Case)</xf:label>
+                <xf:itemset nodeset="/data/items/item">
+                    <xf:label ref="."/>
+                    <xf:value ref="@value"/>
+                </xf:itemset>
+                <xf:message ev:event="xforms-value-changed">select1 outer case value changed</xf:message>
+            </xf:select1>
+    </xf:group>
+    <xf:group appearance="full" id="group-2">
+        <xf:label>Switch / Case: </xf:label>
+        <xf:switch>
+            <xf:case id="case1" >
+                <xf:message ev:event="xforms-select">case 1 selected</xf:message>
+                <xf:group class="case" appearance="full">
+                    <xf:label>Case 1</xf:label>
+                    <xf:trigger appearance="minimal">
+                        <xf:label>Case 2</xf:label>
+                        <xf:toggle case="case2"/>
+                    </xf:trigger>
+                    <xf:select1 id="select2" ref="select-2">
+                        <xf:label>Select 2 (in Case1)</xf:label>
+                        <xf:itemset nodeset="/data/items/item">
+                            <xf:label ref="."/>
+                            <xf:value ref="@value"/>
+                        </xf:itemset>
+                        <xf:message ev:event="xforms-value-changed">select2 in case1 value changed</xf:message>
+                    </xf:select1>
+                    <xf:input ref="select-2">
+                        <xf:label>Select 2 Value</xf:label>
+                        <xf:message ev:event="xforms-value-changed">input in case1 value changed</xf:message>
+                    </xf:input>
+                </xf:group>
+            </xf:case>
+            <xf:case id="case2">
+                <xf:message ev:event="xforms-select">case 2 selected</xf:message>
+                <xf:group class="case" appearance="full">
+                    <xf:label>Case 2</xf:label>
+                    <xf:trigger appearance="minimal">
+                        <xf:label>Case 1</xf:label>
+                        <xf:toggle case="case1"/>
+                    </xf:trigger>
+                    <xf:select1 id="select3" ref="select-3">
+                        <xf:label>Select 3 (in Case2)</xf:label>
+                        <xf:itemset nodeset="/data/items/item">
+                            <xf:label ref="."/>
+                            <xf:value ref="@value"/>
+                        </xf:itemset>
+                        <xf:message ev:event="xforms-value-changed">select3 in case2 value changed</xf:message>
+                    </xf:select1>
+                    <xf:input ref="select-3">
+                        <xf:label>Select 3 Value</xf:label>
+                        <xf:message ev:event="xforms-value-changed">input in case2 value changed</xf:message>
+                    </xf:input>
+                </xf:group>
+            </xf:case>
+        </xf:switch>
+    </xf:group>
+    <xf:group appearance="full" id="group-3">
+        <xf:label>After Switch / Case </xf:label>
+        <xf:select1 id="select4" ref="select-4">
+            <xf:label>Select 4 (outer Case)</xf:label>
+            <xf:itemset nodeset="/data/items/item">
+                <xf:label ref="."/>
+                <xf:value ref="@value"/>
+            </xf:itemset>
+            <xf:message ev:event="xforms-value-changed">select4 outer case value changed</xf:message>
+        </xf:select1>
+    </xf:group>
+</xf:group>
+</body>
+</html>

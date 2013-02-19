@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
+
+        <title>Group with 'bf:horizontalTable' appearance</title>
+
+
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            table, td {
+                border:thin solid #adff2f;
+            }
+
+        </style>
+    </head>
+
+    <body class="soria" style="margin:30px">
+        <div style="display:none">
+            <xf:model>
+                <xf:instance>
+                    <data xmlns="">
+                        <group isRelevant="true">
+                            <a>aaa</a>
+                            <b>bbb</b>
+                            <c>ccc</c>
+                            <d>ddd</d>
+                        </group>
+                    </data>
+                </xf:instance>
+                <xf:bind nodeset="group" relevant="boolean-from-string(@isRelevant)" />
+            </xf:model>
+        </div>
+        <h2>Horizontal Table Test</h2>
+
+        <div class="Section sample">
+            <xf:trigger>
+                <xf:label>Switch relevantce</xf:label>
+                <xf:setvalue ref="group/@isRelevant" value="if(.='true') then 'false' else 'true'"/>
+            </xf:trigger>
+
+            <xf:group ref="group" appearance="bf:horizontalTable">
+                <xf:label>Group with 'horizontalTable' appearance and a group label</xf:label>
+                <xf:input ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input ref="b">
+                    <xf:label>Bb-label</xf:label>
+                </xf:input>
+                <xf:input ref="c">
+                    <xf:label>Ccc-label</xf:label>
+                </xf:input>
+                <xf:input ref="d">
+                    <xf:label>Dddd-label</xf:label>
+                </xf:input>
+            </xf:group>
+            <p/>
+            <div>same but without a group label</div>
+            <xf:group ref="group" appearance="bf:horizontalTable">
+                <xf:input ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input ref="b">
+                    <xf:label>Bb-label</xf:label>
+                </xf:input>
+                <xf:input ref="c">
+                    <xf:label>Ccc-label</xf:label>
+                </xf:input>
+                <xf:input ref="d">
+                    <xf:label>Dddd-label</xf:label>
+                </xf:input>
+            </xf:group>
+            <xf:group ref="group" appearance="bf:horizontalTable">
+                <xf:label>with HTML in a column and a nested group</xf:label>
+                <div>here is some html stuff</div>
+                <xf:input ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input ref="b">
+                    <xf:label>Bb-label</xf:label>
+                </xf:input>
+                <xf:input ref="c">
+                    <xf:label>Ccc-label</xf:label>
+                </xf:input>
+                <xf:group>
+                    <xf:input ref="a">
+                        <xf:label>A-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="b">
+                        <xf:label>Bb-label</xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:input ref="d">
+                    <xf:label>Dddd-label</xf:label>
+                </xf:input>
+            </xf:group>
+        </div>
+    </body>
+
+</html>

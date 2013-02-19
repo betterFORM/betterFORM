@@ -1,0 +1,157 @@
+body {
+	background-image: none;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	margin: 10px;
+}
+
+#container {
+	background: url("header2.png") no-repeat scroll 0 0 transparent;
+	height: 165px;
+	margin: 0 auto;
+	position: relative;
+	width: 950px;
+	z-index: -1;
+}
+
+#header {
+	font-size: 25px;
+	height: 110px;
+	left: 70px;
+	position: relative;
+	width: 360px;
+}
+
+#shim {
+	background-color: #FFFFFF;
+	display: block;
+	height: 100%;
+	left: 0;
+	opacity: 1;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1001;
+}
+
+.xfCompactRepeat .xfRepeatHeader .xfLabel {
+	
+}
+
+.HeaderInfo.xfFullGroup>.xfControl>.xfLabel {
+	width: 210px;
+}
+
+/* override of params in webform.css
+   make sure loading order is ok (these come last) */ 
+.xfFullGroup>.xfGroupLabel,
+.xfCompactGroup>.xfGroupLabel,
+.xfMinimalGroup>.xfGroupLabel {
+	background-color: #FBFBFB;
+	color: #B0C700;
+}
+
+/* Overridden/added from webfor.css */
+.xfFullGroup * .xfFullGroup>.xfGroupLabel,
+.xfFullGroup * .xfCompactGroup>.xfGroupLabel,
+.xfFullGroup * .xfMinimalGroup>.xfGroupLabel {
+	font-size: 13px;
+	width: auto;
+}
+
+/* Overridden/added from webfor.css */
+.xfSwitch {
+	min-height: 270px; /*ff*/
+	height: 270px;
+}
+
+/* Overridden/added from webfor.css */
+.xfCase .xfFullGroup {
+	margin-top: 0px;
+}
+
+.xfMinimalGroup>.xfControl {
+	display: inline-block
+}
+
+.nihilo * .dijitCheckBoxInput,
+.nihilo * .dijitCheckBox {
+	border: 1px solid #B0C700;
+}
+
+.nihilo .dijitTabContainerBottom-spacer,
+.nihilo .dijitTabContainerTop-spacer {
+	border-color: #CCCCCC;
+}
+
+.xfRepeatIndex {
+	background-color: #E9FFA0;
+}
+
+.xfControl select {
+	/*height: 23px;*/
+}
+
+[size="5"] {
+	height: 100px !important;
+	display: inline-block;
+	position: relative;
+	left: 0 !important;
+    width: 545px;
+}
+
+.bfProgressbar .background {
+    background: url("ajax-loader.gif") repeat-x scroll -8px -4px transparent;
+}
+
+.nihilo .dijitDialog .dijitDialogTitle {
+    color: #B0C700;
+}
+
+/* extra readonly formatter for textarea's*/
+.noResize textarea {
+	resize: none;
+}
+
+#_DESADV_Consignment_LineInfos_LineInfo_FreeText textarea {
+	width: 350px;
+}
+
+.uploadsControl .xfRepeatItem {
+	height: 20px;
+}
+
+.uploadsControl .xfUpload {
+	margin-top: 0 !important;
+}
+
+#xforms > .xfContainer > .xfGroupLabel {
+	display: none;
+}
+
+#container #title .xfGroup .xfGroupLabel {
+    font-size: xx-large;
+    color: #B0C700;
+}
+
+#xforms {
+	position:relative;
+	top: -70px;
+}
+
+.bredeLabel210 .xfLabel {
+	width:210px !important;
+    text-overflow: inherit;
+    vertical-align: top !important;
+    white-space: normal;
+}
+
+.xfCompactRepeat > tbody > .xfRepeatItem > td > .xfRepeated > .dijitTextArea {
+    font-family: sans-serif;
+    font-size: 10pt;
+    width: inherit;
+}
+
+.xfGroup .xfControl .xfLabel {
+	margin-top: 0px;
+	margin-bottom: 0.4em;
+}

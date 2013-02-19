@@ -1,0 +1,14 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<data>
+    <firstname/>
+    <lastname/>
+    <alias/>
+    <email/>
+    <pass1/>
+    <pass2/>
+    <agreement>true</agreement>
+</data>

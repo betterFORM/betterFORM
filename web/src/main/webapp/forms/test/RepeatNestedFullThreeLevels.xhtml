@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Repeats</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            #nested-input-value{width:400px;}
+        </style>
+
+        <xf:model id="model_1">
+            <xf:instance id="instance_1" xmlns="">
+                <repeats>
+                    <level1>
+                          <propertyName >level 1 property 1</propertyName>
+                          <level2 >
+                              <propertyName >level 2 property 1</propertyName>
+                               <level3>level 3 property 1</level3>
+                               <level3>level 3 property 2</level3>
+                          </level2>
+                          <level2 >
+                              <propertyName >level 2 property 2</propertyName>
+                               <level3>level 3 property 3</level3>
+                               <level3>level 3 property 4</level3>
+                          </level2>
+                    </level1>
+                    <level1>
+                          <propertyName >level 1 property 2</propertyName>
+                          <level2 >
+                              <propertyName >level 2 property 3</propertyName>
+                               <level3>level 3 property 5</level3>
+                               <level3>level 3 property 6</level3>
+                          </level2>
+                          <level2 >
+                              <propertyName >level 2 property 4</propertyName>
+                               <level3>level 3 property 7</level3>
+                               <level3>level 3 property 8</level3>
+                          </level2>
+                    </level1>
+                </repeats>
+            </xf:instance>
+            <xf:submission id="submission_1" action="{$contextroot}/jsp/debug-instance.jsp" method="post" validate="false"/>
+
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>Nested Repeat</xf:label>
+            <xf:group>
+                <xf:label>Level 1 Controls</xf:label>
+                <xf:group>
+                    <xf:label>Insert</xf:label>
+                    <xf:trigger>
+                        <xf:label>Insert Into Selected Outer Repeat</xf:label>
+                        <xf:insert nodeset="level1" at="index('r-level1Repeat')" position="after"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Outer Repeat @first</xf:label>
+                        <xf:insert nodeset="level1" at="1" position="before"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Outer Repeat @last</xf:label>
+                        <xf:insert nodeset="level1" at="last()" position="after"/>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group>
+                    <xf:label>Delete</xf:label>
+                    <xf:trigger>
+                        <xf:label>Delete Selected Outer RepeatItem</xf:label>
+                        <xf:delete nodeset="level1" at="index('r-level1Repeat')" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Outer RepeatItem @first</xf:label>
+                        <xf:delete nodeset="level1" at="1" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Outer RepeatItem @last</xf:label>
+                        <xf:delete nodeset="level1" at="last()" />
+                    </xf:trigger>
+                </xf:group>
+            </xf:group>
+            <xf:group>
+                <xf:label>Level 2 Controls</xf:label>
+                <xf:group>
+                    <xf:label>Insert</xf:label>
+                    <xf:trigger>
+                        <xf:label>Insert Into Selected Inner Repeat</xf:label>
+                        <xf:insert nodeset="level1[index('r-level1Repeat')]/level2" at="index('r-level2Repeat')" position="after"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Inner Repeat @first</xf:label>
+                        <xf:insert nodeset="level1[index('r-level1Repeat')]/level2" at="1" position="before"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Inner Repeat @last</xf:label>
+                        <xf:insert nodeset="level1[index('r-level1Repeat')]/level2" at="last()" position="after"/>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group>
+                    <xf:label>Delete</xf:label>
+                    <xf:trigger>
+                        <xf:label>Delete Selected Inner RepeatItem</xf:label>
+                        <xf:delete nodeset="level1[index('r-level1Repeat')]/level2" at="index('r-level2Repeat')" position="after"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Inner RepeatItem @first</xf:label>
+                        <xf:delete nodeset="level1[index('r-level1Repeat')]/level2" at="1" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Inner RepeatItem @last</xf:label>
+                        <xf:delete nodeset="level1[index('r-level1Repeat')]/level2" at="last()"/>
+                    </xf:trigger>
+                </xf:group>
+
+            </xf:group>
+
+            <xf:group>
+                <xf:label>Level 3 Controls</xf:label>
+                <xf:group>
+                    <xf:label>Insert</xf:label>
+                    <xf:trigger>
+                        <xf:label>Insert Into Selected Inner Repeat</xf:label>
+                        <xf:insert nodeset="level1[index('r-level1Repeat')]/level2[index('r-level2Repeat')]/level3" at="index('r-level3Repeat')" position="after"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Inner Repeat @first</xf:label>
+                        <xf:insert nodeset="level1[index('r-level1Repeat')]/level2[index('r-level2Repeat')]/level3" at="1" position="before"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Insert Into Inner Repeat @last</xf:label>
+                        <xf:insert nodeset="level1[index('r-level1Repeat')]/level2[index('r-level2Repeat')]/level3" at="last()" position="after"/>
+                    </xf:trigger>
+                </xf:group>
+                <xf:group>
+                    <xf:label>Delete</xf:label>
+                    <xf:trigger>
+                        <xf:label>Delete Selected Inner RepeatItem</xf:label>
+                        <xf:delete nodeset="level1[index('r-level1Repeat')]/level2[index('r-level2Repeat')]/level3" at="index('r-level3Repeat')" position="after"/>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Inner RepeatItem @first</xf:label>
+                        <xf:delete nodeset="level1[index('r-level1Repeat')]/level2[index('r-level2Repeat')]/level3" at="1" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete Inner RepeatItem @last</xf:label>
+                        <xf:delete nodeset="level1[index('r-level1Repeat')]/level2[index('r-level2Repeat')]/level3" at="last()"/>
+                    </xf:trigger>
+                </xf:group>
+
+            </xf:group>
+
+            <xf:group appearance="full">
+                <xf:label>Level 1 Repeat:</xf:label>
+
+                <xf:repeat id="r-level1Repeat" nodeset="level1" appearance="full">
+                    <xf:input ref="propertyName">
+                        <xf:label>Property Level 1</xf:label>
+                    </xf:input>
+                    <xf:group ref=".">
+                        <xf:label>Level 2:</xf:label>
+                        <xf:repeat id="r-level2Repeat" nodeset="level2" appearance="full">
+                            <xf:input ref="propertyName">
+                                <xf:label>Property Level 2</xf:label>
+                            </xf:input>
+                            <xf:group ref=".">
+                                <xf:label>Level 3:</xf:label>
+                                <xf:repeat id="r-level3Repeat" nodeset="level3" appearance="full">
+                                    <xf:input ref=".">
+                                        <xf:label>Level 3 Item</xf:label>
+                                    </xf:input>
+                                </xf:repeat>
+                            </xf:group>
+                        </xf:repeat>
+                    </xf:group>
+                </xf:repeat>
+            </xf:group>
+
+        </xf:group>
+        <xf:trigger>
+            <xf:send submission="submission_1"/>
+            <xf:label>Submit</xf:label>
+        </xf:trigger>
+    </body>
+</html>

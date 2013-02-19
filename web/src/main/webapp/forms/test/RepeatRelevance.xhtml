@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Appearance for Groups</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <xf:model>
+            <xf:submission id="debug" replace="all" action="{$contextroot}/jsp/debug-instance.jsp" method="post" validate="false"/>
+            <xf:instance xmlns="">
+                <data>
+                    <visible>true</visible>
+                 <!--   <grouped-data>
+                        <a>aaa</a>
+                        <b>bbb</b>
+                        <c>ccc</c>
+                        <d>ddd</d>
+                    </grouped-data>-->
+                    <repeated-data2>
+                        <entry>
+                            <u>uuuu</u>
+                            <v>vvvvvv</v>
+                            <w>wwwww</w>
+                            <x>xxx</x>
+                            <y>yyy</y>
+                            <z>zzz</z>
+                        </entry>
+                        <entry>
+                            <u>uuuu</u>
+                            <v>vvvvvv</v>
+                            <w>wwwww</w>
+                            <x>xxx</x>
+                            <y>yyy</y>
+                            <z>zzz</z>
+                        </entry>
+                    </repeated-data2>
+                </data>
+            </xf:instance>
+            <xf:bind id="b-visible" nodeset="visible" type="boolean"/>
+            <xf:bind id="b1" nodeset="repeated-data2/entry" required="true()">
+                <xf:bind id="b2" nodeset="u" required="true()"/>
+                <xf:bind id="b3" nodeset="v" required="true()" relevant="boolean-from-string(/data/visible)"/>
+                <xf:bind id="b4" nodeset="w" required="true()"/>
+            </xf:bind>
+        </xf:model>
+        <style type="text/css">
+            #column1 {display: inline;}
+            #column2 {display: inline;}
+            #compact-repeat .col-1{background:gray;}
+            #compact-repeat .col-1 .value{width:300px;}
+            #compact-repeat .col-1 label{color:white;}
+            #compact-repeat .col-2{background:darkgray;}
+            #compact-repeat .col-2 .value{width:150px;}
+            #compact-repeat .col-3 {background:lightgray;}
+            #compact-repeat .col-3 *{width:50px;}
+
+        </style>
+    </head>
+    <body>
+
+        This form shows how betterForm supports the appearance attribute for groups and repeats.
+        <xf:group appearance="full">
+            <xf:label>Control relevant</xf:label>
+            <xf:input bind="b-visible">
+                <xf:label>Trigger relevant true and false</xf:label>
+                <xf:alert>Trigger relevant true and false</xf:alert>
+                <xf:hint>Trigger relevant true and false</xf:hint>
+                <xf:help>Trigger relevant true and false</xf:help>
+            </xf:input>
+        </xf:group>
+        <xf:group appearance="full">
+            <xf:label>
+                Different Appearances of <b>Repeat</b>
+            </xf:label>
+
+            <xf:group appearance="minimal">
+                <xf:label>
+                    <b>Minimal repeat</b> with flow layout
+                </xf:label>
+                <xf:repeat id="minimal-repeat" appearance="minimal" nodeset="repeated-data2/entry">
+                    <xf:input ref="u">
+                        <xf:label>X-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="v">
+                        <xf:label>Y-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="w">
+                        <xf:label>Z-label</xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:group>
+
+            <xf:group appearance="minimal">
+                <xf:label>
+                    <b>Compact repeat</b> with horizontal table layout
+                </xf:label>
+
+                <xf:repeat id="compact-repeat" appearance="compact" nodeset="repeated-data2/entry">
+                    <xf:input ref="u">
+                        <xf:label>U-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="v">
+                        <xf:label>V-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="w">
+                        <xf:label>W-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="x">
+                        <xf:label>X-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="y">
+                        <xf:label>Y-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="z">
+                        <xf:label>Z-label</xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:group>
+
+            <xf:group appearance="minimal">
+                <xf:label>
+                    <b>Full repeat</b> with vertical table layout
+                </xf:label>
+                <xf:repeat id="full-repeat" appearance="full" nodeset="repeated-data2/entry">
+                    <xf:input ref="x">
+                        <xf:label>X-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="y">
+                        <xf:label>Y-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="z">
+                        <xf:label>Z-label</xf:label>
+                    </xf:input>
+                </xf:repeat>
+            </xf:group>
+
+         </xf:group>
+
+        <xf:trigger>
+            <xf:label>Debug</xf:label>
+            <xf:action>
+                <xf:send submission="debug"/>
+            </xf:action>
+        </xf:trigger>
+
+
+    </body>
+</html>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.w3.org/2002/xforms ">
+<head>
+    <title>TimeTracker</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+
+    <!--<script type="text/javascript">-->
+        <!--dojo.require("dijit.dijit"); // optimize: load dijit layer-->
+        <!--dojo.require("dijit.layout.BorderContainer");-->
+    <!--</script>-->
+
+    <!--<style type="text/css">-->
+        <!--.header {-->
+            <!--font-size: 16pt;-->
+            <!--color: gray;-->
+            <!--border-bottom: thin solid gray;-->
+        <!--}-->
+
+        <!--tr.xfRepeatHeader  td {-->
+            <!--font-weight: bold;-->
+            <!--padding-right: 5px;-->
+        <!--}-->
+
+        <!--.caTabContainer {-->
+            <!--overflow: hidden;-->
+        <!--}-->
+
+        <!--tr.xfRepeatItem  td {-->
+            <!--padding-right: 5px;-->
+        <!--}-->
+
+        <!--/* date column */-->
+        <!--.caTableCol-1 {-->
+            <!--text-align: left;-->
+            <!--width: 11ex;-->
+        <!--}-->
+
+        <!--/* time column */-->
+        <!--.caTableCol-2 {-->
+            <!--text-align: right;-->
+        <!--}-->
+
+        <!--/* time column */-->
+        <!--.caTableCol-3 {-->
+            <!--text-align: left;-->
+        <!--}-->
+
+        <!--/* time column */-->
+        <!--.caTableCol-4 {-->
+            <!--text-align: left;-->
+        <!--}-->
+
+        <!--/* note column */-->
+        <!--.caTableCol-5 {-->
+            <!--overflow: hidden;-->
+        <!--}-->
+
+        <!--/* time column */-->
+        <!--.caTableCol-6 {-->
+            <!--text-align: left;-->
+        <!--}-->
+
+        <!--/* time column */-->
+        <!--.caTableCol-7 {-->
+            <!--text-align: right;-->
+        <!--}-->
+
+        <!--#task-table span.xfControl {-->
+            <!--display: block;-->
+            <!--margin-left: 5px;-->
+        <!--}-->
+
+        <!--/*.subheader {*/-->
+            <!--/*font-size: 14pt;*/-->
+            <!--/*color: gray;*/-->
+            <!--/*border-bottom: thin solid gray;*/-->
+            <!--/*margin-bottom: 30px;*/-->
+
+        <!--/*}*/-->
+
+        <!--/*.xfControl {*/-->
+            <!--/*padding: 4px;*/-->
+        <!--/*}*/-->
+
+        <!--/*#errorReport-value {*/-->
+            <!--/*border: thin solid;*/-->
+            <!--/*display: block;*/-->
+            <!--/*background: red;*/-->
+        <!--/*}*/-->
+
+        <!--/*#caCopyright {*/-->
+            <!--/*bottom: 5px;*/-->
+        <!--/*}*/-->
+    <!--</style>-->
+</head>
+<body>
+<div style="display:none">
+    <xf:model>
+
+        <xf:instance id="i-tasks">
+            <data xmlns="">
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="instance('i-tasks')/project/task">
+            <xf:bind nodeset="billable" type="xf:boolean" readonly="true"/>
+        </xf:bind>
+
+        <!--<xf:bind nodeset="instance('i-tasks')//billable" type="xf:boolean" />-->
+
+        <xf:instance id="i-query-tasks">
+            <data xmlns="">
+                <project/>
+            </data>
+        </xf:instance>
+
+        <xf:instance id="i-project"
+                     src="http://golem.local:8080/exist/rest/db/timetracking/i-project.xml"/>
+
+
+        <!-- Submission to receive all tasks allocated to a specified project -->
+        <xf:submission id="s-get-tasks"
+                       resource="http://golem.local:8080/exist/rest/db/test/timetracker.xql?project={instance('i-query-tasks')/project}"
+                       method="post"
+                       replace="instance"
+                       instance="i-tasks"
+                       validate="false">
+
+            <xf:action ev:event="xforms-submit-done">
+                <xf:message level="ephemeral">Received data from eXist DB</xf:message>
+            </xf:action>
+            <xf:action ev:event="xforms-submit">
+                <xf:message level="ephemeral">xxxx</xf:message>
+            </xf:action>
+        </xf:submission>
+    </xf:model>
+</div>
+
+
+
+<div  style="width: 90%; height: 700px; padding: 10px;">
+
+<div style="height: 50px;" >
+    <div class="header">TimeTracker 0.2</div>
+    <p>
+        This result list should display check boxes, but displays text input fields.
+    </p>
+</div>
+
+    <div style="padding:10px;height:90%;">
+        <xf:group>
+            <xf:label class="subheader">TimeTracker Results</xf:label>
+            <table>
+                <tr>
+                    <td align="right">Project</td>
+                    <td>
+                        <xf:select1 id="projectToDisplay" ref="instance('i-query-tasks')/project" appearance="minimal">
+                            <xf:label/>
+                            <xf:itemset nodeset="instance('i-project')/project">
+                                <xf:label ref="."/>
+                                <xf:value ref="."/>
+                            </xf:itemset>
+
+                        </xf:select1>
+
+                    </td>
+                    <td>
+                        <xf:trigger>
+                                <xf:label>GET DATA</xf:label>
+                                <xf:action>
+                                   <xf:send submission="s-get-tasks" if="string-length(instance('i-query-tasks')/project) &gt; 0"/>
+                                </xf:action>
+                        </xf:trigger>
+                    </td>
+                </tr>
+            </table>
+
+            <!--<xf:output ref="instance('i-tasks')/project/duration">-->
+                <!--<xf:label>Overall Time:</xf:label>-->
+            <!--</xf:output>-->
+
+            <xf:repeat nodeset="instance('i-tasks')/project/task" appearance="compact">
+                <xf:output ref="date">
+                    <xf:label>Date</xf:label>
+                </xf:output>
+                <xf:output
+                        value="concat(format-number(duration/@hours,'00'),':',format-number(duration/@minutes, '00'))">
+                    <xf:label>Duration</xf:label>
+                </xf:output>
+                <xf:output ref="who">
+                    <xf:label>User(s)</xf:label>
+                </xf:output>
+                <xf:output ref="what">
+                    <xf:label>Task</xf:label>
+                </xf:output>
+                <xf:output ref="note">
+                    <xf:label>Note</xf:label>
+                </xf:output>
+                <xf:output ref="status">
+                    <xf:label>Status</xf:label>
+                </xf:output>
+                <xf:input ref="billable">
+                    <xf:label>Billable</xf:label>
+                </xf:input>
+            </xf:repeat>
+        </xf:group>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

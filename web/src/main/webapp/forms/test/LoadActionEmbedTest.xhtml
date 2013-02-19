@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title></title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <meta name="author" content="unl at users.sourceforge.net"/>
+        <meta name="description" content="test form for load action"/>
+        <meta name="version" content="$Id: LoadActionTest.xhtml 3460 2008-08-14 09:11:58Z joern $"/>
+    </head>
+    <body>
+    <!--<form action="../test">-->
+        <div style="display:none;">
+            <xf:model id="model">
+                <xf:instance xmlns="">
+                    <data>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+        <xf:group>
+            <xf:label>Basic example of using the load action with @show="embed"</xf:label>
+            <div id="embeddedForm"/>
+            <xf:trigger id="trigger-load-embed-1">
+                <xf:label>Load embedded Form 1</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embeddedForm">
+                        <xf:resource value="'LoadEmbeddedChild.xml'"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger id="trigger-load-embed-2">
+                <xf:label>Load embedded Form 2</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embeddedForm">
+                        <xf:resource value="'LoadEmbeddedChild2.xml'"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+        </xf:group>
+    <!--</form>-->
+
+    </body>
+</html>

@@ -1,0 +1,1673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by R Bos (InterCommIT b.v.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:item="urn:icit:items" xmlns:ext1="urn:icit:items:extensions1" xmlns:webform="urn:icit:webform" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:events="http://www.w3.org/2001/xml-events" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bfc="http://betterform.sourceforge.net/xforms/controls" xmlns:p="http://activiti.org/bpmn" xmlns="urn:icit:greenery:orders" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="urn:icit:greenery:orders" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:appinfo>
+			<!-- Add an id to the default model, or find some other clever way 
+			<xforms:action events:event="xforms-model-construct-done">
+                 <xforms:setvalue ref="instance('temp')/readonly" value="bf:appContext('webform.readonly')"/>
+            	 <xforms:dispatch name="prefill" if="bf:appContext('webform.readonly') = 'false'" targetid="default"/>
+        	</xforms:action>
+	        <xforms:action events:event="prefill">
+		 -->
+			<xforms:action events:event="xforms-model-construct-done">
+				<xforms:setvalue ref="instance('temp')/readonly" value="bf:appContext('webform.readonly')"/>
+				<xforms:setvalue ref="/DESADV/HeaderInfo/DeliveryType" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryType"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/Name" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:name"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/Address" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:street"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/PostalCode" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:postalCode"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/City" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:city"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/Country" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:country"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/SupplierNumberGreenery" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:id"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/GLN" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:gln"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/Name" value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/Name"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/Address" value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/Address"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/PostalCode" value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/PostalCode"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/City" value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/City"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/Country" value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/Country"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/GLN" value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln"/>
+				<xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/LocCode" value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/LocCode"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationOneway/PalletCodeHAS" value="'110500022'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationChepBlok/PalletCodeHAS" value="'110500015'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationPool/PalletCodeHAS" value="'110500003'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationDPA/PalletCodeHAS" value="'110500009'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationEuro/PalletCodeHAS" value="'110500001'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationChepEuro/PalletCodeHAS" value="'110500026'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationSkid/PalletCodeHAS" value="'110500038'"/>
+				<xforms:setvalue ref="/DESADV/Consignment/PalletInformationSuperVers/PalletCodeHAS" value="'110500056'"/>
+				<xforms:setvalue ref="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//Incoterms/choice" value="//Incoterms/*[1]/name()" />
+			</xforms:action>
+			<xforms:action events:event="xforms-ready">
+				<xforms:setvalue ref="instance('temp')/locked" value="true()"/>
+				<xforms:setvalue ref="/DESADV/HeaderInfo/emailaddress" value="bf:appContext('adr')"/>
+			</xforms:action>
+			<xforms:instance xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:icit:greenery:delivery" id="delivery" src="{$resource_prefix}DeliveryPartys.xml"/>
+			<xforms:instance xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:icit:items" id="artikelen" src="{$articleurl}"/>
+			<xforms:instance xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="" id="dummyArticle">
+				<Artikel>
+					<add-trigger>true</add-trigger>
+					<Artikelsearch/>
+					<Artikelidentificatie/>
+				</Artikel>
+			</xforms:instance>
+			<webform:cancel>
+				<xforms:action>
+					<xhtml:script type="text/javascript"> try { fluxProcessor.skipshutdown=true; fluxProcessor.closeSession(); parent.xformsCallback() } catch (err) { alert("This should trigger the callback, but the parent does not contain the callback method"); }</xhtml:script>
+				</xforms:action>
+				<webform:confirm>
+					<!-- Using custom text will be implemented in the future, currently default in en -->
+					<!-- Button labels are en:yes/no nl:ja/nee es:si/no -->
+				</webform:confirm>
+			</webform:cancel>
+			<xforms:submission replace="none" method="put" indent="true">
+				<xforms:resource value="bf:appContext('submissionaction')"/>
+				<webform:confirm>
+					<!--  Using custom text will be implemented in the future -->
+				</webform:confirm>
+				<!-- Currently requires replace='none' -->
+				<webform:print-after-submission/>
+				<xforms:action>
+					<xhtml:script type="text/javascript"> try { fluxProcessor.skipshutdown=true; fluxProcessor.closeSession(); parent.xformsCallback() } catch (err) { alert("This should trigger the callback, but the parent does not contain the callback method"); }</xhtml:script>
+				</xforms:action>
+				<xforms:message level="ephemeral" events:event="xforms-submit-error" if="count(/DESADV/Consignment/LineInfos/LineInfo)=0 and event('error-type')='validation-error'">You must add at least one article. Other fields marked red are either required and contain no value or contain invalid values.</xforms:message>
+				<xforms:message level="ephemeral" events:event="xforms-submit-error" if="sum(/DESADV/Consignment/LineInfos/LineInfo/NumberOfPallets[text()]) =0 and event('error-type')='validation-error'">The total number of pallets must be greater than 0. Other fields marked red are either required and contain no value or contain invalid values.</xforms:message>
+				<xforms:message level="ephemeral" events:event="xforms-submit-error" if="sum(/DESADV/Consignment/LineInfos/LineInfo/NumberOfPallets[text()]) &gt; 0 and event('error-type')='validation-error'">Fields marked red are either required and contain no value or contain invalid values</xforms:message>
+			</xforms:submission>
+			<xforms:bind nodeset="instance('dummyArticle')/add-trigger" readonly="instance('dummyArticle')/Artikelidentificatie = '' or not(boolean-from-string(instance('dummyArticle')/add-trigger))"/>
+			<webform:print/>
+		</xs:appinfo>
+	</xs:annotation>
+	<xs:element name="DESADV">
+		<xs:annotation>
+			<xs:appinfo>
+				<xforms:label lang="nl">THE GREENERY ORDERBERICHT</xforms:label>
+				<xforms:label lang="en">THE GREENERY ORDERS MESSAGE</xforms:label>
+				<xforms:label lang="es">THE GREENERY MENSAJE ORDEN</xforms:label>
+				<xforms:label lang="pt">MENSAGEM DE ORDEM</xforms:label>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Envelop_Info">
+					<xs:annotation webform:display="none">
+						<xs:appinfo>
+							<xforms:label lang="nl">Envelop informatie</xforms:label>
+							<xforms:label lang="en">Envelope information</xforms:label>
+							<xforms:label lang="es">Informacio de correo</xforms:label>
+							<xforms:label lang="pt">Informação de envelope</xforms:label>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CompanyName" type="xs:string" default="Greenery Portal"/>
+							<xs:element name="CompanyGLN" type="xs:string" default="8713702009999"/>
+							<xs:element name="MessageDateTime" type="xs:dateTime">
+								<xs:annotation xforms:calculate="now()">
+									<xs:appinfo>
+										<xforms:label lang="nl">Berichtdatum en -tijd</xforms:label>
+										<xforms:label lang="en">Message date and time</xforms:label>
+										<xforms:label lang="es">Mensaje fecha y hora</xforms:label>
+										<xforms:label lang="pt">Data e hora de expedição</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="MessageReference">
+								<xs:annotation xforms:calculate="substring(format-dateTime(current-dateTime(),'[Y][M01][D01][H01][m][s][f]'),3,14)">
+									<xs:appinfo>
+										<xforms:label lang="nl">Bericht referentie</xforms:label>
+										<xforms:label lang="en">Messsage reference</xforms:label>
+										<xforms:label lang="es">Referencia del mensaje</xforms:label>
+										<xforms:label lang="pt">Referência da nota</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:length value="14"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Version" default="2">
+								<xs:annotation webform:display="none"/>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HeaderInfo">
+					<xs:annotation xhtml:style="height: auto" xhtml:class="HeaderInfo">
+						<xs:appinfo>
+							<xforms:label lang="nl">Algemene berichtinformatie</xforms:label>
+							<xforms:label lang="en">General Message Information</xforms:label>
+							<xforms:label lang="es">Informacion general del mensaje</xforms:label>
+							<xforms:label lang="pt">Informação geral sobre a nota</xforms:label>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DeliveryType" default="227">
+								<xs:annotation xforms:readonly="boolean-from-string(instance('temp')/locked)">
+									<xs:appinfo>
+										<xforms:label lang="nl">Leveringstype</xforms:label>
+										<xforms:label lang="en">Delivery Type</xforms:label>
+										<xforms:label lang="es">Condiciones de entrega</xforms:label>
+										<xforms:label lang="pt">Tipo de entrega</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="351">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label lang="nl">Reguliere levering</xforms:label>
+													<xforms:label lang="en">Regular</xforms:label>
+													<xforms:label lang="es">Suplido regular</xforms:label>
+													<xforms:label lang="pt">Entrega regular</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="227">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label lang="nl">Account sale</xforms:label>
+													<xforms:label lang="en">Account sale</xforms:label>
+													<xforms:label lang="es">Account sale</xforms:label>
+													<xforms:label lang="pt">Preço com comissão</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:enumeration>
+										<xs:enumeration value="YA7">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label lang="nl">Vastkoop</xforms:label>
+													<xforms:label lang="en">Commission</xforms:label>
+													<xforms:label lang="es">Producto suplido con precio indicativo</xforms:label>
+													<xforms:label lang="pt">Preço fixo</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:enumeration>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<!--xs:element name="DateTimeOfDeparture" type="xs:dateTime">
+								<xs:annotation xforms:appearance="iso8601:dd-MM-yy" xforms:constraint="(days-from-date(now()) -days-from-date(.) &lt; 14)">
+									<xs:appinfo>
+										<xforms:label lang="nl">Vertrekdatum en -tijd </xforms:label>
+										<xforms:label lang="en">Departure Date/Time </xforms:label>
+										<xforms:label lang="es">Fecha y hora de salida</xforms:label>
+										<xforms:label lang="pt">Data e hora de partida </xforms:label>
+										<xforms:alert lang="en">This date may not be more than 14 days ago</xforms:alert>
+										<xforms:hint lang="en">Enter a date/time, but no more than 14 days ago</xforms:hint>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element-->
+							<xs:element name="EstimatedDateTimeOfArrival" type="xs:dateTime">
+								<xs:annotation xforms:appearance="iso8601:dd-MM-yy" xforms:contstraint="(. ge now())">
+									<xs:appinfo>
+										<xforms:label lang="nl">Verwachte aankomst datum en tijd </xforms:label>
+										<xforms:label lang="en">Est. Arrival Date/Time </xforms:label>
+										<xforms:label lang="es">Fecha y hora de llegada</xforms:label>
+										<xforms:label lang="pt">Data e hora de chegada prevista </xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<!--xs:element name="PackingListNumber">
+								<xs:annotation>
+									<xs:appinfo>
+										<xforms:label lang="nl">Paklijst referentienummer </xforms:label>
+										<xforms:label lang="en">Packing List Nr </xforms:label>
+										<xforms:label lang="es">Lista de envases </xforms:label>
+										<xforms:label lang="pt">Referência Guia de Remessa </xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:maxLength value="35"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element-->
+							<xs:element name="ContractNumber" minOccurs="0">
+								<xs:annotation>
+									<xs:appinfo>
+										<xforms:label lang="nl">Contractnummer</xforms:label>
+										<xforms:label lang="en">Contract Number</xforms:label>
+										<xforms:label lang="es">Numero de contrato</xforms:label>
+										<xforms:label lang="pt">Número de contrato</xforms:label>
+										<!--xforms:hint lang="nl">Indien een contract op de levering van toepassing is</xforms:hint -->
+										<xforms:hint lang="en">Only when a contract is appliable</xforms:hint>
+										<xforms:alert lang="nl">Het contractnummer mag maximaal 35 posities bedragen</xforms:alert>
+										<xforms:alert lang="en">The contract number has a maximum field length of 35 characters</xforms:alert>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:maxLength value="35"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="BuyerOrderNumber">
+								<xs:annotation xforms:calculate="concat('72',format-number(substring((current-dateTime() - xs:dateTime('2012-09-18T10:23:00-00:00')) div xs:dayTimeDuration('PT1S'),1,8), '00000000'))" webform:display="output">
+									<xs:appinfo>
+										<xforms:label lang="nl">Ordernummer The Greenery </xforms:label>
+										<xforms:label lang="en">Order Nr The Greenery </xforms:label>
+										<xforms:label lang="es">Numero de albaran The Greenery</xforms:label>
+										<xforms:label lang="pt">Número do pedido The Greenery </xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="35"/>
+										<xs:minLength value="1"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<!--xs:element name="Documenten">
+								<xs:annotation xforms:appearance="full" xhtml:class="uploadsControl">
+									<xs:appinfo>
+										<xforms:label lang="nl">Upload documenten</xforms:label>
+										<xforms:label lang="en">Upload documents</xforms:label>
+										<xforms:label lang="es">Upload documentos</xforms:label>
+										<xforms:label lang="pt">Upload documentos</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="docs" type="xs:anyURI" minOccurs="0" maxOccurs="7">
+											<xs:annotation xhtml:class="noLabel" xforms:appearance="full">
+												<xs:appinfo>
+													<xforms:label/>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element-->
+							<xs:element name="emailaddress">
+								<xs:annotation webform:display="none">
+									<xs:appinfo>
+										<xforms:label lang="nl">Emailadres leverancier</xforms:label>
+										<xforms:label lang="en">Email address supplier</xforms:label>
+										<xforms:label lang="es">Email proveedor</xforms:label>
+										<xforms:label lang="pt">Email fornecedor </xforms:label>
+										<xforms:hint lang="nl">emailadres leverancier</xforms:hint>
+										<xforms:alert lang="nl">Incorrect email adres</xforms:alert>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<!--xs:element name="DetailsOfTransport">
+								<xs:annotation xhtml:style="position: absolute; top: 25px; left: 550px; width: 400px" xforms:appearance="full" xhtml:class="bfChoice">
+									<xs:appinfo>
+										<xforms:label lang="nl">Transport details </xforms:label>
+										<xforms:label lang="en">Transport Details </xforms:label>
+										<xforms:label lang="es">Detalles del transporte</xforms:label>
+										<xforms:label lang="pt">Dados do transporte </xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:choice minOccurs="1" maxOccurs="1">
+										<xs:annotation xforms:appearance="minimal"/>
+										<xs:element name="boat" type="seaType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label lang="nl">Zeetransport</xforms:label>
+													<xforms:label lang="en">Maritime transport</xforms:label>
+													<xforms:label lang="es">Transporte maritimo</xforms:label>
+													<xforms:label lang="pt">Transporte marítimo</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="train" type="roadType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label lang="nl">Wegtransport</xforms:label>
+													<xforms:label lang="en">Road transport</xforms:label>
+													<xforms:label lang="es">Transporte terrestre</xforms:label>
+													<xforms:label lang="pt">Transporte rodoviário</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="air" type="airType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label lang="nl">Luchttransport</xforms:label>
+													<xforms:label lang="en">Air transport</xforms:label>
+													<xforms:label lang="es">Transporte aereo</xforms:label>
+													<xforms:label lang="pt">Transporte aéreo</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element-->
+							<xs:element name="Incoterms">
+								<xs:annotation xhtml:style="position: absolute; top: 25px; left: 550px;" xforms:appearance="full" xhtml:class="bfChoice">
+									<xs:appinfo>
+										<xforms:label>INCOTERMS </xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:choice>
+									 	<xs:annotation webform:choice="cif"></xs:annotation>
+										<xs:element name="cfr" type="cfrType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>CFR - Cost and Freight</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="cif" type="cifType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>CIF - Cost, Insurance and Freight</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="cip" type="cipType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>CIP - Carriage and Insurance Paid to</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="cpt" type="cptType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>CPT - Carriage Paid To</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="dap" type="dapType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>DAP - Delivered at Place</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="dat" type="datType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>DAT - Delivered at Terminal</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ddp" type="ddpType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>DDP - Delivered Duty Paid</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="exw" type="exwType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>EXW – Ex Works</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="fas" type="fasType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>FAS - Free Alongside Ship</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="fca" type="fcaType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>FCA - Free Carrier</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="fob" type="fobType">
+											<xs:annotation>
+												<xs:appinfo>
+													<xforms:label>FOB - Free on Board</xforms:label>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="webmastermail" type="xs:anyURI">
+								<xs:annotation webform:display="output" xhtml:style="position: absolute; top: 38px; right: 0px; width: 400px" xforms:calculate="concat('mailto:webformsupport@thegreenery.com?SUBJECT=Melding webform leverancier ', ../../HeaderAddresses/Supplier/SupplierNumberGreenery)">
+									<xs:appinfo>
+										<xforms:label lang="nl">Contact The Greenery</xforms:label>
+										<xforms:label lang="en">Contact The Greenery</xforms:label>
+										<xforms:label lang="es">Contact The Greenery</xforms:label>
+										<xforms:label lang="pt">Contact The Greenery</xforms:label>
+										<xforms:hint lang="nl">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+										<xforms:hint lang="en">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+										<xforms:hint lang="es">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+										<xforms:hint lang="pt">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HeaderAddresses">
+					<xs:annotation xhtml:style="height:auto;">
+						<xs:appinfo>
+							<xforms:label lang="nl">Adressen</xforms:label>
+							<xforms:label lang="en">Addresses</xforms:label>
+							<xforms:label lang="es">Direccion</xforms:label>
+							<xforms:label lang="pt">Endereços</xforms:label>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Supplier" type="SupplierComplexType">
+								<xs:annotation webform:tab="Address-begin" xforms:readonly="boolean-from-string(instance('temp')/locked)">
+									<xs:appinfo>
+										<xforms:label lang="nl">Leverancier</xforms:label>
+										<xforms:label lang="en">Supplier</xforms:label>
+										<xforms:label lang="es">Proveedor</xforms:label>
+										<xforms:label lang="pt">Fornecedor</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Buyer" type="BuyerComplexType">
+								<xs:annotation webform:tab="Address" xforms:readonly="Name != ''">
+									<xs:appinfo>
+										<xforms:label lang="nl">Afnemer</xforms:label>
+										<xforms:label lang="en">Buyer</xforms:label>
+										<xforms:label lang="es">Comprador</xforms:label>
+										<xforms:label lang="pt">Cliente</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="DeliveryParty" type="DeliveryPartyComplexType">
+								<xs:annotation webform:tab="Address-end" xforms:readonly="Name != ''" xforms:selected="true()">
+									<xs:appinfo>
+										<xforms:label lang="nl">Afleveradres</xforms:label>
+										<xforms:label lang="en">Delivery party</xforms:label>
+										<xforms:label lang="es">Almacén de descarga</xforms:label>
+										<xforms:label lang="pt">Endereço de entrega</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Consignment">
+					<xs:annotation xforms:constraint="(sum(LineInfos/LineInfo/NumberOfPallets[text()]) &gt; 0)">
+						<xs:appinfo>
+							<xforms:label lang="nl">Orderinformatie</xforms:label>
+							<xforms:label lang="en">Order information</xforms:label>
+							<xforms:label lang="es">Order information</xforms:label>
+							<xforms:label lang="pt">Order information</xforms:label>
+							<webform:include document="gdc-dialog.xhtml" position="before-end"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="LineInfos">
+								<xs:annotation xforms:constraint="((sum(LineInfo/NumberOfPallets[text()]) &gt; 0) and (count(LineInfo) &gt; 0))">
+									<xs:appinfo>
+										<xforms:label lang="nl">Artikelregelinformatie</xforms:label>
+										<xforms:label lang="en">Line information</xforms:label>
+										<xforms:label lang="es">Linea de informacion</xforms:label>
+										<xforms:label lang="pt">Linha de informação sobre o artigo</xforms:label>
+										<xforms:alert lang="en">There must be at least 1 article and it is not allowed to have a total of 0 number of pallets</xforms:alert>
+										<xforms:hint lang="en">There must be at least 1 article and it is not allowed to have a total of 0 number of pallets</xforms:hint>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="LineInfo" type="LineInfoType" maxOccurs="unbounded">
+											<xs:annotation xhtml:class="noLabel">
+												<xs:appinfo>
+													<webform:repeat-empty>
+														<xforms:label lang="en">No articles selected</xforms:label>
+														<xforms:label lang="nl">Geen artikelen toegevoegd</xforms:label>
+														<xforms:label lang="es">No artículos seleccionados</xforms:label>
+														<xforms:label lang="pt">Nenhum artigos selecionados</xforms:label>
+														<xforms:label>No articles Selected</xforms:label>
+													</webform:repeat-empty>
+													<webform:repeat-insert>
+														<xforms:label lang="en">Add article</xforms:label>
+														<xforms:label lang="nl">Artikel toevoegen</xforms:label>
+														<xforms:label lang="es">Añadir artículo</xforms:label>
+														<xforms:label lang="pt">Adicionar Item</xforms:label>
+														<xforms:action>
+															<!--xforms:insert nodeset="LineInfo" context="instance('ORDERS_GREENERY_PORTAL_instance.xml')/Consignment/LineInfos" at="last()" position="after" origin="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//LineInfo" /-->
+															<xforms:setvalue ref="instance('dummyArticle')/add-trigger" value="true()"/>
+															<xforms:setvalue ref="instance('dummyArticle')/Artikelidentificatie" value="''"/>
+															<xforms:setvalue ref="instance('dummyArticle')/Artikelsearch" value="''"/>
+															<xforms:delete nodeset="instance('dummyArticle')/Detail"/>
+															<xforms:script type="text/javascript">
+																var selectbox = dojo.byId("articleselectionlist-value");
+																selectbox.selectedIndex = -1;
+								 							</xforms:script>
+														</xforms:action>
+														<bfc:show dialog="gdcdialog" events:event="DOMActivate"/>
+													</webform:repeat-insert>
+													<webform:repeat-delete>
+														<xforms:label lang="en">Delete selected</xforms:label>
+														<xforms:label lang="nl">Verwijder regel</xforms:label>
+														<xforms:label lang="es">Eliminar seleccionados</xforms:label>
+														<xforms:label lang="pt">Excluir linha</xforms:label>
+														<xforms:delete events:event="DOMActivate" nodeset="LineInfo" at="index('_DESADV_Consignment_LineInfos_LineInfo')" context="instance('ORDERS_GREENERY_PORTAL_instance.xml')/Consignment/LineInfos"/>
+														<xforms:setindex events:event="DOMActivate" repeat="_DESADV_Consignment_LineInfos_LineInfo" index="index('_DESADV_Consignment_LineInfos_LineInfo')"/>
+													</webform:repeat-delete>
+												</xs:appinfo>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PalletInformationEuro" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># EURO pallets</xforms:label>
+										<xforms:label lang="nl"># EURO pallets</xforms:label>
+										<xforms:label lang="es"># EURO palets</xforms:label>
+										<xforms:label lang="pt"># EURO palete</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationDPA" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># DPA pallets</xforms:label>
+										<xforms:label lang="nl"># DPA pallets</xforms:label>
+										<xforms:label lang="es"># DPA palets</xforms:label>
+										<xforms:label lang="pt"># DPA palete</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationPool" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># Pool pallets</xforms:label>
+										<xforms:label lang="nl"># Pool pallets</xforms:label>
+										<xforms:label lang="es"># Pool palets</xforms:label>
+										<xforms:label lang="pt"># Pool palete</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationChepBlok" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># Chep Blok pallets</xforms:label>
+										<xforms:label lang="nl"># Chep Blok pallets</xforms:label>
+										<xforms:label lang="es"># Chep Blok palets</xforms:label>
+										<xforms:label lang="pt"># Bloco de paletes Chep</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationOneway" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># Oneway pallets</xforms:label>
+										<xforms:label lang="nl"># Eenmalige pallets</xforms:label>
+										<xforms:label lang="es"># Palets de desechable</xforms:label>
+										<xforms:label lang="pt"># Uma palete</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationChepEuro" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># Chep EURO pallets</xforms:label>
+										<xforms:label lang="nl"># Chep EURO pallets</xforms:label>
+										<xforms:label lang="es"># Chep EURO pallets</xforms:label>
+										<xforms:label lang="pt"># Chep EURO pallets</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationSkid" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># Skid norm vlg pallets</xforms:label>
+										<xforms:label lang="nl"># Skid norm vlg pallets</xforms:label>
+										<xforms:label lang="es"># Skid norm vlg pallets</xforms:label>
+										<xforms:label lang="pt"># Skid norm vlg pallets</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PalletInformationSuperVers" type="PalletInformationType" minOccurs="0">
+								<xs:annotation xforms:relevant="NumberOfPallets &gt; 0" xforms:appearance="full" xhtml:style="position: relative; left:360px; width:200px">
+									<xs:appinfo>
+										<xforms:label lang="en"># Pallets Supervers</xforms:label>
+										<xforms:label lang="nl"># Super fresh pallets</xforms:label>
+										<xforms:label lang="es"># Palet Super fresco</xforms:label>
+										<xforms:label lang="pt"># Pallet Super frescos</xforms:label>
+									</xs:appinfo>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SupplierComplexType">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Naam</xforms:label>
+						<xforms:label lang="en">Name</xforms:label>
+						<xforms:label lang="es">Nombre</xforms:label>
+						<xforms:label lang="pt">Nome</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Adres</xforms:label>
+						<xforms:label lang="en">Address</xforms:label>
+						<xforms:label lang="es">Direccion</xforms:label>
+						<xforms:label lang="pt">Endereços</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Postcode</xforms:label>
+						<xforms:label lang="en">Postal code</xforms:label>
+						<xforms:label lang="es">Codigo postal</xforms:label>
+						<xforms:label lang="pt">Código postal</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Plaats</xforms:label>
+						<xforms:label lang="en">City</xforms:label>
+						<xforms:label lang="es">Ciudad</xforms:label>
+						<xforms:label lang="pt">Localidade</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Landcode</xforms:label>
+						<xforms:label lang="en">Country code</xforms:label>
+						<xforms:label lang="es">Codigo del pais</xforms:label>
+						<xforms:label lang="pt">Código do país</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GLN" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">GLN</xforms:label>
+						<xforms:label lang="en">GLN</xforms:label>
+						<xforms:label lang="es">GLN</xforms:label>
+						<xforms:label lang="pt">GLN</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupplierNumberGreenery" type="xs:anyType">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Greenery leveranciersnummer</xforms:label>
+						<xforms:label lang="en">Greenery supplier number</xforms:label>
+						<xforms:label lang="es">Greenery numero de suplidor</xforms:label>
+						<xforms:label lang="pt">Número de fornecedor Greenery</xforms:label>
+						<xforms:hint lang="nl">Greenery leveranciersnummer</xforms:hint>
+						<xforms:hint lang="en">Greenery supplier number</xforms:hint>
+						<xforms:hint lang="es">Greenery numero de suplidor</xforms:hint>
+						<xforms:hint lang="pt">Número de fornecedor Greenery</xforms:hint>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BuyerComplexType">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:anyType" default="THE GREENERY BV">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Naam</xforms:label>
+						<xforms:label lang="en">Name</xforms:label>
+						<xforms:label lang="es">Nombre</xforms:label>
+						<xforms:label lang="pt">Nome</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="xs:anyType" default="SPOORWEGEMPLACEMENT 1">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Adres</xforms:label>
+						<xforms:label lang="en">Address</xforms:label>
+						<xforms:label lang="es">Direccion</xforms:label>
+						<xforms:label lang="pt">Endereço</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="xs:anyType" default="2991 VT">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Postcode</xforms:label>
+						<xforms:label lang="en">Postal code</xforms:label>
+						<xforms:label lang="es">Codigo postal</xforms:label>
+						<xforms:label lang="pt">Código postal</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="xs:anyType" default="BARENDRECHT">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Plaats</xforms:label>
+						<xforms:label lang="en">City</xforms:label>
+						<xforms:label lang="es">Ciudad</xforms:label>
+						<xforms:label lang="pt">Localidade</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="xs:anyType" default="NL">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Landcode</xforms:label>
+						<xforms:label lang="en">Country code</xforms:label>
+						<xforms:label lang="es">Codigo del pais</xforms:label>
+						<xforms:label lang="pt">Código do país</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GLN" type="xs:anyType" default="8710317000007">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">GLN</xforms:label>
+						<xforms:label lang="en">GLN</xforms:label>
+						<xforms:label lang="es">GLN</xforms:label>
+						<xforms:label lang="pt">GLN</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--xs:complexType name="seaType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="MethodOfTransport" type="xs:string" fixed="10">
+				<xs:annotation webform:display="none">
+					<xs:appinfo>
+						<xforms:label lang="nl">Zeetransport</xforms:label>
+						<xforms:label lang="en">Maritime transport</xforms:label>
+						<xforms:label lang="es">Transporte maritimo</xforms:label>
+						<xforms:label lang="pt">Transporte marítimo</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="carrierName" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<xforms:label lang="nl">Bootnaam </xforms:label>
+						<xforms:label lang="en">Vessel Name </xforms:label>
+						<xforms:label lang="es">Nonbre de la naviera </xforms:label>
+						<xforms:label lang="pt">Barco Nome </xforms:label>
+						<xforms:alert lang="en">Vessel name has a maximum field length of 35 characters</xforms:alert>
+						<xforms:alert lang="nl">Bootnaam mag maximaal 35 posities bedragen</xforms:alert>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportID">
+				<xs:annotation>
+					<xs:appinfo>
+						<xforms:label lang="nl">Container nummer </xforms:label>
+						<xforms:label lang="en">Container number </xforms:label>
+						<xforms:label lang="es">Número del contenedor </xforms:label>
+						<xforms:label lang="pt">Número do container </xforms:label>
+						<xforms:hint lang="en">ABCD1234567</xforms:hint>
+						<xforms:alert lang="en">4 uppercase letters, 7 digits e.g. ABCD1234567</xforms:alert>
+						<xforms:alert lang="nl">4 hoofdletters, 7 cijfers v.b. ABCD1234567</xforms:alert>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="^[A-Z][A-Z][A-Z][A-Z][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType-->
+	<!--xs:complexType name="roadType">
+		<xs:sequence>
+			<xs:element name="MethodOfTransport" type="xs:string" fixed="30">
+				<xs:annotation webform:display="none">
+					<xs:appinfo>
+						<xforms:label lang="nl">Wegtransport</xforms:label>
+						<xforms:label lang="en">Road transport</xforms:label>
+						<xforms:label lang="es">Transporte terrestre</xforms:label>
+						<xforms:label lang="pt">Transporte rodoviário</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="carrierName" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<xforms:label lang="nl">Vervoerder </xforms:label>
+						<xforms:label lang="en">Carrier </xforms:label>
+						<xforms:label lang="es">Corredor </xforms:label>
+						<xforms:label lang="pt">Nome do transportista </xforms:label>
+						<xforms:alert lang="en">Name carrier has a maximum field length of 35 characters</xforms:alert>
+						<xforms:alert lang="nl">Naam vervoerder mag maximaal 35 posities bedragen</xforms:alert>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportID">
+				<xs:annotation>
+					<xs:appinfo>
+						<xforms:label lang="nl">Kenteken </xforms:label>
+						<xforms:label lang="en">Licence plate </xforms:label>
+						<xforms:label lang="es">Numero de matricula</xforms:label>
+						<xforms:label lang="pt">Chapa de matrícula </xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType-->
+	<!--xs:complexType name="airType">
+		<xs:sequence>
+			<xs:element name="MethodOfTransport" type="xs:string" fixed="40">
+				<xs:annotation webform:display="none">
+					<xs:appinfo>
+						<xforms:label lang="nl">Luchttransport</xforms:label>
+						<xforms:label lang="en">Air transport</xforms:label>
+						<xforms:label lang="es">Transporte aereo</xforms:label>
+						<xforms:label lang="pt">Transporte aéreo</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="carrierName" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<xforms:label lang="nl">Vervoerder </xforms:label>
+						<xforms:label lang="en">Carrier </xforms:label>
+						<xforms:label lang="es">Corredor </xforms:label>
+						<xforms:label lang="pt">Nome do transportista </xforms:label>
+						<xforms:alert lang="en">Name carrier has a maximum field length of 35 characters</xforms:alert>
+						<xforms:alert lang="nl">Naam vervoerder mag maximaal 35 posities bedragen</xforms:alert>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransportID">
+				<xs:annotation>
+					<xs:appinfo>
+						<xforms:label lang="nl">Luchtvrachtbrief nummer </xforms:label>
+						<xforms:label lang="en">Airway bill number </xforms:label>
+						<xforms:label lang="es">Número del contenedor </xforms:label>
+						<xforms:label lang="pt">Das vias aéreas número lei </xforms:label>
+						<xforms:alert lang="en">3 digits - 4 digits - 4 digits e.g. 123-1234-1234</xforms:alert>
+						<xforms:alert lang="nl">3 cijfers - 4 cijfers - 4 cijfers v.b. 123-1234-1234</xforms:alert>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="^[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]$"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType-->
+	<xs:complexType name="DeliveryPartyComplexType">
+		<xs:sequence>
+			<xs:element name="Name">
+				<xs:annotation xhtml:style="min-width: 500px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Naam</xforms:label>
+						<xforms:label lang="en">Name</xforms:label>
+						<xforms:label lang="es">Nombre</xforms:label>
+						<xforms:label lang="pt">Nome</xforms:label>
+						<xforms:action events:event="xforms-value-changed">
+							<xforms:setvalue ref="current()/../Address" value="instance('delivery')/DeliveryParty[Name = current()/../Name]/Address"/>
+							<xforms:setvalue ref="current()/../PostalCode" value="instance('delivery')/DeliveryParty[Name = current()/../Name]/PostalCode"/>
+							<xforms:setvalue ref="current()/../City" value="instance('delivery')/DeliveryParty[Name = current()/../Name]/City"/>
+							<xforms:setvalue ref="current()/../Country" value="instance('delivery')/DeliveryParty[Name = current()/../Name]/Country"/>
+							<xforms:setvalue ref="current()/../GLN" value="instance('delivery')/DeliveryParty[Name = current()/../Name]/GLN"/>
+							<xforms:setvalue ref="current()/../LocCode" value="instance('delivery')/DeliveryParty[Name = current()/../Name]/LocCode"/>
+						</xforms:action>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Name">
+							<xs:annotation xforms:nodeset="instance('delivery')/DeliveryParty" xhtml:class="bredeLabel210">
+								<xs:appinfo>
+									<xforms:label ref="Name"/>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address" type="xs:anyType">
+				<xs:annotation xhtml:style="min-width: 400px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Adres</xforms:label>
+						<xforms:label lang="en">Address</xforms:label>
+						<xforms:label lang="es">Direccion</xforms:label>
+						<xforms:label lang="pt">Endereço</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="xs:anyType">
+				<xs:annotation xhtml:style="min-width: 240px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Postcode</xforms:label>
+						<xforms:label lang="en">Postal code</xforms:label>
+						<xforms:label lang="es">Codigo postal</xforms:label>
+						<xforms:label lang="pt">Código postal</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="City" type="xs:anyType">
+				<xs:annotation xhtml:style="min-width: 400px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Plaats</xforms:label>
+						<xforms:label lang="en">City</xforms:label>
+						<xforms:label lang="es">Ciudad</xforms:label>
+						<xforms:label lang="pt">Localidade</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="xs:anyType">
+				<xs:annotation xhtml:style="min-width: 200px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Landcode</xforms:label>
+						<xforms:label lang="en">Country code</xforms:label>
+						<xforms:label lang="es">Codigo del pais</xforms:label>
+						<xforms:label lang="pt">Código do país</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GLN" type="xs:anyType">
+				<xs:annotation xhtml:style="min-width: 280px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">GLN</xforms:label>
+						<xforms:label lang="en">GLN</xforms:label>
+						<xforms:label lang="es">GLN</xforms:label>
+						<xforms:label lang="pt">GLN</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocCode" type="xs:anyType">
+				<xs:annotation xhtml:style="min-width: 220px" webform:display="output" xforms:appearance="bfInputLook" xhtml:class="bredeLabel210">
+					<xs:appinfo>
+						<xforms:label lang="nl">Locatie code</xforms:label>
+						<xforms:label lang="en">Location code</xforms:label>
+						<xforms:label lang="es">Código de ubicación</xforms:label>
+						<xforms:label lang="pt">Código de localização</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PalletInformationType">
+		<xs:sequence>
+			<!--Non negative is 0,1,2,... positive is 1,2,..-->
+			<xs:element name="NumberOfPallets" type="xs:nonNegativeInteger">
+				<xs:annotation xhtml:style="left: 180px; position: relative; top: -24px;" xforms:relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))" xforms:constraint="number(.) &gt;=0" xhtml:class="noLabel" xforms:calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])" xforms:appearance="bfInputLook" webform:display="output"/>
+			</xs:element>
+			<xs:element name="PalletCodeISO">
+				<xs:annotation webform:display="none"/>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PalletCodeHAS">
+				<xs:annotation webform:display="none"/>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="110500001">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Pallet Euro</xforms:label>
+									<xforms:label lang="en">Pallet Euro</xforms:label>
+									<xforms:label lang="es">Palet Euro</xforms:label>
+									<xforms:label lang="pt">Palete Euro</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500003">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Pallet Pool</xforms:label>
+									<xforms:label lang="en">Pallet Pool</xforms:label>
+									<xforms:label lang="es">Palet Pool (grande)</xforms:label>
+									<xforms:label lang="pt">Palete Pool</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500009">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Pallet DPA</xforms:label>
+									<xforms:label lang="en">Pallet DPA</xforms:label>
+									<xforms:label lang="es">Palet DPA</xforms:label>
+									<xforms:label lang="pt">Palete DPA</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500015">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Chep pallet blok</xforms:label>
+									<xforms:label lang="en">Chep pallet blok</xforms:label>
+									<xforms:label lang="es">Chep palet grande</xforms:label>
+									<xforms:label lang="pt">Bloque de palete Chep</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500022">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Eenmalige pallet import</xforms:label>
+									<xforms:label lang="en">Oneway pallet import</xforms:label>
+									<xforms:label lang="es">Palet desechable para importacion</xforms:label>
+									<xforms:label lang="pt">Importação única de paletes</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500026">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Chep Euro pallet</xforms:label>
+									<xforms:label lang="en">Chep Euro pallet</xforms:label>
+									<xforms:label lang="es">Chep palet euro</xforms:label>
+									<xforms:label lang="pt">Palete Chep Euro</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500038">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Skid norm vlg</xforms:label>
+									<xforms:label lang="en">Skid norm vlg</xforms:label>
+									<xforms:label lang="es">Skid norm vlg</xforms:label>
+									<xforms:label lang="pt">Skid norm vlg</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500056">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Pallet supervers</xforms:label>
+									<xforms:label lang="en">Super fresh pallet</xforms:label>
+									<xforms:label lang="es">Palet Super fresco</xforms:label>
+									<xforms:label lang="pt">Pallet Super frescos</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="exwType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="EXW">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of delivery</xforms:label>
+						<xforms:label lang="en">Named place of delivery</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de entrega</xforms:label>
+						<xforms:label lang="pt">Local de entrega</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fcaType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="FCA">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of delivery</xforms:label>
+						<xforms:label lang="en">Named place of delivery</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de entrega</xforms:label>
+						<xforms:label lang="pt">Local de entrega</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cptType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="CPT">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of destination</xforms:label>
+						<xforms:label lang="en">Named place of destination</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+						<xforms:label lang="pt">Destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cipType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="CIP">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of destination</xforms:label>
+						<xforms:label lang="en">Named place of destination</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+						<xforms:label lang="pt">Destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="datType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="DAT">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named terminal at port of place of destination</xforms:label>
+						<xforms:label lang="en">Named terminal at port of place of destination</xforms:label>
+						<xforms:label lang="es">Nombre del terminal en el puerto o lugar de destino</xforms:label>
+						<xforms:label lang="pt">Terminal ou porto de destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="dapType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="DAP">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of destination</xforms:label>
+						<xforms:label lang="en">Named place of destination</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+						<xforms:label lang="pt">Destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ddpType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="DDP">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of destination</xforms:label>
+						<xforms:label lang="en">Named place of destination</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+						<xforms:label lang="pt">Destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fasType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="FAS">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named port of shipment</xforms:label>
+						<xforms:label lang="en">Named port of shipment</xforms:label>
+						<xforms:label lang="es">Nombre del puerto de embarque</xforms:label>
+						<xforms:label lang="pt">Porto de embarque</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="fobType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="FOB">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" xhtml:class="bredeLabel">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named port of shipment</xforms:label>
+						<xforms:label lang="en">Named port of shipment</xforms:label>
+						<xforms:label lang="es">Nombre del puerto de embarque</xforms:label>
+						<xforms:label lang="pt">Porto de embarque</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cfrType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="CFR">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" xhtml:class="bredeLabel">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named port of destination</xforms:label>
+						<xforms:label lang="en">Named port of destination</xforms:label>
+						<xforms:label lang="es">Nombre del puerto de destino</xforms:label>
+						<xforms:label lang="pt">Porto de destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="cifType">
+		<xs:annotation xforms:appearance="full"/>
+		<xs:sequence>
+			<xs:element name="Incoterm" type="xs:string" fixed="CIF">
+				<xs:annotation webform:display="none"/>
+			</xs:element>
+			<xs:element name="Place" type="xs:string" minOccurs="1">
+				<xs:annotation xhtml:class="bredeLabel210" xforms:constraint="string-length(.)&gt;=1">
+					<xs:appinfo>
+						<xforms:label lang="nl">Named place of destination</xforms:label>
+						<xforms:label lang="en">Named place of destination</xforms:label>
+						<xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+						<xforms:label lang="pt">Destino</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LineInfoType">
+		<xs:sequence>
+			<xs:element name="LineNo">
+				<xs:annotation xforms:calculate="count(parent::*/preceding-sibling::*) + 1" webform:display="none" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width:40px">
+					<xs:appinfo>
+						<xforms:label lang="nl">Ln</xforms:label>
+						<xforms:label lang="en">Ln</xforms:label>
+						<xforms:label lang="es">Ln</xforms:label>
+						<xforms:label lang="pt">Ln</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="6"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="GTIN">
+				<xs:annotation webform:display="none" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width: 120px">
+					<xs:appinfo>
+						<xforms:label lang="nl">GTIN</xforms:label>
+						<!--xforms:hint lang="nl">De GTIN van de levereenheid</xforms:hint -->
+						<xforms:label lang="en">GTIN</xforms:label>
+						<xforms:hint lang="en">The GTIN of the despatch unit</xforms:hint>
+						<xforms:label lang="es">GTIN</xforms:label>
+						<xforms:label lang="pt">GTIN</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="14"/>
+						<xs:minLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BuyerProductCode">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width: 75px">
+					<xs:appinfo>
+						<xforms:label lang="nl">Artikelnr</xforms:label>
+						<xforms:label lang="en">Article nr</xforms:label>
+						<xforms:label lang="es">Numero</xforms:label>
+						<xforms:label lang="pt">Número</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="35"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="GreeneryFullProductCode">
+				<xs:annotation webform:display="none" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width: 250px">
+					<xs:appinfo>
+						<xforms:label lang="nl">Artikelnr lang</xforms:label>
+						<xforms:label lang="en">Article nr long</xforms:label>
+						<xforms:label lang="es">Numero de articulo largo (The Greenery)</xforms:label>
+						<xforms:label lang="pt">Número do artigo longo (The Greenery)</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="70"/>
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description" type="xs:string">
+				<xs:annotation xforms:appearance="bfTextArea" xforms:readonly=". != ''" xhtml:style="width: 150px; height: auto; overflow: auto; resize: none;" xhtml:class="noResize">
+					<xs:appinfo>
+						<xforms:label lang="nl">Artikelomschrijving</xforms:label>
+						<xforms:label lang="en">Item description</xforms:label>
+						<xforms:label lang="es">Descripción del articulo</xforms:label>
+						<xforms:label lang="pt">Descrição de artigo</xforms:label>
+						<xforms:alert lang="en">The item description has a maximum field length of 35 characters</xforms:alert>
+						<xforms:alert lang="nl">De artikelomschrijving mag maximaal 35 posities bedragen</xforms:alert>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Content" type="xs:string">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width: 70px">
+					<xs:appinfo>
+						<xforms:label lang="nl">Inhoud</xforms:label>
+						<xforms:label lang="en">Content</xforms:label>
+						<xforms:label lang="es">Contenido</xforms:label>
+						<xforms:label lang="pt">Conteúdo</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CU" type="xs:string">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width: 40px">
+					<xs:appinfo>
+						<xforms:label lang="nl">CE</xforms:label>
+						<xforms:hint lang="nl">Consumenten Eenheid</xforms:hint>
+						<xforms:label lang="en">CU</xforms:label>
+						<xforms:hint lang="en">Consumer Unit</xforms:hint>
+						<xforms:label lang="es">UC</xforms:label>
+						<xforms:hint lang="es">Unidad Consumidor</xforms:hint>
+						<xforms:label lang="pt">UC</xforms:label>
+						<xforms:hint lang="pt">Unidade Consumidora</xforms:hint>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PackageType" type="xs:string">
+				<xs:annotation webform:display="output" xforms:appearance="bfInputLook" xforms:readonly=". != ''" xhtml:style="width: 120px">
+					<xs:appinfo>
+						<xforms:label lang="nl">Verpakkingstype</xforms:label>
+						<xforms:label lang="en">Package type</xforms:label>
+						<xforms:label lang="es">Tipo de Embalaje</xforms:label>
+						<xforms:label lang="pt">Tipo de embalagem</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<!--xs:element name="DespatchQuantityWeight">
+				<xs:annotation xforms:relevant="false" webform:display="none">
+					<xs:appinfo>
+						<xforms:label lang="nl">Geleverd aantal in kilogrammen</xforms:label>
+						<xforms:hint lang="nl">Enkel indien er ongepalletiseerd wordt geleverd</xforms:hint>
+						<xforms:label lang="en">Despatch quantity in kilograms</xforms:label>
+						<xforms:hint lang="en">Only when delivery is wihout pallets</xforms:hint>
+						<xforms:label lang="es">Cantidad entrgada en kilogramos</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:totalDigits value="15"/>
+						<xs:fractionDigits value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element-->
+			<xs:element name="DespatchQuantityPCE" type="xs:positiveInteger">
+				<xs:annotation xhtml:style="width:70px;" xforms:incremental="true" xforms:constraint=". &gt;=0">
+					<xs:appinfo>
+						<xforms:label lang="nl">Aantal</xforms:label>
+						<xforms:label lang="en">QTY</xforms:label>
+						<xforms:hint lang="en">The number of ordered goods must be 1 or higher</xforms:hint>
+						<xforms:alert lang="en">The number of ordered goods must be 1 or higher</xforms:alert>
+						<xforms:label lang="es">Cant.</xforms:label>
+						<xforms:hint lang="es">Cantidad</xforms:hint>
+						<xforms:label lang="pt">Quant.</xforms:label>
+						<xforms:hint lang="pt">Quantidade</xforms:hint>
+						<xforms:setvalue ref="../NumberOfPallets" value="if (ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) &gt;=0) then ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) else 0" events:event="xforms-value-changed"/>
+						<xforms:setvalue ref="../../../*[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets" value="sum(../../LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets)" events:event="xforms-value-changed"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberOfUnitsPerPallet" type="xs:positiveInteger">
+				<xs:annotation xhtml:style="width: 35px" xforms:incremental="true" xforms:constraint="(. &gt;0)">
+					<xs:appinfo>
+						<xforms:label lang="nl">Load</xforms:label>
+						<xforms:label lang="en">Load</xforms:label>
+						<xforms:hint lang="en">The pallet load must have a value equal or higher than 1. In case the number of pallets is zero due to shipment of a mixed pallet, please adjust the number of pallets to zero.</xforms:hint>
+						<xforms:alert lang="en">The pallet load must have a value equal or higher than 1. In case the number of pallets is zero due to shipment of a mixed pallet, please adjust the number of pallets to zero.</xforms:alert>
+						<xforms:label lang="es">Load</xforms:label>
+						<xforms:hint lang="es">Cantidad de bultos por palet</xforms:hint>
+						<xforms:label lang="pt">Load</xforms:label>
+						<xforms:setvalue ref="../NumberOfPallets" value="if (ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) &gt;=0) then ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) else 0" events:event="xforms-value-changed"/>
+						<xforms:setvalue ref="../../../*[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets" value="sum(../../LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets)" events:event="xforms-value-changed"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unitprice" type="xs:string" minOccurs="0">
+				<xs:annotation xhtml:style="width: 60px" xforms:relevant="../../../../HeaderInfo/DeliveryType = 'YA7'" xforms:constraint="matches(., '^\d{1,12}(\.\d{0,2})?$', '') and  ../../../../HeaderInfo/DeliveryType = 'YA7'">
+					<xs:appinfo>
+						<xforms:label lang="nl">Prijs</xforms:label>
+						<!--xforms:hint lang="nl">Prijs is enkel informatief</xforms:hint -->
+						<xforms:label lang="en">Price</xforms:label>
+						<xforms:hint lang="en">The format should be 000.00 (decimal point as a separator). Price is per unit and for information purpose only</xforms:hint>
+						<xforms:alert lang="en">The format should be 000.00 (decimal point as a separator)</xforms:alert>
+						<xforms:label lang="es">Precio</xforms:label>
+						<xforms:label lang="pt">Preço</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumberOfPallets" type="xs:nonNegativeInteger">
+				<xs:annotation xforms:incremental="true" xforms:required="true()" xforms:constraint="(. = '' and boolean-from-string(instance('temp')/submiterror) = false()) or (. &gt;=0)">
+					<xs:appinfo>
+						<xforms:label lang="nl"># Pl</xforms:label>
+						<xforms:label lang="en"># Pl</xforms:label>
+						<xforms:label lang="es">#Pl</xforms:label>
+						<xforms:hint lang="en">In case of a mix pallet set one of the lines to 1 and adjust the other(s) to zero</xforms:hint>
+						<xforms:hint lang="es">Número de palets</xforms:hint>
+						<xforms:label lang="pt"># Pl</xforms:label>
+						<xforms:alert lang="en">In case of a mix pallet set one of the lines to 1 and adjust the other(s) to zero</xforms:alert>
+						<xforms:setvalue ref="../../../*[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets" value="sum(../../LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets)" events:event="xforms-value-changed"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PalletCodeHAS" minOccurs="0">
+				<xs:annotation xhtml:style="width:145px">
+					<xs:appinfo>
+						<xforms:label lang="nl">Palletcode</xforms:label>
+						<xforms:label lang="en">Pallet code</xforms:label>
+						<xforms:label lang="es">Codigo de palets</xforms:label>
+						<xforms:label lang="pt">Código de palete</xforms:label>
+						<xforms:hint lang="en">Palletcode of The Greenery</xforms:hint>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="110500001">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Euro</xforms:label>
+									<xforms:label lang="en">Euro</xforms:label>
+									<xforms:label lang="es">Euro</xforms:label>
+									<xforms:label lang="pt">Euro</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500003">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Pool</xforms:label>
+									<xforms:label lang="en">Pool</xforms:label>
+									<xforms:label lang="es">Pool</xforms:label>
+									<xforms:label lang="pt">Pool</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500009">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">DPA</xforms:label>
+									<xforms:label lang="en">DPA</xforms:label>
+									<xforms:label lang="es">DPA</xforms:label>
+									<xforms:label lang="pt">DPA</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500015">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Chep blok</xforms:label>
+									<xforms:label lang="en">Chep blok</xforms:label>
+									<xforms:label lang="es">Chep blok</xforms:label>
+									<xforms:label lang="pt">Bloque Chep</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500022">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Eenmalig</xforms:label>
+									<xforms:label lang="en">Oneway</xforms:label>
+									<xforms:label lang="es">Desechable</xforms:label>
+									<xforms:label lang="pt">Único</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500026">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Chep Euro</xforms:label>
+									<xforms:label lang="en">Chep Euro</xforms:label>
+									<xforms:label lang="es">Chep Euro</xforms:label>
+									<xforms:label lang="pt">Chep Euro</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500038">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Skid norm vlg</xforms:label>
+									<xforms:label lang="en">Skid norm vlg</xforms:label>
+									<xforms:label lang="es">Skid norm vlg</xforms:label>
+									<xforms:label lang="pt">Skid norm vlg</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="110500056">
+							<xs:annotation>
+								<xs:appinfo>
+									<xforms:label lang="nl">Pallet supervers</xforms:label>
+									<xforms:label lang="en">Super fresh pallet</xforms:label>
+									<xforms:label lang="es">Palet Super fresco</xforms:label>
+									<xforms:label lang="pt">Pallet Super frescos</xforms:label>
+								</xs:appinfo>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FreeText" minOccurs="0">
+				<xs:annotation webform:display="dialog" xforms:appearance="bfTextArea">
+					<xs:documentation>NEW</xs:documentation>
+					<xs:appinfo>
+						<webform:trigger xhtml:style="width:100px">
+							<xforms:label lang="nl">Kies</xforms:label>
+							<xforms:label lang="en">Choose</xforms:label>
+							<xforms:label lang="es">Seleccionar</xforms:label>
+							<xforms:label lang="pt">Selecionar</xforms:label>
+						</webform:trigger>
+						<webform:dialog xhtml:style="width:300px">
+							<xforms:label lang="nl">Aanvullende informatie</xforms:label>
+							<xforms:label lang="en">Additional information</xforms:label>
+							<xforms:label lang="es">Información adicional</xforms:label>
+							<xforms:label lang="pt">Informações adicionais</xforms:label>
+						</webform:dialog>
+						<xforms:label lang="en">Add. info</xforms:label>
+						<xforms:hint lang="en">Additional information such as Number of grower, farm, plot, pallet number, location of temperature meter etc.</xforms:hint>
+						<xforms:label lang="nl">Aanv. info</xforms:label>
+						<xforms:hint lang="nl">Additional information such as Number of grower, farm, plot, pallet number, location of temperature meter etc.</xforms:hint>
+						<xforms:label lang="es">Inf. ad.</xforms:label>
+						<xforms:hint lang="es">Información adicional</xforms:hint>
+						<xforms:label lang="pt">Inf. ad.</xforms:label>
+						<xforms:hint lang="pt">Informações adicionais</xforms:hint>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="70"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DeliveryParty" type="DeliveryPartyComplexType">
+				<xs:annotation webform:display="dialog">
+					<xs:appinfo>
+						<webform:trigger xhtml:style="width:110px">
+							<xforms:label>
+								<xforms:output value="if (DeliveryParty/LocCode[text()]) then DeliveryParty/LocCode else ../../../HeaderAddresses/DeliveryParty/LocCode"/>
+							</xforms:label>
+						</webform:trigger>
+						<webform:dialog xhtml:style="width: 300px;">
+							<xforms:label lang="nl">Afleveradres</xforms:label>
+							<xforms:label lang="en">Delivery party</xforms:label>
+							<xforms:hint lang="nl">Afleveradres</xforms:hint>
+							<xforms:hint lang="en">Delivery party</xforms:hint>
+							<xforms:label lang="es">Descarga</xforms:label>
+							<xforms:hint lang="es">Almacén de descarga</xforms:hint>
+							<xforms:label lang="pt">Endereço</xforms:label>
+							<xforms:hint lang="es">Endereço de entrega</xforms:hint>
+						</webform:dialog>
+						<xforms:label lang="nl">Afleveradres</xforms:label>
+						<xforms:label lang="en">Delivery party</xforms:label>
+						<xforms:label lang="es">Almacén de descarga</xforms:label>
+						<xforms:label lang="pt">Endereço de entrega</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProducerGLN" minOccurs="0">
+				<xs:annotation webform:display="none" xforms:appearance="bfInputLook" xhtml:style="width: 120px">
+					<xs:appinfo>
+						<xforms:label lang="nl">GLN producent</xforms:label>
+						<xforms:hint lang="nl">De GTIN van de levereenheid</xforms:hint>
+						<xforms:label lang="en">GLN manufacturer</xforms:label>
+						<xforms:hint lang="en">The GLN of the manufacturer of the despatch unit</xforms:hint>
+						<xforms:label lang="es">GLN fabricante</xforms:label>
+						<xforms:label lang="pt">GLN fabricante</xforms:label>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="13"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

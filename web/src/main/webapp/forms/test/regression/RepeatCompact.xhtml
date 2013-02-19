@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>Repeats</title>
+        <style type="text/css">
+            .xfGroupLabel{
+                display:block;
+            }
+        </style>
+
+        <xf:model id="model_1">
+            <xf:instance xmlns="">
+                <data>
+                    <item>Item 1</item>
+                    <item>Item 2</item>
+                    <item>Item 3</item>
+                </data>
+            </xf:instance>
+
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:label>Compact Repeat Tests - single insert and delete actions</xf:label>
+            <xf:trigger id="insert">
+                <xf:label>Insert</xf:label>
+                <xf:insert nodeset="item" at="index('r-compactRepeat')" position="after"/>
+            </xf:trigger>
+            <xf:trigger id="delete">
+                <xf:label>Delete</xf:label>
+                <xf:delete nodeset="item" at="index('r-compactRepeat')"/>
+            </xf:trigger>
+
+            <xf:repeat id="r-compactRepeat" nodeset="item" appearance="compact">
+                <xf:input ref=".">
+                    <xf:label>Item</xf:label>
+                </xf:input>
+            </xf:repeat>
+
+        </xf:group>
+
+    </body>
+</html>

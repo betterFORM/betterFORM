@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
+        <title>MediaType failure in repeat.</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <xf:model>
+            <xf:instance id="save-data">
+                <item xmlns="" id="item.0">
+                    <supplemental>
+                        <Note>
+                            <DateTime/>
+                            <Action/>
+                            <Memo/>
+                        </Note>
+                    </supplemental>
+                </item>
+            </xf:instance>
+            
+            <!-- bindings for dates -->
+            <xf:bind nodeset="instance('save-data')/supplemental/Note/DateTime" type="xs:dateTime"/>
+            
+            <xf:instance xmlns="" id="views">
+                <data>
+                    <delete-notes-trigger/>
+                </data>
+            </xf:instance>
+            
+            <!-- If there is a second element, make the delete button visible. -->
+            <xf:bind id="delete-notes-trigger" nodeset="instance('views')/delete-notes-trigger" 
+                relevant="instance('save-data')/supplemental/Case_Notes_and_Actions[2]"/>
+            
+            <xf:submission id="save" method="post" action="save-new" 
+                instance="save-data" replace="all"/>
+            
+        </xf:model>
+    </head>
+    <body class="soria InlineAlert" style="margin:30px">
+    <div xmlns:ev="http://www.w3.org/2001/xml-events" id="xforms" class="InlineAlert">
+            <h2>Example</h2>
+            <div class="repeat">
+                <xf:repeat nodeset="instance('save-data')/supplemental/Note" id="notes-repeat" appearance="full">
+                    <xf:input ref="DateTime">
+                        <xf:label>Date:</xf:label>
+                    </xf:input>
+                    <xf:input ref="Action">
+                        <xf:label>Action:</xf:label>
+                    </xf:input>
+                    <xf:textarea ref="Memo" mediatype="text/html" incremental="true">
+                        <xf:label>Memo:</xf:label>
+                    </xf:textarea>
+                </xf:repeat>
+                
+                <xf:group>
+                    <xf:trigger>
+                        <xf:label>Add</xf:label>
+                        <xf:insert nodeset="instance('save-data')/supplemental/Note" at="index('notes-repeat')" position="after" ev:event="DOMActivate" />
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>Delete</xf:label>
+                        <xf:delete nodeset="instance('save-data')/supplemental/Note" at="index('notes-repeat')" ev:event="DOMActivate" />
+                    </xf:trigger>
+                </xf:group>
+            </div>
+        </div>
+    </body>
+</html>

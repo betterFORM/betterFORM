@@ -1,0 +1,81 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>XForms Select appearance="full" with Image-Label</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none;">
+        <xf:model>
+            <xf:instance xmlns="">
+                <data>
+                    <select1minimalItemset />
+                    <select1minimal/>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="colors">
+                    <items xmlns="">
+                        <color>
+                            <name>RED</name>
+                            <value>00FF00</value>
+                        </color>
+                        <color>
+                            <name>GREEN</name>
+                            <value>0000FF</value>
+                        </color>
+                        <color>
+                            <name>BLUE</name>
+                            <value>FF0000</value>
+                        </color>
+                     </items>
+            </xf:instance>
+        </xf:model>
+    </div>
+
+    <xf:group appearance="full">
+        <xf:select1 ref="instance()/select1minimalItemset" appearance="minimal">
+            <xf:label>Select with Itemset</xf:label>
+            <xf:itemset  nodeset="instance('colors')/color">
+                <xf:label ref="name"/>
+                <xf:value ref="value"/>
+            </xf:itemset>
+        </xf:select1>
+        <xf:output ref="instance()/select1minimalItemset" appearance="minimal">
+            <xf:label>Itemset result</xf:label>
+        </xf:output>
+    </xf:group>
+
+    <xf:group appearance="full">
+        <xf:select1 ref="instance()/select1minimal" >
+            <xf:label>Color Code</xf:label>
+            <xf:item>
+                 <xf:label>Orange</xf:label>
+                <xf:value>orange</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>Green</xf:label>
+                <xf:value>green</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>Blue</xf:label>
+                <xf:value>blue</xf:value>
+            </xf:item>
+       </xf:select1>
+        <xf:output ref="instance()/select1minimal">
+            <xf:label>Selected select1minimal</xf:label>
+        </xf:output>
+        <xf:trigger>
+            <xf:label>Change select1minimal</xf:label>
+            <xf:setvalue ref="instance()/select1minimal" value="'green'"/>
+            <xf:setvalue ref="instance()/select1minimalItemset" value="'0000FF'"/>
+        </xf:trigger>
+    </xf:group>
+</div>
+</body>
+</html>

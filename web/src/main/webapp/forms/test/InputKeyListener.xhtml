@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Key Listener for Input Field</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <meta name="author" content="lars.windauer at betterform.de"/>
+    <style type="text/css">
+        .bf .dijitToasterContent {
+            width:300px;
+        }
+        .xfGroupLabel {
+            font-variant:small-caps;
+            font-size:large;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data>
+                <input/>
+                <search/>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="search" calculate="concat('searching ',../input, ' ... ')"/>
+    </xf:model>
+</head>
+
+<body>
+    <xf:group  appearance="minimal">
+        <xf:label>Key Listener for Input Field</xf:label>
+        <p>enter a string and hit return to activate trigger</p>
+
+        <xf:input id="input-search" ref="input" incremental="true">
+            <xf:label/>
+        </xf:input>
+
+        <xf:trigger id="searchTrigger">
+            <xf:label>Search</xf:label>
+            <xf:message level="ephemeral" ref="search"/>
+        </xf:trigger>
+    </xf:group>
+
+
+    <!--  connect an anonymous function to 'onkeydown' function of the input-search control and check if
+          return (keyCode = 13) was clicked.
+            NOTE: be aware to lookup <id>-value to receive the input field of an xf:control -->
+    <script type="text/javascript" defer="defer">
+        dojo.addOnLoad(function() {
+            dojo.connect(dijit.byId("input-search-value"),"onkeydown", function(event) {
+                if (event.keyCode == 13){
+                    fluxProcessor.dispatchEvent('searchTrigger');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>hello</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <xforms:model id="C-1">
+            <xforms:submission id="debug" action="{$contextroot}/jsp/debug-instance.jsp" method="post" replace="all" validate="false"/>
+            <xforms:instance id="C-2" xmlns="">
+                <data>
+                    <name>Hello</name>
+                </data>
+            </xforms:instance>
+
+            <xforms:action ev:event="xforms-ready">
+                <xforms:send submission="debug"/>
+            </xforms:action>
+        </xforms:model>
+    </head>
+    <body>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>hello</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <xf:model>
+            <xf:instance xmlns="">
+                <data>
+                    <name/>
+                </data>
+            </xf:instance>
+
+            <xf:action ev:event="xforms-ready">
+            <!--    <xf:load resource="{$contextroot}/bfResources/images/betterform50t.gif"/>-->
+				<xf:message>hallo</xf:message>
+			</xf:action>
+        </xf:model>
+    </head>
+    <body>
+		<xf:group>
+			<xf:label>Initial Script Action</xf:label>
+			<xf:input ref="name">
+				<xf:label>Name</xf:label>
+			</xf:input>
+			<xf:trigger>
+				<xf:label>script</xf:label>
+				<xf:action>
+					<xf:message>hallo</xf:message>
+				</xf:action>
+			</xf:trigger>
+		</xf:group>
+    </body>
+</html>

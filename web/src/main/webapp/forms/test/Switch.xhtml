@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Test form for repeated Switches</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            .output {display: block;}
+        </style>
+
+        <xf:model>
+            <xf:instance xmlns="">
+                <data>
+                    <item>One</item>
+                    <item>Two</item>
+                    <item>Three</item>
+                    <item/>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group appearance="full">
+            <xf:label>Repeated Switch</xf:label>
+            <xf:repeat id="repeat" nodeset="item[position()!=last()]" appearance="full">
+                <xf:switch>
+                    <xf:case id="view">
+                        <xf:output ref=".">
+                            <xf:label>Item</xf:label>
+                        </xf:output>
+                        <xf:trigger>
+                            <xf:label>Edit</xf:label>
+                            <xf:toggle case="edit"/>
+                            <xf:refresh/>
+                        </xf:trigger>
+                    </xf:case>
+                    <xf:case id="edit">
+                        <xf:input ref=".">
+                            <xf:label>Item</xf:label>
+                        </xf:input>
+                        <xf:trigger>
+                            <xf:label>View</xf:label>
+                            <xf:toggle case="view"/>
+                            <xf:refresh/>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label>Copy</xf:label>
+                            <xf:insert nodeset="/data/item" at="index('repeat')" position="after"/>
+                            <xf:setvalue ref="/data/item[index('repeat')]" value="/data/item[index('repeat')-1]"/>
+                        </xf:trigger>
+                        <xf:trigger>
+                            <xf:label>Delete</xf:label>
+                            <xf:delete nodeset="/data/item" at="index('repeat')"/>
+                            <xf:refresh/>
+                        </xf:trigger>
+                    </xf:case>
+                </xf:switch>
+            </xf:repeat>
+
+            <xf:trigger>
+                <xf:label>Append new entry</xf:label>
+                <xf:action>
+                    <xf:insert nodeset="item" at="last()" position="before"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>Delete selected entry</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="item" at="index('repeat')"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>Switch case</xf:label>
+                <xf:toggle>
+                    <xf:case value="concat('ed','it')"/>
+                </xf:toggle>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

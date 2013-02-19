@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
+
+    <title>XForms switch rendered as tabcontainer</title>
+
+
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+    -->
+
+
+    <style type="text/css">
+        .caseContent {
+            height: 100%;
+        }
+
+        .caseContent h2 {
+            margin: 0;
+        }
+
+        .bfTabContainer {
+            height: 300px;
+        }
+    </style>
+
+</head>
+
+<body class="soria" style="margin:30px">
+<div id="xforms">
+    <div style="display:none">
+        <xf:model>
+            <xf:instance xmlns="">
+                <data>
+                    <readonly>true</readonly>
+                    <trigger/>
+                </data>
+            </xf:instance>
+            <xf:bind nodeset="instance()">
+                <xf:bind nodeset="trigger" readonly="boolean-from-string(instance()/readonly)"/>
+            </xf:bind>
+        </xf:model>
+    </div>
+    <div>
+        <xf:group>
+            <xf:label>Switch / Case</xf:label>
+
+            <xf:trigger>
+                <xf:label>Select Case 1</xf:label>
+                <xf:toggle case="case1"></xf:toggle>
+            </xf:trigger>
+            <xf:trigger ref="instance()/trigger">
+                <xf:label>Select Case 3</xf:label>
+                <xf:toggle case="case3"></xf:toggle>
+            </xf:trigger>
+
+            <div style="display:none;">
+                <xf:trigger id="t-case1">
+                    <xf:label>Case 1</xf:label>
+                    <xf:toggle case="case1"></xf:toggle>
+                </xf:trigger>
+                <xf:trigger id="t-case2">
+                    <xf:label>Case 2</xf:label>
+                    <xf:toggle case="case2"/>
+                </xf:trigger>
+                <xf:trigger id="t-case3" ref="instance()/trigger">
+                    <xf:label>Case 3</xf:label>
+                    <xf:toggle case="case3"/>
+                </xf:trigger>
+                <xf:trigger id="t-case4">
+                    <xf:label>Case 4</xf:label>
+                    <xf:toggle case="case4"/>
+                </xf:trigger>
+            </div>
+            <xf:switch id="switch1" appearance="dijit:TabContainer">
+                <xf:case id="case1" selected="true">
+                    <xf:label>Case 1</xf:label>
+                    <div class="caseContent" style="background:#bbbbff">
+                        <h2>CASE 1</h2>
+
+                        <p>This is some content for the first case</p>
+                    </div>
+                </xf:case>
+                <xf:case id="case2">
+                    <xf:label>Case 2</xf:label>
+                    <div class="caseContent" style="background:#ccccff">
+                        <h2>CASE 2</h2>
+
+                        <p>This is some content for the second case</p>
+                    </div>
+                </xf:case>
+                <xf:case id="case3">
+                    <xf:label>Case 3</xf:label>
+                    <div class="caseContent" style="background:#ddddff">
+                        <h2>CASE 3</h2>
+
+                        <p>This is some content for the third case</p>
+                    </div>
+                </xf:case>
+                <xf:case id="case4">
+                    <xf:label>Case 4</xf:label>
+                    <div class="caseContent" style="background:#eeeeff">
+                        <h2>CASE 4</h2>
+
+                        <p>This is some content for the fourth case</p>
+                    </div>
+                </xf:case>
+            </xf:switch>
+        </xf:group>
+    </div>
+</div>
+</body>
+
+</html>

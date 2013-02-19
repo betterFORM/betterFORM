@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head>
+  <title>Calendar test</title>
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+    -->
+
+  <xf:model id="main-model">
+
+    <xf:instance id="stringDate" xmlns="">
+      <data>
+        <info>String</info>
+        <classes xmlns="">
+          <class name="Date">
+            <value xsi:type="xsd:date">2007-08-04</value>
+          </class>
+          <class name="String">
+            <value xsi:type="xsd:string">foo</value>
+          </class>
+          <class name="Boolean">
+            <value xsi:type="xsd:boolean">false</value>
+          </class>
+        </classes>
+      </data>
+    </xf:instance>
+  </xf:model>
+</head>
+
+<body>
+    <div class="info">
+        This form shows how the datatype of a Node changes and how the UI reacts.
+    </div>
+  <xf:group>
+    <h3>Select a type here</h3>
+    <xf:select1 ref="instance('stringDate')/info" appearance="minimal">
+      <xf:label>Type: </xf:label>
+      <xf:itemset nodeset="instance('stringDate')/classes/class">
+        <xf:label ref="@name"/>
+        <xf:value ref="@name"/>
+      </xf:itemset>
+    </xf:select1>
+
+    <br/>
+
+    <xf:output ref="instance('stringDate')/info">
+      <xf:label>Info is now: </xf:label>
+    </xf:output>
+  </xf:group>
+
+  <xf:group>
+    <xf:group ref="instance('stringDate')/classes/class[@name=instance('stringDate')/info]">
+      <xf:input ref="value">
+        <xf:label ref="instance('stringDate')/classes/class[@name=instance('stringDate')/info]/value"/> 
+      </xf:input>
+    </xf:group>
+  </xf:group>
+</body>
+</html>

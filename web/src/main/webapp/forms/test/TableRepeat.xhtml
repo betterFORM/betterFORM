@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>TableRepeat</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            th {
+                width:100px;
+                background:#add8e6;
+                padding:4px;
+                color:#00008b;
+            }
+            td{
+                padding:2px;
+            }
+            
+        </style>
+	</head>
+	<body>
+		<div id="xforms">
+			<div style="display:none">
+				<xf:model>
+
+					<xf:instance>
+						<data xmlns="">
+							<items>
+								<item1>item 11</item1>
+								<item2>item 12</item2>
+								<item3>item 13</item3>
+								<item4>item 14</item4>
+								<item5>item 15</item5>
+							</items>
+							<items>
+								<item1>item 21</item1>
+								<item2>item 22</item2>
+								<item3>item 23</item3>
+								<item4>item 24</item4>
+								<item5>item 25</item5>
+							</items>
+							<items>
+								<item1>item 31</item1>
+								<item2>item 32</item2>
+								<item3>item 33</item3>
+								<item4>item 34</item4>
+								<item5>item 35</item5>
+							</items>
+						</data>
+					</xf:instance>
+
+					<!--<xf:instance id="template">
+						<data xmlns="">
+							<items>
+								<item1>1</item1>
+								<item2>2</item2>
+								<item3>3</item3>
+								<item4>4</item4>
+								<item5>5</item5>
+							</items>
+						</data>
+					</xf:instance>-->
+
+					<xf:instance id="labels">
+						<data xmlns="">
+							<item1>Item 1</item1>
+							<item2>Item 2</item2>
+							<item3>Item 3</item3>
+							<item4>Item 4</item4>
+							<item5>Item 5</item5>
+						</data>
+					</xf:instance>
+
+				</xf:model>
+			</div>
+
+			<!--<xf:repeat nodeset="items">
+				<xf:output ref="item1">
+					<xf:label>item 1</xf:label>
+				</xf:output>
+				<xf:output ref="item2">
+					<xf:label>item 2</xf:label>
+				</xf:output>
+				<xf:output ref="item3">
+					<xf:label>item 3</xf:label>
+				</xf:output>	
+			</xf:repeat>-->
+
+<!--
+			<xf:repeat nodeset="items">
+				<xf:output ref="item1">
+					<xf:label>item 1</xf:label>
+				</xf:output>
+				<xf:output ref="item2">
+					<xf:label>item 2</xf:label>
+				</xf:output>
+				<xf:output ref="item3">
+					<xf:label>item 3</xf:label>
+				</xf:output>
+			</xf:repeat>
+-->
+            <xf:trigger>
+                <xf:label>insert</xf:label>
+                <xf:action>
+                    <xf:insert nodeset="items" />
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>delete</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="items[index('r-attrs')]"  />
+                </xf:action>
+            </xf:trigger>
+
+			<table>
+				<thead>
+					<tr>
+						<th>
+							<xf:output ref="instance('labels')/item1"/>
+						</th>
+						<th>
+							<xf:output ref="instance('labels')/item2"/>
+						</th>
+						<th>
+							<xf:output ref="instance('labels')/item3"/>
+						</th>
+						<th>
+							<xf:output ref="instance('labels')/item4"/>
+						</th>
+						<th>
+							<xf:output ref="instance('labels')/item5"/>
+						</th>
+					</tr>
+				</thead>
+				<tbody id="r-attrs" xf:repeat-nodeset="items">
+					<tr>
+						<td id="foo" class="one" style="color:steelblue;font-weight:bold;">
+							<xf:output ref="item1"/>
+						</td>
+						<td class="two" style="color:blue;">
+							<xf:output ref="item2"/>
+						</td>
+						<td class="two" style="color:blue;">
+							<xf:output ref="item3"/>
+						</td>
+						<td class="two" style="color:blue;">
+							<xf:output ref="item4"/>
+						</td>
+						<td class="two" style="color:blue;">
+							<xf:output ref="item5"/>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+
+		</div>
+	</body>
+</html>

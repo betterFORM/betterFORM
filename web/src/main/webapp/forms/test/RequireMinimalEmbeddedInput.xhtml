@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>RequireMinimalEmbedded</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+		<!--
+		Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+		by a xforms load action.
+		-->
+        <script type="text/javascript" src="../../bfResources/scripts/release/dojo/betterform/betterform-compact.js"> </script>
+	</head>
+	<body>
+		<div id="xforms">
+			<div style="display:none">
+				<xf:model id="model-1">
+					<xf:instance id="i-default">
+						<data xmlns="">
+						</data>
+					</xf:instance>
+				</xf:model>
+			</div>
+			<xf:group>
+				    <xf:select1 selection="open">
+                    <xf:label class="contactsRepeatHeader">Article</xf:label>
+                    <xf:hint>Choose the article you wish to add to the shopping cart</xf:hint>
+                    <xf:choices>
+                        <xf:item>
+                            <xf:label>Eraser</xf:label>
+                            <xf:value>eraser</xf:value>
+                        </xf:item>
+                        <xf:item>
+                            <xf:label>Pencil</xf:label>
+                            <xf:value>pencil</xf:value>
+                        </xf:item>
+                        <xf:item>
+                            <xf:label>Ballpoint pen</xf:label>
+                            <xf:value>ballpoint_pen</xf:value>
+                        </xf:item>
+                        <xf:item>
+                            <xf:label>Spiral notebook</xf:label>
+                            <xf:value>spiral_notebook</xf:value>
+                        </xf:item>
+                        <xf:item>
+                            <xf:label>Fountain pen</xf:label>
+                            <xf:value>fountain_pen</xf:value>
+                        </xf:item>
+                        <xf:item>
+                            <xf:label>Shredder</xf:label>
+                            <xf:value>shredder</xf:value>
+                        </xf:item>
+                    </xf:choices>
+                </xf:select1>
+			</xf:group>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Repeated Range</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <!--
+         Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+         by a xforms load action.
+         -->
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none">
+        <xf:model>
+            <xf:instance id="i-integer">
+                <data xmlns="">
+                    <repeat>
+                        <range>3</range>
+                        <range>4</range>
+                    </repeat>
+                </data>
+            </xf:instance>
+            <xf:bind nodeset="repeat/range" type="integer"/>
+
+            <xf:instance id="i-float">
+                <data xmlns="">
+                    <repeat>
+                        <range>3</range>
+                        <range>4</range>
+                    </repeat>
+                </data>
+            </xf:instance>
+            <xf:bind nodeset="instance('i-float')/repeat/range" type="float"/>
+
+            <xf:instance id="i-float-deeper">
+                <data xmlns="">
+                    <repeat>
+                        <repeat>
+                            <range>3</range>
+                            <range>4</range>
+                        </repeat>
+                    </repeat>
+                </data>
+            </xf:instance>
+            <xf:bind nodeset="instance('i-float-deeper')/repeat/repeat/range" type="float"/>
+        </xf:model>
+    </div>
+
+    <xf:group appearance="full">
+        <xf:label>Range Test Page</xf:label>
+        <xf:range ref="repeat[1]/range[1]" start="1" step="1" end="5" incremental="true" appearance="bf:rating">
+            <xf:label>Range 1</xf:label>
+        </xf:range>
+        <xf:output ref="repeat[1]/range[1]">
+            <xf:label>Range Value: </xf:label>
+        </xf:output>
+        <xf:trigger id="trigger">
+            <xf:label>Insert 2 more Range Controls</xf:label>
+            <xf:insert nodeset="repeat" at="last()" position="after"/>
+        </xf:trigger>
+        <xf:group>
+            <xf:label>Repetead Range Controls</xf:label>
+            <xf:repeat appearance="compact" nodeset="instance()/repeat">
+                <xf:range ref="range[1]" start="1" step="1" end="5" incremental="true">
+                    <xf:label>Range 1</xf:label>
+                </xf:range>
+                <xf:range ref="range[2]" start="1" step="1" end="5" incremental="true" appearance="bf:rating">
+                    <xf:label>Range 2</xf:label>
+                </xf:range>
+            </xf:repeat>
+        </xf:group>
+
+
+        <xf:trigger id="trigger-float">
+            <xf:label>Insert 2 more Range Controls</xf:label>
+            <xf:insert nodeset="instance('i-float')/repeat" at="last()" position="after"/>
+        </xf:trigger>
+        <xf:group>
+            <xf:label>Repetead Range Controls</xf:label>
+            <xf:repeat appearance="compact" nodeset="instance('i-float')/repeat">
+                <xf:range ref="range[1]" start="1" step="1" end="5" incremental="true">
+                    <xf:label>Range 1</xf:label>
+                </xf:range>
+                <xf:range ref="range[2]" start="1" step="1" end="5" incremental="true" appearance="bf:rating">
+                    <xf:label>Range 2</xf:label>
+                </xf:range>
+            </xf:repeat>
+        </xf:group>
+
+        <xf:trigger id="trigger-float-deeper">
+            <xf:label>Insert 2 more Range Controls</xf:label>
+            <xf:insert nodeset="instance('i-float-deeper')/repeat/repeat" at="last()" position="after"/>
+        </xf:trigger>
+        <xf:group>
+            <xf:label>Repetead Range Controls</xf:label>
+            <xf:repeat appearance="compact" nodeset="instance('i-float-deeper')/repeat/repeat">
+                <xf:range ref="range[1]" start="1" step="1" end="5" incremental="true">
+                    <xf:label>Range 1</xf:label>
+                </xf:range>
+                <xf:range ref="range[2]" start="1" step="1" end="5" incremental="true" appearance="bf:rating">
+                    <xf:label>Range 2</xf:label>
+                </xf:range>
+            </xf:repeat>
+        </xf:group>
+
+    </xf:group>
+</div>
+</body>
+</html>

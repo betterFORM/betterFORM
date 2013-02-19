@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+        >
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <foo></foo>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+		<xf:group>
+            <xf:input ref="foo">
+                <xf:action ev:event="DOMFocusIn">
+                    <xf:message>DOMFocusIn fired</xf:message>
+                </xf:action>
+            </xf:input>
+		</xf:group>
+    </body>
+</html>

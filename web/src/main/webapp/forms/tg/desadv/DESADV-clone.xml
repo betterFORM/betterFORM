@@ -1,0 +1,179 @@
+<DESADV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <Envelop_Info>
+      <CompanyName/>
+      <CompanyGLN/>
+      <MessageDateTime>2012-09-27T15:10:01.773+02:00</MessageDateTime>
+      <MessageReference/>
+   </Envelop_Info>
+   <HeaderInfo>
+      <DeliveryType>YA7</DeliveryType>
+      <DateTimeOfDeparture>2012-09-25T10:21:52.583+02:00</DateTimeOfDeparture>
+      <EstimatedDateTimeOfArrival>2012-09-26T11:30:00</EstimatedDateTimeOfArrival>
+      <PackingListNumber/>
+      <ContractNumber>ctrtrnr</ContractNumber>
+      <SupplierOrderNumber>myorders</SupplierOrderNumber>
+      <Documenten>
+         <docs/>
+         <docs/>
+         <docs/>
+         <docs/>
+         <docs/>
+         <docs/>
+         <docs/>
+      </Documenten>
+      <emailaddress>mvaessen@descartes.com</emailaddress>
+      <DetailsOfTransport>
+         <boat>
+            <MethodOfTransport>10</MethodOfTransport>
+            <carrierName/>
+            <TransportID/>
+         </boat>
+         <train>
+            <MethodOfTransport>30</MethodOfTransport>
+            <carrierName>teste</carrierName>
+            <TransportID/>
+         </train>
+         <air>
+            <MethodOfTransport>40</MethodOfTransport>
+            <carrierName/>
+            <TransportID/>
+         </air>
+      </DetailsOfTransport>
+   </HeaderInfo>
+   <HeaderAddresses>
+      <Supplier xmlns="urn:icit:greenery:desadv">
+         <Name>SAFARI FRESH BV</Name>
+         <Address>AALSMEERDERWEG 606 A</Address>
+         <PostalCode>1437 EJ</PostalCode>
+         <City>ROZENBURG</City>
+         <Country>NL</Country>
+         <GLN>8713702248220</GLN>
+         <SupplierNumberGreenery>024822</SupplierNumberGreenery>
+      </Supplier>
+      <Buyer xmlns="urn:icit:greenery:desadv">
+         <Name>THE GREENERY BV</Name>
+         <Address>SPOORWEGEMPLACEMENT 1</Address>
+         <PostalCode>2991 VT</PostalCode>
+         <City>BARENDRECHT</City>
+         <Country>NL</Country>
+         <GLN>8710317000007</GLN>
+      </Buyer>
+      <DeliveryParty xmlns="urn:icit:greenery:desadv">
+         <Name>HAGE INTERNATIONAL BV</Name>
+         <Address>SPOORWEGEMPLACEMENT 1</Address>
+         <PostalCode>2991 VT</PostalCode>
+         <City>BARENDRECHT</City>
+         <Country>NL</Country>
+         <GLN>8712199000205</GLN>
+         <LocCode>HAGEB</LocCode>
+      </DeliveryParty>
+   </HeaderAddresses>
+   <Consignment>
+      <LineInfos>
+         <LineInfo>
+            <LineNo>1</LineNo>
+            <GTIN>08712199534694</GTIN>
+            <BuyerProductCode>15810060</BuyerProductCode>
+            <GreeneryFullProductCode>015810060FT0150    000120110300143ZL        </GreeneryFullProductCode>
+            <Description>Haricots Verts Dc      KE ZL</Description>
+            <Content>12</Content>
+            <CU>FT0150</CU>
+            <PackageType>Doos</PackageType>
+            <DespatchQuantityPCE>0</DespatchQuantityPCE>
+            <NumberOfUnitsPerPallet>162</NumberOfUnitsPerPallet>
+            <Unitprice>145</Unitprice>
+            <NumberOfPallets>0</NumberOfPallets>
+            <PalletCodeHAS>110500022</PalletCodeHAS>
+            <FreeText/>
+            <DeliveryParty>
+               <Name/>
+               <Address/>
+               <PostalCode/>
+               <City/>
+               <Country/>
+               <GLN/>
+               <LocCode/>
+            </DeliveryParty>
+         </LineInfo>
+         <LineInfo>
+            <LineNo>2</LineNo>
+            <GTIN>08712199252031</GTIN>
+            <BuyerProductCode>14500025</BuyerProductCode>
+            <GreeneryFullProductCode>014500025FT0250    000080110300143JUMBO     </GreeneryFullProductCode>
+            <Description>Peulen TT              PE JUMBO</Description>
+            <Content>8</Content>
+            <CU>FT0250</CU>
+            <PackageType>Doos</PackageType>
+            <DespatchQuantityPCE>0</DespatchQuantityPCE>
+            <NumberOfUnitsPerPallet>120</NumberOfUnitsPerPallet>
+            <NumberOfPallets>0</NumberOfPallets>
+            <PalletCodeHAS>110500022</PalletCodeHAS>
+            <FreeText/>
+            <DeliveryParty>
+               <Name/>
+               <Address/>
+               <PostalCode/>
+               <City/>
+               <Country/>
+               <GLN/>
+               <LocCode/>
+            </DeliveryParty>
+         </LineInfo>
+         <LineInfo>
+            <LineNo>3</LineNo>
+            <GTIN>08712199549629</GTIN>
+            <BuyerProductCode>15970054</BuyerProductCode>
+            <GreeneryFullProductCode>015970054FT0150    000120110300053FINLAN    </GreeneryFullProductCode>
+            <Description>Sugarsnaps Suga        ZW FINLAN</Description>
+            <Content>12</Content>
+            <CU>FT0150</CU>
+            <PackageType>Doos</PackageType>
+            <DespatchQuantityPCE>0</DespatchQuantityPCE>
+            <NumberOfUnitsPerPallet>180</NumberOfUnitsPerPallet>
+            <Unitprice>110</Unitprice>
+            <NumberOfPallets>0</NumberOfPallets>
+            <PalletCodeHAS>110500022</PalletCodeHAS>
+            <FreeText/>
+            <DeliveryParty>
+               <Name/>
+               <Address/>
+               <PostalCode/>
+               <City/>
+               <Country/>
+               <GLN/>
+               <LocCode/>
+            </DeliveryParty>
+         </LineInfo>
+      </LineInfos>
+      <PalletInformationEuro>
+         <NumberOfPallets>0</NumberOfPallets>
+         <PalletCodeISO/>
+         <PalletCodeHAS/>
+      </PalletInformationEuro>
+      <PalletInformationDPA>
+         <NumberOfPallets>0</NumberOfPallets>
+         <PalletCodeISO/>
+         <PalletCodeHAS/>
+      </PalletInformationDPA>
+      <PalletInformationPool>
+         <NumberOfPallets>0</NumberOfPallets>
+         <PalletCodeISO/>
+         <PalletCodeHAS/>
+      </PalletInformationPool>
+      <PalletInformationChepBlok>
+         <NumberOfPallets>0</NumberOfPallets>
+         <PalletCodeISO/>
+         <PalletCodeHAS/>
+      </PalletInformationChepBlok>
+      <PalletInformationOneway>
+         <NumberOfPallets>0</NumberOfPallets>
+         <PalletCodeISO/>
+         <PalletCodeHAS>110500022</PalletCodeHAS>
+      </PalletInformationOneway>
+      <PalletInformationChepEuro>
+         <NumberOfPallets>0</NumberOfPallets>
+         <PalletCodeISO/>
+         <PalletCodeHAS/>
+      </PalletInformationChepEuro>
+   </Consignment>
+</DESADV>

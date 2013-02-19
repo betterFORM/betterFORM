@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>XForms Select appearance="full" with Image-Label</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none;">
+        <xf:model>
+            <xf:instance>
+                <data>
+                    <target xmlns=""/>
+                    <ColorCode/>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="two">
+                <data>
+                    <ColorCode xmlns=""/>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="colors">
+                    <items xmlns="">
+                        <color>
+                            <name>RED</name>
+                            <value>00FF00</value>
+                        </color>
+                        <color>
+                            <name>GREEN</name>
+                            <value>0000FF</value>
+                        </color>
+                        <color>
+                            <name>BLUE</name>
+                            <value>FF0000</value>
+                        </color>
+                    </items>
+            </xf:instance>
+        </xf:model>
+    </div>
+    <xf:group>
+        <xf:select1 ref="target" appearance="full">
+            <xf:label/>
+            <xf:itemset  nodeset="instance('colors')/color">
+                <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
+                <xf:value ref="value"/>
+            </xf:itemset>
+        </xf:select1>
+    </xf:group>
+
+    <xf:group>
+        <xf:select1 ref="instance('two')/ColorCode" appearance="full" >
+            <xf:item>
+                <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
+                <xf:value>red</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>Orange</xf:label>
+                <xf:value>orange</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
+                <xf:value>yellow</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>Green</xf:label>
+                <xf:value>green</xf:value>
+            </xf:item>
+            <xf:item>
+                 <xf:label>
+                    <xf:output value="'../../bfResources/images/bf_logo_square.png'" mediatype="image/*"/>
+                </xf:label>
+                <xf:value>blue</xf:value>
+            </xf:item>
+       </xf:select1>
+        <img src="../../bfResources/images/bf_logo_square.png"/>
+    </xf:group>
+</div>
+</body>
+</html>

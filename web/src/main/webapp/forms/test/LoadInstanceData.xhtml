@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Load instance data</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance xmlns="" id="i-default" src="{$contextPath}LoadInstanceData.xml"/>
+            </xf:model>
+        </div>
+        <xf:group>
+            <xf:output ref="hello">
+                <xf:label>Hello From:</xf:label>
+            </xf:output>
+        </xf:group>
+    </body>
+</html>

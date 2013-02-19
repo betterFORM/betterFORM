@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+
+        xmlns:xf="http://www.w3.org/2002/xforms"
+        xmlns="http://www.w3.org/1999/xhtml"
+        >
+<head>
+	<title>Nested XF:Copy</title>
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+    -->
+	<style type="text/css">
+		.xfGroupLabel {
+			font-size:larger;
+			font-weight:bold;
+			margin:5px;
+		}
+	</style>
+	
+</head>
+
+<body class="tundra">
+<form action="">
+    <xf:model>
+        <xf:instance id="i-default" xmlns="">
+            <data>
+				<items>
+					<select1/>
+					<property1>other property</property1>
+				</items>
+            </data>
+        </xf:instance>
+
+
+		<xf:instance id="i-controller" xmlns="">
+			<data>
+			   <items>
+                  <empty/>
+				  <item1>
+					  <value1>123</value1>
+					  <value2>532</value2>
+				  </item1>
+				  <item2>
+					  <item2A>5232</item2A>
+					  <item2B>124</item2B>
+					  <item2C>2332</item2C>
+				  </item2>
+
+                   <innerPropery/>
+                   <property1>value for inner property one</property1>
+                   <property2>value for inner property two</property2>
+			   </items>
+			</data>
+		</xf:instance>
+
+		<xf:instance id="i-replace-inner" xmlns="">
+			<xf:data>
+				<items>
+					<select1>
+						<innerPropery>
+							<property2>new property2 value</property2>
+						</innerPropery>
+					</select1>
+					<property1>other property</property1>
+				</items>
+			</xf:data>			
+		</xf:instance>
+
+		<xf:instance id="i-replace-item1" xmlns="">
+			<xf:data>
+				<items>
+					<select1>
+						<item1>
+							<value1>new value1</value1>
+							<value2>new value2</value2>
+						</item1>
+					</select1>
+					<property1>replace item1 foreign property</property1>
+				</items>
+			</xf:data>
+		</xf:instance>
+
+		<xf:instance id="i-replace-item2" xmlns="">
+			<xf:data>
+				<items>
+					<select1>
+						<item2>
+							<item2A>new item2 A value</item2A>
+							<item2B>new item2 B value</item2B>
+							<item2C>new item2 C value</item2C>
+						</item2>
+					</select1>
+					<property1>replace item2 foreign property</property1>
+				</items>
+			</xf:data>
+		</xf:instance>
+
+		<xf:submission
+				id="s-debug"
+				method="post"
+				ref="instance('i-default')"
+				resource="{$contextroot}/jsp/debug-instance.jsp"
+			    validate="false"
+				replace="all"				
+		/>
+
+		<xf:submission
+				id="s-replace-inner"
+				method="get"
+				ref="instance('i-replace-inner')"
+				resource="echo:hallo"
+				replace="instance"
+				instance="i-default"
+			    validate="false"
+		/>
+
+		<xf:submission
+				id="s-replace-item1"
+				method="get"
+				ref="instance('i-replace-item1')"
+				resource="echo:hallo"
+				replace="instance"
+				instance="i-default"
+			    validate="false"
+		/>
+
+		<xf:submission
+				id="s-replace-item2"
+				method="get"
+				ref="instance('i-replace-item2')"
+				resource="echo:hallo"
+				replace="instance"
+				instance="i-default"
+			    validate="false"
+		/>
+    </xf:model>
+
+	<xf:group appearance="full">
+		<xf:label>Property Choice Test (based on XFORMS:COPY)</xf:label>
+		<xf:group appearance="full">
+			<xf:label>Replace Instance Select1 is bound to</xf:label>
+			<span style="float:left;margin:5px;padding:5px;">
+				<xf:trigger>
+					<xf:label>Replace Instance with InnerProperty</xf:label>
+					<xf:send submission="s-replace-inner"/>
+				</xf:trigger>
+			</span>
+			<span style="float:left;margin:5px;padding:5px;">
+				<xf:trigger>
+					<xf:label>Replace Instance with item1</xf:label>
+					<xf:send submission="s-replace-item1"/>
+				</xf:trigger>
+			</span>
+			<span style="float:left;margin:5px;padding:5px;">
+				<xf:trigger>
+					<xf:label>Replace Instance with item2</xf:label>
+					<xf:send submission="s-replace-item2"/>
+				</xf:trigger>
+			</span>
+			<div style="clear:both;"/>
+		</xf:group>
+		<br/>
+
+		<xf:group appearance="full">
+		  <xf:label>Outer xf:copy Select1</xf:label>
+		  <xf:select1 ref="instance('i-default')/items/select1" copySkeleton="true">
+			  <xf:label>Choose Outer Item</xf:label>
+			  <xf:itemset nodeset="instance('i-controller')/items/empty">
+                  <xf:label/>
+                  <xf:copy ref="."/>
+              </xf:itemset>
+			  <xf:itemset nodeset="instance('i-controller')/items/item1">
+				  <xf:label>Item1</xf:label>
+				  <xf:copy ref="."/>
+			  </xf:itemset>
+			  <xf:itemset nodeset="instance('i-controller')/items/item2">
+				  <xf:label>Item2</xf:label>
+				  <xf:copy ref="."/>
+			  </xf:itemset>
+			  <xf:itemset nodeset="instance('i-controller')/items/innerPropery">
+				  <xf:label>Inner Select1 Copy</xf:label>
+				  <xf:copy ref="."/>
+			  </xf:itemset>
+		  </xf:select1>
+	  </xf:group>
+
+		<xf:group ref="instance('i-default')/items/select1" appearance="full">
+			<xf:label>Outer Select1 xf:copy</xf:label>
+			<xf:group ref="item1" appearance="full">
+				<xf:label>Item1</xf:label>
+				<xf:input ref="value1">
+					<xf:label>Item1 Value1</xf:label>
+				</xf:input>
+				<xf:input ref="value2">
+					<xf:label>Item1 Value2</xf:label>
+				</xf:input>
+			</xf:group>
+			<xf:group ref="item2" appearance="full">
+				<xf:label>Item2s</xf:label>
+				<xf:input ref="item2A">
+					<xf:label>Item2 A:</xf:label>
+				</xf:input>
+				<xf:input ref="item2B">
+					<xf:label>Item2 B:</xf:label>
+				</xf:input>
+				<xf:input ref="item2C">
+					<xf:label>Item2 C:</xf:label>
+				</xf:input>
+			</xf:group>
+
+			<xf:group ref="innerPropery" appearance="full">
+				<xf:label>Inner Select1 xf:copy</xf:label>
+
+                <xf:select1 ref="." copySkeleton="true">
+                    <xf:label>Choose Inner Property</xf:label>
+                    <xf:itemset nodeset="instance('i-controller')/items/empty">
+                        <xf:label/>
+                        <xf:copy ref="."/>
+                    </xf:itemset>
+                    <xf:itemset nodeset="instance('i-controller')/items/property1">
+                        <xf:label>Property 1 itemset</xf:label>
+                        <xf:copy ref="."/>
+                    </xf:itemset>
+                    <xf:itemset nodeset="instance('i-controller')/items/property2">
+                        <xf:label>Property 2 itemset</xf:label>
+                        <xf:copy ref="."/>
+                    </xf:itemset>
+                </xf:select1>
+
+                <xf:group ref="property1" appearance="full">
+                    <xf:input ref=".">
+                        <xf:label>Property1</xf:label>
+                    </xf:input>
+                </xf:group>
+                <xf:group ref="property2" appearance="full">
+                    <xf:input ref=".">
+                        <xf:label>Property2</xf:label>
+                    </xf:input>
+                </xf:group>
+			</xf:group>
+		</xf:group>
+		<xf:group appearance="full">
+			<xf:label>Sibling Property</xf:label>
+			<xf:input ref="instance('i-default')/items/property1">
+				<xf:label>Value: </xf:label>
+			</xf:input>
+		</xf:group>
+		<xf:trigger>
+			<xf:label>Show Instance</xf:label>
+			<xf:send submission="s-debug"/>
+		</xf:trigger>
+	</xf:group>
+</form>
+</body>
+</html>

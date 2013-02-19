@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project id="test" default="run" basedir=".">
+    <target name="run">
+        <mkdir dir="run"/>
+    </target>
+
+    <target name="test">
+        <mkdir dir="test"/>
+    </target>
+
+    <target name="test2">
+        <mkdir dir="test2"/>
+    </target>
+</project>

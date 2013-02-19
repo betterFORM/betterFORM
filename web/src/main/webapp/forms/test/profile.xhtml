@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>Profile</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <script type="text/javascript">
+                    dojo.subscribe("/xf/ready", function(){
+                        fluxProcessor.skipshutdown=true;
+                    });
+                </script>
+    </head>
+    <body>
+        <div id="content" class="content">
+            <div id="xforms">
+        <div style="display:none">
+            <xf:model id="user">
+                <xf:instance id="request">
+                    <Parameters xmlns="">
+                        <Company>Old Company</Company>
+                    </Parameters>
+                </xf:instance>
+
+
+
+            </xf:model>
+            <xf:model id="wrcms">
+                <xf:instance id="request1">
+                    <Parameters xmlns="">
+                        <Company>Submitted Company</Company>
+                    </Parameters>
+                </xf:instance>
+
+                 <xf:submission id="copy-cms-parameters"
+                               validate="false"
+                               replace="none"
+                               method="post"
+                               resource="model:user#instance('request')/Parameters">
+                    <xf:action ev:event="xforms-submit-error">
+                        <xf:message>Error</xf:message>
+                    </xf:action>
+                </xf:submission>
+                <xf:action ev:event="xforms-ready">
+                    <xf:send
+                            submission="copy-cms-parameters"/>
+
+
+                    <xf:rebuild model="user"/>
+                        <xf:recalculate model="user"/>
+                </xf:action>
+                </xf:model>
+        </div>
+                <div>
+		<xf:group>
+            <xf:input ref="Company">
+                <xf:label>Company</xf:label>
+            </xf:input>
+
+            <xf:trigger>
+                <xf:label>Trigger submission.</xf:label>
+                <xf:send submission="copy-cms-parameters"></xf:send>
+            </xf:trigger>
+        </xf:group>
+                </div>
+
+            </div>
+
+
+        </div>
+    </body>
+</html>

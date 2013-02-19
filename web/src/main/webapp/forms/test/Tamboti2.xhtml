@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:mods="http://www.loc.gov/mods/v3"
+        >
+    <head>
+        <title><!--eXist-begin-->
+                eXist Bibiliographical Demo - MODS record editor
+                <!--eXist-end--><!--Tamboti-begin
+                Tamboti Metadata Framework - MODS record editor
+            Tamboti-end-->
+        </title>
+        <link rel="stylesheet" type="text/css" href="edit.css" /><!--Tamboti-begin
+                <link rel="stylesheet" type="text/css" href="tamboti.css"/>
+            Tamboti-end-->
+        <link rel="stylesheet" href="theme/css/xforms.css.xq" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="theme/css/default-style2.css" />
+
+        <style xmlns="" type="text/css">
+@namespace xf url(http://www.w3.org/2002/xforms);</style>
+        <xf:model>
+            <xf:instance xmlns="http://www.loc.gov/mods/v3" src="http://localhost:9090/exist/apps/library/modules/edit/get-instance.xq?tab-id=part&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;data=/db/resources/temp" id="save-data"></xf:instance>
+
+       (: Not used. The more or less full embodiment of the MODS schema, 3.3-3.4. :)
+       (: <xf:instance xmlns="http://www.loc.gov/mods/v3" src="http://localhost:9090/exist/apps/library/modules/edit/insert-templates.xml" id="insert-templates" readonly="true"></xf:instance>:)
+
+       (: Not used. A selection of elements and attributes from the MODS schema used for default records. :)
+       (: <xf:instance xmlns="http://www.loc.gov/mods/v3" src="http://localhost:9090/exist/apps/library/modules/edit/new-instance.xml" id="new-instance" readonly="true"></xf:instance>:)
+
+       (: Elements for the compact forms. :)
+       <xf:instance xmlns="http://www.loc.gov/mods/v3" src="http://localhost:9090/exist/apps/library/modules/edit/compact-template.xml" id="compact-template" readonly="true"></xf:instance>
+
+			<!--
+	   <xf:instance xmlns="" id="code-tables">
+		   <data/>
+	   </xf:instance>
+			-->
+	   <xf:instance xmlns="" id="code-tables" src="http://localhost:9090/exist/apps/library/modules/edit/codes-for-tab.xq?tab-id=part" readonly="true"></xf:instance>
+		<!-- a title should ideally speaking be required, but having this bind will prevent a tab from being saved when clicking on another tab, if the user has not input a title.--><!--
+       <xf:bind nodeset="instance('save-data')/mods:titleInfo/mods:title" required="true()"/>
+       -->
+            <xf:submission id="save-submission" method="post" ref="instance('save-data')" action="http://localhost:9090/exist/apps/library/modules/edit/save.xq?collection=/db/resources/temp&amp;action=save" replace="instance" instance="save-results"></xf:submission>
+
+            <xf:submission id="save-and-close-submission" method="post" ref="instance('save-data')" action="http://localhost:9090/exist/apps/library/modules/edit/save.xq?collection=/db/resources/temp&amp;action=close" replace="instance" instance="save-results"></xf:submission>
+            <xf:submission id="cancel-submission" method="post" ref="instance('save-data')" action="http://localhost:9090/exist/apps/library/modules/edit/save.xq?collection=/db/resources/temp&amp;action=cancel" replace="instance" instance="save-results"></xf:submission>
+        </xf:model>
+    </head>
+    <body>
+        <div id="page-head"><!--Tamboti-begin
+        <div id="page-head-left">
+            <a href="../search/index.xml" style="text-decoration: none">
+                <img
+                    src="theme/images/tamboti.png"
+                    title="Tamboti Metadata Framework"
+                    alt="Tamboti Metadata Framework"
+                    style="border-style: none;"/>
+
+            </a>
+        <div class="help"><a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a></div>
+        </div>
+        <div id="page-head-right">
+            <a href="http://www.asia-europe.uni-heidelberg.de/en/home.html" target="_blank">
+                <img
+                    src="theme/images/logovjc.gif"
+                    title="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University"
+                    alt="The Cluster of Excellence &quot;Asia and Europe in a Global Context: Shifting Asymmetries in Cultural Flows&quot; at Heidelberg University"
+                    width="75"
+                    height="69"
+                    style="border-style: none"/>
+            </a>
+        </div>
+        Tamboti-end--><!--eXist-begin-->
+            <a href="../search/index.xml" style="text-decoration: none">
+                <img src="theme/images/logo.jpg" title="eXist-db: Open Source Native XML Database" style="border-style: none;text-decoration: none" />
+            </a>
+
+            <div id="navbar">
+                <h1>Open Source Native XML Database</h1>
+            </div>
+            <div class="help">
+                <a href="../../docs/index.xml" style="text-decoration: none" target="_blank">Help</a>
+            </div><!--eXist-end-->
+        </div>
+        <div id="content1col">
+
+            <div class="container"><!--{ style:header() }-->
+                <div class="inner">
+                    <h3></h3>
+                    <div xmlns="" class="content">
+                        <span class="float-right">Editing record of type <strong>
+                                <label>Monograph</label>
+                            </strong>
+                            <span class="xforms-hint">
+
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                <div class="xforms-hint-value">
+                                    <hint>
+                                        <p>For a <strong>Monograph</strong>, on the <strong>Publication</strong> tab, one would normally input the following information:</p>
+                                        <p>Input the name(s) of the author(s) in <strong>Names and Roles</strong>, selecting "author" as Role. Divide the name into Given Name and Family Name, if possible.</p>
+
+                                        <p>Input the title of the monograph in <strong>Title Information</strong>, dividing this into Title and Subtitle, if possible. If the title begins with an article like "A" or "The," remove this from the title and input it in Non Sort.</p>
+                                        <p>In <strong>Origin Information</strong>, input the city in which the publisher resides and the name of the publisher. If more than one of these is in evidence, input the main one or the first of them. Finally, input the year of monograph. </p>
+                                        <p>In <strong>Physical Description</strong>, input the extent of the monograph in pages, e.g. "ix, 214 p."</p>
+                                        <p>In case the monograph is (also) electronic, input in <strong>URL</strong> the web address of the monograph.</p>
+
+                                        <p>Finally, in <strong>Identifier</strong> input the ISBN number of the monograph, preferably a 13-digit ISBN, and a DOI, if available.</p>
+                                        <p>&#160;</p>
+                                        <p>Use the <strong>Container</strong> tab only if the monograph is part of a series.</p>
+                                        <p>Input the title of the series in <strong>Series Title</strong>. Follow the same guidelines that apply to monograph titles.</p>
+
+                                        <p>Input the name(s) of the editor(s) of the series in <strong>Names and Roles</strong>. Choose "personal," "corporate" or "conference" as Type of Name as applies to the monograph in question. If the "editor" is not personal, select "(none selected)" instead of "Given Name" and "Family Name."</p>
+                                        <p>In <strong>Location of Monograph in Series</strong> note the volume number of the monograph within the series.</p>
+                                        <p>Finally, in <strong>Identifier</strong> input the ISSN number of the monograph series and a DOI, if available.</p>
+
+                                    </hint>
+                                </div>
+                            </span>
+
+    with the title<strong>
+                                <xf:output value="./mods:titleInfo/mods:title"></xf:output>
+                            </strong>,
+    on the <strong>
+                                <label>Parts</label>
+
+                            </strong> tab,
+    to be saved in <strong>/db/resources/users/admin</strong>.
+    </span><!--Here values are passed to the URL.-->
+                        <div class="tabs">
+                            <table class="top-tabs" width="100%">
+                                <tr>
+                                    <td style="background:#EDEDED" width="33.333333333333333333">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+
+                                                <div class="label" style="color:gray">
+                                                    <span class="tab-text">Basic Input Forms</span>
+                                                </div>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the top tabs, select the first of the bottom tabs. -->
+                                                <xf:load resource="edit.xq?tab-id=compact-a&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=1&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+
+                                        </xf:trigger>
+                                    </td>
+                                    <td style="background:white;border-bottom-color:white;" width="20">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+                                                <div class="label" style="font-weight:bold;color:#3681B3;">
+                                                    <span class="tab-text">Citation Forms</span>
+                                                </div>
+
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the top tabs, select the first of the bottom tabs. -->
+                                                <xf:load resource="edit.xq?tab-id=title&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=2&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+                                    <td style="background:#EDEDED" width="12.5">
+                                        <xf:trigger appearance="minimal">
+
+                                            <xf:label>
+                                                <div class="label" style="color:gray">
+                                                    <span class="tab-text">Content Description Forms</span>
+                                                </div>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the top tabs, select the first of the bottom tabs. -->
+                                                <xf:load resource="edit.xq?tab-id=subject&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=3&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+                                    <td style="background:#EDEDED" width="14.285714285714285714">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+                                                <div class="label" style="color:gray">
+                                                    <span class="tab-text">Remaining Forms</span>
+
+                                                </div>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the top tabs, select the first of the bottom tabs. -->
+                                                <xf:load resource="edit.xq?tab-id=note&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=4&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <table class="bottom-tabs">
+                                <tr>
+                                    <td style="background:#EDEDED">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+                                                <div class="label" style="color:gray">Title Info</div>
+                                            </xf:label>
+
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the bottom tabs, keep the show-level the same. -->
+                                                <xf:load resource="edit.xq?tab-id=title&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=2&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+                                    <td style="background:#EDEDED">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+
+                                                <div class="label" style="color:gray">Name Info</div>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the bottom tabs, keep the show-level the same. -->
+                                                <xf:load resource="edit.xq?tab-id=name&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=2&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+
+                                    <td style="background:#EDEDED">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+                                                <div class="label" style="color:gray">Origin Info</div>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the bottom tabs, keep the show-level the same. -->
+                                                <xf:load resource="edit.xq?tab-id=origin&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=2&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+                                    <td style="background:white;border-bottom-color:white;color:#3681B3;">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+                                                <div class="label" style="color:#3681B3;font-weight:bold;">Parts</div>
+                                            </xf:label>
+
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the bottom tabs, keep the show-level the same. -->
+                                                <xf:load resource="edit.xq?tab-id=part&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=2&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+                                    <td style="background:#EDEDED">
+                                        <xf:trigger appearance="minimal">
+                                            <xf:label>
+
+                                                <div class="label" style="color:gray">Physical Description</div>
+                                            </xf:label>
+                                            <xf:action ev:event="DOMActivate">
+                                                <xf:send submission="save-submission"></xf:send><!--When clicking on the bottom tabs, keep the show-level the same. -->
+                                                <xf:load resource="edit.xq?tab-id=physical-description&amp;id=uuid-aa4bba58-f1a4-4272-bfbf-1dc2fd763bcd&amp;show-level=2&amp;type=monograph-latin&amp;collection=/db/resources/users/admin" show="replace"></xf:load>
+                                            </xf:action>
+                                        </xf:trigger>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="save-buttons">
+                            <xf:submit submission="save-submission">
+                                <xf:label class="xforms-group-label-centered-general">&#160;Save</xf:label>
+                            </xf:submit>
+                            <xf:trigger>
+
+                                <xf:label class="xforms-group-label-centered-general">&#160;Save and Close</xf:label>
+                                <xf:action ev:event="DOMActivate">
+                                    <xf:send submission="save-and-close-submission"></xf:send>
+                                    <xf:load resource="../search/index.xml?reload=true" show="replace"></xf:load>
+                                </xf:action>
+                            </xf:trigger>
+                            <xf:trigger>
+                                <xf:label class="xforms-group-label-centered-general">&#160;Cancel Editing</xf:label>
+
+                                <xf:action ev:event="DOMActivate">
+                                    <xf:send submission="cancel-submission"></xf:send>
+                                    <xf:load resource="../search/index.xml?reload=true" show="replace"></xf:load>
+                                </xf:action>
+                            </xf:trigger>
+                            <span class="xforms-hint">
+                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                <div class="xforms-hint-value">
+                                    <p>Every time you click one of the lower tabs, your input is saved. Your input is also saved if you click the current tab. For this reason, there is usually no need to click the "Save" button. </p>
+
+                                    <p>If you plan to be away from your computer for some time, you can save what you have input so far by clicking the "Save" button. Be aware, however, that you are only logged in for a certain period of time and when your session times out, what you have input cannot be retrieved. If you know that you may not be able to finish a record due to some disturbance, it is best to click "Save and Close" and return to finish the record later.</p>
+                                    <p>When you have finished editing, click the "Save and Close" button. The record is then saved inside the folder you marked before opening the editor.</p>
+                                    <p>After you have closed the editor, you can continue editing the record by finding it and clicking the "Edit Record" button inside the record's detail view.</p>
+                                    <p>If you wish to discard what you have input and return to the search function, click "Cancel Editing".</p>
+                                </div>
+                            </span>
+                        </div><!-- Import the correct form body for the tab called. -->
+
+                        <div class="part" tab-id="part">
+                            <div class="block-form">
+                                <xf:group appearance="full">
+            <!-- The DLF/Aquifer Implementation Guidelines for Shareable MODS Records recommend that the part element be used in cases where the part of a resource being represented is a physical or structural part of another resource. Examples include an issue of a journal or a single story from a collection. This element is repeatable. -->
+                                    <fieldset class="level-1">
+                                        <div class="join">
+                                            <span class="legend">Parts</span>
+                                            <span class="join-button">
+
+                                                <xf:trigger>
+                                                    <xf:label>&#160;+</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:insert nodeset="mods:part" at="index('part-repeat')" position="after"></xf:insert>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </span>
+                                            <span class="join-button">
+
+                                                <xf:trigger>
+                                                    <xf:label>&#160;–</xf:label>
+                                                    <xf:action ev:event="DOMActivate">
+                                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part" at="index('part-repeat')"></xf:delete>
+                                                    </xf:action>
+                                                </xf:trigger>
+                                            </span>
+                                            <span class="xforms-hint">
+
+                                                <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                                <div class="xforms-hint-value">
+                                                    <p> The designation of physical parts of a resource in a detailed form. Part is used to provide detailed description of the physical
+                                parts of a resource. It may be used as a top level field to designate physical parts or under Related Item. If used under
+                                Related Item, Part records the location of a part within a host/parent item. If used as a top level field, Part records a part
+                                of a resource, usually because the library is not in possession of the whole resource. </p>
+                                                    <p> Use Part when the record in question refers to either a physical or structural part of a resource, rather than an intellectual
+                                part. An intellectual part of a resource should be recorded in various subfields under Title. A newspaper issue would e.g.
+                                generally be indicated with Part, rather than indicating the issue number as part of the title. Part as a top level field would
+                                also be used to describe one reel of microfilm in a set, or in any other case in which the part being described is not an
+                                intellectual whole by itself. When in doubt, and only part numbers and/or part names are needed, use Part Number and/or Part
+                                Name under Title under Title Information. </p>
+                                                </div>
+                                            </span>
+                                        </div>
+
+
+                <!--part repeat begins-->
+                                        <xf:repeat nodeset="instance('save-data')/mods:part" id="part-repeat">
+                    <!--part node-add begins-->
+                    <!--NB: attributes do not work-->
+                                            <xf:group appearance="full" ref=".[not(mods:detail)] | .[not(mods:extent)] | .[not(mods:date)] | .[not(mods:text)]">
+                                                <xf:switch>
+                                                    <xf:case id="part-add-node-hide">
+                                                        <div class="node-button">
+                                                            <xf:trigger class="add-button">
+
+                                                                <xf:label class="xforms-group-label-centered">&gt;</xf:label>
+                                                                <xf:toggle case="part-add-node-unhide" ev:event="DOMActivate"></xf:toggle>
+                                                            </xf:trigger>
+                                                        </div>
+                                                    </xf:case>
+                                                    <xf:case id="part-add-node-unhide">
+                                                        <div class="node-button">
+                                                            <xf:trigger>
+                                                                <xf:label class="xforms-group-label-centered">&lt;</xf:label>
+
+                                                                <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"></xf:toggle>
+                                                            </xf:trigger>
+                                                        </div>
+                                                        <div class="node-adds">
+                                                            <xf:group id="part-add-node-recommended" ref=".[not(mods:nonSort)] | .[not(mods:title)] | .[not(mods:subTitle)] | .[not(mods:partNumber)] | .[not(mods:partName)]" appearance="full">
+                                        <!--<xf:label class="xforms-group-label-centered">Recommended Fields</xf:label>-->
+                                        <!-- <xf:trigger ref=".[not(@type)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Type</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@type"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@order)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Order</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@order"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@lang)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Language</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@lang"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@transliteration)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Transliteration</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@transliteration"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@script)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Script</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@script"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@altRepGroup)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add altRepGroup</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@altRepGroup"/> </xf:action> </xf:trigger> -->
+                                                                <xf:trigger ref=".[not(mods:detail)]" class="add-button">
+                                                                    <xf:label class="xforms-group-label-centered">Add Detail</xf:label>
+
+                                                                    <xf:action ev:event="DOMActivate">
+                                                                        <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"></xf:toggle>
+                                                                        <xf:insert nodeset="mods:detail" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:part/mods:detail"></xf:insert>
+                                                                    </xf:action>
+                                                                </xf:trigger>
+                                                                <xf:trigger ref=".[not(mods:extent)]" class="add-button">
+                                                                    <xf:label class="xforms-group-label-centered">Add Extent</xf:label>
+                                                                    <xf:action ev:event="DOMActivate">
+
+                                                                        <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"></xf:toggle>
+                                                                        <xf:insert nodeset="mods:extent" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:part/mods:extent"></xf:insert>
+                                                                    </xf:action>
+                                                                </xf:trigger>
+                                                                <xf:trigger ref=".[not(mods:date)]" class="add-button">
+                                                                    <xf:label class="xforms-group-label-centered">Add Date</xf:label>
+                                                                    <xf:action ev:event="DOMActivate">
+                                                                        <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"></xf:toggle>
+
+                                                                        <xf:insert nodeset="mods:date" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:part/mods:date"></xf:insert>
+                                                                    </xf:action>
+                                                                </xf:trigger>
+                                                                <xf:trigger ref=".[not(mods:text)]" class="add-button">
+                                                                    <xf:label class="xforms-group-label-centered">Add Text</xf:label>
+                                                                    <xf:action ev:event="DOMActivate">
+                                                                        <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"></xf:toggle>
+                                                                        <xf:insert nodeset="mods:text" at="index('part-repeat')" position="after" origin="instance('insert-templates')/mods:part/mods:text"></xf:insert>
+
+                                                                    </xf:action>
+                                                                </xf:trigger>
+                                                            </xf:group>
+                                    <!-- <xf:group id="part-add-node-optional"> <xf:label class="xforms-group-label-centered">Optional Fields</xf:label> <xf:trigger ref=".[not(@displayLabel)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add Display Label</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@displayLabel"/> </xf:action> </xf:trigger> </xf:group> -->
+                                    <!-- <xf:group id="part-add-node-not-recommended"> <xf:label class="xforms-group-label-centered">Deprecated Fields</xf:label> <xf:trigger ref=".[not(@ID)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add ID</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@ID"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xlink)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add XLink</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@xlink"/> </xf:action> </xf:trigger> <xf:trigger ref=".[not(@xml:lang)]" class="add-button"> <xf:label class="xforms-group-label-centered">Add xml:lang</xf:label> <xf:action ev:event="DOMActivate"> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:insert context="." origin="instance('insert-templates')/mods:part/@xml:lang"/> </xf:action> </xf:trigger> </xf:group> </xf:group> -->
+                                                        </div>
+                                                    </xf:case>
+                                                </xf:switch>
+                                            </xf:group>
+
+                    <!--part node-add ends-->
+                    <!--part input begins-->
+                    <!--DLF/Aquifer: OPTIONAL-->
+                    <!--Cluster: omit-->
+                                            <xf:group ref=".[@ID]" appearance="full">
+                                                <xf:input ref="./@ID" class="text_50">
+                                                    <xf:label>ID: </xf:label>
+                                                    <xf:hint>
+
+                                                        <p> ID is used to link among records inside the database and to reference a field inside the database from the outside. </p>
+                                                    </xf:hint>
+                                                </xf:input>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@ID" at="index('part-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--DLF/Aquifer: OPTIONAL]-->
+                    <!--Cluster: omit-->
+                                            <xf:group ref=".[@type]" appearance="full">
+
+                                                <xf:input ref="./@type" class="text_50">
+                                                    <xf:label>Type: </xf:label>
+                                                    <xf:hint>
+                                                        <p> A designation of a document segment type. Suggested values include volume, issue, chapter, section, paragraph, and track.
+                                    Other values may be used as needed. Since there is not a controlled set of terms for type, if used, the value should be
+                                    expressed clearly and be generally understandable. </p>
+                                                    </xf:hint>
+                                                </xf:input>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@type" at="index('part-repeat')"/> </xf:trigger> -->
+
+                                            </xf:group>
+                    <!--DLF/Aquifer: OPTIONAL]-->
+                    <!--Cluster: omit-->
+                                            <xf:group ref=".[@order]" appearance="full">
+                                                <xf:input ref="./@order" class="text_50">
+                                                    <xf:label>Order:</xf:label>
+                                                    <xf:hint>
+                                                        <p> An integer that designates the sequence of parts. </p>
+
+                                                    </xf:hint>
+                                                </xf:input>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@order" at="index('part-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--DLF/Aquifer: REQUIRED IF APPLICABLE-->
+                    <!--Cluster: include-->
+                                            <xf:group class="input-group" ref=".[@lang]" appearance="full">
+                                                <xf:select1 ref="./@lang">
+                                                    <xf:label>Language:</xf:label>
+
+                                                    <xf:hint>
+                                                        <p> The language used within Title Information is specified here, if this language is different from the language noted in
+                                    Language of Resource. The most common languages have been moved to the top of the list. </p>
+                                                    </xf:hint>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-3-type-sorted-code']/items/item">
+                                                        <xf:label ref="label"></xf:label>
+                                                        <xf:value ref="value"></xf:value>
+                                                    </xf:itemset>
+                                                </xf:select1>
+
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@lang" at="index('part-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--DLF/Aquifer: NOT RECOMMENDED]-->
+                    <!--Cluster: omit-->
+                                            <xf:group class="input-group" ref=".[@xml:lang]" appearance="full">
+                                                <xf:select1 ref="./@xml:lang">
+                                                    <xf:label>xml:lang:</xf:label>
+                                                    <xf:hint>
+
+                                                        <p> The language used within Title Information is specified here, if this language is different from the language noted in
+                                    Language of Resource. xml:lang is used to specify the language used within a field, using specifications in RFC 3066. RFC
+                                    3066 uses the two-character ISO 639-1 codes along with three-character ISO 639-2 codes for those languages not given in
+                                    639-1. </p>
+                                                        <p> The recommendation is not to use xml:lang, but to use the Language. </p>
+                                                    </xf:hint>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='language-2-type-code']/items/item">
+                                                        <xf:label ref="label"></xf:label>
+                                                        <xf:value ref="value"></xf:value>
+                                                    </xf:itemset>
+
+                                                </xf:select1>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@xml:lang" at="index('part-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+                    <!--Cluster: include-->
+                                            <xf:group class="input-group" ref=".[@type='transliterated']" appearance="full">
+                                                <xf:select1 ref="./@transliteration" selection="open">
+                                                    <xf:label>Transliteration:</xf:label>
+
+                                                    <xf:hint>
+                                                        <p> Transliteration specifies the transliteration (transcription, romanisation) scheme used within Title Information. When
+                                    specificing the transliteration used, also specify the language employed. There is at present no standard list of
+                                    transliteration schemes available. If you wish to employ a transliteration on the scheme, please contact <!--contact -->. In
+                                    general, the Library of Congress transliteration schemes (<!-- NB -->) should be used. If you follow a transliteration
+                                    scheme authorised by <!--NB-->, choose <!--NB--> as the value and note the language from which the transliteration is made.
+                                    The following transliteration schemes are authorised by <!--NB-->: Chinese: pinyin Japanese: (modified) Hepburn Korean:
+                                    <!--NB--> Russian: <!--NB--> Sanskrit: <!--NB--> If you employ a different, but recognised, transliteration scheme, you may
+                                    have it added to the list. </p>
+
+                                                    </xf:hint>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='transliteration-code']/items/item">
+                                                        <xf:label ref="label"></xf:label>
+                                                        <xf:value ref="value"></xf:value>
+                                                    </xf:itemset>
+                                                </xf:select1>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@transliteration" at="index('part-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--DLF/Aquifer: [RECOMMENDED IF APPLICABLE]-->
+
+                    <!--Cluster: include-->
+                                            <xf:group class="input-group" ref=".[not(@type='transliterated')] and ./@script" appearance="full">
+                                                <xf:select1 ref="./@script">
+                                                    <xf:label>Script:</xf:label>
+                                                    <xf:hint>
+                                                        <p> Script specifies the script used within individual fields. The use of Latin script is not noted. "Chinese" is "Han
+                                    (Simplified Variant)" or "Han (Traditional Variant)". If the two variants are not considered, it is "Han (Hanzi, Kanji,
+                                    Hanja)", also used for Japanese, Korean and Vietnamese written in Chinese. </p>
+                                                    </xf:hint>
+
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='script-code']/items/item">
+                                                        <xf:label ref="label"></xf:label>
+                                                        <xf:value ref="value"></xf:value>
+                                                    </xf:itemset>
+                                                </xf:select1>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="part-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/@script" at="index('part-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--DLF/Aquifer: N/A]]-->
+                    <!--Cluster: omit-->
+
+                                            <xf:group ref=".[@altRepGroup]" appearance="full">
+                                                <xf:select1 ref="./@altRepGroup">
+                                                    <xf:label>Alternate Representation Groups: </xf:label>
+                                                    <xf:hint>
+                                                        <p>Alternate Representation Groups is used to link alternate representations of the same element content, such as different
+                                    scripts, transliterations, and translations. The same attribute value is applied to each of the element instances to be
+                                    linked.</p>
+                                                    </xf:hint>
+                                                    <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='altRepGroup-code']/items/item">
+                                                        <xf:label ref="label"></xf:label>
+
+                                                        <xf:value ref="value"></xf:value>
+                                                    </xf:itemset>
+                                                </xf:select1>
+                        <!-- <xf:trigger> <xf:label class="xforms-label-small">-</xf:label> <xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/><xf:toggle case="name-add-node-hide" ev:event="DOMActivate"/> <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:name/@altRepGroup" at="index('name-repeat')"/> </xf:trigger> -->
+                                            </xf:group>
+                    <!--part input ends-->
+                    <!--part/detail begins-->
+                    <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE]-->
+                    <!--Cluster: include-->
+
+                                            <xf:group id="fieldset-detail" ref=".[mods:detail]">
+                                                <fieldset class="level-2">
+                                                    <div class="join">
+                                                        <span class="legend">Detail</span>
+                                                        <span class="join-button">
+                                                            <xf:trigger>
+                                                                <xf:label>&#160;+</xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+
+                                                                    <xf:insert nodeset="mods:detail" at="index('part-detail-repeat')" position="after"></xf:insert>
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </span>
+                                                        <span class="join-button">
+                                                            <xf:trigger>
+                                                                <xf:label>&#160;–</xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+
+                                                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/mods:detail" at="index('part-detail-repeat')"></xf:delete>
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </span>
+                                                        <span class="xforms-hint">
+                                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                                            <div class="xforms-hint-value">
+                                                                <p> Use Detail to indicate the numbering and type of designation of the part in relation to the parent item. Detail
+                                            contains the numbering and type of designation of the part in relation to the host/parent item in which a host item
+                                            resides. </p>
+
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                            <!--part/detail repeat begins-->
+                                                    <xf:repeat nodeset="./mods:detail" id="part-detail-repeat">
+                                <!--part/detail input begins-->
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[@type]" appearance="full">
+
+                                                            <xf:input ref="./@type" class="text_50">
+                                                                <xf:label>Type:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Use this field to indicate the type of the part described. Suggested values include part, volume, issue,
+                                                chapter, section, paragraph, track. Other values may be used as needed. However, since there is not a controlled
+                                                set of terms for type, if used, the value should be expressed clearly and be generally understandable outside of
+                                                the local context of the resource. <!--NB: make open selcetion with code table?-->
+                                                                    </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+
+                                                        </xf:group>
+                                <!--DLF/Aquifer: OPTIONAL]-->
+                                <!--Cluster: omit-->
+                                                        <xf:group ref=".[@order]" appearance="full">
+                                                            <xf:input ref="./@order" class="text_50">
+                                                                <xf:label>Order:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> An integer that designates the sequence of parts. </p>
+
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--DLF/Aquifer: N/A-->
+                                <!--Cluster: omit-->
+                                                        <xf:group ref=".[@level]" appearance="full">
+                                                            <xf:input ref="./@level" class="text_50">
+                                                                <xf:label>Level:</xf:label>
+
+                                                                <xf:hint>
+                                                                    <p> Describes the level of numbering in the host/parent item. This is used to ensure that the numbering is retained
+                                                in the proper order. An example is: "v. 2, no. 3". </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/detail input ends-->
+                                <!--part/detail/number begins-->
+                                <!--DLF/Aquifer: OPTIONAL-->
+
+                                <!--Cluster: ?-->
+                                                        <xf:group ref=".[mods:number]" appearance="full">
+                                                            <xf:input ref="./mods:number" class="text_50">
+                                                                <xf:label>Number:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Contains the actual number within the part. </p>
+                                                                </xf:hint>
+
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/detail/number ends-->
+                                <!--part/detail/caption begins-->
+                                                        <xf:group ref=".[mods:caption]" appearance="full">
+                                                            <xf:input ref="./mods:caption" class="text_50">
+                                                                <xf:label>Caption:</xf:label>
+                                                                <xf:hint>
+
+                                                                    <p> Contains the caption describing the enumeration within a part. This may be the same as type, but conveys what is
+                                                on the item being described. </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/detail/caption ends-->
+                                <!--part/detail/title begins-->
+                                                        <xf:group ref=".[mods:title]" appearance="full">
+                                                            <xf:input ref="./mods:title" class="text_50">
+
+                                                                <xf:label>Title:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Contains the title of the part. Only include if this is different than the Title in Title Information. </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/detail/title ends-->
+
+                                                    </xf:repeat>
+                            <!--part/detail repeat ends-->
+                                                </fieldset>
+                                            </xf:group>
+                    <!--part/detail ends-->
+                    <!--part/extent begins-->
+                    <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                    <!--Cluster: include-->
+                                            <xf:group id="fieldset-extent" ref=".[mods:extent]">
+
+                                                <fieldset class="level-2">
+                                                    <div class="join">
+                                                        <span class="legend">Extent</span>
+                                                        <span class="join-button">
+                                                            <xf:trigger>
+                                                                <xf:label>&#160;+</xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+                                                                    <xf:insert nodeset="mods:extent" at="index('extent-repeat')" position="after"></xf:insert>
+
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </span>
+                                                        <span class="join-button">
+                                                            <xf:trigger>
+                                                                <xf:label>&#160;–</xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+                                                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/mods:extent" at="index('extent-repeat')"></xf:delete>
+
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </span>
+                                                        <span class="xforms-hint">
+                                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                                            <div class="xforms-hint-value">
+                                                                <p> Use this subfield to indicate the measured units making up the part (for example pages, minutes, etc.). </p>
+                                                            </div>
+
+                                                        </span>
+                                                    </div>
+                            <!--part/extent repeat begins-->
+                                                    <xf:repeat nodeset="./mods:extent" id="extent-repeat">
+                                <!--part/extent input begins-->
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[count(@unit) &gt; 0]" appearance="full">
+                                                            <xf:select1 ref="./@unit" selection="open">
+
+                                                                <xf:label>Unit:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Suggested values include page, minute, etc. <!--NB: make code table with open selection?--></p>
+                                                                </xf:hint>
+                                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='part-extent-unit-code']/items/item">
+                                                                    <xf:label ref="label"></xf:label>
+                                                                    <xf:value ref="value"></xf:value>
+
+                                                                </xf:itemset>
+                                                            </xf:select1>
+                                                        </xf:group>
+                                <!--part/extent input ends-->
+                                <!--part/start begins-->
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[count(mods:start) &gt; 0]" appearance="full">
+                                                            <xf:input ref="./mods:start" class="text_50">
+
+                                                                <xf:label>Start:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Contains the beginning unit of the extent within a part (e.g., first page). </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/start ends-->
+
+                                <!--part/end begins-->
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[count(mods:end) &gt; 0]" appearance="full">
+                                                            <xf:input ref="./mods:end" class="text_50">
+                                                                <xf:label>End:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Contains the ending unit of the extent within a part. </p>
+
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/end ends-->
+                                <!--part/total begins-->
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[count(mods:total) &gt; 0]" appearance="full">
+                                                            <xf:input ref="./mods:total" class="text_50">
+
+                                                                <xf:label>Total:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Contains the total number of units within a part, rather than specific units. </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/total ends-->
+
+                                <!--part/list begins-->
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[count(mods:list) &gt; 0]" appearance="full">
+                                                            <xf:input ref="./mods:list" class="text_50">
+                                                                <xf:label>List:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Contains a textual listing of the units within a part (e.g., "pp. 5-9".) </p>
+
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/list ends-->
+                                                    </xf:repeat>
+                            <!--part/extent repeat ends-->
+                                                </fieldset>
+                                            </xf:group>
+                    <!--part/extent ends-->
+
+                    <!--part/date begins-->
+                    <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                    <!--Cluster: include-->
+                                            <xf:group id="fieldset-date" ref=".[mods:date]">
+                                                <fieldset class="level-2">
+                                                    <div class="join">
+                                                        <span class="legend">
+                                                            <span class="legend">Date</span>
+
+                                                            <span class="join-button">
+                                                                <xf:trigger>
+                                                                    <xf:label>&#160;+</xf:label>
+                                                                    <xf:action ev:event="DOMActivate">
+                                                                        <xf:insert nodeset="mods:date" at="index('part-date-repeat')" position="after"></xf:insert>
+                                                                    </xf:action>
+                                                                </xf:trigger>
+                                                            </span>
+
+                                                            <span class="join-button">
+                                                                <xf:trigger>
+                                                                    <xf:label>&#160;–</xf:label>
+                                                                    <xf:action ev:event="DOMActivate">
+                                                                        <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/mods:date" at="index('part-date-repeat')"></xf:delete>
+                                                                    </xf:action>
+                                                                </xf:trigger>
+                                                            </span>
+
+                                                        </span>
+                                                        <span class="xforms-hint">
+                                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                                            <div class="xforms-hint-value">
+                                                                <p> Date contains date information relevant to the part described. </p>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+
+                            <!--part/date repeat begins-->
+                                                    <xf:repeat nodeset="instance('save-data')/mods:part/mods:date" id="part-date-repeat">
+                                <!--part/date input begins-->
+                                <!--DLF/Aquifer: RECOMMENDED-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[@encoding]" appearance="full">
+                                                            <xf:select1 ref="./@encoding">
+                                                                <xf:label>Encoding:</xf:label>
+
+                                                                <xf:hint>
+                                                                    <p> If a structured date is used, indicate the formatting source using the encoding field. These guidelines
+                                                recommend using the following value for the encoding field: "w3cdtf" This encoding is used to specify YYYY-MM-DD
+                                                date patterns. "iso8601" is used for formatted dates which use pattern: YYYYMMDD (hours, minutes, seconds may
+                                                also be added). "marc" is used only for dates coded according to MARC 21 rules in field 008/07-14 for dates of
+                                                publication/issuance. Thus, this would only apply to the field in Date Issued. Examples include: 19uu (a MARC
+                                                convention to show unknown digits in a date), 9999 (a MARC convention showing that the end date has not occurred
+                                                or is not known). </p>
+                                                                </xf:hint>
+                                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-encoding-code']/items/item">
+                                                                    <xf:label ref="label"></xf:label>
+                                                                    <xf:value ref="value"></xf:value>
+                                                                </xf:itemset>
+                                                            </xf:select1>
+
+                                                        </xf:group>
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref=".[@point]" appearance="full">
+                                                            <xf:select1 ref="./@point">
+                                                                <xf:label>Point:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> The point field can be used to encode date ranges using the following values: "start" and "end". If no point is
+                                                specified, date is assumed to be a single date. </p>
+
+                                                                </xf:hint>
+                                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='start-end-code']/items/item">
+                                                                    <xf:label ref="label"></xf:label>
+                                                                    <xf:value ref="value"></xf:value>
+                                                                </xf:itemset>
+                                                            </xf:select1>
+                                                        </xf:group>
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+
+                                                        <xf:group ref=".[@qualifier]" appearance="full">
+                                                            <xf:select1 ref="./@qualifier">
+                                                                <xf:label>Qualifier:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> The qualifier field has three allowed values: approximate, inferred, and questionable. Best practice is to use
+                                                this field with the appropriate value when a date is approximate, inferred, or questionable, rather than
+                                                inserting characters such as "ca.", brackets or a question mark within the date string. </p>
+                                                                </xf:hint>
+                                                                <xf:itemset nodeset="instance('code-tables')/code-table[code-table-name='date-qualifier-code']/items/item">
+
+                                                                    <xf:label ref="label"></xf:label>
+                                                                    <xf:value ref="value"></xf:value>
+                                                                </xf:itemset>
+                                                            </xf:select1>
+                                                        </xf:group>
+                                <!--DLF/Aquifer: RECOMMENDED IF APPLICABLE-->
+                                <!--Cluster: include-->
+                                                        <xf:group ref="." appearance="full">
+                                                            <xf:input ref="." class="text_50">
+
+                                                                <xf:label>Date: </xf:label>
+                                                                <xf:hint>
+                                                                    <p> Date contains date information relevant to the part described. </p>
+                                                                </xf:hint>
+                                                            </xf:input>
+                                                        </xf:group>
+                                <!--part/date input ends-->
+
+                                                    </xf:repeat>
+                            <!--part/date repeat ends-->
+                                                </fieldset>
+                                            </xf:group>
+                    <!--part/date ends-->
+                                            <xf:group id="fieldset-text" ref=".[mods:text]">
+                                                <fieldset class="level-2">
+                                                    <div class="join">
+                                                        <span class="legend">Text</span>
+
+                                                        <span class="join-button">
+                                                            <xf:trigger>
+                                                                <xf:label>&#160;+</xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+                                                                    <xf:insert nodeset="mods:text" at="index('text-repeat')" position="after"></xf:insert>
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </span>
+
+                                                        <span class="join-button">
+                                                            <xf:trigger>
+                                                                <xf:label>&#160;–</xf:label>
+                                                                <xf:action ev:event="DOMActivate">
+                                                                    <xf:delete ev:event="DOMActivate" nodeset="instance('save-data')/mods:part/mods:text" at="index('text-repeat')"></xf:delete>
+                                                                </xf:action>
+                                                            </xf:trigger>
+                                                        </span>
+
+                                                        <span class="xforms-hint">
+                                                            <span onmouseover="show(this, 'hint', true)" onmouseout="show(this, 'hint', false)" class="xforms-hint-icon"></span>
+                                                            <div class="xforms-hint-value">
+                                                                <p> Use this subfield to record information in textual form. Use this subfield when other subfields will not capture the
+                                            appropriate information. </p>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                            <!--part/text repeat begins-->
+
+                                                    <xf:repeat nodeset="./mods:text" id="text-repeat">
+                                <!--part/text input begins-->
+                                                        <xf:group ref="." appearance="full">
+                                                            <xf:textarea ref="." class="textarea" mediatype="dojo">
+                                                                <xf:label>Text:</xf:label>
+                                                                <xf:hint>
+                                                                    <p> Use this subfield to record information in textual form. Use this subfield when other subfields will not capture
+                                                the appropriate information. </p>
+
+                                                                </xf:hint>
+                                                            </xf:textarea>
+                                                        </xf:group>
+                                <!--part/text input ends-->
+                                                    </xf:repeat>
+                            <!--part/text repeat ends-->
+                                                </fieldset>
+                                            </xf:group>
+                    <!--part/text ends-->
+
+                                        </xf:repeat>
+                <!--part repeat ends-->
+                                        <xf:group id="part-add-element" ref=".[not(./mods:part)]" appearance="full">
+                                            <xf:trigger ref=".[not(mods:part)]" class="add-button">
+                                                <xf:label class="xforms-group-label-centered">Add Missing Part</xf:label>
+                                                <xf:action ev:event="DOMActivate">
+                                                    <xf:insert nodeset="mods:form" at="index('part-repeat')" position="after" origin="instance('new-instance')/mods:part"></xf:insert>
+                                                </xf:action>
+
+                                            </xf:trigger>
+                                        </xf:group>
+                                    </fieldset>
+                                </xf:group>
+                            </div>
+                        </div>
+                        <br />
+                        <xf:submit submission="save-submission">
+                            <xf:label class="xforms-group-label-centered-general">Save</xf:label>
+
+                        </xf:submit><!--
+    <div class="debug">
+        <xf:output value="count(instance('save-data')/*)">
+           <xf:label>Root Element Count: </xf:label>
+        </xf:output>
+        <br/>
+        <xf:output ref="instance('save-results')//message ">
+           <xf:label>Message: </xf:label>
+        </xf:output>
+
+        <xf:output ref="instance('save-results')//mods:message ">
+           <xf:label>MODS Message: </xf:label>
+        </xf:output>
+    </div>
+    -->
+                    </div>
+                </div><!--{ style:footer() }-->
+            </div>
+        </div>
+    </body>
+</html>

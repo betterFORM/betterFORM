@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <title>Bind / Value Changed Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <xf:model id="hello-model">
+        <xf:instance id="C-2" xmlns="">
+            <data>
+                <name>initial value</name>
+            </data>
+        </xf:instance>
+        <xf:bind id="bind1" nodeset="name" required="true()"/>
+
+        <xf:action ev:event="xforms-ready">
+            <xf:setvalue bind="bind1" value="'new value'"/>
+        </xf:action>
+    </xf:model>
+</head>
+<body>
+<xf:group id="group-1" appearance="minimal">
+    <xf:label>Bind / Value Changed Test</xf:label>
+    <xf:input id="input-1" bind="bind1">
+        <xf:label>Your name:</xf:label>
+        <xf:action ev:event="xforms-value-changed">
+            <xf:message>the value has changed</xf:message>
+        </xf:action>
+    </xf:input>
+    <xf:trigger id="trigger-reset">
+        <xf:label>Reset</xf:label>
+        <xf:reset/>
+    </xf:trigger>
+</xf:group>
+</body>
+</html>

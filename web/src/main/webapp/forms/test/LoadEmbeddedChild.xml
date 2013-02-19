@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<div  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <xf:model id="m-child-1">
+        <xf:instance id="i-child-1" xmlns="">
+            <data>
+                <item>false</item>
+                <item>2009-10-01</item>
+                <item>2009-10-01</item>
+                <item>4</item>
+                <item>5</item>
+            </data>
+        </xf:instance>
+        <xf:bind  nodeset="item[1]" type="boolean" readonly="true()"/>
+        <xf:bind  nodeset="item[2]" type="date"/>
+        <xf:bind  nodeset="item[3]" type="date"/>
+    </xf:model>
+    <xf:group>
+        <xf:input ref="item[1]" model="m-child-1">
+            <xf:label>item 1</xf:label>
+        </xf:input>
+        <xf:input ref="item[2]" model="m-child-1">
+            <xf:label>item 2</xf:label>
+        </xf:input>
+        <xf:input ref="item[3]" model="m-child-1">
+            <xf:label>item 3</xf:label>
+        </xf:input>
+        <xf:input ref="item[4]" model="m-child-1">
+            <xf:label>item 4</xf:label>
+        </xf:input>
+        <xf:input ref="item[5]" model="m-child-1">
+            <xf:label>item 5</xf:label>
+        </xf:input>
+    </xf:group>
+</div>

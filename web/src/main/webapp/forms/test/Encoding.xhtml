@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Escaping</title>
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+    -->
+    <xf:model id="app-search-model">
+        <xf:instance id="search_params">
+            <data xmlns="">
+                <q/>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="q" type="xs:string"/>
+        <xf:setvalue ev:event="xforms-ready" ref="q" value="bf:appContext('q')"/>
+    </xf:model>
+</head>
+<body>
+      <xf:group appearance="full">
+          <xf:input ref="instance('search_params')/q">
+              <xf:label>Search:</xf:label>
+          </xf:input>
+
+          <xf:input ref="instance('search_params')/q">
+              <xf:label>Copy of Search:</xf:label>
+          </xf:input>
+
+          <xf:trigger model="app-search-model">
+              <xf:label>Submit</xf:label>
+              <xf:action ev:event="DOMActivate">
+                  <xf:load show="replace">
+                      <xf:resource
+                              value="concat('Encoding.xhtml?q=', encode-for-uri(instance('search_params')/q))"/>
+                  </xf:load>
+              </xf:action>
+          </xf:trigger>
+          <xf:output value="instance('search_params')/q">
+              <xf:label>Search Text:</xf:label>
+          </xf:output>
+          <xf:output value="bf:appContext('q')">
+              <xf:label>URI Param:</xf:label>
+          </xf:output>
+      </xf:group>
+<br/>
+
+
+</body>
+</html>

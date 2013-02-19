@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Submit error</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <msg/>
+                    </data>
+                </xf:instance>
+
+                <xf:submission id="s-submission"
+                               validate="false"
+                               replace="none"
+                               method="post"
+                               resource="http://www.dhshfdhsdf.com/rest/">
+
+                  <xf:action ev:event="xforms-submit-done">
+                     <xf:message level="ephemeral">Submitted done</xf:message>
+                  </xf:action>
+
+                  <xf:action ev:event="xforms-submit-error">
+                      <xf:message>Submitted error.
+                         resource-uri:
+                         <xf:output value="event('resource-uri')"/>
+                         response-reason-phrase:
+                         <xf:output value="event('response-reason-phrase')"/>
+                     </xf:message>
+                  </xf:action>
+
+               </xf:submission>
+            </xf:model>
+        </div>
+		<xf:group>
+            <xf:trigger>
+                <xf:label>Submit</xf:label>
+                <xf:send submission="s-submission"/>
+            </xf:trigger>
+
+            <xf:output ref="/msg">
+                <xf:label>resource-URI:</xf:label>
+            </xf:output>
+		</xf:group>
+    </body>
+</html>

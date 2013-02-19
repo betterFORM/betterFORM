@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>CrossModelSubmission</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <meta name="author" content="lars.windauer at betterform.de"/>
+        <meta name="author" content="joern.turner  at betterform.de"/>
+        <meta name="description" content="test form for cross model submission"/>
+        <meta name="version" content="$Id: CrossModelSubmissionTest.xhtml 3251 2008-07-08 09:26:03Z lars $"/>
+
+
+        <!-- model without schemas -->
+        <xf:model id="model-1">
+            <xf:instance id="i-1-m-1" xmlns="">
+                <data>
+                    <item>true</item>
+                    <item>2001-01-01</item>
+                    <item>item instance 1</item>
+                    <child/>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="i-2-m-1" xmlns="">
+                <data>
+                    <items>
+                        <item>new item 1</item>
+                        <item>new item 2</item>
+                        <item>new item 3</item>
+                    </items>
+                </data>
+            </xf:instance>
+
+            <xf:submission id="s-cross-model-submission-1"
+                           action="echo:hallo"
+                           method="get"
+                           ref="instance('i-1-m-1')"
+                           replace="instance"
+                           instance="i-1-m-2"
+                           target="model('model-2')"/>
+
+            <xf:submission id="s-cross-model-submission-2"
+                           action="echo:hallo"
+                           method="get"
+                           ref="instance('i-2-m-1')/items"
+                           replace="instance"
+                           instance="i-1-m-2"
+                           target="model('model-2')/data/child"/>
+
+
+        </xf:model>
+
+        <xf:model id="model-2">
+            <xf:instance id="i-1-m-2" xmlns="">
+                <data>
+                    <item>false</item>
+                    <item>2009-09-09</item>
+                    <item>item instance 2</item>
+                    <child/>
+                </data>
+            </xf:instance>
+
+            <xf:bind nodeset="instance('i-1-m-2')">
+                <xf:bind nodeset="item[1]" type="boolean"/>
+                <xf:bind nodeset="item[2]" type="date"/>
+                <xf:bind nodeset="item[3]" type="string"/>
+            </xf:bind>
+        </xf:model>
+        <style type="text/css">
+            .xfTrigger {
+                float:left;
+            }
+            .xfGroupLabel {
+                font-size:large;
+            }
+        </style>
+    </head>
+    <body>
+        <xf:group appearance="full">
+            <xf:label>Cross Model Submission Test</xf:label>
+
+            <xf:trigger id="trigger-cross-model-submission-1">
+                <xf:label>Activate Cross Model Submission 1</xf:label>
+                <xf:send submission="s-cross-model-submission-1"/>
+            </xf:trigger>
+
+            <xf:trigger id="trigger-cross-model-submission-2">
+                <xf:label>Activate Cross Model Submission 2</xf:label>
+                <xf:send submission="s-cross-model-submission-2"/>
+            </xf:trigger>
+            <xf:group appearance="full">
+                <xf:label>Sample Instance</xf:label>
+                <xf:input ref="instance('i-1-m-2')/item[1]" model="model-2" id="item1">
+                    <xf:label/>
+                </xf:input>
+                <xf:input ref="instance('i-1-m-2')/item[2]" model="model-2" id="item2">
+                    <xf:label/>
+                </xf:input>
+                <xf:input ref="instance('i-1-m-2')/item[3]" model="model-2" id="item3">
+                    <xf:label/>
+                </xf:input>
+            </xf:group>
+            <xf:group >
+                <xf:label>Nodes Inserted by Submission 2</xf:label>
+                <xf:input ref="instance('i-1-m-2')/items/item[1]" model="model-2" id="items1">
+                    <xf:label/>
+                </xf:input>
+                <xf:input ref="instance('i-1-m-2')/items/item[2]" model="model-2" id="items2">
+                    <xf:label/>
+                </xf:input>
+                <xf:input ref="instance('i-1-m-2')/items/item[3]" model="model-2" id="items3">
+                    <xf:label/>
+                </xf:input>
+
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

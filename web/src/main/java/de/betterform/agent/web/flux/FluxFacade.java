@@ -39,14 +39,14 @@ public class FluxFacade {
     //this is a custom event to activate a trigger in XForms.
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private static final Log LOGGER = LogFactory.getLog(FluxFacade.class);
-    private HttpSession session;
+    private HttpSession httpSession;
 
 
     /**
      * grabs the actual web from the session.
      */
     public FluxFacade() {
-        session = WebContextFactory.get().getSession(true);
+        httpSession = WebContextFactory.get().getSession(true);
 
     }
 
@@ -56,20 +56,20 @@ public class FluxFacade {
      * @return update info to initially setup the browser page
      * @throws FluxException when everything goes wrong
      */
-    public List<XMLEvent> init(String sessionKey) throws FluxException {
+    public List<XMLEvent> init(String xformsSessionKey) throws FluxException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FluxProcessor init called on Facade");
         }
-        FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+        FluxProcessor processor = FluxUtil.getProcessor(httpSession, xformsSessionKey);
         return processor.getEventQueue().getEventList();
     }
 
     //todo: should be named 'dispatchActivateEvent'
 
-    public List<XMLEvent> dispatchEvent(String id, String sessionKey) throws XFormsException {
+    public List<XMLEvent> dispatchEvent(String id, String xformsSessionKey) throws XFormsException {
         FluxProcessor processor = null;
         try {
-            processor = FluxUtil.getProcessor(sessionKey);
+            processor = FluxUtil.getProcessor(httpSession, xformsSessionKey);
             // ##### event queue is not flushed here as FluxProcessor handles this ####
         } catch (FluxException e) {
             e.printStackTrace();
@@ -96,14 +96,14 @@ public class FluxFacade {
         return list;
     }
 
-    public List<XMLEvent> dispatchEventType(String id, String eventType, String sessionKey) throws XFormsException {
-        return dispatchEventTypeWithContext(id, eventType, sessionKey, null);
+    public List<XMLEvent> dispatchEventType(String id, String eventType, String xformsSessionKey) throws XFormsException {
+        return dispatchEventTypeWithContext(id, eventType, xformsSessionKey, null);
     }
 
-    public List<XMLEvent> dispatchEventTypeWithContext(String id, String eventType, String sessionKey, String contextInfo) throws XFormsException {
+    public List<XMLEvent> dispatchEventTypeWithContext(String id, String eventType, String xformsSessionKey, String contextInfo) throws XFormsException {
         FluxProcessor processor = null;
         try {
-            processor = FluxUtil.getProcessor(sessionKey);
+            processor = FluxUtil.getProcessor(httpSession, xformsSessionKey);
             processor.getEventQueue().flush();
         } catch (FluxException e) {
             e.printStackTrace();
@@ -124,7 +124,7 @@ public class FluxFacade {
         return processor.getEventQueue().getEventList();
     }
 
-    public List setUIControlValue(String id, String value, String sessionKey) throws XFormsException {
+    public List setUIControlValue(String id, String value, String xformsSessionKey) throws XFormsException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FluxFProcessor: " + this.toString());
         }
@@ -132,7 +132,7 @@ public class FluxFacade {
         event.initEvent("SETVALUE", id, value);
         List results = null;
         try {
-            results = handleUIEvent(event, sessionKey);
+            results = handleUIEvent(event, xformsSessionKey);
         } catch (FluxException e) {
             return this.renderErrorMessage(e.getMessage());
         }
@@ -145,15 +145,15 @@ public class FluxFacade {
      * executes a trigger
      *
      * @param id         the id of the trigger to execute
-     * @param sessionKey the sessionKey identifying the user session
+     * @param xformsSessionKey the xformsSessionKey identifying the user session
      * @return the list of events that may result through this action
      * @throws FluxException raises exception if problem during processing occurs
      */
 /*
-    public List fireAction(String id, String sessionKey) throws FluxException {
+    public List fireAction(String id, String xformsSessionKey) throws FluxException {
         UIEvent uiActivateEvent = new DefaultUIEventImpl();
         uiActivateEvent.initEvent(FLUX_ACTIVATE_EVENT, id, null);
-        return handleUIEvent(uiActivateEvent, sessionKey);
+        return handleUIEvent(uiActivateEvent, xformsSessionKey);
     }
 */
 
@@ -162,23 +162,23 @@ public class FluxFacade {
      *
      * @param id         the id of the control in the host document
      * @param value      the new value
-     * @param sessionKey the sessionKey identifying the user session
+     * @param xformsSessionKey the xformsSessionKey identifying the user session
      * @return the list of events that may result through this action
      * @throws FluxException raises exception if problem during processing occurs
      */
-    public List setXFormsValue(String id, String value, String sessionKey) throws FluxException {
+    public List setXFormsValue(String id, String value, String xformsSessionKey) throws FluxException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FluxFacade instance: " + this.toString());
         }
         UIEvent event = new DefaultUIEventImpl();
         event.initEvent("SETVALUE", id, value);
-        return handleUIEvent(event, sessionKey);
+        return handleUIEvent(event, xformsSessionKey);
     }
 
 
-/*    public Element getNodeset(String id, String sessionKey) throws FluxException {
+/*    public Element getNodeset(String id, String xformsSessionKey) throws FluxException {
         try {
-            XFormsProcessor processor = FluxUtil.getProcessor(sessionKey);
+            XFormsProcessor processor = FluxUtil.getProcessor(xformsSessionKey);
             XFormsElement element = processor.lookup(id);
             if (element instanceof BindingElement){
                 return ((BindingElement)element).
@@ -189,9 +189,9 @@ public class FluxFacade {
 
     }*/
 
-    public org.w3c.dom.Element getXFormsDOM(String sessionKey) throws FluxException {
+    public org.w3c.dom.Element getXFormsDOM(String xformsSessionKey) throws FluxException {
         try {
-            Element resultElem = ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
+            Element resultElem = ((Document) FluxUtil.getProcessor(httpSession, xformsSessionKey).getXForms()).getDocumentElement();
             if (LOGGER.isDebugEnabled()) {
                 DOMUtil.prettyPrintDOM(resultElem);
             }
@@ -201,10 +201,10 @@ public class FluxFacade {
         }
     }
 
-    public List setRepeatIndex(String id, String position, String sessionKey) throws FluxException {
+    public List setRepeatIndex(String id, String position, String xformsSessionKey) throws FluxException {
         UIEvent event = new DefaultUIEventImpl();
         event.initEvent("SETINDEX", id, position);
-        return handleUIEvent(event, sessionKey);
+        return handleUIEvent(event, xformsSessionKey);
     }
 
     /**
@@ -212,18 +212,18 @@ public class FluxFacade {
      *
      * @param id         id of the upload control in use
      * @param filename   filename for uploaded data
-     * @param sessionKey the sessionKey identifying the user session
+     * @param xformsSessionKey the xformsSessionKey identifying the user session
      * @return a array containing two elements for evaluation in browser. First
      *         param is the upload control id and second will be the current
      *         progress of the upload.
      */
 
-    public List<XMLEvent> fetchProgress(String id, String filename, String sessionKey) {
+    public List<XMLEvent> fetchProgress(String id, String filename, String xformsSessionKey) {
         String progress;
         UploadInfo uploadInfo;
 
-        if (session != null && session.getAttribute(WebProcessor.ADAPTER_PREFIX + sessionKey + "-uploadInfo") != null) {
-            uploadInfo = (UploadInfo) session.getAttribute(WebProcessor.ADAPTER_PREFIX + sessionKey + "-uploadInfo");
+        if (httpSession != null && httpSession.getAttribute(WebProcessor.ADAPTER_PREFIX + xformsSessionKey + "-uploadInfo") != null) {
+            uploadInfo = (UploadInfo) httpSession.getAttribute(WebProcessor.ADAPTER_PREFIX + xformsSessionKey + "-uploadInfo");
 
             if (uploadInfo.isInProgress()) {
                 double p = uploadInfo.getBytesRead() / uploadInfo.getTotalSize();
@@ -254,11 +254,11 @@ public class FluxFacade {
             progress = "100";
         }
         // XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
-        // XFormsSession xFormsSession = manager.getWebProcessor(sessionKey);
+        // XFormsSession xFormsSession = manager.getWebProcessor(xformsSessionKey);
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(httpSession, xformsSessionKey);
         if (webProcessor == null) {
-            return this.renderErrorMessage("ERROR: session " + sessionKey + " does not exist");
+            return this.renderErrorMessage("ERROR: session " + xformsSessionKey + " does not exist");
         }
 
 
@@ -290,33 +290,33 @@ public class FluxFacade {
      * Note user typing activity (not value change),
      * which extends session lifetime.
      *
-     * @param sessionKey the sessionKey identifying the user session
+     * @param xformsSessionKey the xformsSessionKey identifying the user session
      */
 /*
-    public void keepAlive(String sessionKey) {
+    public void keepAlive(String xformsSessionKey) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FluxFacade keepAlive: " + sessionKey);
+            LOGGER.debug("FluxFacade keepAlive: " + xformsSessionKey);
         }
         XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
-        XFormsSession xFormsSession = manager.getWebProcessor(sessionKey);
+        XFormsSession xFormsSession = manager.getWebProcessor(xformsSessionKey);
         xFormsSession.updateLRU();
     }
 */
-    public List setLocale(String locale, String sessionKey) throws FluxException {
+    public List setLocale(String locale, String xformsSessionKey) throws FluxException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("switching locale to '" + locale + "' for Session:'" + sessionKey + "'");
+            LOGGER.debug("switching locale to '" + locale + "' for Session:'" + xformsSessionKey + "'");
         }
 /*
         XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
-        XFormsSession xFormsSession = manager.getWebProcessor(sessionKey);
+        XFormsSession xFormsSession = manager.getWebProcessor(xformsSessionKey);
 */
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(httpSession, xformsSessionKey);
 
         if (webProcessor == null) {
             XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent(BetterFormEventNames.RENDER_MESSAGE);
             Map params = new HashMap(1);
-            params.put("message", "ERROR: FluxFacade.setLocale(): session " + sessionKey + " does not exist");
+            params.put("message", "ERROR: FluxFacade.setLocale(): session " + xformsSessionKey + " does not exist");
             errorEvent.initXMLEvent(BetterFormEventNames.RENDER_MESSAGE, true, false, params);
             ArrayList<XMLEvent> list = new ArrayList();
             list.add(errorEvent);
@@ -329,38 +329,38 @@ public class FluxFacade {
 
         UIEvent event = new DefaultUIEventImpl();
         event.initEvent("SETLOCALE", "locale", locale);
-        return handleUIEvent(event, sessionKey);
+        return handleUIEvent(event, xformsSessionKey);
 
     }
 
     /**
      * Note page unload, which rapidly ages session.
      *
-     * @param sessionKey the sessionKey identifying the user session
+     * @param xformsSessionKey the xformsSessionKey identifying the user session
      */
-    public void close(String sessionKey) {
+    public void close(String xformsSessionKey) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("FluxFacade close: " + sessionKey);
+            LOGGER.debug("FluxFacade close: " + xformsSessionKey);
         }
 
         try {
 
             // don't use getWebProcessor to avoid needless error
-            WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+            WebProcessor webProcessor = WebUtil.getWebProcessor(httpSession, xformsSessionKey);
             if (webProcessor == null) {
                 return;
             }
             webProcessor.shutdown();
         } catch (XFormsException e) {
-            LOGGER.warn("FluxFacade close: " + sessionKey, e);
+            LOGGER.warn("FluxFacade close: " + xformsSessionKey, e);
         } finally {
-            WebUtil.removeSession(sessionKey);
+            WebUtil.removeSession(httpSession, xformsSessionKey);
         }
     }
 
 
-    private List handleUIEvent(UIEvent uiEvent, String sessionKey) throws FluxException {
-        FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+    private List handleUIEvent(UIEvent uiEvent, String xformsSessionKey) throws FluxException {
+        FluxProcessor processor = FluxUtil.getProcessor(httpSession, xformsSessionKey);
         if (processor != null) {
             try {
                 processor.handleUIEvent(uiEvent);
@@ -385,8 +385,8 @@ public class FluxFacade {
     /*
     make this available through Facade for those that know what they are doing
      */
-    public static org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String sessionKey){
-        return FluxModel.getInstanceDocument(modelId, instanceId, sessionKey);
+    public static org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String xformsSessionKey){
+        return FluxModel.getInstanceDocument(modelId, instanceId, xformsSessionKey);
     }
 
 }

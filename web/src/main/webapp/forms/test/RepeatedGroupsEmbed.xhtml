@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>[PUT YOUR TITLE HERE]</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <!--
+         Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+         by a xforms load action.
+         -->
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none">
+        <xf:model id="model-e-1">
+            <xf:instance id="i-e-default">
+                <data xmlns="">
+                     <target/>
+                        <repeat>
+                            <one></one>
+                            <two></two>
+                            <three></three>
+                        </repeat>
+                    <repeat>
+                            <one></one>
+                            <two></two>
+                            <three></three>
+                        </repeat>
+                    <repeat>
+                            <one></one>
+                            <two></two>
+                            <three></three>
+                        </repeat>
+                    </data>
+            </xf:instance>
+
+            <xf:instance id="e-colors">
+                    <items xmlns="">
+                        <color>
+                            <name>RED</name>
+                            <value>00FF00</value>
+                        </color>
+                        <color>
+                            <name>GREEN</name>
+                            <value>0000FF</value>
+                        </color>
+                        <color>
+                            <name>BLUE</name>
+                            <value>FF0000</value>
+                        </color>
+                    </items>
+            </xf:instance>
+
+            <xf:instance id="somewhere">
+                 <data xmlns="">
+                     <somewhere/>
+                 </data>
+        </xf:instance>
+        </xf:model>
+    </div>
+    <xf:group ref="instance('somewhere')/somewhere" appearance="full">
+        <xf:repeat appearance="full" nodeset="instance()/repeat">
+            <xf:group class="backLight">
+                <xf:input ref=".">
+                    <xf:label ref="bf:instanceOfModel('model-1', 'i-label')/repeat/label[@for='label']"/>
+                    <xf:alert ref="bf:instanceOfModel('model-1', 'i-label')/repeat/alert[@for='alert']"/>
+                </xf:input>
+
+                <xf:select1 ref="instance()/target" appearance="full">
+                    <xf:label ref="bf:instanceOfModel('model-1', 'i-label')/repeat/label[@for='label']"/>
+            <xf:itemset  nodeset="instance('e-colors')/color">
+                <xf:label ref="name"/>
+                <xf:value ref="value"/>
+            </xf:itemset>
+        </xf:select1>
+            </xf:group>
+        </xf:repeat>
+    </xf:group>
+</div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>Compact Repeat Test</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+
+
+
+
+        </style>
+
+        <xf:model>
+			<xf:instance id="i-default" xmlns="">
+				<data>
+					<item>1</item>
+					<item>2</item>
+					<item>3</item>
+					<item>4</item>
+					<item>5</item>
+					<item>6</item>
+					<item>7</item>
+					<item>8</item>
+					<item>9</item>
+					<item>10</item>
+				</data>
+			</xf:instance>
+
+			<xf:instance id="i-proto" xmlns="">
+				<data>
+					<item>1</item>
+					<item>2</item>
+					<item>3</item>
+					<item>4</item>
+					<item>5</item>
+					<item>6</item>
+					<item>7</item>
+					<item>8</item>
+					<item>9</item>
+					<item>10</item>
+				</data>
+			</xf:instance>
+
+        <xf:submission id="s-debug" action="{$contextroot}/bfResources/jsp/debug-instance.jsp"
+                       method="post" replace="all"
+                       validate="false"/>
+
+        <xf:submission id="s-clean"
+					   ref="instance('i-proto')"
+					   resource="echo:hallo"
+                       method="get"
+					   replace="instance"
+					   instance="i-default"
+                       validate="false"/>
+        </xf:model>
+    </head>
+    <body class="tundra" >
+    <xf:group appearance="full">
+        <xf:label>Delete Action Test</xf:label>
+
+        <xf:group>
+            <xf:label>Repeated Select[1] Controls</xf:label>
+
+			<xf:repeat id="r-repeat" nodeset="item" appearance="full">
+				<xf:output ref=".">
+					<xf:label>Item</xf:label>
+				</xf:output>
+			</xf:repeat>
+        </xf:group>
+    </xf:group>
+
+
+		<xf:trigger>
+			<xf:label>Delete at '-1'</xf:label>
+			<xf:delete nodeset="item" at="-1"/>
+		</xf:trigger>
+
+		<xf:trigger>
+			<xf:label>Delete at '100'</xf:label>
+			<xf:delete nodeset="item" at="100"/>
+		</xf:trigger>
+
+	<xf:trigger>
+		<xf:label>Delete at='5'</xf:label>
+		<xf:delete nodeset="item" at="5"/>
+	</xf:trigger>
+
+	<xf:trigger>
+		<xf:label>Delete at='last()'</xf:label>
+		<xf:delete nodeset="item" at="last()"/>
+	</xf:trigger>
+
+	<xf:trigger>
+		<xf:label>Delete at='last()-3'</xf:label>
+		<xf:delete nodeset="item" at="last()-3"/>
+	</xf:trigger>
+
+	<xf:trigger>
+		<xf:label>Delete item[3]</xf:label>
+		<xf:delete nodeset="item[3]" />
+	</xf:trigger>
+	<xf:trigger>
+		<xf:label>Delete item[position() = 5]</xf:label>
+		<xf:delete nodeset="item[position() = 5]"/>
+	</xf:trigger>
+
+	<xf:trigger>
+		<xf:label>Delete at count(//item)</xf:label>
+		<xf:delete nodeset="item" at="count(//item)"/>
+	</xf:trigger>
+
+
+	<xf:trigger>
+		<xf:label>Clean</xf:label>
+		<xf:send submission="s-clean"/>
+	</xf:trigger>
+
+	<xf:trigger appearance="full">
+		<xf:label>Debug</xf:label>
+		<xf:send submission="s-debug"/>
+	</xf:trigger>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>New standalone XForm</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            #fileName-label {
+                min-width: 250px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default" src="incubator/editor/templates/standardXHTML.xhtml"/>
+
+                <xf:instance id="i-controller">
+                    <data xmlns="">
+                        <fileName/>
+                        <showTrigger>false</showTrigger>
+                    </data>
+                </xf:instance>
+
+                <xf:bind nodeset="showTrigger" relevant="string-length(instance('i-controller')/fileName) &gt; 0"/>
+
+
+
+                <xf:submission id="s-saveAndOpen" method="put" replace="none" validate="false" omit-xml-declaration="true" >
+                    <xf:resource value="concat(bf:appContext('webapp.realpath'), bf:appContext('plainPath'), instance('i-controller')/fileName, '.xhtml')"/>
+
+                    <xf:action ev:event="xforms-submit-done">
+                        <xf:message level="ephemeral"><xf:output value="concat('Data stored to ', bf:appContext('webapp.realpath'), bf:appContext('plainPath'), instance('i-controller')/fileName, '.xhtml')"/></xf:message>
+                        <xf:load show="new">
+                            <xf:resource value="concat(bf:appContext('requestURI'), '/bfEditor/', bf:appContext('plainPath'), instance('i-controller')/fileName, '.xhtml')"/>
+                        </xf:load>
+                    </xf:action>
+                    <xf:message ev:event="xforms-submit-error">Storing failed</xf:message>
+                </xf:submission>
+            </xf:model>
+        </div>
+		<xf:group appearance="full">
+            <xf:output value="concat(bf:appContext('webapp.realpath'), bf:appContext('plainPath'), instance('i-controller')/fileName, '.xhtml')"/>
+
+            <xf:input  ref="instance('i-controller')/fileName">
+                <xf:label id="fileName-label">Enter filename (without .xhtml suffix):</xf:label>
+            </xf:input>
+
+            <xf:trigger ref="instance('i-controller')/showTrigger">
+                <xf:label>Open file in Editor</xf:label>
+                <xf:send submission="s-saveAndOpen"/>
+            </xf:trigger>
+		</xf:group>
+    </body>
+</html>

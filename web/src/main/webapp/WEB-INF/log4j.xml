@@ -51,10 +51,6 @@
     </appender>
 -->
 
-    <category name="org.directwebremoting">
-        <priority value="ERROR"/>
-    </category>
-
     <!-- custom log level -->
 <!--
     <category name="de.betterform.xml.xforms.action">

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DESADV xmlns:webform="urn:icit:webform" xmlns:ev="http://www.w3.org/2001/xml-events"
+        xmlns:xforms="http://www.w3.org/2002/xforms"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+               <Envelop_Info>
+                  <CompanyName xsi:type="xsd:string">The Greenery</CompanyName>
+                  <CompanyGLN>8713702009999</CompanyGLN>
+                  <MessageDateTime xsi:type="xsd:dateTime">2011-08-18T16:09:54.948Z</MessageDateTime>
+                  <MessageReference>11081818095494</MessageReference>
+               </Envelop_Info>
+               <HeaderInfo>
+                  <DeliveryType>YA7</DeliveryType>
+                  <DateTimeOfDeparture xsi:type="xsd:dateTime">2011-08-18T06:00:00</DateTimeOfDeparture>
+                  <EstimatedDateTimeOfArrival xsi:type="xsd:dateTime">2011-08-29T12:00:00</EstimatedDateTimeOfArrival>
+                  <PackingListNumber>59981</PackingListNumber>
+                  <ContractNumber>1JAXEN4813</ContractNumber>
+                  <SupplierOrderNumber>59981</SupplierOrderNumber>
+                  <docs xsi:type="xsd:base64Binary"></docs>
+                  <emailaddress>mijn.email@adres.nu</emailaddress>
+                  <DetailsOfTransport>
+                  <boat>
+                     <MethodOfTransport>10</MethodOfTransport>
+                     <carrierName>OOCL NORFOLK V131</carrierName>
+                     <TransportID>SUDU5210272</TransportID>
+                     </boat>
+                  </DetailsOfTransport>
+               </HeaderInfo>
+               <HeaderAddresses>
+                  <Supplier xsi:type="tns:SupplierComplexType">
+                     <Name xsi:type="xsd:anyType">SOUTHERN PRODUCE DISTRIBUTION INC.</Name>
+                     <Address xsi:type="xsd:anyType"/>
+                     <PostalCode xsi:type="xsd:anyType"/>
+                     <City xsi:type="xsd:anyType"/>
+                     <Country xsi:type="xsd:anyType">US</Country>
+                     <GLN xsi:type="xsd:anyType">8713702243270</GLN>
+                     <SupplierNumberGreenery xsi:type="xsd:anyType">024327</SupplierNumberGreenery>
+                  </Supplier>
+                  <Buyer xsi:type="tns:BuyerComplexType">
+                     <Name xsi:type="xsd:anyType">THE GREENERY BV</Name>
+                     <Address xsi:type="xsd:anyType">SPOORWEGEMPLACEMENT 1</Address>
+                     <PostalCode xsi:type="xsd:anyType">2991 VT</PostalCode>
+                     <City xsi:type="xsd:anyType">BARENDRECHT</City>
+                     <Country xsi:type="xsd:anyType">NL</Country>
+                     <GLN xsi:type="xsd:anyType">8710317000007</GLN>
+                  </Buyer>
+                  <DeliveryParty xsi:type="tns:DeliveryPartyComplexType">
+                     <Name xsi:type="xsd:anyType">HAGE INTERNATIONAL BV</Name>
+                     <Address xsi:type="xsd:anyType">SPOORWEGEMPLACEMENT 1</Address>
+                     <PostalCode xsi:type="xsd:anyType">2991 VT</PostalCode>
+                     <City xsi:type="xsd:anyType">BARENDRECHT</City>
+                     <Country xsi:type="xsd:anyType">NL</Country>
+                     <GLN xsi:type="xsd:anyType">8712199000205</GLN>
+                     <LocCode xsi:type="xsd:anyType">HAGEB</LocCode>
+                  </DeliveryParty>
+               </HeaderAddresses>
+               <Consignment>
+                  <LineInfos>
+         <LineInfo xsi:type="tns:LineInfoType">
+                        <LineNo>1</LineNo>
+                        <GTIN>08712199246498</GTIN>
+                        <BuyerProductCode>16900026</BuyerProductCode>
+                        <GreeneryFullProductCode>016900026KG        000060110300052POINTE    </GreeneryFullProductCode>
+                        <Description xsi:type="xsd:string">Sweet Potatoes M       US POINTE</Description>
+                        <Content xsi:type="xsd:string">6</Content>
+                        <CU xsi:type="xsd:string">KG</CU>
+                        <PackageType xsi:type="xsd:string">Carton</PackageType>
+                        
+                        <DespatchQuantityPCE xsi:type="xsd:positiveInteger">450</DespatchQuantityPCE>
+                        <NumberOfUnitsPerPallet xsi:type="xsd:decimal">150</NumberOfUnitsPerPallet>
+                        <Unitprice xsi:type="xsd:decimal">6.5</Unitprice>
+                        <FreeText>Handle with care, fragile cartons</FreeText>
+                        <DeliveryParty xsi:type="tns:DeliveryPartyComplexType">
+                           <Name xsi:type="xsd:anyType"/>
+                           <Address xsi:type="xsd:anyType"/>
+                           <PostalCode xsi:type="xsd:anyType"/>
+                           <City xsi:type="xsd:anyType"/>
+                           <Country xsi:type="xsd:anyType"/>
+                           <GLN xsi:type="xsd:anyType"/>
+                           <LocCode xsi:type="xsd:anyType"/>
+                        </DeliveryParty>
+                        <PalletCodeHAS>110500015</PalletCodeHAS>
+                        <NumberOfPallets xsi:type="xsd:integer">3</NumberOfPallets>
+                     </LineInfo>
+         <LineInfo xsi:type="tns:LineInfoType">
+                        <LineNo>2</LineNo>
+                        <GTIN>08712199285268</GTIN>
+                        <BuyerProductCode>16900027</BuyerProductCode>
+                        <GreeneryFullProductCode>016900027KG        000060110300052POINTE    </GreeneryFullProductCode>
+                        <Description xsi:type="xsd:string">Sweet Potatoes L       US POINTE</Description>
+                        <Content xsi:type="xsd:string">6</Content>
+                        <CU xsi:type="xsd:string">KG</CU>
+                        <PackageType xsi:type="xsd:string">Carton</PackageType>
+                        
+                        <DespatchQuantityPCE xsi:type="xsd:positiveInteger">600</DespatchQuantityPCE>
+                        <NumberOfUnitsPerPallet xsi:type="xsd:decimal">150</NumberOfUnitsPerPallet>
+                        <Unitprice xsi:type="xsd:decimal">7.75</Unitprice>
+                        <DeliveryParty xsi:type="tns:DeliveryPartyComplexType">
+                           <Name xsi:type="xsd:anyType"/>
+                           <Address xsi:type="xsd:anyType"/>
+                           <PostalCode xsi:type="xsd:anyType"/>
+                           <City xsi:type="xsd:anyType"/>
+                           <Country xsi:type="xsd:anyType"/>
+                           <GLN xsi:type="xsd:anyType"/>
+                           <LocCode xsi:type="xsd:anyType"/>
+                        </DeliveryParty>
+                        <PalletCodeHAS>110500015</PalletCodeHAS>
+                        <NumberOfPallets xsi:type="xsd:integer">4</NumberOfPallets>
+                     </LineInfo>
+         <LineInfo xsi:type="tns:LineInfoType">
+                        <LineNo>3</LineNo>
+                        <GTIN>08712199294833</GTIN>
+                        <BuyerProductCode>16900032</BuyerProductCode>
+                        <GreeneryFullProductCode>016900032KG        000060110300052POINTE    </GreeneryFullProductCode>
+                        <Description xsi:type="xsd:string">Sweet Potatoes L-2     US POINTE</Description>
+                        <Content xsi:type="xsd:string">6</Content>
+                        <CU xsi:type="xsd:string">KG</CU>
+                        <PackageType xsi:type="xsd:string">Carton</PackageType>
+                        
+                        <DespatchQuantityPCE xsi:type="xsd:positiveInteger">900</DespatchQuantityPCE>
+                        <NumberOfUnitsPerPallet xsi:type="xsd:decimal">150</NumberOfUnitsPerPallet>
+                        <Unitprice xsi:type="xsd:decimal">7.75</Unitprice>
+                        <DeliveryParty xsi:type="tns:DeliveryPartyComplexType">
+                           <Name xsi:type="xsd:anyType"/>
+                           <Address xsi:type="xsd:anyType"/>
+                           <PostalCode xsi:type="xsd:anyType"/>
+                           <City xsi:type="xsd:anyType"/>
+                           <Country xsi:type="xsd:anyType"/>
+                           <GLN xsi:type="xsd:anyType"/>
+                           <LocCode xsi:type="xsd:anyType"/>
+                        </DeliveryParty>
+                        <PalletCodeHAS>110500015</PalletCodeHAS>
+                        <NumberOfPallets xsi:type="xsd:integer">6</NumberOfPallets>
+                     </LineInfo>
+         <LineInfo xsi:type="tns:LineInfoType">
+                        <LineNo>4</LineNo>
+                        <GTIN>08712199179734</GTIN>
+                        <BuyerProductCode>16900021</BuyerProductCode>
+                        <GreeneryFullProductCode>016900021KG        000060110300052POINTE    </GreeneryFullProductCode>
+                        <Description xsi:type="xsd:string">Sweet Potatoes XL      US POINTE</Description>
+                        <Content xsi:type="xsd:string">6</Content>
+                        <CU xsi:type="xsd:string">KG</CU>
+                        <PackageType xsi:type="xsd:string">Carton</PackageType>
+                        
+                        <DespatchQuantityPCE xsi:type="xsd:positiveInteger">1050</DespatchQuantityPCE>
+                        <NumberOfUnitsPerPallet xsi:type="xsd:decimal">150</NumberOfUnitsPerPallet>
+                        <Unitprice xsi:type="xsd:decimal">5.75</Unitprice>
+                        <DeliveryParty xsi:type="tns:DeliveryPartyComplexType">
+                           <Name xsi:type="xsd:anyType"/>
+                           <Address xsi:type="xsd:anyType"/>
+                           <PostalCode xsi:type="xsd:anyType"/>
+                           <City xsi:type="xsd:anyType"/>
+                           <Country xsi:type="xsd:anyType"/>
+                           <GLN xsi:type="xsd:anyType"/>
+                           <LocCode xsi:type="xsd:anyType"/>
+                        </DeliveryParty>
+                        <PalletCodeHAS>110500015</PalletCodeHAS>
+                        <NumberOfPallets xsi:type="xsd:integer">7</NumberOfPallets>
+                     </LineInfo>
+                  </LineInfos>
+                  
+                  
+                  
+                  <PalletInformationChepBlok xsi:type="tns:PalletInformationType">
+                     <NumberOfPallets xsi:type="xsd:integer">20</NumberOfPallets>
+                     <PalletCodeISO/>
+                     <PalletCodeHAS>110500015</PalletCodeHAS>
+                  </PalletInformationChepBlok>
+                  
+                  
+               </Consignment>
+            </DESADV>

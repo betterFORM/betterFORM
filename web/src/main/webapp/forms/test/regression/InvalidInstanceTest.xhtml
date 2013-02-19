@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <meta name="author" content="unl at users.sourceforge.net"/>
+    <meta name="description" content="test form for instance"/>
+    <meta name="version" content="$Id: InstanceTest.xhtml 2750 2007-08-10 10:09:08Z joern $"/>
+    <xf:model id="model">
+        <xf:message level="modal" ev:event="xforms-link-exception">
+            Resource error at: <xf:output value="event('resource-uri')" />
+        </xf:message>
+
+        <xf:instance id="instance" xmlns="">
+            <first>1st</first>
+            <second>2nd</second>
+        </xf:instance>
+    </xf:model>
+</head>
+<body>
+<xf:group>
+    <xf:label>This form produces a xforms-link-exception.</xf:label>
+
+    <xf:output ref="first"/>
+    <xf:output ref="second"/>
+</xf:group>
+</body>
+</html>
+

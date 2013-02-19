@@ -1,0 +1,1926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xhtml:html xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:webform="urn:icit:webform"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:bfc="http://betterform.sourceforge.net/xforms/controls"
+            xmlns:eg="http://www.decartes.com/saxon-extension"
+            xmlns:tm="tambet.matiisen@gmail.com"
+            xmlns:xhtml="http://www.w3.org/1999/xhtml"
+            xmlns:xforms="http://www.w3.org/2002/xforms"
+            xmlns:events="http://www.w3.org/2001/xml-events"
+            xmlns="urn:icit:greenery:orders"
+            xmlns:item="urn:icit:items"
+            xmlns:ext1="urn:icit:items:extensions1"
+            xmlns:p="http://activiti.org/bpmn">
+   <xhtml:head xmlns="">
+      <xhtml:title>THE GREENERY ORDERBERICHTTHE GREENERY ORDERS MESSAGETHE GREENERY MENSAJE ORDENMENSAGEM DE ORDEM</xhtml:title>
+      <xforms:model schema="{$resource_prefix}ORDERS_GREENERY_PORTAL.xsd">
+         <xforms:instance id="ORDERS_GREENERY_PORTAL_instance.xml" src="{$instanceurl}" xsd:xmlns=""/>
+         <xforms:instance id="ORDERS_GREENERY_PORTAL_prototype.xml"
+                          src="{$resource_prefix}ORDERS_GREENERY_PORTAL_prototype.xml"
+                          xsd:xmlns=""/>
+         <xforms:instance id="temp">
+            <temp>
+               <readonly xsi:type="boolean">false</readonly>
+               <locked xsi:type="boolean">false</locked>
+               <printable/>
+               <relevant xsi:type="boolean">true</relevant>
+               <submiterror xsi:type="boolean">false</submiterror>
+            </temp>
+         </xforms:instance>
+         <xforms:instance xmlns="urn:icit:greenery:delivery" id="delivery"
+                          src="{$resource_prefix}DeliveryPartys.xml"/>
+         <xforms:instance xmlns="urn:icit:items" id="artikelen" src="{$articleurl}"/>
+         <xforms:instance id="dummyArticle">
+				        <Artikel>
+					          <add-trigger>true</add-trigger>
+					          <Artikelsearch/>
+					          <Artikelidentificatie/>
+				        </Artikel>
+			      </xforms:instance>
+         <xforms:action events:event="xforms-model-construct-done">
+				        <xforms:setvalue ref="instance('temp')/readonly" value="bf:appContext('webform.readonly')"/>
+				        <xforms:setvalue ref="/DESADV/HeaderInfo/DeliveryType"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryType"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/Name"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:name"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/Address"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:street"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/PostalCode"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:postalCode"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/City"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:city"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/Country"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:country"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/SupplierNumberGreenery"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:id"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/Supplier/GLN"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:gln"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/Name"
+                             value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/Name"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/Address"
+                             value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/Address"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/PostalCode"
+                             value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/PostalCode"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/City"
+                             value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/City"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/Country"
+                             value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/Country"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/GLN"
+                             value="instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln"/>
+				        <xforms:setvalue ref="/DESADV/HeaderAddresses/DeliveryParty/LocCode"
+                             value="instance('delivery')/DeliveryParty[@id=instance('artikelen')/document/documentExtensions/ext1:theGreeneryDocumentExtension/ext1:deliveryLocation/ext1:gln]/LocCode"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationOneway/PalletCodeHAS"
+                             value="'110500022'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationChepBlok/PalletCodeHAS"
+                             value="'110500015'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationPool/PalletCodeHAS"
+                             value="'110500003'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationDPA/PalletCodeHAS"
+                             value="'110500009'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationEuro/PalletCodeHAS"
+                             value="'110500001'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationChepEuro/PalletCodeHAS"
+                             value="'110500026'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationSkid/PalletCodeHAS"
+                             value="'110500038'"/>
+				        <xforms:setvalue ref="/DESADV/Consignment/PalletInformationSuperVers/PalletCodeHAS"
+                             value="'110500056'"/>
+				        <xforms:setvalue ref="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//Incoterms/choice"
+                             value="//Incoterms/*[1]/name()"/>
+			      </xforms:action>
+         <xforms:action events:event="xforms-ready">
+				        <xforms:setvalue ref="instance('temp')/locked" value="true()"/>
+				        <xforms:setvalue ref="/DESADV/HeaderInfo/emailaddress" value="bf:appContext('adr')"/>
+			      </xforms:action>
+         <xforms:submission id="ORDERS_GREENERY_PORTAL.submission" indent="true" method="put"
+                            replace="none">
+            <xforms:resource value="bf:appContext('submissionaction')"/>
+            <xforms:setvalue ref="instance('temp')/relevant" value="false()" events:event="xforms-submit"/>
+            <bfc:hide dialog="submit_confirm" events:event="xforms-submit-done"/>
+            <bfc:hide dialog="submit_confirm" events:event="xforms-submit-error"/>
+            <xforms:setvalue ref="instance('temp')/relevant" value="true()"
+                             events:event="xforms-submit-done"/>
+            <bfc:show dialog="print" events:event="xforms-submit-done"/>
+            <xforms:action events:event="xforms-submit-error">
+               <xforms:setvalue ref="instance('temp')/relevant" value="true()"/>
+               <xforms:setvalue ref="instance('temp')/submiterror" value="true()"/>
+               <xforms:message level="modal" if="not(event('error-type') = 'validation-error')">Error: <xforms:output value="event('response-reason-phrase')"/>
+               </xforms:message>
+            </xforms:action>
+            <xforms:message level="ephemeral" events:event="xforms-submit-error"
+                            if="count(/DESADV/Consignment/LineInfos/LineInfo)=0 and event('error-type')='validation-error'">You must add at least one article. Other fields marked red are either required and contain no value or contain invalid values.</xforms:message>
+            <xforms:message level="ephemeral" events:event="xforms-submit-error"
+                            if="sum(/DESADV/Consignment/LineInfos/LineInfo/NumberOfPallets[text()]) =0 and event('error-type')='validation-error'">The total number of pallets must be greater than 0. Other fields marked red are either required and contain no value or contain invalid values.</xforms:message>
+            <xforms:message level="ephemeral" events:event="xforms-submit-error"
+                            if="sum(/DESADV/Consignment/LineInfos/LineInfo/NumberOfPallets[text()]) &gt; 0 and event('error-type')='validation-error'">Fields marked red are either required and contain no value or contain invalid values</xforms:message>
+         </xforms:submission>
+         <xforms:bind nodeset="instance('temp')/printable"
+                      relevant="boolean-from-string(instance('temp')/readonly)"/>
+         <xforms:bind nodeset="instance('dummyArticle')/add-trigger"
+                      readonly="instance('dummyArticle')/Artikelidentificatie = '' or not(boolean-from-string(instance('dummyArticle')/add-trigger))"/>
+         <xforms:bind nodeset="/DESADV" readonly="boolean-from-string(instance('temp')/readonly)">
+            <xforms:bind nodeset="Envelop_Info">
+               <xforms:bind nodeset="CompanyName" type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="CompanyGLN" type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="MessageDateTime" calculate="now()" type="dateTime">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="MessageReference"
+                            calculate="substring(format-dateTime(current-dateTime(),'[Y][M01][D01][H01][m][s][f]'),3,14)"
+                            constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.) = 14)"
+                            type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="Version">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+            </xforms:bind>
+            <xforms:bind nodeset="HeaderInfo">
+               <xforms:bind nodeset="DeliveryType" readonly="boolean-from-string(instance('temp')/locked)"
+                            type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="EstimatedDateTimeOfArrival" type="dateTime">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="ContractNumber"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant))"
+                            constraint="(. = '' and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1 and string-length(.)&lt;=35)"
+                            type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="BuyerOrderNumber"
+                            calculate="concat('72',format-number(substring((current-dateTime() - xs:dateTime('2012-09-18T10:23:00-00:00')) div xs:dayTimeDuration('PT1S'),1,8), '00000000'))"
+                            constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&lt;=35 and string-length(.)&gt;=1)"
+                            type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="emailaddress"
+                            constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (matches(., '^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$'))"
+                            type="string">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="Incoterms"
+                            constraint="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice != ''">
+                  <xforms:bind nodeset="cfr"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e525'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="cif"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e537'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="cip"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e549'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="cpt"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e561'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="dap"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e574'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="dat"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e586'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="ddp"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e598'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="exw"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e610'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="fas"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e622'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="fca"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e634'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="fob"
+                               relevant="(count(../*)=1 and local-name(../*) = local-name(.)) or instance('ORDERS_GREENERY_PORTAL_prototype.xml')//choice-d510e521 = 'd510e647'">
+                     <xforms:bind nodeset="Incoterm" readonly="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (true())"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Place"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="webmastermail"
+                            calculate="concat('mailto:webformsupport@thegreenery.com?SUBJECT=Melding webform leverancier ', ../../HeaderAddresses/Supplier/SupplierNumberGreenery)"
+                            type="anyURI">
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+            </xforms:bind>
+            <xforms:bind nodeset="HeaderAddresses">
+               <xforms:bind nodeset="Supplier" readonly="boolean-from-string(instance('temp')/locked)">
+                  <xforms:bind nodeset="Name">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="Address">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PostalCode">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="City">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="Country">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="GLN">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="SupplierNumberGreenery">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="Buyer" readonly="Name != ''">
+                  <xforms:bind nodeset="Name">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="Address">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PostalCode">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="City">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="Country">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="GLN">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="DeliveryParty" readonly="Name != ''">
+                  <xforms:bind nodeset="Name" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="Address">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PostalCode">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="City">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="Country">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="GLN">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="LocCode">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+            </xforms:bind>
+            <xforms:bind nodeset="Consignment"
+                         constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or ((sum(LineInfos/LineInfo/NumberOfPallets[text()]) &gt; 0))">
+               <xforms:bind nodeset="LineInfos"
+                            constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (((sum(LineInfo/NumberOfPallets[text()]) &gt; 0) and (count(LineInfo) &gt; 0)))">
+                  <xforms:bind nodeset="LineInfo">
+                     <xforms:bind nodeset="LineNo" readonly=". != ''"
+                                  calculate="count(parent::*/preceding-sibling::*) + 1"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&lt;=6 and string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="GTIN" readonly=". != ''"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&lt;=14 and string-length(.)&gt;=8)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="BuyerProductCode" readonly=". != ''"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&lt;=35 and string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="GreeneryFullProductCode" readonly=". != ''"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&lt;=70 and string-length(.)&gt;=1)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Description" readonly=". != ''" type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Content" readonly=". != ''" type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="CU" readonly=". != ''" type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="PackageType" readonly=". != ''" type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="DespatchQuantityPCE"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (. &gt;=0)"
+                                  type="positiveInteger">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="NumberOfUnitsPerPallet"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or ((. &gt;0))"
+                                  type="positiveInteger">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="Unitprice"
+                                  relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and ../../../../HeaderInfo/DeliveryType = 'YA7'"
+                                  constraint="(. = '' and boolean-from-string(instance('temp')/relevant) = true()) or (matches(., '^\d{1,12}(\.\d{0,2})?$', '') and  ../../../../HeaderInfo/DeliveryType = 'YA7')"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="NumberOfPallets" required="true()"
+                                  constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or ((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) or (. &gt;=0))"
+                                  type="nonNegativeInteger">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="PalletCodeHAS"
+                                  relevant="(. != '' or boolean-from-string(instance('temp')/relevant))"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="FreeText"
+                                  relevant="(. != '' or boolean-from-string(instance('temp')/relevant))"
+                                  constraint="(. = '' and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.)&lt;=70)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="DeliveryParty">
+                        <xforms:bind nodeset="Name" type="string">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="Address">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="PostalCode">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="City">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="Country">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="GLN">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="LocCode">
+                           <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                        </xforms:bind>
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="ProducerGLN"
+                                  relevant="(. != '' or boolean-from-string(instance('temp')/relevant))"
+                                  constraint="(. = '' and boolean-from-string(instance('temp')/relevant) = true()) or (string-length(.) = 13)"
+                                  type="string">
+                        <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                     </xforms:bind>
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//insert-trigger-d510e846"
+                               relevant="((count(context()/LineInfo)) &lt; 100) and not(boolean-from-string(instance('temp')/readonly))"/>
+                  <xforms:bind nodeset="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//delete-trigger-d510e846"
+                               relevant="((count(context()/LineInfo)) &gt; 0) and not(boolean-from-string(instance('temp')/readonly))"/>
+                  <xforms:bind nodeset="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//no-items-d510e846"
+                               relevant="((count(context()/LineInfo)) = 0)"/>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationEuro"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationDPA"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationPool"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationChepBlok"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationOneway"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationChepEuro"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationSkid"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="PalletInformationSuperVers"
+                            relevant="(. != '' or boolean-from-string(instance('temp')/relevant)) and NumberOfPallets &gt; 0">
+                  <xforms:bind nodeset="NumberOfPallets"
+                               relevant=". &gt; 0 or not(boolean-from-string(instance('temp')/relevant))"
+                               calculate="sum(../../LineInfos/LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets[text()])"
+                               constraint="((. = '' and boolean-from-string(instance('temp')/submiterror) = false()) and boolean-from-string(instance('temp')/relevant) = true()) or (number(.) &gt;=0)"
+                               type="nonNegativeInteger">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeISO" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="PalletCodeHAS" type="string">
+                     <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+                  </xforms:bind>
+                  <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+               </xforms:bind>
+               <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+            </xforms:bind>
+            <xforms:bind nodeset="@xsi:nil" relevant="false()"/>
+         </xforms:bind>
+      </xforms:model>
+      <xhtml:link rel="stylesheet" type="text/css" href="webform.css"/>
+      <xhtml:link rel="stylesheet" type="text/css" href="webform-print.css" media="print"/>
+      <xhtml:link rel="stylesheet" type="text/css" href="ORDERS_GREENERY_PORTAL.css"/>
+      <xhtml:link rel="stylesheet" type="text/css" href="ORDERS_GREENERY_PORTAL-print.css"
+                  media="print"/>
+      <xhtml:script><![CDATA[
+                function changeLanguage(lang) {
+                var pos = location.href.indexOf('lang=');
+                    if (pos != -1) {
+                        currlang = location.href.substr(pos+5,2);
+                        if (currlang != lang) {
+                                location.href = location.href.replace("lang="+ currlang, "lang="+lang);
+                        } else {
+                                location.href = location.href + "&amp;lang="+lang;
+                        }
+                     }
+                };
+                scroll(0,0);
+				]]></xhtml:script>
+   </xhtml:head>
+   <xhtml:body xmlns="" class="nihilo GrowlAlert GrowlMessage">
+      <xhtml:div id="flags" style="float:right; margin-right: 50px;">
+         <xhtml:img style="cursor:pointer; width:25px; padding: 5px;"
+                    onclick="changeLanguage('nl')"
+                    src="nl.png"
+                    title="Nederlands"/>
+         <xhtml:img style="cursor:pointer; width:25px; padding: 5px;"
+                    onclick="changeLanguage('en')"
+                    src="en.png"
+                    title="English"/>
+         <xhtml:img style="cursor:pointer; width:25px; padding: 5px;"
+                    onclick="changeLanguage('es')"
+                    src="es.png"
+                    title="Espagñol"/>
+         <xhtml:img style="cursor:pointer; width:25px; padding: 5px;"
+                    onclick="changeLanguage('pt')"
+                    src="pt.png"
+                    title="Português"/>
+      </xhtml:div>
+      <xhtml:div id="container">
+         <xhtml:div id="logo-left"/>
+         <xhtml:div id="title">
+            <xforms:group>
+               <xforms:label lang="nl">THE GREENERY ORDERBERICHT</xforms:label>
+               <xforms:label lang="en">THE GREENERY ORDERS MESSAGE</xforms:label>
+               <xforms:label lang="es">THE GREENERY MENSAJE ORDEN</xforms:label>
+               <xforms:label lang="pt">MENSAGEM DE ORDEM</xforms:label>
+            </xforms:group>
+         </xhtml:div>
+         <xhtml:div id="logo"/>
+      </xhtml:div>
+      <xhtml:div id="xforms">
+         <xforms:group ref="/DESADV" appearance="full">
+            <xforms:label lang="nl">THE GREENERY ORDERBERICHT</xforms:label>
+            <xforms:label lang="en">THE GREENERY ORDERS MESSAGE</xforms:label>
+            <xforms:label lang="es">THE GREENERY MENSAJE ORDEN</xforms:label>
+            <xforms:label lang="pt">MENSAGEM DE ORDEM</xforms:label>
+            <xforms:group ref="HeaderInfo" appearance="full" style="height: auto" class="HeaderInfo">
+               <xforms:label lang="nl">Algemene berichtinformatie</xforms:label>
+               <xforms:label lang="en">General Message Information</xforms:label>
+               <xforms:label lang="es">Informacion general del mensaje</xforms:label>
+               <xforms:label lang="pt">Informação geral sobre a nota</xforms:label>
+               <xforms:select1 ref="DeliveryType" id="_DESADV_HeaderInfo_DeliveryType">
+                  <xforms:label lang="nl">Leveringstype</xforms:label>
+                  <xforms:label lang="en">Delivery Type</xforms:label>
+                  <xforms:label lang="es">Condiciones de entrega</xforms:label>
+                  <xforms:label lang="pt">Tipo de entrega</xforms:label>
+                  <xforms:item>
+                     <xforms:label lang="nl">Reguliere levering</xforms:label>
+                     <xforms:label lang="en">Regular</xforms:label>
+                     <xforms:label lang="es">Suplido regular</xforms:label>
+                     <xforms:label lang="pt">Entrega regular</xforms:label>
+                     <xforms:value>351</xforms:value>
+                  </xforms:item>
+                  <xforms:item>
+                     <xforms:label lang="nl">Account sale</xforms:label>
+                     <xforms:label lang="en">Account sale</xforms:label>
+                     <xforms:label lang="es">Account sale</xforms:label>
+                     <xforms:label lang="pt">Preço com comissão</xforms:label>
+                     <xforms:value>227</xforms:value>
+                  </xforms:item>
+                  <xforms:item>
+                     <xforms:label lang="nl">Vastkoop</xforms:label>
+                     <xforms:label lang="en">Commission</xforms:label>
+                     <xforms:label lang="es">Producto suplido con precio indicativo</xforms:label>
+                     <xforms:label lang="pt">Preço fixo</xforms:label>
+                     <xforms:value>YA7</xforms:value>
+                  </xforms:item>
+               </xforms:select1>
+               <xforms:input ref="EstimatedDateTimeOfArrival"
+                             id="_DESADV_HeaderInfo_EstimatedDateTimeOfArrival"
+                             appearance="iso8601:dd-MM-yy">
+                  <xforms:label lang="nl">Verwachte aankomst datum en tijd </xforms:label>
+                  <xforms:label lang="en">Est. Arrival Date/Time </xforms:label>
+                  <xforms:label lang="es">Fecha y hora de llegada</xforms:label>
+                  <xforms:label lang="pt">Data e hora de chegada prevista </xforms:label>
+               </xforms:input>
+               <xforms:input ref="ContractNumber" id="_DESADV_HeaderInfo_ContractNumber">
+                  <xforms:label lang="nl">Contractnummer</xforms:label>
+                  <xforms:label lang="en">Contract Number</xforms:label>
+                  <xforms:label lang="es">Numero de contrato</xforms:label>
+                  <xforms:label lang="pt">Número de contrato</xforms:label>
+                  <xforms:hint lang="en">Only when a contract is appliable</xforms:hint>
+                  <xforms:alert lang="nl">Het contractnummer mag maximaal 35 posities bedragen</xforms:alert>
+                  <xforms:alert lang="en">The contract number has a maximum field length of 35 characters</xforms:alert>
+               </xforms:input>
+               <xforms:output ref="BuyerOrderNumber" id="_DESADV_HeaderInfo_BuyerOrderNumber">
+                  <xforms:label lang="nl">Ordernummer The Greenery </xforms:label>
+                  <xforms:label lang="en">Order Nr The Greenery </xforms:label>
+                  <xforms:label lang="es">Numero de albaran The Greenery</xforms:label>
+                  <xforms:label lang="pt">Número do pedido The Greenery </xforms:label>
+               </xforms:output>
+               <xforms:group ref="Incoterms" appearance="full"
+                             style="position: absolute; top: 25px; left: 550px;"
+                             class="bfChoice">
+                  <xforms:label>INCOTERMS </xforms:label>
+                  <xforms:group class="choice-group">
+                     <xforms:select1 ref="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//Incoterms/@choice"
+                                     id="_DESADV_HeaderInfo_Incoterms_choice">
+                        <xforms:item>
+                           <xforms:value>d510e525</xforms:value>
+                           <xforms:label>CFR - Cost and Freight</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e537</xforms:value>
+                           <xforms:label>CIF - Cost, Insurance and Freight</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e549</xforms:value>
+                           <xforms:label>CIP - Carriage and Insurance Paid to</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e561</xforms:value>
+                           <xforms:label>CPT - Carriage Paid To</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e574</xforms:value>
+                           <xforms:label>DAP - Delivered at Place</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e586</xforms:value>
+                           <xforms:label>DAT - Delivered at Terminal</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e598</xforms:value>
+                           <xforms:label>DDP - Delivered Duty Paid</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e610</xforms:value>
+                           <xforms:label>EXW – Ex Works</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e622</xforms:value>
+                           <xforms:label>FAS - Free Alongside Ship</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e634</xforms:value>
+                           <xforms:label>FCA - Free Carrier</xforms:label>
+                        </xforms:item>
+                        <xforms:item>
+                           <xforms:value>d510e647</xforms:value>
+                           <xforms:label>FOB - Free on Board</xforms:label>
+                        </xforms:item>
+                        <xforms:action events:event="xforms-value-changed">
+                           <xforms:delete nodeset="*" at="1" context="instance('{$instanceurl}')//Incoterms"/>
+                           <xforms:insert nodeset="Incoterms" at="1" context="instance('{$instanceurl}')//Incoterms"
+                                          origin="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//Incoterms/*[name()=../@choice]"/>
+                        </xforms:action>
+                     </xforms:select1>
+                     <xforms:group ref="cfr" appearance="full">
+                        <xforms:label>CFR - Cost and Freight</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_cfr_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named port of destination</xforms:label>
+                           <xforms:label lang="en">Named port of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del puerto de destino</xforms:label>
+                           <xforms:label lang="pt">Porto de destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="cif" appearance="full">
+                        <xforms:label>CIF - Cost, Insurance and Freight</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_cif_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of destination</xforms:label>
+                           <xforms:label lang="en">Named place of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+                           <xforms:label lang="pt">Destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="cip" appearance="full">
+                        <xforms:label>CIP - Carriage and Insurance Paid to</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_cip_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of destination</xforms:label>
+                           <xforms:label lang="en">Named place of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+                           <xforms:label lang="pt">Destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="cpt" appearance="full">
+                        <xforms:label>CPT - Carriage Paid To</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_cpt_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of destination</xforms:label>
+                           <xforms:label lang="en">Named place of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+                           <xforms:label lang="pt">Destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="dap" appearance="full">
+                        <xforms:label>DAP - Delivered at Place</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_dap_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of destination</xforms:label>
+                           <xforms:label lang="en">Named place of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+                           <xforms:label lang="pt">Destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="dat" appearance="full">
+                        <xforms:label>DAT - Delivered at Terminal</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_dat_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named terminal at port of place of destination</xforms:label>
+                           <xforms:label lang="en">Named terminal at port of place of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del terminal en el puerto o lugar de destino</xforms:label>
+                           <xforms:label lang="pt">Terminal ou porto de destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="ddp" appearance="full">
+                        <xforms:label>DDP - Delivered Duty Paid</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_ddp_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of destination</xforms:label>
+                           <xforms:label lang="en">Named place of destination</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de destino</xforms:label>
+                           <xforms:label lang="pt">Destino</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="exw" appearance="full">
+                        <xforms:label>EXW – Ex Works</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_exw_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of delivery</xforms:label>
+                           <xforms:label lang="en">Named place of delivery</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de entrega</xforms:label>
+                           <xforms:label lang="pt">Local de entrega</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="fas" appearance="full">
+                        <xforms:label>FAS - Free Alongside Ship</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_fas_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named port of shipment</xforms:label>
+                           <xforms:label lang="en">Named port of shipment</xforms:label>
+                           <xforms:label lang="es">Nombre del puerto de embarque</xforms:label>
+                           <xforms:label lang="pt">Porto de embarque</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="fca" appearance="full">
+                        <xforms:label>FCA - Free Carrier</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_fca_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named place of delivery</xforms:label>
+                           <xforms:label lang="en">Named place of delivery</xforms:label>
+                           <xforms:label lang="es">Nombre del lugar de entrega</xforms:label>
+                           <xforms:label lang="pt">Local de entrega</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                     <xforms:group ref="fob" appearance="full">
+                        <xforms:label>FOB - Free on Board</xforms:label>
+                        <xforms:input ref="Place" id="_DESADV_HeaderInfo_Incoterms_fob_Place" class="bredeLabel210">
+                           <xforms:label lang="nl">Named port of shipment</xforms:label>
+                           <xforms:label lang="en">Named port of shipment</xforms:label>
+                           <xforms:label lang="es">Nombre del puerto de embarque</xforms:label>
+                           <xforms:label lang="pt">Porto de embarque</xforms:label>
+                        </xforms:input>
+                     </xforms:group>
+                  </xforms:group>
+               </xforms:group>
+               <xforms:output ref="webmastermail" id="_DESADV_HeaderInfo_webmastermail"
+                              style="position: absolute; top: 38px; right: 0px; width: 400px">
+                  <xforms:label lang="nl">Contact The Greenery</xforms:label>
+                  <xforms:label lang="en">Contact The Greenery</xforms:label>
+                  <xforms:label lang="es">Contact The Greenery</xforms:label>
+                  <xforms:label lang="pt">Contact The Greenery</xforms:label>
+                  <xforms:hint lang="nl">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+                  <xforms:hint lang="en">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+                  <xforms:hint lang="es">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+                  <xforms:hint lang="pt">Contact The Greenery when no articles can be selected or submitting is not possible</xforms:hint>
+               </xforms:output>
+            </xforms:group>
+            <xforms:group ref="HeaderAddresses" appearance="full" style="height:auto;">
+               <xforms:label lang="nl">Adressen</xforms:label>
+               <xforms:label lang="en">Addresses</xforms:label>
+               <xforms:label lang="es">Direccion</xforms:label>
+               <xforms:label lang="pt">Endereços</xforms:label>
+               <xhtml:div style="display:none">
+                  <xforms:trigger id="t-AddressSupplier">
+                     <xforms:label lang="nl">Leverancier</xforms:label>
+                     <xforms:label lang="en">Supplier</xforms:label>
+                     <xforms:label lang="es">Proveedor</xforms:label>
+                     <xforms:label lang="pt">Fornecedor</xforms:label>
+                     <xforms:toggle case="AddressSupplier"/>
+                  </xforms:trigger>
+                  <xforms:trigger id="t-AddressBuyer">
+                     <xforms:label lang="nl">Afnemer</xforms:label>
+                     <xforms:label lang="en">Buyer</xforms:label>
+                     <xforms:label lang="es">Comprador</xforms:label>
+                     <xforms:label lang="pt">Cliente</xforms:label>
+                     <xforms:toggle case="AddressBuyer"/>
+                  </xforms:trigger>
+                  <xforms:trigger id="t-AddressDeliveryParty">
+                     <xforms:label lang="nl">Afleveradres</xforms:label>
+                     <xforms:label lang="en">Delivery party</xforms:label>
+                     <xforms:label lang="es">Almacén de descarga</xforms:label>
+                     <xforms:label lang="pt">Endereço de entrega</xforms:label>
+                     <xforms:toggle case="AddressDeliveryParty"/>
+                  </xforms:trigger>
+               </xhtml:div><xforms:switch appearance="dijit:TabContainer"><xforms:case id="AddressSupplier"><xforms:label lang="nl">Leverancier</xforms:label>
+               <xforms:label lang="en">Supplier</xforms:label>
+               <xforms:label lang="es">Proveedor</xforms:label>
+               <xforms:label lang="pt">Fornecedor</xforms:label>
+               <xforms:group ref="Supplier" appearance="full">
+                  <xforms:label lang="nl">Leverancier</xforms:label>
+                  <xforms:label lang="en">Supplier</xforms:label>
+                  <xforms:label lang="es">Proveedor</xforms:label>
+                  <xforms:label lang="pt">Fornecedor</xforms:label>
+                  <xforms:output ref="Name" id="_DESADV_HeaderAddresses_Supplier_Name" appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Naam</xforms:label>
+                     <xforms:label lang="en">Name</xforms:label>
+                     <xforms:label lang="es">Nombre</xforms:label>
+                     <xforms:label lang="pt">Nome</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="Address" id="_DESADV_HeaderAddresses_Supplier_Address"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Adres</xforms:label>
+                     <xforms:label lang="en">Address</xforms:label>
+                     <xforms:label lang="es">Direccion</xforms:label>
+                     <xforms:label lang="pt">Endereços</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="PostalCode" id="_DESADV_HeaderAddresses_Supplier_PostalCode"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Postcode</xforms:label>
+                     <xforms:label lang="en">Postal code</xforms:label>
+                     <xforms:label lang="es">Codigo postal</xforms:label>
+                     <xforms:label lang="pt">Código postal</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="City" id="_DESADV_HeaderAddresses_Supplier_City" appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Plaats</xforms:label>
+                     <xforms:label lang="en">City</xforms:label>
+                     <xforms:label lang="es">Ciudad</xforms:label>
+                     <xforms:label lang="pt">Localidade</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="Country" id="_DESADV_HeaderAddresses_Supplier_Country"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Landcode</xforms:label>
+                     <xforms:label lang="en">Country code</xforms:label>
+                     <xforms:label lang="es">Codigo del pais</xforms:label>
+                     <xforms:label lang="pt">Código do país</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="GLN" id="_DESADV_HeaderAddresses_Supplier_GLN" appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">GLN</xforms:label>
+                     <xforms:label lang="en">GLN</xforms:label>
+                     <xforms:label lang="es">GLN</xforms:label>
+                     <xforms:label lang="pt">GLN</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="SupplierNumberGreenery"
+                                 id="_DESADV_HeaderAddresses_Supplier_SupplierNumberGreenery"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Greenery leveranciersnummer</xforms:label>
+                     <xforms:label lang="en">Greenery supplier number</xforms:label>
+                     <xforms:label lang="es">Greenery numero de suplidor</xforms:label>
+                     <xforms:label lang="pt">Número de fornecedor Greenery</xforms:label>
+                     <xforms:hint lang="nl">Greenery leveranciersnummer</xforms:hint>
+                     <xforms:hint lang="en">Greenery supplier number</xforms:hint>
+                     <xforms:hint lang="es">Greenery numero de suplidor</xforms:hint>
+                     <xforms:hint lang="pt">Número de fornecedor Greenery</xforms:hint>
+                  </xforms:output>
+               </xforms:group></xforms:case><xforms:case id="AddressBuyer"><xforms:label lang="nl">Afnemer</xforms:label>
+               <xforms:label lang="en">Buyer</xforms:label>
+               <xforms:label lang="es">Comprador</xforms:label>
+               <xforms:label lang="pt">Cliente</xforms:label>
+               <xforms:group ref="Buyer" appearance="full">
+                  <xforms:label lang="nl">Afnemer</xforms:label>
+                  <xforms:label lang="en">Buyer</xforms:label>
+                  <xforms:label lang="es">Comprador</xforms:label>
+                  <xforms:label lang="pt">Cliente</xforms:label>
+                  <xforms:output ref="Name" id="_DESADV_HeaderAddresses_Buyer_Name" appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Naam</xforms:label>
+                     <xforms:label lang="en">Name</xforms:label>
+                     <xforms:label lang="es">Nombre</xforms:label>
+                     <xforms:label lang="pt">Nome</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="Address" id="_DESADV_HeaderAddresses_Buyer_Address"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Adres</xforms:label>
+                     <xforms:label lang="en">Address</xforms:label>
+                     <xforms:label lang="es">Direccion</xforms:label>
+                     <xforms:label lang="pt">Endereço</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="PostalCode" id="_DESADV_HeaderAddresses_Buyer_PostalCode"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Postcode</xforms:label>
+                     <xforms:label lang="en">Postal code</xforms:label>
+                     <xforms:label lang="es">Codigo postal</xforms:label>
+                     <xforms:label lang="pt">Código postal</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="City" id="_DESADV_HeaderAddresses_Buyer_City" appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Plaats</xforms:label>
+                     <xforms:label lang="en">City</xforms:label>
+                     <xforms:label lang="es">Ciudad</xforms:label>
+                     <xforms:label lang="pt">Localidade</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="Country" id="_DESADV_HeaderAddresses_Buyer_Country"
+                                 appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Landcode</xforms:label>
+                     <xforms:label lang="en">Country code</xforms:label>
+                     <xforms:label lang="es">Codigo del pais</xforms:label>
+                     <xforms:label lang="pt">Código do país</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="GLN" id="_DESADV_HeaderAddresses_Buyer_GLN" appearance="bfInputLook"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">GLN</xforms:label>
+                     <xforms:label lang="en">GLN</xforms:label>
+                     <xforms:label lang="es">GLN</xforms:label>
+                     <xforms:label lang="pt">GLN</xforms:label>
+                  </xforms:output>
+               </xforms:group></xforms:case><xforms:case id="AddressDeliveryParty" selected="true"><xforms:label lang="nl">Afleveradres</xforms:label>
+               <xforms:label lang="en">Delivery party</xforms:label>
+               <xforms:label lang="es">Almacén de descarga</xforms:label>
+               <xforms:label lang="pt">Endereço de entrega</xforms:label>
+               <xforms:group ref="DeliveryParty" appearance="full">
+                  <xforms:label lang="nl">Afleveradres</xforms:label>
+                  <xforms:label lang="en">Delivery party</xforms:label>
+                  <xforms:label lang="es">Almacén de descarga</xforms:label>
+                  <xforms:label lang="pt">Endereço de entrega</xforms:label>
+                  <xforms:select1 ref="Name" id="_DESADV_HeaderAddresses_DeliveryParty_Name"
+                                  appearance="bfInputLook"
+                                  style="min-width: 500px"
+                                  class="bredeLabel210">
+                     <xforms:label lang="nl">Naam</xforms:label>
+                     <xforms:label lang="en">Name</xforms:label>
+                     <xforms:label lang="es">Nombre</xforms:label>
+                     <xforms:label lang="pt">Nome</xforms:label>
+                     <xforms:action events:event="xforms-value-changed">
+							                 <xforms:setvalue ref="current()/../Address"
+                                         value="instance('delivery')/DeliveryParty[Name = current()/../Name]/Address"/>
+							                 <xforms:setvalue ref="current()/../PostalCode"
+                                         value="instance('delivery')/DeliveryParty[Name = current()/../Name]/PostalCode"/>
+							                 <xforms:setvalue ref="current()/../City"
+                                         value="instance('delivery')/DeliveryParty[Name = current()/../Name]/City"/>
+							                 <xforms:setvalue ref="current()/../Country"
+                                         value="instance('delivery')/DeliveryParty[Name = current()/../Name]/Country"/>
+							                 <xforms:setvalue ref="current()/../GLN"
+                                         value="instance('delivery')/DeliveryParty[Name = current()/../Name]/GLN"/>
+							                 <xforms:setvalue ref="current()/../LocCode"
+                                         value="instance('delivery')/DeliveryParty[Name = current()/../Name]/LocCode"/>
+						               </xforms:action>
+                     <xforms:itemset nodeset="instance('delivery')/DeliveryParty">
+                        <xforms:label ref="Name"/>
+                        <xforms:value ref="Name"/>
+                     </xforms:itemset>
+                  </xforms:select1>
+                  <xforms:output ref="Address" id="_DESADV_HeaderAddresses_DeliveryParty_Address"
+                                 appearance="bfInputLook"
+                                 style="min-width: 400px"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Adres</xforms:label>
+                     <xforms:label lang="en">Address</xforms:label>
+                     <xforms:label lang="es">Direccion</xforms:label>
+                     <xforms:label lang="pt">Endereço</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="PostalCode" id="_DESADV_HeaderAddresses_DeliveryParty_PostalCode"
+                                 appearance="bfInputLook"
+                                 style="min-width: 240px"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Postcode</xforms:label>
+                     <xforms:label lang="en">Postal code</xforms:label>
+                     <xforms:label lang="es">Codigo postal</xforms:label>
+                     <xforms:label lang="pt">Código postal</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="City" id="_DESADV_HeaderAddresses_DeliveryParty_City"
+                                 appearance="bfInputLook"
+                                 style="min-width: 400px"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Plaats</xforms:label>
+                     <xforms:label lang="en">City</xforms:label>
+                     <xforms:label lang="es">Ciudad</xforms:label>
+                     <xforms:label lang="pt">Localidade</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="Country" id="_DESADV_HeaderAddresses_DeliveryParty_Country"
+                                 appearance="bfInputLook"
+                                 style="min-width: 200px"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Landcode</xforms:label>
+                     <xforms:label lang="en">Country code</xforms:label>
+                     <xforms:label lang="es">Codigo del pais</xforms:label>
+                     <xforms:label lang="pt">Código do país</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="GLN" id="_DESADV_HeaderAddresses_DeliveryParty_GLN"
+                                 appearance="bfInputLook"
+                                 style="min-width: 280px"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">GLN</xforms:label>
+                     <xforms:label lang="en">GLN</xforms:label>
+                     <xforms:label lang="es">GLN</xforms:label>
+                     <xforms:label lang="pt">GLN</xforms:label>
+                  </xforms:output>
+                  <xforms:output ref="LocCode" id="_DESADV_HeaderAddresses_DeliveryParty_LocCode"
+                                 appearance="bfInputLook"
+                                 style="min-width: 220px"
+                                 class="bredeLabel210">
+                     <xforms:label lang="nl">Locatie code</xforms:label>
+                     <xforms:label lang="en">Location code</xforms:label>
+                     <xforms:label lang="es">Código de ubicación</xforms:label>
+                     <xforms:label lang="pt">Código de localização</xforms:label>
+                  </xforms:output>
+               </xforms:group></xforms:case></xforms:switch></xforms:group>
+            <xforms:group ref="Consignment" appearance="full">
+               <xforms:label lang="nl">Orderinformatie</xforms:label>
+               <xforms:label lang="en">Order information</xforms:label>
+               <xforms:label lang="es">Order information</xforms:label>
+               <xforms:label lang="pt">Order information</xforms:label>
+               <xforms:group ref="LineInfos" appearance="full">
+                  <xforms:label lang="nl">Artikelregelinformatie</xforms:label>
+                  <xforms:label lang="en">Line information</xforms:label>
+                  <xforms:label lang="es">Linea de informacion</xforms:label>
+                  <xforms:label lang="pt">Linha de informação sobre o artigo</xforms:label>
+                  <xforms:alert lang="en">There must be at least 1 article and it is not allowed to have a total of 0 number of pallets</xforms:alert>
+                  <xforms:hint lang="en">There must be at least 1 article and it is not allowed to have a total of 0 number of pallets</xforms:hint>
+                  <xforms:group class="noLabel">
+                     <xforms:label>Line Info</xforms:label>
+                     <xforms:repeat nodeset="LineInfo" id="_DESADV_Consignment_LineInfos_LineInfo"
+                                    appearance="compact"
+                                    class="noLabel">
+                        <xforms:output ref="BuyerProductCode"
+                                       id="_DESADV_Consignment_LineInfos_LineInfo_BuyerProductCode"
+                                       appearance="bfInputLook"
+                                       style="width: 75px">
+                           <xforms:label lang="nl">Artikelnr</xforms:label>
+                           <xforms:label lang="en">Article nr</xforms:label>
+                           <xforms:label lang="es">Numero</xforms:label>
+                           <xforms:label lang="pt">Número</xforms:label>
+                        </xforms:output>
+                        <xforms:textarea ref="Description" id="_DESADV_Consignment_LineInfos_LineInfo_Description"
+                                         appearance="bfTextArea"
+                                         style="width: 150px; height: auto; overflow: auto; resize: none;"
+                                         class="noResize">
+                           <xforms:label lang="nl">Artikelomschrijving</xforms:label>
+                           <xforms:label lang="en">Item description</xforms:label>
+                           <xforms:label lang="es">Descripción del articulo</xforms:label>
+                           <xforms:label lang="pt">Descrição de artigo</xforms:label>
+                           <xforms:alert lang="en">The item description has a maximum field length of 35 characters</xforms:alert>
+                           <xforms:alert lang="nl">De artikelomschrijving mag maximaal 35 posities bedragen</xforms:alert>
+                        </xforms:textarea>
+                        <xforms:output ref="Content" id="_DESADV_Consignment_LineInfos_LineInfo_Content"
+                                       appearance="bfInputLook"
+                                       style="width: 70px">
+                           <xforms:label lang="nl">Inhoud</xforms:label>
+                           <xforms:label lang="en">Content</xforms:label>
+                           <xforms:label lang="es">Contenido</xforms:label>
+                           <xforms:label lang="pt">Conteúdo</xforms:label>
+                        </xforms:output>
+                        <xforms:output ref="CU" id="_DESADV_Consignment_LineInfos_LineInfo_CU"
+                                       appearance="bfInputLook"
+                                       style="width: 40px">
+                           <xforms:label lang="nl">CE</xforms:label>
+                           <xforms:hint lang="nl">Consumenten Eenheid</xforms:hint>
+                           <xforms:label lang="en">CU</xforms:label>
+                           <xforms:hint lang="en">Consumer Unit</xforms:hint>
+                           <xforms:label lang="es">UC</xforms:label>
+                           <xforms:hint lang="es">Unidad Consumidor</xforms:hint>
+                           <xforms:label lang="pt">UC</xforms:label>
+                           <xforms:hint lang="pt">Unidade Consumidora</xforms:hint>
+                        </xforms:output>
+                        <xforms:output ref="PackageType" id="_DESADV_Consignment_LineInfos_LineInfo_PackageType"
+                                       appearance="bfInputLook"
+                                       style="width: 120px">
+                           <xforms:label lang="nl">Verpakkingstype</xforms:label>
+                           <xforms:label lang="en">Package type</xforms:label>
+                           <xforms:label lang="es">Tipo de Embalaje</xforms:label>
+                           <xforms:label lang="pt">Tipo de embalagem</xforms:label>
+                        </xforms:output>
+                        <xforms:input ref="DespatchQuantityPCE"
+                                      id="_DESADV_Consignment_LineInfos_LineInfo_DespatchQuantityPCE"
+                                      style="width:70px;"
+                                      incremental="true">
+                           <xforms:label lang="nl">Aantal</xforms:label>
+                           <xforms:label lang="en">QTY</xforms:label>
+                           <xforms:hint lang="en">The number of ordered goods must be 1 or higher</xforms:hint>
+                           <xforms:alert lang="en">The number of ordered goods must be 1 or higher</xforms:alert>
+                           <xforms:label lang="es">Cant.</xforms:label>
+                           <xforms:hint lang="es">Cantidad</xforms:hint>
+                           <xforms:label lang="pt">Quant.</xforms:label>
+                           <xforms:hint lang="pt">Quantidade</xforms:hint>
+                           <xforms:setvalue ref="../NumberOfPallets"
+                                            value="if (ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) &gt;=0) then ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) else 0"
+                                            events:event="xforms-value-changed"/>
+                           <xforms:setvalue ref="../../../*[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets"
+                                            value="sum(../../LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets)"
+                                            events:event="xforms-value-changed"/>
+                        </xforms:input>
+                        <xforms:input ref="NumberOfUnitsPerPallet"
+                                      id="_DESADV_Consignment_LineInfos_LineInfo_NumberOfUnitsPerPallet"
+                                      style="width: 35px"
+                                      incremental="true">
+                           <xforms:label lang="nl">Load</xforms:label>
+                           <xforms:label lang="en">Load</xforms:label>
+                           <xforms:hint lang="en">The pallet load must have a value equal or higher than 1. In case the number of pallets is zero due to shipment of a mixed pallet, please adjust the number of pallets to zero.</xforms:hint>
+                           <xforms:alert lang="en">The pallet load must have a value equal or higher than 1. In case the number of pallets is zero due to shipment of a mixed pallet, please adjust the number of pallets to zero.</xforms:alert>
+                           <xforms:label lang="es">Load</xforms:label>
+                           <xforms:hint lang="es">Cantidad de bultos por palet</xforms:hint>
+                           <xforms:label lang="pt">Load</xforms:label>
+                           <xforms:setvalue ref="../NumberOfPallets"
+                                            value="if (ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) &gt;=0) then ceiling(../DespatchQuantityPCE div ../NumberOfUnitsPerPallet) else 0"
+                                            events:event="xforms-value-changed"/>
+                           <xforms:setvalue ref="../../../*[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets"
+                                            value="sum(../../LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets)"
+                                            events:event="xforms-value-changed"/>
+                        </xforms:input>
+                        <xforms:input ref="Unitprice" id="_DESADV_Consignment_LineInfos_LineInfo_Unitprice"
+                                      style="width: 60px">
+                           <xforms:label lang="nl">Prijs</xforms:label>
+                           <xforms:label lang="en">Price</xforms:label>
+                           <xforms:hint lang="en">The format should be 000.00 (decimal point as a separator). Price is per unit and for information purpose only</xforms:hint>
+                           <xforms:alert lang="en">The format should be 000.00 (decimal point as a separator)</xforms:alert>
+                           <xforms:label lang="es">Precio</xforms:label>
+                           <xforms:label lang="pt">Preço</xforms:label>
+                        </xforms:input>
+                        <xforms:input ref="NumberOfPallets"
+                                      id="_DESADV_Consignment_LineInfos_LineInfo_NumberOfPallets"
+                                      incremental="true">
+                           <xforms:label lang="nl"># Pl</xforms:label>
+                           <xforms:label lang="en"># Pl</xforms:label>
+                           <xforms:label lang="es">#Pl</xforms:label>
+                           <xforms:hint lang="en">In case of a mix pallet set one of the lines to 1 and adjust the other(s) to zero</xforms:hint>
+                           <xforms:hint lang="es">Número de palets</xforms:hint>
+                           <xforms:label lang="pt"># Pl</xforms:label>
+                           <xforms:alert lang="en">In case of a mix pallet set one of the lines to 1 and adjust the other(s) to zero</xforms:alert>
+                           <xforms:setvalue ref="../../../*[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets"
+                                            value="sum(../../LineInfo[PalletCodeHAS=current()/../PalletCodeHAS]/NumberOfPallets)"
+                                            events:event="xforms-value-changed"/>
+                        </xforms:input>
+                        <xforms:select1 ref="PalletCodeHAS" id="_DESADV_Consignment_LineInfos_LineInfo_PalletCodeHAS"
+                                        style="width:145px">
+                           <xforms:label lang="nl">Palletcode</xforms:label>
+                           <xforms:label lang="en">Pallet code</xforms:label>
+                           <xforms:label lang="es">Codigo de palets</xforms:label>
+                           <xforms:label lang="pt">Código de palete</xforms:label>
+                           <xforms:hint lang="en">Palletcode of The Greenery</xforms:hint>
+                           <xforms:item>
+                              <xforms:label lang="nl">Euro</xforms:label>
+                              <xforms:label lang="en">Euro</xforms:label>
+                              <xforms:label lang="es">Euro</xforms:label>
+                              <xforms:label lang="pt">Euro</xforms:label>
+                              <xforms:value>110500001</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">Pool</xforms:label>
+                              <xforms:label lang="en">Pool</xforms:label>
+                              <xforms:label lang="es">Pool</xforms:label>
+                              <xforms:label lang="pt">Pool</xforms:label>
+                              <xforms:value>110500003</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">DPA</xforms:label>
+                              <xforms:label lang="en">DPA</xforms:label>
+                              <xforms:label lang="es">DPA</xforms:label>
+                              <xforms:label lang="pt">DPA</xforms:label>
+                              <xforms:value>110500009</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">Chep blok</xforms:label>
+                              <xforms:label lang="en">Chep blok</xforms:label>
+                              <xforms:label lang="es">Chep blok</xforms:label>
+                              <xforms:label lang="pt">Bloque Chep</xforms:label>
+                              <xforms:value>110500015</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">Eenmalig</xforms:label>
+                              <xforms:label lang="en">Oneway</xforms:label>
+                              <xforms:label lang="es">Desechable</xforms:label>
+                              <xforms:label lang="pt">Único</xforms:label>
+                              <xforms:value>110500022</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">Chep Euro</xforms:label>
+                              <xforms:label lang="en">Chep Euro</xforms:label>
+                              <xforms:label lang="es">Chep Euro</xforms:label>
+                              <xforms:label lang="pt">Chep Euro</xforms:label>
+                              <xforms:value>110500026</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">Skid norm vlg</xforms:label>
+                              <xforms:label lang="en">Skid norm vlg</xforms:label>
+                              <xforms:label lang="es">Skid norm vlg</xforms:label>
+                              <xforms:label lang="pt">Skid norm vlg</xforms:label>
+                              <xforms:value>110500038</xforms:value>
+                           </xforms:item>
+                           <xforms:item>
+                              <xforms:label lang="nl">Pallet supervers</xforms:label>
+                              <xforms:label lang="en">Super fresh pallet</xforms:label>
+                              <xforms:label lang="es">Palet Super fresco</xforms:label>
+                              <xforms:label lang="pt">Pallet Super frescos</xforms:label>
+                              <xforms:value>110500056</xforms:value>
+                           </xforms:item>
+                        </xforms:select1>
+                        <xforms:group style="width:100px" appearance="bfTextArea">
+                           <xforms:label>NEW</xforms:label>
+                           <xforms:label lang="en">Add. info</xforms:label>
+                           <xforms:hint lang="en">Additional information such as Number of grower, farm, plot, pallet number, location of temperature meter etc.</xforms:hint>
+                           <xforms:label lang="nl">Aanv. info</xforms:label>
+                           <xforms:hint lang="nl">Additional information such as Number of grower, farm, plot, pallet number, location of temperature meter etc.</xforms:hint>
+                           <xforms:label lang="es">Inf. ad.</xforms:label>
+                           <xforms:hint lang="es">Información adicional</xforms:hint>
+                           <xforms:label lang="pt">Inf. ad.</xforms:label>
+                           <xforms:hint lang="pt">Informações adicionais</xforms:hint>
+                           <xforms:trigger id="_DESADV_Consignment_LineInfos_LineInfo_FreeText-open" style="width:100px">
+                              <xforms:label lang="nl">Kies</xforms:label>
+                              <xforms:label lang="en">Choose</xforms:label>
+                              <xforms:label lang="es">Seleccionar</xforms:label>
+                              <xforms:label lang="pt">Selecionar</xforms:label>
+                              <bfc:show dialog="_DESADV_Consignment_LineInfos_LineInfo_FreeText"
+                                        events:event="DOMActivate"/>
+                           </xforms:trigger>
+                        </xforms:group>
+                        <xforms:group style="width:110px">
+                           <xforms:label lang="nl">Afleveradres</xforms:label>
+                           <xforms:label lang="en">Delivery party</xforms:label>
+                           <xforms:label lang="es">Almacén de descarga</xforms:label>
+                           <xforms:label lang="pt">Endereço de entrega</xforms:label>
+                           <xforms:trigger id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty-open"
+                                           style="width:110px">
+                              <xforms:label>
+								                         <xforms:output value="if (DeliveryParty/LocCode[text()]) then DeliveryParty/LocCode else ../../../HeaderAddresses/DeliveryParty/LocCode"/>
+							                       </xforms:label>
+                              <bfc:show dialog="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty"
+                                        events:event="DOMActivate"/>
+                           </xforms:trigger>
+                        </xforms:group>
+                     </xforms:repeat>
+                     <bfc:dialog id="_DESADV_Consignment_LineInfos_LineInfo_FreeText">
+                        <xforms:label lang="nl">Aanvullende informatie</xforms:label>
+                        <xforms:label lang="en">Additional information</xforms:label>
+                        <xforms:label lang="es">Información adicional</xforms:label>
+                        <xforms:label lang="pt">Informações adicionais</xforms:label>
+                        <xforms:group appearance="full"
+                                      ref="LineInfo[index('_DESADV_Consignment_LineInfos_LineInfo')]">
+                           <xforms:textarea ref="FreeText" id="_DESADV_Consignment_LineInfos_LineInfo_FreeText_FreeText"
+                                            appearance="bfTextArea">
+                              <xforms:label>NEW</xforms:label>
+                              <xforms:label lang="en">Add. info</xforms:label>
+                              <xforms:hint lang="en">Additional information such as Number of grower, farm, plot, pallet number, location of temperature meter etc.</xforms:hint>
+                              <xforms:label lang="nl">Aanv. info</xforms:label>
+                              <xforms:hint lang="nl">Additional information such as Number of grower, farm, plot, pallet number, location of temperature meter etc.</xforms:hint>
+                              <xforms:label lang="es">Inf. ad.</xforms:label>
+                              <xforms:hint lang="es">Información adicional</xforms:hint>
+                              <xforms:label lang="pt">Inf. ad.</xforms:label>
+                              <xforms:hint lang="pt">Informações adicionais</xforms:hint>
+                           </xforms:textarea>
+                           <xforms:group appearance="minimal">
+                              <xforms:trigger id="_DESADV_Consignment_LineInfos_LineInfo_FreeText-ok">
+                                 <xforms:label>OK</xforms:label>
+                                 <bfc:hide dialog="_DESADV_Consignment_LineInfos_LineInfo_FreeText"
+                                           events:event="DOMActivate"/>
+                              </xforms:trigger>
+                              <xforms:trigger id="_DESADV_Consignment_LineInfos_LineInfo_FreeText-cancel">
+                                 <xforms:label>Cancel</xforms:label>
+                                 <xforms:hint>Close dialog</xforms:hint>
+                                 <bfc:hide dialog="_DESADV_Consignment_LineInfos_LineInfo_FreeText"
+                                           events:event="DOMActivate"/>
+                              </xforms:trigger>
+                           </xforms:group>
+                        </xforms:group>
+                     </bfc:dialog>
+                     <bfc:dialog id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty">
+                        <xforms:label lang="nl">Afleveradres</xforms:label>
+                        <xforms:label lang="en">Delivery party</xforms:label>
+                        <xforms:hint lang="nl">Afleveradres</xforms:hint>
+                        <xforms:hint lang="en">Delivery party</xforms:hint>
+                        <xforms:label lang="es">Descarga</xforms:label>
+                        <xforms:hint lang="es">Almacén de descarga</xforms:hint>
+                        <xforms:label lang="pt">Endereço</xforms:label>
+                        <xforms:hint lang="es">Endereço de entrega</xforms:hint>
+                        <xforms:group appearance="full"
+                                      ref="LineInfo[index('_DESADV_Consignment_LineInfos_LineInfo')]">
+                           <xforms:group ref="DeliveryParty" appearance="full">
+                              <xforms:label lang="nl">Afleveradres</xforms:label>
+                              <xforms:label lang="en">Delivery party</xforms:label>
+                              <xforms:label lang="es">Almacén de descarga</xforms:label>
+                              <xforms:label lang="pt">Endereço de entrega</xforms:label>
+                              <xforms:select1 ref="Name"
+                                              id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_Name"
+                                              appearance="bfInputLook"
+                                              style="min-width: 500px"
+                                              class="bredeLabel210">
+                                 <xforms:label lang="nl">Naam</xforms:label>
+                                 <xforms:label lang="en">Name</xforms:label>
+                                 <xforms:label lang="es">Nombre</xforms:label>
+                                 <xforms:label lang="pt">Nome</xforms:label>
+                                 <xforms:action events:event="xforms-value-changed">
+							                             <xforms:setvalue ref="current()/../Address"
+                                                     value="instance('delivery')/DeliveryParty[Name = current()/../Name]/Address"/>
+							                             <xforms:setvalue ref="current()/../PostalCode"
+                                                     value="instance('delivery')/DeliveryParty[Name = current()/../Name]/PostalCode"/>
+							                             <xforms:setvalue ref="current()/../City"
+                                                     value="instance('delivery')/DeliveryParty[Name = current()/../Name]/City"/>
+							                             <xforms:setvalue ref="current()/../Country"
+                                                     value="instance('delivery')/DeliveryParty[Name = current()/../Name]/Country"/>
+							                             <xforms:setvalue ref="current()/../GLN"
+                                                     value="instance('delivery')/DeliveryParty[Name = current()/../Name]/GLN"/>
+							                             <xforms:setvalue ref="current()/../LocCode"
+                                                     value="instance('delivery')/DeliveryParty[Name = current()/../Name]/LocCode"/>
+						                           </xforms:action>
+                                 <xforms:itemset nodeset="instance('delivery')/DeliveryParty">
+                                    <xforms:label ref="Name"/>
+                                    <xforms:value ref="Name"/>
+                                 </xforms:itemset>
+                              </xforms:select1>
+                              <xforms:output ref="Address"
+                                             id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_Address"
+                                             appearance="bfInputLook"
+                                             style="min-width: 400px"
+                                             class="bredeLabel210">
+                                 <xforms:label lang="nl">Adres</xforms:label>
+                                 <xforms:label lang="en">Address</xforms:label>
+                                 <xforms:label lang="es">Direccion</xforms:label>
+                                 <xforms:label lang="pt">Endereço</xforms:label>
+                              </xforms:output>
+                              <xforms:output ref="PostalCode"
+                                             id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_PostalCode"
+                                             appearance="bfInputLook"
+                                             style="min-width: 240px"
+                                             class="bredeLabel210">
+                                 <xforms:label lang="nl">Postcode</xforms:label>
+                                 <xforms:label lang="en">Postal code</xforms:label>
+                                 <xforms:label lang="es">Codigo postal</xforms:label>
+                                 <xforms:label lang="pt">Código postal</xforms:label>
+                              </xforms:output>
+                              <xforms:output ref="City"
+                                             id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_City"
+                                             appearance="bfInputLook"
+                                             style="min-width: 400px"
+                                             class="bredeLabel210">
+                                 <xforms:label lang="nl">Plaats</xforms:label>
+                                 <xforms:label lang="en">City</xforms:label>
+                                 <xforms:label lang="es">Ciudad</xforms:label>
+                                 <xforms:label lang="pt">Localidade</xforms:label>
+                              </xforms:output>
+                              <xforms:output ref="Country"
+                                             id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_Country"
+                                             appearance="bfInputLook"
+                                             style="min-width: 200px"
+                                             class="bredeLabel210">
+                                 <xforms:label lang="nl">Landcode</xforms:label>
+                                 <xforms:label lang="en">Country code</xforms:label>
+                                 <xforms:label lang="es">Codigo del pais</xforms:label>
+                                 <xforms:label lang="pt">Código do país</xforms:label>
+                              </xforms:output>
+                              <xforms:output ref="GLN"
+                                             id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_GLN"
+                                             appearance="bfInputLook"
+                                             style="min-width: 280px"
+                                             class="bredeLabel210">
+                                 <xforms:label lang="nl">GLN</xforms:label>
+                                 <xforms:label lang="en">GLN</xforms:label>
+                                 <xforms:label lang="es">GLN</xforms:label>
+                                 <xforms:label lang="pt">GLN</xforms:label>
+                              </xforms:output>
+                              <xforms:output ref="LocCode"
+                                             id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty_DeliveryParty_LocCode"
+                                             appearance="bfInputLook"
+                                             style="min-width: 220px"
+                                             class="bredeLabel210">
+                                 <xforms:label lang="nl">Locatie code</xforms:label>
+                                 <xforms:label lang="en">Location code</xforms:label>
+                                 <xforms:label lang="es">Código de ubicación</xforms:label>
+                                 <xforms:label lang="pt">Código de localização</xforms:label>
+                              </xforms:output>
+                           </xforms:group>
+                           <xforms:group appearance="minimal">
+                              <xforms:trigger id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty-ok">
+                                 <xforms:label>OK</xforms:label>
+                                 <bfc:hide dialog="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty"
+                                           events:event="DOMActivate"/>
+                              </xforms:trigger>
+                              <xforms:trigger id="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty-cancel">
+                                 <xforms:label>Cancel</xforms:label>
+                                 <xforms:hint>Close dialog</xforms:hint>
+                                 <bfc:hide dialog="_DESADV_Consignment_LineInfos_LineInfo_DeliveryParty"
+                                           events:event="DOMActivate"/>
+                              </xforms:trigger>
+                           </xforms:group>
+                        </xforms:group>
+                     </bfc:dialog>
+                     <xforms:output ref="instance('ORDERS_GREENERY_PORTAL_prototype.xml')/Consignment/LineInfos//no-items-_DESADV_Consignment_LineInfos_LineInfo"
+                                    class="emptyMessages">
+														          <xforms:label lang="en">No articles selected</xforms:label>
+														          <xforms:label lang="nl">Geen artikelen toegevoegd</xforms:label>
+														          <xforms:label lang="es">No artículos seleccionados</xforms:label>
+														          <xforms:label lang="pt">Nenhum artigos selecionados</xforms:label>
+														          <xforms:label>No articles Selected</xforms:label>
+													        </xforms:output>
+                     <xforms:group appearance="minimal" class="bfInsertDelete">
+                        <xforms:trigger ref="instance('ORDERS_GREENERY_PORTAL_prototype.xml')/Consignment/LineInfos//insert-trigger-_DESADV_Consignment_LineInfos_LineInfo"
+                                        id="_DESADV_Consignment_LineInfos_LineInfo-insert">
+														             <xforms:label lang="en">Add article</xforms:label>
+														             <xforms:label lang="nl">Artikel toevoegen</xforms:label>
+														             <xforms:label lang="es">Añadir artículo</xforms:label>
+														             <xforms:label lang="pt">Adicionar Item</xforms:label>
+														             <xforms:action>
+															<!--xforms:insert nodeset="LineInfo" context="instance('ORDERS_GREENERY_PORTAL_instance.xml')/Consignment/LineInfos" at="last()" position="after" origin="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//LineInfo" /-->
+															<xforms:setvalue ref="instance('dummyArticle')/add-trigger" value="true()"/>
+															               <xforms:setvalue ref="instance('dummyArticle')/Artikelidentificatie" value="''"/>
+															               <xforms:setvalue ref="instance('dummyArticle')/Artikelsearch" value="''"/>
+															               <xforms:delete nodeset="instance('dummyArticle')/Detail"/>
+															               <xforms:script type="text/javascript">
+																var selectbox = dojo.byId("articleselectionlist-value");
+																selectbox.selectedIndex = -1;
+								 							</xforms:script>
+														             </xforms:action>
+														             <bfc:show dialog="gdcdialog" events:event="DOMActivate"/>
+													           </xforms:trigger>
+                        <xforms:trigger ref="instance('ORDERS_GREENERY_PORTAL_prototype.xml')/Consignment/LineInfos//delete-trigger-_DESADV_Consignment_LineInfos_LineInfo"
+                                        id="_DESADV_Consignment_LineInfos_LineInfo-delete">
+														             <xforms:label lang="en">Delete selected</xforms:label>
+														             <xforms:label lang="nl">Verwijder regel</xforms:label>
+														             <xforms:label lang="es">Eliminar seleccionados</xforms:label>
+														             <xforms:label lang="pt">Excluir linha</xforms:label>
+														             <xforms:delete events:event="DOMActivate" nodeset="LineInfo"
+                                          at="index('_DESADV_Consignment_LineInfos_LineInfo')"
+                                          context="instance('ORDERS_GREENERY_PORTAL_instance.xml')/Consignment/LineInfos"/>
+														             <xforms:setindex events:event="DOMActivate" repeat="_DESADV_Consignment_LineInfos_LineInfo"
+                                            index="index('_DESADV_Consignment_LineInfos_LineInfo')"/>
+													           </xforms:trigger>
+                     </xforms:group>
+                  </xforms:group>
+               </xforms:group>
+               <xforms:group ref="PalletInformationEuro" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># EURO pallets</xforms:label>
+                  <xforms:label lang="nl"># EURO pallets</xforms:label>
+                  <xforms:label lang="es"># EURO palets</xforms:label>
+                  <xforms:label lang="pt"># EURO palete</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationEuro_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationDPA" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># DPA pallets</xforms:label>
+                  <xforms:label lang="nl"># DPA pallets</xforms:label>
+                  <xforms:label lang="es"># DPA palets</xforms:label>
+                  <xforms:label lang="pt"># DPA palete</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationDPA_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationPool" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># Pool pallets</xforms:label>
+                  <xforms:label lang="nl"># Pool pallets</xforms:label>
+                  <xforms:label lang="es"># Pool palets</xforms:label>
+                  <xforms:label lang="pt"># Pool palete</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationPool_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationChepBlok" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># Chep Blok pallets</xforms:label>
+                  <xforms:label lang="nl"># Chep Blok pallets</xforms:label>
+                  <xforms:label lang="es"># Chep Blok palets</xforms:label>
+                  <xforms:label lang="pt"># Bloco de paletes Chep</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationChepBlok_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationOneway" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># Oneway pallets</xforms:label>
+                  <xforms:label lang="nl"># Eenmalige pallets</xforms:label>
+                  <xforms:label lang="es"># Palets de desechable</xforms:label>
+                  <xforms:label lang="pt"># Uma palete</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationOneway_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationChepEuro" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># Chep EURO pallets</xforms:label>
+                  <xforms:label lang="nl"># Chep EURO pallets</xforms:label>
+                  <xforms:label lang="es"># Chep EURO pallets</xforms:label>
+                  <xforms:label lang="pt"># Chep EURO pallets</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationChepEuro_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationSkid" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># Skid norm vlg pallets</xforms:label>
+                  <xforms:label lang="nl"># Skid norm vlg pallets</xforms:label>
+                  <xforms:label lang="es"># Skid norm vlg pallets</xforms:label>
+                  <xforms:label lang="pt"># Skid norm vlg pallets</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationSkid_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group>
+               <xforms:group ref="PalletInformationSuperVers" appearance="full"
+                             style="position: relative; left:360px; width:200px">
+                  <xforms:label lang="en"># Pallets Supervers</xforms:label>
+                  <xforms:label lang="nl"># Super fresh pallets</xforms:label>
+                  <xforms:label lang="es"># Palet Super fresco</xforms:label>
+                  <xforms:label lang="pt"># Pallet Super frescos</xforms:label>
+                  <xforms:output ref="NumberOfPallets"
+                                 id="_DESADV_Consignment_PalletInformationSuperVers_NumberOfPallets"
+                                 appearance="bfInputLook"
+                                 style="left: 180px; position: relative; top: -24px;"
+                                 class="noLabel">
+                     <xforms:label>Number Of Pallets</xforms:label>
+                  </xforms:output>
+               </xforms:group> 
+               <bfc:dialog xmlns="urn:icit:greenery:orders" xmlns:da="urn:icit:da"
+                           xmlns:bf="http://betterform.sourceforge.net/xforms"
+                           id="gdcdialog"
+                           style="width:600px">
+	                 <xforms:label lang="en">Add article</xforms:label>
+	                 <xforms:label lang="nl">Artikel toevoegen</xforms:label>
+	                 <xforms:label lang="es">Añadir artículo</xforms:label>
+	                 <xforms:label lang="pt">Adicionar Item</xforms:label>
+	                 <xforms:group appearance="full">
+		                   <xforms:group appearance="full" ref="instance('dummyArticle')">
+			                     <xforms:input id="Artikelsearch" ref="Artikelsearch" style="min-width:400px"
+                                      bf:incremental-delay="500"
+                                      incremental="true">
+				                       <xforms:label lang="en">Article search</xforms:label>
+				                       <xforms:label lang="nl">Artikel zoeken</xforms:label>
+				                       <xforms:label lang="es">Artículo búsqueda</xforms:label>
+				                       <xforms:label lang="pt">Artigo pesquisa</xforms:label>
+				                       <xforms:action events:event="xforms-value-changed">
+					                         <xforms:setvalue ref="instance('dummyArticle')/Artikelidentificatie" value="''"/>
+					                         <xforms:script type="text/javascript">
+									var selectbox = dojo.byId("articleselectionlist-value");
+									selectbox.selectedIndex = -1;								
+								</xforms:script>
+				                       </xforms:action>
+			                     </xforms:input>
+
+			                     <xforms:select1 ref="Artikelidentificatie" xhtml:style="min-width: 550px;  height: 100px"
+                                        appearance="compact"
+                                        size="5"
+                                        xhtml:size="5"
+                                        id="articleselectionlist">
+				                       <xforms:label lang="en">Article name</xforms:label>
+				                       <xforms:label lang="nl">Artikel naam</xforms:label>
+				                       <xforms:label lang="es">Descripción del producto</xforms:label>
+				                       <xforms:label lang="pt">A descrição do produto</xforms:label>
+				                       <xforms:itemset nodeset="bf:sort(instance('artikelen')/item[contains(lower-case(gtinName), lower-case(instance('dummyArticle')/Artikelsearch))]/itemId, ../gtinName)"
+                                           style="min-width: 550px;  height: 100px; position:relative">
+
+
+					<!--xforms:label><xforms:output value="concat(../gtinName, ' ', ../netContent, ' ', ../netContent/@uom, ' ', ../itemExtensions/ext1:theGreeneryItemExtension/ext1:package/ext1:packageDescription)"/></xforms:label-->
+					<xforms:label ref="../gtinName"/>
+					                         <xforms:value ref="."/>
+				                       </xforms:itemset>
+			                     </xforms:select1>
+
+			                     <!--xforms:select1 ref="Artikelidentificatie" style="min-width: 525px; height: auto" appearance="compact" xhtml:size="5">
+							<xforms:label lang="en">Article number</xforms:label>
+							<xforms:label lang="nl">Artikel nummer</xforms:label>
+							<xforms:label lang="es">Artículo número</xforms:label>
+							<xforms:label lang="pt">Número do artigo</xforms:label>
+                                                        <xforms:itemset nodeset="bf:sort(instance('artikelen')/item[contains(lower-case(gtinName), lower-case(instance('dummyArticle')/Artikelsearch))]/itemId, ../alternateItemIdentification/id)">
+								<xforms:label><xforms:output value="concat(../alternateItemIdentification/id, ' (', ../netContent, ' ', ../netContent/@uom, ' ', ../itemExtensions/ext1:theGreeneryItemExtension/ext1:package/ext1:packageDescription,  ')')"/></xforms:label>
+								<xforms:value ref="." />
+							</xforms:itemset>
+						</xforms:select1>
+
+						<xforms:select1 ref="Artikelidentificatie" style="min-width: 525px;">
+							<xforms:label lang="en">Article GTIN</xforms:label>
+							<xforms:label lang="nl">Artikel GTIN</xforms:label>
+							<xforms:label lang="es">Artículo GTIN</xforms:label>
+							<xforms:label lang="pt">Artigo GTIN</xforms:label>
+                                                        <xforms:itemset nodeset="bf:sort(instance('artikelen')/item[contains(lower-case(gtinName), lower-case(instance('dummyArticle')/Artikelsearch))]/itemId, ../gtin)">
+								<xforms:label><xforms:output value="concat(../gtin, ' (', ../netContent, ' ', ../netContent/@uom, ' ', ../itemExtensions/ext1:theGreeneryItemExtension/ext1:package/ext1:packageDescription,  ')')"/></xforms:label>
+								<xforms:value ref="." />
+							</xforms:itemset>
+						</xforms:select1 -->
+
+			<xforms:group appearance="minimal">
+				                       <xforms:trigger ref="instance('dummyArticle')/add-trigger" id="okdialog">
+					                         <xforms:label lang="en">Add</xforms:label>
+					                         <xforms:label lang="nl">Toevoegen</xforms:label>
+					                         <xforms:label lang="es">Añadir</xforms:label>
+					                         <xforms:label lang="pt">Adicionar</xforms:label>
+					                         <xforms:setvalue ref="instance('dummyArticle')/add-trigger" value="true()"
+                                               events:event="DOMActivate"/>
+					                         <bfc:hide dialog="gdcdialog" events:event="DOMActivate"/>
+					                         <xforms:insert nodeset="."
+                                             origin="instance('artikelen')/item[itemId=instance('dummyArticle')/Artikelidentificatie]"/>
+					                         <xforms:dispatch name="addLine" targetid="_DESADV_Consignment_LineInfos_LineInfo"/>
+
+				                       </xforms:trigger>
+				                       <xforms:trigger>
+					                         <xforms:label lang="en">Cancel</xforms:label>
+					                         <xforms:label lang="nl">Annuleren</xforms:label>
+					                         <xforms:label lang="es">Cancelar</xforms:label>
+					                         <xforms:label lang="pt">Cancelar</xforms:label>
+					                         <xforms:hint>Close dialog</xforms:hint>
+					                         <bfc:hide dialog="gdcdialog" events:event="DOMActivate"/>
+				                       </xforms:trigger>
+			                     </xforms:group>
+		                   </xforms:group>
+	                 </xforms:group>
+               </bfc:dialog> 
+               <xforms:action xmlns="urn:icit:greenery:orders" xmlns:da="urn:icit:da"
+                              xmlns:bf="http://betterform.sourceforge.net/xforms"
+                              events:event="addLine">
+	                 <xforms:insert nodeset="LineInfo" context="LineInfos" at="last()" position="after"
+                                 origin="instance('ORDERS_GREENERY_PORTAL_prototype.xml')//LineInfo"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/BuyerProductCode"
+                                   value="instance('dummyArticle')/item/alternateItemIdentification/id"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/GTIN"
+                                   value="instance('dummyArticle')/item/gtin"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/Description"
+                                   value="instance('dummyArticle')/item/productDescription"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/GreeneryFullProductCode"
+                                   value="instance('dummyArticle')/item/itemId"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/NumberOfUnitsPerPallet"
+                                   value="instance('dummyArticle')/item/itemExtensions/ext1:theGreeneryItemExtension/ext1:pallet/ext1:numberOfItems"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/PalletCodeHAS"
+                                   value="instance('dummyArticle')/item/itemExtensions/ext1:theGreeneryItemExtension/ext1:pallet/ext1:palletId"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/Content"
+                                   value="instance('dummyArticle')/item/netContent"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/CU"
+                                   value="instance('dummyArticle')/item/netContent/@uom"/>
+	                 <xforms:setvalue ref="LineInfos/LineInfo[last()]/PackageType"
+                                   value="instance('dummyArticle')/item/itemExtensions/ext1:theGreeneryItemExtension/ext1:package/ext1:packageDescription"/>
+	                 <xhtml:script type="text/javascript">
+					window.scrollBy(0,200);
+				</xhtml:script>
+               </xforms:action> 
+            </xforms:group>
+         </xforms:group>
+         <!--This is pre-applying the submission in body--><xforms:trigger ref="instance('temp')/readonly[text()='false']">
+            <xforms:label lang="en">Submit</xforms:label>
+            <xforms:label lang="nl">Verzenden</xforms:label>
+            <bfc:show dialog="submit_confirm" events:event="DOMActivate"/>
+         </xforms:trigger>
+         <bfc:dialog id="submit_confirm">
+            <xforms:label lang="en">Submit this form</xforms:label>
+            <xforms:label lang="nl">Verstuur dit formulier</xforms:label>
+            <xforms:output style="width:100%">
+               <xforms:label lang="en">Are you sure you want to submit this form?</xforms:label>
+               <xforms:label lang="nl">Weet u zeker dat u dit formulier wilt verzenden?</xforms:label>
+            </xforms:output>
+            <xforms:group appearance="minimal">
+               <xforms:submit submission="ORDERS_GREENERY_PORTAL.submission">
+                  <xforms:label lang="en">Yes</xforms:label>
+                  <xforms:label lang="nl">Ja</xforms:label>
+                  <xforms:label lang="es">Si</xforms:label>
+               </xforms:submit>
+               <xforms:trigger>
+                  <xforms:label lang="en">No</xforms:label>
+                  <xforms:label lang="nl">Nee</xforms:label>
+                  <xforms:label lang="es">No</xforms:label>
+                  <bfc:hide dialog="submit_confirm" events:event="DOMActivate"/>
+               </xforms:trigger>
+            </xforms:group>
+         </bfc:dialog>
+         <bfc:dialog id="print">
+            <xforms:label>Print this form</xforms:label>
+				Do you want to print this form?
+				<xforms:group appearance="minimal">
+               <xforms:trigger>
+                  <xforms:label lang="en">Yes</xforms:label>
+                  <xforms:label lang="nl">Ja</xforms:label>
+                  <xforms:label lang="es">Si</xforms:label>
+                  <bfc:hide dialog="print" events:event="DOMActivate"/>
+                  <xforms:action events:event="DOMActivate">
+                     <xhtml:script type="text/javascript"> print();</xhtml:script>
+                     <xhtml:script type="text/javascript"> try { fluxProcessor.skipshutdown=true; fluxProcessor.closeSession(); parent.xformsCallback() } catch (err) { alert("This should trigger the callback, but the parent does not contain the callback method"); }</xhtml:script>
+                  </xforms:action>
+               </xforms:trigger>
+               <xforms:trigger>
+                  <xforms:label lang="en">No</xforms:label>
+                  <xforms:label lang="nl">Nee</xforms:label>
+                  <xforms:label lang="es">No</xforms:label>
+                  <xforms:action xmlns="urn:icit:greenery:orders">
+					                <xhtml:script type="text/javascript"> try { fluxProcessor.skipshutdown=true; fluxProcessor.closeSession(); parent.xformsCallback() } catch (err) { alert("This should trigger the callback, but the parent does not contain the callback method"); }</xhtml:script>
+				              </xforms:action>
+               </xforms:trigger>
+            </xforms:group>
+         </bfc:dialog>
+         <!--This is post-applying the submission in body--><xforms:trigger>
+            <xforms:label lang="en">Cancel</xforms:label>
+            <xforms:label lang="nl">Annuleren</xforms:label>
+            <bfc:show dialog="cancel_confirm" events:event="DOMActivate"
+                      if="not(boolean-from-string(instance('temp')/readonly))"/>
+            <xforms:action if="boolean-from-string(instance('temp')/readonly)">
+               <xforms:action>
+					             <xhtml:script type="text/javascript"> try { fluxProcessor.skipshutdown=true; fluxProcessor.closeSession(); parent.xformsCallback() } catch (err) { alert("This should trigger the callback, but the parent does not contain the callback method"); }</xhtml:script>
+				           </xforms:action>
+            </xforms:action>
+         </xforms:trigger>
+         <bfc:dialog id="cancel_confirm">
+            <xforms:label lang="en">Cancel this form?</xforms:label>
+            <xforms:label lang="nl">Formulier annuleren?</xforms:label>
+            <xforms:output style="width:100%">
+               <xforms:label lang="en">Are you sure you want to leave this form? Data will be lost!</xforms:label>
+               <xforms:label lang="nl">Wilt u dit formulier verlaten?. Gegevens gaan verloren!</xforms:label>
+            </xforms:output>
+            <xforms:group appearance="minimal">
+               <xforms:trigger>
+                  <xforms:label lang="en">Yes</xforms:label>
+                  <xforms:label lang="nl">Ja</xforms:label>
+                  <xforms:label lang="es">Si</xforms:label>
+                  <bfc:hide dialog="cancel_confirm" events:event="DOMActivate"/>
+                  <xforms:action>
+					                <xhtml:script type="text/javascript"> try { fluxProcessor.skipshutdown=true; fluxProcessor.closeSession(); parent.xformsCallback() } catch (err) { alert("This should trigger the callback, but the parent does not contain the callback method"); }</xhtml:script>
+				              </xforms:action>
+               </xforms:trigger>
+               <xforms:trigger>
+                  <xforms:label lang="en">No</xforms:label>
+                  <xforms:label lang="nl">Nee</xforms:label>
+                  <xforms:label lang="es">No</xforms:label>
+                  <bfc:hide dialog="cancel_confirm" events:event="DOMActivate"/>
+               </xforms:trigger>
+            </xforms:group>
+         </bfc:dialog>
+         <xforms:trigger ref="instance('temp')/printable">
+            <xforms:label lang="en">Print</xforms:label>
+            <xforms:label lang="nl">Afdrukken</xforms:label>
+            <bfc:show dialog="print"/>
+         </xforms:trigger>
+      </xhtml:div>
+   </xhtml:body>
+</xhtml:html>

@@ -164,8 +164,8 @@
                    processor="de.betterform.agent.web.servlet.PlainHtmlProcessor"
                    description="request/response-oriented XForms processor without any JavaScript">
         </useragent>
-        <useragent name="dojo"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
+        <useragent name="jquery"
+                   processor="de.betterform.agent.web.rest.RestProcessor"
                    description="AJAX-enabled useragent with packed resources for production environments">
         </useragent>
 
@@ -174,8 +174,8 @@
     <ui-generators>
         <!-- todo: deprecate unscripted processing?-->
         <!-- todo: we probably shouldn't use the term 'useragent' here to avoid confusion with other meanings throughout betterform -->
-        <ui-generator useragent="dojo" stylesheet="xhtml.xsl"/>
         <ui-generator useragent="html" stylesheet="html4.xsl"/>
+        <ui-generator useragent="jquery" stylesheet="jquery.xsl"/>
     </ui-generators>
 
     <connectors>

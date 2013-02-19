@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Repeated Groups</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+</head>
+<body>
+<div style="display:none">
+    <xf:model id="model-1">
+        <xf:instance id="i-default">
+            <data xmlns="">
+                <target/>
+                <repeat>
+                    <one></one>
+                    <two></two>
+                    <three></three>
+                </repeat>
+                <repeat>
+                    <one></one>
+                    <two></two>
+                    <three></three>
+                </repeat>
+                <repeat>
+                    <one></one>
+                    <two></two>
+                    <three></three>
+                </repeat>
+            </data>
+        </xf:instance>
+
+        <xf:instance id="i-label">
+            <data xmlns="">
+                <repeat>
+                    <label for="label">label</label>
+                    <alert for="alert">alert</alert>
+                </repeat>
+            </data>
+        </xf:instance>
+
+        <xf:instance id="colors">
+            <items xmlns="">
+                <color>
+                    <name>RED</name>
+                    <value>00FF00</value>
+                </color>
+                <color>
+                    <name>GREEN</name>
+                    <value>0000FF</value>
+                </color>
+                <color>
+                    <name>BLUE</name>
+                    <value>FF0000</value>
+                </color>
+            </items>
+        </xf:instance>
+
+         <xf:instance id="somewhere">
+                 <data xmlns="">
+                     <somewhere/>
+                 </data>
+        </xf:instance>
+    </xf:model>
+</div>
+<xf:group ref="instance('somewhere')/somewhere" appearance="full">
+    <xf:repeat appearance="full" nodeset="instance()/repeat">
+        <xf:group>
+            <xf:input ref="." appearance="iso8601:dd/MM/yyyy" class="medField">
+                <xf:label ref="instance('i-label')/repeat/label[@for='label']"/>
+                <xf:alert ref="instance('i-label')/repeat/alert[@for='alert']"/>
+            </xf:input>
+
+            <xf:select1 ref="instance()/target" appearance="full">
+                <xf:label ref="instance('i-label')/repeat/label[@for='label']"/>
+                <xf:itemset nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                </xf:itemset>
+            </xf:select1>
+
+        </xf:group>
+    </xf:repeat>
+
+
+    <div id="mount"/>
+
+    <xf:trigger>
+        <xf:label>Load Subform</xf:label>
+        <xf:action>
+            <xf:load show="embed" targetid="mount">
+                <xf:resource value="'RepeatedGroupsEmbed.xhtml#xforms'"/>
+                <xf:extension includeCSS="true" includeScript="true"/>
+            </xf:load>
+        </xf:action>
+    </xf:trigger>
+
+</xf:group>
+</body>
+</html>

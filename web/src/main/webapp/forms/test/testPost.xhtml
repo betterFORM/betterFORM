@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Test XForms Post Servlet</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model>
+                <xf:instance>
+                    <html xmlns="http://www.w3.org/1999/xhtml"
+                          xmlns:xf="http://www.w3.org/2002/xforms">
+                        <head>
+                            <title>hello</title>
+                            <xf:model>
+                                <xf:instance>
+                                    <data></data>
+                                </xf:instance>
+                            </xf:model>
+                        </head>
+                        <body>
+                            <xf:output id="ui" ref="hello">
+                                <xf:label>Hello from xf:</xf:label>
+                            </xf:output>
+                        </body>
+                    </html>
+                </xf:instance>
+
+                <xf:submission id="postit"
+                               resource="http://localhost:8080/betterform/XFormsPost"
+                               method="post"
+                               replace="instance"
+                               ref="instance()"
+                        >
+                    <xf:message ev:event="xforms-submit-error">post failed - make sure that XFormsPostServlet is properly configured in web.xml</xf:message>
+                </xf:submission>
+            </xf:model>
+
+        </div>
+        <xf:trigger>
+            <xf:label>Post form</xf:label>
+            <xf:action>
+                <xf:send submission="postit"/>
+            </xf:action>
+        </xf:trigger>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>Load-Embed-CSS-JavaScript-Subform</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+		<script type="text/javascript" src="data/test.js"/>
+        <link rel="stylesheet" type="text/css" href="data/test.css" />
+
+		<script type="text/javascript">
+            function test2() {
+                alert("Hello from test2");
+            }
+		</script>
+
+        <style type="text/css">
+            .red {
+                background: red;
+            }
+
+            .blue {
+                background: blue;
+            }
+		</style>
+
+	</head>
+	<body>
+		<div id="xforms">
+			<div style="display:none">
+				<xf:model id="model-1">
+					<xf:instance id="i-default">
+						<data xmlns="">
+						</data>
+					</xf:instance>
+				</xf:model>
+			</div>
+			<xf:group>
+                <xf:trigger class="red">
+                    <xf:label>Test</xf:label>
+                    <xf:action>
+                        <script type="text/javascript">
+                            test();
+                        </script>
+                    </xf:action>
+                </xf:trigger>
+
+                <xf:trigger class="blue">
+                    <xf:label>Test2</xf:label>
+                    <xf:action>
+                        <script type="text/javascript">
+                            test2();
+                        </script>
+                    </xf:action>
+                </xf:trigger>
+			</xf:group>
+		</div>
+	</body>
+</html>

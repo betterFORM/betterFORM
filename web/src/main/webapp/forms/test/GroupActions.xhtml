@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+        >
+    <head>
+        <title>Group Action</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <valid>valid</valid>
+                        <unvalid></unvalid>
+                    </data>
+                </xf:instance>
+
+
+
+            </xf:model>
+        </div>
+		<xf:group id="group"  ref="valid">
+            <xf:label>Valid</xf:label>
+            <xf:message ev:event="xforms-valid" level="modal">valid</xf:message>
+            <xf:message ev:event="xforms-invalid" level="modal">invalid</xf:message>
+            <xf:message ev:event="xforms-in-range" level="modal">in-range</xf:message>
+            <xf:message ev:event="xforms-out-of-range" level="modal">out-of-range</xf:message>
+            <xf:message ev:event="xforms-readonly" level="modal">readonly</xf:message>
+            <xf:message ev:event="xforms-readwrite" level="modal">readwrite</xf:message>
+            <xf:message ev:event="xforms-required" level="modal">required</xf:message>
+            <xf:message ev:event="xforms-optional" level="modal">optional</xf:message>
+            <xf:message ev:event="xforms-enabled" level="modal">enabled</xf:message>
+            <xf:message ev:event="xforms-disabled" level="modal">disabled</xf:message>
+            <xf:action ev:event="xforms-valid" ev:phase="capture"><xf:message level="modal">valid</xf:message></xf:action>
+            <xf:action ev:event="xforms-invalid"><xf:message level="modal">invalid</xf:message></xf:action>
+            <xf:action ev:event="xforms-in-range"><xf:message level="modal">in-range</xf:message></xf:action>
+            <xf:action ev:event="xforms-out-of-range"><xf:message level="modal">out-of-range</xf:message></xf:action>
+            <xf:action ev:event="xforms-readonly"><xf:message level="modal">readonly</xf:message></xf:action>
+            <xf:action ev:event="xforms-readwrite"><xf:message level="modal">readwrite</xf:message></xf:action>
+            <xf:action ev:event="xforms-required"><xf:message level="modal">required</xf:message></xf:action>
+            <xf:action ev:event="xforms-optional"><xf:message level="modal">optional</xf:message></xf:action>
+            <xf:action ev:event="xforms-enabled" ev:phase="capture"><xf:message level="modal">enabled</xf:message></xf:action>
+            <xf:action ev:event="xforms-disabled"><xf:message level="modal">disabled</xf:message></xf:action>
+            <xf:output id="output">
+                <xf:label>Valid output</xf:label>
+                <xf:message ev:event="xforms-enabled" level="modal">O: enabled</xf:message>
+                <xf:message ev:event="xforms-valid" level="modal">O: enabled</xf:message>
+            </xf:output>
+		</xf:group>
+
+        <xf:group ref="invalid">
+            <xf:label>Invalid</xf:label>
+            <xf:action ev:event="xforms-valid"><xf:message level="modal">valid</xf:message></xf:action>
+            <xf:action ev:event="xforms-invalid"><xf:message level="modal">invalid</xf:message></xf:action>
+            <xf:action ev:event="xforms-in-range"><xf:message level="modal">in-range</xf:message></xf:action>
+            <xf:action ev:event="xforms-out-of-range"><xf:message level="modal">out-of-range</xf:message></xf:action>
+            <xf:action ev:event="xforms-readonly"><xf:message level="modal">readonly</xf:message></xf:action>
+            <xf:action ev:event="xforms-readwrite"><xf:message level="modal">readwrite</xf:message></xf:action>
+            <xf:action ev:event="xforms-required"><xf:message level="modal">required</xf:message></xf:action>
+            <xf:action ev:event="xforms-optional"><xf:message level="modal">optional</xf:message></xf:action>
+            <xf:action ev:event="xforms-enabled"><xf:message level="modal">enabled</xf:message></xf:action>
+            <xf:action ev:event="xforms-disabled"><xf:message level="modal">disabled</xf:message></xf:action>
+		</xf:group>
+    </body>
+</html>

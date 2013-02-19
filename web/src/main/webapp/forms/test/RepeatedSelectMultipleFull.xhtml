@@ -1,0 +1,81 @@
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Test - Repeat checkbox</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <xf:model>
+            <xf:instance xmlns="" id="i-1">
+                <data>
+                    <items>
+                        <item>
+                            <bool>rot</bool>
+                        </item>
+
+                        <item>
+                            <bool>gelb</bool>
+                        </item>
+                    </items>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind_items" nodeset="instance('i-1')/items"/>
+        </xf:model>
+        <xf:group appearance="full">
+            <xf:group bind="bind_items" appearance="full">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Checkbox</th>
+                        </tr>
+                    </thead>
+                    <tbody id="repeat" xf:repeat-nodeset="item">
+                        <tr>
+                            <td>
+                                <xf:select ref="bool" appearance="full">
+                                    <xf:item>
+                                        <xf:label>Rot</xf:label>
+                                        <xf:value>rot</xf:value>
+                                    </xf:item>
+
+                                    <xf:item>
+                                        <xf:label>Gelb</xf:label>
+                                        <xf:value>gelb</xf:value>
+                                    </xf:item>
+                                </xf:select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <xf:trigger appearance="full">
+                    <xf:label>new</xf:label>
+                    <xf:action>
+                        <xf:insert nodeset="item"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger appearance="full">
+                    <xf:label>delete</xf:label>
+                    <xf:action>
+                        <xf:delete nodeset="item[index('repeat')]"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+            <xf:group appearance="full">
+                <xf:label>Status</xf:label>
+                <xf:output ref="instance('i-1')/items/item[1]/bool">
+                    <xf:label>Item 1</xf:label>
+                </xf:output>
+                <xf:output ref="instance('i-1')/items/item[2]/bool">
+                    <xf:label>Item 2</xf:label>
+                </xf:output>
+                <xf:output ref="instance('i-1')/items/item[3]/bool">
+                    <xf:label>Item 3</xf:label>
+                </xf:output>
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

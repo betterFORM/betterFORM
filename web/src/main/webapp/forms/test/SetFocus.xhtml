@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>SetFocus</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <input>Hello from input!</input>
+                        <inputDate>2011-08-19</inputDate>
+                        <target></target>
+                    </data>
+                </xf:instance>
+
+                <xf:instance id="colors">
+                    <items xmlns="">
+                        <color>
+                            <name>RED</name>
+                            <value>00FF00</value>
+                        </color>
+                        <color>
+                            <name>GREEN</name>
+                            <value>0000FF</value>
+                        </color>
+                        <color>
+                            <name>BLUE</name>
+                            <value>FF0000</value>
+                        </color>
+                    </items>
+                </xf:instance>
+            </xf:model>
+        </div>
+		<xf:group>
+            <xf:group appearance="full">
+                <xf:label>Input</xf:label>
+
+                <xf:input id="input1" ref="input">
+                    <xf:label>Input with DomFocusIn action:</xf:label>
+                    <xf:action ev:event="DOMFocusIn">
+                        <xf:message level="ephemeral">DOMFocusIn input1.</xf:message>
+                    </xf:action>
+                </xf:input>
+
+
+                <xf:input id="inputText" ref="input">
+                    <xf:label>inputText:</xf:label>
+                </xf:input>
+
+                <xf:input id="inputDate" ref="inputDate">
+                    <xf:label>inputDate:</xf:label>
+                </xf:input>
+
+                <xf:trigger>
+                    <xf:label>Set Focus to inputText</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="inputText"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Set Focus to inputDate</xf:label>
+                    <xf:setfocus control="inputDate"/>
+                </xf:trigger>
+            </xf:group>
+
+            <xf:group>
+                <xf:output id="output1" ref="input" tabindex="0">
+                    <xf:label>Output:</xf:label>
+
+                </xf:output>
+
+                <xf:trigger>
+                    <xf:label>Set Focus to output</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="output1"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+
+            <xf:group appearance="full">
+                <xf:label>Select1 Focus Test</xf:label>
+                <xf:select1 id="select1minimal" ref="target" appearance="minimal">
+                    <xf:label>Select1 full:</xf:label>
+                    <xf:itemset  nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select1>
+                <xf:select1 id="select1compact" ref="target" appearance="compact">
+                    <xf:label>Select1 full:</xf:label>
+                    <xf:itemset  nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select1>
+                <xf:select1 id="select1full" ref="target" appearance="full">
+                    <xf:label>Select1 full:</xf:label>
+                    <xf:itemset  nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select1>
+
+                <xf:trigger>
+                    <xf:label>Set Focus to select1minimal</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="select1minimal"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Set Focus to select1compact</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="select1compact"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Set Focus to select1full</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="select1full"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+
+            <xf:group appearance="full">
+                <xf:label>Select Focus Test</xf:label>
+                <xf:select id="selectminimal" ref="target" appearance="minimal">
+                    <xf:label>Select:</xf:label>
+                    <xf:itemset  nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select>
+
+                <xf:select id="selectcompact" ref="target" appearance="compact">
+                    <xf:label>select:</xf:label>
+                    <xf:itemset  nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select>
+
+                <xf:select id="selectfull" ref="target" appearance="full">
+                    <xf:label>select:</xf:label>
+                    <xf:itemset  nodeset="instance('colors')/color">
+                        <xf:label ref="name"/>
+                        <xf:value ref="value"/>
+                    </xf:itemset>
+                </xf:select>
+
+                <xf:trigger>
+                    <xf:label>Set Focus to selectminimal</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="selectminimal"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Set Focus to selectcompact</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="selectcompact"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Set Focus to selectfull</xf:label>
+                    <xf:action>
+                        <xf:setfocus control="selectfull"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+		</xf:group>
+    </body>
+</html>

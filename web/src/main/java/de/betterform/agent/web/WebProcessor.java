@@ -378,12 +378,15 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     setContextParam(REFERER, request.getContextPath() + request.getServletPath() + "?" + referer);
                     //actually register the XFormsSession with the manager
                     // getManager().addXFormsSession(this);
-                    Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
-                    if(cache == null) {
-                        throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
-                    }
-                    cache.put(new net.sf.ehcache.Element(this.getKey(), this));
+                    //RKU session cache
+//                    Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
+//                    if(cache == null) {
+//                        throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
+//                    }
+//                    cache.put(new net.sf.ehcache.Element(this.getKey(), this));
 
+                    
+                    request.getSession().setAttribute("webprocessor", this);
                     //todo:check if it's still necessary to set an attribute to the session
                     httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
 
@@ -424,7 +427,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
                 String loadURI = (String) exitEvent.getContextInfo("uri");
 
                 //kill XFormsSession
-                WebUtil.removeSession(getKey());
+                WebUtil.removeSession(httpSession, getKey());
                 if (WebProcessor.LOGGER.isDebugEnabled()) {
                     WebProcessor.LOGGER.debug("loading: " + loadURI);
                 }
@@ -456,7 +459,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         //remove session from XFormsSessionManager
         // getManager().deleteXFormsSession(this.key);
-        WebUtil.removeSession(this.key);
+        WebUtil.removeSession(httpSession, this.key);
 
         // redirect to error page (after encoding session id if required)
         response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/" +

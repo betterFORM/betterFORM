@@ -106,7 +106,7 @@ public class WebFactory {
                 Object o = clazz.newInstance();
                 if (!(o instanceof XFormsProcessor)) {
                     throw new XFormsConfigException("This useragent is not configured properly: '" + useragent + "'");
-        }
+                }
                 processor = (WebProcessor) o;
                 processor.setUseragent(useragent);
                 return processor;
@@ -257,7 +257,7 @@ public class WebFactory {
     }
 
 
-    public void initXFormsSessionCache() {
-        CacheManager.create();
-    }
+//    public void initXFormsSessionCache() {
+//        CacheManager.create();
+//    }
 }

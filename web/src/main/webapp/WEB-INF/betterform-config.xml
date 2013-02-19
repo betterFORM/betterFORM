@@ -101,7 +101,7 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="true" description="if true enables debug bar and event log viewer"/>
+        <property name="betterform.debug-allowed" value="false" description="if true enables debug bar and event log viewer"/>
 
         <property name="betterform.unloading-message" value="You are about to leave this XForms application" description="Set message which is shown to user if unsaved form is left."/>
 
@@ -168,6 +168,10 @@
                    processor="de.betterform.agent.web.flux.FluxProcessor"
                    description="AJAX-enabled useragent with packed resources for production environments">
         </useragent>
+        <useragent name="jquery"
+                   processor="de.betterform.agent.web.rest.RestProcessor"
+                   description="AJAX-enabled useragent with packed resources for production environments">
+        </useragent>
 
     </useragents>
 
@@ -176,6 +180,7 @@
         <!-- todo: we probably shouldn't use the term 'useragent' here to avoid confusion with other meanings throughout betterform -->
         <ui-generator useragent="dojo" stylesheet="xhtml.xsl"/>
         <ui-generator useragent="html" stylesheet="html4.xsl"/>
+        <ui-generator useragent="jquery" stylesheet="jquery.xsl"/>
     </ui-generators>
 
     <connectors>

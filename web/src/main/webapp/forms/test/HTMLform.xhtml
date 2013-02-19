@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>hello</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance>
+                    <data xmlns="">
+                        <hello>Hello World!</hello>
+                    </data>
+                </xf:instance>
+            </xf:model>
+
+        </div>
+
+        <h1>combining HTML forms and XForms</h1>
+        <p>
+            HTML forms and XForms can be combined in one page but you have to watch your structure to avoid
+            creation of nested form tags.
+        </p>
+        <p>
+            To do it savely wrap your XForms UI markup into a single outermost xf:group element. The generated
+            output should then contain non-nested form tags.
+        </p>
+
+        <form action="#" method="post" enctype="application/x-www-form-urlencoded">
+            <label for="search">a HTML input</label>
+            <input type="text" id="search"/>
+        </form>
+        <xf:group>
+            <xf:input id="ui" ref="hello">
+                <xf:label>a XForms input</xf:label>
+            </xf:input>
+        </xf:group>
+    </body>
+</html>

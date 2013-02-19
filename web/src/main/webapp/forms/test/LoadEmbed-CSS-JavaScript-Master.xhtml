@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Load-Embed-CSS-JavaScript-Subform</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="m-model-fieldset">
+                <xf:instance id="i-m-default">
+                    <data xmlns="">
+						<dummy/>
+                    </data>
+                </xf:instance>
+				<xf:instance id="i-fieldset">
+					<data xmlns="">
+						<repeated></repeated>
+						<repeated></repeated>
+						<repeated></repeated>
+						<repeated></repeated>
+					</data>
+				</xf:instance>
+            </xf:model>
+        </div>
+
+        <xf:group>
+            <xf:trigger>
+                <xf:label>Load Subform containing CSS and Javascript</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embedInlineInclude">
+                            <xf:resource value="'Load-Embed-CSS-JavaScript-Subform.xhtml#xforms'"/>
+                            <xf:extension includeCSS="true" includeScript="true"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+
+            <xf:trigger>
+                <xf:label>Load Subform containing CSS and Javascript. Wrong Targetid</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embedInline">
+                            <xf:resource value="'Load-Embed-CSS-JavaScript-Subform.xhtml#xforms'"/>
+                            <xf:extension includeCSS="true" includeScript="true"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+
+            <xf:trigger>
+                <xf:label>Load Subform containing CSS and Javascript. JavaScript and Css will not be Included.</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embedInlineNoInclude">
+                            <xf:resource value="'Load-Embed-CSS-JavaScript-Subform.xhtml#xforms'"/>
+                            <xf:extension includeCSS="false" includeScript="false"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+
+			<xf:trigger id="initial">
+
+                <xf:label>Load Subform containing HTML-Fieldset.</xf:label>
+                <xf:action>
+                    <xf:load show="embed" targetid="embedInlineNoInclude">
+                            <xf:resource value="'Load-Embed-Fieldset.xhtml#xforms'"/>
+                    </xf:load>
+                </xf:action>
+            </xf:trigger>
+
+		</xf:group>
+
+        <xf:group apperance="full">
+            <xf:label>Include</xf:label>
+            <div id="embedInlineInclude" />
+        </xf:group>
+
+        <xf:group apperance="full">
+            <xf:label>No Include</xf:label>
+            <div id="embedInlineNoInclude" />
+        </xf:group>
+
+
+
+		<script type="text/javascript" defer="defer">
+				dojo.addOnLoad(function(){{
+					var initLoad = dojo.subscribe("/xf/ready", function() {{
+						dojo.unsubscribe(initLoad);
+						fluxProcessor.dispatchEvent('initial');
+					}});
+				}});
+			</script>
+    </body>
+</html>

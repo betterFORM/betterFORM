@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Custom Drop Down Date Control</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+		<script type="text/javascript">
+			  var initLoad = dojo.subscribe("/xf/ready", function() {
+				dojo.unsubscribe(initLoad);
+        	});
+		</script>
+    </head>
+    <body>
+
+
+
+        <div style="display:none;">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data>
+						<input readonly="true">
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                            <value>1978-02-03</value>
+                        </input>
+					</data>
+                </xf:instance>
+				<xf:bind nodeset="input"> readonly="boolean-from-string(@readonly)">
+                    <xf:bind nodeset="value" type="date" readonly="boolean-from-string(../@readonly)"/>
+                    <xf:bind nodeset="@readonly" type="boolean"/>
+                </xf:bind>
+            </xf:model>
+        </div>
+
+
+        <xf:group id="main" appearance="full">
+            <xf:label>Custom Time Control</xf:label>
+<!--
+			<xf:input ref="input[1]">
+				<xf:label>Date: </xf:label>
+			</xf:input>
+			<xf:input ref="input[2]">
+				<xf:label>DateTime: </xf:label>
+			</xf:input>
+-->
+
+			<xf:input ref="input/value[1]" appearance="bf:dropdowndate=1970">
+				<xf:label>Date 1970:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value[2]" appearance="bf:dropdowndate=1970:1980">
+				<xf:label>Date 1970:1980:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value[3]" appearance="bf:dropdowndate=1980:1970">
+				<xf:label>Date 1980:1970:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value[4]" appearance="bf:dropdowndate=-50:+50">
+				<xf:label>Date: -50:+50</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value[5]" appearance="bf:dropdowndate=+50:-50">
+				<xf:label>Date: +50:-50</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value[6]" appearance="bf:dropdowndate=+30:+20">
+				<xf:label>Date +30:+20:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input ref="input/value[7]" appearance="bf:dropdowndate=-40:-30">
+				<xf:label>Date -40:-30:</xf:label>
+                <xf:hint>Enter you Date of birth</xf:hint>
+                <xf:alert>Not valid</xf:alert>
+			</xf:input>
+
+            <xf:input id="input1-readonly" ref="input/@readonly" incremental="true">
+                  <xf:label>readonly</xf:label>
+           </xf:input>
+        </xf:group>
+    </body>
+</html>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Appearance for Groups</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+        <xf:model>
+            <xf:submission id="debug" replace="all" action="{$contextroot}/jsp/debug-instance.jsp" method="post" validate="false"/>
+            <xf:instance xmlns="">
+                <data>
+                    <visible>true</visible>
+                    <grouped-data>
+                        <a>aaa</a>
+                        <b>bbb</b>
+                        <c>ccc</c>
+                        <d>ddd</d>
+                    </grouped-data>
+                </data>
+            </xf:instance>
+            <xf:bind id="b-visible" nodeset="visible" type="boolean"/>
+            <xf:bind id="b1" nodeset="grouped-data" required="true()" relevant="boolean-from-string(/data/visible)">
+                <xf:bind id="b2" nodeset="a" required="true()"/>
+                <xf:bind id="b3" nodeset="b" required="true()" relevant="boolean-from-string(/data/visible)"/>
+                <xf:bind id="b4" nodeset="c" required="true()"/>
+                <xf:bind id="b4" nodeset="d" required="true()"/>
+            </xf:bind>
+        </xf:model>
+        <style type="text/css">
+            /*#column1 {display: inline;}*/
+            /*#column2 {display: inline;}*/
+            /*#compact-repeat .col-1{background:gray;}*/
+            /*#compact-repeat .col-1 .value{width:300px;}*/
+            /*#compact-repeat .col-1 label{color:white;}*/
+            /*#compact-repeat .col-2{background:darkgray;}*/
+            /*#compact-repeat .col-2 .value{width:150px;}*/
+            /*#compact-repeat .col-3 {background:lightgray;}*/
+            /*#compact-repeat .col-3 *{width:50px;}*/
+             .xfContainer{border:thin dotted;display:block;margin:20px;}
+            .xfGroupLabel{display:block;clear:left}
+            #relevantSwitch .xfLabel{
+                white-space:nowrap;
+                width:230px;
+                font-size:12pt;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="description">
+            This form shows the impact of relevance on different type of groups. When clicking the checkbox at the
+            top of the page all fields with the 'B-label' should appear or disappear respectively.
+        </div>
+        <xf:group appearance="full">
+            <xf:label></xf:label>
+            <xf:input id="relevantSwitch" bind="b-visible">
+                <xf:label>Triggers relevance switching</xf:label>
+                <xf:alert>Triggers relevant true and false</xf:alert>
+                <xf:hint>Triggers relevant true and false</xf:hint>
+                <xf:help>This trigger toggles between relevant and non-relevant</xf:help>
+            </xf:input>
+        </xf:group>
+        <xf:group appearance="minimal">
+            <xf:label>
+                Different Appearances of <b>Group</b>
+            </xf:label>
+            <xf:group ref="grouped-data" appearance="minimal">
+                <xf:label>
+                    <b>Minimal Group</b> produces a flow layout which can be styled with CSS.
+                </xf:label>
+                <xf:input ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input ref="b">
+                    <xf:label>B-label</xf:label>
+                </xf:input>
+                <xf:input ref="c">
+                    <xf:label>C-label</xf:label>
+                </xf:input>
+                <xf:input ref="d">
+                    <xf:label>D-label</xf:label>
+                </xf:input>
+            </xf:group>
+            <xf:group ref="grouped-data" appearance="compact">
+                <xf:label>
+                    <b>Compact Group</b> uses a horizontal table layout
+                </xf:label>
+                <xf:input ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input ref="b">
+                    <xf:label>B-label</xf:label>
+                </xf:input>
+                <xf:input ref="c">
+                    <xf:label>C-label</xf:label>
+                </xf:input>
+                <xf:input ref="d">
+                    <xf:label>D-label</xf:label>
+                </xf:input>
+            </xf:group>
+
+            <xf:group ref="grouped-data" appearance="full">
+                <xf:label>
+                    <b>Full Group</b> uses a two column layout to display controls vertically
+                </xf:label>
+                <xf:input ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:group appearance="full" id="nested">
+                    <xf:label>nested group</xf:label>
+                    <xf:input ref="b">
+                        <xf:label>B-label</xf:label>
+                    </xf:input>
+                    <xf:input ref="c">
+                        <xf:label>C-label</xf:label>
+                    </xf:input>
+                </xf:group>
+            </xf:group>
+
+        </xf:group>
+        <xf:group appearance="bf:horizontalTable">
+            <xf:label>groups side by side in a multi-column layout.
+            Control labels are placed above controls with the
+            help of custom CSS classes authored in this document.
+            </xf:label>
+            <xf:group id="column1" ref="grouped-data" appearance="full">
+                <xf:label>
+                    <b>First Column</b>
+                </xf:label>
+                <xf:input class="label-above" ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input class="label-above" ref="b">
+                    <xf:label>B-label</xf:label>
+                </xf:input>
+                <xf:input class="label-above" ref="c">
+                    <xf:label>C-label</xf:label>
+                </xf:input>
+                <xf:input class="label-above" ref="d">
+                    <xf:label>D-label</xf:label>
+                </xf:input>
+            </xf:group>
+            <xf:group id="column2" ref="grouped-data" appearance="full">
+                <xf:label>
+                    <b>Second Column</b>
+                </xf:label>
+                <xf:input class="label-above" ref="a">
+                    <xf:label>A-label</xf:label>
+                </xf:input>
+                <xf:input class="label-above" ref="b">
+                    <xf:label>B-label</xf:label>
+                </xf:input>
+                <xf:input class="label-above" ref="c">
+                    <xf:label>C-label</xf:label>
+                </xf:input>
+                <xf:input class="label-above" ref="d">
+                    <xf:label>D-label</xf:label>
+                </xf:input>
+            </xf:group>
+        </xf:group>
+
+        <xf:trigger>
+            <xf:label>Debug</xf:label>
+            <xf:action>
+                <xf:send submission="debug"/>
+            </xf:action>
+        </xf:trigger>
+
+
+    </body>
+</html>

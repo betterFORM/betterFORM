@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DeliveryPartys xmlns:webform="urn:icit:webform" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:events="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<DeliveryParty id="8712199000205">
+		<Name>HAGE INTERNATIONAL BV</Name>
+		<Address>SPOORWEGEMPLACEMENT 1</Address>
+		<PostalCode>2991 VT</PostalCode>
+		<City>BARENDRECHT</City>
+		<Country>NL</Country>
+		<GLN>8712199000205</GLN>
+		<LocCode>HAGEB</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199000113">
+		<Name>GREENERY U.K.</Name>
+		<Address>HERENLAAN 27</Address>
+		<PostalCode>3155 DC</PostalCode>
+		<City>MAASLAND</City>
+		<Country>NL</Country>
+		<GLN>8712199000113</GLN>
+		<LocCode>UK-MS</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199002636">
+		<Name>HESSING GROENTE BV</Name>
+		<Address>NIEUWMARKT 8</Address>
+		<PostalCode>1681 NP</PostalCode>
+		<City>ZWAAGDIJK-OOST</City>
+		<Country>NL</Country>
+		<GLN>8712199002636</GLN>
+		<LocCode>HESSI</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199000953">
+		<Name>JOVER B.V., HANDELSMAATSCHAPPIJ</Name>
+		<Address>IABC 5301</Address>
+		<PostalCode>4814 RB</PostalCode>
+		<City>BREDA</City>
+		<Country>NL</Country>
+		<GLN>8712199000953</GLN>
+		<LocCode>JOVER</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199006856">
+		<Name>GREENERY BENELUX</Name>
+		<Address>DIERENSTEINWEG 30 HAL 1,DEUR 12</Address>
+		<PostalCode>2991 XJ</PostalCode>
+		<City>BARENDRECHT</City>
+		<Country>NL</Country>
+		<GLN>8712199006856</GLN>
+		<LocCode>BARSAP</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199000083">
+		<Name>GREENERY INT. LOCATIE BLEISWIJK</Name>
+		<Address>KLAPPOLDER 1/2</Address>
+		<PostalCode>2665 LP</PostalCode>
+		<City>BLEISWIJK</City>
+		<Country>NL</Country>
+		<GLN>8712199000083</GLN>
+		<LocCode>BLEIS</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199001493">
+		<Name>SEABREX</Name>
+		<Address>GALILEISTRAAT 36</Address>
+		<PostalCode>3029 AM</PostalCode>
+		<City>ROTTERDAM</City>
+		<Country>NL</Country>
+		<GLN>8712199001493</GLN>
+		<LocCode>SEABR</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199006535">
+		<Name>VAN GORP GREENFOOD BV</Name>
+		<Address>BLAUWWATER 8</Address>
+		<PostalCode>5951 DB</PostalCode>
+		<City>BELFELD</City>
+		<Country>NL</Country>
+		<GLN>8712199006535</GLN>
+		<LocCode>GORPB</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199000243">
+		<Name>GREENERY AMBTMAN Loods B'drecht</Name>
+		<Address>KOOPLIEDENWEG 5</Address>
+		<PostalCode>2990 AK</PostalCode>
+		<City>BARENDRECHT</City>
+		<Country>NL</Country>
+		<GLN>8712199000243</GLN>
+		<LocCode>GRAMB</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199006542">
+		<Name>BOS BROTHERS B.V.</Name>
+		<Address>AMERSGAT 17</Address>
+		<PostalCode>3151 ZJ</PostalCode>
+		<City>HOEK VAN HOLLAND</City>
+		<Country>NL</Country>
+		<GLN>8712199006542</GLN>
+		<LocCode>BOSHO</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199002926">
+		<Name>GARDEREN-GRIFFIOEN</Name>
+		<Address>SCHALKWIJKSEWEG 22</Address>
+		<PostalCode>3998 LZ</PostalCode>
+		<City>SCHALKWIJK</City>
+		<Country>NL</Country>
+		<GLN>8712199002926</GLN>
+		<LocCode>GARSC</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199006528">
+		<Name>DIRECT DELIVERY UK/OVERSEAS</Name>
+		<Address/>
+		<PostalCode/>
+		<City/>
+		<Country/>
+		<GLN>8712199002926</GLN>
+		<LocCode>DIRLE</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199002834">
+		<Name>DIRECT DELIVERY EUROPE</Name>
+		<Address/>
+		<PostalCode/>
+		<City/>
+		<Country/>
+		<GLN>8712199002834</GLN>
+		<LocCode>DIREU</LocCode>
+	</DeliveryParty>	
+	<DeliveryParty id="8712199000090">
+		<Name>VAN DIJK FOODS BELGIUM</Name>
+		<Address>KEMPENARESTRAAT 50</Address>
+		<PostalCode>2860</PostalCode>
+		<City>SINT-KATELIJNE-WAVER</City>
+		<Country>BE</Country>
+		<GLN>8712199000090</GLN>
+		<LocCode>VDBEL</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199007716">
+		<Name>KNOFLOOK TRANSITO</Name>
+		<Address>SPOORWEGEMPLACEMENT 1</Address>
+		<PostalCode>2991 VT</PostalCode>
+		<City>BARENDRECHT</City>
+		<Country>NL</Country>
+		<GLN>8712199000090</GLN>
+		<LocCode>HGKNO</LocCode>
+	</DeliveryParty>
+	<DeliveryParty id="8712199000236">
+		<Name>EXOTEN HAG LOK.BARENDRECHT</Name>
+		<Address>SPOORWEGEMPLACEMENT 1</Address>
+		<PostalCode>2991 VT</PostalCode>
+		<City>BARENDRECHT</City>
+		<Country>NL</Country>
+		<GLN>8712199000236</GLN>
+		<LocCode>EXOHG</LocCode>
+	</DeliveryParty>	
+</DeliveryPartys>

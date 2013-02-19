@@ -1,0 +1,55 @@
+@page {
+   size: A4 landscape;
+   margin: 10mm;
+}
+
+#flags {
+	display: none;
+}
+
+/* Show choice label and case labels when printing */
+.bfChoice .xfGroupLabel, .xfCase * .xfGroupLabel {
+    display: inline-block !important;
+}
+
+.xfTrigger,.xfSubmit {
+	display: none;
+}
+
+.bfTabContainer {
+    overflow: none;
+}
+
+.dijitTabPaneWrapper {
+	height: auto !important;
+	width: 100% !important;
+	border: none !important;
+	padding-top: 0px;
+	background-color: transparent !important;
+}
+
+.dijitTabContainerTop-tabs,.dijitTabContainerTop-spacer {
+	display: none;
+}
+
+.xfCase {
+	display: inline-block !important;
+	height: auto !important;
+}
+
+.xfCase>.xfContainer {
+	padding: 0px !important;
+}
+
+.xfTrigger, .xfSubmit, .xfDialog, .dijitDialogUnderlayWrapper {
+    display: none !important;
+}
+
+.xfSwitch {
+    height: auto !important;
+    display: inline-block;
+    border: none;
+    top: -80px;
+    padding-top: 0px;
+    overflow: visible;
+}

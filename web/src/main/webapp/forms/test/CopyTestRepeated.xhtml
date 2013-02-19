@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+	<head>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+		<meta name="author" content="lars at users.sourceforge.net"/>
+		<meta name="description" content="test form for repeated copy control"/>
+
+		<xf:model id="i-default">
+
+			<xf:instance xmlns="">
+				<items>
+<!--
+					<item>
+						<entry>
+							<empty/>
+						</entry>
+						<input>inputtext</input>
+						<select1>two</select1>
+					</item>
+-->
+				</items>
+			</xf:instance>
+
+			<xf:instance id="i-controller" xmlns="">
+				<data>
+					<item>
+						<entry>
+                            <entryset2>
+                                <entry2>2</entry2>
+                            </entryset2>
+						</entry>
+						<input>created</input>
+						<select1>three</select1>
+					</item>
+					<empty/>
+					<entryset1>
+						<entry1>1</entry1>
+					</entryset1>
+					<entryset2>
+						<entry2>2</entry2>
+					</entryset2>
+					<entryset3>
+						<entry3>3</entry3>
+					</entryset3>
+					<select1>
+						<item>one</item>
+						<item>two</item>
+						<item>three</item>
+					</select1>
+				</data>
+			</xf:instance>
+
+		</xf:model>
+	</head>
+	<body>
+
+	<xf:group>
+	   <table border="0">
+		  <tr>
+			 <td valign="top">
+				<xf:trigger>
+				   <xf:label>Insert Item</xf:label>
+				   <xf:action>
+					  <xf:insert nodeset="instance()//item[last()]" position="after" origin="instance('i-controller')/item"></xf:insert>
+				   </xf:action>
+				</xf:trigger>
+			 </td>
+			 <td>
+				<xf:repeat id="r-copy" nodeset="instance()//item" appearance="full">
+				   <table>
+					  <tr>
+						 <td valign="top">
+							<xf:trigger>
+							   <xf:label>Delete Item</xf:label>
+							   <xf:delete nodeset="instance()//item[index('r-copy')]"></xf:delete>
+							</xf:trigger>
+						 </td>
+						 <td>
+							<xf:group ref=".">
+							   <xf:label>Repeated Item Entry</xf:label>
+							   <div style="padding:5px;display:block;border:thin dotted;">
+								  <xf:select1 ref="entry"  >
+									 <xf:label>entrys</xf:label>
+									 <xf:hint>Hint for entrys</xf:hint>
+									 <xf:help>Help for entrys</xf:help>
+									 <xf:alert>Alert for entrys</xf:alert>
+
+									 <xf:itemset nodeset="instance('i-controller')/empty">
+										<xf:label>Empty</xf:label>
+										<xf:copy ref="."></xf:copy>
+									 </xf:itemset>
+									 <xf:itemset nodeset="instance('i-controller')/entryset1">
+										<xf:label>entry 1</xf:label>
+										<xf:copy ref="."></xf:copy>
+									 </xf:itemset>
+									 <xf:itemset nodeset="instance('i-controller')/entryset2">
+										<xf:label>entry 2</xf:label>
+										<xf:copy ref="."></xf:copy>
+									 </xf:itemset>
+									 <xf:itemset nodeset="instance('i-controller')/entryset3">
+										<xf:label>entry 3</xf:label>
+										<xf:copy ref="."></xf:copy>
+									 </xf:itemset>
+								  </xf:select1>
+								   <xf:group ref="entry/entryset1">
+									   <table border="0">
+										   <tr>
+											   <td class="tablecol1" valign="middle"></td>
+											   <td class="tablecol2">entry 1</td>
+											   <td class="tablecol3">
+												   <xf:select1 ref="entry1" appearance="minimal"
+															   incremental="true">
+													   <xf:label></xf:label>
+													   <xf:choices>
+														   <xf:item>
+															   <xf:label>1</xf:label>
+															   <xf:value>1</xf:value>
+														   </xf:item>
+													   </xf:choices>
+												   </xf:select1>
+												   <xf:input ref="entry1" appearance="minimal"
+															   incremental="true">
+													   <xf:label>Entry1 Input</xf:label>
+												   </xf:input>
+											   </td>
+										   </tr>
+									   </table>
+                                   </xf:group>
+								   <xf:group ref="entry/entryset2">
+									 <table border="0">
+										<tr>
+										   <td class="tablecol1" valign="middle"></td>
+										   <td class="tablecol2">entry 2</td>
+										   <td class="tablecol3">
+											  <xf:select1 ref="entry2" appearance="minimal" incremental="true">
+												 <xf:label/>
+												 <xf:choices>
+													 <xf:item>
+														<xf:label>2</xf:label>
+														<xf:value>2</xf:value>
+													 </xf:item>
+												 </xf:choices>
+											  </xf:select1>
+                                               <xf:input ref="entry2" appearance="minimal"
+															   incremental="true">
+													   <xf:label>Entry2 Input</xf:label>
+												   </xf:input>
+										   </td>
+										</tr>
+									 </table>
+								  </xf:group>
+								  <xf:group ref="entry/entryset3">
+									 <table border="0">
+										<tr>
+										   <td class="tablecol1" valign="middle"></td>
+										   <td class="tablecol2">entry 3</td>
+										   <td class="tablecol3">
+											  <xf:select1 ref="entry3" appearance="minimal" incremental="true" >
+												 <xf:label></xf:label>
+												 <xf:choices>
+													 <xf:item>
+														<xf:label>3</xf:label>
+														<xf:value>3</xf:value>
+													 </xf:item>
+												 </xf:choices>
+											  </xf:select1>
+                                               <xf:input ref="entry3" appearance="minimal"
+															   incremental="true">
+													   <xf:label>Entry3 Input</xf:label>
+												   </xf:input>
+										   </td>
+										</tr>
+									 </table>
+								  </xf:group>
+							   </div>
+							</xf:group>
+						 </td>
+					  </tr>
+					   <tr>
+						   <td></td>
+						   <td>
+							   <xf:input ref="input">
+								   <xf:label>Input</xf:label>
+							   </xf:input>
+						   </td>
+					   </tr>
+					   <tr>
+						   <td></td>
+						   <td>
+							   <xf:select1 ref="select1">
+								   <xf:label>select1</xf:label>
+								   <xf:itemset nodeset="instance('i-controller')/select1/item">
+									  <xf:label ref="."/>
+									  <xf:value ref="."/>
+								   </xf:itemset>
+
+							   </xf:select1>
+						   </td>
+					   </tr>
+				   </table>
+				</xf:repeat>
+			 </td>
+		  </tr>
+	   </table>
+	</xf:group>
+
+	</body>
+</html>

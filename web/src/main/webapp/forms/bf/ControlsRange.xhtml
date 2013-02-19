@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Range Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+        .bf .xfControl .xfLabel {
+            width:200px;
+        }
+
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <range label="range slider">2</range>
+                <range label="range rating">2</range>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="range[1]" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="decimal"/>
+            <xf:bind nodeset="range[2]" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="decimal"/>
+        </xf:bind>
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group appearance="minimal">
+
+        <xf:group>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Required [',boolean-from-string(instance()/@required),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Relevant [',boolean-from-string(instance()/@relevant),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Valid [',boolean-from-string(instance()/@valid),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Readonly [',boolean-from-string(instance()/@readonly),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Range:</span>
+                <xf:trigger>
+                    <xf:label>Label[1]</xf:label>
+                    <xf:setvalue ref="instance()/range[1]/@label" value="'new range label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/range[1]" value="5"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/range[2]" value="7"/>
+                </xf:trigger>
+            </div>
+        </xf:group>
+        <xf:group ref="instance()" appearance="full">
+            <xf:label>Range</xf:label>
+
+            <xf:range ref="range[1]" start="0" step="1" end="10" incremental="true">
+                <xf:label ref="@label"/>
+                <xf:hint>range[1] hint</xf:hint>
+                <xf:help>range[1] help</xf:help>
+                <xf:alert>range[1] alert</xf:alert>
+            </xf:range>
+            <xf:output ref="range[1]">
+                    <xf:label>Range[1] value:</xf:label>
+            </xf:output>
+
+            <xf:range ref="range[2]" start="0" step="1" end="10" appearance="bf:rating">
+                <xf:label ref="@label"/>
+                <xf:hint>range[2] hint</xf:hint>
+                <xf:help>range[2] help</xf:help>
+                <xf:alert>range[2] alert</xf:alert>
+            </xf:range>
+            <xf:output ref="range[2]">
+                <xf:label>Range[2] value:</xf:label>
+            </xf:output>
+
+        </xf:group>
+    </xf:group>
+</body>
+</html>

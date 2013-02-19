@@ -184,7 +184,7 @@ public class FluxProcessor extends WebProcessor {
                         this.exitEvent = xmlEvent;
                         shutdown();
                         //this.xformsSession.getManager().deleteXFormsSession(this.xformsSession.getKey());
-                        WebUtil.removeSession(getKey());
+                        WebUtil.removeSession(request, getKey());
                     }
 
                     return;
@@ -220,7 +220,7 @@ public class FluxProcessor extends WebProcessor {
                     this.eventQueue.add(xmlEvent);
                     return;
                 }else if (XFormsEventNames.VERSION_EXCEPTION.equals(type)) {
-                    WebUtil.removeSession(getKey());
+                    WebUtil.removeSession(request, getKey());
                     xmlEvent.addProperty("errorinformation",xmlEvent.getContextInfo().get("error-information"));
                 }
                 this.eventQueue.add(xmlEvent);

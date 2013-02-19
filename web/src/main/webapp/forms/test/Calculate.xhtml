@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:v="http://tests.ca/2011/ns/Variables">
+	<head>
+		<title>YearMonth Calculation</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+		<xf:model >
+			<xf:instance>
+				<v:variables xmlns:v="http://tests.ca/2011/ns/Variables">
+					<v:startDate>2010-04-02</v:startDate>
+					<v:duration>P0Y1M</v:duration>
+					<v:endDate/>
+				</v:variables>
+			</xf:instance>
+            <xf:bind nodeset="/v:variables">
+				<xf:bind nodeset="v:startDate" type="xs:date"/>
+				<xf:bind nodeset="v:duration"  type="xf:yearMonthDuration"/>
+				<xf:bind nodeset="v:endDate" type="xs:date" calculate="xs:date(/v:variables/v:startDate) + xs:yearMonthDuration(/v:variables/v:duration)"/>
+            </xf:bind>
+		</xf:model>
+	</head>
+	<body>
+		<xf:group ref="/v:variables" appearance="full">
+			<xf:label>YearMonth Calculation</xf:label>
+			<xf:input ref="v:startDate">
+				<xf:label>startDate</xf:label>
+				<xf:hint>enter a valid date (e.q. 10.5.2010)</xf:hint>
+				<xf:alert>value is not a valid date (e.q. 10.5.2010)</xf:alert>
+			</xf:input>
+			<xf:input ref="v:duration">
+				<xf:label>duration</xf:label>
+				<xf:hint>enter a valid yearMonthDuration (eg. e.q. P0Y1M)</xf:hint>
+				<xf:alert>value is not a valid yearMonthDuration (e.q. P0Y1M)</xf:alert>
+			</xf:input>
+			<xf:input ref="v:endDate">
+				<xf:label>endDate</xf:label>
+			    <xf:hint>enter a valid date (e.q. 10.5.2010)</xf:hint>
+				<xf:alert>value is not a valid date (e.q. 10.5.2010)</xf:alert>
+			</xf:input>
+		</xf:group>
+	</body>
+</html>

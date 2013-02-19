@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+<head>
+    <title></title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <meta name="author" content="unl at users.sourceforge.net"/>
+    <meta name="description" content="test form for instance"/>
+    <meta name="version" content="$Id: InstanceTest.xhtml 2750 2007-08-10 10:09:08Z joern $"/>
+    <xf:model id="model">
+
+        <xf:instance id="instance" src="noXML.txt" xmlns=""/>
+    </xf:model>
+</head>
+<body>
+<xf:group>
+    <xf:label>This shouldn´t work.</xf:label>
+
+    <xf:output ref="first"/>
+    <xf:output ref="second"/>
+</xf:group>
+</body>
+</html>
+

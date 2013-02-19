@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <one>one</one>
+                        <three>three</three>
+                    </data>
+                </xf:instance>
+                <xf:instance id="two">#
+                    <data xmlns="">
+                        <two>2</two>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+		<xf:group>
+            <xf:input ref="one">
+                <xf:label>one</xf:label>
+            </xf:input>
+            <xf:input ref="two">
+                <xf:label>two</xf:label>
+            </xf:input>
+            <xf:input ref="three">
+                <xf:label>three</xf:label>
+            </xf:input>
+            <xf:trigger>
+                <xf:label>insert</xf:label>
+                <xf:insert nodeset="two" origin="instance('two')/two" />
+            </xf:trigger>
+		</xf:group>
+    </body>
+</html>

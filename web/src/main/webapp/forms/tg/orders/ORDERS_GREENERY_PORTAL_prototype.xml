@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DESADV xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="false">
+   <Envelop_Info xsi:nil="false">
+      <CompanyName xsi:nil="false" xsi:type="xsd:string">Greenery Portal</CompanyName>
+      <CompanyGLN xsi:nil="false" xsi:type="xsd:string">8713702009999</CompanyGLN>
+      <MessageDateTime xsi:nil="true" xsi:type="xsd:dateTime"/>
+      <MessageReference xsi:nil="true"/>
+      <Version xsi:nil="false">2</Version>
+   </Envelop_Info>
+   <HeaderInfo xsi:nil="false">
+      <DeliveryType xsi:nil="false">227</DeliveryType>
+      <EstimatedDateTimeOfArrival xsi:nil="true" xsi:type="xsd:dateTime"/>
+      <ContractNumber xsi:nil="true"/>
+      <BuyerOrderNumber xsi:nil="true"/>
+      <emailaddress xsi:nil="true"/>
+      <Incoterms xsi:nil="false">
+         <choice>cif</choice>
+         <cfr xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:cfrType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">CFR</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </cfr>
+         <cif xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:cifType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">CIF</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </cif>
+         <cip xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:cipType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">CIP</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </cip>
+         <cpt xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:cptType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">CPT</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </cpt>
+         <dap xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:dapType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">DAP</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </dap>
+         <dat xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:datType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">DAT</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </dat>
+         <ddp xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:ddpType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">DDP</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </ddp>
+         <exw xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:exwType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">EXW</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </exw>
+         <fas xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:fasType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">FAS</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </fas>
+         <fca xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:fcaType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">FCA</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </fca>
+         <fob xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:fobType">
+            <Incoterm xsi:nil="false" xsi:type="xsd:string">FOB</Incoterm>
+            <Place xsi:nil="true" xsi:type="xsd:string"/>
+         </fob>
+      </Incoterms>
+      <webmastermail xsi:nil="true" xsi:type="xsd:anyURI"/>
+   </HeaderInfo>
+   <HeaderAddresses xsi:nil="false">
+      <Supplier xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                xsi:type="tns:SupplierComplexType">
+         <Name xsi:nil="true" xsi:type="xsd:anyType"/>
+         <Address xsi:nil="true" xsi:type="xsd:anyType"/>
+         <PostalCode xsi:nil="true" xsi:type="xsd:anyType"/>
+         <City xsi:nil="true" xsi:type="xsd:anyType"/>
+         <Country xsi:nil="true" xsi:type="xsd:anyType"/>
+         <GLN xsi:nil="true" xsi:type="xsd:anyType"/>
+         <SupplierNumberGreenery xsi:nil="true" xsi:type="xsd:anyType"/>
+      </Supplier>
+      <Buyer xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+             xsi:type="tns:BuyerComplexType">
+         <Name xsi:nil="false" xsi:type="xsd:anyType">THE GREENERY BV</Name>
+         <Address xsi:nil="false" xsi:type="xsd:anyType">SPOORWEGEMPLACEMENT 1</Address>
+         <PostalCode xsi:nil="false" xsi:type="xsd:anyType">2991 VT</PostalCode>
+         <City xsi:nil="false" xsi:type="xsd:anyType">BARENDRECHT</City>
+         <Country xsi:nil="false" xsi:type="xsd:anyType">NL</Country>
+         <GLN xsi:nil="false" xsi:type="xsd:anyType">8710317000007</GLN>
+      </Buyer>
+      <DeliveryParty xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                     xsi:type="tns:DeliveryPartyComplexType">
+         <Name xsi:nil="true"/>
+         <Address xsi:nil="true" xsi:type="xsd:anyType"/>
+         <PostalCode xsi:nil="true" xsi:type="xsd:anyType"/>
+         <City xsi:nil="true" xsi:type="xsd:anyType"/>
+         <Country xsi:nil="true" xsi:type="xsd:anyType"/>
+         <GLN xsi:nil="true" xsi:type="xsd:anyType"/>
+         <LocCode xsi:nil="true" xsi:type="xsd:anyType"/>
+      </DeliveryParty>
+   </HeaderAddresses>
+   <Consignment xsi:nil="false">
+      <LineInfos xsi:nil="false">
+         <no-items-d5e871/>
+         <insert-trigger-d5e871/>
+         <delete-trigger-d5e871/>
+         <LineInfo xmlns:tns="urn:icit:greenery:orders" xsi:nil="false" xsi:type="tns:LineInfoType">
+            <LineNo xsi:nil="true"/>
+            <GTIN xsi:nil="true"/>
+            <BuyerProductCode xsi:nil="true"/>
+            <GreeneryFullProductCode xsi:nil="true"/>
+            <Description xsi:nil="true" xsi:type="xsd:string"/>
+            <Content xsi:nil="true" xsi:type="xsd:string"/>
+            <CU xsi:nil="true" xsi:type="xsd:string"/>
+            <PackageType xsi:nil="true" xsi:type="xsd:string"/>
+            <DespatchQuantityPCE xsi:nil="true" xsi:type="xsd:positiveInteger"/>
+            <NumberOfUnitsPerPallet xsi:nil="true" xsi:type="xsd:positiveInteger"/>
+            <Unitprice xsi:nil="true" xsi:type="xsd:string"/>
+            <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+            <PalletCodeHAS xsi:nil="true"/>
+            <FreeText xsi:nil="true"/>
+            <DeliveryParty xsi:nil="false" xsi:type="tns:DeliveryPartyComplexType">
+               <Name xsi:nil="true"/>
+               <Address xsi:nil="true" xsi:type="xsd:anyType"/>
+               <PostalCode xsi:nil="true" xsi:type="xsd:anyType"/>
+               <City xsi:nil="true" xsi:type="xsd:anyType"/>
+               <Country xsi:nil="true" xsi:type="xsd:anyType"/>
+               <GLN xsi:nil="true" xsi:type="xsd:anyType"/>
+               <LocCode xsi:nil="true" xsi:type="xsd:anyType"/>
+            </DeliveryParty>
+            <ProducerGLN xsi:nil="true"/>
+         </LineInfo>
+      </LineInfos>
+      <PalletInformationEuro xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                             xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationEuro>
+      <PalletInformationDPA xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                            xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationDPA>
+      <PalletInformationPool xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                             xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationPool>
+      <PalletInformationChepBlok xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                                 xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationChepBlok>
+      <PalletInformationOneway xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                               xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationOneway>
+      <PalletInformationChepEuro xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                                 xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationChepEuro>
+      <PalletInformationSkid xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                             xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationSkid>
+      <PalletInformationSuperVers xmlns:tns="urn:icit:greenery:orders" xsi:nil="false"
+                                  xsi:type="tns:PalletInformationType">
+         <NumberOfPallets xsi:nil="true" xsi:type="xsd:nonNegativeInteger"/>
+         <PalletCodeISO xsi:nil="true"/>
+         <PalletCodeHAS xsi:nil="true"/>
+      </PalletInformationSuperVers>
+   </Consignment>
+</DESADV>

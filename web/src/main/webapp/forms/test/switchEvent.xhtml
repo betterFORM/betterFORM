@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+  <head>
+    <title>Test switch</title>
+      <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+      -->
+
+    <xf:model id="onlyModel"> 
+      <xf:instance id="main" xmlns="" > 
+        <data>
+          <page>1</page>
+        </data>
+      </xf:instance>
+    </xf:model>
+  </head>
+
+  <body>
+    <xf:switch>
+      <xf:case id="buttons">
+          <xf:trigger>
+            <xf:label>Toggle it</xf:label>
+            <xf:action ev:event="DOMActivate">
+              <xf:toggle case="processingRequest" />
+            </xf:action>
+          </xf:trigger>
+      </xf:case>
+      <xf:case id="processingRequest">
+        <xf:action ev:event="xforms-select">
+          <xf:setvalue ref="instance('main')/page">2</xf:setvalue>
+        </xf:action>
+        <div>Processing request...</div>
+      </xf:case>
+    </xf:switch>
+
+    <xf:group>
+      <xf:output ref="instance('main')/page">
+        <xf:label>Page: </xf:label>
+      </xf:output>
+    </xf:group>
+  </body>
+</html>

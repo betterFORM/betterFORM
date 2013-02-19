@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Repeated Groups with hints</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+</head>
+<body>
+<div style="display:none">
+    <xf:model id="model-fieldset">
+        <xf:instance id="i-default">
+            <data xmlns="">
+                <hint>HINT</hint>
+            </data>
+        </xf:instance>
+
+        <xf:instance id="i-fieldset">
+            <data xmlns="">
+                <repeated/>
+            </data>
+        </xf:instance>
+    </xf:model>
+</div>
+<xf:group>
+    <!--
+    <xf:repeat nodeset="instance('i-fieldset')/repeated" id="repeated-thingy">
+
+        <xf:group apperance="full">
+            <xf:input ref=".">
+                <xf:label>Full Repeat: Hint with output and ref</xf:label>
+
+                <xf:hint>
+                    <xf:output ref="instance()/hint">
+                        <xf:label/>
+                    </xf:output>
+                </xf:hint>
+
+            </xf:input>
+        </xf:group>
+
+        <xf:group apperance="full">
+            <xf:input ref=".">
+                <xf:label>Full Repeat: Hint with ref</xf:label>
+                <xf:hint ref="instance()/hint"/>
+            </xf:input>
+        </xf:group>
+    </xf:repeat>
+    -->
+
+    <xf:repeat nodeset="instance('i-fieldset')/repeated" id="repeated-compact-thingy" appearance="compact">
+        <xf:group apperance="full">
+            <xf:input ref=".">
+                <xf:label>Compact Repeat: Hint with output and ref</xf:label>
+
+                <xf:hint>
+                    <xf:output ref="instance()/hint">
+                        <xf:label/>
+                    </xf:output>
+                </xf:hint>
+
+            </xf:input>
+        </xf:group>
+
+        <xf:group apperance="full">
+            <xf:input ref=".">
+                <xf:label>Compact Repeat: Hint with ref</xf:label>
+                <xf:hint ref="instance()/hint"/>
+            </xf:input>
+        </xf:group>
+    </xf:repeat>
+
+
+    <xf:trigger>
+        <xf:label>Insert</xf:label>
+        <xf:insert nodeset="instance('i-fieldset')/repeated" at="index('repeated-thingy')" position="after"/>
+    </xf:trigger>
+
+
+</xf:group>
+</body>
+</html>

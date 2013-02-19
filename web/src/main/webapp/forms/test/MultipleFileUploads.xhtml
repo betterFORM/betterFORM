@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
+    <title>Multiple Upload control</title>
+    <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+    -->
+</head>
+
+<body style="margin:30px">
+    <div id="xforms">
+        <div style="display:none">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data>
+                        <upload1>
+                            <value type="" value=""></value>
+                        </upload1>
+                        <upload2>
+                            <value type="" value=""></value>
+                        </upload2>
+                        <upload3>
+                            <value type="" value=""></value>
+                        </upload3>
+                        <upload4>
+                            <value type="" value=""></value>
+                        </upload4>
+                    </data>
+                </xf:instance>
+
+                <xf:bind nodeset="upload1">
+                    <xf:bind nodeset="value" type="anyURI"></xf:bind>
+                </xf:bind>
+                <xf:bind nodeset="upload2">
+                    <xf:bind nodeset="value" type="anyURI"></xf:bind>
+                </xf:bind>
+                <xf:bind nodeset="upload3">
+                    <xf:bind nodeset="value" type="anyURI"></xf:bind>
+                </xf:bind>
+                <xf:bind nodeset="upload4">
+                    <xf:bind nodeset="value" type="anyURI"></xf:bind>
+                </xf:bind>
+            </xf:model>
+        </div>
+        <div>
+            <xf:upload id="upload1" ref="upload1/value">
+                <xf:label>a standard file upload</xf:label>
+                <xf:filename ref="."></xf:filename>
+                <xf:mediatype ref="attribute::type"></xf:mediatype>
+            </xf:upload>
+
+            <xf:upload id="upload2" ref="upload2/value">
+                <xf:label>a standard file upload</xf:label>
+                <xf:filename ref="."></xf:filename>
+                <xf:mediatype ref="attribute::type"></xf:mediatype>
+            </xf:upload>
+
+
+            <xf:upload id="upload3" ref="upload3/value">
+                <xf:label>a standard file upload</xf:label>
+                <xf:filename ref="."></xf:filename>
+                <xf:mediatype ref="attribute::type"></xf:mediatype>
+            </xf:upload>
+
+
+            <xf:upload id="upload4" ref="upload4/value">
+                <xf:label>a standard file upload</xf:label>
+                <xf:filename ref="."></xf:filename>
+                <xf:mediatype ref="attribute::type"></xf:mediatype>
+            </xf:upload>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+   
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      
+      <title>Text input control</title>
+      
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
+      
+      <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+	<link rel="stylesheet" href="css/aristo/theme.css" />
+	<link rel="stylesheet" href="css/inputtext.css" />
+   </head>
+   
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               
+               <xf:instance xmlns="">
+                  
+                  <data>
+                     
+                     <input1 constraint=". &lt; 20" readonly="false" required="true" relevant="true">
+                        
+                        <value></value>
+                        
+                     </input1>
+                     
+                  </data>
+                  
+               </xf:instance>
+               
+               <xf:bind nodeset="input1">
+                  
+                  <xf:bind nodeset="value" constraint=". &lt; 20" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
+                  
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                  
+               </xf:bind>
+               
+               
+            </xf:model>
+         </div>
+		<div>
+            <xf:input id="input1" ref="input1/value" incremental="true">
+               
+               <xf:label>a text</xf:label>
+               
+               <xf:hint>Hint for this input</xf:hint>
+               
+               <xf:help>help for input1</xf:help>
+               
+               <xf:alert>invalid</xf:alert>
+               
+            </xf:input>
+         </div>
+         <div class="MIPS">
+            
+            <xf:group appearance="full">
+               
+               <xf:label></xf:label>
+               
+               <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
+                  
+                  <xf:label>readonly</xf:label>
+                  
+               </xf:input>
+               
+               <xf:input id="input1-required" ref="input1/@required" incremental="true">
+                  
+                  <xf:label>required</xf:label>
+                  
+               </xf:input>
+               
+               <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
+                  
+                  <xf:label>relevant</xf:label>
+                  
+               </xf:input>
+               
+               <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
+                  
+                  <xf:label>valid</xf:label>
+                  
+               </xf:input>
+               
+            </xf:group>
+            
+         </div>
+  
+      </div>
+      
+      <div id="container">
+    	<input type="button" value="Directed event"/>
+      </div>
+
+      <div id="container2">
+    	<input type="button" value="Global Event"/>
+      </div>
+      
+      </body>
+   
+</html>

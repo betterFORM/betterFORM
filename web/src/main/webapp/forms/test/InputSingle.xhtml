@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Single Input Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+
+    <xf:model id="m-atom">
+        <xf:instance xmlns="">
+            <data/>
+        </xf:instance>
+    </xf:model>
+</head>
+
+<body class="tundra">
+	<form action="irgendwas">
+		<input type="text" name="seach"></input>
+	</form>
+
+    <xf:group  appearance="full">
+        <xf:input ref="/data">
+            <xf:label>Input 1: </xf:label>
+        </xf:input>
+    </xf:group>
+</body>
+</html>

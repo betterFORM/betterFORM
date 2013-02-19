@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xf="http://www.w3.org/2002/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+	<head>
+		<title>Repeat test</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+		<xf:model>
+			<xf:instance id="items">
+				<items xmlns="">
+					<item>1</item>
+					<item>2</item>
+					<item>3</item>
+				</items>
+			</xf:instance>
+			<xf:instance id="nextitem">
+				<items xmlns="">
+					<item>4</item>
+				</items>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body>
+		<h1>repeat test</h1>
+		<p> As repeat:
+		<xf:repeat id="repeat" nodeset="instance('items')/item">
+			Item: <xf:output ref="."/><br/>
+		</xf:repeat>
+		</p>
+
+		<p>As table:</p>
+		<table>
+			<th>
+				Number:
+			</th>
+			<tbody id="repeat-table" xf:repeat-nodeset="instance('items')/item">
+				<tr>
+					<td><xf:output ref="."/></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<xf:trigger>
+			<xf:label>Add</xf:label>
+			<xf:action ev:event="DOMActivate">
+				<xf:insert
+					origin="instance('nextitem')/item"
+					nodeset="instance('items')/item"
+					at="last()"
+					position="after" />
+				<xf:setvalue ref="instance('nextitem')/item" value="instance('nextitem')/item + 1"/>
+			</xf:action>
+		</xf:trigger>
+		<xf:trigger>
+			<xf:label>Delete repeat</xf:label>
+			<xf:action ev:event="DOMActivate">
+				<xf:delete
+					nodeset="instance('items')/item[index('repeat')]"
+					/>
+			</xf:action>
+		</xf:trigger>
+		<xf:trigger>
+			<xf:label>Delete table</xf:label>
+			<xf:action ev:event="DOMActivate">
+				<xf:delete
+					nodeset="instance('items')/item[index('repeat-table')]"
+					/>
+			</xf:action>
+		</xf:trigger>
+	</body>
+</html>

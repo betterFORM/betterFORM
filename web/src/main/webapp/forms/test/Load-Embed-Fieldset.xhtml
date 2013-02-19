@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <title>Load-Embde-Fieldset</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+    <!--
+         Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+         by a xforms load action.
+         -->
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none">
+        <xf:model id="model-fieldset">
+            <xf:instance id="i-default">
+                <data xmlns="">
+                </data>
+            </xf:instance>
+            <xf:instance id="i-fieldset">
+                <data xmlns="">
+                    <repeated/>
+                    <repeated/>
+                    <repeated/>
+                </data>
+            </xf:instance>
+        </xf:model>
+    </div>
+    <xf:group model="model-fieldset">
+        <fieldset>
+            <xf:repeat nodeset="instance('i-fieldset')/repeated" id="repeated-thingy">
+
+                <xf:group id="fieldset-relatedItem-name-series">
+                    <fieldset class="level-2">
+                        <div class="join">
+                            <span class="legend">Names and Roles</span>
+                                <span class="join-button">
+                                    <xf:trigger>
+                                        <xf:label>+1</xf:label>
+                                        <xf:action ev:event="DOMActivate">
+                                            <xf:message>Plus</xf:message>
+                                        </xf:action>
+                                    </xf:trigger>
+								</span>
+                        </div>
+                    </fieldset>
+                </xf:group>
+            </xf:repeat>
+        </fieldset>
+
+        <xf:trigger>
+            <xf:label>Insert</xf:label>
+            <xf:insert nodeset="instance('i-fieldset')/repeated" at="index('repeated-thingy')" position="after"/>
+        </xf:trigger>
+    </xf:group>
+
+
+</div>
+
+
+</body>
+</html>

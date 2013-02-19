@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Submit Replace Attribute</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+		<style type="text/css">
+			.xfGroupLabel {
+				font-size:x-large;
+			}
+		</style>
+    </head>
+    <body>
+        <div style="display:none;">
+            <xf:model>
+                <xf:instance id="i-default" xmlns="">
+                    <data root="originalRootElemAttr">
+						<id root="originalChildElemAttr"/>
+					</data>
+                </xf:instance>
+
+				<xf:instance id="i-controller" xmlns="">
+					<data>
+						<item>newAttributeValue</item>
+					</data>
+				</xf:instance>
+
+				<xf:submission id="s-replace-text-attribute-in-childelement"
+							   resource="SubmitReplaceAttribute.txt"
+							   replace="text"
+							   instance="i-default"
+							   targetref="id/@root"
+							   method="get"
+							   />
+
+				<xf:submission id="s-replace-text-attribute-in-rootelement"
+							   resource="SubmitReplaceAttribute.txt"
+							   replace="text"
+							   instance="i-default"
+							   targetref="@root"
+							   method="get"
+							   />
+
+
+				<xf:submission id="s-replace-instance-attribute-in-childelement"
+							   ref="instance('i-controller')/item"
+							   resource="echo:hallo"
+							   replace="instance"
+							   instance="i-default"
+							   targetref="id/@root"
+							   method="get"
+							   />
+
+				<xf:submission id="s-replace-instance-attribute-in-rootelement"
+							   ref="instance('i-controller')/item"
+							   resource="echo:hallo"
+							   replace="instance"
+							   instance="i-default"
+							   targetref="@root"
+							   method="get"
+							   />
+
+            </xf:model>
+        </div>
+
+
+		<xf:group id="main">
+			<xf:label>Submission Replace Attributes</xf:label>
+			<xf:group appearance="bf:verticalTable">
+				<xf:label/>
+				<xf:output ref="@root">
+					<xf:label>Root Elem Attr: </xf:label>
+				</xf:output>
+				<xf:output ref="id/@root">
+					<xf:label>Child Elem Attr:</xf:label>
+				</xf:output>
+			</xf:group>
+			<xf:group appearance="full">
+				<xf:label/>
+				<xf:trigger>
+					<xf:label>Replace Text Root Elem Attr.</xf:label>
+					<xf:send submission="s-replace-text-attribute-in-rootelement"/>
+				</xf:trigger>
+				<xf:trigger>
+					<xf:label>Replace Text Child Elem Attr.</xf:label>
+					<xf:send submission="s-replace-text-attribute-in-childelement"/>
+				</xf:trigger>
+				<xf:trigger>
+					<xf:label>Replace Instance Root Elem Attr.</xf:label>
+					<xf:send submission="s-replace-instance-attribute-in-rootelement"/>
+				</xf:trigger>
+				<xf:trigger>
+					<xf:label>Replace Instance Child Elem Attr.</xf:label>
+					<xf:send submission="s-replace-instance-attribute-in-childelement"/>
+				</xf:trigger>
+			</xf:group>
+		</xf:group>
+
+	</body>
+</html>
+

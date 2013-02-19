@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Compact Repeat Test</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+
+
+
+
+        </style>
+
+        <xf:model>
+			<xf:instance id="i-1" xmlns="">
+				<data>
+					<trigger/>
+					<repeated>
+						<item>
+							<select selected="uk">
+								<country name="England" value="uk"/>
+								<country name="Germany" value="de"/>
+								<country name="Guatemala" value="gt"/>
+							</select>
+							<select1 selected="uk">
+								<country name="England" value="uk"/>
+								<country name="Germany" value="de"/>
+								<country name="Guatemala" value="gt"/>
+							</select1>
+						</item>
+						<item>
+							<select selected="fr">
+								<country name="France" value="fr"/>
+								<country name="United States" value="us"/>
+								<country name="Russia" value="ru"/>
+							</select>
+							<select1 selected="fr">
+								<country name="France" value="fr"/>
+								<country name="United States" value="us"/>
+								<country name="Russia" value="ru"/>
+							</select1>
+
+						</item>
+						<item>
+							<select selected="dk">
+								<country name="Denmark" value="dk"/>
+								<country name="Sveden" value="sv"/>
+								<country name="Norway" value="nw"/>
+							</select>
+							<select1 selected="dk">
+								<country name="Denmark" value="dk"/>
+								<country name="Sveden" value="sv"/>
+								<country name="Norway" value="nw"/>
+							</select1>
+
+						</item>
+
+						<countries>
+							<country value=""/>
+							<country value="uk">England</country>
+							<country value="fr">France</country>
+							<country value="dk">Denmark</country>
+						</countries>
+					</repeated>
+				</data>
+			</xf:instance>
+			<xf:bind nodeset="instance('i-1')">
+                <xf:bind nodeset="trigger" readonly="count(../repeated/item) = 1"/>
+            </xf:bind>
+        <xf:submission id="s-debug" action="{$contextroot}/bfResources/jsp/debug-instance.jsp"
+                       method="post" replace="all"
+                       validate="false"/>
+        </xf:model>
+    </head>
+    <body class="tundra" >
+    <xf:group appearance="full">
+        <xf:label>Compact Repeat Test</xf:label>
+        <div dojoType="dijit.form.DropDownButton" label="todo">
+            <div dojoType="dijit.TooltipDialog" title="ToDo" tabindex="-1">
+                <div style="color:blue;" tabindex="-1">
+                    <ul>
+                        <li><strike>value missing for inserted date</strike></li>
+                        <li><strike>select1 full insert not working (cause: dojoTypes on Prototype for RadioButtons</strike></li>
+                        <li><strike>initial value for inserted select1 not working</strike></li>
+                        <li>select1 full inserted items are connected because name is same as prototype, has to be updated </li>
+                        <li><i>itemset in repeated selects not working correctly (or lars is to stupid once again!)</i></li>
+                        <li>delocalize value of inserted date is only a dirty not working!! hack (see EventQueue)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div dojoType="dijit.form.DropDownButton" label="insert">
+            <div dojoType="dijit.TooltipDialog" title="Insert Actions" tabindex="-1">
+                <xf:group>
+                    <label>Insert Actions</label>
+                    <xf:trigger>
+                        <xf:label>after</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeated/item" at="index('r-reapeated')" position="after"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>before</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeated/item" at="index('r-reapeated')" position="before"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>first</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeated/item" at="1" position="before"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>last</xf:label>
+                        <xf:action>
+                            <xf:insert nodeset="repeated/item" at="last()" position="after"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+            </div>
+        </div>
+        <div dojoType="dijit.form.DropDownButton" label="delete">
+            <div dojoType="dijit.TooltipDialog" title="Delete Action" tabindex="-1">
+                <xf:group>
+                    <label>Delete Actions</label>
+                    <xf:trigger>
+                        <xf:label>selected</xf:label>
+                        <xf:action if="count(instance('i-1')/repeated/item) &gt; 1">
+                            <xf:delete nodeset="repeated/item" at="index('r-reapeated')" />
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>first</xf:label>
+                        <xf:action if="count(instance('i-1')/repeated/item) &gt; 1">
+                            <xf:delete nodeset="repeated/item" at="1"/>
+                        </xf:action>
+                    </xf:trigger>
+                    <xf:trigger>
+                        <xf:label>last</xf:label>
+                        <xf:action if="count(instance('i-1')/repeated/item) &gt; 1">
+                            <xf:delete nodeset="repeated/item" at="(last()-1)"/>
+                        </xf:action>
+                    </xf:trigger>
+                </xf:group>
+            </div>
+        </div>
+
+        <xf:group>
+            <xf:label>Repeated Select[1] Controls</xf:label>
+
+			<xf:repeat id="r-reapeated" nodeset="repeated/item[position() != last()]" appearance="full">
+				<xf:select1 class="select1Min" ref="select1/@selected" appearance="minimal">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+				</xf:select1>
+
+				<xf:select1 class="select1Comp" ref="select1/@selected" appearance="compact">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+				</xf:select1>
+				<xf:select1 class="select1Full" ref="select1/@selected" appearance="full">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+				</xf:select1>
+				<xf:select class="selectMin" ref="select/@selected" appearance="minimal">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+				</xf:select>
+				<xf:select class="selectFull" ref="select/@selected" appearance="full">
+					<xf:label/>
+					<xf:itemset nodeset="instance('i-1')/repeated/countries/country">
+						<xf:label ref="."/>
+						<xf:value ref="@value"/>
+					</xf:itemset>
+				</xf:select>
+			</xf:repeat>
+        </xf:group>
+    </xf:group>
+
+
+            <xf:trigger appearance="full">
+                <xf:label>Debug</xf:label>
+                <xf:send submission="s-debug"/>
+            </xf:trigger>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<html xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>Group UICommon Test</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+		<!-- TODO: implement or fix xf:hint -->
+		<xf:model>
+			<xf:instance>
+				<data xmlns="">
+					<group>
+						<output>foo</output>
+						<input>bar</input>
+					</group>
+					<valid>true</valid>
+					<relevant>true</relevant>
+					<readonly>false</readonly>
+				</data>
+			</xf:instance>
+			<!--a is invalid identically-->
+			<xf:bind nodeset="group"
+					 readonly="boolean-from-string(../readonly)" 
+					 constraint="boolean-from-string(../valid)"
+					 relevant="boolean-from-string(../relevant)"/>
+
+			<xf:bind nodeset="valid"    type="boolean"/>
+			<xf:bind nodeset="readonly" type="boolean"/>
+			<xf:bind nodeset="relevant" type="boolean"/>
+		</xf:model>
+	</head>
+	<body>
+		<xf:group>
+			<xf:label>Group UICommon Test</xf:label>
+			<div class="testdesc">XForms 1.1 Chapter <a href="http://www.w3.org/TR/xforms11/#ui-group-module" target="_blank">9.1 The XForms Group Module</a></div>
+
+			<div class="testdesc">Trigger 'Change Validity' switches validity for groups to true or  false</div>
+			<div class="testdesc">Expectations:</div>
+			
+			<xf:input ref="valid">
+				<xf:label>Change Validity</xf:label>
+			</xf:input>
+
+			<xf:input ref="relevant">
+				<xf:label>Change Relevance</xf:label>
+			</xf:input>
+
+			<xf:input ref="readonly">
+				<xf:label>Change Readonly</xf:label>
+			</xf:input>
+
+			<xf:group ref="group" appearance="full">
+				<xf:message ev:event="xforms-invalid">Group 'Empty Group' is invalid</xf:message>
+				<xf:message ev:event="xforms-valid">Group 'Empty Group' is valid</xf:message>
+				<xf:label>Empty Group</xf:label>
+				<xf:alert>Group is invalid</xf:alert>
+				<!-- <xf:hint>This Group should show an Alert if invalid</xf:hint>-->
+				<xf:help>This Group should show an Alert if invalid</xf:help>
+			</xf:group>
+
+
+			<xf:group ref="group" appearance="full">
+				<xf:message ev:event="xforms-invalid">Group 'Group with ChildControls' is invalid</xf:message>
+				<xf:message ev:event="xforms-valid">Group 'Group with ChildControls' is valid</xf:message>
+
+				<xf:label>Group with ChildControls</xf:label>
+				<xf:alert>Group is invalid</xf:alert>
+				<!-- <xf:hint>This Group should show an Alert if invalid</xf:hint> -->
+				<xf:help>This Group should show an Alert if invalid</xf:help>
+
+				<xf:output ref="output">
+					<xf:label>Output: </xf:label>
+					<xf:alert>Output and Group are invalid</xf:alert>
+					<xf:hint>Output is invalid</xf:hint>
+					<xf:help>This Output should show an Alert if group is invalid</xf:help>
+				</xf:output>
+
+				<xf:input ref="input">
+					<xf:label>Input: </xf:label>
+					<xf:alert>Input is invalid</xf:alert>
+					<xf:hint>This Input should show an Alert if group is invalid</xf:hint>
+					<xf:help>This Input should show an Alert if group is invalid</xf:help>
+				</xf:input>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

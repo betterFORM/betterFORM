@@ -45,7 +45,7 @@ import java.util.Map;
 @SuppressWarnings({"JavadocReference"})
 public class XFormsFilter implements Filter {
     private static final Log LOG = LogFactory.getLog(XFormsFilter.class);
-    private static final String USERAGENT = "dojo";
+    private static final String USERAGENT = "jquery";
     protected WebFactory webFactory;
 
     protected String defaultRequestEncoding = "UTF-8";
@@ -66,7 +66,7 @@ public class XFormsFilter implements Filter {
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
             webFactory.initTransformerService(this.filterConfig.getServletContext().getRealPath("."));
-            webFactory.initXFormsSessionCache();
+            //webFactory.initXFormsSessionCache();
         } catch (XFormsConfigException e) {
             throw new ServletException(e);
         }
@@ -157,7 +157,7 @@ public class XFormsFilter implements Filter {
                 LOG.info("Start Update XForm");
 
                 try {
-                    WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+                    WebProcessor webProcessor = WebUtil.getWebProcessor(request);
                     webProcessor.setRequest(request);
                     webProcessor.setResponse(response);
                     webProcessor.handleRequest();
@@ -238,7 +238,7 @@ public class XFormsFilter implements Filter {
                             session.setAttribute("betterform.exception.message", e.getMessage());
                             session.setAttribute("betterform.referer", request.getRequestURL());
                             //remove session from XFormsSessionManager
-                            WebUtil.removeSession(webProcessor.getKey());
+                            WebUtil.removeSession(request);
 
                             String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
                             webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
@@ -261,7 +261,7 @@ public class XFormsFilter implements Filter {
             LOG.debug("*** FluxHelper ***");
         }
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
         try {
             if (webProcessor == null) {
                 throw new ServletException(Config.getInstance().getErrorMessage("session-invalid"));
@@ -406,8 +406,7 @@ public class XFormsFilter implements Filter {
         if (!request.getMethod().equals("POST"))
             return false;
 
-        String key = request.getParameter("sessionKey");
-        WebProcessor webProcessor = WebUtil.getWebProcessor(key);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
         if (webProcessor == null) {
             return false;
         }
@@ -487,7 +486,7 @@ public class XFormsFilter implements Filter {
      */
     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request);
         if (session != null && webProcessor != null) {
             if (LOG.isDebugEnabled()) {
                 Enumeration keys = session.getAttributeNames();
@@ -552,7 +551,7 @@ public class XFormsFilter implements Filter {
                 outputStream.close();
 
                 //kill XFormsSession
-                WebUtil.removeSession(webProcessor.getKey());
+                WebUtil.removeSession(request);
                 return;
             }
         }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>RepeatCompact Tests</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+
+        <div style="display: none;">
+            <xf:model>
+                <xf:instance id="i-default">
+                    <data xmlns="">
+<!--
+                        <repeat readonly="false" relevant="true">
+                            <items>
+                                <item label="control-1"/>
+                                <item label="control-2"/>
+                                <item label="control-3"/>
+                            </items>
+                        </repeat>
+-->
+                    </data>
+                </xf:instance>
+                <xf:bind nodeset="instance()/repeat/items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)"/>
+
+                <xf:instance id="i-origin">
+                    <data xmlns="">
+                        <repeat readonly="false" relevant="true">
+                            <items>
+                                <item label="control-1">text 1</item>
+                                <item label="control-2">2009-01-20</item>
+                                <item label="control-3">true</item>
+                            </items>
+
+                            <items>
+                                <item label="control-4">text 2</item>
+                                <item label="control-5">2010-03-17</item>
+                                <item label="control-6">false</item>
+                            </items>
+
+                            <items>
+                                <item label="control-7">text 3</item>
+                                <item label="control-8">2011-05-22</item>
+                                <item label="control-9">true</item>
+                            </items>
+                        </repeat>
+                    </data>
+                </xf:instance>
+
+                <xf:submission id="s-replace-instance"
+                               ref="instance('i-origin')"
+                               resource="echo:hallo"
+                               replace="instance"
+                               instance="i-default"
+                               method="get"        />
+
+            </xf:model>
+        </div>
+        <div>
+            <span>Insert Actions:</span>
+            <xf:trigger>
+                <xf:label>Add [index]</xf:label>
+                <xf:action>
+                    <xf:insert nodeset="repeat/items" at="index('repeat1')" position="after"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>Add [first]</xf:label>
+                <xf:action>
+                    <xf:insert nodeset="repeat/items" at="1" position="before"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>Add [last]</xf:label>
+                <xf:action>
+                    <xf:insert nodeset="repeat/items" at="last()" position="after"/>
+                </xf:action>
+            </xf:trigger>
+        </div>
+        <div>
+            <span>Delete Actions:</span>
+            <xf:trigger>
+                <xf:label>Delete [index]</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="repeat/items" at="index('repeat1')"/>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>Delete [first]</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="repeat/items" at="1" />
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>Delete [last]</xf:label>
+                <xf:action>
+                    <xf:delete nodeset="repeat/items" at="last()" />
+                </xf:action>
+            </xf:trigger>
+        </div>
+        <div>
+            <span></span>
+            <xf:trigger>
+                <xf:label>Replace Instance</xf:label>
+                <xf:action>
+                    <xf:send submission="s-replace-instance"/>
+                </xf:action>
+            </xf:trigger>
+        </div>
+        <div>
+            <span>MIPS</span>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Readonly: ', instance()/repeat/@readonly)"/> </xf:label>
+                <xf:action>
+                    <xf:setvalue ref="instance()/repeat/@readonly" value="not(boolean-from-string(instance()/repeat/@readonly))" />
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label><xf:output value="concat('Relevant: ', instance()/repeat/@relevant)"/></xf:label>
+                <xf:action>
+                    <xf:setvalue ref="instance()/repeat/@relevant" value="not(boolean-from-string(instance()/repeat/@relevant))" />
+                </xf:action>
+            </xf:trigger>
+        </div>
+
+        <xf:repeat id="repeat1" nodeset="repeat/items" appearance="compact">
+            <xf:input ref="item[1]">
+                <xf:label ref="@label"/>
+            </xf:input>
+            <xf:input ref="item[2]">
+                <xf:label ref="@label"/>
+            </xf:input>
+            <xf:input ref="item[3]">
+                <xf:label ref="@label"/>
+            </xf:input>
+        </xf:repeat>
+    </body>
+</html>
