@@ -1199,14 +1199,14 @@
 
 
     <xsl:template match="@*" mode="copy-foreign-attributes">
-        <xsl:for-each select="@*[not(   local-name(.) = 'ref' or
-                                        local-name(.) = 'style' or
-                                        local-name(.) = 'id' or
-                                        local-name(.) = 'class' or
-                                        local-name(.) = 'placeholder'
-                                )]">
+        <xsl:if test="not(  local-name(.) = 'ref' or
+                            local-name(.) = 'style' or
+                            local-name(.) = 'id' or
+                            local-name(.) = 'class' or
+                            local-name(.) = 'placeholder'
+                        )">
             <xsl:copy/>
-        </xsl:for-each>
+        </xsl:if>
     </xsl:template>
 
 
