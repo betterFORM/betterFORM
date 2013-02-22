@@ -39,19 +39,6 @@ require(["domReady!", "jquery", "jquery-ui", "XFormsProcessor", "bf/bfinputtext"
             // console.debug("returning xfId: ",tmp);
             return tmp;
         };
-    	
-    	 	
-        $('body').addClass('Ronald');
-        
-        $(function() {
-            $('#in').bfinputtext();
-        });
-        $(function() {
-            $('#error').bfinputtext();
-        });
-        $(function() {
-            $('#disabled').bfinputtext();
-        });
         
     });
 });

@@ -3,7 +3,6 @@ define(['jquery', 'jquery-ui','pui/inputtext', 'XFormsProcessor'], function($) {
 		// These options will be used as defaults
 		options : {
 			valid : true,
-			value : 0,
 			id : null
 		},
 		
@@ -58,7 +57,7 @@ define(['jquery', 'jquery-ui','pui/inputtext', 'XFormsProcessor'], function($) {
 			alert(contextInfo + " " + this.options);
 		},
 		
-		setValue : function(newvalue) {
+		_setValue : function(newvalue) {
 			if (this.options.value != newvalue) {
 				xformsprocessor.setControlValue(this.options.id, newvalue);
 			}
@@ -66,7 +65,7 @@ define(['jquery', 'jquery-ui','pui/inputtext', 'XFormsProcessor'], function($) {
 			this.element.attr('value', newvalue);
 		},
 		
-		setValid : function(valid) {
+		_setValid : function(valid) {
 			this.options.valid = valid;
 			if(this.options.valid == 'false') {
                 this.element.addClass('ui-state-error');
