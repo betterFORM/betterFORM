@@ -260,17 +260,6 @@
             </tomcat-webdriver>
         </test>
     </web>
-    <betty>
-        <app>
-            <name>betty</name>
-        </app>
-        <compile>
-            <classpath pathid="betty.class.path" description="classpath for compiling web classes">
-                <pathelement location="${betty.dir}/src/main/lib/plugin.jar" groupid="netscape" version="1.0" artifactId="netscape" scope="provided"/>
-                <path refid="compile.class.path"/>
-            </classpath>
-        </compile>
-    </betty>
     <zaphod>
         <app>
             <name>zaphod</name>
