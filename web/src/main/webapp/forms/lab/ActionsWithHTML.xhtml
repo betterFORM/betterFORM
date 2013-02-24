@@ -34,13 +34,35 @@
                             </xf:action>
                         </xf:submission>
 
-                        <!-- !!!!!!!!!!!!!!!!!!!!!!!! LOOK HERE !!!!!!!!!!!!!!!!!!!! -->
+                        <!--
+                        Option 1:
+                        move all actions that you usually kept as direct childs of UI control into the model.
+                        -->
                         <xf:action ev:event="xforms-value-changed" ev:target="firstname">
                             <xf:message level="ephemeral">Hello <xf:output ref="firstname"/></xf:message>
                         </xf:action>
                     </xf:model>
                 </div>
 
+                <!-- option 1: mapping xf actions to data attributes -->
+                <span data-xf-action="{target:'#firstname',event:'xforms-value-changed'}">
+                    <span data-xf-message="{'hello'+ xp.get('firstname'), ephemeral:true}"></span>
+                    <!-- ... further actions ... -->
+                </span>
+
+                <!-- option 2: using a js API -->
+                <script type="text/javascript">
+                    <!-- assuming that 'xp' the XForms processor is in scope here  - pseudo code -->
+                    xp.listen('firstname','xforms-value-changed', function(){
+                        xp.message("hello " + xp.get("firstname"), true);
+                        // ... further actions ...
+                    });
+                </script>
+
+                <!-- option 3: extension elements instead -->
+                <x-action event="xforms-value-changed" target="firstname" [observer="",propagate="",...]>
+                    <x-message ephemeral>Hello</x-message>
+                </x-action>
 
                 <form>
                     <label for="firstname">First Name:</label>
