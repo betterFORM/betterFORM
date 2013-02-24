@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Registration </title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div id="xforms">
+            <div id="registration" class="InlineRoundBordersAlert">
+                <div style="display:none" id="xf1">
+                    <xf:model id="m-registration">
+                        <xf:instance src="registration.xml" xmlns=""/>
+
+                        <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
+                        <xf:bind nodeset="email" type="email" constraint="string-length(.) &gt; 3" required="true()"/>
+                        <xf:bind nodeset="pass1" constraint="string-length(.) &gt;= 6" required="true()"/>
+                        <xf:bind nodeset="pass2" constraint=". = ../pass1" required="true()"/>
+                        <xf:bind nodeset="agreement" type="boolean" />
+
+                        <xf:submission id="s-send"
+                                       replace="instance"
+                                       resource="echo:test"
+                                       method="get">
+                            <xf:action ev:event="xforms-submit-error">
+                                <xf:message>Registration failed. Please fill in valid values</xf:message>
+                            </xf:action>
+                            <xf:action ev:event="xforms-submit-done">
+                                <xf:message>You have been registered successfully.</xf:message>
+                            </xf:action>
+                        </xf:submission>
+
+                        <!-- !!!!!!!!!!!!!!!!!!!!!!!! LOOK HERE !!!!!!!!!!!!!!!!!!!! -->
+                        <xf:action ev:event="xforms-value-changed" ev:target="firstname">
+                            <xf:message level="ephemeral">Hello <xf:output ref="firstname"/></xf:message>
+                        </xf:action>
+                    </xf:model>
+                </div>
+
+
+                <form>
+                    <label for="firstname">First Name:</label>
+                    <input id="firstname" type="text" value="" data-xf-ref="firstname"/>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
