@@ -7,6 +7,8 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.util.SubnetUtils;
 
 /**
@@ -17,6 +19,8 @@ import org.apache.commons.net.util.SubnetUtils;
  * To change this template use File | Settings | File Templates.
  */
 public class IsInIPRange extends XFormsFunction {
+    private static final Log LOGGER = LogFactory.getLog(IsInIPRange.class);
+
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
@@ -39,8 +43,12 @@ public class IsInIPRange extends XFormsFunction {
             return BooleanValue.FALSE;
         }
         SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
+        try {
         if (subnetUtils.getInfo().isInRange(ipAddress)) {
             return BooleanValue.TRUE;
+        }
+        } catch (IllegalArgumentException iae) {
+            LOGGER.debug("IsInIPRange Exception:", iae);
         }
         return BooleanValue.FALSE;
     }
