@@ -98,10 +98,8 @@
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
+                    <xsl:apply-templates select="@*" mode="copy-foreign-attributes"/>
                 </input>
-
-
-
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="InputDefault">
@@ -129,6 +127,9 @@
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
+            <xsl:for-each select="@*[not(local-name(.) = 'ref' or local-name(.) = 'style' or local-name(.) = 'id' or local-name(.) = 'class' or local-name(.) = 'placeholder')]">
+                <xsl:copy/>
+            </xsl:for-each>
         </input>
     </xsl:template>
 
@@ -159,6 +160,7 @@
             <xsl:if test="bf:data/@bf:readonly='true'">
                 <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
+            <xsl:apply-templates select="@*" mode="copy-foreign-attributes"/>
         </input>
     </xsl:template>
 
@@ -617,6 +619,9 @@
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
                         type="button">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
                     <img src="{@src}" alt="image"/>
                 </button>
             </xsl:when>
@@ -627,6 +632,9 @@
                         class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}">
+                    <xsl:if test="bf:data/@bf:readonly='true'">
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
+                    </xsl:if>
                     <xsl:value-of select="xf:label"/>
                 </a>
             </xsl:when>
@@ -638,7 +646,7 @@
                         title="{xf:hint/text()}"
                         >
                     <xsl:if test="bf:data/@bf:readonly='true'">
-                        <xsl:attribute name="readonly">readonly</xsl:attribute>
+                        <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <!-- todo: does this still apply? -->
                     <xsl:if test="@accesskey">
@@ -1187,6 +1195,18 @@
                 <xsl:apply-templates select="xf:label" mode="prototype"/>
             </span>
         </span>
+    </xsl:template>
+
+
+    <xsl:template match="@*" mode="copy-foreign-attributes">
+        <xsl:if test="not(  local-name(.) = 'ref' or
+                            local-name(.) = 'style' or
+                            local-name(.) = 'id' or
+                            local-name(.) = 'class' or
+                            local-name(.) = 'placeholder'
+                        )">
+            <xsl:copy/>
+        </xsl:if>
     </xsl:template>
 
 

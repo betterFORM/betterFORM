@@ -221,7 +221,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             },
 
             setEnabled:function() {
-                var label = dom.byId(this.id + "-label");
+                var label = this._getLabel();
                 if (label != undefined) {
                     if (domClass.contains(label, "xfDisabled")) {
                         domClass.replace(label, "xfEnabled", "xfDisabled");
@@ -239,7 +239,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             },
 
             setDisabled:function() {
-                var label = dom.byId(this.id + "-label");
+                var label = this._getLabel();
                 if (label != undefined) {
                     if (domClass.contains(label, "xfEnabled")) {
                         domClass.replace(label,"xfDisabled", "xfEnabled");
@@ -256,7 +256,7 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             },
 
             _handleHelperChanged: function(properties) {
-            // console.debug("Control.handleHelperChanged: this.id: "+this.id+ "type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
+                // console.debug("XFBinding.handleHelperChanged: this.id: "+this.id+ " type='" + properties["targetName"] + "',  value='" + properties["value"] + "'");
                 switch (properties["targetName"]) {
                     case "label":
                     this.setLabel(properties["value"]);
@@ -270,18 +270,20 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                     case "alert":
                     this.setAlert(properties["value"]);
                         return;
+                    default:
+                        console.warn("XFBinding._handleHelperChange: can't handle ", properties["targetName"]);
                 }
             },
 
             setLabel:function(value) {
                 // console.debug("XFBinding.setLabel value:"+ value);
 
-                var labelNode = dom.byId(this.id + "-label");
+                var labelNode = this._getLabel();
                 if (labelNode != undefined) {
                     labelNode.innerHTML = value;
                 }
                 else {
-                    console.warn("XFBinding.setLabel Failure updating label for Control '" + this.id + "-help' with value: " + value);
+                    console.warn("XFBinding.setLabel Failure updating label for Control '" + this.id + "-label' with value: " + value);
                 }
             },
             setHelp:function(value) {
@@ -352,6 +354,16 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
                 }
 
             },
+
+            // function to get the label for a specific control, handles label ids manipulated by Dojo as well
+            _getLabel: function() {
+                var label = dom.byId(this.id + "-label");
+                if(label == undefined) {
+                    label = dom.byId(this.id + "-value_label");
+                }
+                return label;
+            },
+
 
             getWidget:function() {
                 if(domClass.contains(this.srcNodeRef,"xfContainer")){

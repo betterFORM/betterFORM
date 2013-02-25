@@ -266,6 +266,13 @@
     <xsl:template name="include-xforms-css">
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
         <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
+        <xsl:variable name="timelineActive" select="count(//*[@appearance eq 'bf:timeline']) gt 0" />
+        <xsl:if test="$timelineActive">
+            <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'simile/timeline/timeline_js/timeline-bundle.css')}"/>
+            <script src="{concat($contextroot,$scriptPath,'simile/timeline/timeline_ajax/simile-ajax-api.js?bundle=true')}" type="text/javascript"/>
+            <script src="{concat($contextroot,$scriptPath,'simile/timeline/timeline_js/timeline-api.js?bundle=true')}" type="text/javascript"/>
+        </xsl:if>
+
     </xsl:template>
 
 
@@ -951,10 +958,10 @@
     </xsl:template>
 
     <xsl:template name="addLocalScript">
-        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement","dojo/_base/connect"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
+        <xsl:variable name="requires">"bf/XFProcessor","bf/XFormsModelElement"<xsl:if test="$isDebugEnabled">,"bf/devtool"</xsl:if></xsl:variable>
         <script type="text/javascript">
             require([<xsl:value-of select="$requires"/>],
-                function(XFProcessor, XFormsModelElement, connect){
+            function(XFProcessor, XFormsModelElement){
             // console.debug("ready - new Session with key:", dojo.config.bf.sessionkey);
             <!-- create a XForms Processor for the form -->
             fluxProcessor = new XFProcessor();

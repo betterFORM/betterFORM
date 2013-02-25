@@ -1404,7 +1404,7 @@ define(["dojo/_base/declare",
         },
 
     	fetchProgress:function(fetchProgressId, fileName) {
-	        console.debug("XFProcessor.fetchProgress id:", fetchProgressId);
+	        // console.debug("XFProcessor.fetchProgress id:", fetchProgressId);
             try {
         		console.debug("XFProcessor.fetchProgress id:", fetchProgressId, "fileName: " , fileName , " this.sessionKey:", this.sessionKey);
         		Flux.fetchProgress(fetchProgressId, fileName, this.sessionKey, this.applyChanges);

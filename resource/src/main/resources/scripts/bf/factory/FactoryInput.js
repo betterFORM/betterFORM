@@ -56,10 +56,13 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         case "mobileTime":
                             this._createMobileTime(xfControlDijit, node);
                             break;
+                        case "timeline":
+                            this._createTimeline(xfControlDijit, node);
+                            break;
                         case "tbd":
                             console.warn("No handler for node", node, " yet");
                         default:
-                            console.warn("FactoryInput.default");
+                            console.warn("FactoryInput unknown type for node:", node);
 
                     }
                 },
@@ -339,6 +342,23 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                             xfControlDijit.handleOnFocus();
                         });
 
+                    });
+                },
+
+                _createTimeline:function(controlDijit, n){
+                    var xfControlDijit = controlDijit;
+                    var node = n;
+                    var self = this;
+                    require(["bf/input/Timeline"],function(Timeline){
+                        var value = domAttr.get(node,"value");
+                        xfControlDijit.setCurrentValue(value);
+                        var timeline = new Timeline({ value:value}, node);
+                        console.debug("created new timeline: " , timeline );
+
+                        xfControlDijit.setValue = function(value,schemavalue) {
+                            // console.debug("value:",value);
+                            timeline.set('value', value);
+                        };
                     });
                 },
 

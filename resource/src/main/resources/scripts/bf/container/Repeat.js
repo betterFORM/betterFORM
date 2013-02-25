@@ -15,8 +15,18 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     } else {
                         this.appearance = "full";
                     }
+                    var repeatId = this.id;
                     // console.debug("Repeat.postCreate appearance:",this.appearance);
-
+                    // TODO: review needed!!!!
+                    // remove existing handlers for this id
+                    if(fluxProcessor.subscribers[repeatId] != undefined) {
+                        array.forEach(fluxProcessor.subscribers[repeatId], function(handle) {
+                            console.debug("removing handle:",handle);
+                            connect.unsubscribe(handle);
+                        });
+                        console.debug("delete subscriber: :",repeatId);
+                        delete fluxProcessor.subscribers[repeatId];
+                    }
                     var bfInsertRepeatItemHandle = connect.subscribe("betterform-insert-repeatitem-"+ this.id, this, "handleInsert");
                     fluxProcessor.addSubscriber(this.id, bfInsertRepeatItemHandle);
                     var bfItemDeleteHandle = connect.subscribe("betterform-item-deleted-"+ this.id,      this, "handleDelete");
@@ -27,9 +37,11 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     this._getRepeatItems().forEach(function(repeatItem){
                         on(repeatItem, "click", lang.hitch(self, self._onClickRepeatItem));
                         var repeatItemId = domAttr.get(repeatItem,"id");
+                        if(fluxProcessor.subscribers[repeatItemId] == undefined) {
                         // console.debug("Repeat.constructor connect.subscribe('bf-state-change-"+ repeatItemId, " self.handleStateChanged)");
-                        var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
-                        fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
+                            var bfStateChanged = connect.subscribe("bf-state-change-"+ repeatItemId, self.handleStateChanged);
+                            fluxProcessor.addSubscriber(repeatItemId, bfStateChanged);
+                        }
                     });
 
                 },
@@ -177,12 +189,17 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     // console.debug("Repeat.handleDelete contextInfo:",contextInfo);
                     var position = parseInt(contextInfo.position,"10");
                     var itemToRemove = this._getRepeatItems()[position - 1];
-                    var repeatNode = this.srcNodeRef;
-                    if (this.appearance == "compact") {
-                        query("> tbody", repeatNode)[0].removeChild(itemToRemove);
-                    } else {
-                        repeatNode.removeChild(itemToRemove);
+                    if(itemToRemove == undefined){
+                        console.warn("itemToRemove: ", itemToRemove, " is undefined");
                     }
+                    var repeatNode = this.srcNodeRef;
+                    var parentOfItemToRemove = undefined;
+                    if (this.appearance == "compact") {
+                        parentOfItemToRemove = query("> tbody", repeatNode)[0];
+                    } else {
+                        parentOfItemToRemove = repeatNode;
+                    }
+                    parentOfItemToRemove.removeChild(itemToRemove);
                 },
 
                 _removeRepeatIndexClasses:function() {

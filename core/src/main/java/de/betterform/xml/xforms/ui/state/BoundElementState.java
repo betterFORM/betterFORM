@@ -116,7 +116,7 @@ public class BoundElementState implements UIElementState {
                 if(this.handleValue)
                 {
                 	//attempt to store the subtree (xforms:copy)
-                    if(modelItem.getNode() instanceof Element)
+                    if(modelItem.getNode() != null && modelItem.getNode() instanceof Element)
                     {
                     	this.currentValue = storeSubtree(modelItem);
                     	Element childElement = DOMUtil.getFirstChildElement((Element)modelItem.getNode());
@@ -212,7 +212,7 @@ public class BoundElementState implements UIElementState {
             UIElementStateUtil.setStateAttribute(this.state, P3PTYPE_ATTRIBUTE, p3ptype);
 
             if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
-                if (modelItem.getNode() instanceof Element) {
+                if (modelItem != null && modelItem.getNode() != null && modelItem.getNode() instanceof Element) {
                     UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
                 }
             }
@@ -256,10 +256,12 @@ public class BoundElementState implements UIElementState {
             this.currentType = datatype;
             //Set base-type
             if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
-                if (modelItem.getNode() instanceof Element) {
-                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
-                } else {
-                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                if ( modelItem != null && modelItem.getNode() != null) {
+                    if (modelItem.getNode() instanceof Element) {
+                        UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
+                    } else {
+                        UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                    }
                 }
             }
         }
