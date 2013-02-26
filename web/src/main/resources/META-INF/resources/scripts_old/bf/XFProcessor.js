@@ -373,7 +373,6 @@ define(["dojo/_base/declare",
             try {
                 dwr.engine.setErrorHandler(this._handleExceptions);
                 dwr.engine.setOrdered(true);
-                dwr.engine.setErrorHandler(this._handleExceptions);
                 //        Flux.setUIControlValue(id, value, this.sessionKey,this.changeManager.applyChanges);
 		        Flux.setUIControlValue(controlId, value, this.sessionKey, this.applyChanges);
             }

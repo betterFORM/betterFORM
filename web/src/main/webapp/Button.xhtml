@@ -17,7 +17,7 @@
       <!-- link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /-->
     <link rel="stylesheet" href="css/jquery-ui.css" />
 	<link rel="stylesheet" href="css/aristo/theme.css" />
-	<link rel="stylesheet" href="css/inputtext.css" />
+	<link rel="stylesheet" href="css/button.css" />
 	<link rel="stylesheet" href="css/checkbox.css" />
    </head>
    
@@ -30,22 +30,19 @@
                   
                   <data>
                      
-                     
-                     <input1 constraint="false" readonly="false" required="true" relevant="true">
+                     <trigger1 constraint="false" readonly="false" required="true" relevant="true">
                         
                         <value></value>
-                        <response></response>
                         
-                     </input1>
+                     </trigger1>
                   
                   </data>
                   
                </xf:instance>
                
-               <xf:bind nodeset="input1">
+               <xf:bind nodeset="trigger1">
                   
-                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
-                  <xf:bind nodeset="response" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string" calculate="../value"></xf:bind>
+                  <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"></xf:bind>
                   
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                   
@@ -59,17 +56,20 @@
                
             </xf:model>
          </div>
-		<div style="height: 70px">
+         
+ 
+         
+         
+		<div style="height: 50px">
 			<xf:group appearance="full">
-	            <xf:input id="input1" ref="input1/value" incremental="true">               
-	               <xf:label>a text</xf:label>
-	               <xf:hint>Hint for this input</xf:hint>
-	               <xf:help>help for input1</xf:help>
-	               <xf:alert>invalid</xf:alert>
-	            </xf:input>
-	            <xf:input id="input2" ref="input1/value" incremental="true">
-		            <xf:label>response</xf:label>
-	            </xf:input>
+	        	<xf:trigger id="trigger1" ref="trigger1/value" incremental="true">
+    				<xf:label>a text</xf:label>
+    				<xf:hint>a Hint for this control</xf:hint>
+    				<xf:help>help for trigger1</xf:help>
+    				<script type="text/javascript">
+        				alert('trigger was clicked, script action executed');
+    				</script>
+    			</xf:trigger>
 	        </xf:group>
          </div>
 
@@ -79,25 +79,25 @@
                
                <xf:label></xf:label>
                
-               <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
+               <xf:input id="trigger1-readonly" ref="trigger1/@readonly" incremental="true">
                   
                   <xf:label>readonly</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-required" ref="input1/@required" incremental="true">
+               <xf:input id="trigger1-required" ref="trigger1/@required" incremental="true">
                   
                   <xf:label>required</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
+               <xf:input id="trigger1-relevant" ref="trigger1/@relevant" incremental="true">
                   
                   <xf:label>relevant</xf:label>
                   
                </xf:input>
                
-               <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
+               <xf:input id="trigger1-valid" ref="trigger1/@constraint" incremental="true">
                   
                   <xf:label>valid</xf:label>
                   

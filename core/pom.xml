@@ -97,8 +97,8 @@
 <version>9.2.1.5</version>
 </dependency-->
 <dependency>
-<groupId>net.sf.saxon</groupId>
-<artifactId>saxon</artifactId>
+<groupId>net.sourceforge.saxon</groupId>
+<artifactId>saxonhe</artifactId>
 <version>9.2.1.5</version>
 </dependency>
 <dependency>

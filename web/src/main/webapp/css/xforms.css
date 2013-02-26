@@ -1,0 +1,14 @@
+.xfRequired>.xfLabel:after,.xfRequired>.bfTableLabel:after {
+	content: '*';
+	color: #8b0000
+}
+
+.xfRequired .xfValue .xfLabel {
+	padding-left: 0;
+	font-weight: normal
+}
+
+.xfReadOnly .xfValue a, .xfReadOnly .xfValue {
+
+	cursor: not-allowed !important
+}

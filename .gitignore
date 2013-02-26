@@ -41,3 +41,4 @@ tools/installer/betterform-*install*
 
 
 build.properties.local.xml
+/.ant-targets-build.xml

@@ -155,7 +155,8 @@
     the following 2 vars select the default css files
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
+    <!--  xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/-->
+    <xsl:variable name="default-css" select="'css/xforms.css'"/>
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 
