@@ -3,7 +3,7 @@
   ~ Licensed under the terms of BSD License
   -->
 
-<project name="betterFORM reference generator" default="generate-forms" basedir=".">
+<project name="betterFORM reference generator" default="generate-forms" basedir="">
     <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
     <property name="core.dir" value="${basedir}/../../../core"/>    
     <xmlproperty file="../../../../build.properties.xml"

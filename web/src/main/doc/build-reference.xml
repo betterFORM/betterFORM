@@ -3,12 +3,13 @@
   ~ Licensed under the terms of BSD License
   -->
 
-<project name="betterFORM reference page generator" default="deploy-forms" basedir=".">
+<project name="betterFORM reference page generator" default="deploy-forms" basedir="../../../../web">
     <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
     <property name="core.dir" value="${basedir}/../core"/>
-    <xmlproperty file="../build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
+    <xmlproperty file="${basedir}/../build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
     <property name="web.dir" value="${basedir}/../web"/>
-    <property name="form.src" value="${basedir}/src/main/referenceForms"/>
+    <property name="form.src" value="${web.dir}/src/main/doc/referenceForms"/>
+    <property name="form.dest" value="${web.dir}/src/main/webapp/forms/reference"/>
 
 
     <target name="generate-forms" description="generate reference forms">
@@ -19,7 +20,7 @@
         </echo>
 
         <xslt basedir="${form.src}/xml"
-              destdir="${form.src}/../xforms/reference"
+              destdir="${form.dest}"
               style="${form.src}/build-forms.xsl"
               force="false"
               includes="*.xml"
