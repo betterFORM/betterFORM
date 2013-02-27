@@ -238,9 +238,11 @@
             -->
             <xsl:otherwise>
                 <span   id="{$id}-value"
-                        tabindex="{$navindex}"
                         class="{$widgetClasses}"
                         title="{xf:hint/text()}">
+                    <xsl:if test="exists(@navindex)">
+                        <xsl:attribute name="tabindex" select="$navindex"/>
+                    </xsl:if>
                     <xsl:value-of select="bf:data/text()"/>
                 </span>
                 <xsl:apply-templates select="xf:hint"/>

@@ -17,7 +17,6 @@
 
     <modules>
         <module>core</module>
-        <module>betty</module>
         <module>web</module>
         <module>zaphod</module>
     </modules>

@@ -187,7 +187,7 @@
         <br/>
 
         <!--<div class="orderListRegionSelect">-->
-            <xf:select1 appearance="minimal" ref="instance('shippingAndTaxes')">
+            <xf:select1 appearance="minimal" ref="instance('shippingAndTaxes')" incremental="true">
                 <xf:label id="region">Ship to:</xf:label>
                 <xf:hint>Choose your region for correct tax and shipping cost calculation</xf:hint>
                 <xf:itemset nodeset="instance('countries')/region">
