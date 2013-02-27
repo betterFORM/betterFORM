@@ -1,0 +1,6 @@
+{
+    "name": "bf",
+    "description": "betterFORM",
+    "version": 1.0,
+    "dojoBuild": "bf.profile.js"
+}

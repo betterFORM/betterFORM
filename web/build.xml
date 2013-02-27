@@ -18,11 +18,10 @@
           is called - DO NOT MOVE
   ###  -->
 
-    <property name="root.dir" value=".."/>
-    <property name="resource.module.dir" value="../resource"/>
-    <property name="resource.src.dir" value="${resource.module.dir}/src"/>
-    <property name="core.dir" value="../core"/>
-    <property name="web.dir" value="."/>
+    <property name="root.dir" value="${basedir}/.."/>
+    <property name="resource.src.dir" value="${basedir}/src"/>
+    <property name="core.dir" value="${basedir}/../core"/>
+    <property name="web.dir" value="${basedir}"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
 
@@ -124,7 +123,7 @@
         ************************************************************************************
         </echo>
         <copy todir="${target}/classes/META-INF/resources">
-            <fileset dir="${resource.src.dir}/main/resources" includes="**/*" excludes="scripts/**" />
+            <fileset dir="${resource.src.dir}/main/webapp/resources" includes="**/*" excludes="scripts/**" />
         </copy>
 
 <!--
@@ -268,6 +267,15 @@
             <fileset dir="${src.webapp.dir}">
                 <exclude name="WEB-INF/*.template.xml"/>
                 <exclude name="META-INF/context.xml"/>
+                <exclude name="**/images/**"/>
+            </fileset>
+        </copy>
+        <copy description="copy WEB-INF dir"
+              todir="${webapp.dir}"
+              overwrite="true"
+              filtering="false">
+            <fileset dir="${src.webapp.dir}">
+                <include name="**/images/**"/>
             </fileset>
         </copy>
 
@@ -275,7 +283,7 @@
         <mkdir dir="${webapp.dir}/resources"/>
         <copy description="copy resources dir"
               todir="${webapp.dir}/resources"
-              file="${resource.src.dir}/main/resources/images/blank.gif"/>
+              file="${resource.src.dir}/main/webapp/resources/images/blank.gif"/>
     </target>
 
     <target name="copy-libs" unless="should.not.copy.libs">
@@ -294,7 +302,7 @@
                 Therefore only needed libs are copied directly here.
 			-->
             <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${app.version}.jar">
-                <include name="**/dwr*"/>
+                <include name="dwr*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -318,16 +326,16 @@
         </echo>
 
         <antcall target="copy-src-resources"/>
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
 
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
     </target>
 
-    <target name="deploy-exploded-resources" description="only deployes resources in resources/src/main/resources">
+    <target name="deploy-exploded-resources" description="only deployes resources in src/main/webapp/resources">
 
         <echo>
         ************************************************************************************
@@ -335,7 +343,7 @@
         ************************************************************************************
         </echo>
         <antcall target="copy-src-resources"/>
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
     </target>
@@ -382,12 +390,12 @@
          <copy description="copy resources from global 'src' directory"
               todir="${resources.dir}"
               includeemptydirs="true">
-            <fileset dir="${resource.src.dir}/main/resources">
+            <fileset dir="${resource.src.dir}/main/webapp/resources">
                 <exclude name="**/scripts/**"/>
             </fileset>
         </copy>
 
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts/dojo"/>
         </ant>
     </target>
