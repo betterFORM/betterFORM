@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+       <script type="text/javascript">
+           NodeState = Backbone.Model.extend({
+               defaults: {
+                   id       :'',
+                   value    :'',
+                   readonly :false,
+                   required :false,
+                   valid    :true,
+                   type     :'string'
+               },
+               initialize: function(){
+                   alert("Welcome to this world");
+
+                   this.on("change:value", function(model){
+                       //handle changes of the model
+                   });
+               }
+           });
+
+
+           var myState = new NodeState({
+               id:"foo",
+               value:"",
+               readonly:false,
+               required:false,
+               valid:true,
+               type:"string"
+           });
+
+
+/*
+           var nodeState = ({ id: "foo",
+                              value: 'bar',
+                              readonly:false,
+                              required:false,
+                              valid:true,
+                              type:"string"
+                            });
+*/
+       </script>
+    </body>
+</html>

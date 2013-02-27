@@ -118,5 +118,35 @@
 </node>
 <node BACKGROUND_COLOR="#999900" CREATED="1361572899914" HGAP="24" ID="ID_246879144" MODIFIED="1361656184388" TEXT="Encapsulation" VSHIFT="31"/>
 </node>
+<node CREATED="1361710106640" HGAP="179" ID="ID_1007674156" MODIFIED="1361710117309" POSITION="left" TEXT="ideas" VSHIFT="222">
+<node CREATED="1361710119232" ID="ID_760495958" MODIFIED="1361719340975" TEXT="filtered instances">
+<richcontent TYPE="NOTE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      instead of using complicated expression in ui bindings a 'filtered' instance is an extension of the
+    </p>
+    <p>
+      instance/@src allowing additional xpath expression
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node CREATED="1361787429464" HGAP="87" ID="ID_964658820" MODIFIED="1361787466210" POSITION="right" TEXT="Iteration Planning" VSHIFT="280">
+<font NAME="SansSerif" SIZE="16"/>
+<node CREATED="1361787483382" ID="ID_948195399" MODIFIED="1361787572504" TEXT="establish new JS layer">
+<node CREATED="1361787509876" ID="ID_207814477" MODIFIED="1361787527575" TEXT="stay with xslt transform but generate new markup"/>
+</node>
+<node CREATED="1361787625666" ID="ID_517342714" MODIFIED="1361787634463" TEXT="develop component model"/>
+<node CREATED="1361787573228" ID="ID_1123397050" MODIFIED="1361787589787" TEXT="introduce view-model"/>
+<node CREATED="1361787601086" ID="ID_281896948" MODIFIED="1361787607608" TEXT="optimize communication"/>
+<node CREATED="1361787698430" ID="ID_1727720254" MODIFIED="1361787706990" TEXT="html syntax roundtrip">
+<node CREATED="1361787710312" ID="ID_934954082" MODIFIED="1361787727293" TEXT="allow direct loading of html syntax instead of xforms markup"/>
+</node>
+</node>
 </node>
 </map>
