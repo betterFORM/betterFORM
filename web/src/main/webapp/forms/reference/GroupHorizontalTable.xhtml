@@ -73,8 +73,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d12e150" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e150">matches any Element that represents a XForms
+                  <td id="d11e150" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d11e150">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -86,8 +86,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d12e168" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e168">matches an Element that represents a XForms
+                  <td id="d11e168" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d11e168">matches an Element that represents a XForms
                         group
                         element with
                         'bf:horizontalTable'
@@ -97,25 +97,25 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d12e183" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e183">matches the  label of a group</div>
+                  <td id="d11e183" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d11e183">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d12e197" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e197">matches the  label of a control used as table header</div>
+                  <td id="d11e197" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d11e197">matches the  label of a control used as table header</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d12e209" onmouseover="showClass('bfTableCol1');" onmouseout="hideClass('bfTableCol1');">bfTableCol1
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e209">matches the first column of the table. Subsequent columns have the same class but with their respective column number (counted
+                  <td id="d11e209" onmouseover="showClass('bfTableCol1');" onmouseout="hideClass('bfTableCol1');">bfTableCol1
+                     <div data-dojo-type="dijit.Tooltip" connectId="d11e209">matches the first column of the table. Subsequent columns have the same class but with their respective column number (counted
                         from left to right)
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d12e219" onmouseover="showClass('bfTableLabel');" onmouseout="hideClass('bfTableLabel');">bfTableLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e219">matches a label of a nested group</div>
+                  <td id="d11e219" onmouseover="showClass('bfTableLabel');" onmouseout="hideClass('bfTableLabel');">bfTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d11e219">matches a label of a nested group</div>
                   </td>
                </tr>
                <tr>
@@ -344,31 +344,31 @@
 &lt;/xf:group&gt;
 </code></pre></div>
       </div><script type="text/javascript">
-                function showClass(cssClass) {
-                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
-                        query('.sample .' + cssClass).forEach(function (item) {
-                            domClass.add(item, 'showClass');
+                function showClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.add(item,'showClass');
                         });
                     });
                 }
 
-                function hideClass(cssClass) {
-                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
-                        query('.sample .' + cssClass).forEach(function (item) {
-                            domClass.remove(item, 'showClass');
+                function hideClass(cssClass){
+                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
+                        query('.sample .'+ cssClass).forEach(function(item){
+                            domClass.remove(item,'showClass');
                         });
                     });
                 }
 
-                require(["../../../../../resource/target/scripts/dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
-                        function (parser, connect, Tooltip, dom) {
-                            var xforms = dom.byId("xforms");
-                            // console.debug("parse ",xforms);
-                            parser.parse(xforms);
-                            connect.subscribe("/xf/ready", function () {
-                                fluxProcessor.skipshutdown = true;
-                            });
-                        }
+                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                    function(parser,connect, Tooltip,dom) {
+                        var xforms = dom.byId("xforms");
+                        // console.debug("parse ",xforms);
+                        parser.parse(xforms);
+                        connect.subscribe("/xf/ready", function(){
+                            fluxProcessor.skipshutdown=true;
+                        });
+                    }
                 );
             </script></body>
    
