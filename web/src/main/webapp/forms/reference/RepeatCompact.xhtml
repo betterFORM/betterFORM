@@ -108,8 +108,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d26e156" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e156">matches any Element that represents a XForms
+                  <td id="d32e156" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e156">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -121,8 +121,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d26e174" onmouseover="showClass('xfCompactRepeat');" onmouseout="hideClass('xfCompactRepeat');">xfCompactRepeat
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e174">matches an Element that represents a XForms
+                  <td id="d32e174" onmouseover="showClass('xfCompactRepeat');" onmouseout="hideClass('xfCompactRepeat');">xfCompactRepeat
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e174">matches an Element that represents a XForms
                         repeat
                         element
                         
@@ -130,8 +130,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d26e186" onmouseover="showClass('xfRepeatHeader');" onmouseout="hideClass('xfRepeatHeader');">xfRepeatHeader
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e186">matches an Element that represents a XForms
+                  <td id="d32e186" onmouseover="showClass('xfRepeatHeader');" onmouseout="hideClass('xfRepeatHeader');">xfRepeatHeader
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e186">matches an Element that represents a XForms
                         repeat
                         element
                         
@@ -139,36 +139,36 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d26e198" onmouseover="showClass('xfRepeatItem');" onmouseout="hideClass('xfRepeatItem');">xfRepeatItem
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e198">matches all repeat items
+                  <td id="d32e198" onmouseover="showClass('xfRepeatItem');" onmouseout="hideClass('xfRepeatItem');">xfRepeatItem
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e198">matches all repeat items
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d26e210" onmouseover="showClass('xfRepeatIndex');" onmouseout="hideClass('xfRepeatIndex');">xfRepeatIndex
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e210">matches the currently selected repeat item
+                  <td id="d32e210" onmouseover="showClass('xfRepeatIndex');" onmouseout="hideClass('xfRepeatIndex');">xfRepeatIndex
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e210">matches the currently selected repeat item
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d26e223" onmouseover="showClass('bfTableCol-1');" onmouseout="hideClass('bfTableCol-1');">bfTableCol-1
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e223">matches the first column
+                  <td id="d32e223" onmouseover="showClass('bfTableCol-1');" onmouseout="hideClass('bfTableCol-1');">bfTableCol-1
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e223">matches the first column
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d26e232" onmouseover="showClass('bfTableCol-2');" onmouseout="hideClass('bfTableCol-2');">bfTableCol-2
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e232">matches the second column
+                  <td id="d32e232" onmouseover="showClass('bfTableCol-2');" onmouseout="hideClass('bfTableCol-2');">bfTableCol-2
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e232">matches the second column
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d26e241" onmouseover="showClass('bfTableCol-3');" onmouseout="hideClass('bfTableCol-3');">bfTableCol-3
-                     <div data-dojo-type="dijit.Tooltip" connectId="d26e241">matches the third column
+                  <td id="d32e241" onmouseover="showClass('bfTableCol-3');" onmouseout="hideClass('bfTableCol-3');">bfTableCol-3
+                     <div data-dojo-type="dijit.Tooltip" connectId="d32e241">matches the third column
                         
                      </div>
                   </td>
@@ -374,31 +374,31 @@
             
          </div>
       </div><script type="text/javascript">
-                function showClass(cssClass){
-                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                        query('.sample .'+ cssClass).forEach(function(item){
-                            domClass.add(item,'showClass');
+                function showClass(cssClass) {
+                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
                         });
                     });
                 }
 
-                function hideClass(cssClass){
-                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                        query('.sample .'+ cssClass).forEach(function(item){
-                            domClass.remove(item,'showClass');
+                function hideClass(cssClass) {
+                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
                         });
                     });
                 }
 
-                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
-                    function(parser,connect, Tooltip,dom) {
-                        var xforms = dom.byId("xforms");
-                        // console.debug("parse ",xforms);
-                        parser.parse(xforms);
-                        connect.subscribe("/xf/ready", function(){
-                            fluxProcessor.skipshutdown=true;
-                        });
-                    }
+                require(["../../../../../resource/target/scripts/dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
                 );
             </script></body>
    

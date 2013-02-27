@@ -63,13 +63,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d47e117" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
-                     <div data-dojo-type="dijit.Tooltip" connectId="d47e117">matches an Element that represents a XForms input element</div>
+                  <td id="d53e117" onmouseover="showClass('xfUpload');" onmouseout="hideClass('xfUpload');">xfUpload
+                     <div data-dojo-type="dijit.Tooltip" connectId="d53e117">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d47e126" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
-                     <div data-dojo-type="dijit.Tooltip" connectId="d47e126">matches an Element that is bound to a node with datatype
+                  <td id="d53e126" onmouseover="showClass('xsdAnyURI');" onmouseout="hideClass('xsdAnyURI');">xsdAnyURI
+                     <div data-dojo-type="dijit.Tooltip" connectId="d53e126">matches an Element that is bound to a node with datatype
                         anyURI
                         
                      </div>
@@ -277,31 +277,31 @@
 &lt;/xf:upload&gt;
 </code></pre></div>
       </div><script type="text/javascript">
-                function showClass(cssClass){
-                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                        query('.sample .'+ cssClass).forEach(function(item){
-                            domClass.add(item,'showClass');
+                function showClass(cssClass) {
+                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
                         });
                     });
                 }
 
-                function hideClass(cssClass){
-                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                        query('.sample .'+ cssClass).forEach(function(item){
-                            domClass.remove(item,'showClass');
+                function hideClass(cssClass) {
+                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
                         });
                     });
                 }
 
-                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
-                    function(parser,connect, Tooltip,dom) {
-                        var xforms = dom.byId("xforms");
-                        // console.debug("parse ",xforms);
-                        parser.parse(xforms);
-                        connect.subscribe("/xf/ready", function(){
-                            fluxProcessor.skipshutdown=true;
-                        });
-                    }
+                require(["../../../../../resource/target/scripts/dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
                 );
             </script></body>
    

@@ -102,8 +102,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d32e171" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
-                     <div data-dojo-type="dijit.Tooltip" connectId="d32e171">matches an Element that represents a XForms
+                  <td id="d38e171" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
+                     <div data-dojo-type="dijit.Tooltip" connectId="d38e171">matches an Element that represents a XForms
                         select
                         element
                         
@@ -111,8 +111,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d32e183" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div data-dojo-type="dijit.Tooltip" connectId="d32e183">matches an item of a XForms
+                  <td id="d38e183" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div data-dojo-type="dijit.Tooltip" connectId="d38e183">matches an item of a XForms
                         select1
                         element
                         
@@ -355,31 +355,31 @@
 &lt;/xf:select1&gt;
 </code></pre></div>
       </div><script type="text/javascript">
-                function showClass(cssClass){
-                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                        query('.sample .'+ cssClass).forEach(function(item){
-                            domClass.add(item,'showClass');
+                function showClass(cssClass) {
+                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
                         });
                     });
                 }
 
-                function hideClass(cssClass){
-                    require(["dojo/query", "dojo/dom-class"], function(query, domClass){
-                        query('.sample .'+ cssClass).forEach(function(item){
-                            domClass.remove(item,'showClass');
+                function hideClass(cssClass) {
+                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
                         });
                     });
                 }
 
-                require(["dojo/parser","dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
-                    function(parser,connect, Tooltip,dom) {
-                        var xforms = dom.byId("xforms");
-                        // console.debug("parse ",xforms);
-                        parser.parse(xforms);
-                        connect.subscribe("/xf/ready", function(){
-                            fluxProcessor.skipshutdown=true;
-                        });
-                    }
+                require(["../../../../../resource/target/scripts/dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
                 );
             </script></body>
    
