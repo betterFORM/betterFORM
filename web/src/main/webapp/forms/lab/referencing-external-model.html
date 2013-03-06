@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>using HTML5 data attributes </title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+
+        <!--
+        Example for linking a model in HTML.
+
+        Regardless of the
+        -->
+    </head>
+    <body>
+        <div id="xforms">
+            <div id="registration">
+                <!-- to load an external model -->
+                <span id="myModel" data-xf-model="../forms/demo/registration.xhtml#m-registration"></span>
+                <!-- assuming the above link returns this:
+                    <xf:model id="m-registration">
+                        <xf:instance>
+                            <data xmlns="">
+                                <firstname/>
+                            </data>
+                        </xf:instance>
+                        <xf:bind id="b-firstname />
+                    </xf:model>
+
+                    The markup of a loaded model is NOT added to the browser DOM. It stays invisible on the server.
+                -->
+
+                <!-- variant: HTML5 extension element -->
+                <x-model id="myModel" src="../forms/demo/registration.xhtml#m-registration">
+                <!--
+                the x-model element is an empty element. @src will get resolved on demand by default.
+
+                One might be tempted to inline the xforms model within the x-model but we actually do NOT want the
+                model to be exposed under production circumstances. It should stays safely on the server.
+
+                (However from a developers point of view it could make a lot of sense to inline the XForms model
+                markup as shadow DOM.)
+                -->
+
+                <!-- referencing model from js -->
+                <script type="text/javascript">
+                    $("#mymodel").recalculate();
+                </script>
+            </div>
+        </div>
+    </body>
+</html>

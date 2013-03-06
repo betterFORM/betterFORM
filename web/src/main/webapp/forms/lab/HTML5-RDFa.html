@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>RDFa attribution</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+
+        <!--
+            uses RDFa attribution for binding to XForms nodes. This provides an interesting option for
+            on-demand processing. Controls are actually bound when they are needed by defining an activation event
+            that will create the necessary control on the fly.
+
+
+        -->
+    </head>
+    <body prefix="my: someUrl">
+        <div id="xforms">
+            <div id="registration">
+                <!-- to load an external model -->
+                <span id="myModel" data-xf-model="../forms/demo/registration.xhtml#m-registration"></span>
+
+                <div id="signin">
+                    Already a member? Sign in here
+                </div>
+
+                <form>
+                    <div class="verticalTable">
+                        <!-- label also does not seem to make much sense here as any arbitrary element can be used here (div, span, ...) -->
+                        <label for="firstname1">First Name:</label>
+                        <input id="firstname1" type="text" value="" property="my:firstname" content="">
+
+
+                        <!-- this creates a quite different user experience. Probably not applicable
+                        for typical forms that are filled in sequence but interesting for long text inputs even
+                        mixed input. -->
+                        <div property="my:firstname" contenteditable="true">Hans</div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

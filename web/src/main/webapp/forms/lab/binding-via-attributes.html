@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>using HTML5 data attributes </title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+
+        <!--
+        Example using data attributes for binding to XForms.
+
+        Caveats:
+        when attaching to a HTML input there's no way of adding children to this element as it is defined as empty.
+        This means we cannot add actions as children in this scenario. These MUST be defined/placed elsewhere. Possible
+        solutions will be dealts with in another example file in this directory.
+        -->
+    </head>
+    <body>
+        <div id="xforms">
+            <div id="registration">
+                <!-- to load an external model -->
+                <span id="myModel" data-xf-model="../forms/demo/registration.xhtml#m-registration"></span>
+                <!-- assuming the above link returns this:
+                    <xf:model id="m-registration">
+                        <xf:instance>
+                            <data xmlns="">
+                                <firstname/>
+                            </data>
+                        </xf:instance>
+                        <xf:bind id="b-firstname />
+                    </xf:model>
+                -->
+
+                <div id="signin">
+                    Already a member? Sign in here
+                </div>
+
+                <form>
+                    <div class="verticalTable">
+                        <!-- label also does not seem to make much sense here as any arbitrary element can be used here (div, span, ...) -->
+                        <label for="firstname1">First Name:</label>
+
+                        <!--
+                        Should we use 'data-xf-ref' or just plain 'data-xf-bind' which means to bind to a
+                        XForms bind element by idref or both?.
+
+                        Advantages of bind:
+                        - just plain idrefs - complicated xpathes would be in the model not cluttering the content markup
+
+                        Disadvantages of bind:
+                        - requires to write a bind element in the model to link a control or add extra support for 'implied' binds
+                        taking the value as node name.
+
+
+                        -->
+                        <!--
+                        Variant 1: data-xf-ref
+                        -->
+                        <input id="firstname1" type="text" value="" data-xf-ref="firstname">
+
+                        <!--
+                        Variant 2: data-xf-bind
+
+                        additional attributes have their own data-xf-[attributename] equivalent:
+                           - incremental -> data-xf-incremental
+                           - mediatype -> data-xf-mediatype
+                           - ...
+                        -->
+                        <input id="firstname2" type="text" value="" data-xf-bind="b-firstname" data-xf-incremental="true">
+
+                        <!--
+                        Variant 3: property list
+                        -->
+                        <input id="firstname3" type="text" value="" data-xf-props="{bind:'b-firstname',incremental:'true'}">
+
+                        <!--
+                        Variant 4: staying with XForms UI but parse client-side
+                        -->
+
+                        <!--
+                            HINT, HELP, ALERT
+                        -->
+                        <!-- Option 1 -->
+                        <label for="firstname1" class="hint">enter your firstname</label>
+
+                        <!--Option 2 -->
+                        <span data-xf-hint-for="firstname1">enter your firstname</span>
+
+                        <!-- Option 3 -->
+                        <span data-xf-for="firstname1" class="xfHint">enter your firstname</span>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
