@@ -6,25 +6,18 @@
 package de.betterform.xml.xpath.impl.saxon;
 
 import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.BetterFormFunctionLibrary;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunctionLibrary;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathDynamicContext;
+
 import de.betterform.xml.xpath.impl.saxon.sxpath.XPathEvaluator;
 import de.betterform.xml.xpath.impl.saxon.sxpath.XPathExpression;
 import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.expr.LastPositionFinder;
-import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
-import net.sf.saxon.s9api.XdmItem;
-import net.sf.saxon.om.LookaheadIterator;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.s9api.*;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.xpath.XPathFunctionLibrary;
@@ -105,23 +98,23 @@ public class XPathCache {
         return evaluate(context.getNodeset(), context.getPosition(), xpathString, context.getPrefixMapping(), context.getXPathFunctionContext());
     }
 
-    public List evaluate(NodeInfo contextNode, String xpathString, Map prefixMapping, XPathFunctionContext functionContext)
+    public List evaluate(XdmNode contextNode, String xpathString, Map prefixMapping, XPathFunctionContext functionContext)
         throws XFormsException {
         return evaluate(Collections.singletonList(contextNode), 1, xpathString, prefixMapping, functionContext);
     }
 
 
     public Node evaluateAsSingleNode(List nodeset, int position, String xpath, Map prefixes, XPathFunctionContext functionContext) throws XFormsException {
-        NodeInfo node = (NodeInfo) XPathCache.getInstance().evaluate(nodeset,1, xpath,prefixes,functionContext).get(0);
-            return (Node) ((NodeWrapper)node).getUnderlyingNode();
-        }
+        XdmNode node = (XdmNode) XPathCache.getInstance().evaluate(nodeset,1, xpath,prefixes,functionContext).get(0);
+            return (Node) node.getUnderlyingNode();
+    }
 
     public Node evaluateAsSingleNode(BetterFormXPathContext context,String xpath) throws XFormsException {
 
         List nodeList =  XPathCache.getInstance().evaluate(context, xpath);
         if(nodeList != null && nodeList.size() >= 1){
-            NodeInfo node = (NodeInfo)nodeList.get(0);
-            return (Node) ((NodeWrapper)node).getUnderlyingNode();
+            XdmNode node = (XdmNode)nodeList.get(0);
+            return (Node) node.getUnderlyingNode();
          }else {
             return null;
         }
@@ -131,46 +124,33 @@ public class XPathCache {
      */
     public List evaluate(List nodeset, int position, String xpathString, Map prefixMapping, XPathFunctionContext functionContext)
         throws XFormsException {
+        LinkedList result = new LinkedList();
+
         if (nodeset != null && nodeset.size() < position) {
             return Collections.EMPTY_LIST;
         }
 
+        Processor processor = new Processor(false);
+        XPathCompiler xPathCompiler = processor.newXPathCompiler();
 
-        try {
-            final XPathExpression exp = getXPathExpression(xpathString, prefixMapping, functionContext != null?functionContext.getXFormsElement().getContainerObject().getConfiguration():XPathCache.kCONFIG);
-            final XPathDynamicContext context = exp.createDynamicContext((XdmItem) nodeset.get(position - 1));
-            ListSequenceIterator nodesetIt = new ListSequenceIterator(nodeset, position);
-            nodesetIt.next();
-			((XPathContextMajor)context.getXPathContextObject()).setCurrentIterator(nodesetIt);
-            context.getXPathContextObject().getController().setUserData(XFormsProcessorImpl.class.toString(), XPathFunctionContext.class.toString(), functionContext);
-
-            SequenceIterator it = exp.iterate(context);
-
-            int nrOfEntries;
-            if ((it.getProperties() & SequenceIterator.LAST_POSITION_FINDER) != 0) {
-                nrOfEntries = ((LastPositionFinder) it).getLastPosition();
-            } else {
-                nrOfEntries = -1;
-            }
-
-            if (nrOfEntries == 1) {
-                return Collections.singletonList(it.next());
-            }
-
-            final List result = new ArrayList(nrOfEntries > 0 ? nrOfEntries : 20);
-            for (Object item = it.next(); item != null; item = it.next()) {
-                result.add(item);
-            }
-
-            return result;
-
-        } catch (XPathException e) {
-        	if (e.getCause() instanceof XFormsException) {
-        		throw (XFormsException)e.getCause();
-        	}
-            throw new XFormsException(e.getMessage(), e);
+        for( Object key : prefixMapping.keySet()) {
+            xPathCompiler.declareNamespace((String) key, (String) prefixMapping.get(key));
         }
 
+        DocumentBuilder builder = processor.newDocumentBuilder();
+        XdmItem xdmItem =  builder.wrap(nodeset);
+        try {
+            XPathSelector xpathSelector = xPathCompiler.compile(xpathString).load();
+            xpathSelector.setContextItem(xdmItem);
+
+            for (XdmItem item: xpathSelector) {
+                result.add(item);
+            }
+        } catch (SaxonApiException sae) {
+            throw new XFormsException(sae.getMessage(), sae);
+        }
+
+        return result;
     }
 
     /**
@@ -222,76 +202,5 @@ public class XPathCache {
 
         independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
         return independentContext;
-    }
-
-    private static class ListSequenceIterator implements SequenceIterator, Cloneable, LastPositionFinder, LookaheadIterator {
-
-        private List<XdmItem> nodeset;
-        private int position;
-
-        
-        /**
-         * 
-         * @param nodeset
-         * @param position 1 based
-         */
-        public ListSequenceIterator(List nodeset, int position) {
-            this.nodeset = nodeset;
-            this.position = position - 1;
-        }
-
-        public XdmItem current() {
-            if (position != -1) {
-                return nodeset.get(position - 1);
-            }
-
-            return null;
-        }
-
-        public SequenceIterator getAnother() {
-            return new ListSequenceIterator(nodeset, position);
-        }
-
-        public XdmItem next() {
-            if (position < nodeset.size()) {
-                position++;
-            } else {
-                position = -1;
-            }
-            return current();
-        }
-
-        public int position() {
-            return position;
-        }
-
-        public void close() {
-            this.close();
-        }
-
-        /**
-         * Get properties of this iterator, as a bit-significant integer.
-         *
-         * @return the properties of this iterator. This will be some combination of
-         *         properties such as {@link #GROUNDED}, {@link #LAST_POSITION_FINDER},
-         *         and {@link #LOOKAHEAD}. It is always
-         *         acceptable to return the value zero, indicating that there are no known special properties.
-         *         It is acceptable for the properties of the iterator to change depending on its state.
-         */
-
-        public int getProperties() {
-            return LAST_POSITION_FINDER | LOOKAHEAD;
-        }
-
-//		@Override
-		public int getLastPosition() throws XPathException {
-			return nodeset.size();
-		}
-
-//		@Override
-		public boolean hasNext() {
-			return position <= nodeset.size();
-		}
-		
     }
 }
