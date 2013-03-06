@@ -13,7 +13,7 @@ import net.sf.saxon.instruct.Executable;
 import net.sf.saxon.instruct.SlotManager;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.om.NamespaceResolver;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.sxpath.XPathStaticContext;
@@ -97,13 +97,13 @@ public class XPathEvaluator {
      * {@link Configuration#buildDocument}
     */
 
-    public NodeInfo build(Source source) throws XPathException {
+    public XdmNode build(Source source) throws XPathException {
         if (stripSpace) {
             AugmentedSource as = AugmentedSource.makeAugmentedSource(source);
             as.setStripSpace(Whitespace.ALL);
             source = as;
-        } else if (source instanceof NodeInfo) {
-            return (NodeInfo)source;
+        } else if (source instanceof XdmNode) {
+            return (XdmNode)source;
         }
         return getConfiguration().buildDocument(source);
     }

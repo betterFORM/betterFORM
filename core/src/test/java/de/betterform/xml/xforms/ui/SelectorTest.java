@@ -11,7 +11,7 @@ import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import org.w3c.dom.events.EventTarget;
 
 import java.util.HashMap;
@@ -164,9 +164,9 @@ public class SelectorTest extends TestCase {
         assertEquals("123", selector.getValue());
 
         List result = XPathUtil.evaluate(selector.getElement(), "descendant::xf:item/@id");
-        String item1 = ((NodeInfo) result.get(0)).getStringValue();
-        String item2 = ((NodeInfo) result.get(1)).getStringValue();
-        String item3 = ((NodeInfo) result.get(3)).getStringValue();
+        String item1 = ((XdmNode) result.get(0)).getStringValue();
+        String item2 = ((XdmNode) result.get(1)).getStringValue();
+        String item3 = ((XdmNode) result.get(3)).getStringValue();
 
 
         register(item1, item2, item3);
@@ -198,9 +198,9 @@ public class SelectorTest extends TestCase {
         assertEquals("123", selector.getValue());
 
         List result = XPathUtil.evaluate(selector.getElement(), "descendant::xf:item/@id");
-        String item1 = ((NodeInfo) result.get(0)).getStringValue();
-        String item2 = ((NodeInfo) result.get(1)).getStringValue();
-        String item3 = ((NodeInfo) result.get(2)).getStringValue();
+        String item1 = ((XdmNode) result.get(0)).getStringValue();
+        String item2 = ((XdmNode) result.get(1)).getStringValue();
+        String item3 = ((XdmNode) result.get(2)).getStringValue();
 
 
         register(item1, item2, item3);
@@ -227,9 +227,9 @@ public class SelectorTest extends TestCase {
         assertEquals("123", selector.getValue());
 
         List result = XPathUtil.evaluate(selector.getElement(), "descendant::xf:item/@id");
-        String item1 = ((NodeInfo) result.get(0)).getStringValue();
-        String item2 = ((NodeInfo) result.get(1)).getStringValue();
-        String item3 = ((NodeInfo) result.get(2)).getStringValue();
+        String item1 = ((XdmNode) result.get(0)).getStringValue();
+        String item2 = ((XdmNode) result.get(1)).getStringValue();
+        String item3 = ((XdmNode) result.get(2)).getStringValue();
 
 
         register(item1, item2, item3);
@@ -261,9 +261,9 @@ public class SelectorTest extends TestCase {
         assertEquals("123", selector.getValue());
 
         List result = XPathUtil.evaluate(selector.getElement(), "descendant::xf:item/@id");
-        String item1 = ((NodeInfo) result.get(0)).getStringValue();
-        String item2 = ((NodeInfo) result.get(1)).getStringValue();
-        String item3 = ((NodeInfo) result.get(2)).getStringValue();
+        String item1 = ((XdmNode) result.get(0)).getStringValue();
+        String item2 = ((XdmNode) result.get(1)).getStringValue();
+        String item3 = ((XdmNode) result.get(2)).getStringValue();
 
 
         register(item1, item2, item3);

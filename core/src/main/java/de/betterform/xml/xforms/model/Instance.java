@@ -5,6 +5,33 @@
 
 package de.betterform.xml.xforms.model;
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerException;
+
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.trans.XPathException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.traversal.DocumentTraversal;
+import org.w3c.dom.traversal.NodeFilter;
+
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
@@ -18,19 +45,6 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.trans.XPathException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.*;
-import org.w3c.dom.traversal.DocumentTraversal;
-import org.w3c.dom.traversal.NodeFilter;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayOutputStream;
-import java.util.*;
 
 /**
  * Implementation of XForms instance Element.
@@ -583,8 +597,12 @@ public class Instance extends XFormsElement {
 
     // XXX remove when geteModelItem is rewritten
     private Node getNode(String xpath) throws XFormsException{
-        NodeInfo nodeInfo = (NodeInfo) XPathCache.getInstance().evaluate(this.xPathContext,xpath).get(0); 
-        return (Node) ((NodeWrapper)nodeInfo).getUnderlyingNode();
+    	XdmNode xdmNode = (XdmNode) XPathCache.getInstance().evaluate(this.xPathContext,xpath).get(0);
+    	Object node = xdmNode.getExternalNode();
+    	if (node instanceof Node){
+    		return (Node) node;
+    	}
+        throw new XFormsException("Node '" + xdmNode.getNodeName() + "' is not a '" + Node.class.getName());
     }
 
     /**

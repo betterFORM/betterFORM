@@ -5,7 +5,6 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function.extensions;
 
-import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
@@ -17,6 +16,7 @@ import net.sf.saxon.sort.SortKeyEvaluator;
 import net.sf.saxon.sort.SortedIterator;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.Value;
+import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 
 public class BFSort extends XFormsFunction {
 

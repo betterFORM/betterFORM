@@ -11,7 +11,7 @@ import de.betterform.xml.xforms.TestEventListener;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import org.w3c.dom.Document;
 import org.w3c.dom.events.EventTarget;
 
@@ -326,7 +326,7 @@ public class RepeatTest extends TestCase {
 
         List result = XPathUtil.evaluate(repeat.getElement(), ".//xf:input[bf:data]/@id");
         for (int i = 0; i < result.size(); i++) {
-            ids.add(((NodeInfo) result.get(i)).getStringValue());
+            ids.add(((XdmNode) result.get(i)).getStringValue());
 
         }
         assertEquals(3, ids.size());

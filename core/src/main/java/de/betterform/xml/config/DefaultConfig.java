@@ -13,7 +13,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.XdmNode;
 

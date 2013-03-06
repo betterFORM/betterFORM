@@ -5,6 +5,23 @@
 
 package de.betterform.xml.xforms.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import net.sf.saxon.s9api.XdmNode;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventTarget;
+
 import de.betterform.xml.dom.DOMComparator;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
@@ -18,16 +35,6 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import net.sf.saxon.om.NodeInfo;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventTarget;
-
-import java.util.*;
 
 /**
  * Implementation of both <b>8.1.10 The select Element</b> and <b>8.1.11 The
@@ -108,7 +115,7 @@ public class Selector extends AbstractFormControl {
 
 
 		while (iterator.hasNext()) {
-			itemId = ((NodeInfo)iterator.next()).getStringValue();
+			itemId = ((XdmNode)iterator.next()).getStringValue();
 			item = (Item) this.container.lookup(itemId);
 
 			if(list.contains(item.getId()) && !item.isSelected()){
@@ -352,7 +359,7 @@ public class Selector extends AbstractFormControl {
         Boolean inRange = false;
 
         while (iterator.hasNext()) {
-            itemId = ((NodeInfo) iterator.next()).getStringValue();
+            itemId = ((XdmNode) iterator.next()).getStringValue();
             item = (Item) this.container.lookup(itemId);
 
             if(item.hasCopyChild()){

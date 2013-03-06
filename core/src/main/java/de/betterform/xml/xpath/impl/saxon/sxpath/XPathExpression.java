@@ -9,7 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.instruct.SlotManager;
 import net.sf.saxon.s9api.XdmItem;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceExtent;
@@ -135,7 +135,7 @@ public class XPathExpression {
      *      {@link net.sf.saxon.Configuration#buildDocument}
      * @return The results of the expression, as a List. The List represents the sequence
      *         of items returned by the expression. Each item in the list will either be an instance
-     *         of net.sf.saxon.om.NodeInfo, representing a node, or a Java object representing an atomic value.
+     *         of net.sf.saxon.s9api.XdmNode, representing a node, or a Java object representing an atomic value.
      */
 
     public List evaluate(Source source) throws XPathException {

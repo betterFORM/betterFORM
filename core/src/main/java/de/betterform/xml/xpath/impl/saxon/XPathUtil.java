@@ -14,7 +14,7 @@ import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.DoubleValue;
@@ -178,7 +178,7 @@ public class XPathUtil {
     public static List evaluate(Element element, String xpath) throws XFormsException {
         List context = XPathUtil.getElementContext(element,null);
         Map namespaces = NamespaceResolver.getAllNamespaces(element);
-        NodeInfo root = (NodeInfo) context.get(0);
+        XdmNode root = (XdmNode) context.get(0);
         return XPathCache.getInstance().evaluate(root,xpath,namespaces,null);
     }
 
