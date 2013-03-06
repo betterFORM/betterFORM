@@ -311,7 +311,7 @@ public class Instance extends XFormsElement {
             return;
         }
 
-        Node parentNode = (Node) ((NodeWrapper) nodeset.get(position - 1)).getUnderlyingNode();
+        Node parentNode = (Node) ((XdmNode) nodeset.get(position - 1)).getExternalNode();
         try {
         	parentNode.appendChild(createElement(qname));
         }

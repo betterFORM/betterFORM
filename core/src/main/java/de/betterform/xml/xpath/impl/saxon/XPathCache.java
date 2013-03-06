@@ -5,25 +5,42 @@
 
 package de.betterform.xml.xpath.impl.saxon;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.saxon.Configuration;
+import net.sf.saxon.expr.StaticContext;
+import net.sf.saxon.functions.ConstructorFunctionLibrary;
+import net.sf.saxon.functions.ExtensionFunctionCall;
+import net.sf.saxon.functions.ExtensionFunctionDefinition;
+import net.sf.saxon.functions.FunctionLibrary;
+import net.sf.saxon.functions.FunctionLibraryList;
+import net.sf.saxon.functions.SystemFunctionLibrary;
+import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.s9api.DocumentBuilder;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XPathCompiler;
+import net.sf.saxon.s9api.XPathExecutable;
+import net.sf.saxon.s9api.XPathSelector;
+import net.sf.saxon.s9api.XdmItem;
+import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.sxpath.XPathExpression;
+import net.sf.saxon.value.SequenceType;
+import net.sf.saxon.xpath.XPathEvaluator;
+import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.xpath.XPathFunctionLibrary;
+
+import org.w3c.dom.Node;
+
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.BetterFormFunctionLibrary;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunctionLibrary;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathEvaluator;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathExpression;
-import net.sf.saxon.Configuration;
-import net.sf.saxon.functions.ConstructorFunctionLibrary;
-import net.sf.saxon.functions.FunctionLibraryList;
-import net.sf.saxon.functions.SystemFunctionLibrary;
-import net.sf.saxon.s9api.*;
-import net.sf.saxon.sxpath.IndependentContext;
-import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.xpath.XPathFunctionLibrary;
-import org.w3c.dom.Node;
-
-import java.util.*;
 
 /**
  * A XPath cache that caches the XPath expressions.
@@ -114,7 +131,7 @@ public class XPathCache {
         List nodeList =  XPathCache.getInstance().evaluate(context, xpath);
         if(nodeList != null && nodeList.size() >= 1){
             XdmNode node = (XdmNode)nodeList.get(0);
-            return (Node) node.getUnderlyingNode();
+            return (Node) node.getExternalNode();
          }else {
             return null;
         }
@@ -130,26 +147,33 @@ public class XPathCache {
             return Collections.EMPTY_LIST;
         }
 
-        Processor processor = new Processor(false);
+        Processor processor = XPathUtil.getProcessor();
         XPathCompiler xPathCompiler = processor.newXPathCompiler();
 
-        for( Object key : prefixMapping.keySet()) {
+        for(Object key : prefixMapping.keySet()) {
             xPathCompiler.declareNamespace((String) key, (String) prefixMapping.get(key));
         }
 
         DocumentBuilder builder = processor.newDocumentBuilder();
-        XdmItem xdmItem =  builder.wrap(nodeset);
-        try {
-            XPathSelector xpathSelector = xPathCompiler.compile(xpathString).load();
-            xpathSelector.setContextItem(xdmItem);
-
-            for (XdmItem item: xpathSelector) {
-                result.add(item);
-            }
-        } catch (SaxonApiException sae) {
-            throw new XFormsException(sae.getMessage(), sae);
+        for (Object o : nodeset) {
+	        try {
+	        	XdmNode xdmNode; 
+	        
+	        	if (o instanceof XdmNode){
+	        		xdmNode = (XdmNode) o;
+	        	} else {
+	        		xdmNode = builder.wrap(nodeset.get(0)); 
+	        	}
+	            XPathSelector xpathSelector = xPathCompiler.compile(xpathString).load();
+	            xpathSelector.setContextItem(xdmNode);
+	
+	            for (XdmItem xdmItem : xpathSelector) {
+	                result.add(xdmItem);
+	            }
+	        } catch (SaxonApiException sae) {
+	            throw new XFormsException(sae.getMessage(), sae);
+	        }
         }
-
         return result;
     }
 
@@ -159,48 +183,32 @@ public class XPathCache {
      * @return
      * @throws XPathException
      */
-    public XPathExpression getXPathExpression(String xpathString, Map prefixMapping, Configuration configuration) throws XPathException {
-        XPathEvaluator xpe = new XPathEvaluator(configuration);
-
-        IndependentContext independentContext = (IndependentContext) xpe.getStaticContext();
-        independentContext.setDefaultFunctionNamespace(NamespaceConstants.XFORMS_NS);
-        independentContext.setBackwardsCompatibilityMode(true);
-
-        // XXX set base URI
-
-        for (Iterator it = prefixMapping.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            independentContext.declareNamespace((String) entry.getKey(), (String) entry.getValue());
+    public XPathExpression getXPathExpression(String xpathString, Map prefixMapping, Processor processor) throws XPathException {
+        
+    	// TODO register in container
+    	registerExtensionFunctions(processor);
+    	
+        XPathCompiler xPathCompiler = processor.newXPathCompiler();
+        xPathCompiler.setBackwardsCompatible(true);
+        //independentContext.setDefaultFunctionNamespace(NamespaceConstants.XFORMS_NS);
+        
+        for(Object key : prefixMapping.keySet()) {
+            xPathCompiler.declareNamespace((String) key, (String) prefixMapping.get(key));
         }
-        //independentContext.declareNamespace("bffn","java:de.betterform.xml.xforms.xpath.BetterFormXPathFunctions");
-        // XXX declare variable
-
-        independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
-
-
-        XPathExpression exp = xpe.createExpression(xpathString);
-        return exp;
+        
+		try {
+			XPathExecutable compiledExpression = xPathCompiler.compile(xpathString);
+			XPathExpression exp = compiledExpression.getUnderlyingExpression();
+	        return exp;
+		} catch (SaxonApiException e) {
+			throw new XPathException(e.getMessage(), e);
+		}
     }
 
-    /**
-     * @param prefixMapping
-     * @return
-     */
-    private IndependentContext createIndependentContext(Map prefixMapping) {
-        final IndependentContext independentContext = new IndependentContext();
-        independentContext.setDefaultFunctionNamespace(NamespaceConstants.XFORMS_NS);
-        independentContext.setBackwardsCompatibilityMode(true);
+	private void registerExtensionFunctions(Processor processor) {
+//		for (function : functions){
+//			processor.registerExtensionFunction(function);
+//		}
+	}
 
-        // XXX set base URI
-
-        for (Iterator it = prefixMapping.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            independentContext.declareNamespace((String) entry.getKey(), (String) entry.getValue());
-        }
-
-        // XXX declare variable
-
-        independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
-        return independentContext;
-    }
 }

@@ -9,15 +9,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.s9api.XdmNode;
-import net.sf.saxon.s9api.Processor;
-import net.sf.saxon.value.BooleanValue;
-import net.sf.saxon.value.DoubleValue;
+import net.sf.saxon.value.Value;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,6 +33,15 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
  * @version $Id$
  */
 public class XPathUtil {
+	
+	private static Processor processor;
+	
+	public static Processor getProcessor(){
+		if (null == processor){
+			processor = new Processor(false);
+		}
+		return processor;
+	}
 
     /**
      * returns item at position as if converted with the string() function
@@ -119,7 +126,8 @@ public class XPathUtil {
         if (resultAsNodeset.size() >= position) {
             XdmItem item = ((XdmItem) resultAsNodeset.get(position - 1));
             if (item instanceof XdmNode) {
-                return (Node) ((XdmNode) item).getUnderlyingNode();
+                return (Node) ((XdmNode) item).getExternalNode();
+                
             }
         }
         return null;
@@ -138,7 +146,7 @@ public class XPathUtil {
 
     public static List getElementContext(Element element,String baseURI){
         if (element != null){
-        	Processor processor = new Processor(false);
+        	Processor processor = XPathUtil.getProcessor();
         	return Collections.singletonList(processor.newDocumentBuilder().wrap(element));
         } else
             return Collections.emptyList();

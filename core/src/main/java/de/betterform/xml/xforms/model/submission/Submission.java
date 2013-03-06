@@ -1150,7 +1150,7 @@ public class Submission extends BindingElement implements DefaultAction {
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		final Document ownerDocument = this.element.getOwnerDocument();
-		final DocumentBuilder builder = new Processor(false).newDocumentBuilder();
+		final DocumentBuilder builder = XPathUtil.getProcessor().newDocumentBuilder();
 		
 		
 		List<XdmItem> headerItems = new ArrayList<XdmItem>(response.size());

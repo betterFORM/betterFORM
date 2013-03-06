@@ -81,7 +81,7 @@ public class DefaultConfig extends Config {
 	 * @return
 	 */
 	private XdmNode getDocumentElementContext(Document document) {
-		return new Processor(false).newDocumentBuilder().wrap(document);
+		return XPathUtil.getProcessor().newDocumentBuilder().wrap(document.getDocumentElement());
 	}
 
 	/**

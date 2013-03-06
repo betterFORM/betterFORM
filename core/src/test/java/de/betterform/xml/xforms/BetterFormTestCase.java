@@ -186,7 +186,7 @@ public abstract class BetterFormTestCase extends TestCase {
             throw new XFormsException("Could not convert resultset to XdmNode");
         }
 
-        return (Node) ((XdmNode) result.get(0)).getUnderlyingNode();
+        return (Node) ((XdmNode) result.get(0)).getExternalNode();
     }
 
 

@@ -5,14 +5,12 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
-import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.model.bind.Binding;
-import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
-import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.DocumentWrapper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.StaticProperty;
@@ -21,14 +19,22 @@ import net.sf.saxon.om.ArrayIterator;
 import net.sf.saxon.om.EmptyIterator;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.trans.XPathException;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.traversal.DocumentTraversal;
 import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.traversal.NodeIterator;
 
-import java.util.*;
+import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.bind.Binding;
+import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
+import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 
 /**
  * Implementation of 7.10.3 The id() Function
@@ -106,7 +112,7 @@ public class Id2 extends XFormsFunction {
 		final XPathFunctionContext functionContext = getFunctionContext(xpathContext);
 		final XFormsElement xformsElement = functionContext.getXFormsElement();
 
-		ArrayList<Item> resultList = new ArrayList<Item>();
+		ArrayList<XdmNode> resultList = new ArrayList<XdmNode>();
 
 		Item item = (nodeIterator != null)?nodeIterator.next():null;
 		if (argument.length == 1 || item == null) {
@@ -119,7 +125,7 @@ public class Id2 extends XFormsFunction {
             }
             try {
 				getElementsByIDs(ids, xformsElement.getModel().getInstance(binding.getInstanceId()).getInstanceDocument().getDocumentElement()
-						, resultList, xformsElement.getContainerObject().getConfiguration());
+						, resultList, xformsElement.getContainerObject().getS9Processor());
 			} catch (XFormsException e) {
 				throw new XPathException(e);
 			}
@@ -127,7 +133,7 @@ public class Id2 extends XFormsFunction {
 			do {
 				getElementsByIDs(ids, XPathUtil.getAsNode(Collections
 						.singletonList(item), 1), resultList, xformsElement
-						.getContainerObject().getConfiguration());
+						.getContainerObject().getS9Processor());
 			} while ((item = nodeIterator.next()) != null);
 		}
 
@@ -139,7 +145,7 @@ public class Id2 extends XFormsFunction {
 		return new ArrayIterator(resultList.toArray(result));
 	}
 
-	private void getElementsByIDs(String ids, Node node, ArrayList<Item> result, Configuration configuration) {
+	private void getElementsByIDs(String ids, Node node, ArrayList<XdmNode> result, Processor processor) {
 		// Naive non-performant implementation
 		
 		final Set<String> idSet = new HashSet<String>(Arrays.asList(ids.split(" ")));
@@ -152,7 +158,8 @@ public class Id2 extends XFormsFunction {
     		final Element el = (Element)it;
 			if ((el.hasAttributeNS("http://www.w3.org/XML/1998/namespace", "id") && idSet.contains(el.getAttribute("xml:id"))) 
 					|| (el.hasAttributeNS("http://www.w3.org/XMLSchema-instance", "type") && "xsd:ID".equals(el.getAttributeNS("http://www.w3.org/XMLSchema-instance", "type")) && idSet.contains(el.getTextContent()))) {
-				result.add(new DocumentWrapper(el.getOwnerDocument(), "dummy", configuration).wrap(el));
+				XdmNode wrapped = processor.newDocumentBuilder().wrap(el.getOwnerDocument());
+				result.add(wrapped);
     		}
 	    }
 	}

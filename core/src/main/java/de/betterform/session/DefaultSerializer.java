@@ -154,6 +154,6 @@ public class DefaultSerializer {
      * @return
      */
      private static XdmNode getDocumentElementContext(Document document) {
-    	 return new Processor(false).newDocumentBuilder().wrap(document);
+    	 return XPathUtil.getProcessor().newDocumentBuilder().wrap(document.getDocumentElement());
      }
 }

@@ -43,6 +43,7 @@ import de.betterform.xml.xforms.ui.Repeat;
 import de.betterform.xml.xforms.ui.Switch;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 
 /**
  * This class represents a complete XForms document. It encapsulates the DOM
@@ -62,7 +63,7 @@ import de.betterform.xml.xpath.impl.saxon.XPathCache;
  */
 public class Container {
     private static final Log LOGGER = LogFactory.getLog(Container.class);
-    private final Configuration fConfiguration = new Configuration();
+    private final Processor s9Processor = new Processor(false);
     private BindingResolver bindingResolver;
     private XFormsProcessorImpl processor;
     private ConnectorFactory connectorFactory;
@@ -916,8 +917,8 @@ public class Container {
     	return fEventInfoStack.peek();
     }
 
-	public Configuration getConfiguration() {
-		return fConfiguration;
+	public Processor getS9Processor() {
+		return s9Processor;
 	}
 
     public static class EventInfo {
@@ -985,7 +986,7 @@ public class Container {
     	final Document ownerDocument = n.getOwnerDocument();
     	DocumentBuilder documentBuilder = fgDocumentWrapperCache.get(ownerDocument);
 		if (documentBuilder == null) {
-			documentBuilder = new Processor(false).newDocumentBuilder();
+			documentBuilder = XPathUtil.getProcessor().newDocumentBuilder();
 			fgDocumentWrapperCache.put(ownerDocument, documentBuilder);
 		}
 		
