@@ -5,23 +5,26 @@
 
 package de.betterform.xml.config;
 
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.XdmNode;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import de.betterform.connector.InstanceSerializer;
 import de.betterform.connector.InstanceSerializerMap;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.IndependentContext;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Load the configuration in the default XML format from an InputStream.
@@ -45,7 +48,7 @@ public class DefaultConfig extends Config {
 
 			Document document = factory.newDocumentBuilder().parse(stream);
 			
-			NodeInfo context = getDocumentElementContext(document);
+			XdmNode context = getDocumentElementContext(document);
 			
 			this.properties = load(context, "properties/property", "name", "value");
 			this.useragents = load(context, "useragents/useragent", "name", "processor");
@@ -77,8 +80,8 @@ public class DefaultConfig extends Config {
 	 * @param document
 	 * @return
 	 */
-	private NodeWrapper getDocumentElementContext(Document document) {
-	    return new DocumentWrapper(document, "configuration.xml", new IndependentContext().getConfiguration()).wrap(document.getDocumentElement());
+	private XdmNode getDocumentElementContext(Document document) {
+		return new Processor(false).newDocumentBuilder().wrap(document);
 	}
 
 	/**
@@ -96,7 +99,7 @@ public class DefaultConfig extends Config {
 	 * @throws Exception
 	 *             if any error occured during configuration loading.
 	 */
-	private HashMap load(NodeInfo configContext, String sectionPath,
+	private HashMap load(XdmNode configContext, String sectionPath,
 			String nameAttribute, String valueAttribute) throws Exception {
 		HashMap map = new HashMap();
 		List nodeset = XPathCache.getInstance().evaluate(configContext, sectionPath, Collections.EMPTY_MAP, null);
@@ -131,7 +134,7 @@ public class DefaultConfig extends Config {
 	 * @throws Exception
 	 *             if any error occured during configuration loading.
 	 */
-	private InstanceSerializerMap loadSerializer(NodeInfo configContext,
+	private InstanceSerializerMap loadSerializer(XdmNode configContext,
 			String sectionPath, String scheme, String method, String mediatype,
 			String serializerClass) throws Exception {
 		InstanceSerializerMap map = new InstanceSerializerMap();
@@ -175,7 +178,7 @@ public class DefaultConfig extends Config {
 
 	// ==================== Added by Terence Jacyno (start): 7.12 - extension
 	// functions
-	private HashMap loadExtensionFunctions(NodeInfo configContext,
+	private HashMap loadExtensionFunctions(XdmNode configContext,
 			String sectionPath) throws XFormsException {
 		HashMap map = new HashMap();
 		List nodeset = XPathCache.getInstance().evaluate(configContext, sectionPath, Collections.EMPTY_MAP, null);
@@ -224,8 +227,7 @@ public class DefaultConfig extends Config {
 	// ==================== Added by Terence Jacyno (end): 7.12 - extension
 	// functions
 
-	private HashMap loadCustomElements(NodeInfo configContext,
-			String sectionPath) throws XFormsException {
+	private HashMap loadCustomElements(XdmNode configContext, String sectionPath) throws XFormsException {
 		HashMap map = new HashMap();
 		List nodeset = XPathCache.getInstance().evaluate(configContext, sectionPath, Collections.EMPTY_MAP, null);
 
@@ -267,7 +269,7 @@ public class DefaultConfig extends Config {
 	 * @throws Exception
 	 *             if any error occured during configuration loading.
 	 */
-	private String load(NodeInfo configContext, String path,
+	private String load(XdmNode configContext, String path,
 			String nameAttribute) throws Exception {
 		String value;
 

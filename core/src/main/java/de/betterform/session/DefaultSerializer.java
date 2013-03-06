@@ -5,6 +5,25 @@
 
 package de.betterform.session;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
+
+import javax.xml.transform.TransformerException;
+
+import net.sf.saxon.dom.DocumentWrapper;
+import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.XdmNode;
+import net.sf.saxon.sxpath.IndependentContext;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
@@ -15,21 +34,6 @@ import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.IndependentContext;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * SessionSerializer allows to persist a running XForms session as XML. It uses a special
@@ -93,7 +97,7 @@ public class DefaultSerializer {
      */
     public void inlineInstances(Document out) {
         //imlining instances
-        NodeInfo context = getDocumentElementContext(out);
+        XdmNode context = getDocumentElementContext(out);
         //iterate all models to get all instances
         List models = this.processor.getContainer().getModels();
         for (int i = 0; i < models.size(); i++) {
@@ -149,7 +153,7 @@ public class DefaultSerializer {
      * @param document
      * @return
      */
-     private static NodeWrapper getDocumentElementContext(Document document) {
-	return new DocumentWrapper(document, "configuration.xml", new IndependentContext().getConfiguration()).wrap(document.getDocumentElement());
+     private static XdmNode getDocumentElementContext(Document document) {
+    	 return new Processor(false).newDocumentBuilder().wrap(document);
      }
 }

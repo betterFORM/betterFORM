@@ -19,9 +19,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import junit.framework.TestCase;
-import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.s9api.XdmItem;
-import net.sf.saxon.om.NodeInfo;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.NumericValue;
 import net.sf.saxon.value.StringValue;
@@ -53,7 +52,7 @@ public abstract class BetterFormTestCase extends TestCase {
 
 
     protected XFormsProcessor processor;
-    protected NodeInfo defaultContext;
+    protected XdmNode defaultContext;
     protected XPathFunctionContext defaultFunctionContext;
     protected List documentContext;
 
@@ -115,10 +114,10 @@ public abstract class BetterFormTestCase extends TestCase {
 
     }
 
-    protected NodeInfo getDefaultContext() throws XFormsException {
+    protected XdmNode getDefaultContext() throws XFormsException {
         Instance defaultInstance = getDefaultModel().getDefaultInstance();
         if(defaultInstance != null){
-            return (NodeInfo) getDefaultModel().getDefaultInstance().getInstanceNodeset().get(0);
+            return (XdmNode) getDefaultModel().getDefaultInstance().getInstanceNodeset().get(0);
         }
         return null;
     }
@@ -167,7 +166,7 @@ public abstract class BetterFormTestCase extends TestCase {
             throw new XFormsException("Could not convert resultset to string");
         }
 
-        return ((Item) result.get(0)).getStringValue();
+        return ((XdmItem) result.get(0)).getStringValue();
     }
 
     protected double evaluateInDefaultContextAsDouble(final String xpathExpression) throws XFormsException {
@@ -183,11 +182,11 @@ public abstract class BetterFormTestCase extends TestCase {
     protected Node evaluateInDefaultContextAsNode(final String xpathExpression) throws XFormsException {
         List result = XPathCache.getInstance().evaluate(defaultContext, xpathExpression, kPREFIX_MAPPING, defaultFunctionContext);
 
-        if ((result.size() != 1) || !(result.get(0) instanceof NodeWrapper)) {
-            throw new XFormsException("Could not convert resultset to NodeWrapper");
+        if ((result.size() != 1) || !(result.get(0) instanceof XdmNode)) {
+            throw new XFormsException("Could not convert resultset to XdmNode");
         }
 
-        return (Node) ((NodeWrapper) result.get(0)).getUnderlyingNode();
+        return (Node) ((XdmNode) result.get(0)).getUnderlyingNode();
     }
 
 
@@ -218,11 +217,11 @@ public abstract class BetterFormTestCase extends TestCase {
     protected Node evaluateInInstanceAsNode(final String instanceID, final String xpathExpression) throws XFormsException {
         List result = XPathCache.getInstance().evaluate(getInstanceNodeInfo(instanceID), xpathExpression, kPREFIX_MAPPING, defaultFunctionContext);
 
-        if ((result.size() != 1) || !(result.get(0) instanceof NodeWrapper)) {
-            throw new XFormsException("Could not convert resultset to NodeWrapper");
+        if ((result.size() != 1) || !(result.get(0) instanceof XdmNode)) {
+            throw new XFormsException("Could not convert resultset to XdmNode");
         }
 
-        return (Node) ((NodeWrapper) result.get(0)).getUnderlyingNode();
+        return (Node) ((XdmNode) result.get(0)).getUnderlyingNode();
     }
 
     protected String evaluateInInstanceAsString(final String instanceID, final String xpathExpression) throws XFormsException {
@@ -310,9 +309,9 @@ public abstract class BetterFormTestCase extends TestCase {
      * @return
      * @throws XFormsException
      */
-    private NodeInfo getDefaultInstanceNodeInfoOfModel(String modelID) throws XFormsException {
+    private XdmNode getDefaultInstanceNodeInfoOfModel(String modelID) throws XFormsException {
         Model model = (Model) this.processor.getXFormsModel(modelID);
-        return (NodeInfo) model.getDefaultInstance().getInstanceNodeset().get(0);
+        return (XdmNode) model.getDefaultInstance().getInstanceNodeset().get(0);
     }
 
     /**
@@ -320,8 +319,8 @@ public abstract class BetterFormTestCase extends TestCase {
      * @return
      * @throws XFormsException
    */
-  private NodeInfo getInstanceNodeInfo(String instanceID) throws XFormsException {
-      return (NodeInfo) getDefaultModel().getInstance(instanceID).getInstanceNodeset().get(0);
+  private XdmNode getInstanceNodeInfo(String instanceID) throws XFormsException {
+      return (XdmNode) getDefaultModel().getInstance(instanceID).getInstanceNodeset().get(0);
   }
 
 }
