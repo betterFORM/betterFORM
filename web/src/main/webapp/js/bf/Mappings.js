@@ -1,4 +1,4 @@
-        /**
+ define(/**
          * This file contains all mappings from XForms controls to concrete widget used in the browser.
          *
          * XForms control types and their properties are represented by CSS classes that are present on the
@@ -17,8 +17,15 @@
          * Note: the order of the entries in this array is significant. That means that rules that come first are also
          * applied first to the rendered DOM.
          */
-        bf.Mapping.data = [
-            //todo: is there any reason why first entry of triple used single quotes while others use double quotes?
+		 { data: [
+		          
+		    {
+		    	selector: '.xfControl',
+		    	xfWidgetFile: 'bf/XFControl',
+		        xfWidgetName: 'bfcontrol',
+		    },
+            
+		            //todo: is there any reason why first entry of triple used single quotes while others use double quotes?
             // CONTAINER
             /*['.xfGroup',            "bf/factory/FactoryContainer", "group"],
             ['.xfRepeat, .xfTbody',   "bf/factory/FactoryContainer", "repeat"],
@@ -26,11 +33,24 @@
             ['.xfSwitch.bfTabContainer',"bf/factory/FactoryContainer", "tabswitch"],
             ['.xfDialog',            "bf/factory/FactoryContainer", "dialog"],*/
 
+            
+            
 
             // INPUTS
-            ['.xfControl', "bf/XFControl"],
-            ['.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean) .xfValue',     "bf/bfinputtext", "bfinputtext"]
-            ['.xfInput.xsdBoolean > * >  .xfValue',                                                 "bf/bfcheckbox", "bfcheckbox"],
+            {
+            	selector: '.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean) .xfValue',
+            	xfWidgetFile: 'bf/inputtext',
+            	xfWidgetName: 'bfinputtext',
+            	uiWidgetFile: 'pui/inputtext',
+            	uiWidgetName: 'puiinputtext',	
+            },
+            {
+            	selector: '.xfInput.xsdBoolean > * >  .xfValue',
+            	xfWidgetFile: 'bf/checkbox',
+            	xfWidgetName: 'bfcheckbox',
+            	uiWidgetFile: 'pui/checkbox',
+            	uiWidgetName: 'puicheckbox',	
+            },
             /*
             the following rule is special in that it matches for 'widgetContainer' and not 'xfValue'. The reason
             for this is the behavior of Dojo Dijits that replace the DOM Node they are applied to. But this creates
@@ -64,9 +84,15 @@
             ['.xfSelect.aMinimal .xfValue, .xfSelect.aDefault .xfValue, .xfSelect.aCompact .xfValue',   "bf/factory/FactorySelect", "listcontrol"],
             ['.xfSelect.aFull .xfValue',                                                                "bf/factory/FactorySelect", "checkboxes"],
 
-
+*/
             // OUTPUT
-            ['.xfOutput.mediatypeText:not(.xsdAnyURI) .xfValue',    "bf/factory/FactoryOutput", "text"],
+            {
+            	selector: '.xfOutput.mediatypeText:not(.xsdAnyURI) .xfValue',
+            	xfWidgetFile: 'bf/ouputtext',
+            	xfWidgetName: 'bfoutputtext'	
+            },
+            /*
+            ['',    "bf/factory/FactoryOutput", "text"],
             ['.xfOutput.mediatypeImage .xfValue',   "bf/factory/FactoryOutput", "image"],
             ['.xfOutput.xsdAnyURI .xfValue',        "bf/factory/FactoryOutput", "link"],
             ['.xfOutput.mediatypeHtml .xfValue',    "bf/factory/FactoryOutput", "html"],
@@ -83,7 +109,16 @@
             // TRIGGER
             // this matcher handles several types of triggers like standard button, image button and link at once
             ['.xfTrigger.aMinimal .xfValue',   "bf/factory/FactoryTrigger", "link"],
-            ['.xfTrigger:not(.aMinimal) .xfValue',   "bf/factory/FactoryTrigger", "button"],
+            */
+            {
+            	selector: '.xfTrigger:not(.aMinimal) .xfValue',
+            	xfWidgetFile: 'bf/button',
+            	xfWidgetName: 'bfbutton',
+            	uiWidgetFile: 'pui/button',
+            	uiWidgetName: 'puibutton',	
+            },
+            
+            /*
             ['.xfSubmit:not(.aMinimal)  .xfValue',   "bf/factory/FactoryTrigger", "button"],
 
             // UPLOAD
@@ -95,5 +130,23 @@
             ['body.ToolTipAlert',     "bf/common/AlertToolTip"],
             ['body.InlineAlert',      "bf/common/AlertInline"]
 */
+            
+            {
+            	selector: 'body',
+            	xfWidgetFile: 'bf/alert',
+            	xfWidgetName: 'bfalert',
+            	uiWidgetFile: 'pui/growl',
+            	uiWidgetName: 'puigrowl',	
+            },
+            
+            {
+            	selector: 'xf\\\:hint',
+            	xfWidgetFile: 'bf/hint',
+            	xfWidgetName: 'bfhint',
+            	uiWidgetFile: 'pui/tooltip',
+            	uiWidgetName: 'puitooltip',	
+            }
+            
 
-        ];
+        ]}
+ )

@@ -17,11 +17,11 @@ define(['jquery', 'jquery-ui','bf/XFControl', 'bf/basewidget', 'XFormsProcessor'
 		_bindEvents: function() {
             
 			this._unbindEvents();
-            var $this = this;
+            var _self = this;
             
             this.element.on('click.bfbutton', function(evt){
             	// Send to xfcontrol??? Not directly
-                xformsprocessor.dispatchEvent($this.xfControl.bfcontrol("getId"));
+                xformsprocessor.dispatchEvent(_self.xfControl.bfcontrol("getId"));
             });
 		 
 		 },

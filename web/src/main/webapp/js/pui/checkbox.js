@@ -30,38 +30,43 @@ define(['jquery', 'jquery-ui'], function($) {
         	this._unbindEvents(); // to make sure no duplicate events are registered... 
             var $this = this;
             
+            
             this.box.on('mouseover.puicheckbox', function() {
-                if(!$this.isChecked())
+                //if(!$this.isChecked())
                     $this.box.addClass('ui-state-hover');
             })
             .on('mouseout.puicheckbox', function() {
                 $this.box.removeClass('ui-state-hover');
             })
             .on('click.puicheckbox', function() {
+            	console.log("click.puicheckbox");
                 $this.toggle();
             });
             
             this.element.focus(function() {
-            	if($this.isChecked()) {
-                    $this.box.removeClass('ui-state-active');
-                }
+            	console.log("focus.puicheckbox");
+            	//if($this.isChecked()) {
+                //    $this.box.removeClass('ui-state-active');
+                //}
 
                 $this.box.addClass('ui-state-focus');
             })
             .blur(function() {
-            	if($this.isChecked()) {
-            		$this.box.addClass('ui-state-active');
-            	}
-       
+            	console.log("blur.puicheckbox");
+            	//if($this.isChecked()) {
+            	//	$this.box.addClass('ui-state-active');
+            	//}
             	$this.box.removeClass('ui-state-focus');
             })
             .keydown(function(e) {
+            	console.log("keydown.puicheckbox");
                 var keyCode = $.ui.keyCode;
                 if(e.which == keyCode.SPACE) {
                     e.preventDefault();
                 }
             })
             .keyup(function(e) {
+            	console.log("keyup.puicheckbox");
                 var keyCode = $.ui.keyCode;
                 if(e.which == keyCode.SPACE) {
                     $this.toggle(true);
@@ -77,13 +82,9 @@ define(['jquery', 'jquery-ui'], function($) {
         },
         
         _unbindEvents: function () {
-        	this.element.off('focus.puicheckbox blur.puicheckbox keydown.puicheckbox keyup.puicheckbox');
+        	this.element.off('focus blur keydown keyup');
         	this.box.off('mouseover.puicheckbox mouseout.puicheckbox click.puicheckbox');
         	this.label.off('click.puicheckbox');
-        },
-        
-        _getVisualElement : function () {
-        	return this.box;
         },
         
         toggle: function(keypress) {
@@ -92,20 +93,24 @@ define(['jquery', 'jquery-ui'], function($) {
             } else {
                 this.check(keypress);
             }
-            
             this._trigger('change', null, this.isChecked());
         },
         
         isChecked: function() {
             return this.element.prop('checked');
         },
+        
 
-        check: function(activate, silent) {
+        check: function(focus, silent) {
+        	
+        	if (focus) {
+        		this.element.focus();
+        	}
             if(!this.isChecked()) {
                 this.element.prop('checked', true);
                 this.icon.addClass('ui-icon ui-icon-check');
 
-                if(!activate) {
+                if(!focus) {
                     this.box.addClass('ui-state-active');
                 }
                 
@@ -115,31 +120,40 @@ define(['jquery', 'jquery-ui'], function($) {
             }
         },
 
-        uncheck: function() {
+        uncheck: function(focus, silent) {
+        	if (focus) {
+        		this.element.focus();
+        	}
+//            if (!this.element.hasis(":focus")){
+//        		console.log("setting focus to underlying input");
+//        		
+//        	}
             if(this.isChecked()) {
                 this.element.prop('checked', false);
-                this.box.removeClass('ui-state-active');
+                //this.box.removeClass('ui-state-active');
                 this.icon.removeClass('ui-icon ui-icon-check');
-
-                this.element.trigger('change');
+                if (!silent) {
+                	this.element.trigger('change');
+                }
             }
+
         },
 
         disable: function() {
         	this._unbindEvents();
+        	this.element.prop('readonly', true);
+        	this.element.prop('disabled', true);
         	this.box.addClass('ui-state-disabled');
         },
 
         enable: function() {
         	this._bindEvents();
-        	this.element.removeAttr('readonly');
-        	this.element.removeAttr('disabled');
+        	this.element.prop('readonly', false);
+        	this.element.prop('disabled', false);
         	this.box.removeClass('ui-state-disabled');
         },
         
         valid: function() {
-        	this.element.attr('readonly', 'readonly');
-        	this.element.attr('disabled', 'disabled');
         	this.box.removeClass('ui-state-error');
         },
         

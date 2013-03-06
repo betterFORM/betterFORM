@@ -23,13 +23,13 @@ define(['jquery', 'jquery-ui'], function($) {
         
         _bindEvents: function() {
         	this._unbindEvents(); // to make sure no duplicate events are registered...
-        	var $this = this;
+        	var _self = this;
         	this.element.hover(function() {
-                $this.element.toggleClass('ui-state-hover');
+                _self.element.toggleClass('ui-state-hover');
             }).focus(function() {
-                $this.element.addClass('ui-state-focus');
+                _self.element.addClass('ui-state-focus');
             }).blur(function() {
-                $this.element.removeClass('ui-state-focus');
+                _self.element.removeClass('ui-state-focus');
             });
         },
         

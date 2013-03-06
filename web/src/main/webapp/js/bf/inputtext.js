@@ -2,8 +2,8 @@ define(['jquery', 'jquery-ui','bf/XFControl', 'bf/basewidget', 'XFormsProcessor'
 	$.widget("bf.bfinputtext", $.bf.bfbasewidget, {
 		
 		options: {
-			uiWidgetName: "puiinputtext",
-			uiWidgetFile: "pui/inputtext",
+			uiWidgetName: "",
+			uiWidgetFile: "",
 		},
 		
 		_create: function() {
@@ -12,15 +12,23 @@ define(['jquery', 'jquery-ui','bf/XFControl', 'bf/basewidget', 'XFormsProcessor'
 			
 			// needed do 'this' component can be used in another method...
 			// It can also be used when registering eventhandlers to prevent the need for the 'proxy' construction
-			// Use a standard for this? _self, $this, _this??? 
-			$this = this;
+			// Use a standard for this? _self, $this, _this???
+			// The construction with var _self seems shorter than using the 'proxy' construct, but if you forget 
+			// to put the var in front, it becomes a GLOBAL variable, so always the LAST element processed will be in it!!!
+			var _self = this;
+			
 			
 			// This is just to see if and how overriding in another widget works...
 			// Maybe storing $(this.xfControl).data("bfBfcontrol") somewhere??? does that work?
 			// bf.bfcontrol becomes bfBcontrol.. 
+			// This method is only needed if the value is 'pushed' from the server.
+			// in the example input2 gets its value from input1 and this method is needed then
+			
+
+			
 			$(this.xfControl).data("bfBfcontrol").setValue = function(value,schemavalue) {
-                $this.element.attr('value', value);
-                $this.element.val(value);
+                _self.element.attr('value', value);
+                _self.element.val(value);
             };
             
 		},
@@ -28,18 +36,21 @@ define(['jquery', 'jquery-ui','bf/XFControl', 'bf/basewidget', 'XFormsProcessor'
         _bindEvents: function() {
         	this._unbindEvents;
             //var $this = this;
-            $this = this;
+            var _self = this;
             
+            // Not sure why, but using $this instead of the $.proxy(...., this) construct fails 
+            // when using xf:input instead of parsed html...
+            // Look into it if needed... but for now... Success 
             this.element.on("keyup.bfinputtext", function () {
-    			if($this.xfControl.bfcontrol("isIncremental")){
-    				$this.xfControl.bfcontrol("sendValue", this.element.val(), false);
+    			if(_self.xfControl.bfcontrol("isIncremental")){
+    				_self.xfControl.bfcontrol("sendValue", _self.element.val(), false);
     			}
             })
             .on("blur.bfinputtext", function () {
-            		$this.xfControl.bfcontrol("sendValue", $this.element.val(), true);	
+            		_self.xfControl.bfcontrol("sendValue", _self.element.val(), true);	
             })
             .on("focus.bfinputext",function () {
-            	$this.xfControl.bfcontrol("handleOnFocus");
+            	_self.xfControl.bfcontrol("handleOnFocus");
             });
             	
 		},

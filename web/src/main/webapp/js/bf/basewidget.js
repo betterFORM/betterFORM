@@ -12,8 +12,13 @@ define(['require', 'jquery', 'jquery-ui','bf/XFControl', 'XFormsProcessor'], fun
 			// How do I get the require working here.... the 'uiWidgetFile' is already loaded now,
 			// but do not expect this in the future when real dynamic loading takes place.
 			//$this = this;
-			//require([$this.options.uiWidgetFile], function() { 
-					this.element[this.options.uiWidgetName]();
+			//require([$this.options.uiWidgetFile], function() {
+			
+			console.log("Creating: ", this.widgetName);
+			
+			if (this.options.uiWidgetName != "") {
+				this.uiWidget = this.element[this.options.uiWidgetName]();
+			}
 			//});
 			//this.options.id = getXfId(this.element);
 			this.xfControl = $(this.element).closest(".xfControl");
@@ -26,7 +31,7 @@ define(['require', 'jquery', 'jquery-ui','bf/XFControl', 'XFormsProcessor'], fun
             this._setCurrentValue();
             
             this.xfControl.bfcontrol("setWidget", this);
-            
+			console.log("Created: ", this.widgetName);            
 		},
 		
 		_bindEvents: function () {
@@ -66,7 +71,8 @@ define(['require', 'jquery', 'jquery-ui','bf/XFControl', 'XFormsProcessor'], fun
 
 		//Override in implementation widget if specific behaviour is needed 
 		_setValid: function(valid) {
-			console.debug("_setValid called on " + this.widgetName + " for " + this.xfControl.bfcontrol("getId"));
+			//console.debug("_setValid called on " + this.widgetName + " for " + this.xfControl.bfcontrol("getId"));
+			if(this.uiWidget === undefined) return;
 			if (valid  == true || valid == 'true') {
 				this.element[this.options.uiWidgetName]("valid");
 			} else if (valid  == false || valid == 'false') {
@@ -77,7 +83,8 @@ define(['require', 'jquery', 'jquery-ui','bf/XFControl', 'XFormsProcessor'], fun
 		},
 
 		_setReadonly: function(value) {
-			console.debug("_setReadonly called on " + this.widgetName + " for " + this.xfControl.bfcontrol("getId"));
+			//console.debug("_setReadonly called on " + this.widgetName + " for " + this.xfControl.bfcontrol("getId"));
+			if(this.uiWidget === undefined) return;
 			if (value  == true || value == 'true') {
 				this._unbindEvents();
 				this.element[this.options.uiWidgetName]("disable");
@@ -99,7 +106,15 @@ define(['require', 'jquery', 'jquery-ui','bf/XFControl', 'XFormsProcessor'], fun
 		
 		_destroy: function () {
 			
-		}
+		},
+		
+
+		
+	    _checkBlur: function (ev) {
+	        var target = ev.target;
+	        console.log("timeout, target: ", target, ev);
+	    }
+		
 		
 	});
 });

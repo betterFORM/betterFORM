@@ -1,4 +1,27 @@
-.xfRequired>.xfLabel:after,.xfRequired>.bfTableLabel:after {
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.xfFullGroup .xfControl xf\:label {
+    display: block;
+    float: left;
+    margin-top: 0;
+    text-align: left;
+    vertical-align: top;
+    width: 160px;
+}
+
+.xfFullGroup .xfControl xf\:label {
+	margin-left: 0.2em;
+}
+
+.xfRequired>.xfLabel:after,.xfRequired>.bfTableLabel:after, .xfRequired >xf\:label:after {
 	content: '*';
 	color: #8b0000
 }
@@ -11,4 +34,23 @@
 .xfReadOnly .xfValue a, .xfReadOnly .xfValue {
 
 	cursor: not-allowed !important
+}
+
+xf\:hint {
+	display: none;
+}
+
+xf\:alert {
+	display: none;
+}
+
+xf\:help {
+	display: none;
+}
+
+@media screen and (min-width: 1600px) {
+	.xfFullGroup {
+		column-count: 2;
+	 	-webkit-column-count: 2;
+	}
 }

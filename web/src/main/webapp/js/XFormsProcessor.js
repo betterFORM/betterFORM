@@ -38,7 +38,7 @@ XFormsProcessor.prototype = {
 		                case "xforms-ready" : 
 		                	console.info("xforms-ready");
 		                	xformsprocessor.isReady = true;
-		                	//connect.publish("xforms-ready", []);
+		                	$.publish("xforms-ready", []);
 		                	break; //not perfect - should be on XFormsModelElement
                         case "xforms-invalid" :
                         	xformsprocessor._handleInvalid(xmlEvent);
@@ -225,7 +225,7 @@ XFormsProcessor.prototype = {
     },
     
 	init: function() {
-		$.getJSON("rest/init", {}, function(xmlEvents) {
+		$.getJSON(contextRoot+"/rest/init", {}, function(xmlEvents) {
 			//alert("JSON Data: " + xmlEvents);
 				xformsprocessor.applyChanges(xmlEvents);
 			}).error(
@@ -238,7 +238,7 @@ XFormsProcessor.prototype = {
     
 	_setControlValue: function(id, value) {
 		
-		$.getJSON("rest/setControlValue/"+id+"/"+value, {}, function(xmlEvents) {
+		$.getJSON(contextRoot+"/rest/setControlValue/"+id+"/"+value, {}, function(xmlEvents) {
 			//alert("JSON Data: " + xmlEvents);
 				xformsprocessor.applyChanges(xmlEvents);
 			}).error(
@@ -252,7 +252,7 @@ XFormsProcessor.prototype = {
     _dispatchEventType:function(id, eventType, contextInfo) {
         console.debug("XFProcessor._dispatchEventType(",id,") this: ", this, " eventType:",eventType, " contextInfo:",contextInfo);
         		
-        		$.getJSON("rest/dispatchEventType/"+id+"/"+eventType, contextInfo, function(xmlEvents) {
+        		$.getJSON(contextRoot+"/rest/dispatchEventType/"+id+"/"+eventType, contextInfo, function(xmlEvents) {
         			//alert("JSON Data: " + xmlEvents);
         				xformsprocessor.applyChanges(xmlEvents);
         			}).error(
@@ -271,7 +271,9 @@ XFormsProcessor.prototype = {
 	
 	_buildUI: function() {
 		
-		//this.mappingProcessor = new MappingProcessor();
+		this.mappingProcessor = new MappingProcessor();
+		
+		this.mappingProcessor.apply();
 		
 //		var JS_FILE_NAME = "bf/bfinputtext";
 //		var widgetName = "bfinputtext";
@@ -288,17 +290,6 @@ XFormsProcessor.prototype = {
         	//console.log(window[JS_CLASS_NAME]);
         	//console.log(window[JS_CLASS_NAME]() );
 		try {
-			$('.xfControl')['bfcontrol']();
-			$('.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean) .xfValue')['bfinputtext']();
-        	//$('.xfInput:not(.xsdDate):not(.xsdDateTime):not(.xsdTime):not(.xsdBoolean) .xfValue')['puiinputtext']();
-			
-        	$('.xfInput.xsdBoolean > * >  .xfValue')["bfcheckbox"]();
-        	
-            $('.xfTrigger:not(.aMinimal) .xfValue')["bfbutton"]();
-        	//$('.xfInput.xsdBoolean > * >  .xfValue')["puicheckbox"]();
-
-        //});
-		
         	$('#formWrapper').fadeIn('slow');
 		} catch (ex) {
 			this._handleExceptions("Error building ui", ex);
@@ -309,7 +300,7 @@ XFormsProcessor.prototype = {
     
 	dummyFunction: function(id, value) {
 		
-		$.getJSON("rest/<command>/"+id+"/"+value, { jsonParam1: "JSONValue1", jsonParam2: "JSONValue2" }, function(json) {
+		$.getJSON(contextRoot+"rest/<command>/"+id+"/"+value, { jsonParam1: "JSONValue1", jsonParam2: "JSONValue2" }, function(json) {
 			
 			// json in the case of BF responses is an immediate array of xml events
 			// So json[1] gives you the first event

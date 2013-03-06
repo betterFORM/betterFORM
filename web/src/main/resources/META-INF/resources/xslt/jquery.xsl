@@ -14,9 +14,8 @@
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
 
     <xsl:import href="common-ui.xsl"/>
-    <xsl:include href="html-form-controls.xsl"/>
+    <xsl:include href="jquery-form-controls.xsl"/>
     <xsl:include href="ui.xsl"/>
-
 
     <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     todo: compare and merge dojo.controls with html-form-controls
@@ -156,7 +155,10 @@
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
     <!--  xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/-->
-    <xsl:variable name="default-css" select="'css/xforms.css'"/>
+    
+    
+    
+    <xsl:variable name="default-css" select="concat($contextroot, '/css/xforms.css')"/>
     <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 
@@ -265,6 +267,11 @@
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
     <xsl:template name="include-xforms-css">
+		<xsl:variable name="customCSS" select="('jquery-ui.css','aristo/theme.css','inputtext.css','checkbox.css','tooltip.css','growl.css')" />	
+    	<xsl:for-each select="$customCSS" >
+    		<xsl:variable name="css" select="concat($contextroot, '/css/', . )"/>
+    		<link rel="stylesheet" type="text/css" href="{$css}"/>
+    	</xsl:for-each>
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
         <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
     </xsl:template>
@@ -563,7 +570,35 @@
     <!-- #####################################  CONTROLS ######################################################## -->
     <!-- ######################################################################################################## -->
 
-    <xsl:template match="xf:input|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload">
+	<xsl:template match="xf:input[@xf]">
+		<xf:input>
+
+			<xsl:variable name="type"><xsl:call-template name="getType" /></xsl:variable>
+
+    		<xsl:variable name="widgetClass" select="'xfValue'"/>
+			<xsl:variable name="authorClasses"><xsl:call-template name="get-control-classes" /></xsl:variable>
+			<xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))" />
+			<xsl:variable name="control-classes">
+				<xsl:call-template name="assemble-control-classes">
+					<xsl:with-param name="appearance" select="@appearance" />
+				</xsl:call-template>
+			</xsl:variable>
+			
+			<xsl:if test="bf:data/@bf:readonly='true'">
+				<xsl:attribute name="disabled">disabled</xsl:attribute>
+			</xsl:if>
+			<xsl:if test="bf:data/text()='true'">
+				<xsl:attribute name="checked">true</xsl:attribute>
+			</xsl:if>
+			
+			<xsl:attribute name="class"><xsl:value-of select="$control-classes"/></xsl:attribute>
+			<xsl:attribute name="widgetClasses"><xsl:value-of select="$widgetClasses"/></xsl:attribute>
+			<xsl:copy-of select="@*" />
+			<xsl:copy-of select="*" />
+		</xf:input>
+	</xsl:template>
+
+    <xsl:template match="xf:input[not(@xf)]|xf:range|xf:secret|xf:select|xf:select1|xf:textarea|xf:upload">
         <xsl:variable name="control-classes">
             <xsl:call-template name="assemble-control-classes">
                 <xsl:with-param name="appearance" select="@appearance"/>

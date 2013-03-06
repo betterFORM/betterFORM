@@ -52,6 +52,12 @@ define(['jquery', 'jquery-ui'],
 
         _create: function() {
         	
+        
+        	this.id = $(this.element).attr('id');
+        	
+        	if(this.element.attr('xf')) {
+        		$('<input id="'+ this.id + '-value" type="text" class="xfValue" name=​d_"'+ this.id + '" placeholder value />').appendTo(this.element);
+        	}
         	
             if(this.isIncremental()){
                 this.incremental = true;
@@ -60,29 +66,34 @@ define(['jquery', 'jquery-ui'],
             // from XFBinding.js (constructor)
             
             		this.srcNodeRef = this.element;
-           			this.id = $(this.element).attr('id');
+           			
             
            			setDefaultClasses(this.srcNodeRef);
            			/*
             		Controls publish their validity state to the processor which will pass it to the selected alertHandler
            			 */
            			// console.debug("XFBinding.constructor handleValid");
-           			if (this.isValid()) {
-           				$.publish("xforms-valid", [this.id,"init"]);
-           			} else {
-           				$.publish("xforms-invalid", [this.id,"init"]);
-           			}
+           			// Moved to init
            			// console.debug("XFBinding.constructor subscribe state change");
            			// console.debug("XFBinding.constructor: $("#"+this.id).on('bf-state-change', $.proxy(this.handleStateChanged, this)");
-
+           			
            			var bfStateChangedHandle = $("#"+this.id).on('bf-state-change', $.proxy(this.handleStateChanged, this));
           
+           			$.subscribe("xforms-ready", $.proxy(this._handleInit, this));
            
            			// xformsprocessor.addSubscriber(this.id, bfStateChangedHandle);
 
             
          // end from XFBinding.js
       
+        },
+        
+        _handleInit:function() {
+        	if (this.isValid()) {
+   				$.publish("xforms-valid", [this.id, "init"]);
+   			} else {
+   				$.publish("xforms-invalid", [this.id, "init"]);
+   			}	
         },
 
         /**
@@ -97,6 +108,12 @@ define(['jquery', 'jquery-ui'],
                 // console.debug("XFControl sendValue - control is readonly - ignoring event");
                 return;
             }
+            
+//            console.log("Focus CONTROL: ", $(this.element).has(":focus") > 0 );
+//            if($(this.element).has(":focus").length > 0){
+//                console.debug("XFControl sendValue - control still has focus (just not the input) - ignoring event");
+//                return;
+//            }
 
             if (value != undefined && this.currentValue != value) {
                 //update internal value

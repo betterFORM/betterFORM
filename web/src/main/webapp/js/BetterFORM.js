@@ -1,7 +1,7 @@
 require.config({
 
   // Sets the js folder as the base directory for all future relative paths
-  baseUrl: "./js",
+  //baseUrl: "./js",
 
   // 3rd party script alias names (Easier to type "jquery" than "libs/jquery, etc")
   paths: {
@@ -37,11 +37,20 @@ require.config({
 
 });
 
-require(["domReady!", "jquery", "jquery-ui", "subtopic", "XFormsProcessor", "bf/XFControl", "pui/inputtext", "pui/checkbox", "pui/button", "bf/inputtext", "bf/checkbox", "bf/button"], function(doc, $) {
-    $(function() {
+require(["domReady!", "jquery", "bf/Mappings", "jquery-ui", "subtopic", 
+         "XFormsProcessor", , "bf/MappingProcessor", "bf/XFControl", 
+         "pui/core", "pui/inputtext", "pui/checkbox", "pui/button", "pui/tooltip", "pui/growl",
+         "bf/hint", "bf/alert", "bf/inputtext", "bf/checkbox", "bf/button", "bf/outputtext"], 
+    function(doc, $, bfMappings) { $(function() {
+    	
+    	contextRoot = "/"+document.URL.split("/")[3];
+    	
     	
     	xformsprocessor = new XFormsProcessor();
+    	mappings = bfMappings.data;
     	xformsprocessor.init();
+    	
+    	
     	
     	getXfId = function(/*Node*/n){
             var tmp = $(n).attr('id').substring(0,$(n).attr('id').lastIndexOf("-"));
@@ -64,5 +73,5 @@ require(["domReady!", "jquery", "jquery-ui", "subtopic", "XFormsProcessor", "bf/
             }
         };
         
-    });
-});
+    });}
+);
