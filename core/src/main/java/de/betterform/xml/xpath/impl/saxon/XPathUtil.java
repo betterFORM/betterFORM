@@ -5,23 +5,27 @@
 
 package de.betterform.xml.xpath.impl.saxon;
 
-import de.betterform.xml.ns.NamespaceResolver;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import net.sf.saxon.dom.DocumentWrapper;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XdmAtomicValue;
+import net.sf.saxon.s9api.XdmItem;
+import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.sxpath.IndependentContext;
+import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.DoubleValue;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import de.betterform.xml.ns.NamespaceResolver;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 
 /**
  * Utility function working with the Saxon XPath implementation
@@ -41,7 +45,7 @@ public class XPathUtil {
     public static String getAsString(List nodeset, int position) {
         List resultAsNodeset = nodeset;
         if (resultAsNodeset.size() >= position)
-            return ((Item) resultAsNodeset.get(position - 1)).getStringValue();
+            return ((XdmItem) resultAsNodeset.get(position - 1)).getStringValue();
         else
             return null;
     }
@@ -51,11 +55,14 @@ public class XPathUtil {
             return false;
         }
 
-        Item item = ((Item) nodeset.get(position - 1));
-        if (item instanceof BooleanValue) {
-            return ((BooleanValue) item).effectiveBooleanValue();
-        }
-
+        XdmItem item = ((XdmItem) nodeset.get(position - 1));
+        try {
+        	if (item instanceof XdmAtomicValue) {
+        		return ((XdmAtomicValue) item).getBooleanValue();
+        	}
+		} catch (SaxonApiException e) {
+			
+		}
         return false;
     }
     
@@ -64,11 +71,14 @@ public class XPathUtil {
             return Double.NaN;
         }
 
-        Item item = ((Item) nodeset.get(position - 1));
-        if (item instanceof DoubleValue) {
-            return ((DoubleValue) item).getDoubleValue();
-        }
-
+        XdmItem item = ((XdmItem) nodeset.get(position - 1));
+        try {
+        	if (item instanceof XdmAtomicValue) {
+        		return ((XdmAtomicValue) item).getDoubleValue();
+        	}
+		} catch (SaxonApiException e) {
+			
+		}
         return Double.NaN;
     }
 
@@ -107,9 +117,9 @@ public class XPathUtil {
     public static Node getAsNode(List nodeset, int position) {
         List resultAsNodeset = nodeset;
         if (resultAsNodeset.size() >= position) {
-            Item item = ((Item) resultAsNodeset.get(position - 1));
-            if (item instanceof NodeWrapper) {
-                return (Node) ((NodeWrapper) item).getUnderlyingNode();
+            XdmItem item = ((XdmItem) resultAsNodeset.get(position - 1));
+            if (item instanceof XdmNode) {
+                return (Node) ((XdmNode) item).getUnderlyingNode();
             }
         }
         return null;
@@ -121,19 +131,17 @@ public class XPathUtil {
      * @param baseURI the base URI of the Document
      * @return
      */
-    public static List getRootContext(Document doc,String baseURI) {
-            final Element documentElement = doc.getDocumentElement();
-            if (documentElement != null)
-                return Collections.singletonList(new DocumentWrapper(doc, baseURI, new IndependentContext().getConfiguration()).wrap(documentElement));
-            else
-                return Collections.EMPTY_LIST;
+     public static List getRootContext(Document doc,String baseURI) {
+    	 final Element documentElement = doc.getDocumentElement();
+    	 return getElementContext(documentElement, baseURI);
     }
 
     public static List getElementContext(Element element,String baseURI){
-        if (element != null)
-            return Collections.singletonList(new DocumentWrapper(element.getOwnerDocument(), baseURI, new IndependentContext().getConfiguration()).wrap(element));
-        else
-            return Collections.EMPTY_LIST;
+        if (element != null){
+        	Processor processor = new Processor(false);
+        	return Collections.singletonList(processor.newDocumentBuilder().wrap(element));
+        } else
+            return Collections.emptyList();
     }
 
     public static Node evaluateAsSingleNode(Document doc, String xpath,String baseURI) throws XFormsException {
@@ -201,5 +209,5 @@ public class XPathUtil {
        Map namespaces = NamespaceResolver.getAllNamespaces(element);
        return XPathCache.getInstance().evaluateAsString(context,1,xpath,namespaces,null);
     }
-
+   
 }

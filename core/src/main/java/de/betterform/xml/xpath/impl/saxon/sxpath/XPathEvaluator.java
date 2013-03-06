@@ -11,7 +11,7 @@ import net.sf.saxon.expr.ExpressionTool;
 import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.instruct.Executable;
 import net.sf.saxon.instruct.SlotManager;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.om.NamespaceResolver;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;

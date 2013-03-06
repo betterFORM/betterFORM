@@ -108,7 +108,5 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
 
-        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}existquery", ExistDBQuery.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
     }
 }

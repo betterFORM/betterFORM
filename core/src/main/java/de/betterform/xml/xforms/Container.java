@@ -5,6 +5,26 @@
 
 package de.betterform.xml.xforms;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+import net.sf.saxon.Configuration;
+import net.sf.saxon.s9api.DocumentBuilder;
+import net.sf.saxon.s9api.Processor;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
+import org.w3c.xforms.XFormsModelElement;
+
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
@@ -23,18 +43,6 @@ import de.betterform.xml.xforms.ui.Repeat;
 import de.betterform.xml.xforms.ui.Switch;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.DocumentWrapper;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.xforms.XFormsModelElement;
-
-import java.util.*;
 
 /**
  * This class represents a complete XForms document. It encapsulates the DOM
@@ -972,15 +980,15 @@ public class Container {
 		}
     }
     
-    private Map<Document, DocumentWrapper> fgDocumentWrapperCache = new HashMap<Document, DocumentWrapper>();
-    public DocumentWrapper getDocumentWrapper(Node n) {
+    private Map<Document, DocumentBuilder> fgDocumentWrapperCache = new HashMap<Document, DocumentBuilder>();
+    public DocumentBuilder getDocumentBuilder(Node n) {
     	final Document ownerDocument = n.getOwnerDocument();
-		DocumentWrapper documentWrapper = fgDocumentWrapperCache.get(ownerDocument);
-		if (documentWrapper == null) {
-			documentWrapper = new DocumentWrapper(ownerDocument, getProcessor().getBaseURI(), getConfiguration());
-			fgDocumentWrapperCache.put(ownerDocument, documentWrapper);
+    	DocumentBuilder documentBuilder = fgDocumentWrapperCache.get(ownerDocument);
+		if (documentBuilder == null) {
+			documentBuilder = new Processor(false).newDocumentBuilder();
+			fgDocumentWrapperCache.put(ownerDocument, documentBuilder);
 		}
 		
-		return documentWrapper;
+		return documentBuilder;
     }
 }

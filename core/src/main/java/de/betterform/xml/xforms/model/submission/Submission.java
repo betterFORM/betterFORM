@@ -5,15 +5,47 @@
 
 package de.betterform.xml.xforms.model.submission;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import javax.xml.transform.TransformerException;
+
+import net.sf.saxon.s9api.DocumentBuilder;
+import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.XdmItem;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.Event;
+
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
-import de.betterform.xml.xforms.*;
+import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.Initializer;
+import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.xforms.XFormsElementFactory;
+import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.action.UpdateHandler;
-import de.betterform.xml.xforms.exception.*;
+import de.betterform.xml.xforms.exception.XFormsBindingException;
+import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.exception.XFormsInternalSubmitException;
+import de.betterform.xml.xforms.exception.XFormsLinkException;
+import de.betterform.xml.xforms.exception.XFormsSubmitError;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Bind;
@@ -25,21 +57,6 @@ import de.betterform.xml.xforms.ui.state.BoundElementState;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.om.Item;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.Event;
-
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.*;
 
 
 /**
@@ -602,7 +619,7 @@ public class Submission extends BindingElement implements DefaultAction {
             //do xforms-submit-serialize handling
     		final Element submissionBodyEl = this.element.getOwnerDocument().createElement("submission-body");
     		final Map<String, Object> info = new HashMap<String, Object>();
-    		info.put(XFormsConstants.SUBMISSION_BODY, this.container.getDocumentWrapper(this.element).wrap(submissionBodyEl));
+    		info.put(XFormsConstants.SUBMISSION_BODY, this.container.getDocumentBuilder(this.element).wrap(submissionBodyEl));
 
     		this.container.dispatch(this.id, XFormsEventNames.SUBMIT_SERIALIZE, info);
 			submissionBodyEl.normalize();
@@ -1133,10 +1150,10 @@ public class Submission extends BindingElement implements DefaultAction {
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		final Document ownerDocument = this.element.getOwnerDocument();
-		final DocumentWrapper wrapper = new DocumentWrapper(ownerDocument, this.container.getProcessor().getBaseURI(), this.container.getConfiguration());
+		final DocumentBuilder builder = new Processor(false).newDocumentBuilder();
 		
 		
-		List<Item> headerItems = new ArrayList<Item>(response.size());
+		List<XdmItem> headerItems = new ArrayList<XdmItem>(response.size());
 		for (Iterator<Map.Entry<String, String>> it = response.entrySet().iterator(); it.hasNext();) {
 			Map.Entry<String, String> entry =  it.next();
 			if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey()) &&
@@ -1154,7 +1171,7 @@ public class Submission extends BindingElement implements DefaultAction {
 				valueEl.appendChild(ownerDocument.createTextNode(entry.getValue()));
 				headerEl.appendChild(valueEl);
 				
-				headerItems.add(wrapper.wrap(headerEl));
+				headerItems.add(builder.wrap(headerEl));
 			}
 		}
 		result.put(RESOURCE_URI, getResourceURI());

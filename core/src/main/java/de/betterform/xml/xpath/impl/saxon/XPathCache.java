@@ -21,7 +21,7 @@ import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.om.LookaheadIterator;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
@@ -138,7 +138,7 @@ public class XPathCache {
 
         try {
             final XPathExpression exp = getXPathExpression(xpathString, prefixMapping, functionContext != null?functionContext.getXFormsElement().getContainerObject().getConfiguration():XPathCache.kCONFIG);
-            final XPathDynamicContext context = exp.createDynamicContext((Item) nodeset.get(position - 1));
+            final XPathDynamicContext context = exp.createDynamicContext((XdmItem) nodeset.get(position - 1));
             ListSequenceIterator nodesetIt = new ListSequenceIterator(nodeset, position);
             nodesetIt.next();
 			((XPathContextMajor)context.getXPathContextObject()).setCurrentIterator(nodesetIt);
@@ -226,7 +226,7 @@ public class XPathCache {
 
     private static class ListSequenceIterator implements SequenceIterator, Cloneable, LastPositionFinder, LookaheadIterator {
 
-        private List nodeset;
+        private List<XdmItem> nodeset;
         private int position;
 
         
@@ -240,9 +240,9 @@ public class XPathCache {
             this.position = position - 1;
         }
 
-        public Item current() {
+        public XdmItem current() {
             if (position != -1) {
-                return (NodeInfo) nodeset.get(position - 1);
+                return nodeset.get(position - 1);
             }
 
             return null;
@@ -252,7 +252,7 @@ public class XPathCache {
             return new ListSequenceIterator(nodeset, position);
         }
 
-        public Item next() {
+        public XdmItem next() {
             if (position < nodeset.size()) {
                 position++;
             } else {

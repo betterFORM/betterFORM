@@ -23,7 +23,7 @@ import javax.xml.transform.Source;
  * The dynamic context holds the context item and the values of external variables used by the XPath expression.
  *
  * <p>This object is always created via the method
- * {@link net.sf.saxon.sxpath.XPathExpression#createDynamicContext(net.sf.saxon.om.Item)}</p>
+ * {@link net.sf.saxon.sxpath.XPathExpression#createDynamicContext(net.sf.saxon.s9api.XdmItem)}</p>
  */
 public class XPathDynamicContext {
 

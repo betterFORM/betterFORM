@@ -14,7 +14,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.s9api.XdmItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Attr;
@@ -385,20 +385,20 @@ public class InsertAction extends AbstractBoundAction {
 			doRefresh(true);
 		}
 
-		private Map<String, Object> createEventInfoObject(List<Node> insertedNodes, List<Item> originNodeSet, Node insertLocationNode, String positionAttribute, String locationPath) {
+		private Map<String, Object> createEventInfoObject(List<Node> insertedNodes, List<XdmItem> originNodeSet, Node insertLocationNode, String positionAttribute, String locationPath) {
 			Map<String, Object> result = new HashMap<String, Object>();
 	    	
-			List<Item> insertedItems = new ArrayList<Item>(insertedNodes.size());
+			List<XdmItem> insertedItems = new ArrayList<XdmItem>(insertedNodes.size());
 			for (int i = 0; i < insertedNodes.size(); ++i) {
 				final Node n = insertedNodes.get(i);
-				insertedItems.add(InsertAction.this.container.getDocumentWrapper(n).wrap(n));
+				insertedItems.add(InsertAction.this.container.getDocumentBuilder(n).wrap(n));
 			}
 			
 	    	result.put("location-path", locationPath);
 	    	result.put(INSERTED_NODES, insertedItems);
 	    	result.put(ORIGIN_NODES, originNodeSet);
             //todo: fix this!!!
-	    	result.put(INSERT_LOCATION_NODE, InsertAction.this.container.getDocumentWrapper(insertLocationNode).wrap(insertLocationNode));
+	    	result.put(INSERT_LOCATION_NODE, InsertAction.this.container.getDocumentBuilder(insertLocationNode).wrap(insertLocationNode));
 	    	result.put(POSITION, positionAttribute);
 	    	
 	    	return result;

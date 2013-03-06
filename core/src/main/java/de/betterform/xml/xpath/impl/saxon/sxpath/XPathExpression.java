@@ -8,7 +8,7 @@ package de.betterform.xml.xpath.impl.saxon.sxpath;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.instruct.SlotManager;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
@@ -70,7 +70,7 @@ public class XPathExpression {
      * expression.
      */
 
-    public XPathDynamicContext createDynamicContext(Item contextItem) {
+    public XPathDynamicContext createDynamicContext(XdmItem contextItem) {
         XPathContextMajor context = new XPathContextMajor(contextItem, evaluator.getExecutable());
         context.openStackFrame(stackFrameMap);
         return new XPathDynamicContext(context);
@@ -78,7 +78,7 @@ public class XPathExpression {
 
     /**
      * Execute the expression, returning the result as a {@link SequenceIterator}, whose members will be instances
-     * of the class {@link net.sf.saxon.om.Item}
+     * of the class {@link net.sf.saxon.s9api.XdmItem}
      *
      * <p>Note that if evaluation of the expression fails with a dynamic error, this will generally
      * be reported in the form of an exception thrown by the next() method of the {@link SequenceIterator}
@@ -93,7 +93,7 @@ public class XPathExpression {
 
     /**
      * Execute the expression, returning the result as a List, whose members will be instances
-     * of the class {@link net.sf.saxon.om.Item}
+     * of the class {@link net.sf.saxon.s9api.XdmItem}
      * @param context the XPath dynamic context
      * @return a list of items representing the result of the expression
      */
@@ -112,7 +112,7 @@ public class XPathExpression {
     }
 
     /**
-     * Execute the expression, returning the result as a single {@link net.sf.saxon.om.Item}
+     * Execute the expression, returning the result as a single {@link net.sf.saxon.s9api.XdmItem}
      * If the result of the expression is a sequence containing more than one item, items after
      * the first are discarded. If the result is an empty sequence, the method returns null.
      * @param context the XPath dynamic context

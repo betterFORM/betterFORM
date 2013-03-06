@@ -5,18 +5,24 @@
 
 package de.betterform.xml.xforms.exception;
 
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.xforms.Container;
-import de.betterform.xml.xforms.XFormsConstants;
-import de.betterform.xml.xforms.XFormsProcessor;
-import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.om.Item;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.saxon.s9api.DocumentBuilder;
+import net.sf.saxon.s9api.XdmItem;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.EventTarget;
 
-import java.util.*;
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xforms.Container;
+import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.xforms.XFormsProcessor;
 
 /**
  * Signals an <code>xforms-submit-error</code> error indication.
@@ -85,8 +91,8 @@ public class XFormsSubmitError extends XFormsErrorIndication {
     	
     	if (responseHeaders != null) {
     		final Document ownerDocument = submissionEl.getOwnerDocument();
-    		final DocumentWrapper wrapper = container.getDocumentWrapper(submissionEl);
-    		List<Item> headerItems = new ArrayList<Item>(responseHeaders.size());
+    		final DocumentBuilder builder = container.getDocumentBuilder(submissionEl);
+    		List<XdmItem> headerItems = new ArrayList<XdmItem>(responseHeaders.size());
     		for (Iterator<Map.Entry<String, String>> it = responseHeaders.entrySet().iterator(); it.hasNext();) {
     			Map.Entry<String, String> entry =  it.next();
     			if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey())) {
@@ -101,7 +107,7 @@ public class XFormsSubmitError extends XFormsErrorIndication {
     				valueEl.appendChild(ownerDocument.createTextNode(entry.getValue()));
     				headerEl.appendChild(valueEl);
     				
-    				headerItems.add(wrapper.wrap(headerEl));
+    				headerItems.add(builder.wrap(headerEl));
     			}
     		}
     		result.put(XFormsConstants.RESPONSE_HEADERS, headerItems);

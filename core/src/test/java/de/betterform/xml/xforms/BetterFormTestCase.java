@@ -20,7 +20,7 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import junit.framework.TestCase;
 import net.sf.saxon.dom.NodeWrapper;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.NumericValue;
