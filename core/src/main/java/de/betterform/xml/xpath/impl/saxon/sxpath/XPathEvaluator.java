@@ -146,7 +146,19 @@ public class XPathEvaluator {
         xpe.setStackFrameMap(map, numberOfExternalVariables);
         return xpe;
     }
-
+     /*
+    Expression exp = ExpressionTool.make(expression, staticContext, 0, -1, 1, false);
+    exp.setContainer(staticContext);
+    ExpressionVisitor visitor = ExpressionVisitor.make(staticContext);
+    visitor.setExecutable(getExecutable());
+    exp = visitor.typeCheck(exp, Type.ITEM_TYPE);
+    SlotManager map = staticContext.getStackFrameMap();
+    int numberOfExternalVariables = map.getNumberOfVariables();
+    ExpressionTool.allocateSlots(exp, numberOfExternalVariables, map);
+    XPathExpression xpe = new XPathExpression(this, exp);
+    xpe.setStackFrameMap(map, numberOfExternalVariables);
+    return xpe;
+     */
     /**
      * Prepare (compile) an XSLT pattern for subsequent evaluation. The result is an XPathExpression
      * object representing a (pseudo-) expression that when evaluated returns a boolean result: true
