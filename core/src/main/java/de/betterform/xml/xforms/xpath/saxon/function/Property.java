@@ -10,7 +10,7 @@ import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.exception.XFormsComputeException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.ExpressionVisitor;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;

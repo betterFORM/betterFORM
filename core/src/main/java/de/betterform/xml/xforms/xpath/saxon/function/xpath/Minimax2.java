@@ -6,14 +6,17 @@
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import net.sf.saxon.expr.*;
+import net.sf.saxon.expr.parser.ExpressionTool;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.expr.parser.Optimizer;
 import net.sf.saxon.functions.CollatingFunction;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StandardNames;
-import net.sf.saxon.sort.AtomicComparer;
-import net.sf.saxon.sort.DescendingComparer;
-import net.sf.saxon.sort.GenericAtomicComparer;
-import net.sf.saxon.sort.StringCollator;
+import net.sf.saxon.expr.sort.AtomicComparer;
+import net.sf.saxon.expr.sort.DescendingComparer;
+import net.sf.saxon.expr.sort.GenericAtomicComparer;
+import net.sf.saxon.lib.StringCollator;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.ItemType;
@@ -38,7 +41,7 @@ public class Minimax2 extends CollatingFunction {
 
     public void checkArguments(ExpressionVisitor visitor) throws XPathException {
         super.checkArguments(visitor);
-        Optimizer opt = visitor.getConfiguration().getOptimizer();
+        Optimizer opt = visitor.getConfiguration().obtainOptimizer();
         argument[0] = ExpressionTool.unsorted(opt, argument[0], false);
     }
 
@@ -71,6 +74,7 @@ public class Minimax2 extends CollatingFunction {
      */
 
     public Expression optimize(ExpressionVisitor visitor, ItemType contextItemType) throws XPathException {
+        /*
         TypeHierarchy th = visitor.getConfiguration().getTypeHierarchy();
         argumentType = (BuiltInAtomicType)argument[0].getItemType(th).getAtomizedItemType().getPrimitiveItemType();
         Expression e = super.optimize(visitor, contextItemType);
@@ -84,6 +88,8 @@ public class Minimax2 extends CollatingFunction {
                 return argument[0];
             }
         }
+
+        */
         return this;
     }
 
@@ -165,7 +171,7 @@ public class Minimax2 extends CollatingFunction {
             prim = min;
             if (min instanceof UntypedAtomicValue) {
                 try {
-                    min = new DoubleValue(Value.stringToNumber(min.getStringValueCS()));
+                    min =  DoubleValue.parseNumber(min.getStringValue());
                     prim = min;
                     foundDouble = true;
                 } catch (NumberFormatException e) {
@@ -207,7 +213,7 @@ public class Minimax2 extends CollatingFunction {
             prim = test2;
             if (test instanceof UntypedAtomicValue) {
                 try {
-                    test2 = new DoubleValue(Value.stringToNumber(test.getStringValueCS()));
+                    test2 =  DoubleValue.parseNumber(test.getStringValue());
                     if (foundNaN) {
                         return DoubleValue.NaN;
                     }
@@ -251,11 +257,11 @@ public class Minimax2 extends CollatingFunction {
         }
         if (foundDouble) {
             if (!(min instanceof DoubleValue)) {
-                min = min.convert(BuiltInAtomicType.DOUBLE, context);
+                min = DoubleValue.parseNumber(min.getStringValue());
             }
         } else if (foundFloat) {
             if (!(min instanceof FloatValue)) {
-                min = min.convert(BuiltInAtomicType.FLOAT, context);
+                min = FloatValue.parseNumber(min.getStringValue());
             }    
         }
         return min;

@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
+import net.sf.saxon.expr.Container;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.functions.FunctionLibrary;
@@ -25,6 +26,7 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
     protected static Value EMPTY = EmptySequence.getInstance();
     private static HashMap functionTable = new HashMap(20);
     protected static ItemType SAME_AS_FIRST_ARGUMENT = NodeKindTest.NAMESPACE;
+    private static final long serialVersionUID = -6673788638743556161L;
 
     protected abstract String getFunctionNamespace();
 
@@ -39,8 +41,8 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      */
 
     public boolean isAvailable(StructuredQName functionName, int arity) {
-        String uri = functionName.getNamespaceURI();
-        String local = functionName.getLocalName();
+        String uri = functionName.getURI();
+        String local = functionName.getDisplayName();
 //        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
         if (uri.equals(getFunctionNamespace())) {
 //            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
@@ -56,8 +58,8 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
 
     //TODO: implement method!!!!!! 
     public net.sf.saxon.value.SequenceType[] getFunctionSignature(StructuredQName functionName, int arity) {
-        String uri = functionName.getNamespaceURI();
-        String local = functionName.getLocalName();
+        String uri = functionName.getURI();
+        String local = functionName.getDisplayName();
 //        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
         if (uri.equals(getFunctionNamespace())) {
 //            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
@@ -70,6 +72,13 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
             return null;
         }
      }
+
+
+    public Expression bind(StructuredQName structuredQName, Expression[] expressions, StaticContext staticContext, Container container) throws XPathException {
+        Expression expression =  bind(structuredQName, expressions, staticContext);
+        expression.setContainer(container);
+        return expression;
+    }
 
     /**
      * Bind an extension function, given the URI and local parts of the function name,
@@ -89,10 +98,9 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      *          while searching for the function; or if this function library "owns" the namespace containing
      *          the function call, but no function was found.
      */
-
     public Expression bind(StructuredQName functionName, Expression[] staticArgs, StaticContext env) throws XPathException {
-        String uri = functionName.getNamespaceURI();
-        String local = functionName.getLocalName();
+        String uri = functionName.getURI();
+        String local = functionName.getDisplayName();
 //        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
         if (uri.equals(getFunctionNamespace())) {
 //            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, staticArgs.length);

@@ -98,8 +98,8 @@
 </dependency-->
 <dependency>
 <groupId>net.sf.saxon</groupId>
-<artifactId>saxon</artifactId>
-<version>9.2.1.5</version>
+<artifactId>Saxon-HE</artifactId>
+<version>9.4.0.7</version>
 </dependency>
 <dependency>
 <groupId>commons-codec</groupId>

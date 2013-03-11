@@ -58,13 +58,13 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
 	{
 	    references.add((context!=null?(context + "/"):"") + SaxonXPathExpressionSerializer.serialize(expression, prefixMapping));
 	}
-	else if (expression instanceof PathExpression)
+	else if (expression instanceof SlashExpression)
 	{
-	    final PathExpression pathExpression = (PathExpression)expression;
-	    final Expression startExpression = pathExpression.getControllingExpression();
+	    final SlashExpression slashExpression = (SlashExpression)expression;
+	    final Expression startExpression = slashExpression.getControllingExpression();
 	    
 	    addExpressionReferences(references, context, startExpression, prefixMapping); 
-	    addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(startExpression, prefixMapping), pathExpression.getControlledExpression(), prefixMapping);
+	    addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(startExpression, prefixMapping), slashExpression.getControlledExpression(), prefixMapping);
 	    
 	}
 	else if (expression instanceof FilterExpression)

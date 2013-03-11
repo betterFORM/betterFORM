@@ -10,12 +10,12 @@ import net.sf.saxon.Platform;
 import net.sf.saxon.event.LocationProvider;
 import net.sf.saxon.expr.*;
 import net.sf.saxon.functions.*;
-import net.sf.saxon.instruct.Executable;
-import net.sf.saxon.instruct.LocationMap;
+import net.sf.saxon.expr.instruct.Executable;
+import net.sf.saxon.expr.instruct.LocationMap;
 import net.sf.saxon.java.JavaPlatform;
 import net.sf.saxon.om.NamePool;
-import net.sf.saxon.om.NamespaceConstant;
-import net.sf.saxon.sort.StringCollator;
+import net.sf.saxon.lib.NamespaceConstant;
+import net.sf.saxon.lib.StringCollator;
 import net.sf.saxon.type.BuiltInAtomicType;
 
 import javax.xml.transform.SourceLocator;
@@ -49,7 +49,7 @@ public abstract class AbstractStaticContext implements StaticContext {
     protected void setConfiguration(Configuration config) {
         this.config = config;
         executable = new Executable(config);
-        executable.setHostLanguage(Configuration.XPATH);
+        executable.setHostLanguage(Configuration.XPATH, false);
     }
 
     /**
@@ -170,7 +170,7 @@ public abstract class AbstractStaticContext implements StaticContext {
      * @param lib the function library
      */
 
-    public void setFunctionLibrary(FunctionLibrary lib) {
+    public void setFunctionLibrary(FunctionLibraryList lib) {
         executable.setFunctionLibrary(lib);
     }
 

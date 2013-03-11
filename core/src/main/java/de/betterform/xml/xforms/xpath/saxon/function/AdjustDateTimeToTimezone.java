@@ -38,8 +38,9 @@ public class AdjustDateTimeToTimezone extends XFormsFunction {
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
     if (argument.length == 0) return StringValue.EMPTY_STRING;
-    
-	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
+    return StringValue.EMPTY_STRING;
+	    /*
+        final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
 
 	try {
 	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString).asAtomic();
@@ -47,6 +48,6 @@ public class AdjustDateTimeToTimezone extends XFormsFunction {
 	    return new StringValue(argAsDateTime.adjustTimezone(kLOCAL_TIME_OFFSET_IN_MINUTES).getStringValue());
 	} catch (XPathException e1) {
 	    return StringValue.EMPTY_STRING;
-	}
+	}    */
     }
 }

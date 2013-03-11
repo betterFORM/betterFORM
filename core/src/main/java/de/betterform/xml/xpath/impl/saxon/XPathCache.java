@@ -22,11 +22,12 @@ import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.om.Item;
-import net.sf.saxon.om.LookaheadIterator;
+import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.LookaheadIterator;
 import net.sf.saxon.xpath.XPathFunctionLibrary;
 import org.w3c.dom.Node;
 
@@ -46,6 +47,9 @@ public class XPathCache {
 
     private static final XPathCache fgXPathCache = new XPathCache();
 
+    private static final NamePool NAMEPOOL = new NamePool();
+
+
     static {
         fgXFormsFunctionLibrary = new FunctionLibraryList();
         fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(Configuration.XPATH));
@@ -55,6 +59,9 @@ public class XPathCache {
         fgXFormsFunctionLibrary.addFunctionLibrary(new BetterFormFunctionLibrary());
 //        fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));
 
+    }
+    public static NamePool getNamePool() {
+        return XPathCache.NAMEPOOL;
     }
 
     public static XPathCache getInstance() {
@@ -148,7 +155,7 @@ public class XPathCache {
 
             int nrOfEntries;
             if ((it.getProperties() & SequenceIterator.LAST_POSITION_FINDER) != 0) {
-                nrOfEntries = ((LastPositionFinder) it).getLastPosition();
+                nrOfEntries = ((LastPositionFinder) it).getLength();
             } else {
                 nrOfEntries = -1;
             }
@@ -283,12 +290,12 @@ public class XPathCache {
             return LAST_POSITION_FINDER | LOOKAHEAD;
         }
 
-//		@Override
-		public int getLastPosition() throws XPathException {
+        //@Override
+        public int getLength() throws XPathException {
 			return nodeset.size();
 		}
 
-//		@Override
+        //@Override
 		public boolean hasNext() {
 			return position <= nodeset.size();
 		}
