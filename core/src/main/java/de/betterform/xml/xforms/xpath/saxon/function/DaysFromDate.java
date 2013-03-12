@@ -10,7 +10,6 @@ import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.*;
-import sun.org.mozilla.javascript.ast.NewExpression;
 
 /**
  * Implementation of 7.9.2 The local-dateTime() Function <p/> This function

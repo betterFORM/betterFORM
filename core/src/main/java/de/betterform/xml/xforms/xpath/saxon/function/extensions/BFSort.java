@@ -44,9 +44,7 @@ public class BFSort extends XFormsFunction {
 			
 			public AtomicValue evaluateSortKey(int i, XPathContext context)
 					throws XPathException {
-
-                SequenceIterator iterator =  sortByKey.evaluateItem(context).getTypedValue();
-                Item item = iterator.next();
+                Item item = sortByKey.evaluateItem(context);
                 Value value = null;
                 if (item instanceof NodeInfo) {
 					 value = ((NodeInfo) item).atomize();
@@ -56,10 +54,10 @@ public class BFSort extends XFormsFunction {
 		};
 		
 		SortKeyDefinition skd = new SortKeyDefinition();
-		skd.setSortKey(sortByKey, false);
+		skd.setSortKey(sortByKey, true);
 		
 		AtomicComparer[] comparers = { skd.makeComparator(xpathContext) };
 		 
-		return new SortedIterator(xpathContext, nodeset.iterate(xpathContext), ske, comparers, false);
+		return new SortedIterator(xpathContext, nodeset.iterate(xpathContext), ske, comparers, true);
 	}	
 }

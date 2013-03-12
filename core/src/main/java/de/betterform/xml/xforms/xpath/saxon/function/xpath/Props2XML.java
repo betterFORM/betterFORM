@@ -12,7 +12,7 @@ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.tree.iter.ListIterator;;
+import net.sf.saxon.tree.iter.ListIterator;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
 import org.w3c.dom.Document;
