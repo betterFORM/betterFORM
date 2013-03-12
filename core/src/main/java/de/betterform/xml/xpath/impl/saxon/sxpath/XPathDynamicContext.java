@@ -147,7 +147,7 @@ public class XPathDynamicContext {
         for (int i=0; i<numberOfExternals; i++) {
             if (stack[i] == null) {
                 StructuredQName qname = (StructuredQName)stackFrameMap.getVariableMap().get(i);
-                throw new XPathException("No value has been supplied for variable $" + qname.getLocalPart());
+                throw new XPathException("No value has been supplied for variable $" + qname.getDisplayName());
             }
         }
     }

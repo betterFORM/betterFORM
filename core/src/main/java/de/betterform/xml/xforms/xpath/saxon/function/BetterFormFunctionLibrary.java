@@ -28,7 +28,7 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
 
     @Override
     protected String getFunctionNamespace() {
-        return functionNamespace;
+        return BetterFormFunctionLibrary.functionNamespace;
     }
 
     static {
@@ -87,7 +87,9 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
 
 
 
-
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}createAttributeNode", CreateAttributeNode.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);

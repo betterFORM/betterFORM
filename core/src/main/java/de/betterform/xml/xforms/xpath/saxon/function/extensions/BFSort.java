@@ -16,7 +16,6 @@ import net.sf.saxon.expr.sort.SortKeyDefinition;
 import net.sf.saxon.expr.sort.SortKeyEvaluator;
 import net.sf.saxon.expr.sort.SortedIterator;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.value.AtomicValue;
 import net.sf.saxon.value.Value;
 
 public class BFSort extends XFormsFunction {
@@ -39,27 +38,28 @@ public class BFSort extends XFormsFunction {
 			Expression nodeset,
 			final Expression sortByKey) throws XPathException {
 	
-
+		/*
         final SortKeyEvaluator ske = new SortKeyEvaluator() {
 			
-			public AtomicValue evaluateSortKey(int i, XPathContext context)
+			public Item evaluateSortKey(int i, XPathContext context)
 					throws XPathException {
 
-                SequenceIterator iterator =  sortByKey.evaluateItem(context).getTypedValue();
-                Item item = iterator.next();
-                Value value = null;
-                if (item instanceof NodeInfo) {
-					 value = ((NodeInfo) item).atomize();
+				Item item = sortByKey.evaluateItem(context);
+				if (item instanceof NodeInfo) {
+					Value value = ((NodeInfo) item).atomize();
+					item =value.itemAt(0);
 				}
-				return (AtomicValue) value;
+				return item;
 			}
 		};
 		
 		SortKeyDefinition skd = new SortKeyDefinition();
-		skd.setSortKey(sortByKey, false);
+		skd.setSortKey(sortByKey);
 		
 		AtomicComparer[] comparers = { skd.makeComparator(xpathContext) };
 		 
-		return new SortedIterator(xpathContext, nodeset.iterate(xpathContext), ske, comparers, false);
+		return new SortedIterator(xpathContext, nodeset.iterate(xpathContext), ske, comparers);
+		*/
+        return null;
 	}	
 }

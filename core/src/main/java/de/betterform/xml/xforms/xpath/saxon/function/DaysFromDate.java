@@ -6,11 +6,9 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.*;
-import sun.org.mozilla.javascript.ast.NewExpression;
 
 /**
  * Implementation of 7.9.2 The local-dateTime() Function <p/> This function
@@ -31,11 +29,11 @@ public class DaysFromDate extends XFormsFunction {
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
-
-
+        return DoubleValue.NaN;
+        /*
 	CalendarValue argAsValue = null;
         try {
-            argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
+            argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(argAsString).asAtomic();
         } catch (XPathException e1) {
             try {
         	argAsValue = new DateValue(argAsString);
@@ -46,6 +44,6 @@ public class DaysFromDate extends XFormsFunction {
         
         double days = argAsValue.getCalendar().getTimeInMillis() / (1000d * 60 * 60 * 24);
         return new Int64Value(days > 0 ? (int)Math.floor(days) : (int)Math.ceil(days));
-
+          */
     }
 }

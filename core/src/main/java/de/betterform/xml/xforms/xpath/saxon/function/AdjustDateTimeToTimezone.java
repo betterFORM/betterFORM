@@ -6,7 +6,6 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
@@ -39,16 +38,16 @@ public class AdjustDateTimeToTimezone extends XFormsFunction {
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
     if (argument.length == 0) return StringValue.EMPTY_STRING;
-
-
+    return StringValue.EMPTY_STRING;
+	    /*
         final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
 
 	try {
-	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
+	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString).asAtomic();
 
 	    return new StringValue(argAsDateTime.adjustTimezone(kLOCAL_TIME_OFFSET_IN_MINUTES).getStringValue());
 	} catch (XPathException e1) {
 	    return StringValue.EMPTY_STRING;
-	}
+	}    */
     }
 }

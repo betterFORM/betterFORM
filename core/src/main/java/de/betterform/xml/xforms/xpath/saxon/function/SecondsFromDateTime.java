@@ -6,7 +6,6 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
@@ -38,12 +37,15 @@ public class SecondsFromDateTime extends XFormsFunction {
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
+     /*
 	try {
-	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
+	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString).asAtomic();
 
 	    return new DoubleValue(argAsDateTime.getCalendar().getTimeInMillis() / 1000d);
 	} catch (XPathException e1) {
 	    return DoubleValue.NaN;
-	}
+	}*/
+
+        return DoubleValue.NaN;
     }
 }

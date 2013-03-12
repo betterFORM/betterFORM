@@ -63,11 +63,7 @@ public class SaxonXPathExpressionSerializer {
             if (nodeTest == null) {
                 result.append("node()");
             } else {
-                NamePool namePool = ((NameTest) nodeTest).getNamePool();
-                //String localName = namePool.getLocalName(nodeTest.getFingerprint());
-                //String prefix = namePool.getPrefix(nodeTest.getFingerprint();
-                String func =  namePool.getLocalName(nodeTest.getFingerprint());
-                result.append(fixPreFixes(func, reversePrefixMapping));
+                result.append(fixPreFixes(nodeTest.toString(), reversePrefixMapping));
             }
         } else if (expr instanceof BinaryExpression) {
             BinaryExpression binaryExpression = (BinaryExpression) expr;
@@ -104,7 +100,7 @@ public class SaxonXPathExpressionSerializer {
                 result.append(name.getPrefix());
                 result.append(":");
             }
-            result.append(name.getLocalPart());
+            result.append(name.getDisplayName());
             result.append("(");
 
             Iterator iter = functionCall.iterateSubExpressions();

@@ -75,7 +75,7 @@
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="saxon"/>
+                <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar" groupid="net.sf.saxon" version="9.2.1.5" artifactId="saxon"/>
             </classpath>
         </transform>
         <compile>
