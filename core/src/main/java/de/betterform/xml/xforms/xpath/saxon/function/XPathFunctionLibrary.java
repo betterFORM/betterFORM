@@ -28,7 +28,7 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
     protected static ItemType SAME_AS_FIRST_ARGUMENT = NodeKindTest.NAMESPACE;
     private static final long serialVersionUID = -6673788638743556161L;
 
-    protected abstract String getFunctionNamespace();
+    protected  abstract String getFunctionNamespace();
 
     /**
      * Test whether a system function with a given name and arity is available. This supports
@@ -42,7 +42,7 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
 
     public boolean isAvailable(StructuredQName functionName, int arity) {
         String uri = functionName.getURI();
-        String local = functionName.getDisplayName();
+        String local = functionName.getLocalPart();
 //        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
         if (uri.equals(getFunctionNamespace())) {
 //            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
@@ -59,7 +59,7 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
     //TODO: implement method!!!!!! 
     public net.sf.saxon.value.SequenceType[] getFunctionSignature(StructuredQName functionName, int arity) {
         String uri = functionName.getURI();
-        String local = functionName.getDisplayName();
+        String local = functionName.getLocalPart();
 //        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
         if (uri.equals(getFunctionNamespace())) {
 //            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
@@ -76,7 +76,9 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
 
     public Expression bind(StructuredQName structuredQName, Expression[] expressions, StaticContext staticContext, Container container) throws XPathException {
         Expression expression =  bind(structuredQName, expressions, staticContext);
-        expression.setContainer(container);
+        if (expression != null) {
+            expression.setContainer(container);
+        }
         return expression;
     }
 
@@ -100,9 +102,9 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      */
     public Expression bind(StructuredQName functionName, Expression[] staticArgs, StaticContext env) throws XPathException {
         String uri = functionName.getURI();
-        String local = functionName.getDisplayName();
+        String local = functionName.getLocalPart();
 //        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
-        if (uri.equals(getFunctionNamespace())) {
+           if (uri.equals(getFunctionNamespace())) {
 //            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, staticArgs.length);
             StandardFunction.Entry entry = getFunction("{" + uri + "}" + local, staticArgs.length);
             if (entry == null) {

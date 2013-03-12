@@ -47,23 +47,17 @@ public class XPathCache {
 
     private static final XPathCache fgXPathCache = new XPathCache();
 
-    private static final NamePool NAMEPOOL = new NamePool();
-
-
     static {
         fgXFormsFunctionLibrary = new FunctionLibraryList();
         fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(Configuration.XPATH));
         fgXFormsFunctionLibrary.addFunctionLibrary(new ConstructorFunctionLibrary(XPathCache.kCONFIG));
-        fgXFormsFunctionLibrary.addFunctionLibrary(new XPathFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new XFormsFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new BetterFormFunctionLibrary());
+        fgXFormsFunctionLibrary.addFunctionLibrary(new XPathFunctionLibrary());
+
 //        fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));
 
     }
-    public static NamePool getNamePool() {
-        return XPathCache.NAMEPOOL;
-    }
-
     public static XPathCache getInstance() {
         return fgXPathCache;
     }
@@ -189,6 +183,7 @@ public class XPathCache {
     public XPathExpression getXPathExpression(String xpathString, Map prefixMapping, Configuration configuration) throws XPathException {
         XPathEvaluator xpe = new XPathEvaluator(configuration);
 
+        //IndependentContext independentContext = (IndependentContext) xpe.getStaticContext();
         IndependentContext independentContext = (IndependentContext) xpe.getStaticContext();
         independentContext.setDefaultFunctionNamespace(NamespaceConstants.XFORMS_NS);
         independentContext.setBackwardsCompatibilityMode(true);
@@ -203,7 +198,7 @@ public class XPathCache {
         // XXX declare variable
 
         independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
-
+       xpe.setStaticContext(independentContext);
 
         XPathExpression exp = xpe.createExpression(xpathString);
         return exp;
