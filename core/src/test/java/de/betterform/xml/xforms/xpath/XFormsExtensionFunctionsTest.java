@@ -151,15 +151,12 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testLocalDataTime() throws Exception {
-        /*
         GregorianCalendar before = new GregorianCalendar();
         final DateTimeValue localdateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(evaluateInDefaultContextAsString("local-dateTime()")).asAtomic();
         GregorianCalendar after = new GregorianCalendar();
 
         assertTrue(localdateTime.getCalendar().compareTo(before) >= 0);
         assertTrue(localdateTime.getCalendar().compareTo(after) <= 0);
-        */
-         fail();
     }
 
     /**
@@ -243,12 +240,9 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
     }
 
     private String convertToLocalTimeZone(String dateTime) throws Exception {
-        /*
         DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(dateTime).asAtomic();
 
         return argAsDateTime.adjustTimezone(kLOCAL_TIME_OFFSET_IN_MINUTES).getStringValue();
-        */
-        return "DateTimeValue.makeDateTimeValue";
     }
 
     /**

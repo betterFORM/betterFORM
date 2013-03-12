@@ -29,8 +29,7 @@ public class DaysFromDate extends XFormsFunction {
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
-        return DoubleValue.NaN;
-        /*
+	
 	CalendarValue argAsValue = null;
         try {
             argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(argAsString).asAtomic();
@@ -44,6 +43,6 @@ public class DaysFromDate extends XFormsFunction {
         
         double days = argAsValue.getCalendar().getTimeInMillis() / (1000d * 60 * 60 * 24);
         return new Int64Value(days > 0 ? (int)Math.floor(days) : (int)Math.ceil(days));
-          */
+
     }
 }

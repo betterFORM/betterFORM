@@ -11,10 +11,10 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.expr.sort.AtomicComparer;
-import net.sf.saxon.expr.sort.SortKeyDefinition;
-import net.sf.saxon.expr.sort.SortKeyEvaluator;
-import net.sf.saxon.expr.sort.SortedIterator;
+import net.sf.saxon.sort.AtomicComparer;
+import net.sf.saxon.sort.SortKeyDefinition;
+import net.sf.saxon.sort.SortKeyEvaluator;
+import net.sf.saxon.sort.SortedIterator;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.Value;
 
@@ -38,8 +38,7 @@ public class BFSort extends XFormsFunction {
 			Expression nodeset,
 			final Expression sortByKey) throws XPathException {
 	
-		/*
-        final SortKeyEvaluator ske = new SortKeyEvaluator() {
+		final SortKeyEvaluator ske = new SortKeyEvaluator() {
 			
 			public Item evaluateSortKey(int i, XPathContext context)
 					throws XPathException {
@@ -59,7 +58,5 @@ public class BFSort extends XFormsFunction {
 		AtomicComparer[] comparers = { skd.makeComparator(xpathContext) };
 		 
 		return new SortedIterator(xpathContext, nodeset.iterate(xpathContext), ske, comparers);
-		*/
-        return null;
 	}	
 }

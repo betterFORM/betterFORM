@@ -8,13 +8,8 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.extensions.BFSort;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.*;
-import net.sf.saxon.expr.Container;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.StandardFunction.Entry;
-import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.Type;
 
@@ -111,7 +106,9 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}schemaenumeration", SchemaEnumeration.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}existquery", ExistDBQuery.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
     }
-
-
 }

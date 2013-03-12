@@ -123,8 +123,6 @@ public class Aggregate2 extends SystemFunction {
 
     public static AtomicValue total(SequenceIterator iter, XPathContext context, SourceLocator location)
             throws XPathException {
-        return DoubleValue.NaN;
-        /*
         AtomicValue sum = (AtomicValue)iter.next();
         if (sum == null) {
             // the sequence is empty
@@ -173,7 +171,7 @@ public class Aggregate2 extends SystemFunction {
             return sum;
         } else {
             return DoubleValue.NaN;
-        }      */
+        }
     }
 
     /**
@@ -183,8 +181,6 @@ public class Aggregate2 extends SystemFunction {
     public static AtomicValue average(SequenceIterator iter, XPathContext context, SourceLocator location)
             throws XPathException {
         int count = 0;
-        return DoubleValue.NaN;
-        /*
         AtomicValue item = (AtomicValue)iter.next();
         if (item == null) {
             // the sequence is empty
@@ -239,7 +235,6 @@ public class Aggregate2 extends SystemFunction {
         } else {
             return DoubleValue.NaN;
         }
-        */
     }
 
 
@@ -254,8 +249,6 @@ public class Aggregate2 extends SystemFunction {
      */
 
     public static int count(SequenceIterator iter) throws XPathException {
-        return -1;
-                /*
         if ((iter.getProperties() & SequenceIterator.LAST_POSITION_FINDER) != 0) {
             return ((LastPositionFinder)iter).getLastPosition();
         } else {
@@ -265,7 +258,6 @@ public class Aggregate2 extends SystemFunction {
             }
             return n;
         }
-        */
     }
 }
 

@@ -7,8 +7,7 @@ package de.betterform.xml.xpath.impl.saxon.sxpath;
 
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContextMajor;
-import net.sf.saxon.expr.instruct.SlotManager;
-import net.sf.saxon.expr.instruct.SlotManager;
+import net.sf.saxon.instruct.SlotManager;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
@@ -72,7 +71,7 @@ public class XPathExpression {
      */
 
     public XPathDynamicContext createDynamicContext(Item contextItem) {
-        XPathContextMajor context = new XPathContextMajor(contextItem, expression.getExecutable());
+        XPathContextMajor context = new XPathContextMajor(contextItem, evaluator.getExecutable());
         context.openStackFrame(stackFrameMap);
         return new XPathDynamicContext(context);
     }

@@ -13,7 +13,7 @@ import de.betterform.xml.xforms.ui.AbstractUIElement;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
