@@ -322,7 +322,7 @@
         The hint span will be put outside of the anchor
         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         -->
-        <xsl:apply-templates select="xf:hint"/>
+        <!-- xsl:apply-templates select="xf:hint"/-->
 
     </xsl:template>
 
