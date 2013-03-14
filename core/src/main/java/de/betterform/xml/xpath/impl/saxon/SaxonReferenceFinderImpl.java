@@ -103,7 +103,14 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
 	    references.add(context!=null?(context + "/.."):"..");
 	}
 	else if (expression instanceof Assignation) {
-	  addExpressionReferences(references, context, ((Assignation)expression).getSequence(), prefixMapping);  
+	   if (expression instanceof LetExpression) {
+	      LetExpression letExpression = (LetExpression) expression;
+	      addExpressionReferences(references, context, ((Assignation)expression).getSequence(), prefixMapping);
+	      addExpressionReferences(references, context, letExpression.getAction(), prefixMapping);
+	      
+	    } else {
+	      addExpressionReferences(references, context, ((Assignation)expression).getSequence(), prefixMapping);
+	    }
 	}
 	else {
 	    Iterator iter = expression.iterateSubExpressions();
