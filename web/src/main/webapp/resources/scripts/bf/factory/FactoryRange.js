@@ -50,12 +50,12 @@ define(["dojo/_base/declare","dojo/_base/connect","dojo/query","dijit/registry",
                                     // create and setup Range Labels
                                     var labelNode = document.createElement('div');
                                     n.appendChild(labelNode);
-
+                                    var median = (start + end) / 2;
                                     // setup the labels
                                     var sliderLabels = new HorizontalRuleLabels({
                                         count: discreteValues,
                                         style: "height:1.2em;font-size:75%;color:gray;",
-                                        labels: [start,end/2,end]
+                                        labels: [start,median ,end]
                                     },labelNode);
                                     // Create Slider
                                     var slider = new HorizontalSlider({
