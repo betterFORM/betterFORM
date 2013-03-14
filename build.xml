@@ -12,7 +12,6 @@
                  semanticAttributes="true" keepRoot="false"/>
 
     <property name="web.dir" value="${basedir}/web"/>
-    <property name="betty.dir" value="${basedir}/betty"/>
     <property name="server.dir" value="${basedir}/tools/server"/>
     <property name="target.dir" value="${basedir}/target"/>
     <property name="src.target.dir" value="${basedir}/target"/>
@@ -33,7 +32,7 @@
     <target name="clean" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="cleaning up project target, to clean up core, web and betty call 'ant clean-all'"/>
+        <echo message="cleaning up project target, to clean up core, and web call 'ant clean-all'"/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${target.dir}"/>
@@ -43,13 +42,12 @@
     <target name="clean-all" description="clean build target directory">
         <echo/>
         <echo message="************************************************************************************"/>
-        <echo message="cleaning up core, web and betty"/>
+        <echo message="cleaning up core and web "/>
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${target.dir}"/>
         <delete dir="${core.dir}/target"/>
         <delete dir="${web.dir}/target"/>
-        <delete dir="${betty.dir}/target"/>
 
         <delete dir="${basedir}/XRX/target"/>
         <delete dir="${basedir}/XRX/target-utils"/>
@@ -98,11 +96,10 @@
 
     </target>
 
-    <target name="update-maven-poms" description="update core, web and betty pom.xml" depends="check-ant-version" if="antversion">
+    <target name="update-maven-poms" description="update core and web pom.xml" depends="check-ant-version" if="antversion">
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-project-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-core-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
         <ant antfile="${basedir}/tools/maven/build.xml"  target="update-web-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
-        <ant antfile="${basedir}/tools/maven/build.xml"  target="update-betty-pom" dir="${basedir}/tools/maven"  inheritall="false"/>
     </target>
 
 

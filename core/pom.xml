@@ -91,11 +91,6 @@
     -->
 
     <dependencies>
-<!-- dependency>
-<groupId>net.sourceforge.saxon</groupId>
-<artifactId>saxonhe</artifactId>
-<version>9.2.1.5</version>
-</dependency-->
 <dependency>
 <groupId>net.sf.saxon</groupId>
 <artifactId>saxon</artifactId>
@@ -113,17 +108,17 @@
 </dependency>
 <dependency>
 <groupId>org.apache.httpcomponents</groupId>
-<artifactId>httpcore</artifactId>
+<artifactId>httpcomponents-core</artifactId>
 <version>4.1</version>
 </dependency>
 <dependency>
 <groupId>org.apache.httpcomponents</groupId>
-<artifactId>httpclient</artifactId>
+<artifactId>httpcomponents-client</artifactId>
 <version>4.1.1</version>
 </dependency>
 <dependency>
 <groupId>org.apache.httpcomponents</groupId>
-<artifactId>httpmime</artifactId>
+<artifactId>httpcomponents-mime</artifactId>
 <version>4.1.1</version>
 </dependency>
 <dependency>
@@ -135,6 +130,11 @@
 <groupId>commons-io</groupId>
 <artifactId>commons-io</artifactId>
 <version>2.1</version>
+</dependency>
+<dependency>
+<groupId>org.apache.commons</groupId>
+<artifactId>commons-lang3</artifactId>
+<version>3.1</version>
 </dependency>
 <dependency>
 <groupId>commons-logging</groupId>
@@ -227,12 +227,7 @@
 <version>4.10</version>
 <scope>test</scope>
 </dependency>
-    	<dependency>
-    		<groupId>org.apache.commons</groupId>
-    		<artifactId>commons-lang3</artifactId>
-    		<version>3.1</version>
-    	</dependency>
-    </dependencies>
+</dependencies>
     <!-- END OF GENERATED DEPENDENCIES - configure libs in ../build.properties.xml -->
 
     <developers>
