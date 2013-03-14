@@ -54,16 +54,6 @@ define(["dojo/_base/declare",
         indicatorTargetObject: null,
 
 
-        /*
-         keepAlive: function() {
-         if(dwr.engine){
-         dwr.engine.setErrorHandler(this._handleExceptions);
-         dwr.engine.setOrdered(true);
-         Flux.keepAlive(this.sessionKey);
-         }
-         },
-         */
-
         constructor:function() {
             // console.debug("XFProcessor.constructor sessionKey:",this.sessionKey);
 
@@ -89,7 +79,6 @@ define(["dojo/_base/declare",
             this.userAgent = navigator.userAgent;
         },
 
-
         handleUnload:function(evt) {
             // console.debug("XFProcessor.handleUnload Event: ", evt);
             if (this.isDirty && !this.skipshutdown) {
@@ -107,6 +96,7 @@ define(["dojo/_base/declare",
         },
 
         close:function() {
+            // console.debug("fluxProcessor.close")
             var tmpSkipShutdown = lang.hitch(this, fluxProcessor.skipShutdown).skipshutdown;
             if (!tmpSkipShutdown) {
                 fluxProcessor.closeSession();
@@ -114,6 +104,7 @@ define(["dojo/_base/declare",
         },
 
         closeSession: function() {
+            // console.debug("fluxProcessor.closeSession")
             try {
                 dwr.engine.setErrorHandler(this._handleExceptions);
                 dwr.engine.setOrdered(true);
