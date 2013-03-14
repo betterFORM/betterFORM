@@ -62,12 +62,13 @@ public class SaxonXPathExpressionSerializer {
             final NodeTest nodeTest = axisExpression.getNodeTest();
             if (nodeTest == null) {
                 result.append("node()");
+            } else if (nodeTest instanceof NameTest) {
+              NameTest nt = (NameTest) nodeTest;
+              NamePool namePool = nt.getNamePool();
+              String localName = namePool.getLocalName(nt.getFingerprint());
+              result.append(fixPreFixes(localName, reversePrefixMapping));
             } else {
-                NamePool namePool = ((NameTest) nodeTest).getNamePool();
-                //String localName = namePool.getLocalName(nodeTest.getFingerprint());
-                //String prefix = namePool.getPrefix(nodeTest.getFingerprint();
-                String func =  namePool.getLocalName(nodeTest.getFingerprint());
-                result.append(fixPreFixes(func, reversePrefixMapping));
+              result.append(fixPreFixes(nodeTest.toString(), reversePrefixMapping));
             }
         } else if (expr instanceof BinaryExpression) {
             BinaryExpression binaryExpression = (BinaryExpression) expr;
