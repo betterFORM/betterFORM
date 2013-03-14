@@ -20,17 +20,8 @@
     style rules.
 */
 
+@import "variables.less";
 
-@image-url: "../images";
-@invalid-color: #8B0000;
-@link-color:#444444;     
-@repeat-index-color:#DFDFDF;  
-@gray:#999999;
-@debugPaneColor:#777777;
-@debugPaneFontColor:#DEDEDE;
-@borderColor1:#999999;
-@fontFamily:"Helvetica Neue",Helvetica,Arial,sans-serif;
-@fontSize:1em;
 
 .border-radius (@radius) {
   border-radius: @radius;
@@ -41,210 +32,180 @@
     ################################## global betterFORM styles ##############################
 */
 body {
-    background: url("@{image-url}/bgOne.gif") repeat-x scroll;
-    margin: 30px;
-    font-family:@fontFamily;
-    padding: 0; /*overflow: hidden;*/
-    font-size: @fontSize;
+  background: url("@{image-url}/bgOne.gif") repeat-x scroll;
+  margin: 30px;
+  font-family:@fontFamily;
+  padding: 0; /*overflow: hidden;*/
+  font-size: @fontSize;
 }
-
-/*
-.bfHelpWrapper a:active{
-	border:none;
-}
-#fluxProcessor {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #fff url( '../images/betterform-logo_klein2.gif' ) no-repeat center center;
-    position: absolute;
-    z-index: 999;
-}
-*/
 
 #bfCopyright {
-    position: absolute; /*bottom:0;*/
-    right: 0;
-    font-size: 8pt;
-    font-family: sans-serif;
-    padding-right: 20px;
+  position: absolute; /*bottom:0;*/
+  right: 0;
+  font-size: @fontSizeMin;
+  font-family: @fontFamily;
+  padding-right: 20px;
 
 }
 
 #bfLoading {
-    top: 4px;
-    right: 40px;
-    padding: 3px;
-	position: absolute;
-	z-index: 1000;
+  top: 4px;
+  right: 40px;
+  padding: 3px;
+  position: absolute;
+  z-index: 1000;
 }
 
 /*
 debug bar at bottom of screen if debug is enabled by betterform config
 */
 #bfDebug{
-    opacity:0.7;
-	position:fixed;
-    bottom: 0;
-    left: 0;
-    display:block;
-	background:@debugPaneColor;
-	width:100%;
-	padding:5px;
-	text-align:left;
-    color:@debugPaneFontColor;
+  opacity:0.7;
+  position:fixed;
+  bottom: 0;
+  left: 0;
+  display:block;
+  background:@debugPaneColor;
+  width:100%;
+  padding:5px;
+  text-align:left;
+  color:@debugPaneFontColor;
 
-    a{
-        padding:2px 10px 2px 10px;
-        font-weight:bold;
-        display:inline-block;
-        .border-radius(5px);
-        color:@debugPaneFontColor;
-    }
-    #bfDebugLinks{
-        padding-left: 30px;
-        font-size: 100%;
-    }
+  a{
+    padding:2px 10px 2px 10px;
+    font-weight:bold;
+    display:inline-block;
+    border-radius:5px;
+    color:@debugPaneFontColor;
+  }
+  #bfDebugLinks{
+    padding-left: 30px;
+    font-size: @fontSize;
+  }
 }
 #bfDebugOpenClose{
-    position: fixed;
-    width:30px;
-    height: 30px;
-    z-index: 200;
-    bottom:-6px;
-    left:5px;
-    float:left;
+  position: fixed;
+  width:30px;
+  height: 30px;
+  z-index: 200;
+  bottom:-6px;
+  left:5px;
+  float:left;
 
-    img{
-        width: 50%;
-        height: 50%;
-    }
+  img{
+    width: 50%;
+    height: 50%;
+  }
 }
 
 a:link,
 a:visited,
 a:active {
-    color: @link-color;
+  color: @link-color;
 }
 
 /*
-    .bf is always created on body element by dojo.xsl
+  .bf is always created on body element by dojo.xsl
 */
-.bf {
-    .xfControl {
-        position:relative;
-        font-family: @fontFamily;
-    }
+.xfControl {
+  position:relative;
+  font-family: @fontFamily;
+}
 
-    /* ################### some theme-specific (Dojo tundra) styles ################### */
-    .dijitToasterContainer {
-        padding: 2px;
-        border: thin dotted gray;
-    }
-    .dijitToasterContainer {
-        padding: 2px;
-        border: thin dotted gray;
-    }
+/* ################### some theme-specific (Dojo tundra) styles ################### */
 
-    .dijitToasterContent {
-        font-size: smaller;
-        color: black;
-        padding-top: 2px;
-        padding-bottom: 2px;
+.xsdDateTime .dijitError {
+  background: @controlBackground url("@{image-url}/validationInputBg.png") repeat-x scroll left top;
+}
+.widgetContainer .xfTimeControl{
+  display:inline-block;
 
-    }
-    .xsdDateTime .dijitError {
-        background: #FFFFFF url("@{image-url}/validationInputBg.png") repeat-x scroll left top;
-    }
-    .widgetContainer .xfTimeControl{
-        display:inline-block;
+  .dijitComboBox {
+    width: 18px;
+  }
 
-        .dijitComboBox {
-            width: 18px;
-        }
+  .dijitButtonNode {
+    display:none;
+  }
+}
+.xfDateTimeControl {
+  display: inline;
+}
 
-        .dijitButtonNode {
-            display:none;
-        }
-    }
-    .xfDateTimeControl {
-        display: inline;
-    }
+.xfDateTimeControl > xfLabel {
+  float: left;
+}
+.xfDateTimeControl {
+  .dijitDateTextBox{
+    width:9em;
+  }
 
-    .xfDateTimeControl > xfLabel {
-            float: left;
-    }
-    .xfDateTimeControl {
-        .dijitDateTextBox{
-            width:9em;
-        }
-
-        .dijitTimeTextBox {
-            width:9em;
-        }
-    }
-    .bfTabContainer {
-        height: 600px;
-        width: 98%;
-        overflow: auto;
-        .xfCase .caseContent {
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-        }
-    }
-
+  .dijitTimeTextBox {
+    width:9em;
+  }
+}
+.bfTabContainer {
+  height: 600px;
+  width: 98%;
+  overflow: auto;
+  .xfCase .caseContent {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
 }
 
 .dijitError .dijitValidationIcon,
 .dijitError .dijitValidationIconText {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 /* #################### SPECIAL CONTROL APPEARANCE STYLES #################### */
 
 /* matches all input widgets in the output*/
 .xfInput .xfValue {
-    height: 1.2em;
+  height: 1.2em;
 }
 
 /* matches all popup calendars */
 .xsdDateTime .xfDateTextBox {
-    width: 90px;
+  width: 90px;
 }
 .xfTextarea .xfValue,
 .xfRange .xfValue {
-	display:inline-block;
+  display:inline-block;
+}
+.xfRange.aDefault .xfAlert {
+  left: 250px;
 }
 
 /* matches Rating control (range) */
 .dojoxRating ul {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* matches Rating control (range) */
 .dojoxRatingStar {
-    display: inline-block;
-	background: url("@{image-url}/rating_empty.gif") left center;
-	position: relative;
-    height: 15px;
-    width: 15px;
-    float: left;
+  display: inline-block;
+  background: url("@{image-url}/rating_empty.gif") left center;
+  position: relative;
+  height: 15px;
+  width: 15px;
+  float: left;
 }
 
 /* matches Rating control (range) */
 .dojoxRatingStarChecked {
-    background-image: url("@{image-url}/rating_full.gif");
+  background-image: url("@{image-url}/rating_full.gif");
 }
 
 /* matches Rating control (range) */
 .dojoxRatingStarHover {
-    background-image: url("@{image-url}/rating_full.gif");
-    opacity: .5;
+  background-image: url("@{image-url}/rating_full.gif");
+  opacity: .5;
 }
 
 /* needed to work with flowting layouts in Safari */
@@ -258,82 +219,84 @@ a:active {
 /* ********************* GENERAL betterFORM STYLES ************ */
 /* ***************************************************************************** */
 
-.widgetContainer {
+/* .widgetContainer {
     display: inline-block;
     margin: 0;
     padding: 0;
     position: relative;
-}
+}  */
 
 /* ***************************************************************************** */
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
 /* ***************************************************************************** */
 
-.xfInvalid .xfValue,
-.xfInvalid .xfCheckBoxValue,
-.xfInvalid .xfRadioLabel,
-.xfInvalid .xfCheckBoxLabel,
-.xfInvalid .dijitTextBox {
-/*
-	border-color:@invalid-color;
-	border-width:1px 1px 1px 1px;
-	border-style:solid;
-*/
-}
-
-.bf .bfInvalidControl .xfValue,
-.bf .bfInvalidControl .xfDateTextBox,
-.bf .bfInvalidControl .xfTimeTextBox {
-	border: 1px solid @invalid-color !important;
-}
-.bfInvalidControl .bfCheckBoxGroup {
+.bfInvalidControl {
+  .xfValue,
+  .xfDateTextBox,
+  .xfTimeTextBox {
+    border: 1px solid @invalid-color !important;
+  }
+  .bfCheckBoxGroup {
     border:none;
     border-bottom:1px solid @invalid-color;
     margin-right:4px;
     padding-bottom:4px;
-}
-
-/* Keep styling for Selects even if invalid */
-.bf .bfInvalidControl .xfValue .xfSelectorItem .xfRadioValue  {
+  }
+  .xfSelectorItem .xfRadioValue  {
     border: 0 none !important;
+  }
+  .xfSelectorItem .xfCheckBoxValue {
+    border: 1px solid @invalid-checkbox-color !important;
+  }
 }
-.bf .bfInvalidControl .xfValue .xfSelectorItem .xfCheckBoxValue {
-    border: 1px solid gray !important;
-}
-
-
 
 .xfAlert, .xfHint{
-	position:absolute;
-	top:0;
-	/*bottom:2px;*/
-	font-size:0.8em;
-	border:thin solid #cccccc;
-	padding: 3px 20px 3px 26px;
-	min-width:150px;
-	max-width:300px;
-   .border-radius(5px);
+  top:0;
+  position:absolute;
+  display: block;
+  font-size:@fontSizeMin;
 
-   >span{
-       max-width: 140px;
-   }
-   .bfAlertMsg {
-       border: thin solid #E5A3A3;
-       margin: 1px;
-       padding: 3px !important;
-       display: block;
-   }
+  width:200px;
+  min-width:150px;
+  max-width:300px;
+  vertical-align:middle;
 }
+
+.xfAlert {
+  border: 1px solid @alertBorder;
+  color: @alertColor;
+  background:@alertBackgroundColor url("@{image-url}/error.png") 5px 50% no-repeat;
+  padding: 3px 20px 3px 26px;
+
+  .bfToolTipAlert {
+    z-index:200;
+  }
+  .closeAlertIcon{
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    font-size: @fontSizeLarge;
+    position: absolute;
+    right: -4px;
+    top: 0;
+  }
+  .bfAlertMsg {
+    margin: 1px;
+    padding: 3px !important;
+    display: block;
+  }
+}
+
 .xfHint {
-    display:none;
-    border-color:#DBDBDB;
-    background:#F2F2F2 url("@{image-url}/hint.png") 5px 50% no-repeat;
-    z-index:300;
-    color:#666666;
+  border:1px solid @hintBorder;
+  background:@hintBackground url("@{image-url}/hint.png") 5px 50% no-repeat;
+  z-index:100;
+  color:@hintColor;
+  padding: 6px 23px 6px 23px !important;
+  display: block;
 }
 
 .xfRequiredEmpty:after{
-    content:'Please fill in a value';
+  content:'Please fill in a value';
 }
 /*
 special handling for alerts and hints in compact groups as the label is above control and changes the situation.
@@ -341,169 +304,142 @@ alert + hints should always be aligned with the control.
 */
 .xfCompactGroup .widgetContainer .xfAlert,
 .xfCompactGroup .widgetContainer .xfHint{
-	top:0;
-}
-
-.xfAlert {
-    border: 1px solid #E5A3A3;
-    color: #333333;
-	vertical-align:middle;
-	background:#FFCFCF url("@{image-url}/error.png") 5px 50% no-repeat;
-}
-.xfAlert, .bfToolTipAlert {
-    z-index:200;
-}
-.xfAlert .closeAlertIcon{
-    background: none repeat scroll 0 0 transparent;
-    border: medium none;
-    font-size: 1.2em;
-    position: absolute;
-    right: -4px;
-    top: 0;
+  top:0;
 }
 
 .xfCompactGroup .xfHint,
 .xfCompactGroup .xfAlert{
-    top:19px;
+  top:19px;
 }
 
 
 .bfHelpWrapper{
-	display:inline-block;
+  display:inline-block;
 }
 
 .xfHelp{
-	height:24px;
-	margin:0;
-	display:inline-block;
-	position:absolute;
-	right:0;
-	top:0;
-	z-index:800;
-	padding:0;
+  height:24px;
+  margin:0;
+  display:inline-block;
+  position:absolute;
+  right:0;
+  top:0;
+  z-index:800;
+  padding:0;
 }
 .bfHelpText{
-	background:white;
-	padding:10px;
-	border:thin solid #dedede;
-	position:absolute;
-	top:22px;
-	right:1px;
-	-moz-border-radius-topleft:10px;
-	-moz-border-radius-bottomright:10px;
-	-webkit-border-bottom-right-radius:10px;
-	-webkit-border-top-left-radius:10px;
-	z-index:800;
+  background:@light;
+  padding:10px;
+  border:thin solid @lightGray;
+  position:absolute;
+  top:22px;
+  right:1px;
+  -moz-border-radius-topleft:10px;
+  -moz-border-radius-bottomright:10px;
+  -webkit-border-bottom-right-radius:10px;
+  -webkit-border-top-left-radius:10px;
+  z-index:800;
 }
 
 /* for tundra checkboxes */
 .bf .dijitCheckBox,
 .bf .dijitCheckBoxIcon {
-   	background-image: url("@{image-url}/checkmarkNoBorder.png");
-	 border: 1px solid gray;
-    height: 14px;
-    width: 14px;
+  background-image: url("@{image-url}/checkmarkNoBorder.png");
+  border: 1px solid @gray;
+  height: 14px;
+  width: 14px;
 
 }
 
 /* matches selection open controls in tundra */
 .bf .xfSelectOpen .xfValue {
-    width: 150px;
-    display: block;
+  width: 150px;
+  display: block;
 }
 
 .xfSelectOpen .xfSelectFreeText {
-    display: inline-block;
-    overflow-x: hidden; /*overflow-y: scroll;*/
-    position: relative;
-    width: 152px;
-    top: 0;
+  display: inline-block;
+  overflow-x: hidden; /*overflow-y: scroll;*/
+  position: relative;
+  width: 152px;
+  top: 0;
 }
 
 .bf .xfSelectOpen .dijitTextBox {
-    width: 140px;
+  width: 140px;
 }
 
 /*********** styles character used for signaling 'required' (normally '*') ***********/
 
 #bfHelpTrigger {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 999;
-    padding: 3px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+  padding: 3px;
 }
 
 .bfHelpPane {
-    position: absolute;
-    top: 20px;
-    right: 0;
-    height: 40px;
-    width: 500px;
+  position: absolute;
+  top: 20px;
+  right: 0;
+  height: 40px;
+  width: 500px;
 }
 
 .bfRefreshButton {
-    display: block;
-    float: right;
-    background-color: rgb(188, 216, 132);
-    border: thin solid gray;
-    padding: 2px;
-    margin-left: 10px;
+  display: block;
+  float: right;
+  background-color:@refreshButtonColor;
+  border: thin solid @gray;
+  padding: 2px;
+  margin-left: 10px;
 }
 
 /*********** Upload specific styles ***********/
 /*********** Upload specific styles ***********/
 /*********** Upload specific styles ***********/
 .bfProgressbar {
-    display: none;
-}
-
-.bfProgressbar .border {
-    background: url("@{image-url}/progress-remainder.gif") repeat-x;
-    margin-top: 1px;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    width: 100%;
-    height: 18px;
+  display: none;
 }
 
 .bfProgressbar .background {
-    background: url("@{image-url}/progress-bar.gif") repeat-x;
-    height: 18px;
-    width: 0;
+  background: url("@{image-url}/progress-bar.gif") repeat-x;
+  height: 18px;
+  width: 0;
 }
 
 .xfDisabled .bfProgressbar {
-    display: none;
+  display: none;
 }
 
 .xfLabel {
-    display: inline-block;
-    float:left;
-    padding-top: 2px;
-	vertical-align:top;
+  display: inline-block;
+  float:left;
+  padding-top: 2px;
+  vertical-align:top;
 }
 
 
 
 .xfDropDownDateControl {
-    display:inline;
+  display:inline;
 }
 
 .xfDropDownDateControl > xfLabel {
-    float: left;
+  float: left;
 }
 
 .xfDropDownDate .xfDropDownDateDays{
-    width: 45px;
+  width: 45px;
 }
 
 .xfDropDownDate .xfDropDownDateYears {
-   width: 60px;
+  width: 60px;
 }
 
 .xfDropDownDate .xfDropDownDateMonths {
-    width: 100px;
+  width: 100px;
 }
 /* ***************************************************************************** */
 /* ***************************************************************************** */
@@ -517,20 +453,20 @@ alert + hints should always be aligned with the control.
 
 
 .xfContainer{
-	display:block;
+  display:block;
 }
 
 
 .xfGroup {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 // TODO LW: REMOVE THIS STYLE SINCE I ALWAYS HAVE TO WORK AROUND IT
 .xfGroup .xfControl .xfLabel {
-    display: block;
-    float: none;
-    margin-left: 0.2em;
-    margin-top: 0.4em;
+  display: block;
+  float: none;
+  margin-left: 0.2em;
+  margin-top: 0.4em;
 }
 
 /* ############################## Minimal GROUP STYLES ############################## */
@@ -538,7 +474,7 @@ alert + hints should always be aligned with the control.
 /* ############################## Minimal GROUP STYLES ############################## */
 
 .xfMinimalGroup .xfGroupLabel {
-    display: block;
+  display: block;
 }
 
 /* ############################## COMPACT GROUP STYLES ############################## */
@@ -547,127 +483,127 @@ alert + hints should always be aligned with the control.
 
 .xfCompactGroup {
 
-    .xfContainer{
-	    display:inline-block;
-    }
-    >.xfGroupLabel {
-        display: block;
-        width: 100%;
-        clear: left;
-    }
+  .xfContainer{
+    display:inline-block;
+  }
+  >.xfGroupLabel {
+    display: block;
+    width: 100%;
+    clear: left;
+  }
 
-    .xfControl{
-        clear: both;
-        display: block;
-        margin:1px;
-    }
+  .xfControl{
+    clear: both;
+    display: block;
+    margin:1px;
+  }
 
-    .xfControl .xfLabel {
-        clear: both;
-        display: block;
-        float: none;
-        margin-left: 0.2em;
-        margin-top: 0.3em;
-    }
+  .xfControl .xfLabel {
+    clear: both;
+    display: block;
+    float: none;
+    margin-left: 0.2em;
+    margin-top: 0.3em;
+  }
 
-    .xfDisabled {
-        display: none;
-    }
+  .xfDisabled {
+    display: none;
+  }
 }
 
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
 /* ############################## FULL GROUP STYLES ############################## */
 .xfFullGroup {
-    >.xfGroupLabel {
-         display: block;
-    }
+  >.xfGroupLabel {
+    display: block;
+  }
 
-    .xfControl {
-        clear: both;
-        display: block;
-        margin-top:10px;
-        margin-bottom:10px;
-    }
+  .xfControl {
+    clear: both;
+    display: block;
+    margin-top:10px;
+    margin-bottom:10px;
+  }
 
-    .xfLabel {
-        width: 10em;
-        float: left;
-    }
+  .xfLabel {
+    width: 10em;
+    float: left;
+  }
 
-    .xfAlert{
-	    vertical-align:top;
-    }
+  .xfAlert{
+    vertical-align:top;
+  }
 
-    .xfDisabled {
-        display: none;
-    }
+  .xfDisabled {
+    display: none;
+  }
 
-    .xfControl .xfLabel {
-        text-align: left;
-        width: 160px;
-        vertical-align: top;
-        display: block;
-        /*Commenting this out breaks fullgroup layout*/
-        float: left;
-        margin-top: 0;
-    }
+  .xfControl .xfLabel {
+    text-align: left;
+    width: 160px;
+    vertical-align: top;
+    display: block;
+  /*Commenting this out breaks fullgroup layout*/
+    float: left;
+    margin-top: 0;
+  }
 
 
 }
 
 .bfCheckBoxGroup .xfSelectorItem{
-	margin-right:6px;
+  margin-right:6px;
 }
 /* TODO: Review Select CSS Classes, there is no xfFullSelect but only xfSelect on the Control Dijit */
 .xfFullSelect .xfSelectorItem .xfLabel {
-    display: inline;
-    float: none;
+  display: inline;
+  float: none;
 }
 
 .select1Comp .xfOptGroup .xfSelectorItem,
 .selectMin .xfOptGroup .xfSelectorItem {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 .xfSelect  .xfOptGroupLabelFull,
 .xfSelect1 .xfOptGroupLabelFull {
-    font-weight:bold;
-    font-style:	italic;
-    text-align:	left;
-    padding-right:10px;
+  font-weight:bold;
+  font-style:	italic;
+  text-align:	left;
+  padding-right:10px;
 }
 .xfSelect1 {
-    .xfOptGroupLabelFull {
-        padding-left:5px;
-    }
-    .dijitArrowButton  {
-        width:13px;
-        height:22px;
-    }
+  .xfOptGroupLabelFull {
+    padding-left:5px;
+  }
+  .dijitArrowButton  {
+    width:13px;
+    height:22px;
+  }
 
-    .dijitArrowButton .dijitInputField {
-        padding-top:5px;
-    }
+  .dijitArrowButton .dijitInputField {
+    padding-top:5px;
+  }
 
-    .dijitInputContainer .xfValue {
-        border:0;
-        padding-top:3px;
-    }
+  .dijitInputContainer .xfValue {
+    border:0;
+    padding-top:3px;
+  }
 }
 
 /* remove styles from select element to apply custom style */
 .bf .select1Min .xfLabel {
-    position: relative;
-    top: 5px;
+  position: relative;
+  top: 5px;
 }
 
 
 .xfFullGroup .xfControl .xfValue {
-    /*  conflicts with repeat
-        position:absolute;
-    */
-    left: 200px;
-    text-align: left;
+/*  conflicts with repeat
+    position:absolute;
+*/
+  left: 200px;
+  text-align: left;
 }
 
 
@@ -679,69 +615,69 @@ alert + hints should always be aligned with the control.
 
 
 .bf .bfVerticalTable {
+  position:relative;
+
+  .bfGroupLabelLeft .xfLabel {
+    display: none;
+  }
+  .bfVerticalTableLabel .xfLabel {
+    padding-top: 7px;
+  }
+  td {
+
+  }
+  .bfVerticalTableInfo {
     position:relative;
+    display: inline-block;
+  }
 
-    .bfGroupLabelLeft .xfLabel {
-        display: none;
-    }
-    .bfVerticalTableLabel .xfLabel {
-        padding-top: 7px;
-    }
-    td {
+  .bfVerticalTableLabel {
 
-    }
-    .bfVerticalTableInfo {
-        position:relative;
-        display: inline-block;
-    }
+  }
 
-    .bfVerticalTableLabel {
-
+  .bfVerticalTableValue {
+    > .xfControl > .xfLabel {
+      display: none;
     }
-
-    .bfVerticalTableValue {
-        > .xfControl > .xfLabel {
-            display: none;
-        }
-    }
+  }
 }
 
 
 .bf .bfHorizontalTable {
-    overflow: auto;
+  overflow: auto;
 
-    td {
-        vertical-align: top;
+  td {
+    vertical-align: top;
+  }
+
+
+/* hide duplicate group-labels for horizontal groups */
+  .xfContainer .xfGroupLabel {
+    display: none;
+  }
+
+  .bfHorizontalTableLabel{
+
+    .bfTableLabel {
+      padding-left: 2px;
     }
+  }
 
-
-    /* hide duplicate group-labels for horizontal groups */
-    .xfContainer .xfGroupLabel {
-        display: none;
+  .bfHorizontalTableValue{
+    .bfHorizontalTableHeader {
+      display: none;
     }
+  }
 
-    .bfHorizontalTableLabel{
+  .bfHorizontalTableValue > .xfControl > .xfLabel {
+    display:none; //hide control labels as these are displayed in a separate header row
 
-        .bfTableLabel {
-            padding-left: 2px;
-        }
-    }
+  }
 
-    .bfHorizontalTableValue{
-        .bfHorizontalTableHeader {
-            display: none;
-        }
-    }
-
-    .bfHorizontalTableValue > .xfControl > .xfLabel {
-        display:none; //hide control labels as these are displayed in a separate header row
-
-    }
-
-    .bfHorizontalTableValue .xfControl {
-        padding:0;
-        margin: 0;
-    }
+  .bfHorizontalTableValue .xfControl {
+    padding:0;
+    margin: 0;
+  }
 }
 
 
@@ -758,76 +694,55 @@ alert + hints should always be aligned with the control.
 /* ***************************************************************************** */
 
 .xfRepeatIndex {
-    background-color:@repeat-index-color;
+  background-color:@repeat-index-color;
 
-    .xfRepeatIndex {
-        background-color: #ffffe0;
-    }
+  .xfRepeatIndex {
+    background-color: @inner-repeat-index-color;
+  }
 }
-.bf .xsdBoolean .xfValue,
-.bf .bfCheckBoxGroup .xfValue {
-	background-color:#FFFFFF;
-}
-.bf .bfCheckBoxGroup .dijitDisabled,
-.bf .xfReadOnly .dijitCheckBoxReadOnly {
-    background-color: #F3F3F3 !important;
+.xsdBoolean .xfValue,
+.bfCheckBoxGroup .xfValue {
+  background-color:@controlBackground;
+}                            
+.bfCheckBoxGroup .dijitDisabled,
+.xfReadOnly .dijitCheckBoxReadOnly {
+  background-color: @controlDisabled !important;
 }
 
 .xfMinimalRepeat {
-    display: block;
-
-    * {
-        background-color: #eeeeee;
-    }
+  display: block;
 }
 
 
 .xfFullRepeat {
+  display: block;
+
+  .xfLabel {
     display: block;
+    float: left;
+    width: 100px;
+  }
+}
 
-    .xfLabel {
-        display: block;
-        float: left;
-        width: 100px;
-    }
+.xfRepeatItem {
+  clear: both; /*display: block;*/
+  padding: 5px;
 
-    .xfRepeatItem {
-        clear: both; /*display: block;*/
-        padding: 5px;
+  .xfControl {
+    clear: both;
+    display: block;
+  }
 
-        .xfControl {
-            clear: both;
-            display: block;
-        }
-
-        .xfMinimalGroup .xfControl {
-            clear: none;
-            display: inline-block;
-        }
-
-        .xfRepeatIndex {
-            background-color:transparent;
-        }
-
-    }
-
-/*
-    .xfRepeatItem  .xfControl {
-        clear: both;
-        display: block;
-    }
-
-    .xfRepeatItem  .xfMinimalGroup .xfControl {
-        clear: none;
-        display: inline-block;
-    }
-*/
+  .xfMinimalGroup .xfControl {
+    clear: none;
+    display: inline-block;
+  }
 }
 
 
 /* this rule is for tables using repeat Attributes - a display:block will otherwise break the table layout */
 table .xfContainer{
-	display:table-row-group;
+  display:table-row-group;
 }
 
 
@@ -843,7 +758,7 @@ table .xfContainer{
 /* ***************************************************************************** */
 /* ***************************************************************************** */
 .xfSwitch {
-    clear: both;
+  clear: both;
 }
 
 /* ***************************************************************************** */
@@ -859,71 +774,74 @@ table .xfContainer{
 /* ***************************************************************************** */
 
 .xfReadWrite {
-    .dijitRadio, .xfReadWrite .dijitRadioIcon {
-    	background: url("@{image-url}/checkmark.png") no-repeat -112px 50%;
-    	height: 16px;
-        margin: 0;
-        padding: 0;
-        width: 16px;
-    }
-    .dijitRadioChecked {
-        background: url("@{image-url}/checkmark.png") no-repeat -96px 50%;
-        height: 16px;
-        margin: 0;
-        padding: 0;
-        width: 16px;
+  .dijitRadio, .xfReadWrite .dijitRadioIcon {
+    background: url("@{image-url}/checkmark.png") no-repeat -112px 50%;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    width: 16px;
+  }
+  .dijitRadioChecked {
+    background: url("@{image-url}/checkmark.png") no-repeat -96px 50%;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    width: 16px;
 
-    }
-    .dijitCheckBox,
-    .dijitCheckBoxIcon {
-        background: url("@{image-url}/checkmarkNoBorder.png") no-repeat -16px 50%;
-        height: 14px;
-        width: 14px;
-        margin: 0;
-        padding: 0;
-    }
+  }
+  .dijitCheckBox,
+  .dijitCheckBoxIcon {
+    background: url("@{image-url}/checkmarkNoBorder.png") no-repeat -16px 50%;
+    height: 14px;
+    width: 14px;
+    margin: 0;
+    padding: 0;
+  }
 
-    .dijitCheckBoxChecked {
-        background: url("@{image-url}/checkmarkNoBorder.png") no-repeat 0 50%;
-        height: 14px;
-        width: 14px;
-    }
+  .dijitCheckBoxChecked {
+    background: url("@{image-url}/checkmarkNoBorder.png") no-repeat 0 50%;
+    height: 14px;
+    width: 14px;
+  }
 
 }
 
 .xfReadOnly {
-    .dijitRadio, .xfReadOnly .dijitRadioIcon {
-        background: url("@{image-url}/checkmark.png") no-repeat -144px 50%;
-        height: 16px;
-        margin: 0;
-        padding: 0;
-        width: 16px;
-    }
+  .dijitRadio, .xfReadOnly .dijitRadioIcon {
+    background: url("@{image-url}/checkmark.png") no-repeat -144px 50%;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    width: 16px;
+  }
 
-    .dijitRadioChecked {
-        background-position: -129px 50%;
-    }
+  .dijitRadioChecked {
+    background-position: -129px 50%;
+  }
 
-    .dijitCheckBox,
-    .dijitCheckBoxIcon {
-        background: url("@{image-url}/checkmarkNoBorder.png") no-repeat -48px 50%;
-        height: 14px;
-        width: 14px;
-    }
+  .dijitCheckBox,
+  .dijitCheckBoxIcon {
+    background: url("@{image-url}/checkmarkNoBorder.png") no-repeat -48px 50%;
+    height: 14px;
+    width: 14px;
+  }
 
-    .dijitCheckBoxChecked {
-        background-position: -32px 50%;
-    }
+  .dijitCheckBoxChecked {
+    background-position: -32px 50%;
+  }
 
 }
 
-.bf .xfControl  {
-     .dijitCheckBoxFocused {
-        border:1px solid black;
-     }
-    .dijitFocusedLabel {
-        border:1px solid #AAA;
-    }
+.xfControl  {
+  .dijitCheckBoxFocused {
+    border:1px solid @dark;
+  }
+  .dijitFocusedLabel {
+    border:1px solid @gray;
+  }
+  select {
+    background-color: @controlBackground;
+  }
 }
 
 
@@ -934,89 +852,64 @@ table .xfContainer{
 */
 
 .bfHelpIcon {
-    vertical-align: top;
+  vertical-align: top;
 }
 
+/*
 .bf .dijitCheckBoxIcon {
-    /*background-image: url("@{image-url}/checkmarkNoBorder.png");*/
+    background-image: url("@{image-url}/checkmarkNoBorder.png");
 }
+*/
 
-.xfControl select {
-    background-color: white;
-}
 
 .helpAttributeTableHeader {
-    font-size: small;
-    font-weight: bold;
-    background-color: #D3D3D3;
+  font-size: @fontSizeMin;
+  font-weight: bold;
+  background-color: @helpTableHeader;
 }
 
 .xfAccordion {
-    float: left;
-    margin-right: 30px;
-    width: 900px;
-    height: 750px;
-    overflow: hidden
+  float: left;
+  margin-right: 30px;
+  width: 900px;
+  height: 750px;
+  overflow: hidden
 }
-.bf .xfOutput {
-    display: block;
+
+.xfOutput {
+  display: block;
 }
 
 
 .xfOutput .xfValue {
-    padding-top: 2px;
-    display:inline-block;
+  padding-top: 2px;
+  display:inline-block;
 }
 
 .xfTextareaHTML .xfValue {
-    height: 240px;
-    width: 500px;
+  height: 240px;
+  width: 500px;
 }
 
 .xfTextarea .RichTextEditable iframe {
-    background-color: white;
-    height: 195px;
+  background-color: @controlBackground;
+  height: 195px;
 }
 
 /* overwritten dojo styles */
 
 .dijitBorderContainer {
-    position: absolute;
+  position: absolute;
 }
 
 .dijitAccordionBody {
-    padding-top: 10px;
-    padding-left: 5px;
+  padding-top: 10px;
+  padding-left: 5px;
 }
 
-/* An Element that is waiting for a server-call to return gets 'bfPending' class to allow styling of this control
-and visually give feedback to the user. */
-/* An bfPending Element gets an animates Gif-Symbol. bfPending is applied to a DOM-Node while it is being processed. */
-.bfPending .xfValue {
-    /*
-     background: url("@{image-url}/indicator.gif" ) no-repeat right !important;
-     background:#ffffe0;
-     background-repeat: repeat !important;
-     */
-}
-
-/* All Elements infront of the bfPending Element must be half-transparent */
-.bfPending * {
-    /*
-         background-image: none;
-         opacity:0.9 !important;
-         filter:Alpha(opacity=90) !important;
-         moz-opacity: 0.9 !important;
-         */
-}
-
-table > .bfPending .xfRepeatIndex {
-    /*
-    background: url("@{image-url}/ajax-loader.gif" ) no-repeat center center !important;
-    background-color:#ffffe0;
-    opacity:0.8;
-    */
-}
+/*
+  XForms Trigger (can be matched with .xfTrigger .xfValue as well
+*/
 
 /*##################################################################
                    START IMPORTANT STYLES (DO NOT OVERWRITE)
@@ -1025,7 +918,7 @@ table > .bfPending .xfRepeatIndex {
 .bf .xfDisabled .xfLabel,
 .bf .xfDisabled .xfGroupLabel,
 .bf .xfDisabled {
-    display: none !important;
+  display: none !important;
 }
 
 /*##################################################################
@@ -1037,11 +930,11 @@ table > .bfPending .xfRepeatIndex {
 ##################################################################*/
 
 .xfOutOfRange {
-    background: transparent;
+  background: transparent;
 }
 
 .xfInRange {
-    background: transparent;
+  background: transparent;
 }
 
 /* START DOJOX/FORMS/RESOURCES/RANGESLIDER.CSS */
@@ -1052,98 +945,101 @@ table > .bfPending .xfRepeatIndex {
 
 /* SORIA THEME BUGFIX */
 .dijitTextBoxFocused {
-    outline:none;
+  outline:none;
 }
+
+
 
 
 /*##################################################################
                             EVENTLOG
 ##################################################################*/
 
+
 #evtLogContainer{
-    position:fixed;
-    z-index: 999;
-    right: 0;
-    top:0;
-    background: whitesmoke;
-    height: 500px;
-    border:thin solid @borderColor1;
-    width: 280px;
-    box-shadow:10px 10px 5px #aaaaaa;
+  position:fixed;
+  z-index: 999;
+  right: 0;
+  top:0;
+  background: @light;
+  height: 500px;
+  border:thin solid @borderColorEventLog;
+  width: 280px;
+  box-shadow:10px 10px 5px @gray;
 
-    #logControls{
-        background:@repeat-index-color;
-        text-align: right;
-        width: 100%;
-        margin: 0;
-        border-bottom: thin solid @borderColor1;
-        position: absolute;
-        height: 26px;
-        cursor:move;
+}
 
-        a{
-            text-decoration: none;
-            width: 26px;
-            height: 26px;
-            cursor: pointer;
-        }
+#logControls{
+  background:@repeat-index-color;
+  text-align: right;
+  width: 100%;
+  margin: 0;
+  border-bottom: thin solid @borderColorEventLog;
+  position: absolute;
+  height: 26px;
+  cursor:move;
+  a{
+    text-decoration: none;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+  }
+}
 
-        #switchLog{
-            background: url("@{image-url}/openclose.png") no-repeat center;
-            float: right;
-            color:transparent;
-        }
-        #trashLog{
-            background: url("@{image-url}/trash.png") no-repeat center;
-            color:transparent;
-            float: left;
-        }
-    }
+#switchLog{
+  background: url("@{image-url}/openclose.png") no-repeat center;
+  float: right;
+  color:transparent;
+}
 
-    #eventLog {
-        list-style: none;
-        padding: 0;
-        color:#333333;
-        height: 460px;
-        overflow: auto;
-        margin-top: 26px;
+#trashLog{
+  background: url("@{image-url}/trash.png") no-repeat center;
+  color:transparent;
+  float: left;
+}
 
-        li{
-            margin: 10px 10px 0 10px;
-        }
+#eventLog {
+  list-style: none;
+  padding: 0;
+  color:@dark;
+  height: 460px;
+  overflow: auto;
+  margin-top: 26px;
 
-        li > a{
-            text-decoration: none;
-        }
+  li{
+    margin: 10px 10px 0 10px;
+  }
 
-        li > a > span{
-            color:#777777;
-            border-bottom:thin solid @borderColor1;
-            margin-top: 10px;
-            display: block;
-            width: 100%;
-            font-weight: bold;
-        }
-        td{
-            padding:0 5px;
-            font-size: 8pt;
-        }
+  li > a{
+    text-decoration: none;
+  }
 
-        .logDevider{
-            display:block;
-            width: 100%;
-            height:3px;
-            background: #b0c4de;
-        }
+  li > a > span{
+    color:@debugPaneColor;
+    border-bottom:thin solid @borderColorEventLog;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    font-weight: bold;
+  }
+  td{
+    padding:0 5px;
+    font-size: @fontSizeMin
+  }
 
-        .eventLogTable{
-            .propName{
-                background: #dadada;
-                vertical-align: top;
-            }
-        }
+  .logDevider{
+    display:block;
+    width: 100%;
+    height:3px;
+    background: @eventLogDevider;
+  }
+}
 
-    }
+.eventLogTable{
+  .propName{
+    background: @eventLogTable;
+    vertical-align: top;
+  }
 }
 
 /* ################################################ */
@@ -1151,44 +1047,50 @@ table > .bfPending .xfRepeatIndex {
 /* ################################################ */
 /* main classes for dojox.widget.Toaster */
 
-.dijitToasterContent {
-    padding:1em;
-    padding-top:0.25em;
-    background:#73c74a;
+.dijitToasterContainer {
+  padding: 2px;
+  border: thin dotted @gray;
+  display: block;
+  position: absolute;
+  width: 17.5em;
+  margin: 0px;
+  font:0.75em;
 }
 
+.dijitToasterContent {
+  background:@dijitTosterContent;
+  font-size: @fontSizeMin;
+  color: @dark;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+
 .dijitToasterMessage{
-    color:#fff;
+  color:@light;
 }
 
 .dijitToasterWarning{ }
 .dijitToasterError,
 .dijitToasterFatal{
-    font-weight:bold;
-    color:#fff;
+  font-weight:bold;
+  color:@light;
 }
 
 .dijitToasterWarning .dijitToasterContent{
-    background:#d4d943;
+  background:@toasterWarning;
 }
 
 .dijitToasterError .dijitToasterContent{
-    background:#c46600;
+  background:@toasterError;
 }
 
 /* imported from dijit.css */
 
 .dijitToasterClip {
-    position: absolute;
-    z-index: 5000;
-    overflow: hidden;
+  position: absolute;
+  z-index: 5000;
+  overflow: hidden;
 }
 
-.dijitToasterContainer {
-    display: block;
-    position: absolute;
-    width: 17.5em;
-    margin: 0px;
-    font:0.75em;
-}
 
