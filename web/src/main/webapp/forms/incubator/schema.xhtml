@@ -36,7 +36,7 @@
             <xf:bind id="b-email" nodeset="my:email" type="my:email"/>
         </xf:model>
 		<xs:schema id="g-schema">
-			<xs:import schemaLocation="http://localhost:8080/betterform/forms/incubator/xsd/generic.xsd" namespace="http://my.schema.com/schema" />
+			<xs:import schemaLocation="xsd/generic.xsd" namespace="http://my.schema.com/schema" />
 		</xs:schema>
         <xs:schema id="s-schema">
             <xs:simpleType name="login">
@@ -60,9 +60,9 @@
 
             <xf:input bind="b-name">
                 <xf:label>Name</xf:label>
-				<xf:alert>Name must be at least three characters long</xf:alert>
-				<xf:hint>Name must be at least three characters long</xf:hint>
-				<xf:help>Name must be at least three characters long</xf:help>
+				<xf:alert>Name must be at least four characters long</xf:alert>
+				<xf:hint>Name must be at least four characters long</xf:hint>
+				<xf:help>Name must be at least four characters long</xf:help>
             </xf:input>
             <xf:input bind="b-birthday">
                 <xf:label>Birthday</xf:label>
