@@ -13,7 +13,6 @@
     <property name="root.dir" value="${betterFORM.src}"/>
     <property name="core.dir" value="${betterFORM.src}/core"/>
     <property name="web.dir" value="${betterFORM.src}/web"/>
-    <property name="resource.dir" value="${betterFORM.src}/resource"/>
     <property name="XRX.dir" value="${betterFORM.src}/XRX"/>
 
     <!-- eXist-module sub-dirs -->
@@ -203,14 +202,14 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="db.install-files-into-eXist-DB">
            <param name="db.user" value="${eXist.db.user}"/>
            <param name="db.passwd" value="${eXist.db.passwd}"/>
-           <param name="file-source-dir" value="${resource.dir}/src/main/xforms/reference"/>
+           <param name="file-source-dir" value="${betterFORM.src}/web/src/main/webapp/forms/reference"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}/forms/reference"/>
         </antcall>
 
         <antcall target="db.install-file-into-eXist-DB">
            <param name="db.user" value="${eXist.db.user}"/>
            <param name="db.passwd" value="${eXist.db.passwd}"/>
-           <param name="file-source" value="${resource.dir}/src/main/xforms/FeatureExplorer.xhtml"/>
+           <param name="file-source" value="${betterFORM.src}/web/src/main/webapp/forms/FeatureExplorer.xhtml"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}"/>
         </antcall>
     </target>
@@ -222,14 +221,14 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="db.install-files-into-eXist-DB">
            <param name="db.user" value="${eXist.db.user}"/>
            <param name="db.passwd" value="${eXist.db.passwd}"/>
-           <param name="file-source-dir" value="${resource.dir}/src/main/xforms/demo"/>
+           <param name="file-source-dir" value="${betterFORM.src}/web/src/main/webapp/forms/demo"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}/forms/demo"/>
         </antcall>
 
         <antcall target="db.install-file-into-eXist-DB">
            <param name="db.user" value="${eXist.db.user}"/>
            <param name="db.passwd" value="${eXist.db.passwd}"/>
-           <param name="file-source" value="${resource.dir}/src/main/xforms/Status.xhtml"/>
+           <param name="file-source" value="${betterFORM.src}/web/src/main/webapp/forms/Status.xhtml"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}"/>
         </antcall>
     </target>
@@ -248,7 +247,7 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="db.install-file-into-eXist-DB">
            <param name="db.user" value="${eXist.db.user}"/>
            <param name="db.passwd" value="${eXist.db.passwd}"/>
-           <param name="file-source" value="${resource.dir}/src/main/xforms/TimeTracker.xhtml"/>
+           <param name="file-source" value="${betterFORM.src}/web/src/main/webapp/forms/TimeTracker.xhtml"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}"/>
         </antcall>
 
@@ -289,7 +288,7 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="db.install-files-into-eXist-DB">
            <param name="db.user" value="${eXist.db.user}"/>
            <param name="db.passwd" value="${eXist.db.passwd}"/>
-           <param name="file-source-dir" value="${resource.dir}/src/main/xforms/incubator/editor"/>
+           <param name="file-source-dir" value="${betterFORM.src}/web/src/main/webapp/forms/incubator/editor"/>
            <param name="db.uri" value="xmldb:exist://${eXist.server.name}:${eXist.server.port}${eXist.context}/xmlrpc/db/${eXist.db.rootcollection.name}/apps/editor"/>
         </antcall>
 
