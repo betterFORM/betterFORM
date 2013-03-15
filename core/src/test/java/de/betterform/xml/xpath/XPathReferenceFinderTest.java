@@ -48,13 +48,13 @@ public class XPathReferenceFinderTest extends TestCase {
                 this.referenceFinder.getReferences("../data", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{"child::f", "child::f/child::g"},
                 this.referenceFinder.getReferences("f[g != '']", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"(child::observation[(child::data!=\"\")])/child::code", "child::observation", "child::observation/child::data"},
+        assertReferences(new String[]{"child::observation[child::data!=\"\"]/child::code", "child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("observation[data != '']/code", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"(child::observation[(child::data!=\"\")])/child::code", "child::observation", "child::observation/child::data"},
+        assertReferences(new String[]{"child::observation[child::data!=\"\"]/child::code", "child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("count(observation[data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::observation", "/child::data", "(child::observation[((/child::data)!=\"\")])/child::code"},
+        assertReferences(new String[]{"child::observation", "/child::data", "child::observation[/child::data!=\"\"]/child::code"},
                 this.referenceFinder.getReferences("count(observation[/data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"(/(child::observation[((/child::data)!=\"\")]))/child::code", "/child::observation", "/child::data"},
+        assertReferences(new String[]{"/child::observation[/child::data!=\"\"]/child::code", "/child::observation", "/child::data"},
                 this.referenceFinder.getReferences("count(/observation[/data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{},
                 this.referenceFinder.getReferences("current()", Collections.EMPTY_MAP, fDummyContainer));
@@ -91,7 +91,7 @@ public class XPathReferenceFinderTest extends TestCase {
 //        assertReferences(new String[]{"instance(\"test\")/child::observation", "instance(\"list\")/attribute::attribute(data, xs:anyAtomicType)", "instance(\"list\")", "instance(\"test\")/child::observation/child::data", "instance(\"test\")"},
 //                this.referenceFinder.getReferences("count(instance(\"test\")/observation[data != instance('list')/@data]) > 0", Collections.EMPTY_MAP, fDummyContainer));
 
-        assertReferences(new String[]{"instance(\"test\")/child::observation", "instance(\"list\")/attribute::attribute(data, xs:anySimpleType)", "instance(\"list\")", "instance(\"test\")/child::observation/child::data", "instance(\"test\")"},
+        assertReferences(new String[]{"instance(\"test\")/child::observation", "instance(\"list\")/attribute::data", "instance(\"list\")", "instance(\"test\")/child::observation/child::data", "instance(\"test\")"},
                 this.referenceFinder.getReferences("count(instance(\"test\")/observation[data != instance('list')/@data]) > 0", Collections.EMPTY_MAP, fDummyContainer));
 
 
@@ -101,7 +101,7 @@ public class XPathReferenceFinderTest extends TestCase {
 //        assertReferences(new String[]{"instance(\"y\")/child::node", "instance(\"z\")", "child::element", "../child::no", "child::data", "..", "instance(\"x\")", "instance(\"y\")", "child::element/attribute::attribute(id, xs:anyAtomicType)", "(../child::no)/child::data"},
 //                this.referenceFinder.getReferences("concat(instance('x'), data or ../no/data, instance('y')/node, element[@id = instance('z')])", Collections.EMPTY_MAP, fDummyContainer));
 
-        assertReferences(new String[]{"instance(\"y\")/child::node", "instance(\"z\")", "child::element", "../child::no", "child::data", "..", "instance(\"x\")", "instance(\"y\")", "child::element/attribute::attribute(id, xs:anySimpleType)", "(../child::no)/child::data"},
+        assertReferences(new String[]{"instance(\"y\")/child::node", "instance(\"z\")", "child::element", "../child::no", "child::data", "..", "instance(\"x\")", "instance(\"y\")", "child::element/attribute::id", "../child::no/child::data"},
                 this.referenceFinder.getReferences("concat(instance('x'), data or ../no/data, instance('y')/node, element[@id = instance('z')])", Collections.EMPTY_MAP, fDummyContainer));
     }
 
