@@ -83,18 +83,18 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d1e162" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
-                     <div data-dojo-type="dijit.Tooltip" connectId="d1e162">matches a body that uses inline alerts</div>
+                  <td id="d2e162" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
+                     <div data-dojo-type="dijit.Tooltip" connectId="d2e162">matches a body that uses inline alerts</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d1e171" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d1e171">matches an Element that represents a XForms input element</div>
+                  <td id="d2e171" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d2e171">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d1e180" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
-                     <div data-dojo-type="dijit.Tooltip" connectId="d1e180">matches an Element that represents a XForms alert element</div>
+                  <td id="d2e180" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
+                     <div data-dojo-type="dijit.Tooltip" connectId="d2e180">matches an Element that represents a XForms alert element</div>
                   </td>
                </tr>
                <tr>
@@ -334,7 +334,7 @@
 </code></pre></div>
       </div><script type="text/javascript">
                 function showClass(cssClass) {
-                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
                         query('.sample .' + cssClass).forEach(function (item) {
                             domClass.add(item, 'showClass');
                         });
@@ -342,14 +342,14 @@
                 }
 
                 function hideClass(cssClass) {
-                    require(["../../../../../resource/target/scripts/dojo/query", "dojo/dom-class"], function (query, domClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
                         query('.sample .' + cssClass).forEach(function (item) {
                             domClass.remove(item, 'showClass');
                         });
                     });
                 }
 
-                require(["../../../../../resource/target/scripts/dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                require(["dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
                         function (parser, connect, Tooltip, dom) {
                             var xforms = dom.byId("xforms");
                             // console.debug("parse ",xforms);
