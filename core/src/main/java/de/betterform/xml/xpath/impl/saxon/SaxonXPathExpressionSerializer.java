@@ -130,11 +130,11 @@ public class SaxonXPathExpressionSerializer {
             // This is not an XPath expression
         } else if (expr instanceof SlashExpression) {
             SlashExpression slashExpression = (SlashExpression) expr;
-            result.append('(');
+//            result.append('(');
             serialize(result, slashExpression.getControllingExpression(), reversePrefixMapping);
             result.append('/');
             serialize(result, slashExpression.getControlledExpression() , reversePrefixMapping);
-            result.append(')');
+//            result.append(')');
         }  else if (expr instanceof PatternSponsor) {
             // XXX not yet supported
         } else if (expr instanceof SimpleExpression) {

@@ -61,39 +61,31 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
 	else if (expression instanceof SlashExpression)
 	{
 	    final SlashExpression slashExpression = (SlashExpression)expression;
-	    final Expression startExpression = slashExpression.getControllingExpression();
+	    final Expression lhsExpression = slashExpression.getControllingExpression();
+	    final Expression rhsExpression = slashExpression.getControlledExpression();
 	    
-	    addExpressionReferences(references, context, startExpression, prefixMapping); 
-	    addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(startExpression, prefixMapping), slashExpression.getControlledExpression(), prefixMapping);
+	    addExpressionReferences(references, context, lhsExpression, prefixMapping); 
+	    addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(lhsExpression, prefixMapping), rhsExpression, prefixMapping);
 	    
 	}
 	else if (expression instanceof FilterExpression)
 	{
 	    final FilterExpression filterExpression = (FilterExpression)expression;
 	    
-	    final HashSet baseReferences = new HashSet();
-	    addExpressionReferences(baseReferences, context, filterExpression.getControllingExpression(), prefixMapping);
-	    
-	    for (Iterator it = baseReferences.iterator(); it.hasNext();) {
-		String newContext = (String) it.next();
-		
-		addExpressionReferences(references, newContext, filterExpression.getFilter(), prefixMapping);
-	    }
-	    
-	    references.addAll(baseReferences);
+	    String newContext = SaxonXPathExpressionSerializer.serialize(filterExpression.getControllingExpression(), prefixMapping);
+	    addExpressionReferences(references, context, filterExpression.getControllingExpression(), prefixMapping);
+	    addExpressionReferences(references, newContext, filterExpression.getFilter(), prefixMapping);
 	}
 	else if (expression instanceof FunctionCall)
 	{
 	    String newContext = SaxonXPathExpressionSerializer.serialize(expression, prefixMapping);
 	    
-	    if (expression instanceof Instance)
-	    {
-		references.add(newContext);
+	    if (expression instanceof Instance) {
+	      references.add(newContext);
 	    }
 	    
 	    for (Iterator it = expression.iterateSubExpressions(); it.hasNext();) {
-		
-		addExpressionReferences(references, context, (Expression) it.next(), prefixMapping);
+	      addExpressionReferences(references, context, (Expression) it.next(), prefixMapping);
 	    }
 	}
 	else if (expression instanceof ContextItemExpression) {
