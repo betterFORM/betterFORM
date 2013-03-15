@@ -147,17 +147,17 @@
          <div class="MIPS"></div>
          <h2>XForms Markup</h2>
          <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:model id="model-child"&gt;
-    &lt;xf:instance&gt;
-        &lt;data&gt;
-            &lt;class&gt;&lt;/class&gt;
-        &lt;/data&gt;
-    &lt;/xf:instance&gt;
-    &lt;xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn"&gt;
-        &lt;xf:toggle case="c-input1"&gt;&lt;/xf:toggle&gt;
-    &lt;/xf:action&gt;
-    &lt;xf:setvalue ref="class" value="'observedGroupBG'" ev:observer="observedGroup" ev:event="DOMFocusIn"&gt;&lt;/xf:setvalue&gt;
-    &lt;xf:setvalue ref="class" value="''" ev:observer="observedGroup" ev:target="observedGroup" ev:event="DOMFocusOut"&gt;&lt;/xf:setvalue&gt;
-&lt;/xf:model&gt;
+                        &lt;xf:instance&gt;
+                            &lt;data&gt;
+                                &lt;class&gt;&lt;/class&gt;
+                            &lt;/data&gt;
+                        &lt;/xf:instance&gt;
+                        &lt;xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn"&gt;
+                            &lt;xf:toggle case="c-input1"&gt;&lt;/xf:toggle&gt;
+                        &lt;/xf:action&gt;
+                        &lt;xf:setvalue ref="class" value="'observedGroupBG'" ev:observer="observedGroup" ev:event="DOMFocusIn"&gt;&lt;/xf:setvalue&gt;
+                        &lt;xf:setvalue ref="class" value="''" ev:observer="observedGroup" ev:target="observedGroup" ev:event="DOMFocusOut"&gt;&lt;/xf:setvalue&gt;
+                    &lt;/xf:model&gt;
 
 &lt;xf:input id="input1" ref="."&gt;
     &lt;xf:label&gt;Input before observerd Group&lt;/xf:label&gt;

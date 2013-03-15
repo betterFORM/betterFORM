@@ -62,18 +62,20 @@
         <div class="sample">
             <div class="markup">
                 <code>
-<xf:model id="model-child">
-    <xf:instance>
-        <data xmlns="">
-            <class></class>
-        </data>
-    </xf:instance>
-    <xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn" >
-        <xf:toggle case="c-input1" />
-    </xf:action>
-    <xf:setvalue ref="class" value="'observedGroupBG'" ev:observer="observedGroup" ev:event="DOMFocusIn" />
-    <xf:setvalue ref="class" value="''"  ev:observer="observedGroup" ev:target="observedGroup" ev:event="DOMFocusOut"/>
-</xf:model>
+                    <xf:model id="model-child">
+                        <xf:instance>
+                            <data xmlns="">
+                                <class></class>
+                            </data>
+                        </xf:instance>
+                        <xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn">
+                            <xf:toggle case="c-input1"/>
+                        </xf:action>
+                        <xf:setvalue ref="class" value="'observedGroupBG'" ev:observer="observedGroup"
+                                     ev:event="DOMFocusIn"/>
+                        <xf:setvalue ref="class" value="''" ev:observer="observedGroup" ev:target="observedGroup"
+                                     ev:event="DOMFocusOut"/>
+                    </xf:model>
 
                 </code>
                 <code class="ui">
