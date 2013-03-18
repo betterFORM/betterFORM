@@ -20,7 +20,6 @@
     <title>Welcome to Zaphod</title>
     <style type="text/css">
         @import "/zaphod/forms/forward/resources/scripts/dijit/themes/soria/soria.css";
-        @import "/zaphod/forms/forward/resources/styles/xforms.css";
         @import "/zaphod/forms/forward/resources/styles/betterform.css";
         @import "/zaphod/forms/forward/resources/styles/reference.css";
     </style>

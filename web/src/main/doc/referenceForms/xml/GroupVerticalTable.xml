@@ -49,7 +49,10 @@
                         <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
                                  required="boolean-from-string(../@required)"
-                                 relevant="boolean-from-string(../@relevant)"/>
+                                 relevant="boolean-from-string(../@relevant)">
+                            <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"/>
+                        </xf:bind>
+
                         <xf:bind nodeset="@constraint" type="boolean"/>
                         <xf:bind nodeset="@readonly" type="boolean"/>
                         <xf:bind nodeset="@required" type="boolean"/>
@@ -62,15 +65,22 @@
     <xf:input ref="a">
         <xf:label>A-label</xf:label>
         <xf:hint>a hint to A-label</xf:hint>
+        <xf:alert>an alert to A-label</xf:alert>
     </xf:input>
     <xf:input ref="b">
-        <xf:label>Bb-label</xf:label>
+        <xf:label>B-label</xf:label>
+        <xf:hint>a hint to B-label</xf:hint>
+        <xf:alert>an alert to B-label</xf:alert>
     </xf:input>
     <xf:input ref="c">
-        <xf:label>Ccc-label</xf:label>
+        <xf:label>C-label</xf:label>
+        <xf:hint>a hint to C-label</xf:hint>
+        <xf:alert>an alert to C-label</xf:alert>
     </xf:input>
     <xf:input ref="d">
-        <xf:label>Dddd-label</xf:label>
+        <xf:label>D-label</xf:label>
+        <xf:hint>a hint to D-label</xf:hint>
+        <xf:alert>an alert to D-label</xf:alert>
     </xf:input>
 </xf:group>
                 </code>

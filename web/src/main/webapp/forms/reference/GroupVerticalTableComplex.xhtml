@@ -76,7 +76,11 @@
                
                <xf:bind nodeset="grouped-data">
                   
-                  <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
+                  <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)">
+                     
+                     <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"></xf:bind>
+                     
+                  </xf:bind>
                   
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                   
@@ -100,8 +104,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d15e365" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e365">matches any Element that represents a XForms
+                  <td id="d7e590" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e590">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -113,13 +117,13 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d15e383" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e383">matches the  label of a group</div>
+                  <td id="d7e608" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e608">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e397" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e397">matches an Element that represents a XForms
+                  <td id="d7e622" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e622">matches an Element that represents a XForms
                         group
                         element with
                         'bf:verticalTable'
@@ -129,59 +133,59 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d15e412" onmouseover="showClass('bfVerticalTableLabel');" onmouseout="hideClass('bfVerticalTableLabel');">bfVerticalTableLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e412">matches the label column of a vertical table layout
+                  <td id="d7e637" onmouseover="showClass('bfVerticalTableLabel');" onmouseout="hideClass('bfVerticalTableLabel');">bfVerticalTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e637">matches the label column of a vertical table layout
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e421" onmouseover="showClass('bfVerticalTableValue');" onmouseout="hideClass('bfVerticalTableValue');">bfVerticalTableValue
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e421">matches the value column of a vertical table layout
+                  <td id="d7e646" onmouseover="showClass('bfVerticalTableValue');" onmouseout="hideClass('bfVerticalTableValue');">bfVerticalTableValue
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e646">matches the value column of a vertical table layout
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e431" onmouseover="showClass('bfVerticalTableInfo');" onmouseout="hideClass('bfVerticalTableInfo');">bfVerticalTableInfo
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e431">matches the info column of a vertical table layout
+                  <td id="d7e656" onmouseover="showClass('bfVerticalTableInfo');" onmouseout="hideClass('bfVerticalTableInfo');">bfVerticalTableInfo
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e656">matches the info column of a vertical table layout
                         
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e440" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e440">tbd</div>
+                  <td id="d7e665" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e665">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e449" onmouseover="showClass('xfMinimalGroup');" onmouseout="hideClass('xfMinimalGroup');">xfMinimalGroup
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e449">tbd</div>
+                  <td id="d7e674" onmouseover="showClass('xfMinimalGroup');" onmouseout="hideClass('xfMinimalGroup');">xfMinimalGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e674">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e458" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e458">tbd</div>
+                  <td id="d7e683" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e683">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e467" onmouseover="showClass('xfFullGroup');" onmouseout="hideClass('xfFullGroup');">xfFullGroup
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e467">tbd</div>
+                  <td id="d7e692" onmouseover="showClass('xfFullGroup');" onmouseout="hideClass('xfFullGroup');">xfFullGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e692">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e476" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e476">tbd</div>
+                  <td id="d7e701" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e701">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e486" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e486">tbd</div>
+                  <td id="d7e711" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e711">tbd</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d15e495" onmouseover="showClass('bfGroupLabelLeft');" onmouseout="hideClass('bfGroupLabelLeft');">bfGroupLabelLeft
-                     <div data-dojo-type="dijit.Tooltip" connectId="d15e495">tbd</div>
+                  <td id="d7e720" onmouseover="showClass('bfGroupLabelLeft');" onmouseout="hideClass('bfGroupLabelLeft');">bfGroupLabelLeft
+                     <div data-dojo-type="dijit.Tooltip" connectId="d7e720">tbd</div>
                   </td>
                </tr>
                <tr>
@@ -337,23 +341,39 @@
                   
                   <xf:label>A-label</xf:label>
                   
+                  <xf:hint>a hint to A-label</xf:hint>
+                  
+                  <xf:alert>an alert to A-label</xf:alert>
+                  
                </xf:input>
                
                <xf:input ref="b">
                   
-                  <xf:label>Bb-label</xf:label>
+                  <xf:label>B-label</xf:label>
+                  
+                  <xf:hint>a hint to B-label</xf:hint>
+                  
+                  <xf:alert>an alert to B-label</xf:alert>
                   
                </xf:input>
                
                <xf:input ref="c">
                   
-                  <xf:label>Ccc-label</xf:label>
+                  <xf:label>C-label</xf:label>
+                  
+                  <xf:hint>a hint to C-label</xf:hint>
+                  
+                  <xf:alert>an alert to C-label</xf:alert>
                   
                </xf:input>
                
                <xf:input ref="d">
                   
-                  <xf:label>Dddd-label</xf:label>
+                  <xf:label>D-label</xf:label>
+                  
+                  <xf:hint>a hint to D-label</xf:hint>
+                  
+                  <xf:alert>an alert to D-label</xf:alert>
                   
                </xf:input>
                
@@ -369,23 +389,39 @@
                      
                      <xf:label>A-label</xf:label>
                      
+                     <xf:hint>a hint to A-label</xf:hint>
+                     
+                     <xf:alert>an alert to A-label</xf:alert>
+                     
                   </xf:input>
                   
                   <xf:input ref="b">
                      
-                     <xf:label>Bb-label</xf:label>
+                     <xf:label>B-label</xf:label>
+                     
+                     <xf:hint>a hint to B-label</xf:hint>
+                     
+                     <xf:alert>an alert to B-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="c">
                      
-                     <xf:label>Ccc-label</xf:label>
+                     <xf:label>C-label</xf:label>
+                     
+                     <xf:hint>a hint to C-label</xf:hint>
+                     
+                     <xf:alert>an alert to C-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="d">
                      
-                     <xf:label>Dddd-label</xf:label>
+                     <xf:label>D-label</xf:label>
+                     
+                     <xf:hint>a hint to D-label</xf:hint>
+                     
+                     <xf:alert>an alert to D-label</xf:alert>
                      
                   </xf:input>
                   
@@ -425,23 +461,39 @@
                      
                      <xf:label>A-label</xf:label>
                      
+                     <xf:hint>a hint to A-label</xf:hint>
+                     
+                     <xf:alert>an alert to A-label</xf:alert>
+                     
                   </xf:input>
                   
                   <xf:input ref="b">
                      
-                     <xf:label>Bb-label</xf:label>
+                     <xf:label>B-label</xf:label>
+                     
+                     <xf:hint>a hint to B-label</xf:hint>
+                     
+                     <xf:alert>an alert to B-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="c">
                      
-                     <xf:label>Ccc-label</xf:label>
+                     <xf:label>C-label</xf:label>
+                     
+                     <xf:hint>a hint to C-label</xf:hint>
+                     
+                     <xf:alert>an alert to C-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="d">
                      
-                     <xf:label>Dddd-label</xf:label>
+                     <xf:label>D-label</xf:label>
+                     
+                     <xf:hint>a hint to D-label</xf:hint>
+                     
+                     <xf:alert>an alert to D-label</xf:alert>
                      
                   </xf:input>
                   
@@ -456,23 +508,39 @@
                      
                      <xf:label>A-label</xf:label>
                      
+                     <xf:hint>a hint to A-label</xf:hint>
+                     
+                     <xf:alert>an alert to A-label</xf:alert>
+                     
                   </xf:input>
                   
                   <xf:input ref="b">
                      
-                     <xf:label>Bb-label</xf:label>
+                     <xf:label>B-label</xf:label>
+                     
+                     <xf:hint>a hint to B-label</xf:hint>
+                     
+                     <xf:alert>an alert to B-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="c">
                      
-                     <xf:label>Ccc-label</xf:label>
+                     <xf:label>C-label</xf:label>
+                     
+                     <xf:hint>a hint to C-label</xf:hint>
+                     
+                     <xf:alert>an alert to C-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="d">
                      
-                     <xf:label>Dddd-label</xf:label>
+                     <xf:label>D-label</xf:label>
+                     
+                     <xf:hint>a hint to D-label</xf:hint>
+                     
+                     <xf:alert>an alert to D-label</xf:alert>
                      
                   </xf:input>
                   
@@ -487,11 +555,39 @@
                      
                      <xf:label>A-label</xf:label>
                      
+                     <xf:hint>a hint to A-label</xf:hint>
+                     
+                     <xf:alert>an alert to A-label</xf:alert>
+                     
                   </xf:input>
                   
                   <xf:input ref="b">
                      
-                     <xf:label>Bb-label</xf:label>
+                     <xf:label>B-label</xf:label>
+                     
+                     <xf:hint>a hint to B-label</xf:hint>
+                     
+                     <xf:alert>an alert to B-label</xf:alert>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="c">
+                     
+                     <xf:label>C-label</xf:label>
+                     
+                     <xf:hint>a hint to C-label</xf:hint>
+                     
+                     <xf:alert>an alert to C-label</xf:alert>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="d">
+                     
+                     <xf:label>D-label</xf:label>
+                     
+                     <xf:hint>a hint to D-label</xf:hint>
+                     
+                     <xf:alert>an alert to D-label</xf:alert>
                      
                   </xf:input>
                   
@@ -506,17 +602,39 @@
                      
                      <xf:label>A-label</xf:label>
                      
+                     <xf:hint>a hint to A-label</xf:hint>
+                     
+                     <xf:alert>an alert to A-label</xf:alert>
+                     
                   </xf:input>
                   
                   <xf:input ref="b">
                      
-                     <xf:label>Bb-label</xf:label>
+                     <xf:label>B-label</xf:label>
+                     
+                     <xf:hint>a hint to B-label</xf:hint>
+                     
+                     <xf:alert>an alert to B-label</xf:alert>
                      
                   </xf:input>
                   
                   <xf:input ref="c">
                      
-                     <xf:label>Ccc-label</xf:label>
+                     <xf:label>C-label</xf:label>
+                     
+                     <xf:hint>a hint to C-label</xf:hint>
+                     
+                     <xf:alert>an alert to C-label</xf:alert>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="d">
+                     
+                     <xf:label>D-label</xf:label>
+                     
+                     <xf:hint>a hint to D-label</xf:hint>
+                     
+                     <xf:alert>an alert to D-label</xf:alert>
                      
                   </xf:input>
                   
@@ -536,11 +654,39 @@
                      
                      <xf:label>A-label</xf:label>
                      
+                     <xf:hint>a hint to A-label</xf:hint>
+                     
+                     <xf:alert>an alert to A-label</xf:alert>
+                     
                   </xf:input>
                   
                   <xf:input ref="b">
                      
-                     <xf:label>Bb-label</xf:label>
+                     <xf:label>B-label</xf:label>
+                     
+                     <xf:hint>a hint to B-label</xf:hint>
+                     
+                     <xf:alert>an alert to B-label</xf:alert>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="c">
+                     
+                     <xf:label>C-label</xf:label>
+                     
+                     <xf:hint>a hint to C-label</xf:hint>
+                     
+                     <xf:alert>an alert to C-label</xf:alert>
+                     
+                  </xf:input>
+                  
+                  <xf:input ref="d">
+                     
+                     <xf:label>D-label</xf:label>
+                     
+                     <xf:hint>a hint to D-label</xf:hint>
+                     
+                     <xf:alert>an alert to D-label</xf:alert>
                      
                   </xf:input>
                   
@@ -559,11 +705,19 @@
                         
                         <xf:label>A-label</xf:label>
                         
+                        <xf:hint>a hint to A-label</xf:hint>
+                        
+                        <xf:alert>an alert to A-label</xf:alert>
+                        
                      </xf:input>
                      
                      <xf:input ref="b">
                         
-                        <xf:label>Bb-label</xf:label>
+                        <xf:label>B-label</xf:label>
+                        
+                        <xf:hint>a hint to B-label</xf:hint>
+                        
+                        <xf:alert>an alert to B-label</xf:alert>
                         
                      </xf:input>
                      
@@ -575,13 +729,21 @@
                      
                      <xf:input ref="c">
                         
-                        <xf:label>Ccc-label</xf:label>
+                        <xf:label>C-label</xf:label>
+                        
+                        <xf:hint>a hint to C-label</xf:hint>
+                        
+                        <xf:alert>an alert to C-label</xf:alert>
                         
                      </xf:input>
                      
                      <xf:input ref="d">
                         
-                        <xf:label>Dddd-label</xf:label>
+                        <xf:label>D-label</xf:label>
+                        
+                        <xf:hint>a hint to D-label</xf:hint>
+                        
+                        <xf:alert>an alert to D-label</xf:alert>
                         
                      </xf:input>
                      
@@ -633,15 +795,23 @@
     &lt;/xf:label&gt;
     &lt;xf:input ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="b"&gt;
-        &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+        &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="c"&gt;
-        &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+        &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="d"&gt;
-        &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+        &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 
     &lt;div style="padding:5px;color:darkgreen;font-size:14pt;"&gt;this is a simple DIV in between groups&lt;/div&gt;
@@ -650,15 +820,23 @@
         &lt;xf:label&gt;a first nested group with no appearance at all&lt;/xf:label&gt;
         &lt;xf:input ref="a"&gt;
             &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="b"&gt;
-            &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="c"&gt;
-            &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="d"&gt;
-            &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
     &lt;/xf:group&gt;
     
@@ -683,15 +861,23 @@
         &lt;xf:label&gt;minimal group&lt;/xf:label&gt;
         &lt;xf:input ref="a"&gt;
             &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="b"&gt;
-            &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="c"&gt;
-            &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="d"&gt;
-            &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
     &lt;/xf:group&gt;
 
@@ -699,15 +885,23 @@
         &lt;xf:label&gt;compact group&lt;/xf:label&gt;
         &lt;xf:input ref="a"&gt;
             &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="b"&gt;
-            &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="c"&gt;
-            &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="d"&gt;
-            &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
     &lt;/xf:group&gt;
 
@@ -715,9 +909,23 @@
         &lt;xf:label&gt;full group&lt;/xf:label&gt;
         &lt;xf:input ref="a"&gt;
             &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="b"&gt;
-            &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
     &lt;/xf:group&gt;
 
@@ -725,12 +933,23 @@
         &lt;xf:label&gt;horizontal group&lt;/xf:label&gt;
         &lt;xf:input ref="a"&gt;
             &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="b"&gt;
-            &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="c"&gt;
-            &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
     &lt;/xf:group&gt;
 
@@ -741,9 +960,23 @@
         &lt;xf:label style="border:thin solid lightsteelblue;"&gt;A-label / Bb-label&lt;/xf:label&gt;
         &lt;xf:input ref="a"&gt;
             &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
         &lt;xf:input ref="b"&gt;
-            &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
         &lt;/xf:input&gt;
     &lt;/xf:group&gt;
 
@@ -753,18 +986,26 @@
             &lt;xf:label&gt;left group&lt;/xf:label&gt;
             &lt;xf:input ref="a"&gt;
                 &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
             &lt;/xf:input&gt;
             &lt;xf:input ref="b"&gt;
-                &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+                &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
             &lt;/xf:input&gt;
         &lt;/xf:group&gt;
         &lt;xf:group appearance="bf:verticalTable"&gt;
             &lt;xf:label&gt;right group&lt;/xf:label&gt;
             &lt;xf:input ref="c"&gt;
-                &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+                &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
             &lt;/xf:input&gt;
             &lt;xf:input ref="d"&gt;
-                &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+                &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
             &lt;/xf:input&gt;
         &lt;/xf:group&gt;
     &lt;/xf:group&gt;

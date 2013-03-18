@@ -49,7 +49,12 @@
                
                <xf:bind nodeset="grouped-data">
                   
-                  <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
+                  <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)">
+                     
+                     <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"></xf:bind>
+                     
+                  </xf:bind>
+                  
                   
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
                   
@@ -73,8 +78,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d14e150" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d14e150">matches any Element that represents a XForms
+                  <td id="d6e174" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d6e174">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -86,8 +91,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d14e168" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
-                     <div data-dojo-type="dijit.Tooltip" connectId="d14e168">matches an Element that represents a XForms
+                  <td id="d6e192" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d6e192">matches an Element that represents a XForms
                         group
                         element with
                         'bf:verticalTable'
@@ -97,8 +102,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d14e183" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d14e183">matches the  label of a group</div>
+                  <td id="d6e207" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d6e207">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
@@ -260,23 +265,37 @@
                   
                   <xf:hint>a hint to A-label</xf:hint>
                   
+                  <xf:alert>an alert to A-label</xf:alert>
+                  
                </xf:input>
                
                <xf:input ref="b">
                   
-                  <xf:label>Bb-label</xf:label>
+                  <xf:label>B-label</xf:label>
+                  
+                  <xf:hint>a hint to B-label</xf:hint>
+                  
+                  <xf:alert>an alert to B-label</xf:alert>
                   
                </xf:input>
                
                <xf:input ref="c">
                   
-                  <xf:label>Ccc-label</xf:label>
+                  <xf:label>C-label</xf:label>
+                  
+                  <xf:hint>a hint to C-label</xf:hint>
+                  
+                  <xf:alert>an alert to C-label</xf:alert>
                   
                </xf:input>
                
                <xf:input ref="d">
                   
-                  <xf:label>Dddd-label</xf:label>
+                  <xf:label>D-label</xf:label>
+                  
+                  <xf:hint>a hint to D-label</xf:hint>
+                  
+                  <xf:alert>an alert to D-label</xf:alert>
                   
                </xf:input>
                
@@ -321,15 +340,22 @@
     &lt;xf:input ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
         &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="b"&gt;
-        &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+        &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="c"&gt;
-        &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+        &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
     &lt;xf:input ref="d"&gt;
-        &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+        &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
     &lt;/xf:input&gt;
 &lt;/xf:group&gt;
 </code></pre></div>
