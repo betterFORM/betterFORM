@@ -155,9 +155,7 @@
     the following 2 vars select the default css files
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
-    <xsl:variable name="betterform-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
-
+    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
 <!--
     <xsl:output method="xhtml" version="1.0" encoding="UTF-8" indent="no"
@@ -265,7 +263,6 @@
     -->
     <xsl:template name="include-xforms-css">
         <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-        <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
         <xsl:variable name="timelineActive" select="count(//*[@appearance eq 'bf:timeline']) gt 0" />
         <xsl:if test="$timelineActive">
             <link rel="stylesheet" type="text/css" href="{concat($contextroot,$scriptPath,'simile/timeline/timeline_js/timeline-bundle.css')}"/>

@@ -493,45 +493,6 @@
         </div>
     </xsl:template>
 
-    <xsl:template match="xf:switch[@appearance='bf:AccordionContainer']">
-        <xsl:variable name="switch-id" select="@id"/>
-        <xsl:variable name="switch-classes">
-            <xsl:call-template name="assemble-compound-classes">
-                <xsl:with-param name="appearance" select="@appearance"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <div style="display:none">
-            <xsl:for-each select="xf:case[@name='switch-toggles']/xf:trigger">
-                <xsl:call-template name="trigger"/>
-            </xsl:for-each>
-        </div>
-
-        <div id="{$switch-id}" class="{$switch-classes} xfAccordion" duration="200">
-            <!--
-                    <div id="{$switch-id}" class="{$switch-classes}" dojoType="betterform.ui.container.TabSwitch"
-                            style="width: 900px; height: 400px;">
-            -->
-            <xsl:for-each select="xf:case[./xf:label]">
-                <xsl:variable name="selected">
-                    <xsl:choose>
-                        <xsl:when test="@selected='true'">true</xsl:when>
-                        <xsl:otherwise>false</xsl:otherwise>
-                    </xsl:choose>
-                </xsl:variable>
-
-                <xsl:variable name="label">
-                    <xsl:call-template name="create-label">
-                        <xsl:with-param name="label-elements" select="xf:label"/>
-                    </xsl:call-template>
-                </xsl:variable>
-                <div class="xfCase" caseId="{@id}"
-                     selected="{$selected}" title="{$label}">
-                    <xsl:apply-templates select="*[not(self::xf:label)]"/>
-                </div>
-            </xsl:for-each>
-        </div>
-    </xsl:template>
-
     <xsl:template match="xf:switch[@appearance='dijit:TabContainer']">
         <xsl:variable name="switch-id" select="@id"/>
         <!--

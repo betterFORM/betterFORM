@@ -66,8 +66,7 @@
 	<xsl:variable name="uses-html-textarea" select="boolean(//xf:textarea[@mediatype='text/html'])"/>
 
     <!-- ### the CSS stylesheet to use ### -->
-    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'xforms.css')"/>
-    <xsl:variable name="betterform-css"  select="concat($contextroot,$CSSPath,'betterform.css')"/>
+    <xsl:variable name="default-css" select="concat($contextroot,$CSSPath,'betterform.css')"/>
 
     <xsl:variable name="default-hint-appearance" select="'bubble'"/>
 
@@ -104,8 +103,6 @@
 
             <!-- include betterForm default stylesheet -->
             <link rel="stylesheet" type="text/css" href="{$default-css}"/>
-            <link rel="stylesheet" type="text/css" href="{$betterform-css}"/>
-
             <!-- copy user-defined stylesheets and inline styles -->
             <xsl:call-template name="getLinkAndStyle"/>
 

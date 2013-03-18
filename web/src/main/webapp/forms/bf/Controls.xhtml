@@ -117,7 +117,7 @@
                     <label>trigger[1] minimal</label>
                 </trigger>
                 <trigger>
-                    <label>trigger[2] embed</label>
+                    <label>trigger[2] script</label>
                 </trigger>
                 <trigger>
                     <label>trigger[3] customEvent</label>
@@ -338,14 +338,14 @@
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>Range:</span>
                 <xf:trigger>
-                    <xf:label>Value[1]</xf:label>
+                    <xf:label>Value </xf:label>
                     <xf:setvalue ref="instance()/range[1]/value" value="2"/>
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>Textarea Text:</span>
                 <xf:trigger>
-                    <xf:label>Value[1]</xf:label>
+                    <xf:label>Value</xf:label>
                     <xf:setvalue ref="instance()/textarea[1]/value" value="'new text'"/>
                 </xf:trigger>
             </div>
@@ -655,11 +655,8 @@
                 <xf:trigger ref="trigger[2]/label">
                     <xf:label ref="."/>
                     <xf:action>
-                        <xf:load show="embed" targetid="mountPoint">
-                            <xf:resource value=""/>
-                        </xf:load>
                         <script type="text/javascript">
-                            alert("load sample not implemented yet");
+                            alert("message from JavaScript");
                         </script>
                     </xf:action>
                 </xf:trigger>
