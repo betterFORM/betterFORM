@@ -924,12 +924,13 @@ public class Submission extends BindingElement implements DefaultAction {
     private void submitReplaceEmbedHTML(Map response) throws XFormsException{
         // check for targetid
         String targetid = getXFormsAttribute(TARGETID_ATTRIBUTE);
+        String evaluatedTarget = evalAttributeValueTemplates(targetid, this.element);
         String resource = getResource();
         Map eventInfo = new HashMap();
         String error = null;
 
-        if (targetid == null) {
-            error = "targetId";
+        if (evaluatedTarget == null) {
+            error = "evaluatedTarget";
         }else if(resource == null){
             error = "resource";
         }
@@ -963,7 +964,7 @@ public class Submission extends BindingElement implements DefaultAction {
         }
 
         eventInfo.put(EMBEDNODE,outputStream.toString());
-        eventInfo.put("embedTarget",targetid);
+        eventInfo.put("embedTarget",evaluatedTarget);
 
         // dispatch xforms-submit-done
         this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, eventInfo);
