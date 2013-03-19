@@ -160,9 +160,7 @@
                 <tr>
                     <td>
                         <a style="color:#005A9C;"
-                           href="http://www.w3.org/MarkUp/Forms/specs/XForms1.1/index-all.html{$specRef}" target="_blank">
-                            Recommendation
-                        </a>
+                           href="http://www.w3.org/TR/2009/REC-xforms-20091020#ui-input{$specRef}" target="_blank">Recommendation</a>
                     </td>
                 </tr>
                 <tr>
