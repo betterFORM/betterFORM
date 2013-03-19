@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:my="http://my.schema.com/schema" xml:base="http://localhost:8080/exist/apps/betterform/">
+<head>
+    <title>hello</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+</head>
+<body>
+<div style="display:none">
+    <xf:model id="model-1" schema="test/hello.xsd">
+        <xf:instance>
+            <data xmlns="">
+                <email>info@betterform.de</email>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="email" type="my:email"/>
+    </xf:model>
+</div>
+<xf:input ref="email" incremental="true">
+    <xf:label>Email: </xf:label>
+    <xf:alert>Invalid Email</xf:alert>
+</xf:input>
+</body>
+</html>
