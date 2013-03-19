@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:bf="http://betterform.sourceforge.net/xforms"
-      xml:base="http://localhost:8080/betterform/forms/">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xf="http://www.w3.org/2002/xforms"
+          xml:base="http://localhost:8080/exist/apps/betterform/">
     <head>
         <title>hello</title>
         <!--
         ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
         ~ Licensed under the terms of BSD License
         -->
-
-
         <style type="text/css">
             .xfControl *{
                 font-size:20pt;
@@ -21,12 +17,9 @@
             <bf:include src="test/helloModel.xhtml#model-1"/>
         </div>
 
-<!--
-        <xforms:output ref="hello">
-            <xforms:label>Hello from XForms: </xforms:label>
-        </xforms:output>
--->
+        <!-- xf:output ref="hello">
+            <xf:label>Hello from XForms: </xf:label>
+        </xf:output-->
         <bf:include src="test/helloModel.xhtml#ui"/>
-
     </body>
 </html>
