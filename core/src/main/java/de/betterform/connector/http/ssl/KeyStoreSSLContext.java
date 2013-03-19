@@ -49,9 +49,9 @@ public class KeyStoreSSLContext {
         if (KeyStoreSSLContext.keyStorePath != null) {
             File keystore;
 
-            if (KeyStoreSSLContext.keyStorePath.startsWith( File.separator)) {
-                keystore = new File(KeyStoreSSLContext.keyStorePath);
-            } else {
+            keystore = new File(KeyStoreSSLContext.keyStorePath);
+            if (! keystore.isAbsolute()) {
+                LOGGER.info("Keystore path is not absoulte adding user.home to it. New keystore path: " + System.getProperty("user.home") + File.separator + KeyStoreSSLContext.keyStorePath);
                 keystore = new File(System.getProperty("user.home") + File.separator + KeyStoreSSLContext.keyStorePath);
             }
             try {
