@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="deploy" name="betterform">
+
+    <xmlproperty file="build.properties.xml"
+                semanticAttributes="true"
+                keepRoot="false"
+                description="build properties"/>
+
+    <property name="project.app" value="${docu.name}"/>
+    <property name="project.version" value="${docu.version}"/>
+
+
+    <property name="build.dir" value="${basedir}/target"/>
+    <property name="template.dir" value="${basedir}/templates"/>
+    <property name="xar.dir" value="${basedir}/xar"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="deploy">
+        <mkdir dir="${build.dir}"/>
+
+        <filter token="REP_DESC" value="${docu.desc}"/>
+        <filter token="REP_VERSION" value="${docu.version}"/>
+        <filter token="REP_TARGET" value="${docu.name}"/>
+        <filter token="REP_USER" value="${docu.permission.user}"/>
+        <filter token="REP_PWD" value="${docu.permission.pwd}"/>
+        <filter token="REP_GROUP" value="${docu.permission.group}"/>
+        <filter token="REP_MODE" value="${docu.permission.mode}"/>
+        <filter token="REP_LICENSE" value="${docu.license}"/>
+        <filter token="REP_WEBSITE" value="${docu.website}"/>
+        <copy file="${template.dir}/repo.xml" description="filter repo.xml from templates to xar dir"
+              tofile="${xar.dir}/repo.xml"
+              overwrite="true"
+              filtering="true">
+        </copy>
+
+
+        <!-- EXPath Properties -->
+        <filter token="EX_NAME" value="${docu.ex-name}"/>
+        <filter token="EX_ABBR" value="${docu.name}"/>
+        <filter token="EX_VERS" value="${docu.version}"/>
+        <filter token="EX_TITLE" value="${docu.title}"/>
+        <copy description="filter expath-pkg.xml from templates to xforms xar"
+              file="${template.dir}/expath-pkg.xml"
+              tofile="${xar.dir}/expath-pkg.xml"
+              overwrite="true"
+              filtering="true">
+        </copy>
+        <zip basedir="xar" destfile="${build.dir}/${project.app}-${project.version}.xar"/>
+    </target>
+</project>

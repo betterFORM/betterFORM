@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<xars>
+    <docu>
+        <name>betterform</name>
+        <version>1.1</version>
+        <ex-name>http://www.betterform.de/xars/documentation</ex-name>
+        <title>betterFORM Documentation XAR</title>
+        <desc>The betterFORM Documentation XAR provides various samples, reference and demo forms as well as links to all important documentation sources.</desc>
+        <website>http://www.betterform.de</website>
+        <license>LGPL</license>
+        <permission>
+            <user>admin</user>
+            <pwd/>
+            <group>dba</group>
+            <mode>rwxrwxr-x</mode>
+        </permission>
+    </docu>
+</xars>
+

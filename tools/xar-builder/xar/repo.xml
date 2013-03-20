@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta xmlns="http://exist-db.org/xquery/repo">
+    <description>The betterFORM Documentation XAR provides various samples, reference and demo forms as well as links to all important documentation sources.</description>
+    <author>Lars Windauer</author>
+    <author>Joern Turner</author>
+    <author>Tobias Krebs</author>
+    <author>Robert Netzschwitz</author>
+    <website>http://www.betterform.de</website>
+    <status>stable</status>
+    <license>LGPL</license>
+    <copyright>true</copyright>
+    <type>application</type>
+    <target>betterform</target>
+    <version>1.1</version>
+    <prepare>pre-install.xql</prepare>
+    <finish/>
+    <permissions user="admin" password="" group="dba" mode="rwxrwxr-x"/>
+</meta>
