@@ -34,8 +34,7 @@
     <property name="targetname" value="${target}/${web.app.name}-${app.version.number}"/>
 
     <path id="saxon.libs" description="classpath for Saxon">
-        <pathelement location="${basedir}/../core/src/main/lib/saxon-9.0.jar"/>
-        <pathelement location="${basedir}/../core/src/main/lib/saxon-dom-9.0.jar"/>
+        <pathelement location="${basedir}/../core/src/main/lib/saxon-9.4.0.7.jar"/>
     </path>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->

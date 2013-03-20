@@ -41,7 +41,7 @@
     <!-- classpaths -->
     <!-- Saxon for xslt-transformation -->
     <path id="generator.libs" description="classpath for using Saxon XSLT">
-        <pathelement location="${betterFORM.libs}/saxon-9.2.1.5.jar"/>
+        <pathelement location="${betterFORM.libs}/saxon-9.4.0.7.jar"/>
     </path>
 
     <!-- check if eXist is available (command must be placed before includes(!) -->
