@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--+ betterFORM XAR builder
+    + Current Status: only used to create the documentation XAR
+    +
+    + -->
 <project default="deploy" name="xar-builder">
 
     <xmlproperty file="build.properties.xml"
