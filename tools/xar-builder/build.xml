@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="deploy" name="betterform">
+<project default="deploy" name="xar-builder">
 
     <xmlproperty file="build.properties.xml"
                 semanticAttributes="true"
@@ -13,14 +13,14 @@
     <property name="build.dir" value="${basedir}/target"/>
     <property name="template.dir" value="${basedir}/templates"/>
     <property name="xar.dir" value="${basedir}/xar"/>
+    <property name="forms.dir" value="${basedir}/../../web/src/main/webapp/forms"/>
 
-    <target name="clean">
+    <target name="clean" description="cleans up the build directory">
         <delete dir="${build.dir}"/>
     </target>
 
-    <target name="deploy">
-        <mkdir dir="${build.dir}"/>
 
+    <target name="filter">
         <filter token="REP_DESC" value="${docu.desc}"/>
         <filter token="REP_VERSION" value="${docu.version}"/>
         <filter token="REP_TARGET" value="${docu.name}"/>
@@ -48,6 +48,39 @@
               overwrite="true"
               filtering="true">
         </copy>
-        <zip basedir="xar" destfile="${build.dir}/${project.app}-${project.version}.xar"/>
+    </target>
+
+
+    <target name="deploy" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <!-- FILTER REPO.XML AND EXPATH-PKG.XML -->
+        <antcall target="filter"   />
+
+        <!-- generate latest version of the reference files -->
+        <ant antfile="../../web/src/main/doc/build-reference.xml" target="deploy-forms" inheritall="no"/>
+        <!-- copy selected forms into the documentation xar -->
+        <copy todir="${build.dir}/xar">
+            <fileset dir="${basedir}/xar"/>
+        </copy>
+        <copy todir="${build.dir}/xar" >
+            <fileset dir="${forms.dir}" >
+                <filename name="FeatureExplorer.xhtml"/>
+                <filename name="Status.xhtml"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${build.dir}/xar/example">
+            <fileset dir="${forms.dir}/example" />
+        </copy>
+
+        <copy todir="${build.dir}/xar/demo">
+            <fileset dir="${forms.dir}/demo" />
+        </copy>
+
+        <copy todir="${build.dir}/xar/reference">
+            <fileset dir="${forms.dir}/reference" />
+        </copy>
+
+        <zip basedir="${build.dir}/xar" destfile="${build.dir}/${project.app}-${project.version}.xar"/>
     </target>
 </project>
