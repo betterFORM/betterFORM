@@ -4,8 +4,12 @@
  */
 package de.betterform.xml.xpath;
 
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import net.sf.saxon.dom.NodeWrapper;
 
 import org.w3c.dom.Document;
 
@@ -21,11 +25,17 @@ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 public class XPathReferenceFinderBindsTest extends XMLTestBase {
 
   private XFormsProcessorImpl xformsProcesssorImpl;
-
+  
+//  public void testDocumentDump() throws Exception {
+//    Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
+//    dump(doc);
+//  }
+  
   public void testSimpleConstraints() throws Exception {
     assertInvalid("a");
     assertInvalid("b");
-    assertInvalid("c");
+    assertInvalid("c2");
+    assertInvalid("c3");
     assertInvalid("d");
   }
 
@@ -34,16 +44,24 @@ public class XPathReferenceFinderBindsTest extends XMLTestBase {
     assertInvalid("f");
   }
 
-  public void testQuantifiedExpressionsAsConstraints() throws Exception {
+  public void testQuantifiedAndForExpressionsAsConstraints() throws Exception {
     assertInvalid("i");
     assertInvalid("j");
+    assertInvalid("n2");
+  }
+  
+  public void testNodeComparisons() throws Exception {
+    assertInvalid("k1");
+    assertInvalid("l1");
+    assertInvalid("m");
   }
 
   private void assertInvalid(String input) throws XFormsException {
     Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
-    String valid = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@bf:valid").trim();
-    String msg = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/xf:alert").trim();
-    assertFalse(msg, Boolean.getBoolean(valid));
+    String valid = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@bf:valid");
+    String msg = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/xf:alert");
+    assertNotNull("Cannot find '//xf:input[@id='" + input + "']", valid);
+    assertFalse(msg, Boolean.parseBoolean(valid));
   }
 
   protected void setUp() throws Exception {
