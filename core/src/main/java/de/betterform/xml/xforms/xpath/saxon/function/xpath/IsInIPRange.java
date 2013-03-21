@@ -39,17 +39,20 @@ public class IsInIPRange extends XFormsFunction {
         final Expression ipAddressExpression = argument[2];
         final String ipAddress = ipAddressExpression.evaluateAsString(xpathContext).toString();
 
+        LOGGER.debug("SubnetId: " + subnetID.trim() + " subnetMask: " + subnetMask.trim() +  " IP: " + ipAddress.trim());
         if ("".equals(subnetID.trim()) || "".equals(subnetMask.trim()) || "".equals(ipAddress.trim())) {
             return BooleanValue.FALSE;
         }
         SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
         try {
             if (subnetUtils.getInfo().isInRange(ipAddress)) {
+                LOGGER.debug(ipAddress + " is in Range");
                 return BooleanValue.TRUE;
             }
         } catch (IllegalArgumentException iae) {
             LOGGER.debug("IsInIPRange Exception:", iae);
         }
+        LOGGER.debug(ipAddress + " is not in Range");
         return BooleanValue.FALSE;
     }
 }
