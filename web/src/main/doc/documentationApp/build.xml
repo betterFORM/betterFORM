@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--+ betterFORM XAR builder
+    + Current Status: only used to create the documentation XAR
+    +
+    + -->
 <project default="deploy" name="xar-builder">
 
     <xmlproperty file="build.properties.xml"
@@ -13,7 +17,8 @@
     <property name="build.dir" value="${basedir}/target"/>
     <property name="template.dir" value="${basedir}/templates"/>
     <property name="xar.dir" value="${basedir}/xar"/>
-    <property name="forms.dir" value="${basedir}/../../web/src/main/webapp/forms"/>
+    <property name="webapp.dir" value="${basedir}/../../webapp"/>
+    <property name="forms.dir" value="${webapp.dir}/forms"/>
 
     <target name="clean" description="cleans up the build directory">
         <delete dir="${build.dir}"/>
@@ -57,10 +62,10 @@
         <antcall target="filter"   />
 
         <!-- generate latest version of the reference files -->
-        <ant antfile="../../web/src/main/doc/build-reference.xml" target="deploy-forms" inheritall="no"/>
+        <ant antfile="../build-reference.xml" target="deploy-forms" inheritall="no"/>
         <!-- copy selected forms into the documentation xar -->
         <copy todir="${build.dir}/xar">
-            <fileset dir="${basedir}/xar"/>
+            <fileset dir="${xar.dir}"/>
         </copy>
         <copy todir="${build.dir}/xar" >
             <fileset dir="${forms.dir}" >
@@ -79,6 +84,11 @@
 
         <copy todir="${build.dir}/xar/reference">
             <fileset dir="${forms.dir}/reference" />
+        </copy>
+        <copy todir="${build.dir}/xar" >
+            <fileset dir="${webapp.dir}" >
+                <filename name="Dashboard.html"/>
+            </fileset>
         </copy>
 
         <zip basedir="${build.dir}/xar" destfile="${build.dir}/${project.app}-${project.version}.xar"/>
