@@ -102,7 +102,7 @@ public class Submission extends BindingElement implements DefaultAction {
      * Returns the <code>resource</code> submission option.
      *
      * @return the <code>resource</code> submission option.
-     * @throws XFormsException
+     * @throws XFormsException 
      */
     public String getResource() throws XFormsException {
         return this.resource.getValue();
@@ -157,7 +157,7 @@ public class Submission extends BindingElement implements DefaultAction {
      * Returns the <code>method</code> submission option.
      *
      * @return the <code>method</code> submission option.
-     * @throws XFormsException
+     * @throws XFormsException 
      */
     public String getMethod() throws XFormsException {
         return this.method.getValue();
@@ -414,7 +414,7 @@ public class Submission extends BindingElement implements DefaultAction {
             //try deprecated 'target' attrbute
             if(getXFormsAttribute(TARGET_ATTRIBUTE) != null) {
                 this.targetExpr = getXFormsAttribute(TARGET_ATTRIBUTE);
-                LOGGER.warn("'target' Attribute is deprecated - Please use 'targetref' instead.");
+                LOGGER.warn("'target' Attribute is deprecated - Please use 'targetref' instead.");                
             }
         }
 
@@ -519,7 +519,7 @@ public class Submission extends BindingElement implements DefaultAction {
     public void performDefault(Event event) {
         try {
             if (event.getType().equals(XFormsEventNames.SUBMIT)) {
-                submit();
+                 submit();
             }
         }
         catch (Exception e) {
@@ -600,12 +600,12 @@ public class Submission extends BindingElement implements DefaultAction {
 
 
             //do xforms-submit-serialize handling
-            final Element submissionBodyEl = this.element.getOwnerDocument().createElement("submission-body");
-            final Map<String, Object> info = new HashMap<String, Object>();
-            info.put(XFormsConstants.SUBMISSION_BODY, this.container.getDocumentWrapper(this.element).wrap(submissionBodyEl));
+    		final Element submissionBodyEl = this.element.getOwnerDocument().createElement("submission-body");
+    		final Map<String, Object> info = new HashMap<String, Object>();
+    		info.put(XFormsConstants.SUBMISSION_BODY, this.container.getDocumentWrapper(this.element).wrap(submissionBodyEl));
 
-            this.container.dispatch(this.id, XFormsEventNames.SUBMIT_SERIALIZE, info);
-            submissionBodyEl.normalize();
+    		this.container.dispatch(this.id, XFormsEventNames.SUBMIT_SERIALIZE, info);
+			submissionBodyEl.normalize();
 
 
             // serialize and transmit instance items
@@ -618,7 +618,7 @@ public class Submission extends BindingElement implements DefaultAction {
             }
         }
         catch (XFormsInternalSubmitException e) {
-            Map<String, Object> info = XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, e.getErrorType(), getResourceURI(), e.getStatusCode(), null, e.getStatusText(), e.getResponseBodyAsString());
+        	Map<String, Object> info = XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, e.getErrorType(), getResourceURI(), e.getStatusCode(), null, e.getStatusText(), e.getResponseBodyAsString());
             throw new XFormsSubmitError("instance submission failed at: " + DOMUtil.getCanonicalPath(this.getElement()), e, this.getTarget(), info);
         }
         catch (Exception e) {
@@ -627,7 +627,7 @@ public class Submission extends BindingElement implements DefaultAction {
                 errorType = ((XFormsInternalSubmitException)e).getErrorType();
             } else {
                 errorType = XFormsConstants.RESOURCE_ERROR;
-            }
+            }            
             Map<String, Object> info = XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, errorType, getResourceURI());
 
             //todo: hacky - event context info construction must be reviewed - using exception cause as response-reason-phrase for now
@@ -672,19 +672,19 @@ public class Submission extends BindingElement implements DefaultAction {
     }
 
     /**
-     * @return
-     * @throws XFormsException
-     */
-    private String getResourceURI() throws XFormsException {
-        final String effectiveResource;
-        if (this.resource.isAvailable()) {
-            effectiveResource = this.resource.getValue();
-        }
-        else {
-            effectiveResource = this.action;
-        }
-        return this.container.getConnectorFactory().getAbsoluteURI(effectiveResource, this.element).toString();
-    }
+	 * @return
+	 * @throws XFormsException
+	 */
+	private String getResourceURI() throws XFormsException {
+		final String effectiveResource;
+		if (this.resource.isAvailable()) {
+			effectiveResource = this.resource.getValue();
+		}
+		else {
+			effectiveResource = this.action;
+		}
+		return this.container.getConnectorFactory().getAbsoluteURI(effectiveResource, this.element).toString();
+	}
 
     private void initializeSubmissionOptions() throws XFormsException {
         XFormsElementFactory elementFactory = model.getContainer().getElementFactory();
@@ -703,7 +703,7 @@ public class Submission extends BindingElement implements DefaultAction {
                         this.submissionHeaders = new ArrayList<Header>();
                     }
                     if(submissionHeader.getName() != null && !submissionHeader.getName().equals("")){
-                        this.submissionHeaders.add(submissionHeader);
+                        this.submissionHeaders.add(submissionHeader);    
                     }
 
                 }
@@ -812,7 +812,7 @@ public class Submission extends BindingElement implements DefaultAction {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(this + " submit: replacing all");
         }
-
+        
         // todo: refactor submission response
         // split copied response into header and body (keep original response
         // for backwards compat)
@@ -827,7 +827,7 @@ public class Submission extends BindingElement implements DefaultAction {
         // dispatch xforms-submit-done
         this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, constructEventInfo(response));
 
-
+        
         // dispatch internal betterform event
         // special case for URI redirection, resubmit as GET
         if (header.containsKey("Location")) {
@@ -924,13 +924,12 @@ public class Submission extends BindingElement implements DefaultAction {
     private void submitReplaceEmbedHTML(Map response) throws XFormsException{
         // check for targetid
         String targetid = getXFormsAttribute(TARGETID_ATTRIBUTE);
-        String evaluatedTarget = evalAttributeValueTemplates(targetid, this.element);
         String resource = getResource();
         Map eventInfo = new HashMap();
         String error = null;
 
-        if (evaluatedTarget == null) {
-            error = "evaluatedTarget";
+        if (targetid == null) {
+            error = "targetId";
         }else if(resource == null){
             error = "resource";
         }
@@ -964,7 +963,7 @@ public class Submission extends BindingElement implements DefaultAction {
         }
 
         eventInfo.put(EMBEDNODE,outputStream.toString());
-        eventInfo.put("embedTarget",evaluatedTarget);
+        eventInfo.put("embedTarget",targetid);
 
         // dispatch xforms-submit-done
         this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, eventInfo);
@@ -990,7 +989,7 @@ public class Submission extends BindingElement implements DefaultAction {
     }
 
 
-
+    
     private void updateInstanceAndModel(Model referedModel, Document responseInstance) throws XFormsException {
         if (this.targetExpr != null) {
             Node targetNode;
@@ -1040,12 +1039,12 @@ public class Submission extends BindingElement implements DefaultAction {
         }
         Node targetNode;
         if (this.targetExpr != null) {
-            targetNode = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(this.instance == null?evalInScopeContext():this.model.getInstance(this.instance).getRootContext().getNodeset(), 1, this.targetExpr, this.prefixMapping, this.xpathFunctionContext), 1);
+        	targetNode = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(this.instance == null?evalInScopeContext():this.model.getInstance(this.instance).getRootContext().getNodeset(), 1, this.targetExpr, this.prefixMapping, this.xpathFunctionContext), 1);
         }
         else if (this.instance == null) {
-            targetNode = this.model.getInstance(getInstanceId()).getInstanceDocument().getDocumentElement();
+        	targetNode = this.model.getInstance(getInstanceId()).getInstanceDocument().getDocumentElement();
         } else {
-            targetNode = this.model.getInstance(this.instance).getInstanceDocument().getDocumentElement();
+        	targetNode = this.model.getInstance(this.instance).getInstanceDocument().getDocumentElement();
         }
         final InputStream responseStream = (InputStream) response.get(XFormsProcessor.SUBMISSION_RESPONSE_STREAM);
 
@@ -1079,8 +1078,8 @@ public class Submission extends BindingElement implements DefaultAction {
 
 
         if (targetNode == null) {
-            throw new XFormsSubmitError("Invalid target", this.getTarget(), XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.TARGET_ERROR, getResourceURI(), 200d, null, "", ""));
-        }
+    		throw new XFormsSubmitError("Invalid target", this.getTarget(), XFormsSubmitError.constructInfoObject(this.element, this.container, locationPath, XFormsConstants.TARGET_ERROR, getResourceURI(), 200d, null, "", ""));
+    	}
 
         else if(targetNode.getNodeType() == Node.ELEMENT_NODE){
             while(targetNode.getFirstChild() != null) {
@@ -1131,42 +1130,42 @@ public class Submission extends BindingElement implements DefaultAction {
     }
 
     private Map<String, Object> constructEventInfo(Map response) throws XFormsException {
-        Map<String, Object> result = new HashMap<String, Object>();
-
-        final Document ownerDocument = this.element.getOwnerDocument();
-        final DocumentWrapper wrapper = new DocumentWrapper(ownerDocument, this.container.getProcessor().getBaseURI(), this.container.getConfiguration());
-
-
-        List<Item> headerItems = new ArrayList<Item>(response.size());
-        for (Iterator<Map.Entry<String, String>> it = response.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<String, String> entry =  it.next();
-            if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey()) &&
-                    !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()) &&
-                    ! RESPONSE_STATUS_CODE.equals(entry.getKey()) && ! RESPONSE_REASON_PHRASE.equals(entry.getKey()) )
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		final Document ownerDocument = this.element.getOwnerDocument();
+		final DocumentWrapper wrapper = new DocumentWrapper(ownerDocument, this.container.getProcessor().getBaseURI(), this.container.getConfiguration());
+		
+		
+		List<Item> headerItems = new ArrayList<Item>(response.size());
+		for (Iterator<Map.Entry<String, String>> it = response.entrySet().iterator(); it.hasNext();) {
+			Map.Entry<String, String> entry =  it.next();
+			if (!XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey()) &&
+                !XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT.equals(entry.getKey()) &&
+                ! RESPONSE_STATUS_CODE.equals(entry.getKey()) && ! RESPONSE_REASON_PHRASE.equals(entry.getKey()) )
             {
+				
+				Element headerEl = ownerDocument.createElement("header");
+				
+				Element nameEl = ownerDocument.createElement("name");
+				nameEl.appendChild(ownerDocument.createTextNode(entry.getKey()));
+				headerEl.appendChild(nameEl);
 
-                Element headerEl = ownerDocument.createElement("header");
-
-                Element nameEl = ownerDocument.createElement("name");
-                nameEl.appendChild(ownerDocument.createTextNode(entry.getKey()));
-                headerEl.appendChild(nameEl);
-
-                Element valueEl = ownerDocument.createElement("value");
-                valueEl.appendChild(ownerDocument.createTextNode(entry.getValue()));
-                headerEl.appendChild(valueEl);
-
-                headerItems.add(wrapper.wrap(headerEl));
-            }
-        }
-        result.put(RESOURCE_URI, getResourceURI());
+				Element valueEl = ownerDocument.createElement("value");
+				valueEl.appendChild(ownerDocument.createTextNode(entry.getValue()));
+				headerEl.appendChild(valueEl);
+				
+				headerItems.add(wrapper.wrap(headerEl));
+			}
+		}
+		result.put(RESOURCE_URI, getResourceURI());
         result.put(RESPONSE_STATUS_CODE, (response.containsKey(RESPONSE_STATUS_CODE) ? Double.parseDouble((String)response.get(RESPONSE_STATUS_CODE)) : Double.valueOf(200d))); //TODO get real response code
-        result.put(RESPONSE_HEADERS, headerItems);
-        result.put(RESPONSE_REASON_PHRASE, (response.containsKey(RESPONSE_REASON_PHRASE) ? (String) response.get(RESPONSE_REASON_PHRASE) : "")); //TODO get real response reason phrase
+		result.put(RESPONSE_HEADERS, headerItems);
+		result.put(RESPONSE_REASON_PHRASE, (response.containsKey(RESPONSE_REASON_PHRASE) ? (String) response.get(RESPONSE_REASON_PHRASE) : "")); //TODO get real response reason phrase
+		
+		return result;
+	}
 
-        return result;
-    }
-
-    // deprecated crap
+	// deprecated crap
 
     /**
      * @deprecated backwards compat

@@ -9,6 +9,7 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Aggregate2;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Id2;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Minimax2;
+import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.*;
 import net.sf.saxon.functions.Compare;
@@ -33,7 +34,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
 
     @Override
     protected String getFunctionNamespace() {
-        return XFormsFunctionLibrary.functionNamespace;
+        return functionNamespace;
     }
 
     static {
@@ -42,31 +43,40 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.XFORMS_NS + "}boolean-from-string", BooleanFromString.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
+
         e = register("{" + NamespaceConstants.XFORMS_NS + "}is-card-number", IsCardNumber.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}count-non-empty", CountNonEmpty.class, 0, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE);
 
+
         e = register("{" + NamespaceConstants.XFORMS_NS + "}current", Current.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}IF", If.class, 0, 3, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
+
         e = register("{" + NamespaceConstants.XFORMS_NS + "}instance", Instance.class, 0, 0, 1, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
+
         e = register("{" + NamespaceConstants.XFORMS_NS + "}index", Index.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}power", Power.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
 
+
         e = register("{" + NamespaceConstants.XFORMS_NS + "}random", Random.class, 0, 0, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}compare", Compare.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
@@ -166,7 +176,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.XFORMS_NS + "}base-uri", BaseURI.class, 0, 0, 1, BuiltInAtomicType.ANY_URI, StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}boolean", BooleanFn.class, BooleanFn.BOOLEAN, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}boolean", BooleanFn.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}ceiling", Rounding.class, Rounding.CEILING, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
@@ -206,10 +216,8 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         register("{" + NamespaceConstants.XFORMS_NS + "}current-dateTime", CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.EXACTLY_ONE);
         register("{" + NamespaceConstants.XFORMS_NS + "}current-time", CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.TIME, StaticProperty.EXACTLY_ONE);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-group", CurrentGroup.class, CurrentGroup.CURRENT_GROUP, 0, 0, Type.ITEM_TYPE,
-                StaticProperty.ALLOWS_ZERO_OR_MORE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-grouping-key", CurrentGroup.class, CurrentGroup.CURRENT_GROUPING_KEY, 0, 0, BuiltInAtomicType.ANY_ATOMIC,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
+        register("{" + NamespaceConstants.XFORMS_NS + "}current-group", CurrentGroup.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
+        register("{" + NamespaceConstants.XFORMS_NS + "}current-grouping-key", CurrentGroupingKey.class, 0, 0, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}data", Data.class, 0, 1, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
@@ -218,8 +226,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
         arg(e, 1, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}day-from-date", Component.class, (Component.DAY << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}day-from-date", Component.class, (Component.DAY << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}day-from-dateTime", Component.class, (Component.DAY << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER,
@@ -247,15 +254,15 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.XFORMS_NS + "}doc-available", DocAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.FALSE);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}document", Document.class, 0, 1, 2, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}document", DocumentFn.class, 0, 1, 2, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
         arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}document-uri", NamePart.class, NamePart.DOCUMENT_URI, 1, 1, BuiltInAtomicType.ANY_URI,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}document-uri", DocumentUriFn.class, 0, 1, 1, BuiltInAtomicType.ANY_URI,
                 StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}empty", Existence.class, Existence.EMPTY, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}empty", Empty.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.TRUE);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}ends-with", EndsWith.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
@@ -263,7 +270,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}element-available", Available.class, Available.ELEMENT_AVAILABLE, 1, 1, BuiltInAtomicType.BOOLEAN,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}element-available", ElementAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN,
                 StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
@@ -292,10 +299,10 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         // because we don't do draconian static type checking, we can do the
         // work in the argument type checking code
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}exists", Existence.class, Existence.EXISTS, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}exists", Exists.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.FALSE);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}false", BooleanFn.class, BooleanFn.FALSE, 0, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        register("{" + NamespaceConstants.XFORMS_NS + "}false", FalseFn.class, 0, 0, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}floor", Rounding.class, Rounding.FLOOR, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
@@ -326,12 +333,12 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 3, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 4, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}function-available", Available.class, Available.FUNCTION_AVAILABLE, 1, 2, BuiltInAtomicType.BOOLEAN,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}function-available", FunctionAvailable.class, 0, 1, 2, BuiltInAtomicType.BOOLEAN,
                 StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
         arg(e, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}generate-id", NamePart.class, NamePart.GENERATE_ID, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}generate-id", GenerateId.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}hours-from-dateTime", Component.class, (Component.HOURS << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER,
@@ -383,7 +390,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
 
         register("{" + NamespaceConstants.XFORMS_NS + "}last", Last.class, 0, 0, 0, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}local-name", NamePart.class, NamePart.LOCAL_NAME, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}local-name", LocalNameFn.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}local-name-from-QName", Component.class, (Component.LOCALNAME << 16) + StandardNames.XS_QNAME, 1, 1,
@@ -397,6 +404,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+
 
 //                        e = register("{" + NamespaceConstants.XFORMS_NS + "}max", Minimax.class, Minimax.MAX, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
 //                        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
@@ -430,10 +438,10 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
                 StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}name", NamePart.class, NamePart.NAME, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}name",NameFn.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}namespace-uri", NamePart.class, NamePart.NAMESPACE_URI, 0, 1, BuiltInAtomicType.ANY_URI,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}namespace-uri", NamespaceUriFn.class, 0, 0, 1, BuiltInAtomicType.ANY_URI,
                 StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
 
@@ -449,15 +457,14 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.XFORMS_NS + "}nilled", Nilled.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}node-name", NamePart.class, NamePart.NODE_NAME, 1, 1, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}node-name", NodeNameFn.class, 0, 1, 1, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}not", BooleanFn.class, BooleanFn.NOT, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}not", NotFn.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.TRUE);
 
         register("{" + NamespaceConstants.XFORMS_NS + "}normalize-space", NormalizeSpace.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         register("{" + NamespaceConstants.XFORMS_NS + "}normalize-space#0", NormalizeSpace.class, 0, 0, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
         e = register("{" + NamespaceConstants.XFORMS_NS + "}normalize-space#1", NormalizeSpace.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
 
@@ -547,6 +554,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.XFORMS_NS + "}string-length#1", StringLength.class, 0, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
 
+
         e = register("{" + NamespaceConstants.XFORMS_NS + "}string-join", StringJoin.class, 0, 2, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE, StringValue.EMPTY_STRING);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
@@ -598,7 +606,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}true", BooleanFn.class, BooleanFn.TRUE, 0, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        register("{" + NamespaceConstants.XFORMS_NS + "}true", TrueFn.class, 0, 0, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
 
         e = register("{" + NamespaceConstants.XFORMS_NS + "}translate", Translate.class, 0, 3, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
@@ -610,7 +618,7 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
         arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}type-available", Available.class, Available.TYPE_AVAILABLE, 1, 1, BuiltInAtomicType.BOOLEAN,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}type-available", TypeAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN,
                 StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
@@ -646,12 +654,12 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         // it must actually be a document node, but there's a non-standard
         // error code
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-text", UnparsedText.class, UnparsedText.UNPARSED_TEXT, 1, 2, BuiltInAtomicType.STRING,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-text", UnparsedText.class, 0, 1, 2, BuiltInAtomicType.STRING,
                 StaticProperty.ALLOWS_ZERO_OR_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-text-available", UnparsedText.class, UnparsedText.UNPARSED_TEXT_AVAILABLE, 1, 2,
+        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-text-available", UnparsedTextAvailable.class, 1, 1, 2,
                 BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);

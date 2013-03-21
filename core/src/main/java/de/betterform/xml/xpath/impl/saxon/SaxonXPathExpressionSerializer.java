@@ -6,22 +6,26 @@
 package de.betterform.xml.xpath.impl.saxon;
 
 import net.sf.saxon.expr.*;
-import net.sf.saxon.instruct.Instruction;
-import net.sf.saxon.instruct.NumberInstruction;
-import net.sf.saxon.instruct.SimpleContentConstructor;
+import net.sf.saxon.expr.instruct.Instruction;
+import net.sf.saxon.expr.instruct.NumberInstruction;
+//import net.sf.saxon.expr.instruct.SimpleContentConstructor;
+import net.sf.saxon.expr.parser.Token;
 import net.sf.saxon.om.Axis;
-import net.sf.saxon.om.FastStringBuffer;
+import net.sf.saxon.om.NamePool;
+import net.sf.saxon.pattern.NameTest;
+import net.sf.saxon.tree.util.FastStringBuffer;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.pattern.NodeTest;
 import net.sf.saxon.pattern.PatternSponsor;
-import net.sf.saxon.sort.ConditionalSorter;
-import net.sf.saxon.sort.SortExpression;
-import net.sf.saxon.sort.TupleExpression;
-import net.sf.saxon.sort.TupleSorter;
+import net.sf.saxon.expr.sort.ConditionalSorter;
+import net.sf.saxon.expr.sort.SortExpression;
+import net.sf.saxon.expr.flwor.TupleExpression;
+//import net.sf.saxon.sort.TupleSorter;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.prefs.PreferenceChangeEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +54,7 @@ public class SaxonXPathExpressionSerializer {
      */
     private static void serialize(FastStringBuffer result, Expression expr, Map reversePrefixMapping) {
         if (expr instanceof Assignation) {
-            // XXX not yet supported
+            serialize(result, ((Assignation) expr).getAction(), reversePrefixMapping);
         } else if (expr instanceof AxisExpression) {
             AxisExpression axisExpression = (AxisExpression) expr;
             result.append(Axis.axisName[axisExpression.getAxis()]);
@@ -59,23 +63,24 @@ public class SaxonXPathExpressionSerializer {
             final NodeTest nodeTest = axisExpression.getNodeTest();
             if (nodeTest == null) {
                 result.append("node()");
+            } else if (nodeTest instanceof NameTest) {
+              NameTest nt = (NameTest) nodeTest;
+              NamePool namePool = nt.getNamePool();
+              String localName = namePool.getLocalName(nt.getFingerprint());
+              result.append(fixPreFixes(localName, reversePrefixMapping));
             } else {
-                result.append(fixPreFixes(nodeTest.toString(), reversePrefixMapping));
+              result.append(fixPreFixes(nodeTest.toString(), reversePrefixMapping));
             }
         } else if (expr instanceof BinaryExpression) {
             BinaryExpression binaryExpression = (BinaryExpression) expr;
-            result.append('(');
             serialize(result, binaryExpression.getOperands()[0], reversePrefixMapping);
             result.append(Token.tokens[binaryExpression.getOperator()]);
             serialize(result, binaryExpression.getOperands()[1], reversePrefixMapping);
-            result.append(')');
         } else if (expr instanceof CompareToIntegerConstant) {
             CompareToIntegerConstant compareToIntegerConstant = (CompareToIntegerConstant) expr;
-            result.append('(');
             serialize(result, compareToIntegerConstant.getOperand(), reversePrefixMapping);
             result.append(Token.tokens[compareToIntegerConstant.getComparisonOperator()]);
             result.append(Long.toString(compareToIntegerConstant.getComparand()));
-            result.append(')');
         } else if (expr instanceof ConditionalSorter) {
             // XXX not yet supported
         } else if (expr instanceof ContextItemExpression) {
@@ -84,11 +89,10 @@ public class SaxonXPathExpressionSerializer {
             // Error do nothing
         } else if (expr instanceof FilterExpression) {
             FilterExpression filterExpression = (FilterExpression) expr;
-            result.append('(');
             serialize(result, filterExpression.getControllingExpression(), reversePrefixMapping);
             result.append('[');
             serialize(result, filterExpression.getFilter(), reversePrefixMapping);
-            result.append("])");
+            result.append("]");
 
         } else if (expr instanceof FunctionCall) {
             FunctionCall functionCall = (FunctionCall) expr;
@@ -97,7 +101,7 @@ public class SaxonXPathExpressionSerializer {
                 result.append(name.getPrefix());
                 result.append(":");
             }
-            result.append(name.getLocalName());
+            result.append(name.getLocalPart());
             result.append("(");
 
             Iterator iter = functionCall.iterateSubExpressions();
@@ -120,19 +124,15 @@ public class SaxonXPathExpressionSerializer {
             result.append(literal.getValue().toString());
         } else if (expr instanceof NumberInstruction) {
             // This is not an XPath expression
-        } else if (expr instanceof PathExpression) {
-            PathExpression pathExpression = (PathExpression) expr;
-            result.append('(');
-            serialize(result, pathExpression.getControllingExpression(), reversePrefixMapping);
+        } else if (expr instanceof SlashExpression) {
+            SlashExpression slashExpression = (SlashExpression) expr;
+//            result.append('(');
+            serialize(result, slashExpression.getControllingExpression(), reversePrefixMapping);
             result.append('/');
-            serialize(result, pathExpression.getControlledExpression() , reversePrefixMapping);
-            result.append(')');
-        } else if (expr instanceof PatternMatchExpression) {
+            serialize(result, slashExpression.getControlledExpression() , reversePrefixMapping);
+//            result.append(')');
+        }  else if (expr instanceof PatternSponsor) {
             // XXX not yet supported
-        } else if (expr instanceof PatternSponsor) {
-            // XXX not yet supported
-        } else if (expr instanceof SimpleContentConstructor) {
-            // This is not an XPath expression
         } else if (expr instanceof SimpleExpression) {
             // This is not an XPath expression
         }
@@ -151,16 +151,16 @@ public class SaxonXPathExpressionSerializer {
             // XXX not yet supported
         } else if (expr instanceof TupleExpression) {
             // This is not an XPath expression
-        } else if (expr instanceof TupleSorter) {
-            // This is not an XPath expression
         } else if (expr instanceof UnaryExpression) {
             UnaryExpression unaryExpression = (UnaryExpression) expr;
             serialize(result, unaryExpression.getBaseExpression(), reversePrefixMapping); // Not sure if this is correct in all cases
         } else if (expr instanceof VariableReference) {
             VariableReference variableReference = (VariableReference) expr;
-            String d = variableReference.getDisplayName();
-            result.append("$");
-            result.append(d == null ? "$" : d);
+            Binding binding = variableReference.getBinding();
+            if (binding instanceof LetExpression) {
+              LetExpression let = (LetExpression) binding;
+              serialize(result, let.getSequence(), reversePrefixMapping);
+            }
         }
     }
 

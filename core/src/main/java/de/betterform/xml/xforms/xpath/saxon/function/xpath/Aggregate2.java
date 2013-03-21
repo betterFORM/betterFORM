@@ -8,14 +8,12 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import net.sf.saxon.expr.*;
 import net.sf.saxon.functions.SystemFunction;
+import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.type.BuiltInAtomicType;
-import net.sf.saxon.type.ItemType;
-import net.sf.saxon.type.Type;
-import net.sf.saxon.type.TypeHierarchy;
+import net.sf.saxon.type.*;
 import net.sf.saxon.value.*;
 
 import javax.xml.transform.SourceLocator;
@@ -123,6 +121,8 @@ public class Aggregate2 extends SystemFunction {
 
     public static AtomicValue total(SequenceIterator iter, XPathContext context, SourceLocator location)
             throws XPathException {
+
+
         AtomicValue sum = (AtomicValue)iter.next();
         if (sum == null) {
             // the sequence is empty
@@ -132,22 +132,14 @@ public class Aggregate2 extends SystemFunction {
 //            sum = sum.getPrimitiveValue();
 //        }
         if (sum instanceof UntypedAtomicValue) {
-            try {
-                sum = sum.convert(BuiltInAtomicType.DOUBLE, context);
-            } catch (XPathException e) {
-                return DoubleValue.NaN;
-            }
+            sum = convertToDouble(sum);
         }
 
         if (sum instanceof NumericValue) {
             AtomicValue next;
             while ( (next = (AtomicValue)iter.next()) != null) {
                 if ( next instanceof UntypedAtomicValue ) {
-                    try {
-                        next = next.convert(BuiltInAtomicType.DOUBLE, context);
-                    }  catch (XPathException e) {
-                        return DoubleValue.NaN;
-                    }
+                    next = convertToDouble(next);
                 } else {
                     return DoubleValue.NaN;
                 }
@@ -174,6 +166,15 @@ public class Aggregate2 extends SystemFunction {
         }
     }
 
+
+    private static DoubleValue convertToDouble(AtomicValue atomicValue) {
+             try {
+                 String value = atomicValue.getStringValue();
+                 return new DoubleValue(Double.valueOf(value), BuiltInAtomicType.DOUBLE);
+             } catch (NumberFormatException nfe) {
+                 return DoubleValue.NaN;
+             }
+    }
     /**
     * Calculate average
     */
@@ -181,6 +182,8 @@ public class Aggregate2 extends SystemFunction {
     public static AtomicValue average(SequenceIterator iter, XPathContext context, SourceLocator location)
             throws XPathException {
         int count = 0;
+
+
         AtomicValue item = (AtomicValue)iter.next();
         if (item == null) {
             // the sequence is empty
@@ -189,11 +192,10 @@ public class Aggregate2 extends SystemFunction {
         count++;
         if (item instanceof UntypedAtomicValue) {
             try {
-                item = item.convert(BuiltInAtomicType.DOUBLE, context);
-            } catch (XPathException e) {
-                if (e.getLocator() == null || e.getLocator().getLineNumber() == -1) {
-                    e.setLocator(location);
-                }
+                item = convertToDouble(item);
+
+                //item = item.convert(BuiltInAtomicType.DOUBLE, context);
+            } catch (NumberFormatException nfe) {
                 return DoubleValue.NaN;
             }
         }
@@ -206,8 +208,9 @@ public class Aggregate2 extends SystemFunction {
                 count++;
                 if (next instanceof UntypedAtomicValue) {
                     try {
-                        next = next.convert(BuiltInAtomicType.DOUBLE, context);
-                    } catch (XPathException e) {
+                        next = convertToDouble(next);
+                        //next = next.convert(BuiltInAtomicType.DOUBLE, context);
+                    } catch (NumberFormatException nfe) {
                         return DoubleValue.NaN;
                     }
                 } else if (!(next instanceof NumericValue)) {
@@ -250,7 +253,7 @@ public class Aggregate2 extends SystemFunction {
 
     public static int count(SequenceIterator iter) throws XPathException {
         if ((iter.getProperties() & SequenceIterator.LAST_POSITION_FINDER) != 0) {
-            return ((LastPositionFinder)iter).getLastPosition();
+            return ((LastPositionFinder)iter).getLength();
         } else {
             int n = 0;
             while (iter.next() != null) {

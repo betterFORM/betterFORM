@@ -5,14 +5,16 @@
 
 package de.betterform.xml.xpath.impl.saxon.sxpath;
 
-import net.sf.saxon.expr.TypeChecker;
+import net.sf.saxon.expr.parser.TypeChecker;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.XPathContextMajor;
-import net.sf.saxon.instruct.SlotManager;
+import net.sf.saxon.expr.instruct.SlotManager;
 import net.sf.saxon.om.*;
 import net.sf.saxon.sxpath.XPathVariable;
 import net.sf.saxon.trans.SaxonErrorCode;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.SingletonIterator;
+import net.sf.saxon.tree.iter.UnfailingIterator;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.Value;
 
@@ -145,7 +147,7 @@ public class XPathDynamicContext {
         for (int i=0; i<numberOfExternals; i++) {
             if (stack[i] == null) {
                 StructuredQName qname = (StructuredQName)stackFrameMap.getVariableMap().get(i);
-                throw new XPathException("No value has been supplied for variable $" + qname.getDisplayName());
+                throw new XPathException("No value has been supplied for variable $" + qname.getLocalPart());
             }
         }
     }

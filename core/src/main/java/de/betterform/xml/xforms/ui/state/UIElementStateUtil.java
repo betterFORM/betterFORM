@@ -519,7 +519,7 @@ public class UIElementStateUtil {
         //Search schema with correct namespace
         while (xsNamespaceItemList.hasNext()) {
             String schemaNamespace = xsNamespaceItemList.next().getSchemaNamespace();
-            if ((schemaNamespace==null && namespace == null) || (schemaNamespace != null) && (schemaNamespace.equals(namespace) || schemaNamespace.contains(namespace))) {
+            if (schemaNamespace.equals(namespace) || schemaNamespace.contains(namespace)) {
 
                 //Search type
                 XSTypeDefinition xsTypeDefinition = schema.getTypeDefinition(typeName, schemaNamespace);
