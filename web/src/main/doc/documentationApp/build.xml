@@ -57,7 +57,7 @@
 
 
     <target name="deploy" depends="clean">
-        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.dir}/xar"/>
         <!-- FILTER REPO.XML AND EXPATH-PKG.XML -->
         <antcall target="filter"   />
 
@@ -67,11 +67,12 @@
         <copy todir="${build.dir}/xar">
             <fileset dir="${xar.dir}"/>
         </copy>
-        <copy todir="${build.dir}/xar" >
-            <fileset dir="${forms.dir}" >
-                <filename name="FeatureExplorer.xhtml"/>
-                <filename name="Status.xhtml"/>
-            </fileset>
+        <copy todir="${build.dir}/xar" flatten="true">
+            <resources>
+                <file file="${forms.dir}/FeatureExplorer.xhtml"/>
+                <file file="${forms.dir}/Status.xhtml"/>
+                <file file="${webapp.dir}/dashboard.html"/>
+            </resources>
         </copy>
 
         <copy todir="${build.dir}/xar/example">
