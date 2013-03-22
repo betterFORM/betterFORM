@@ -7,6 +7,8 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.util.SubnetUtils;
 
 /**
@@ -17,6 +19,8 @@ import org.apache.commons.net.util.SubnetUtils;
  * To change this template use File | Settings | File Templates.
  */
 public class CalcIPRange extends XFormsFunction {
+    private static final Log LOGGER = LogFactory.getLog(CalcIPRange.class);
+
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
@@ -34,8 +38,14 @@ public class CalcIPRange extends XFormsFunction {
         if ("".equals(subnetID.trim()) || "".equals(subnetMask.trim())) {
             return new StringValue("unknown");
         }
-        SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
-        return  new StringValue(subnetUtils.getInfo().getLowAddress() + " - " + subnetUtils.getInfo().getHighAddress());
+        try {
+            SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
+            return  new StringValue(subnetUtils.getInfo().getLowAddress() + " - " + subnetUtils.getInfo().getHighAddress());
+        } catch (IllegalArgumentException iae) {
+            LOGGER.debug("CalcIPRange Exception:", iae);
+        }
+
+        return new StringValue("unknown");
     }
 }
 

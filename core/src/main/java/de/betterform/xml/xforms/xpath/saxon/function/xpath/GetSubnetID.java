@@ -7,6 +7,8 @@ import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.net.util.SubnetUtils;
 
 /**
@@ -17,6 +19,8 @@ import org.apache.commons.net.util.SubnetUtils;
  * To change this template use File | Settings | File Templates.
  */
 public class GetSubnetID extends XFormsFunction {
+    private static final Log LOGGER = LogFactory.getLog(GetSubnetID.class);
+
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
@@ -34,7 +38,13 @@ public class GetSubnetID extends XFormsFunction {
         if ("".equals(subnetID.trim()) || "".equals(subnetMask.trim())) {
             return new StringValue("unknown");
         }
-        SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
-        return  new StringValue(subnetUtils.getInfo().getLowAddress());
+        try {
+            SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
+            return  new StringValue(subnetUtils.getInfo().getLowAddress());
+        } catch (IllegalArgumentException iae) {
+            LOGGER.debug("GetSubnetID Exception:", iae);
+        }
+
+        return new StringValue("unknown");
     }
 }
