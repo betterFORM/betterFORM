@@ -267,7 +267,7 @@
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Users/windauer/dev/eXist/eXist</home>
+        <home>/home/zwobit/Development/Source/customers/PSI/configwizard</home>
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
         <context>/exist</context>

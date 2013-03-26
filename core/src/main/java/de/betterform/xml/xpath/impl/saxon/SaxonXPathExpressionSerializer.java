@@ -74,12 +74,12 @@ public class SaxonXPathExpressionSerializer {
         } else if (expr instanceof BinaryExpression) {
             BinaryExpression binaryExpression = (BinaryExpression) expr;
             serialize(result, binaryExpression.getOperands()[0], reversePrefixMapping);
-            result.append(Token.tokens[binaryExpression.getOperator()]);
+            result.append(" " + Token.tokens[binaryExpression.getOperator()] + " ");
             serialize(result, binaryExpression.getOperands()[1], reversePrefixMapping);
         } else if (expr instanceof CompareToIntegerConstant) {
             CompareToIntegerConstant compareToIntegerConstant = (CompareToIntegerConstant) expr;
             serialize(result, compareToIntegerConstant.getOperand(), reversePrefixMapping);
-            result.append(Token.tokens[compareToIntegerConstant.getComparisonOperator()]);
+            result.append(" " + Token.tokens[compareToIntegerConstant.getComparisonOperator()] + " ");
             result.append(Long.toString(compareToIntegerConstant.getComparand()));
         } else if (expr instanceof ConditionalSorter) {
             // XXX not yet supported

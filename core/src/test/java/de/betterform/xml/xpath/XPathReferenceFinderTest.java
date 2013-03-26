@@ -48,13 +48,13 @@ public class XPathReferenceFinderTest extends TestCase {
                 this.referenceFinder.getReferences("../data", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{"child::f", "child::f/child::g"},
                 this.referenceFinder.getReferences("f[g != '']", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::observation[child::data!=\"\"]/child::code", "child::observation", "child::observation/child::data"},
+        assertReferences(new String[]{"child::observation[child::data != \"\"]/child::code", "child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("observation[data != '']/code", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::observation[child::data!=\"\"]/child::code", "child::observation", "child::observation/child::data"},
+        assertReferences(new String[]{"child::observation[child::data != \"\"]/child::code", "child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("count(observation[data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::observation", "/child::data", "child::observation[/child::data!=\"\"]/child::code"},
+        assertReferences(new String[]{"child::observation", "/child::data", "child::observation[/child::data != \"\"]/child::code"},
                 this.referenceFinder.getReferences("count(observation[/data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"/child::observation[/child::data!=\"\"]/child::code", "/child::observation", "/child::data"},
+        assertReferences(new String[]{"/child::observation[/child::data != \"\"]/child::code", "/child::observation", "/child::data"},
                 this.referenceFinder.getReferences("count(/observation[/data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{},
                 this.referenceFinder.getReferences("current()", Collections.EMPTY_MAP, fDummyContainer));
