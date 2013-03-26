@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Constraint / Submission Test</title>
+        <xf:model>
+            <xf:instance xmlns="" id="i-default">
+                <data>
+                    <input>hallo</input>
+                </data>
+            </xf:instance>
+            <xf:bind id="bind2check" nodeset="input" constraint="string-length(.) &gt; 3"/>
+
+
+            <xf:instance xmlns="" id="i-replace">
+                <data>
+                    <input>h</input>
+                </data>
+            </xf:instance>
+            <xf:submission id="s-replace"
+                           ref="instance('i-replace')"
+                           method="get"
+                           resource="echo:hallo"
+                           replace="instance"
+                           validate="true"
+                           instance="i-default"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group>
+            <xf:trigger id="replaceInstance">
+                <xf:label>Replace instance</xf:label>
+                <xf:send submission="s-replace"/>
+            </xf:trigger>
+            <xf:input ref="input" id="input1">
+                <xf:label>Test</xf:label>
+                <xf:alert>Error</xf:alert>
+            </xf:input>
+        </xf:group>
+    </body>
+</html>
