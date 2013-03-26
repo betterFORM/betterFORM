@@ -56,6 +56,10 @@ public class XPathReferenceFinderBindsTest extends XMLTestBase {
     assertInvalid("m");
   }
 
+    public void testNodeRelevant() throws Exception {
+        assertRelevant("relevantTest");
+    }
+
   private void assertInvalid(String input) throws XFormsException {
     Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
     String valid = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@bf:valid");
@@ -63,6 +67,12 @@ public class XPathReferenceFinderBindsTest extends XMLTestBase {
     assertNotNull("Cannot find '//xf:input[@id='" + input + "']", valid);
     assertFalse(msg, Boolean.parseBoolean(valid));
   }
+
+   private void assertRelevant(String input) throws XFormsException {
+        Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
+        String relevant = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@bf:enabled");
+        assertEquals("true",  relevant);
+   }
 
   protected void setUp() throws Exception {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

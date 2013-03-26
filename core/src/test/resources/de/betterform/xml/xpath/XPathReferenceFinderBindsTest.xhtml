@@ -72,6 +72,16 @@
         <xf:bind ref="l[1]" constraint="//l[2] &lt;&lt; current()"/>
         <xf:bind ref="m" constraint="current() is //b"/>
         <xf:bind ref="n[2]" constraint="string-length(.) > string-length(string-join((for $wiggum in //n return $wiggum), ''))"/>
+
+          <xf:instance id="i-complexBind">
+              <data xmlns="">
+                  <test>Test me</test>
+                  <condition1 condition="B">A</condition1>
+                  <condition2>B</condition2>
+              </data>
+          </xf:instance>
+
+          <xf:bind nodeset="instance('i-complexBind')/test" relevant="instance('i-complexBind')//condition1[@condition eq instance('i-complexBind')/condition2/text()]/@condition eq 'B'" calculate="'Hello'"/>
       </xf:model>
     </div>
     <h1>XPathReferenceFinderTest - Binds</h1>
@@ -154,6 +164,12 @@
         <xf:hint>m: current() is //b</xf:hint>
         <xf:alert>current() and //b are not identical</xf:alert>
       </xf:input>
+    </xf:group>
+
+    <xf:group>
+        <xf:input id="relevantTest" ref="instance('i-complexBind')/test">
+            <xf:label>Test</xf:label>
+        </xf:input>
     </xf:group>
   </body>
 </html>
