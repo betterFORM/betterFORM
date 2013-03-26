@@ -13,7 +13,7 @@ ATTENTION - THIS FILE IS NOT INTEGRATED WITHIN THE AUTOMATED POM GENERATION - MU
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>5.0rc1</version>
+        <version>5.0rc3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
