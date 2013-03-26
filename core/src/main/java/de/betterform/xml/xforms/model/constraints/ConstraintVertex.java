@@ -66,6 +66,12 @@ public class ConstraintVertex extends Vertex {
         boolean evaluates=true;
         List <Constraint> failed=new ArrayList();
         List <Constraint> constraints = declarationView.getConstraints();
+
+        boolean singleResult = true;
+        if (declarationView.getConstraint() != null) {
+            singleResult = XPathCache.getInstance().evaluateAsBoolean(relativeContext, "boolean(" + this.xpathExpression + ")");
+        }
+
         for (int i = 0; i < constraints.size(); i++) {
             Constraint c =  constraints.get(i);
             expr = c.getXPathExpr();
@@ -82,7 +88,7 @@ public class ConstraintVertex extends Vertex {
             }
         }
 
-        if(failed.size() != 0){
+        if(failed.size() != 0 || !singleResult ){
             finalResult = false; //if any of the Constraints failed the final result is 'false' (ALL constraints must be true)
         }
 

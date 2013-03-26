@@ -140,6 +140,7 @@ public class DeclarationViewImpl implements DeclarationView {
      *
      * @return the <code>constraint</code> declaration of a model item.
      */
+    @Deprecated
     public String getConstraint() {
         return this.constraint;
     }
@@ -154,6 +155,7 @@ public class DeclarationViewImpl implements DeclarationView {
      * @param constraint the <code>constraint</code> declaration of a model
      * item.
      */
+    @Deprecated
     public void setConstraint(String constraint) {
         this.constraint = constraint;
     }
@@ -162,7 +164,7 @@ public class DeclarationViewImpl implements DeclarationView {
         this.constraints = constraints;
     }
 
-    public void addConstraint(String constraintId) {
+    public void addConstraint(String constraint) {
         this.constraints.add(constraint);
     }
 
