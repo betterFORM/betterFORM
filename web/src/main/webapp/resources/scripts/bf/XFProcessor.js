@@ -1018,43 +1018,61 @@ define(["dojo/_base/declare",
                     // console.debug("XFProcessor._unloadDOM item:",item);
                     if (item != undefined) {
                         var itemId = domAttr.get(item, 'id');
-                        var childDijit = registry.byId(itemId);
-                        if (childDijit != undefined) {
-                            // console.debug("XFProcessor._unloadDOM: destroy itemId: ",itemId, " dijit:", childDijit);
-                            self.removeSubscribers(itemId);
-                            childDijit.destroy();
-                        } else {
-                            var dijitId = domAttr.get(item, widgetID);
-                            // console.debug("XFProcessor._unloadDOM: ChildDijit is null; dijitId:",dijitId);
-                            self.removeSubscribers(dijitId);
-                            childDijit = registry.byId(dijitId);
-                            if (childDijit != undefined) {
-                                childDijit.destroy();
-                            }
-                        }
-
+                        self._destroyUIControl(itemId,widgetID);
                     }
                 }
             );
             // console.debug("Target id: ",target);
             if(this.bfDialogs && this.bfDialogs[target] && this.bfDialogs[target].length > 0){
-                // console.debug("dialogs to remove: ",this.bfDialogs[target]);
-                array.forEach(this.bfDialogs[target],function(dialogId){
+                var dialogId = this.bfDialogs[target];
+                // console.debug("dialogs to remove: ", dialogId);
+                array.forEach(this.bfDialogs[target],function(id){
                     // console.debug("dialog to find and delete: ", id);
-                    var dialogDijit = registry.byId(dialogId);
+                    var dialogDijit = registry.byId(id);
                     if(dialogDijit){
                         // console.debug("destroy dialogDijit: ",dialogDijit);
+                        var widgets = query("*[" + widgetID + "]", dialogDijit.domNode);
+                        // console.debug("delete widgets in dialog: ",widgets);
+                        array.forEach(widgets,
+                            function(item) {
+                                if (item != undefined) {
+                                    var itemId = domAttr.get(item, 'id');
+                                    self._destroyUIControl(itemId,widgetID);
+                                }
+                            }
+                        );
+
                         dialogDijit.destroy();
+                    }else {
+                        console.warn("could not find a dijit for dialogDijit:",dialogDijit);
                     }
                 });
+                // console.debug("delete dialog", dialogId);
                 delete this.bfDialogs[target];
             }
-            // console.info("XFProcessor._unloadDOM AFTER REMOVING SUBSCRIBERS: :",this.subscribers);
+            console.info("XFProcessor._unloadDOM AFTER REMOVING SUBSCRIBERS: :",this.subscribers);
             while (htmlEntryPoint.hasChildNodes()) {
                 // console.debug("XFProcessor._unloadDOM: hasChildNodes START");
                 // console.dirxml(htmlEntryPoint.firstChild);
                 // console.debug("XFProcessor._unloadDOM: hasChildNodes END");
                 htmlEntryPoint.removeChild(htmlEntryPoint.firstChild);
+            }
+        },
+
+        _destroyUIControl:function(itemId,widgetID) {
+            var childDijit = registry.byId(itemId);
+            if (childDijit != undefined) {
+                // console.debug("XFProcessor._unloadDOM: destroy itemId: ",itemId, " dijit:", childDijit);
+                this.removeSubscribers(itemId);
+                childDijit.destroy();
+            } else {
+                var dijitId = domAttr.get(item, widgetID);
+                // console.debug("XFProcessor._unloadDOM: ChildDijit is null; dijitId:",dijitId);
+                self.removeSubscribers(dijitId);
+                childDijit = registry.byId(dijitId);
+                if (childDijit != undefined) {
+                    childDijit.destroy();
+                }
             }
         },
 
