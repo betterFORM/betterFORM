@@ -117,7 +117,7 @@
              SSLProtocolSocketFactory-Handling will be activated if the property is specified.
              ! You have to uncomment this if you would like to use betterFORM with custom SSL-Certificates. !
         -->
-        <property name="httpclient.ssl.context" value="de.betterform.connector.http.ssl.KeyStoreSSLContext" description="Full classpath of SSLProtocolSocketFactory which should be used by httpclient."/>
+        <!--property name="httpclient.ssl.context" value="de.betterform.connector.http.ssl.KeyStoreSSLContext" description="Full classpath of SSLProtocolSocketFactory which should be used by httpclient."/-->
         <!--
             Specify a customPort for SSLProtocolSocketFactory for httpclient.
             Port 443,8443 are the default ports.

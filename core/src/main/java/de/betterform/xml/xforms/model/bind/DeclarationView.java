@@ -92,6 +92,7 @@ public interface DeclarationView {
      *
      * @return the <code>constraint</code> declaration of a model item.
      */
+    @Deprecated
     String getConstraint();
 
     List getConstraints();
@@ -102,6 +103,7 @@ public interface DeclarationView {
      * @param constraint the <code>constraint</code> declaration of a model
      * item.
      */
+    @Deprecated
     void setConstraint(String constraint);
 
     void addConstraint(String constraint);

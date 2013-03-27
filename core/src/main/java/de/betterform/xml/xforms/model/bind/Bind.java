@@ -568,9 +568,11 @@ public class Bind extends XFormsElement implements Binding, DefaultAction {
 //        }
         if (this.constraint != null) {
             if (declaration.getConstraint() != null) {
+                /* TODO ADAPT ME TO LIST ME*/
                 this.constraint = declaration.getConstraint()+ " " + COMBINE_ALL + " " + this.constraint;
             }
 
+            /* TODO REMOVE ME*/
             declaration.setConstraint(this.constraint);
             declaration.setConstraints(this.constraints);
         }
