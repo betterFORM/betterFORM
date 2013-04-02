@@ -187,7 +187,11 @@ define(["dojo/_base/declare","dojo/dom", "dojo/dom-class","dojo/query",
             },
 
             setValid:function() {
+                //console.debug("XFBinding.setValid(): " + this.id);
                 domClass.replace(this.srcNodeRef, "xfValid","xfInvalid");
+                if (domClass.contains(this.srcNodeRef, "xfRequiredEmpty")) {
+                        domClass.remove(this.srcNodeRef, "xfRequiredEmpty");
+                }
                 connect.publish("xforms-valid", [this.id,"applyChanges"]);
 
             },
