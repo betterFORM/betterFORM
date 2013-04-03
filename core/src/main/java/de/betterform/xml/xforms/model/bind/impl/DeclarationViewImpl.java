@@ -36,7 +36,6 @@ public class DeclarationViewImpl implements DeclarationView {
      * Creates a new declaration viewport implementation.
      */
     public DeclarationViewImpl() {
-        // NOP
         this.constraints=new ArrayList();
     }
 
@@ -190,12 +189,6 @@ public class DeclarationViewImpl implements DeclarationView {
         return this.customMIPs;
     }
 
-    /**
-     * Sets the <code>constraint</code> declaration of a model item.
-     *
-     * @param constraint the <code>constraint</code> declaration of a model
-     * item.
-     */
     public void setCustomMIPs(Map<String, String>  customMIPs) {
         this.customMIPs = customMIPs;
     } 

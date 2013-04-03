@@ -4,6 +4,7 @@
  */
 package de.betterform.xml.xforms.model.bind;
 
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
 import de.betterform.xml.xforms.exception.XFormsBindingException;
@@ -48,7 +49,10 @@ public class SubmissionConstraintTest extends XMLTestBase {
 
 
             this.xformsProcesssorImpl.dispatch("replaceInstance", "DOMActivate");
-            assertEquals("h" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data") );
+
+            DOMUtil.prettyPrintDOM(xformsProcesssorImpl.getInstanceDocument("i-default"));
+
+            assertEquals("h", XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data"));
             assertEquals("false" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data/@bf:valid") );
 
         }catch (XFormsBindingException e){

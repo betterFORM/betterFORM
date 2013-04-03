@@ -171,7 +171,8 @@ public class MainDependencyGraph extends DependencyGraph {
 
             property = bind.getConstraint();
             if (property != null) {
-
+                List constraints = bind.getConstraints();
+                modelItem.getDeclarationView().setConstraints(constraints);
                 modelItem.getDeclarationView().setConstraint(property);
                 this.addReferredNodesToGraph(relativeContext, node, property, Vertex.CONSTRAINT_VERTEX, bind.getConstraintReferences());
             }
