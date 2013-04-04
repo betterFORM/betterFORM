@@ -33,35 +33,33 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <code class="ui">
-                    <xf:model>
-                        <xf:instance xmlns="">
-                            <data xmlns="">
-                                <grouped-data>
-                                    <group>
-                                        <a></a>
-                                        <b></b>
-                                        <c></c>
-                                        <d></d>
-                                    </group>
-                                </grouped-data>
-                            </data>
-                        </xf:instance>
-                        <xf:submission id="echo" resource="echo:foo" method="GET" replace="none">
-                            <xf:message ev:event="xforms-submit-error">Submission failed: invalid data</xf:message>
-                            <xf:message ev:event="xforms-submit-done">Submission successfull</xf:message>
-                        </xf:submission>
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data xmlns="">
+                            <grouped-data>
+                                <group>
+                                    <a></a>
+                                    <b></b>
+                                    <c></c>
+                                    <d></d>
+                                </group>
+                            </grouped-data>
+                        </data>
+                    </xf:instance>
+                    <xf:submission id="echo" resource="echo:foo" method="GET" replace="none">
+                        <xf:message ev:event="xforms-submit-error">Submission failed: invalid data</xf:message>
+                        <xf:message ev:event="xforms-submit-done">Submission successfull</xf:message>
+                    </xf:submission>
 
-                            <xf:bind nodeset="grouped-data">
-                                <xf:bind nodeset="group">
-                                    <xf:bind nodeset="a" constraint="string-length(.) &gt; 5"/>
-                                    <xf:bind nodeset="b" constraint="string-length(.) &gt; 5"/>
-                                    <xf:bind nodeset="c" constraint="string-length(.) &gt; 5"/>
-                                    <xf:bind nodeset="d" constraint="string-length(.) &gt; 5"/>
-                                </xf:bind>
+                        <xf:bind nodeset="grouped-data">
+                            <xf:bind nodeset="group">
+                                <xf:bind nodeset="a" constraint="string-length(.) &gt; 5"/>
+                                <xf:bind nodeset="b" constraint="string-length(.) &gt; 5"/>
+                                <xf:bind nodeset="c" constraint="string-length(.) &gt; 5"/>
+                                <xf:bind nodeset="d" constraint="string-length(.) &gt; 5"/>
                             </xf:bind>
-                    </xf:model>
-                </code>
+                        </xf:bind>
+                </xf:model>
 
                 <code class="ui">
                     <xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
