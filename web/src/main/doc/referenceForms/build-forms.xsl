@@ -52,8 +52,8 @@
 
             <div id="xforms">
                 <!-- the xforms model here -->
-                <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model"/>
-                <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/code/xf:model"/>
+                <xsl:apply-templates select="div[@class='sample']/div[@class='markup']//xf:model"/>
+                <!-- xsl:apply-templates select="div[@class='sample']/div[@class='markup']/code/xf:model"/-->
                 <!--
                                 <div style="display:none">
                                     <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model" mode="xforms"/>
@@ -87,7 +87,7 @@
                     <pre>
                         <code class="xml" data-dojo-type="dojox.highlight.Code">
                             <!--<xsl:text>&#10;</xsl:text>-->
-                            <xsl:for-each select=".//code/*">
+                            <xsl:for-each select=".//code[@class='ui' or @class='model']/*">
                                 <xsl:apply-templates select="." mode="escape"/>
                                 <xsl:text>&#10;</xsl:text>
                                 <xsl:if test="position()!=last()">
@@ -182,7 +182,7 @@
     </xsl:template>
 
 
-    <xsl:template match="div[@class='sample']/div[@class='markup']/xf:model">
+    <xsl:template match="xf:model">
         <div style="display:none">
             <xsl:apply-templates select="." mode="xforms"/>
         </div>
@@ -383,6 +383,10 @@
     </xsl:template>
 
     <xsl:template match="code" mode="xforms" priority="10">
+        <xsl:apply-templates mode="xforms"/>
+    </xsl:template>
+
+    <xsl:template match="code[@class='model']" priority="10">
         <xsl:apply-templates mode="xforms"/>
     </xsl:template>
 

@@ -22,9 +22,9 @@
          <div style="display:none">
             <xf:model>
                
-               <xf:instance xmlns="">
+               <xf:instance>
                   
-                  <data>
+                  <data xmlns="">
                      
                      <grouped-data>
                         
@@ -156,24 +156,11 @@
          </div>
          <h2>Example</h2>
          <div class="Section sample">
-            <xf:bind nodeset="grouped-data">
-               
-               <xf:bind nodeset="group">
-                  
-                  <xf:bind nodeset="a" constraint="string-length(.) &gt; 5"></xf:bind>
-                  
-                  <xf:bind nodeset="b" constraint="string-length(.) &gt; 5"></xf:bind>
-                  
-                  <xf:bind nodeset="c" constraint="string-length(.) &gt; 5"></xf:bind>
-                  
-                  <xf:bind nodeset="d" constraint="string-length(.) &gt; 5"></xf:bind>
-                  
-               </xf:bind>
-               
-            </xf:bind>
             <xf:group ref="grouped-data/group" appearance="compact">
                
-               <p>To enabled the Tooltip Alerts the CSS class 'ToolTipAlert' must be added to the html:body element</p>
+               <p>To enabled the Tooltip Alerts the CSS class 'ToolTipAlert' must be added to the html:body
+                  element
+               </p>
                
                <xf:label>Each field must have more than 5 characters to become valid</xf:label>
                
@@ -271,15 +258,19 @@
             
             <p>
                It currently does not matter where you put the <strong>'ToolTipAlert'</strong> class as it's
-               simply searched in the whole document but it is recommended to up it as high in the hierarchy of the
-               document as possible which shortens searching time. Later on when we support several handlers at a
+               simply searched in the whole document but it is recommended to up it as high in the
+               hierarchy of the
+               document as possible which shortens searching time. Later on when we support several
+               handlers at a
                time hierarchy may become relevant again.
                
             </p>
             
             <p>
-               When dealing with subforms it should be noted that one alerthandler in a subform cannot overwrite the one
-               already loaded by its parent. It seems at least questionable if a subform should be able to switch
+               When dealing with subforms it should be noted that one alerthandler in a subform cannot
+               overwrite the one
+               already loaded by its parent. It seems at least questionable if a subform should be
+               able to switch
                the alert handling mode. For this reason this sample runs in its own window (not-embedded).
                
             </p>

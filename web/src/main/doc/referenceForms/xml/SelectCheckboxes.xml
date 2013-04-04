@@ -52,7 +52,7 @@
                         <xf:bind nodeset="@required" type="boolean"></xf:bind>
                         <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
                     </xf:bind>
-                    <code>
+                    <code class="model">
 <xf:instance id="codes">
     <countrylist xmlns="">
         <country>

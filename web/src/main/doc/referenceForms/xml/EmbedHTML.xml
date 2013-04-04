@@ -25,7 +25,7 @@
                     <xf:instance xmlns="">
                         <data/>
                     </xf:instance>
-<code>
+<code class="model">
 <xf:submission id="s-embedHTML-audio"
    replace="embedHTML"
    targetid="mountpoint-audio"

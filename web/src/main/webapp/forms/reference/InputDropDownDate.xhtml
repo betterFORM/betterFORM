@@ -14,9 +14,9 @@
          <div style="display:none">
             <xf:model>
                
-               <xf:instance xmlns="">
+               <xf:instance>
                   
-                  <data>
+                  <data xmlns="">
                      
                      <input1 constraint="true" readonly="false" required="true" relevant="true">
                         
@@ -171,7 +171,8 @@
                      xfDisabled
                      
                      <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
-                        matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                        matches a xforms control that is currently disabled (can't be visualized here as the
+                        control gets hidden)
                         
                      </div>
                   </td>
@@ -203,10 +204,12 @@
             <div class="description">
                
                <p>
-                  An input which binds to a Node of type 'date' with an additional apperance "bf:dropdowndate" is rendered as a three piece
-                  select1 date control. The value
-                  may also be be typed in directly but allowed values for the year can be constrained by a custom
-                  appearance attribute. Values exceeding the range will 'jump back' to the lowest or highest allowed value
+                  An input which binds to a Node of type 'date' with an additional apperance "bf:dropdowndate"
+                  is rendered as a three piece select1 date control. The value
+                  may also be be typed in directly but allowed values for the year can be constrained
+                  by a custom
+                  appearance attribute. Values exceeding the range will 'jump back' to the lowest or
+                  highest allowed value
                   respectively.
                   
                </p>
@@ -263,7 +266,9 @@
                
                <xf:input id="input5" ref="input1/value[5]" appearance="bf:dropdowndate" data-bf-params="date:'-50:+50'">
                   
-                  <xf:label>Date with years range starting 50 years in the past from current year, ending 50 years in the future from current year</xf:label>
+                  <xf:label>Date with years range starting 50 years in the past from current year, ending 50 years
+                     in the future from current year
+                  </xf:label>
                   
                   <xf:hint>Enter you Date of birth</xf:hint>
                   
@@ -274,7 +279,9 @@
                
                <xf:input id="input6" ref="input1/value[6]" appearance="bf:dropdowndate" data-bf-params="date:'+50:-50'">
                   
-                  <xf:label>Date with years range starting 50 years in the future from current year, ending 50 years in the past from current year</xf:label>
+                  <xf:label>Date with years range starting 50 years in the future from current year, ending 50
+                     years in the past from current year
+                  </xf:label>
                   
                   <xf:hint>Enter you Date of birth</xf:hint>
                   
@@ -285,7 +292,9 @@
                
                <xf:input id="input7" ref="input1/value[7]" appearance="bf:dropdowndate" data-bf-params="date:'+30:+20'">
                   
-                  <xf:label>Date with years range starting 30 years in the future from current year, ending 20 years in the future from current year</xf:label>
+                  <xf:label>Date with years range starting 30 years in the future from current year, ending 20
+                     years in the future from current year
+                  </xf:label>
                   
                   <xf:label>Date +30:+20:</xf:label>
                   
@@ -298,7 +307,9 @@
                
                <xf:input id="input8" ref="input1/value[8]" appearance="bf:dropdowndate" data-bf-params="date:'-40:-30'">
                   
-                  <xf:label>Date with years range starting 40 years in the past from current year, ending 30 years in the past from current year</xf:label>
+                  <xf:label>Date with years range starting 40 years in the past from current year, ending 30 years
+                     in the past from current year
+                  </xf:label>
                   
                   <xf:hint>Enter you Date of birth</xf:hint>
                   

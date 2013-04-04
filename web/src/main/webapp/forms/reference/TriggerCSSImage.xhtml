@@ -28,9 +28,9 @@
          <div style="display:none">
             <xf:model>
                
-               <xf:instance xmlns="">
+               <xf:instance>
                   
-                  <data>
+                  <data xmlns="">
                      
                      <trigger1 constraint="true" readonly="false" required="false" relevant="true">
                         
@@ -159,7 +159,8 @@
                      xfDisabled
                      
                      <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
-                        matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                        matches a xforms control that is currently disabled (can't be visualized here as the
+                        control gets hidden)
                         
                      </div>
                   </td>
@@ -202,7 +203,8 @@
                   Here the trigger is given an id and a CSS matcher is added for it. The corresponding
                   button rendered in HTML will have the original id with '-value' attached. The matcher
                   for the button is therefore #trigger1-value.
-                  This is only one example how to style controls with CSS. Besides identity matching alternative
+                  This is only one example how to style controls with CSS. Besides identity matching
+                  alternative
                   style rules are possible to achieve the same result. E.g. instead of #trigger1 .xfValue
                   would match the same element in the tree.
                   

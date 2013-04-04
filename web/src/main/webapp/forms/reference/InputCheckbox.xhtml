@@ -22,9 +22,9 @@
          <div style="display:none">
             <xf:model>
                
-               <xf:instance xmlns="">
+               <xf:instance>
                   
-                  <data>
+                  <data xmlns="">
                      
                      <input1 constraint="true" readonly="false" required="true" relevant="true">
                         
@@ -158,7 +158,8 @@
                      xfDisabled
                      
                      <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
-                        matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                        matches a xforms control that is currently disabled (can't be visualized here as the
+                        control gets hidden)
                         
                      </div>
                   </td>
@@ -279,15 +280,7 @@
             
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:bind nodeset="input1"&gt;
-                        &lt;xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="xf:boolean"&gt;&lt;/xf:bind&gt;
-                        &lt;xf:bind nodeset="@constraint" type="boolean"&gt;&lt;/xf:bind&gt;
-                        &lt;xf:bind nodeset="@readonly" type="boolean"&gt;&lt;/xf:bind&gt;
-                        &lt;xf:bind nodeset="@required" type="boolean"&gt;&lt;/xf:bind&gt;
-                        &lt;xf:bind nodeset="@relevant" type="boolean"&gt;&lt;/xf:bind&gt;
-                    &lt;/xf:bind&gt;
-
-&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" incremental="true"&gt;
     &lt;xf:label&gt;a checkbox&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for input1&lt;/xf:help&gt;

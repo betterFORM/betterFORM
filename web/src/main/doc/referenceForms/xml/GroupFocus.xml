@@ -54,7 +54,7 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <code>
+                <code class="model">
 <xf:model id="modelChild">
     <xf:instance>
         <data xmlns=""/>

@@ -31,7 +31,7 @@
         <div class="sample">
             <div class="markup">
                 <xf:model>
-                    <code>
+                    <code class="model">
 <xf:instance xmlns="">
     <data>
         <output1 constraint="true" readonly="false" required="false" relevant="true">
@@ -41,7 +41,7 @@
 </xf:instance>
                     </code>
                     <xf:bind nodeset="output1">
-                    <code>
+                    <code  class="model">
 <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
          readonly="boolean-from-string(../@readonly)"
          required="boolean-from-string(../@required)"

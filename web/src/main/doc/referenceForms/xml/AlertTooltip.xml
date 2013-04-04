@@ -45,7 +45,7 @@
                         <xf:message ev:event="xforms-submit-done">Success</xf:message>
                     </xf:submission>
 
-                    <code class="ui">
+                    <code class="model">
 <xf:bind nodeset="grouped-data">
     <xf:bind nodeset="group">
         <xf:bind nodeset="a"  constraint="string-length(.) &gt; 5"/>

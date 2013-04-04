@@ -22,9 +22,9 @@
          <div style="display:none">
             <xf:model>
                
-               <xf:instance xmlns="">
+               <xf:instance>
                   
-                  <data>
+                  <data xmlns="">
                      
                      <input1 constraint="true" readonly="false" required="true" relevant="true">
                         
@@ -157,7 +157,8 @@
                      xfDisabled
                      
                      <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
-                        matches a xforms control that is currently disabled (can't be visualized here as the control gets hidden)
+                        matches a xforms control that is currently disabled (can't be visualized here as the
+                        control gets hidden)
                         
                      </div>
                   </td>
@@ -196,7 +197,8 @@
                </p>
                
                <p>
-                  An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+                  An input which binds to a Node of type 'date' is rendered as a popup calendar control.
+                  The value
                   may also be be typed in directly.
                   
                </p>
@@ -301,7 +303,8 @@
 </code></pre></div>
          <h2>Notes</h2>
          <div class="Notes">
-            There is no way to distinguish a standard date control from one with a date pattern. If that should be essential for you
+            There is no way to distinguish a standard date control from one with a date pattern.
+            If that should be essential for you
             please contact the betterform users mailing list.
             
          </div>
@@ -315,13 +318,15 @@
             </p>
             
             <p>
-               Though locale-specific formatting of a date is supported there's no further support for
+               Though locale-specific formatting of a date is supported there's no further support
+               for
                subformats like the Java short/medium/long date formatting.
                
             </p>
             
             <p>
-               Dojo only accepts 'date'-inputs in the format of the datePattern OR the ISO8601/RFC3339 format.
+               Dojo only accepts 'date'-inputs in the format of the datePattern OR the ISO8601/RFC3339
+               format.
                
             </p>
             

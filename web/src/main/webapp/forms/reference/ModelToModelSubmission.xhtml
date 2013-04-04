@@ -22,9 +22,9 @@
          <div style="display:none">
             <xf:model id="m-model-1">
                
-               <xf:instance xmlns="" id="i-instance-1">
+               <xf:instance id="i-instance-1">
                   
-                  <data>
+                  <data xmlns="">
                      
                      <item>model-1</item>
                      
@@ -37,9 +37,9 @@
          <div style="display:none">
             <xf:model id="m-model-2">
                
-               <xf:instance xmlns="" id="i-instance-2">
+               <xf:instance id="i-instance-2">
                   
-                  <data>
+                  <data xmlns="">
                      
                      <item>model-2</item>
                      
@@ -139,41 +139,7 @@
             </xf:group>
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:model id="m-model-1"&gt;
-    &lt;xf:instance id="i-instance-1"&gt;
-        &lt;data&gt;
-            &lt;item&gt;model-1&lt;/item&gt;
-        &lt;/data&gt;
-    &lt;/xf:instance&gt;
-&lt;/xf:model&gt;
-
-&lt;xf:model id="m-model-2"&gt;
-    &lt;xf:instance id="i-instance-2"&gt;
-        &lt;data&gt;
-            &lt;item&gt;model-2&lt;/item&gt;
-        &lt;/data&gt;
-    &lt;/xf:instance&gt;
-
-&lt;xf:submission id="s-model-2-to-model-1" validate="false" replace="none" method="post" resource="model:m-model-1#instance('i-instance-1')/data"&gt;
-    &lt;xf:action ev:event="xforms-submit-done"&gt;
-        &lt;xf:message level="ephemeral"&gt;Submitted data from model-2 to model-1&lt;/xf:message&gt;
-    &lt;/xf:action&gt;
-    &lt;xf:action ev:event="xforms-submit-error"&gt;
-        &lt;xf:message&gt;Submitted data from model-2 to model-1 failed&lt;/xf:message&gt;
-    &lt;/xf:action&gt;
-&lt;/xf:submission&gt;
-
-&lt;xf:submission id="s-model-1-to-model-2" validate="false" replace="instance" method="get" resource="model:m-model-1#instance('i-instance-1')/data"&gt;
-    &lt;xf:action ev:event="xforms-submit-done"&gt;
-        &lt;xf:message level="ephemeral"&gt;Submitted data from model-1 to model-2&lt;/xf:message&gt;
-    &lt;/xf:action&gt;
-    &lt;xf:action ev:event="xforms-submit-error"&gt;
-        &lt;xf:message&gt;Submitted data from model-1 to model-2 failed.&lt;/xf:message&gt;
-    &lt;/xf:action&gt;
-&lt;/xf:submission&gt;
-&lt;/xf:model&gt;
-
-&lt;xf:group&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:group&gt;
 
     &lt;xf:input model="m-model-1" ref="instance()/item"&gt;
         &lt;xf:label&gt;Model-1&lt;/xf:label&gt;

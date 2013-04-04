@@ -61,7 +61,6 @@
         </div>
         <div class="sample">
             <div class="markup">
-                <code>
                     <xf:model id="model-child">
                         <xf:instance>
                             <data xmlns="">
@@ -69,7 +68,7 @@
                             </data>
                         </xf:instance>
                         <xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn">
-                            <xf:toggle case="c-input1"/>
+                            <!--xf:toggle case="c-input1"/-->
                         </xf:action>
                         <xf:setvalue ref="class" value="'observedGroupBG'" ev:observer="observedGroup"
                                      ev:event="DOMFocusIn"/>
@@ -77,7 +76,6 @@
                                      ev:event="DOMFocusOut"/>
                     </xf:model>
 
-                </code>
                 <code class="ui">
 <xf:input id="input1" ref=".">
     <xf:label>Input before observerd Group</xf:label>

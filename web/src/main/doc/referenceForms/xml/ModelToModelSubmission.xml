@@ -22,7 +22,7 @@
         </div>
         <div class="sample">
             <div class="markup">
-<code>
+<code id="model">
 <xf:model id="m-model-1">
     <xf:instance id="i-instance-1" xmlns="">
         <data>

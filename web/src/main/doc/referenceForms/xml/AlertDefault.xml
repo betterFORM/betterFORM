@@ -33,6 +33,7 @@
         </div>
         <div class="sample">
             <div class="markup">
+                <code class="model">
                 <xf:model>
                     <xf:instance xmlns="">
                         <data xmlns="">
@@ -60,6 +61,7 @@
                             </xf:bind>
                         </xf:bind>
                 </xf:model>
+                </code>
 
                 <code class="ui">
                     <xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">

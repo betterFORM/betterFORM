@@ -59,7 +59,7 @@
         ]-->
         <div class="sample">
             <div class="markup">
-                <code><html xmlns:xf="http://www.w3.org/2002/xforms"
+                <code class="model"><html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:bf="http://betterform.sourceforge.net/xforms"
         bf:evalAVTs="class style">
@@ -67,7 +67,7 @@
 </html>
                 </code>
                 <xf:model>
-                    <code>
+                    <code class="model">
 <xf:instance id="instance-1" xmlns="">
     <avt>
         <theme>tundra</theme>

@@ -44,9 +44,9 @@
             <xf:model>
                
                
-               <xf:instance xmlns="" id="instance-1">
+               <xf:instance id="instance-1">
                   
-                  <avt>
+                  <avt xmlns="">
                      
                      <theme>tundra</theme>
                      
@@ -70,21 +70,26 @@
             <div class="description">
                
                <p>
-                  This page demonstrates the use of Attribute Value Templates (AVT) as known from XSL. By
-                  putting an attribute value inside of curly brackets you signal to the processor to evaluate the
+                  This page demonstrates the use of Attribute Value Templates (AVT) as known from XSL.
+                  By
+                  putting an attribute value inside of curly brackets you signal to the processor to
+                  evaluate the
                   contents as an XPath expression.
                   
                </p>
                
                <p>
-                  AVTs can be used to dynamically style a page dependent on some instance data. The example below switches
+                  AVTs can be used to dynamically style a page dependent on some instance data. The
+                  example below switches
                   between the main Dojo themes available.
                   
                </p>
                
                <p>
-                  AVTs in betterFORM are operating on the host document, this means that classes added in XSLt or JavaScript
-                  will be lost if the AVT changes during runtime (due to the host document does not know about CSS classes
+                  AVTs in betterFORM are operating on the host document, this means that classes added
+                  in XSLt or JavaScript
+                  will be lost if the AVT changes during runtime (due to the host document does not
+                  know about CSS classes
                   added later on)
                   
                </p>
@@ -201,7 +206,8 @@
             </p>
             
             <p>
-               It is easy to work around this restriction by simply wrapping the wanted element inside of a 
+               It is easy to work around this restriction by simply wrapping the wanted element inside
+               of a 
                <span class="keyword">span</span> or <span class="keyword">div</span>.
                
             </p>

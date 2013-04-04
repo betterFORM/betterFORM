@@ -94,8 +94,7 @@
                 </tr>
                 <tr>
                     <td>xsdDate</td>
-                    <td>matches an Element that is bound to a node widht datatype
-                        <code>date</code>
+                    <td>matches an Element that is bound to a node widht datatype <code>date</code>
                     </td>
                 </tr>
             </table>
