@@ -80,7 +80,9 @@
                     <xsl:with-param name="classes" select="$widgetClasses"/>
                 </xsl:call-template>
             </xsl:when>
-            <xsl:when test="$type='byte' or $type='decimal'
+            <!-- TODO: Fix bug in validity handling for input type="integer" (Chrome/Safari) -->
+            <!--
+            xsl:when test="$type='byte' or $type='decimal'
                             or $type='int' or $type='integer'
                             or $type='float' or $type='double'
                             or $type='long' or $type='negativeInteger'
@@ -100,7 +102,7 @@
                     </xsl:if>
                     <xsl:apply-templates select="@*" mode="copy-foreign-attributes"/>
                 </input>
-            </xsl:when>
+            </xsl:when-->
             <xsl:otherwise>
                 <xsl:call-template name="InputDefault">
                     <xsl:with-param name="id" select="$id"/>
