@@ -411,7 +411,7 @@
         <echo message="************************************************************************************"/>
         <echo/>
         <copy todir="${webapp.dir}/${forms.target}">
-            <fileset dir="../resource/src/test/resources"/>
+            <fileset dir="${basedir}/src/test/resources"/>
         </copy>
     </target>
 
