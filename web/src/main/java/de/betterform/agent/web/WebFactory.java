@@ -223,13 +223,19 @@ public class WebFactory {
 
     public void initLogging(Class theClass) throws XFormsConfigException {
         String initLogging = this.config.getProperty(WebFactory.DO_INIT_LOGGING);
-        if(initLogging.equals("true")){
-            String logConfig = this.config.getProperty(WebFactory.LOG_CONFIG);
 
-            DOMConfigurator.configure(resolvePath(logConfig, servletContext));
-            Log logger = LogFactory.getLog(theClass);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Logger initialized");
+        if(initLogging.equals("true")){
+            String pathToLog4jConfig = resolvePath(this.config.getProperty(WebFactory.LOG_CONFIG), servletContext);
+            File log4jFile = new File(pathToLog4jConfig);
+            if(log4jFile.exists()){
+                DOMConfigurator.configure(pathToLog4jConfig);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Logger initialized");
+                }
+            }else {
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Could not find " + pathToLog4jConfig);
+                }
             }
         }
     }
