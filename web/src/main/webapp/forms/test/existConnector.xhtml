@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+<head>
+    <title>eXist DB URI and Submission Handler Test Form</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+</head>
+    <body>
+        <div style="display:none">
+
+            <xf:model id="model-1">
+                <xf:instance id="i-default" src="exist:/db/apps/betterform/connector/testdata.xml">
+                    <data xmlns="">
+                        <item/>
+                    </data>
+                </xf:instance>
+
+                <xf:submission method="get"
+                               id="s-load"
+                               replace="instance"
+                               resource="exist:/db/apps/betterform/forms/connector/get.xml">
+
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">get submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">get submission successful</xf:message>
+                </xf:submission>
+
+                <xf:submission method="put"
+                               id="s-create"
+                               replace="none"
+                               resource="exist:/db/apps/betterform/forms/connector/put.xml">
+
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">put submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">put submission successful</xf:message>
+                </xf:submission>
+                <xf:submission method="post"
+                               id="s-update"
+                               replace="none"
+                               resource="exist:/db/apps/betterform/forms/connector/post.xml">
+
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">post submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">post submission successful</xf:message>
+                </xf:submission>
+                <xf:submission method="delete"
+                               id="s-delete"
+                               replace="none"
+                               resource="exist:/db/apps/betterform/forms/connector/delete.xml">
+
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">delete submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">delete submission successful</xf:message>
+                </xf:submission>
+            </xf:model>
+        </div>
+        <xf:group>
+
+            <xf:input ref="item">
+                <xf:label>hello from ...</xf:label>
+            </xf:input>
+
+            <xf:trigger>
+                <xf:label>load</xf:label>
+                <xf:send submission="s-load"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>create</xf:label>
+                <xf:send submission="s-create"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>update</xf:label>
+                <xf:send submission="s-update"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>delete</xf:label>
+                <xf:send submission="s-delete"/>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>
