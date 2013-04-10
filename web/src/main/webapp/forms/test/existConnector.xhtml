@@ -13,7 +13,13 @@
         <div style="display:none">
 
             <xf:model id="model-1">
-                <xf:instance id="i-default" src="exist:/db/apps/betterform/connector/testdata.xml">
+                <xf:instance id="i-default" src="exist:/db/apps/betterform/connector/testdata.xql">
+                    <data xmlns="">
+                        <item/>
+                    </data>
+                </xf:instance>
+
+                <xf:instance id="i-exist-uri-resolver" src="exist:/db/apps/betterform/connector/testdata.xml">
                     <data xmlns="">
                         <item/>
                     </data>
