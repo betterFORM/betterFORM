@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,92 +15,44 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance id="instance-1">
-                  
                   <data xmlns="" constraint="true" readonly="false" required="false" relevant="true">
-                     
                      <select1 constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value>AX</value>
-                        
                      </select1>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:bind nodeset="select1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
                <xf:instance id="codes">
-                  
                   <countrylist xmlns="" lang="en" constraint="true" readonly="false" required="true" relevant="true">
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">
-                           AFGHANISTAN
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">AFGHANISTAN</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">AF</code>
-                        
                      </country>
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">LAND
-                           ISLANDS
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">LAND ISLANDS</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">AX</code>
-                        
                      </country>
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">
-                           ALBANIA
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">ALBANIA</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">AL</code>
-                        
                      </country>
-                     
                      <country constraint="true" readonly="false" required="true" relevant="true">
-                        
-                        <country-name constraint="true" readonly="false" required="true" relevant="true">
-                           ALGERIA
-                           
-                        </country-name>
-                        
+                        <country-name constraint="true" readonly="false" required="true" relevant="true">ALGERIA</country-name>
                         <code constraint="true" readonly="false" required="true" relevant="true">DZ</code>
-                        
                      </country>
-                     
                   </countrylist>
-                  
                </xf:instance>
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -114,8 +65,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d37e178" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
-                     <div data-dojo-type="dijit.Tooltip" connectId="d37e178">matches an Element that represents a XForms
+                  <td id="d73e178" onmouseover="showClass('xfSelect1');" onmouseout="hideClass('xfSelect1');">xfSelect1
+                     <div data-dojo-type="dijit.Tooltip" connectId="d73e178">matches an Element that represents a XForms
                         select1
                         element
                         
@@ -123,8 +74,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d37e190" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
-                     <div data-dojo-type="dijit.Tooltip" connectId="d37e190">matches an item of a XForms 
+                  <td id="d73e190" onmouseover="showClass('xfSelectorItem');" onmouseout="hideClass('xfSelectorItem');">xfSelectorItem
+                     <div data-dojo-type="dijit.Tooltip" connectId="d73e190">matches an item of a XForms 
                         select1
                         element
                         
@@ -244,30 +195,11 @@
          <div class="pageintro">
             <h1>select1 control rendered as combobox control</h1>
             <div class="description">
-               
-               <p>
-                  This form control allows the user to make a selection from a set of choices.
-                  
-                  
+               <p>This form control allows the user to make a selection from a set of choices.</p>
+               <p>A <span class="keyword">select1</span> with <span class="keyword">appearance</span> 'minimal' will be rendered as a combobox conrol.
                </p>
-               
-               <p>
-                  A
-                  <span class="keyword">select1</span>
-                  with
-                  <span class="keyword">appearance</span>
-                  'minimal' will be
-                  rendered as a combobox conrol.
-                  
+               <p>This is the default rendering when no <span class="keyword">appearance</span> is given.
                </p>
-               
-               <p>
-                  This is the default rendering when no
-                  <span class="keyword">appearance</span>
-                  is given.
-                  
-               </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -285,62 +217,38 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:select1 id="select1" ref="select1/value" appearance="minimal" incremental="true">
-               
                <xf:label>a select1 combobox</xf:label>
-               
                <xf:hint>a Hint for this control</xf:hint>
-               
                <xf:help>help for select1</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
                <xf:itemset nodeset="instance('codes')/country">
-                  
                   <xf:label ref="country-name"></xf:label>
-                  
                   <xf:value ref="code"></xf:value>
-                  
                </xf:itemset>
-               
-            </xf:select1>
+            </xf:select1> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="select1-readonly" ref="select1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="select1-required" ref="select1/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="select1-relevant" ref="select1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="select1-valid" ref="select1/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:select1 id="select1" ref="select1/value" appearance="minimal" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:select1 id="select1" ref="select1/value" appearance="minimal" incremental="true"&gt;
     &lt;xf:label&gt;a select1 combobox&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for select1&lt;/xf:help&gt;
@@ -379,5 +287,4 @@
                         }
                 );
             </script></body>
-   
 </html>

@@ -113,11 +113,11 @@
                 </tr>
             </table>
         </div>
-        <div class="Notes">
+        <div class="notes">
             There is no way to distinguish a standard date control from one with a date pattern. If that should be essential for you
             please contact the betterform users mailing list.
         </div>
-        <div class="Limitations">
+        <div class="limitations">
             <p>
                 The date control is currently not fully accessible esp. keyboard navigation is not
                 working in the current version of Dojo.

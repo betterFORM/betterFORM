@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,55 +15,31 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <grouped-data constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <group>
-                           
                            <a>aaa</a>
-                           
                            <b>bbb</b>
-                           
                            <c>ccc</c>
-                           
                            <d>ddd</d>
-                           
                         </group>
-                        
                      </grouped-data>
-                     
                   </data>
-                  
                </xf:instance>
-               
-               
                <xf:bind nodeset="grouped-data">
-                  
                   <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)">
-                     
                      <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"></xf:bind>
-                     
                   </xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -77,8 +52,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d12e177" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e177">matches any Element that represents a XForms
+                  <td id="d23e177" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d23e177">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -90,8 +65,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d12e195" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e195">matches an Element that represents a XForms
+                  <td id="d23e195" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d23e195">matches an Element that represents a XForms
                         group
                         element with
                         'bf:horizontalTable'
@@ -101,25 +76,25 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d12e210" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e210">matches the  label of a group</div>
+                  <td id="d23e210" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d23e210">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d12e224" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e224">matches the  label of a control used as table header</div>
+                  <td id="d23e224" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d23e224">matches the  label of a control used as table header</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d12e236" onmouseover="showClass('bfTableCol1');" onmouseout="hideClass('bfTableCol1');">bfTableCol1
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e236">matches the first column of the table. Subsequent columns have the same class but
+                  <td id="d23e236" onmouseover="showClass('bfTableCol1');" onmouseout="hideClass('bfTableCol1');">bfTableCol1
+                     <div data-dojo-type="dijit.Tooltip" connectId="d23e236">matches the first column of the table. Subsequent columns have the same class but
                         with their respective column number (counted from left to right)
                      </div>
                   </td>
                </tr>
                <tr>
-                  <td id="d12e246" onmouseover="showClass('bfTableLabel');" onmouseout="hideClass('bfTableLabel');">bfTableLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d12e246">matches a label of a nested group</div>
+                  <td id="d23e246" onmouseover="showClass('bfTableLabel');" onmouseout="hideClass('bfTableLabel');">bfTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d23e246">matches a label of a nested group</div>
                   </td>
                </tr>
                <tr>
@@ -235,19 +210,10 @@
          <div class="pageintro">
             <h1>Group with 'bf:horizontalTable' appearance</h1>
             <div class="description">
-               
-               <p>
-                  A group with the custom <span class="keyword">appearance</span> 'bf:horizontalTable' use an HTML table
-                  for displaying all child controls in one row.
-                  
+               <p>A group with the custom <span class="keyword">appearance</span> 'bf:horizontalTable' use an HTML table for displaying all child controls in one row.
                </p>
-               
-               <p>
-                  This layout allows nesting of other groups. A nested <span class="keyword">group</span> will take
-                  one column within the horizontal table.
-                  
+               <p>This layout allows nesting of other groups. A nested <span class="keyword">group</span> will take one column within the horizontal table.
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -265,88 +231,51 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:group id="group1" ref="grouped-data/group" appearance="bf:horizontalTable">
-               
                <xf:label>Group with 'horizontalTable' appearance</xf:label>
-               
                <xf:input id="input1" ref="a">
-                  
                   <xf:label>A-label</xf:label>
-                  
                   <xf:hint>a hint to A-label</xf:hint>
-                  
                   <xf:alert>an alert to A-label</xf:alert>
-                  
                </xf:input>
-               
                <xf:input id="input2" ref="b">
-                  
                   <xf:label>B-label</xf:label>
-                  
                   <xf:hint>a hint to B-label</xf:hint>
-                  
                   <xf:alert>an alert to B-label</xf:alert>
-                  
                </xf:input>
-               
                <xf:input id="input3" ref="c">
-                  
                   <xf:label>C-label</xf:label>
-                  
                   <xf:hint>a hint to C-label</xf:hint>
-                  
                   <xf:alert>an alert to C-label</xf:alert>
-                  
                </xf:input>
-               
                <xf:input id="input4" ref="d">
-                  
                   <xf:label>D-label</xf:label>
-                  
                   <xf:hint>a hint to D-label</xf:hint>
-                  
                   <xf:alert>an alert to D-label</xf:alert>
-                  
                </xf:input>
-               
-            </xf:group>
+            </xf:group> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="group1-readonly" ref="grouped-data/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="group1-required" ref="grouped-data/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="group1-relevant" ref="grouped-data/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="group1-valid" ref="grouped-data/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:group id="group1" ref="grouped-data/group" appearance="bf:horizontalTable"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:group id="group1" ref="grouped-data/group" appearance="bf:horizontalTable"&gt;
     &lt;xf:label&gt;Group with 'horizontalTable' appearance&lt;/xf:label&gt;
     &lt;xf:input id="input1" ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
@@ -398,5 +327,4 @@
                         }
                 );
             </script></body>
-   
 </html>

@@ -98,13 +98,13 @@
                 </tr>
             </table>
         </div>
-        <div class="Limitations">
+        <div class="limitations">
             <p>
                 The HTML markup in the bound instance data node must enclosed within a CDATA section. This is not
                 shown in the sample above due to limitations with the syntax highlighting. 
             </p>
         </div>
-        <div class="Notes">
+        <div class="notes">
             <p>
                 Though the Model Item Properties
                 <span class="keyword">readonly</span>

@@ -35,7 +35,7 @@
                             </input1>
                         </data>
                     </xf:instance>
-<code>
+<code class="model">
                     <xf:bind nodeset="input1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"

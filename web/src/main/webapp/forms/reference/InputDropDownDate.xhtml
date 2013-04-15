@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -8,63 +7,35 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <input1 constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                         <value>1978-02-03</value>
-                        
                      </input1>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:bind nodeset="input1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="date"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -77,13 +48,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d20e228" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d20e228">matches an Element that represents a XForms input element</div>
+                  <td id="d39e228" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d39e228">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d20e237" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
-                     <div data-dojo-type="dijit.Tooltip" connectId="d20e237">matches an Element that is bound to a node widht datatype
+                  <td id="d39e237" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
+                     <div data-dojo-type="dijit.Tooltip" connectId="d39e237">matches an Element that is bound to a node widht datatype
                         date
                         
                      </div>
@@ -202,158 +173,88 @@
          <div class="pageintro">
             <h1>Drop Down Date input control</h1>
             <div class="description">
-               
-               <p>
-                  An input which binds to a Node of type 'date' with an additional apperance "bf:dropdowndate"
-                  is rendered as a three piece select1 date control. The value
-                  may also be be typed in directly but allowed values for the year can be constrained
-                  by a custom
-                  appearance attribute. Values exceeding the range will 'jump back' to the lowest or
-                  highest allowed value
-                  respectively.
-                  
+               <p>An input which binds to a Node of type 'date' with an additional apperance "bf:dropdowndate"
+                  is rendered as a three piece select1 date control. The value may also be be typed
+                  in directly but allowed values for the year can be constrained by a custom appearance
+                  attribute. Values exceeding the range will 'jump back' to the lowest or highest allowed
+                  value respectively.
                </p>
-               
             </div>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:group id="main" appearance="full">
-               
                <xf:input id="input1" ref="input1/value[1]" appearance="bf:dropdowndate">
-                  
                   <xf:label>Date with years range from ten years in the past to current year</xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input2" ref="input1/value[2]" appearance="bf:dropdowndate" data-bf-params="date:'1970'">
-                  
                   <xf:label>Date with years range starting from 1970 to current year</xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input3" ref="input1/value[3]" appearance="bf:dropdowndate" data-bf-params="date:'1970:1980'">
-                  
                   <xf:label>Date with years range starting from 1970 to 1980</xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input4" ref="input1/value[4]" appearance="bf:dropdowndate" data-bf-params="date:'1980:1970'">
-                  
                   <xf:label>Date with years range starting from 1980 to 1970</xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input5" ref="input1/value[5]" appearance="bf:dropdowndate" data-bf-params="date:'-50:+50'">
-                  
                   <xf:label>Date with years range starting 50 years in the past from current year, ending 50 years
                      in the future from current year
                   </xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input6" ref="input1/value[6]" appearance="bf:dropdowndate" data-bf-params="date:'+50:-50'">
-                  
                   <xf:label>Date with years range starting 50 years in the future from current year, ending 50
                      years in the past from current year
                   </xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input7" ref="input1/value[7]" appearance="bf:dropdowndate" data-bf-params="date:'+30:+20'">
-                  
                   <xf:label>Date with years range starting 30 years in the future from current year, ending 20
                      years in the future from current year
                   </xf:label>
-                  
                   <xf:label>Date +30:+20:</xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-               
                <xf:input id="input8" ref="input1/value[8]" appearance="bf:dropdowndate" data-bf-params="date:'-40:-30'">
-                  
                   <xf:label>Date with years range starting 40 years in the past from current year, ending 30 years
                      in the past from current year
                   </xf:label>
-                  
                   <xf:hint>Enter you Date of birth</xf:hint>
-                  
                   <xf:alert>Not valid</xf:alert>
-                  
                </xf:input>
-               
-            </xf:group>
+            </xf:group> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-required" ref="input1/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:group id="main" appearance="full"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:group id="main" appearance="full"&gt;
     &lt;xf:input id="input1" ref="input1/value[1]" appearance="bf:dropdowndate"&gt;
         &lt;xf:label&gt;Date with years range from ten years in the past to current year&lt;/xf:label&gt;
         &lt;xf:hint&gt;Enter you Date of birth&lt;/xf:hint&gt;
@@ -432,5 +333,4 @@
                         }
                 );
             </script></body>
-   
 </html>

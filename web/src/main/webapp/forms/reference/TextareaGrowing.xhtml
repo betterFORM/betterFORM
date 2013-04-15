@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -21,41 +20,24 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <textarea1 constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value></value>
-                        
                      </textarea1>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:bind nodeset="textarea1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -68,8 +50,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d46e125" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
-                     <div data-dojo-type="dijit.Tooltip" connectId="d46e125">matches an Element that represents a XForms input element</div>
+                  <td id="d91e125" onmouseover="showClass('xfTextarea');" onmouseout="hideClass('xfTextarea');">xfTextarea
+                     <div data-dojo-type="dijit.Tooltip" connectId="d91e125">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -185,26 +167,12 @@
          <div class="pageintro">
             <h1>growing Textarea control</h1>
             <div class="description">
-               
-               <p>
-                  
-                  This form control enables free-form data entry and is
-                  intended for use in entering multiline content, e.g., the
-                  body of an email message.
-                  
+               <p>This form control enables free-form data entry and is intended for use in entering
+                  multiline content, e.g., the body of an email message.
                </p>
-               
-               <p>
-                  A
-                  <span class="keyword">textarea</span>
-                  using attribute
-                  <span class="keyword">mediatype</span>
-                  with
-                  value 'dojo' will be rendered as a growing textarea that expands as the user types
-                  in more text.
-                  
+               <p>A <span class="keyword">textarea</span> using attribute <span class="keyword">mediatype</span> with value 'dojo' will be rendered as a growing textarea that expands as the user
+                  types in more text.
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -222,54 +190,34 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:textarea id="textarea1" ref="textarea1/value" appearance="growing" incremental="true">
-               
                <xf:label>a growing textarea</xf:label>
-               
                <xf:hint>a Hint for this control</xf:hint>
-               
                <xf:help>help for textarea1</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
-            </xf:textarea>
+            </xf:textarea> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="textarea1-readonly" ref="textarea1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="textarea1-required" ref="textarea1/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="textarea1-relevant" ref="textarea1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="textarea1-valid" ref="textarea1/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:textarea id="textarea1" ref="textarea1/value" appearance="growing" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:textarea id="textarea1" ref="textarea1/value" appearance="growing" incremental="true"&gt;
     &lt;xf:label&gt;a growing textarea&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for textarea1&lt;/xf:help&gt;
@@ -304,5 +252,4 @@
                         }
                 );
             </script></body>
-   
 </html>

@@ -85,52 +85,8 @@
     <xf:label>Send</xf:label>
     <xf:send submission="echo"/>
 </xf:trigger>
-<!--
-<xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
-    <xf:label>a compact group with inline inputs - no initial data</xf:label>
-    <xf:input ref="a" incremental="true">
-        <xf:label>A-label</xf:label>
-        <xf:alert>Your input is not long enough</xf:alert>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
-    </xf:input>
-    <xf:input ref="b" incremental="true">
-        <xf:label>Bb-label</xf:label>
-        <xf:alert>Your input is not long enough</xf:alert>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
-    </xf:input>
-    <xf:input ref="c" incremental="true">
-        <xf:label>Ccc-label</xf:label>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
-        <xf:alert>Your input is not long enough</xf:alert>
-    </xf:input>
-    <xf:input ref="d" incremental="true">
-        <xf:label>Dddd-label</xf:label>
-        <xf:hint>The input must be longer than 5 characters</xf:hint>
-        <xf:alert>Your input is not long enough</xf:alert>
-    </xf:input>
-</xf:group>
--->
                 </code>
             </div>
-<!--
-            <div class="MIPS">
-                <xf:group appearance="full">
-                    <xf:label></xf:label>
-                    <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
-                        <xf:label>readonly</xf:label>
-                    </xf:input>
-                    <xf:input id="input1-required" ref="input1/@required" incremental="true">
-                        <xf:label>required</xf:label>
-                    </xf:input>
-                    <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
-                        <xf:label>relevant</xf:label>
-                    </xf:input>
-                    <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
-                        <xf:label>valid</xf:label>
-                    </xf:input>
-                </xf:group>
-            </div>
--->
         </div>
         <div class="CSS">
             <table>
@@ -150,7 +106,7 @@
                 </tr>
             </table>
         </div>
-        <div class="Notes">
+        <div class="notes">
             <p>
                 It currently does not matter where you put the <strong>'ToolTipAlert'</strong> class as it's
                 simply searched in the whole document but it is recommended to up it as high in the hierarchy of the
@@ -163,7 +119,7 @@
                 the alert handling mode. For this reason this sample runs in its own window (not-embedded).
             </p>
         </div>
-        <div class="Limitations">
+        <div class="limitations">
             <p>
                 Only one alert handler for the whole document is supported currently.
             </p>

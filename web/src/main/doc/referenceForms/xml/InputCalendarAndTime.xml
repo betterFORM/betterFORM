@@ -105,7 +105,7 @@
                 </tr>
             </table>
         </div>
-        <div class="Limitations">
+        <div class="limitations">
             The date control is currently not fully accessible esp. keyboard navigation is not
             working in the current version of Dojo.
         </div>

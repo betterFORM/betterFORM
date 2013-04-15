@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,41 +15,24 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <input1 constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value>2011-09-07</value>
-                        
                      </input1>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:bind nodeset="input1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="date"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -63,13 +45,13 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d18e144" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d18e144">matches an Element that represents a XForms input element</div>
+                  <td id="d35e144" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e144">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
-                  <td id="d18e153" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
-                     <div data-dojo-type="dijit.Tooltip" connectId="d18e153">matches an Element that is bound to a node widht datatype
+                  <td id="d35e153" onmouseover="showClass('xsdDate');" onmouseout="hideClass('xsdDate');">xsdDate
+                     <div data-dojo-type="dijit.Tooltip" connectId="d35e153">matches an Element that is bound to a node widht datatype
                         date
                         
                      </div>
@@ -188,34 +170,17 @@
          <div class="pageintro">
             <h1>Calendar input control with Date pattern</h1>
             <div class="description">
-               
-               <p>
-                  This form control enables free-form data entry or a user
-                  interface component appropriate to the datatype of the bound
-                  node.
-                  
+               <p>This form control enables free-form data entry or a user interface component appropriate
+                  to the datatype of the bound node.
                </p>
-               
-               <p>
-                  An input which binds to a Node of type 'date' is rendered as a popup calendar control.
-                  The value
-                  may also be be typed in directly.
-                  
+               <p>An input which binds to a Node of type 'date' is rendered as a popup calendar control.
+                  The value may also be be typed in directly.
                </p>
-               
-               <p>
-                  By setting the
-                  <span class="keyword">appearance</span>
-                  attribute to "iso8601:datePattern" the format of the Date value
-                  can be customized.
-                  Typical format strings apply. See
-                  <a href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html" target="_blank">Dojo
+               <p>By setting the <span class="keyword">appearance</span> attribute to "iso8601:datePattern" the format of the Date value can be customized.
+                  Typical format strings apply. See <a href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html" target="_blank">Dojo
                      Docs
-                     </a>
-                  for a full specification with examples.
-                  
+                     </a> for a full specification with examples.
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -233,68 +198,43 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:input id="input1" ref="input1/value" appearance="bf:iso8601" data-bf-params="date:'dd.MMMM.yyyy'" incremental="true">
-               
                <xf:label>a calendar with a date pattern</xf:label>
-               
                <xf:hint>a Hint for this control</xf:hint>
-               
                <xf:help>help for input1</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
-            </xf:input>
-            <xf:output ref="input1/value">
-               
-               <xf:label>CurrentValue: </xf:label>
-               
-            </xf:output>
+            </xf:input> 
+            <div class="output">
+               <xf:output ref="input1/value">
+                  <xf:label>CurrentValue:</xf:label>
+               </xf:output>
+            </div>
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-required" ref="input1/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
                <xf:trigger>
-                  
                   <xf:label>now</xf:label>
-                  
                   <xf:setvalue ref="input1/value" value="substring-before(current-date(),'+')"></xf:setvalue>
-                  
                </xf:trigger>
-               
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" appearance="bf:iso8601" data-bf-params="date:'dd.MMMM.yyyy'" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:input id="input1" ref="input1/value" appearance="bf:iso8601" data-bf-params="date:'dd.MMMM.yyyy'" incremental="true"&gt;
     &lt;xf:label&gt;a calendar with a date pattern&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
@@ -302,14 +242,14 @@
 &lt;/xf:input&gt;
 </code></pre></div>
          <h2>Notes</h2>
-         <div class="Notes">
+         <div class="notes">
             There is no way to distinguish a standard date control from one with a date pattern.
             If that should be essential for you
             please contact the betterform users mailing list.
             
          </div>
          <h2>Limitations</h2>
-         <div class="Limitations">
+         <div class="limitations">
             
             <p>
                The date control is currently not fully accessible esp. keyboard navigation is not
@@ -359,5 +299,4 @@
                         }
                 );
             </script></body>
-   
 </html>

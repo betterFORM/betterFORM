@@ -178,7 +178,7 @@
             </table>
         </div>
 
-        <div class="Notes">
+        <div class="notes">
             Please note that if you use a display:block for class xfContainer you should add a rule
         </div>
     </body>

@@ -4,7 +4,6 @@
   ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
   ~ Licensed under the terms of BSD License
   --><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -51,46 +50,29 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model id="model-child">
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <class></class>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn">
                   
                   <!--xf:toggle case="c-input1"/-->
-                  
                </xf:action>
-               
                <xf:setvalue ref="class" value="'observedGroupBG'" ev:observer="observedGroup" ev:event="DOMFocusIn"></xf:setvalue>
-               
                <xf:setvalue ref="class" value="''" ev:observer="observedGroup" ev:target="observedGroup" ev:event="DOMFocusOut"></xf:setvalue>
-               
             </xf:model>
          </div>
          <div class="pageintro">
             <h1>Group Focus</h1>
             <div class="description">
-               
-               <p>
-                  Form demonstrates the
-                  <span class="keyword">observer</span> pattern for
-                  <span class="keyword">DOMFocusIn</span> and <span class="keyword">DOMFocusOut</span> events. In response to the xforms-ready event a setfocus actions is fired to set
-                  the focus into the first input within 'observed Group'
-                  
+               <p>Form demonstrates the <span class="keyword">observer</span> pattern for <span class="keyword">DOMFocusIn</span> and <span class="keyword">DOMFocusOut</span> events. In response to the xforms-ready event a setfocus actions is fired to set the
+                  focus into the first input within 'observed Group'
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -108,43 +90,32 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:input id="input1" ref=".">
-               
                <xf:label>Input before observerd Group</xf:label>
-               
             </xf:input>
             <xf:group id="observedGroup" appearance="minimal">
-               
                <xf:label>Observed Group</xf:label>
-               
                <xf:input id="inputCase1" ref=".">
-                  
                   <xf:label>1</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="inputCase2" ref=".">
-                  
                   <xf:label>2</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
             <xf:input id="input2" ref=".">
-               
                <xf:label>Input after observed Group</xf:label>
-               
             </xf:input>
+            
+            <!--Action within UI listening on Model action-->
             <xf:action ev:observer="model-child" ev:event="xforms-ready">
-               
                <xf:setfocus control="input1"></xf:setfocus>
-               
-            </xf:action>
+            </xf:action> 
          </div>
          <div class="MIPS"></div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:input id="input1" ref="."&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:input id="input1" ref="."&gt;
     &lt;xf:label&gt;Input before observerd Group&lt;/xf:label&gt;
 &lt;/xf:input&gt;
 
@@ -167,7 +138,7 @@
 &lt;/xf:action&gt;
 </code></pre></div>
          <h2>Limitations</h2>
-         <div class="Limitations">
+         <div class="limitations">
             
          </div>
       </div><script type="text/javascript">
@@ -198,5 +169,4 @@
                         }
                 );
             </script></body>
-   
 </html>

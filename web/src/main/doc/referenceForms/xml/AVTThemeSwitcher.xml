@@ -2,7 +2,7 @@
 <html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:bf="http://betterform.sourceforge.net/xforms"
-        bf:evalAVTs="class style">
+      bf:evalAVTs="class style">
     <head>
         <title>AVT Theme Switcher</title>
 <!--
@@ -59,11 +59,12 @@
         ]-->
         <div class="sample">
             <div class="markup">
-                <code class="model"><html xmlns:xf="http://www.w3.org/2002/xforms"
+                <code class="escape">
+<html xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:bf="http://betterform.sourceforge.net/xforms"
-        bf:evalAVTs="class style">
-    <body class="{theme}">...</body>   
+      bf:evalAVTs="class style">
+    <body class="{theme}">...</body>
 </html>
                 </code>
                 <xf:model>
@@ -112,7 +113,7 @@
                 </code>
             </div>
         </div>
-        <div class="Limitations">
+        <div class="limitations">
             <p>
             AVTs do not work inside of the <span class="keyword">class</span> attribute on xforms UI elements as it
             would overwrite the state classes that are computed to reflect the control status.

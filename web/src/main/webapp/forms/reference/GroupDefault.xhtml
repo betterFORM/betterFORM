@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,55 +15,31 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <grouped-data constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <group>
-                           
                            <a>aaa</a>
-                           
                            <b>bbb</b>
-                           
                            <c>ccc</c>
-                           
                            <d>ddd</d>
-                           
                         </group>
-                        
                      </grouped-data>
-                     
                   </data>
-                  
                </xf:instance>
-               
-               
                <xf:bind nodeset="grouped-data">
-                  
                   <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)">
-                     
                      <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"></xf:bind>
-                     
                   </xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -77,8 +52,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d8e171" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d8e171">matches any Element that represents a XForms
+                  <td id="d15e171" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d15e171">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -90,8 +65,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d8e189" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
-                     <div data-dojo-type="dijit.Tooltip" connectId="d8e189">matches an Element that represents a XForms
+                  <td id="d15e189" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d15e189">matches an Element that represents a XForms
                         group
                         element
                         
@@ -99,8 +74,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d8e201" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d8e201">matches the  label of a group</div>
+                  <td id="d15e201" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d15e201">matches the  label of a group</div>
                   </td>
                </tr>
                <tr>
@@ -216,16 +191,10 @@
          <div class="pageintro">
             <h1>Default group</h1>
             <div class="description">
-               
-               <p>
-                  A group without any
-                  <span class="keyword">appearance</span>
-                  attribute defaults to a rendering equivalent to a compact group.
-                  Though no appearance is specified this behavior is a concession to the lazy or
-                  unexperienced author thereby getting a clean readable output.
-                  
+               <p>A group without any <span class="keyword">appearance</span> attribute defaults to a rendering equivalent to a compact group. Though no appearance
+                  is specified this behavior is a concession to the lazy or unexperienced author thereby
+                  getting a clean readable output.
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -243,88 +212,51 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:group id="group1" ref="grouped-data/group">
-               
                <xf:label>Group with no appearance</xf:label>
-               
                <xf:input id="input1" ref="a">
-                  
                   <xf:label>A-label</xf:label>
-                  
                   <xf:hint>a hint to A-label</xf:hint>
-                  
                   <xf:alert>an alert to A-label</xf:alert>
-                  
                </xf:input>
-               
                <xf:input id="input2" ref="b">
-                  
                   <xf:label>B-label</xf:label>
-                  
                   <xf:hint>a hint to B-label</xf:hint>
-                  
                   <xf:alert>an alert to B-label</xf:alert>
-                  
                </xf:input>
-               
                <xf:input id="input3" ref="c">
-                  
                   <xf:label>C-label</xf:label>
-                  
                   <xf:hint>a hint to C-label</xf:hint>
-                  
                   <xf:alert>an alert to C-label</xf:alert>
-                  
                </xf:input>
-               
                <xf:input id="input4" ref="d">
-                  
                   <xf:label>D-label</xf:label>
-                  
                   <xf:hint>a hint to D-label</xf:hint>
-                  
                   <xf:alert>an alert to D-label</xf:alert>
-                  
                </xf:input>
-               
-            </xf:group>
+            </xf:group> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="group1-readonly" ref="grouped-data/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="group1-required" ref="grouped-data/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="group1-relevant" ref="grouped-data/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="group1-valid" ref="grouped-data/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:group id="group1" ref="grouped-data/group"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:group id="group1" ref="grouped-data/group"&gt;
     &lt;xf:label&gt;Group with no appearance&lt;/xf:label&gt;
     &lt;xf:input id="input1" ref="a"&gt;
         &lt;xf:label&gt;A-label&lt;/xf:label&gt;
@@ -349,7 +281,7 @@
 &lt;/xf:group&gt;
 </code></pre></div>
          <h2>Limitations</h2>
-         <div class="Limitations">
+         <div class="limitations">
             
             <p>There is no way to show the invalidity of a <span class="keyword">group</span> currently as the <span class="keyword">xfInvalid</span> class sits
                on the <span class="keyword">group</span> element itself.
@@ -384,5 +316,4 @@
                         }
                 );
             </script></body>
-   
 </html>
