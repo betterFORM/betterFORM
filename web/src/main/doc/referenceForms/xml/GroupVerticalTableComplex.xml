@@ -143,9 +143,13 @@
     </div>
     <xf:input ref="c">
         <xf:label>Ccc-label</xf:label>
+        <xf:hint>a hint to Ccc-label</xf:hint>
+        <xf:alert>an alert to Ccc-label</xf:alert>
     </xf:input>
     <xf:input ref="d">
         <xf:label>Dddd-label</xf:label>
+        <xf:hint>a hint to Dddd-label</xf:hint>
+        <xf:alert>an alert to Dddd-label</xf:alert>
     </xf:input>
 
 

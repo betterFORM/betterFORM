@@ -7,7 +7,7 @@
     <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
     <property name="core.dir" value="${basedir}/../core"/>
     <xmlproperty file="${basedir}/../build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
-    <property name="web.dir" value="${basedir}/../web"/>
+    <property name="web.dir" value="${basedir}"/>
     <property name="form.src" value="${web.dir}/src/main/doc/referenceForms"/>
     <property name="form.dest" value="${web.dir}/src/main/webapp/forms/reference"/>
 
@@ -22,7 +22,7 @@
         <xslt basedir="${form.src}/xml"
               destdir="${form.dest}"
               style="${form.src}/build-forms.xsl"
-              force="false"
+              force="true"
               includes="*.xml"
               extension=".xhtml">
             <classpath refid="transform.class.path"/>
