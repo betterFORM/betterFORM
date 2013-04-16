@@ -47,7 +47,7 @@ require(['dojo/_base/declare'],
 
             ['body.uaDesktop .xfInput.xsdDateTime > * > .xfValue',              "bf/factory/FactoryInput", "dateTime"],
 
-            ['body.uaDesktop .xfInput.xsdTime:not(.aBfTimetextbox):not(.aBfDropdowntime) > * >  .xfValue',        "bf/factory/FactoryInput", "text"],
+            ['body.uaDesktop .xfInput.xsdTime:not(.aBfTimetextbox):not(.aBfDropdowntime) > * >  .xfValue',        "bf/factory/FactoryInput", "htmlTime"],
             ['body.uaDesktop .xfInput.xsdTime.aBfTimetextbox > * >  .xfValue',  "bf/factory/FactoryInput", "timeTextBox"],
             ['body.uaDesktop .xfInput.xsdTime.aBfDropdowntime > * >  .xfValue', "bf/factory/FactoryInput", "dropDownTime"],
             //DateTime support for mobile might still be a problem and must be solved by a combination of controls

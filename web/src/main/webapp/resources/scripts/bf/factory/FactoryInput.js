@@ -22,6 +22,9 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                         case "text":
                             this._createText(xfControlDijit,node);
                             break;
+                        case "htmlTime":
+                            this._createTimeHTML(xfControlDijit,node);
+                            break;
                     //INPUT TYPE BOOLEAN
                         case "checkbox":
                             this._createCheckbox(xfControlDijit, node);
@@ -106,6 +109,11 @@ define(["dojo/_base/declare","dojo/_base/connect","dijit/registry","dojo/dom-att
                     });
                     xfControlDijit.setCurrentValue(domAttr.get(node,"value"));
 
+                },
+
+                _createTimeHTML:function(xfControlDijit,node){
+                    domAttr.set(node, "type", "text");
+                    this._createText(xfControlDijit,node)
                 },
 
 
