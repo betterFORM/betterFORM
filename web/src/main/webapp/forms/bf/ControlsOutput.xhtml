@@ -31,27 +31,22 @@
                 <output label="output[1]">output value</output>
                 <output label="output[2] image">/betterform/bfResources/images/logo.png</output>
                 <output label="output[3] anyURI">http://www.betterform.de</output>
-                <output label="output[4] html"><b>Bold</b> and <i>italic</i> text</output>
+                <output label="output[4] html">&lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text</output>
             </data>
         </xf:instance>
         <xf:bind nodeset="instance()">
-            <xf:bind nodeset="output[1]" required="boolean-from-string(instance()/@required)"
+            <xf:bind nodeset="output[1]"
                      relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"
-                     readonly="boolean-from-string(instance()/@readonly)"/>
-            <xf:bind nodeset="output[2]" required="boolean-from-string(instance()/@required)"
+                     constraint="boolean-from-string(instance()/@valid)"/>
+            <xf:bind nodeset="output[2]"
                      relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"
-                     readonly="boolean-from-string(instance()/@readonly)"/>
-            <xf:bind nodeset="output[3]" type="anyURI" required="boolean-from-string(instance()/@required)"
+                     constraint="boolean-from-string(instance()/@valid)"/>
+            <xf:bind nodeset="output[3]" type="anyURI"
                      relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"
-                     readonly="boolean-from-string(instance()/@readonly)"/>
-            <xf:bind nodeset="output[4]" required="boolean-from-string(instance()/@required)"
+                     constraint="boolean-from-string(instance()/@valid)"/>
+            <xf:bind nodeset="output[4]"
                      relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"
-                     readonly="boolean-from-string(instance()/@readonly)"/>
-
+                     constraint="boolean-from-string(instance()/@valid)"/>
         </xf:bind>
     </xf:model>
 </head>
@@ -63,20 +58,12 @@
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
                 <span>MIPS:</span>
                 <xf:trigger>
-                    <xf:label><xf:output value="concat('Required [',boolean-from-string(instance()/@required),']')"/></xf:label>
-                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
-                </xf:trigger>
-                <xf:trigger>
                     <xf:label><xf:output value="concat('Relevant [',boolean-from-string(instance()/@relevant),']')"/></xf:label>
                     <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
                 </xf:trigger>
                 <xf:trigger>
                     <xf:label><xf:output value="concat('Valid [',boolean-from-string(instance()/@valid),']')"/></xf:label>
                     <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
-                </xf:trigger>
-                <xf:trigger>
-                    <xf:label><xf:output value="concat('Readonly [',boolean-from-string(instance()/@readonly),']')"/></xf:label>
-                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
@@ -96,6 +83,10 @@
                 <xf:trigger>
                     <xf:label>Output[3] Value</xf:label>
                     <xf:setvalue ref="instance()/output[3]" value="'http://exist-db.org/'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Output[4] Value</xf:label>
+                    <xf:setvalue ref="instance()/output[4]" value="'&lt;b&gt;new value&lt;/b&gt;'"/>
                 </xf:trigger>
             </div>
         </xf:group>
