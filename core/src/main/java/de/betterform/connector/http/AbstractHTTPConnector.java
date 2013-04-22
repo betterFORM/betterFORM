@@ -5,6 +5,7 @@
 
 package de.betterform.connector.http;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.ConnectorFactory;
 import de.betterform.connector.http.ssl.KeyStoreSSLContext;
@@ -272,8 +273,9 @@ public class AbstractHTTPConnector extends AbstractConnector {
         String realm = null;
 
         //add custom header to signal XFormsFilter to not process this internal request
-        //httpMethod.setRequestHeader("betterform-internal","true");
-        httpRequestBase.addHeader("betterform-internal", "true");
+        //httpMethod.setRequestHeader(BetterFORMConstants.BETTERFORM_INTERNAL,"true");
+        httpRequestBase.addHeader(BetterFORMConstants.BETTERFORM_INTERNAL, "true");
+
 
         /// *** copy all keys in map HTTP_REQUEST_HEADERS as http-submissionHeaders
         if (getContext().containsKey(HTTP_REQUEST_HEADERS)) {

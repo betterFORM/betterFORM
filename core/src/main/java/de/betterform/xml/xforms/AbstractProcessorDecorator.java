@@ -141,6 +141,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         this.root.addEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
         //betterform notification event must be passed always
         this.root.addEventListener(BetterFormEventNames.REPLACE_ALL, this, true);
+        this.root.addEventListener(BetterFormEventNames.REPLACE_ALL_XFORMS, this, true);
 
         if (isEventUsed(XFormsEventNames.SUBMIT)) {
             this.root.addEventListener(XFormsEventNames.SUBMIT, this, true);
@@ -211,6 +212,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
             this.root.removeEventListener(XFormsEventNames.READY, this, true);
             this.root.removeEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
             this.root.removeEventListener(BetterFormEventNames.REPLACE_ALL, this, true);
+            this.root.removeEventListener(BetterFormEventNames.REPLACE_ALL_XFORMS, this, true);
             this.root.removeEventListener(XFormsEventNames.SUBMIT, this, true);
             this.root.removeEventListener(XFormsEventNames.SUBMIT_DONE, this, true);
             this.root.removeEventListener(XFormsEventNames.SUBMIT_ERROR, this, true);

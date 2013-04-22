@@ -7,6 +7,7 @@
 
 package de.betterform.agent.web.filter;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -110,7 +112,9 @@ public class XFormsFilter implements Filter {
         As the contenttype may not be present for such requests we have to determine the mimetype by the file ending
         of the requested resource.
         */
-        if(request.getHeader("betterform-internal") != null) {
+
+        //Check if  MEDIATYPE is set if so we will handle response as XForms
+        if( request.getHeader(BetterFORMConstants.BETTERFORM_INTERNAL) != null ) {
             LOG.warn("Request from internal betterForm HTTP Client arrived in XFormsFilter");
             String requestURI = request.getRequestURI();
 
@@ -148,9 +152,12 @@ public class XFormsFilter implements Filter {
         if(request.getParameter("isUpload") != null){
             //Got an upload...
             handleUpload(request,response,session);
-        }else if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter("submissionResponse") != null) {
+        //TODO: XFORMS  PROCESSING: do we need to exit?
+        }else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter("submissionResponse") != null) {
             doSubmissionReplaceAll(request, response);
-        }else {
+        }else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter("submissionResponseXForms") != null) {
+            doSubmissionReplaceAllXForms(request, response,session);
+        } else {
 
             /* before servlet request */
             if (isXFormUpdateRequest(request)) {
@@ -196,6 +203,9 @@ public class XFormsFilter implements Filter {
                     bufResponse.getOutputStream().close();
                     LOG.info("Start Filter XForm");
 
+
+                    processXForms(request, response, session);
+                    /*
                     WebProcessor webProcessor = null;
                     try {
                         webProcessor = WebFactory.createWebProcessor(request);
@@ -244,12 +254,63 @@ public class XFormsFilter implements Filter {
                             webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
                         }
                     }
+                    */
 
                     LOG.info("End Render XForm");
                 } else {
                     srvResponse.getOutputStream().write(bufResponse.getData());
                     srvResponse.getOutputStream().close();
                 }
+            }
+        }
+    }
+
+    private void processXForms( HttpServletRequest  request,  HttpServletResponse response, HttpSession  session) throws IOException, ServletException {
+        WebProcessor webProcessor = null;
+        try {
+            webProcessor = WebFactory.createWebProcessor(request);
+            webProcessor.setRequest(request);
+            webProcessor.setResponse(response);
+            webProcessor.setHttpSession(session);
+            webProcessor.setBaseURI(request.getRequestURL().toString());
+            webProcessor.setContext(webFactory.getServletContext());
+            webProcessor.configure();
+            webProcessor.setXForms();
+            webProcessor.init();
+            webProcessor.handleRequest();
+            if (LOG.isDebugEnabled() && CacheManager.getInstance().getCache("xfSessionCache") != null) {
+                LOG.debug(CacheManager.getInstance().getCache("xfSessionCache").getStatistics());
+                DOMUtil.prettyPrintDOM(webProcessor.getXForms());
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            if (webProcessor != null) {
+                //reset xforms to state before init and serialize it to StreamResult
+                //reparse with PositionalXMLReader for error summary
+
+                if (e instanceof XFormsErrorIndication) {
+                    try {
+                        session.setAttribute("betterform.hostDoc", webProcessor.getXForms());
+                    } catch (XFormsException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+                // attempt to shutdown processor
+                try {
+                    webProcessor.shutdown();
+                } catch (XFormsException xfe) {
+                    LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
+                }
+                // store exception
+                session.setAttribute("betterform.exception", e);
+                session.setAttribute("betterform.exception.message", e.getMessage());
+                session.setAttribute("betterform.referer", request.getRequestURL());
+                //remove session from XFormsSessionManager
+                WebUtil.removeSession(webProcessor.getKey());
+
+                String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
+                webFactory.getServletContext().getRequestDispatcher(path).forward(request, response);
             }
         }
     }
@@ -486,6 +547,42 @@ public class XFormsFilter implements Filter {
      * @throws IOException if something basic goes wrong
      */
     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map submissionResponse = handleResponseReplaceAll(request, response);
+
+        if (submissionResponse != null) {
+            // copy body stream
+            InputStream bodyStream = (InputStream) submissionResponse.get("body");
+            OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+            for (int b = bodyStream.read(); b > -1; b = bodyStream.read()) {
+                outputStream.write(b);
+            }
+
+            // close streams
+            bodyStream.close();
+            outputStream.close();
+            return;
+        }
+
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "no submission response available");
+    }
+
+    protected void doSubmissionReplaceAllXForms(HttpServletRequest request, HttpServletResponse response, HttpSession  session) throws IOException, ServletException {
+        Map submissionResponse = handleResponseReplaceAll(request, response);
+
+        if (submissionResponse != null) {
+                //Set USERAGENT
+                request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
+                request.setAttribute(WebFactory.XFORMS_INPUTSTREAM,  submissionResponse.get("body"));
+                processXForms(request, response, session);
+                return;
+        }
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "no submission response available");
+    }
+
+
+    private Map handleResponseReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map submissionResponse = null;
+
         HttpSession session = request.getSession(false);
         WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
         if (session != null && webProcessor != null) {
@@ -500,7 +597,7 @@ public class XFormsFilter implements Filter {
                 }
             }
 
-            Map submissionResponse = webProcessor.checkForExitEvent().getContextInfo();
+            submissionResponse = webProcessor.checkForExitEvent().getContextInfo();
             if (submissionResponse != null) {
 
                 if (LOG.isDebugEnabled()) {
@@ -540,22 +637,13 @@ public class XFormsFilter implements Filter {
                     response.setHeader(name, value);
                 }
 
-                // copy body stream
-                InputStream bodyStream = (InputStream) submissionResponse.get("body");
-                OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
-                for (int b = bodyStream.read(); b > -1; b = bodyStream.read()) {
-                    outputStream.write(b);
-                }
 
-                // close streams
-                bodyStream.close();
-                outputStream.close();
 
                 //kill XFormsSession
                 WebUtil.removeSession(webProcessor.getKey());
-                return;
             }
         }
-        response.sendError(HttpServletResponse.SC_FORBIDDEN, "no submission response available");
+
+        return submissionResponse;
     }
 }

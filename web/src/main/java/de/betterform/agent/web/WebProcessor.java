@@ -417,7 +417,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      * @throws java.io.IOException occurs if the redirect fails
      */
     public void handleExit(XMLEvent exitEvent) throws IOException {
-        if (BetterFormEventNames.REPLACE_ALL.equals(exitEvent.getType())) {
+        if (BetterFormEventNames.REPLACE_ALL.equals(exitEvent.getType()) || BetterFormEventNames.REPLACE_ALL_XFORMS.equals(exitEvent.getType()) ) {
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/SubmissionResponse?sessionKey=" + getKey()));
         } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
             if (exitEvent.getContextInfo("show") != null) {
