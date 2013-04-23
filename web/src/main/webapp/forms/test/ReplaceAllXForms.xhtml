@@ -18,18 +18,65 @@
                 <none/>
             </data>
         </xf:instance>
-        <xf:submission id="s-replace-all" replace="all" resource="InputSingle.xhtml"  method="post" mediatype="application/xhtml+xforms">
-            <xf:message ev:event="xforms-submit">About to replace XForm with replace="all"</xf:message>
-            <xf:message ev:event="xforms-submit-error">Something went wrong</xf:message>
-            <xf:message ev:event="xforms-submit-done">Done!</xf:message>
+        <xf:submission id="s-replace-all-xforms-post" replace="all" resource="InputSingle.xhtml"  method="post" mediatype="application/xhtml+xforms">
+            <xf:message ev:event="xforms-submit">About to replace="all"  with XForms-content. POST</xf:message>
+            <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+            <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+        </xf:submission>
+
+        <xf:submission id="s-replace-all-xforms-put" replace="all" resource="InputSingle.xhtml"  method="put" mediatype="application/xhtml+xforms">
+            <xf:message ev:event="xforms-submit">About to replace="all"  with XForms-content. PUT</xf:message>
+            <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+            <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+        </xf:submission>
+
+        <xf:submission id="s-replace-all-xforms-get" replace="all" resource="InputSingle.xhtml"  method="get" mediatype="application/xhtml+xforms">
+            <xf:message ev:event="xforms-submit">About to replace="all"  with XForms-content. GET</xf:message>
+            <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+            <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+        </xf:submission>
+
+        <xf:submission id="s-replace-all-post" replace="all" resource="InputSingle.xhtml"  method="post">
+            <xf:message ev:event="xforms-submit">About to replace="all"  without XForms-content. POST</xf:message>
+            <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+            <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+        </xf:submission>
+
+        <xf:submission id="s-replace-all-put" replace="all" resource="InputSingle.xhtml"  method="put">
+            <xf:message ev:event="xforms-submit">About to replace="all"  without XForms-content.</xf:message>
+            <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+            <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+        </xf:submission>
+
+        <xf:submission id="s-replace-all-get" replace="all" resource="InputSingle.xhtml"  method="get">
+            <xf:message ev:event="xforms-submit">About to replace XForm without replace="all"</xf:message>
+            <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+            <xf:message ev:event="xforms-submit-done">Done.</xf:message>
         </xf:submission>
     </xf:model>
 </div>
 <xf:group>
     <xf:label>Replace "all" with XForms Content</xf:label>
-
-    <xf:submit submission="s-replace-all">
-            <xf:label>Let´s do it!</xf:label>
+    <xf:submit submission="s-replace-all-xforms-post">
+            <xf:label>POST</xf:label>
+    </xf:submit>
+    <xf:submit submission="s-replace-all-xforms-put">
+        <xf:label>PUT</xf:label>
+    </xf:submit>
+    <xf:submit submission="s-replace-all-xforms-get">
+        <xf:label>GET</xf:label>
+    </xf:submit>
+</xf:group>
+<xf:group>
+    <xf:label>Replace "all"  WITHOUT XForms Content</xf:label>
+    <xf:submit submission="s-replace-all-post">
+        <xf:label>POST</xf:label>
+    </xf:submit>
+    <xf:submit submission="s-replace-all-put">
+        <xf:label>PUT</xf:label>
+    </xf:submit>
+    <xf:submit submission="s-replace-all-get">
+        <xf:label>GET</xf:label>
     </xf:submit>
 </xf:group>
 </body>

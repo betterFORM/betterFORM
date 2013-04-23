@@ -1255,7 +1255,7 @@ define(["dojo/_base/declare",
             if (type  === "betterform-replace-all-xforms" ) {
                 path += "&submissionResponseXForms=true&sessionKey=" + fluxProcessor.sessionKey;
             }  else {
-                path += "&submissionResponses=true&sessionKey=" + fluxProcessor.sessionKey;
+                path += "&submissionResponse=true&sessionKey=" + fluxProcessor.sessionKey;
             }
             if (anchorIndex != -1) {
                 path += window.location.href.substring(anchorIndex);

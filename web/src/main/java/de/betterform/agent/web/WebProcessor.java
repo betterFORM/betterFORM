@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -418,7 +419,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      */
     public void handleExit(XMLEvent exitEvent) throws IOException {
         if (BetterFormEventNames.REPLACE_ALL.equals(exitEvent.getType()) || BetterFormEventNames.REPLACE_ALL_XFORMS.equals(exitEvent.getType()) ) {
-            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/SubmissionResponse?sessionKey=" + getKey()));
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/" + BetterFORMConstants.SUBMISSION_RESPONSE  + "?sessionKey=" + getKey()));
         } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
             if (exitEvent.getContextInfo("show") != null) {
                 String loadURI = (String) exitEvent.getContextInfo("uri");
