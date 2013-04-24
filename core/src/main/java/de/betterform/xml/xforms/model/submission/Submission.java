@@ -839,6 +839,7 @@ public class Submission extends BindingElement implements DefaultAction {
             return;
         } else {
             if (getMediatype().equals(BetterFORMConstants.XFORMS_MEDIATYPE)) {
+                map.put(BetterFORMConstants.SUBMISSION_REDIRECT_XFORMS, this.action);
                 this.container.dispatch(this.target, BetterFormEventNames.REPLACE_ALL_XFORMS, map);
             }  else {
                 this.container.dispatch(this.target, BetterFormEventNames.REPLACE_ALL, map);

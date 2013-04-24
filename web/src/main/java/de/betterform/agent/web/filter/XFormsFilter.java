@@ -155,8 +155,11 @@ public class XFormsFilter implements Filter {
         //TODO: XFORMS  PROCESSING: do we need to exit?
         }else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE) != null) {
             doSubmissionReplaceAll(request, response);
-        }else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE_XFORMS) != null) {
-            doSubmissionReplaceAllXForms(request, response,session);
+         /*
+        }  else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE_XFORMS) != null) {
+             doSubmissionReplaceAllXForms(request, response,session);
+         }
+         */
         } else {
 
             /* before servlet request */
