@@ -344,7 +344,7 @@ Error: eXist is not installed in ${eXist.home}.
         </ant>
     </target>
 
-    <target name="update-resources-exploded">
+    <target name="update-resources-exploded" depends="update-libs">
         <echo>
             __== Deploying betterFORM resources in exploded Mode ==__
         </echo>
@@ -370,6 +370,12 @@ Error: eXist is not installed in ${eXist.home}.
         <antcall target="patch-betterFORM-config"/>
     </target>
 
+    <target name="update-libs">
+        <delete file="${eXist.home}/lib/endorsed/saxonhe-9.2.1.5.jar"/>
+        <copy file="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" tofile="${eXist.home}/lib/endorsed/saxonhe-9.4.0.7.jar"/>
+        <delete file="${betterFORM.extension}/main/lib/dwr-2.0.5.jar"/>
+        <copy file="${web.dir}/src/main/lib/dwr-3.0.RC2.jar" tofile="${betterFORM.extension}/main/lib/dwr-3.0.RC2.jar"/>
+    </target>
 
     <!-- *********************************************************************************************************** -->
 
@@ -397,7 +403,7 @@ Error: eXist is not installed in ${eXist.home}.
         </delete>
     </target>
 
-    <target name="deploy-resources">
+    <target name="deploy-resources" depends="update-libs">
         <echo>
             __== Deploying betterFORM resources in single JAR Mode ==__
         </echo>
@@ -410,14 +416,7 @@ Error: eXist is not installed in ${eXist.home}.
             <property name="should.not.copy.libs" value="YES MA´AM"/>
         </ant>
 
-
-
         <move file="${betterFORM.extension}/target/WEB-INF/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar"/>
-
-        <!-- ehcache 2.5.2: remove me when exist has been updated -->
-        <delete file="${betterFORM.extension}/target/WEB-INF/lib/ehcache-1.6.2.jar"/>
-        <copy file="${core.dir}/src/main/lib/ehcache-core-2.5.2.jar" todir="${betterFORM.libs}"/>
-        <copy file="${core.dir}/src/main/lib/slf4j-api-1.6.1.jar" todir="${betterFORM.libs}"/>
         <move file="${betterFORM.extension}/target/WEB-INF/classes/ehcache.xml" todir="${eXist.home}/webapp/WEB-INF/classes/"/>
 
 
