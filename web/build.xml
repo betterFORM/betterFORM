@@ -301,10 +301,19 @@
             <!-- todo: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
                 Therefore only needed libs are copied directly here.
 			-->
-            <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${app.version}.jar">
+            <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${app.version}.jar" overwrite="true">
                 <include name="dwr*.jar"/>
             </fileset>
+
         </copy>
+        <copy todir="${webapp.dir}/WEB-INF/lib" description="copy dependent libraries from Web" flatten="true" tofile="">
+
+            <fileset dir="${basedir}../core//src/main/lib" excludes="**/*.jar" overwrite="true">
+                <include name="saxon*.jar"/>
+            </fileset>
+
+        </copy>
+
     </target>
 
     <target name="deploy-exploded"
