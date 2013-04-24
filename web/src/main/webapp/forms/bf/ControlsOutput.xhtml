@@ -31,22 +31,14 @@
                 <output label="output[1]">output value</output>
                 <output label="output[2] image">/betterform/bfResources/images/logo.png</output>
                 <output label="output[3] anyURI">http://www.betterform.de</output>
-                <output label="output[4] html">&lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text</output>
+                <output label="output[4] html"><![CDATA[<b<Bold</b> and <i>italic</i> text]]></output>
             </data>
         </xf:instance>
         <xf:bind nodeset="instance()">
-            <xf:bind nodeset="output[1]"
-                     relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"/>
-            <xf:bind nodeset="output[2]"
-                     relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"/>
-            <xf:bind nodeset="output[3]" type="anyURI"
-                     relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"/>
-            <xf:bind nodeset="output[4]"
-                     relevant="boolean-from-string(instance()/@relevant)"
-                     constraint="boolean-from-string(instance()/@valid)"/>
+            <xf:bind nodeset="output[1]" relevant="boolean-from-string(instance()/@relevant)"/>
+            <xf:bind nodeset="output[2]" relevant="boolean-from-string(instance()/@relevant)" />
+            <xf:bind nodeset="output[3]" relevant="boolean-from-string(instance()/@relevant)" type="anyURI"/>
+            <xf:bind nodeset="output[4]" relevant="boolean-from-string(instance()/@relevant)" />
         </xf:bind>
     </xf:model>
 </head>
@@ -60,10 +52,6 @@
                 <xf:trigger>
                     <xf:label><xf:output value="concat('Relevant [',boolean-from-string(instance()/@relevant),']')"/></xf:label>
                     <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
-                </xf:trigger>
-                <xf:trigger>
-                    <xf:label><xf:output value="concat('Valid [',boolean-from-string(instance()/@valid),']')"/></xf:label>
-                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
                 </xf:trigger>
             </div>
             <div style="margin:4px;padding:4px;border:thin dotted #808080">
@@ -86,7 +74,7 @@
                 </xf:trigger>
                 <xf:trigger>
                     <xf:label>Output[4] Value</xf:label>
-                    <xf:setvalue ref="instance()/output[4]" value="'&lt;b&gt;new value&lt;/b&gt;'"/>
+                    <xf:setvalue ref="instance()/output[4]" value="'&lt;i&gt;Italic&lt;/i&gt; and &lt;b&gt;bold&lt;/b&gt; text'"/>
                 </xf:trigger>
             </div>
         </xf:group>
@@ -95,30 +83,18 @@
 
             <xf:output ref="output[1]">
                 <xf:label ref="@label"/>
-                <xf:hint>output[1] hint</xf:hint>
-                <xf:help>output[1] help</xf:help>
-                <xf:alert>output[1] alert</xf:alert>
             </xf:output>
 
             <xf:output ref="output[2]" mediatype="image/gif">
                 <xf:label ref="@label"/>
-                <xf:hint>output[2] hint</xf:hint>
-                <xf:help>output[2] help</xf:help>
-                <xf:alert>output[2] alert</xf:alert>
             </xf:output>
 
             <xf:output ref="output[3]">
                 <xf:label ref="@label"/>
-                <xf:hint>output[3] hint</xf:hint>
-                <xf:help>output[3] help</xf:help>
-                <xf:alert>output[3] alert</xf:alert>
             </xf:output>
 
             <xf:output ref="output[4]" mediatype="text/html">
                 <xf:label ref="@label"/>
-                <xf:hint>output[4] hint</xf:hint>
-                <xf:help>output[4] help</xf:help>
-                <xf:alert>output[4] alert</xf:alert>
             </xf:output>
         </xf:group>
     </xf:group>
