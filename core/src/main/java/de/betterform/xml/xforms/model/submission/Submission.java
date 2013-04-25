@@ -7,10 +7,14 @@ package de.betterform.xml.xforms.model.submission;
 
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.http.AbstractHTTPConnector;
+import de.betterform.generator.XSLTGenerator;
+import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DefaultAction;
 import de.betterform.xml.events.XFormsEventNames;
+import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xforms.*;
 import de.betterform.xml.xforms.action.UpdateHandler;
 import de.betterform.xml.xforms.exception.*;
@@ -25,6 +29,8 @@ import de.betterform.xml.xforms.ui.state.BoundElementState;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
+import de.betterform.xml.xslt.impl.FileResourceResolver;
 import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.om.Item;
 import org.apache.commons.logging.Log;
@@ -36,9 +42,12 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
 
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMResult;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 
@@ -663,6 +672,11 @@ public class Submission extends BindingElement implements DefaultAction {
             submitReplaceEmbedHTML(response);
             return;
         }
+        if (this.replace.equals("embedXFormsUI")){
+            submitReplaceEmbedXForms(response);
+            return;
+        }
+
         if(this.replace.equals("new")){
             submitReplaceNew(response);
             return;
@@ -971,6 +985,106 @@ public class Submission extends BindingElement implements DefaultAction {
 
     }
 
+
+    private void submitReplaceEmbedXForms(Map response) throws XFormsException {
+        // check for targetid
+        String targetid = getXFormsAttribute(TARGETID_ATTRIBUTE);
+        String resource = getResource();
+        Map eventInfo = new HashMap();
+        String error = null;
+        if (targetid == null) {
+            error = "targetId";
+        }else if(resource == null){
+            error = "resource";
+        }
+
+        if(error != null && error.length() > 0) {
+            eventInfo.put(XFormsConstants.ERROR_TYPE, "no " +  error + "defined for submission resource");
+            this.container.dispatch(this.target, XFormsEventNames.SUBMIT_ERROR, eventInfo);
+            return;
+        }
+
+        Document result = getResponseAsDocument(response);
+        Node embedElement = result.getDocumentElement();
+
+        if(resource.indexOf("#") != -1){
+            // detected a fragment so extract that from our result Document
+
+            String fragmentid = resource.substring(resource.indexOf("#")+1);
+            if (fragmentid.indexOf("?") != -1) {
+                fragmentid = fragmentid.substring(0, fragmentid.indexOf("?"));
+            }
+            embedElement = DOMUtil.getById(result,fragmentid);
+        }
+
+
+        Element embeddedNode = null;
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("get target element for id: " + targetid);
+        }
+        Element targetElem =  this.container.getElementById(targetid);
+        DOMResult domResult = new DOMResult();
+        //Test if targetElem exist.
+        if (targetElem != null) {
+            // destroy existing embedded form within targetNode
+            if ( targetElem.hasChildNodes()) {
+                // destroyembeddedModels(targetElem);
+                Initializer.disposeUIElements(targetElem);
+            }
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("destroyed any existing ui elements for target elem");
+            }
+
+            // import referenced embedded form into host document
+            embeddedNode = (Element) this.container.getDocument().importNode(embedElement, true);
+
+            //import namespaces
+            NamespaceResolver.applyNamespaces(targetElem.getOwnerDocument().getDocumentElement(), (Element) embeddedNode);
+
+            // keep original targetElem id within hostdoc
+            embeddedNode.setAttributeNS(null, "id", targetElem.getAttributeNS(null, "id"));
+            //copy all Attributes that might have been on original mountPoint to embedded node
+            DOMUtil.copyAttributes(targetElem, embeddedNode, null);
+            targetElem.getParentNode().replaceChild(embeddedNode, targetElem);
+            //create model for it
+            Initializer.initializeUIElements(model,embeddedNode,null,null);
+
+            try {
+                CachingTransformerService transformerService = new CachingTransformerService(new FileResourceResolver());
+                // TODO: MUST NEVER EVER BE COMITTED TO DEVELOPMENT!!!!!!
+                // TODO: MUST BE GENERIFIED USING USERAGENT MECHANISM
+                String path = getClass().getResource("/META-INF/resources/xslt/xhtml.xsl").getPath();
+                String xslFilePath = "file:" + path;
+                transformerService.getTransformer(new URI(xslFilePath));
+                XSLTGenerator generator = new XSLTGenerator();
+                generator.setTransformerService(transformerService);
+                generator.setStylesheetURI(new URI(xslFilePath));
+                generator.setInput(embeddedNode);
+                generator.setOutput(domResult);
+                generator.generate();
+            } catch (TransformerException e) {
+                throw new XFormsException("Transformation error while executing 'Submission.submitReplaceEmbedXForms'", e);
+            } catch (URISyntaxException e) {
+                throw new XFormsException("Malformed URI throwed URISyntaxException in 'Submission.submitReplaceEmbedXForms'", e);
+            }
+        }
+
+        // Map eventInfo = constructEventInfo(response);
+        OutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            DOMUtil.prettyPrintDOM(domResult.getNode(),outputStream);
+        } catch (TransformerException e) {
+            throw new XFormsException(e);
+        }
+
+        eventInfo.put(EMBEDNODE,outputStream.toString());
+        eventInfo.put("embedTarget",targetid);
+        eventInfo.put("embedXForms",true);
+
+        // dispatch xforms-submit-done
+        this.container.dispatch(this.target, XFormsEventNames.SUBMIT_DONE, eventInfo);
+
+    }
     private void submitReplaceNew(Map response) throws XFormsException {
         Document result = getResponseAsDocument(response);
         Node embedElement = result.getDocumentElement();
@@ -1188,5 +1302,42 @@ public class Submission extends BindingElement implements DefaultAction {
     public void redirect(String uri) {
         this.container.getProcessor().getContext().put(XFormsProcessor.LOAD_URI, uri);
     }
+
+    private void destroyembeddedModels(Element targetElem) throws XFormsException {
+        NodeList childNodes = targetElem.getChildNodes();
+
+        for (int index = 0; index < childNodes.getLength(); index++) {
+            Node node = childNodes.item(index);
+
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element elementImpl = (Element) node;
+
+                String name = elementImpl.getLocalName();
+                String uri = elementImpl.getNamespaceURI();
+
+                if (NamespaceConstants.XFORMS_NS.equals(uri) && name.equals(XFormsConstants.MODEL)) {
+                    Model model = (Model) elementImpl.getUserData("");
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("dispatch 'model-destruct' event to embedded model: " + model.getId());
+                    }
+                    String modelId=model.getId();
+                    // do not dispatch model-destruct to avoid problems in lifecycle
+                    // TODO: review: this.container.dispatch(model.getTarget(), XFormsEventNames.MODEL_DESTRUCT, null);
+                    model.dispose();
+                    this.container.removeModel(model);
+                    model = null;
+                    if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true")){
+                        Map contextInfo = new HashMap(1);
+                        contextInfo.put("modelId", modelId);
+                        this.container.dispatch(this.target, BetterFormEventNames.MODEL_REMOVED, contextInfo);
+                    }
+
+                } else {
+                    destroyembeddedModels(elementImpl);
+                }
+            }
+        }
+    }
+
 
 }
