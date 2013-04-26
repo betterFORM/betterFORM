@@ -37,7 +37,7 @@
 
         <xf:bind id="items" nodeset="item[position()!=last()]">
             <xf:bind id="article" nodeset="." required="true()"/>
-            <xf:bind id="amount" nodeset="@amount" type="integer" required="true()" constraint=". &lt; 100"/>
+            <xf:bind id="amount" nodeset="@amount" type="integer" required="true()" constraint=". &gt; -1 and . &lt; 100" calculate="if(../. eq '') then (0) else ."/>
             <xf:bind id="price" nodeset="@price" type="float"/>
             <xf:bind id="taxValue" nodeset="@taxValue" calculate="../@amount * ../@price * instance('shippingAndTaxes')/region/tax" type="float"/>
             <xf:bind id="sum" nodeset="@sum" calculate="../@amount * ../@price * ( 1 + instance('shippingAndTaxes')/region/tax)" type="float"/>
