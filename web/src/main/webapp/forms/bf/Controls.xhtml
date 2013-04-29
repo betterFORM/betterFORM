@@ -194,6 +194,10 @@
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
                      readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="secret[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
             <xf:bind nodeset="select1[1]/value" required="boolean-from-string(instance()/@required)"
                      relevant="boolean-from-string(instance()/@relevant)"
                      constraint="boolean-from-string(instance()/@valid)"
@@ -272,7 +276,7 @@
     </xf:model>
 </head>
 
-<body class="tundra ToolTipAlert">
+<body class="tundra">
     <h1>Various XForms Controls</h1>
     <hr/>
     <div style="display:block;">

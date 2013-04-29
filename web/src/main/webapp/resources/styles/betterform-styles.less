@@ -34,6 +34,10 @@ body {
   font-size: @fontSize;
 }
 
+.xfControl .xfValue {
+  font-size: @fontSize;
+}
+
 #bfCopyright {
   position: absolute; /*bottom:0;*/
   right: 0;
@@ -146,30 +150,22 @@ a:active {
     margin: 0;
     padding: 0;
     position: relative;
+    display: inline-block;
 }
+
 
 
 /* ***************************************************************************** */
 /* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
 /* ***************************************************************************** */
 
-.bfInvalidControl {
-  .xfValue,
-  .xfDateTextBox,
-  .xfTimeTextBox {
+.xfInvalid {
+
+  .xfAlert{
+    display: inline-block !important;
+  }
+  .widgetContainer {
     outline: 1px solid @invalid-color !important;
-  }
-  .bfCheckBoxGroup {
-    border:none;
-    border-bottom:1px solid @invalid-color;
-    margin-right:4px;
-    padding-bottom:4px;
-  }
-  .xfSelectorItem .xfRadioValue  {
-    border: 0 none !important;
-  }
-  .xfSelectorItem .xfCheckBoxValue {
-    outline: 1px solid @invalid-checkbox-color !important;
   }
 }
 
@@ -260,7 +256,6 @@ alert + hints should always be aligned with the control.
 }
 
 .bf .xfSelectOpen .xfValue {
-  width: @selectOpenWidth;
   border-color: @lightGray;
   border-style: none solid solid;
   border-width: 1px;
@@ -275,7 +270,6 @@ alert + hints should always be aligned with the control.
   border-bottom:none;
   margin: 0;
   padding: 0;
-  width: @selectOpenWidth - 2px;
 }
 
 .xfSelectOpen .xfSelectFreeText {
@@ -462,15 +456,6 @@ alert + hints should always be aligned with the control.
   top: 5px;
 }
 
-.xfInput
-.xfSecret,
-.xfTextarea,
-.xfSelect1,
-.xfSelect, {
-  .xfValue {
-    width:@xfValueWidth;
-  }
-}
 .xfFullGroup .xfControl .xfValue {
 /*  conflicts with repeat
     position:absolute;
@@ -767,6 +752,7 @@ table .xfContainer{
 
 /* ################### some theme-specific (Dojo tundra) styles ################### */
 
+
 .dijitBorderContainer {
   position: absolute;
 }
@@ -847,7 +833,18 @@ table .xfContainer{
   outline:none;
 }
 
+.widgetContainer .dijitTextBox {
+  width: auto;
+}
 
+.tundra .dijitInputContainer input {
+  margin:0;
+}
+
+.bf .xfSelect1  .widgetContainer .dijitButtonNode {
+  height:100%;
+  padding: 0.18em;
+}
 
 /* ################################################ */
 /*  DOJOX TOASTER CSS

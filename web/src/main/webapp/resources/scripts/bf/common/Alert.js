@@ -60,9 +60,9 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                     // console.info("Alert.handleValid: action:'", action, "' unknown, commonChild handling for control '", id, "', execution stopped");
                 }
 
-                var domNode = (control.domNode) ? control.domNode : control;
-                if(domClass.contains(domNode, "bfInvalidControl")) {
-                    domClass.remove(domNode, "bfInvalidControl");
+                var controlDomNode = (control.domNode) ? control.domNode : control;
+                if(domClass.contains(controlDomNode, "bfInvalidControl")) {
+                    domClass.remove(controlDomNode, "bfInvalidControl");
                 }
             },
 
@@ -108,10 +108,6 @@ define(["dojo/_base/declare","dojo/_base/window","dojo/dom-class","dijit/registr
                 return;
             }
     */
-            else {
-                // console.info("Alert.handleInvalid: action:'", action , "' unknown, commonChild handling for control '", id, "', execution stopped");
-            }
-
             if(!domClass.contains(control.domNode,"bfInvalidControl")) {
                 domClass.add(control.domNode,"bfInvalidControl");
             }
