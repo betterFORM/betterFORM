@@ -19,7 +19,7 @@
             <version>1.6</version>
         </javac>
 
-        <dojo>dojo-release-1.7.2-src-patched</dojo>
+        <dojo>dojo-release-1.8.3-src</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
         <ckeditor>ckeditor_3.6.3</ckeditor>
         <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
@@ -267,7 +267,7 @@
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Users/windauer/dev/eXist/eXist-gh</home>
+        <home>/Users/windauer/dev/exist/exist-git</home>
         <!-- home>/Applications/eXist-ziziphus</home-->
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
