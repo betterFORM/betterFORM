@@ -16,6 +16,7 @@ import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
 import net.sf.ehcache.CacheManager;
@@ -199,6 +200,7 @@ public class XFormsFilter implements Filter {
                     WebProcessor webProcessor = null;
                     try {
                         webProcessor = WebFactory.createWebProcessor(request);
+                        webProcessor.setXformsProcessor(new XFormsProcessorImpl());
                         webProcessor.setRequest(request);
                         webProcessor.setResponse(response);
                         webProcessor.setHttpSession(session);

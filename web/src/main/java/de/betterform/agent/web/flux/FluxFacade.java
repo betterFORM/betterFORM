@@ -24,7 +24,7 @@ import org.directwebremoting.WebContextFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.util.*;
 
 
@@ -40,6 +40,8 @@ public class FluxFacade {
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private static final Log LOGGER = LogFactory.getLog(FluxFacade.class);
     private HttpSession session;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
 
     /**
@@ -47,7 +49,8 @@ public class FluxFacade {
      */
     public FluxFacade() {
         session = WebContextFactory.get().getSession(true);
-
+        request = WebContextFactory.get().getHttpServletRequest();
+        response = WebContextFactory.get().getHttpServletResponse();
     }
 
     /**

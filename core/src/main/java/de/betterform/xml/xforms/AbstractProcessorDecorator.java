@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -54,6 +53,9 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
     }
 */
 
+    public void setXformsProcessor(XFormsProcessor processor){
+        this.xformsProcessor = processor;
+    }
 
     /**
      * check wether an Event is used in the form being processed. Will return true if any action registers

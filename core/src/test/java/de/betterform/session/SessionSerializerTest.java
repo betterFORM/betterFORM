@@ -5,6 +5,7 @@
 
 package de.betterform.session;
 
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
 import de.betterform.session.SerializableObject;
@@ -26,9 +27,9 @@ import net.sf.ehcache.Element;
  * @author Joern Turner
  */
 public class SessionSerializerTest extends XMLTestBase {
-//    static {
-//        org.apache.log4j.BasicConfigurator.configure();
-//    }
+    static {
+        org.apache.log4j.BasicConfigurator.configure();
+    }
     private static final Log LOGGER = LogFactory.getLog(SessionSerializerTest.class);
 
     private XFormsProcessorImpl processor;
@@ -73,8 +74,13 @@ public class SessionSerializerTest extends XMLTestBase {
 
         File inFile = new File(strippedPath,"foo.xml");
         xformsProcesssorImpl.readExternal(new ObjectInputStream(new FileInputStream(inFile)));
+
+        Document xforms = xformsProcesssorImpl.getXForms();
+        DOMUtil.prettyPrintDOM(xforms);
+
         xformsProcesssorImpl.init();
         assertNotNull(xformsProcesssorImpl.getContainer());
+        assertEquals(xformsProcesssorImpl.getContext().get("betterform.baseURI"),this.baseURI);
     }
 
     public void testEhcachSerialization() throws Exception {
@@ -89,22 +95,23 @@ public class SessionSerializerTest extends XMLTestBase {
 
         sessionCache.evictExpiredElements();
         Thread.sleep(1000);                                             
+        System.out.println(sessionCache.getStatistics());
 
-        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
+        Element elem = sessionCache.get("xformsProcesssorImpl");
+        System.out.println("expired: " + elem.isExpired());
 
-
-        XFormsProcessorImpl syncedProcessor = (XFormsProcessorImpl) sessionCache.get("xformsProcesssorImpl").getValue();
+        XFormsProcessorImpl syncedProcessor = (XFormsProcessorImpl) sessionCache.get("xformsProcesssorImpl").getObjectValue();
         assertNotNull(syncedProcessor);
 
         syncedProcessor.init();
 
-        if(LOGGER.isDebugEnabled()) {
+//        if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("START PRETTY PRINT");
             DOMUtil.prettyPrintDOM(syncedProcessor.getContainer().getDocument());
             LOGGER.debug("\nEND PRETTY PRINT");
-        }
-        SerializableObject value2 = (SerializableObject) sessionCache.get("2").getValue();
-        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
+//        }
+        SerializableObject value2 = (SerializableObject) sessionCache.get("2").getObjectValue();
+        System.out.println(sessionCache.getStatistics());
 
         assertEquals("foo", value2.getValue());
     }

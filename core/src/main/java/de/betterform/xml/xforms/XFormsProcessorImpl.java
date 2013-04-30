@@ -15,6 +15,7 @@ import de.betterform.xml.events.XMLEventService;
 import de.betterform.xml.events.impl.DefaultXMLEventInitializer;
 import de.betterform.xml.events.impl.DefaultXMLEventService;
 import de.betterform.xml.events.impl.XercesXMLEventFactory;
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.AbstractFormControl;
@@ -773,6 +774,12 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     }
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        String baseURI = (String) this.getContext().get("betterform.baseURI");
+        try {
+            getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
+        } catch (XFormsException e) {
+            throw new IOException("baseURI couldn't be set");
+        }
         DefaultSerializer serializer = new DefaultSerializer(this);
         Document serializedForm = serializer.serialize();
 
@@ -813,6 +820,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         Document host=null;
         try {
             host = DOMUtil.parseString(read,true,false);
+            setContextParam("betterform.baseURI",host.getDocumentElement().getAttribute("bf:baseURI"));
             setXForms(host.getDocumentElement());
         } catch (ParserConfigurationException e) {
             throw new IOException("Parser misconfigured: " + e.getMessage());

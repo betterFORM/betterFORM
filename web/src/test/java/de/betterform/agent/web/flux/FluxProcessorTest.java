@@ -15,11 +15,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public class FluxProcessorTest extends TestCase {
-/*
-    static {        
+    static {
         org.apache.log4j.BasicConfigurator.configure();
     }
-*/
 
     private XFormsProcessor fluxProcessor;
     private static final Log LOGGER = LogFactory.getLog(FluxProcessorTest.class);
@@ -51,9 +49,9 @@ public class FluxProcessorTest extends TestCase {
 
         if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
 
-        FluxProcessor syncedProcessor = (FluxProcessor) sessionCache.get("fluxProcessor").getValue();
+        FluxProcessor syncedProcessor = (FluxProcessor) sessionCache.get("fluxProcessor").getObjectValue();
         assertNotNull(syncedProcessor);
-        // syncedProcessor.init();
+        syncedProcessor.init();
 
 /*
         if(LOGGER.isDebugEnabled()) {

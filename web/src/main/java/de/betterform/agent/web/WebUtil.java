@@ -39,6 +39,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,7 +67,7 @@ public class WebUtil {
 
     public static void printSessionKeys(HttpSession session) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("--------------- session dump ---------------");
+            LOGGER.debug("--------------- http session dump ---------------");
             Enumeration keys = session.getAttributeNames();
             if (keys.hasMoreElements()) {
                 LOGGER.debug("--- existing keys in session --- ");
@@ -139,6 +140,8 @@ public class WebUtil {
         }
 
         Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
+        printCache(cache);
+
         if(cache == null || cache.get(key) == null) {
             LOGGER.warn("No xformsSession for key " + key + " in Cache");
             return null;
@@ -155,6 +158,17 @@ public class WebUtil {
 //        LOGGER.debug(xml);
 
         return webProcessor;
+    }
+
+    public static void printCache(Cache cache) {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("---------- ehcache sessions -------------");
+            List keys = cache.getKeys();
+            for (int i = 0; i < keys.size(); i++) {
+                Object o =  keys.get(i);
+                LOGGER.debug("Cache entry found with key: " + o.toString());
+            }
+        }
     }
 
     public static boolean removeSession(String key) {

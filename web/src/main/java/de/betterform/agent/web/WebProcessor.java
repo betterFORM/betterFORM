@@ -383,7 +383,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
                         throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
                     }
                     cache.put(new net.sf.ehcache.Element(this.getKey(), this));
-
+                    if(LOGGER.isDebugEnabled()){
+                        WebUtil.printCache(cache);
+                    }
                     //todo:check if it's still necessary to set an attribute to the session
                     httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
 
