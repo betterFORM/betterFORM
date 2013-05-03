@@ -97,6 +97,13 @@ public class WebProcessor extends AbstractProcessorDecorator {
     private String uploadDestination;
     private String useragent;
     private String uploadDir;
+    /*
+    todo: push uigenerator up to XFormsFilter to make the WebProcessor independant of ui rendering.
+
+    This will allow to create a XFormsSession from AJAX (in that case the ui is already there). This solves
+    the problem of sessions going stale (the user leaves the window open for a longer period) - any click or value
+    change will re-init the persistent session.
+    */
     protected UIGenerator uiGenerator;
 
     public WebProcessor() {
@@ -270,10 +277,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
         if (noHttp()) {
             throw new XFormsException("request, response and session object are undefined");
         }
-            addEventListeners();
+        addEventListeners();
 
         // init processor
         this.xformsProcessor.init();
+        registerXFormsSession();
     }
 
     public XMLEvent checkForExitEvent() {
@@ -292,14 +300,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Event " + event.getEventName() + " dispatched");
             LOGGER.debug("Event target: " + event.getId());
-            /*   try {
-                    if(this.xformsProcessor != null){
-                        DOMUtil.prettyPrintDOM(this.xformsProcessor.getXMLContainer(),System.out);
-                    }
-                } catch (TransformerException e) {
-                    throw new XFormsException(e);
-                }
-                */
         }
     }
 
@@ -335,6 +335,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
         boolean updating = false; //this will become true in case PlainHtmlProcessor is in use
         WebUtil.nonCachingResponse(response);
 
+        /*
+        todo: extract behavior that checks for exit events and move to init().
+
+
+        */
         try {
             if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null) {
                 updating = true;
@@ -376,19 +381,17 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     setContextParam(UIGENERATOR, uiGenerator);
                     //store queryString as 'referer' in XFormsSession
                     setContextParam(REFERER, request.getContextPath() + request.getServletPath() + "?" + referer);
+
+                    /*
+                    todo: move the cache code to init()
+                    */
                     //actually register the XFormsSession with the manager
                     // getManager().addXFormsSession(this);
-                    Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
-                    if(cache == null) {
-                        throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
-                    }
-                    cache.put(new net.sf.ehcache.Element(this.getKey(), this));
-                    if(LOGGER.isDebugEnabled()){
-                        WebUtil.printCache(cache);
-                    }
+//                    registerXFormsSession();
+
                     //todo:check if it's still necessary to set an attribute to the session
                     httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
-
+//----- end move code
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
                     generateUI(this.xformsProcessor.getXForms(), outputStream);
@@ -405,6 +408,17 @@ public class WebProcessor extends AbstractProcessorDecorator {
         WebUtil.printSessionKeys(this.httpSession);
     }
 
+    private void registerXFormsSession() throws XFormsException {
+        Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
+        if(cache == null) {
+            throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
+        }
+        cache.put(new net.sf.ehcache.Element(this.getKey(), this));
+        if(LOGGER.isDebugEnabled()){
+            WebUtil.printCache(cache);
+        }
+    }
+
     protected void generateUI(Object input, Object output) throws XFormsException {
         uiGenerator.setInput(input);
         uiGenerator.setOutput(output);
@@ -413,7 +427,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     /**
      * Handles XForms exist events. There are only 2 situations when this occurs. A load action or a submission/@replace='all'
-     * happens during XForms Model init.
+     * firing during XForms Model init.
      *
      * @param exitEvent the XMLEvent representing the exit condition
      * @throws java.io.IOException occurs if the redirect fails
@@ -506,7 +520,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
          */
     }
 
-    protected String generateXFormsSessionKey() {
+    private String generateXFormsSessionKey() {
         return "" + System.currentTimeMillis();
     }
 
@@ -548,7 +562,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     /**
      * creates and configures a UIGenerator that transcodes the XHTML/XForms document into the desired target format.
      * <p/>
-     * todo: make configuration of xsl file more flexible
+     * todo: make configuration of xsl file more flexible                                                                              3
      * todo: add baseURI as stylesheet param
      *
      * @return an instance of an UIGenerator
@@ -560,7 +574,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String relativeUris = configuration.getProperty(WebFactory.RELATIVE_URI_PROPERTY);
 
         URI uri = getTransformURI();
-        XSLTGenerator generator = setupTransformer(uri);
+//        XSLTGenerator generator = setupTransformer(uri);
+        XSLTGenerator generator = WebFactory.setupTransformer(uri,getContext());
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
@@ -572,13 +587,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
             generator.setParameter("keepalive-pulse", getContextParam(KEEPALIVE_PULSE));
         }
 
-        if (useragent.equalsIgnoreCase("html")) {
-            generator.setParameter("action-url", getActionURL(false));
-        }else{
-            generator.setParameter("action-url", getActionURL(true));
-        }
-        generator.setParameter("debug-enabled", String.valueOf(isDebugOn()));
-        generator.setParameter("unloadingMessage", getUnloadingMessage());
+        generator.setParameter("action-url", getActionURL());
+        generator.setParameter("debug-enabled", String.valueOf(configuration.getProperty("betterform.debug-allowed").equals("true")));
+        generator.setParameter("unloadingMessage", configuration.getProperty("betterform.unloading-message"));
 
         generator.setParameter("baseURI", getBaseURI());
 
@@ -609,9 +620,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
             }
         }
         generator.setParameter("locale", locale);
-//        if(useragent.equals("bfEditor")){
-//            new DefaultSerializer((XFormsProcessorImpl) this.xformsProcessor).inlineInstances(this.xformsProcessor.getXForms().getOwnerDocument());
-//        }
         return generator;
     }
 
@@ -620,7 +628,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
             Node input = getXForms();
             String xsltPath = RESOURCE_DIR + "xslt/";
             URI styleURI = new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI("include.xsl"));
-            XSLTGenerator xsltGenerator = setupTransformer(styleURI);
+            XSLTGenerator xsltGenerator = WebFactory.setupTransformer(styleURI,getContext());
             String baseURI = getBaseURI();
             String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);
 
@@ -640,17 +648,16 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     }
 
-    private XSLTGenerator setupTransformer(URI uri) throws URISyntaxException {
-        return WebFactory.setupTransformer(uri,getContext());
-    }
+//    private XSLTGenerator setupTransformer(URI uri) throws URISyntaxException {
+//        return WebFactory.setupTransformer(uri,getContext());
+//    }
 
     /**
      * determines the value for the HTML form/@action attribute in the transcoded page
      *
-     * @param scripted Client allows scripting or not
      * @return the action url to be used in the HTML form
      */
-    protected String getActionURL(boolean scripted) {
+    private String getActionURL() {
         String defaultActionURL = this.request.getRequestURI();
         String encodedDefaultActionURL = response.encodeURL(defaultActionURL);
         int sessIdx = encodedDefaultActionURL.indexOf(";jsession");

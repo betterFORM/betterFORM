@@ -24,7 +24,7 @@
         eternal="true"
         timeToIdleSeconds="600"
         timeToLiveSeconds="1800"
-        maxElementsInMemory="1"
+        maxElementsInMemory="10"
         memoryStoreEvictionPolicy="LRU"
         maxElementsOnDisk="100"
         diskSpoolBufferSizeMB="30"

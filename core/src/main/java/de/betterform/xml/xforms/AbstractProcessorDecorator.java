@@ -170,7 +170,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
 
         this.root.addEventListener(BetterFormEventNames.CUSTOM_MIP_CHANGED, this, true);
 
-        if(isDebugOn()){
+        if(configuration.getProperty("betterform.debug-allowed").equals("true")){
             this.root.addEventListener(BetterFormEventNames.INSTANCE_CREATED, this, true);
             this.root.addEventListener(BetterFormEventNames.MODEL_REMOVED, this, true);
         }
@@ -334,15 +334,6 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
 
 
     }
-
-    protected boolean isDebugOn() {
-        return configuration.getProperty("betterform.debug-allowed").equals("true");
-    }
-
-    protected String getUnloadingMessage() {
-        return configuration.getProperty("betterform.unloading-message");
-    }
-
 
     protected boolean eventOptimizationIsDisabled() {
         return configuration.getProperty("betterform.event-optimization-enabled").equals("false");
