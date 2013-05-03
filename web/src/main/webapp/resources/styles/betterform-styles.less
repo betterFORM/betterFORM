@@ -164,9 +164,14 @@ a:active {
   .xfAlert{
     display: inline-block !important;
   }
+  .xfLabel {
+    color:@invalid-color !important;;
+  }
+/*
   .widgetContainer {
     outline: 1px solid @invalid-color !important;
   }
+  */
 }
 
 .xfAlert, .xfHint{
@@ -835,6 +840,11 @@ table .xfContainer{
 
 .widgetContainer .dijitTextBox {
   width: auto;
+  /* width:13.8em;*/
+  -moz-user-modify: read-write !important;
+}
+.widgetContainer .dijitInputInner {
+  border: 2px inset threedface;
 }
 
 .tundra .dijitInputContainer input {
