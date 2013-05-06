@@ -751,7 +751,9 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
 
     private void ensureContainerNotInitialized() throws XFormsException {
         if (this.container != null && this.container.isModelConstructDone()) {
-            throw new XFormsException("document container already initialized");
+            //check if we've been serialized
+            //if so, remove model event listeners and return else exception
+//            throw new XFormsException("document container already initialized");
         }
     }
 

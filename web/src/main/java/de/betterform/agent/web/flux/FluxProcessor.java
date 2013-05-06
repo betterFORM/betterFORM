@@ -12,6 +12,7 @@ import de.betterform.agent.web.WebUtil;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.EventQueue;
 import de.betterform.agent.web.event.UIEvent;
+import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
@@ -27,7 +28,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,7 +42,7 @@ import java.util.Map;
  * @author Joern Turner
  * @version $Id: FluxAdapter.java 2970 2007-10-30 11:25:03Z lars $
  */
-public class FluxProcessor extends WebProcessor {
+public class FluxProcessor extends WebProcessor implements Externalizable {
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private transient EventQueue eventQueue;
@@ -317,5 +318,12 @@ public class FluxProcessor extends WebProcessor {
     }
 */
 
+    public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        this.xformsProcessor.writeExternal(objectOutput);
+    }
+
+    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
+        this.xformsProcessor.readExternal(objectInput);
+    }
 }
 // end of class

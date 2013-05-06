@@ -10,8 +10,8 @@
         >
     <head>
         <xf:model>
-            <xf:instance id="internal" xmlns="">
-                <data locale="de">
+            <xf:instance id="internal">
+                <data locale="de" xmlns="">
                     <item>string</item>
                     <item>1</item>
                     <item>10001.1111111</item>
@@ -46,6 +46,7 @@
 
             </xf:submission>
 
+            <xf:setvalue ev:event="xforms-ready" ref="item[1]" value="'schade'"/>
         </xf:model>
         <style type="text/css">
             .label{

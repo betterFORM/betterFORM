@@ -6,6 +6,7 @@
 package de.betterform.agent.web.flux;
 
 import de.betterform.agent.web.session.SerializableObject;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessor;
 import junit.framework.TestCase;
 import net.sf.ehcache.CacheManager;
@@ -28,7 +29,7 @@ public class FluxProcessorTest extends TestCase {
     protected void setUp() throws Exception {
         this.fluxProcessor = new FluxProcessor();
         this.fluxProcessor.setXForms(getClass().getResourceAsStream("localization.xhtml"));
-        //this.fluxProcessor.init();
+        this.fluxProcessor.init();
     }
 
     @Override
@@ -38,30 +39,44 @@ public class FluxProcessorTest extends TestCase {
 
 
     public void testEhcachSerialization() throws Exception {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################################################################################");
+            LOGGER.debug("####################################################################################");
+            LOGGER.debug("####################################################################################");
+        }
         CacheManager manager = CacheManager.create();
-        Ehcache sessionCache = manager.getCache("xfSessionCache");
+        Ehcache sessionCache = manager.getCache("xfTestConfigOneElementInMemory");
 
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################### put xformsProcessor into cache #############################");
+        }
         sessionCache.put(new Element("fluxProcessor",this.fluxProcessor));
         sessionCache.flush();
 
+
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################### put second object into cache - should serialize xformsProcessor");
+        }
         sessionCache.put(new Element("2",new SerializableObject("foo")));
         sessionCache.flush();
 
-        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
+//        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
 
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################### access (serialized) xformsprocessor from cache");
+        }
         FluxProcessor syncedProcessor = (FluxProcessor) sessionCache.get("fluxProcessor").getObjectValue();
         assertNotNull(syncedProcessor);
         syncedProcessor.init();
 
-/*
         if(LOGGER.isDebugEnabled()) {
             LOGGER.debug("START PRETTY PRINT");
             DOMUtil.prettyPrintDOM(syncedProcessor.getXForms());
             LOGGER.debug("\nEND PRETTY PRINT");
         }
-*/
+
         SerializableObject value2 = (SerializableObject) sessionCache.get("2").getValue();
-        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
+//        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
 
         assertEquals("foo", value2.getValue());
     }

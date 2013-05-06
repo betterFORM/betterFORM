@@ -17,6 +17,7 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
 
+import java.io.Externalizable;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
@@ -31,10 +32,10 @@ import java.util.Map;
  * @author joern turner
  */
 public abstract class AbstractProcessorDecorator implements XFormsProcessor, EventListener {
-    protected transient XFormsProcessor xformsProcessor;
+    protected transient XFormsProcessorImpl xformsProcessor;
     protected transient EventTarget root;
-    protected Config configuration;
-    protected String locale = "en";
+    protected transient Config configuration;
+    protected transient String locale = "en";
 
     public AbstractProcessorDecorator() {
         this.xformsProcessor = new XFormsProcessorImpl();
@@ -54,7 +55,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
 */
 
     public void setXformsProcessor(XFormsProcessor processor){
-        this.xformsProcessor = processor;
+        this.xformsProcessor = (XFormsProcessorImpl) processor;
     }
 
     /**

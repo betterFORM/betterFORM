@@ -44,7 +44,7 @@
         change to WARN in production environments
     -->
     <category name="de.betterform">
-        <priority value="ERROR"/>
+        <priority value="DEBUG"/>
     </category>
 
 <!--

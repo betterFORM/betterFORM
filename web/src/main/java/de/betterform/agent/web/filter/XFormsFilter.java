@@ -12,6 +12,7 @@ import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
+import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
@@ -152,32 +153,15 @@ public class XFormsFilter implements Filter {
         }else if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter("submissionResponse") != null) {
             doSubmissionReplaceAll(request, response);
         }else {
+            /* ########## call filter chain ########## */
+            /* ########## call filter chain ########## */
+            /* ########## call filter chain ########## */
+            LOG.info("Passing to Chain");
+            BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
+            filterChain.doFilter(srvRequest, bufResponse);
+            LOG.info("Returned from Chain");
 
-            /* before servlet request */
-            if (isXFormUpdateRequest(request)) {
-                // todo: remove this ? This branch of code is only called in a request/response xforms mode
-                LOG.info("Start Update XForm");
-                try {
-                    WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
-                    webProcessor.setRequest(request);
-                    webProcessor.setResponse(response);
-                    webProcessor.handleRequest();
-                } catch (XFormsException e) {
-                    throw new ServletException(e);
-                }
-                LOG.info("End Update XForm");
-            } else {
-
-                /* ########## call filter chain ########## */
-                /* ########## call filter chain ########## */
-                /* ########## call filter chain ########## */
-                LOG.info("Passing to Chain");
-                BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
-                filterChain.doFilter(srvRequest, bufResponse);
-                LOG.info("Returned from Chain");
-
-                handleResponse(srvResponse, request, response, session, bufResponse, webFactory);
-            }
+            handleResponse(srvResponse, request, response, session, bufResponse, webFactory);
         }
     }
 
@@ -196,7 +180,7 @@ public class XFormsFilter implements Filter {
         //pass to request object
         request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
 
-                /* dealing with response from chain */
+        /* dealing with response from chain */
         if (handleResponseBody(request, bufResponse)) {
             byte[] data = prepareData(bufResponse);
             if (data.length > 0) {

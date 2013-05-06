@@ -72,6 +72,7 @@ public class SessionSerializerTest extends XMLTestBase {
         XFormsProcessorImpl xformsProcesssorImpl = new XFormsProcessorImpl();
         assertTrue(xformsProcesssorImpl.getContainer() == null);
 
+
         File inFile = new File(strippedPath,"foo.xml");
         xformsProcesssorImpl.readExternal(new ObjectInputStream(new FileInputStream(inFile)));
 

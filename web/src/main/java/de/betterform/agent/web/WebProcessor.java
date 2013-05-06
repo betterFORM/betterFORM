@@ -53,6 +53,7 @@ import java.net.URISyntaxException;
  * @see de.betterform.agent.web.servlet.PlainHtmlProcessor
  */
 public class WebProcessor extends AbstractProcessorDecorator {
+//public class WebProcessor extends AbstractProcessorDecorator {
 
     /**
      * Defines the key for accessing (HTTP) session ids.
@@ -84,8 +85,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     //todo:review - can be deleted when ehcache is in place
     String KEEPALIVE_PULSE = "keepalive";
-    protected HttpRequestHandler httpRequestHandler;
-    protected XMLEvent exitEvent = null;
+    protected transient HttpRequestHandler httpRequestHandler;
+    protected transient XMLEvent exitEvent = null;
     protected String contextRoot;
     protected String key;
     protected transient HttpServletRequest request;
@@ -104,10 +105,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
     the problem of sessions going stale (the user leaves the window open for a longer period) - any click or value
     change will re-init the persistent session.
     */
-    protected UIGenerator uiGenerator;
+    protected transient UIGenerator uiGenerator;
 
     public WebProcessor() {
         super();
+
     }
 
     public void configure() throws XFormsException {
@@ -274,9 +276,10 @@ public class WebProcessor extends AbstractProcessorDecorator {
      *
      */
     public void init() throws XFormsException {
-        if (noHttp()) {
-            throw new XFormsException("request, response and session object are undefined");
-        }
+//        if (noHttp()) {
+//            throw new XFormsException("request, response and session object are undefined");
+//        }
+        this.configuration = Config.getInstance();
         addEventListeners();
 
         // init processor
@@ -413,7 +416,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         if(cache == null) {
             throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
         }
-        cache.put(new net.sf.ehcache.Element(this.getKey(), this));
+        cache.put(new net.sf.ehcache.Element(this.getKey(), this.xformsProcessor));
         if(LOGGER.isDebugEnabled()){
             WebUtil.printCache(cache);
         }
@@ -704,4 +707,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
             return true;
         }
     }
+
+
 }

@@ -147,15 +147,22 @@ public class WebUtil {
             return null;
         }
 
-        net.sf.ehcache.Element elem = cache.get(key);
+        net.sf.ehcache.Element elem;
+        if(cache.isElementInMemory(key)){
+            elem = cache.get(key);
+        }else{
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("Element is read from disk");
+            }
+            elem = null;
+        }
+
+
         WebProcessor webProcessor = (WebProcessor) elem.getObjectValue();
         if (webProcessor == null) {
             LOGGER.warn("Cached WebProcessor for key '" + key + "' is null");
             return null;
         }
-//        XStream xStream = new XStream();
-//        String xml = xStream.toXML(webProcessor);
-//        LOGGER.debug(xml);
 
         return webProcessor;
     }
@@ -167,6 +174,8 @@ public class WebUtil {
             for (int i = 0; i < keys.size(); i++) {
                 Object o =  keys.get(i);
                 LOGGER.debug("Cache entry found with key: " + o.toString());
+                Object obj= cache.get(o);
+                LOGGER.debug("Cache entry is of type: " + obj.toString());
             }
         }
     }
