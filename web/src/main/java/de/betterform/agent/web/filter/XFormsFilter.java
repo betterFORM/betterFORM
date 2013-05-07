@@ -256,7 +256,7 @@ public class XFormsFilter implements Filter {
             LOG.debug("*** FluxHelper ***");
         }
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         try {
             if (webProcessor == null) {
                 throw new ServletException(Config.getInstance().getErrorMessage("session-invalid"));
@@ -395,6 +395,7 @@ public class XFormsFilter implements Filter {
      * @param srvRequest The request
      * @return true if the request is to update an XForm, false otherwise
      */
+    /*
     public boolean isXFormUpdateRequest(HttpServletRequest request) {
 
         //must be a POST request
@@ -432,6 +433,8 @@ public class XFormsFilter implements Filter {
         //if the action-url in the adapters context param is the same as that of the action url then we know we are updating
         return actionURL.equals(webProcessor.getContextParam("action-url"));
     }
+
+    */
 
     /**
      * Removes the DOCTYPE Processing Instruction from the content if it exists
@@ -482,7 +485,7 @@ public class XFormsFilter implements Filter {
      */
     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         if (session != null && webProcessor != null) {
             if (LOG.isDebugEnabled()) {
                 Enumeration keys = session.getAttributeNames();

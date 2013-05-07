@@ -24,7 +24,7 @@
         eternal="true"
         timeToIdleSeconds="600"
         timeToLiveSeconds="1800"
-        maxElementsInMemory="1"
+        maxElementsInMemory="3"
         memoryStoreEvictionPolicy="LRU"
         maxElementsOnDisk="100"
         diskSpoolBufferSizeMB="30"
@@ -41,7 +41,7 @@
     <cache name="xfTestConfigOneElementInMemory"
            maxElementsOnDisk="100"
            maxElementsInMemory="1"
-           eternal="true"
+           eternal="false"
            timeToIdleSeconds="300"
            timeToLiveSeconds="300"
            diskSpoolBufferSizeMB="30"
@@ -49,7 +49,9 @@
            overflowToDisk="true"
             diskExpiryThreadIntervalSeconds="300"
             memoryStoreEvictionPolicy="LRU"
-            />
+            >
+            <cacheEventListenerFactory class="de.betterform.agent.web.cache.BFCacheManagerEventListenerFactory" properties=""/>
+    </cache>
 
     <defaultCache
             maxElementsInMemory="10000"

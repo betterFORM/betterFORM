@@ -63,7 +63,7 @@ public class FluxFacade {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("FluxProcessor init called on Facade");
         }
-        FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+        FluxProcessor processor = FluxUtil.getProcessor(sessionKey, request, response, session);
         return processor.getEventQueue().getEventList();
     }
 
@@ -72,7 +72,7 @@ public class FluxFacade {
     public List<XMLEvent> dispatchEvent(String id, String sessionKey) throws XFormsException {
         FluxProcessor processor = null;
         try {
-            processor = FluxUtil.getProcessor(sessionKey);
+            processor = FluxUtil.getProcessor(sessionKey, request, response, session);
             processor.dispatchEvent(id);
             return processor.getEventQueue().getEventList();
         } catch (FluxException e) {
@@ -98,7 +98,7 @@ public class FluxFacade {
     public List<XMLEvent> dispatchEventTypeWithContext(String id, String eventType, String sessionKey, String contextInfo) throws XFormsException {
         FluxProcessor processor = null;
         try {
-            processor = FluxUtil.getProcessor(sessionKey);
+            processor = FluxUtil.getProcessor(sessionKey, request, response, session);
             processor.getEventQueue().flush();
         } catch (FluxException e) {
             e.printStackTrace();
@@ -186,7 +186,7 @@ public class FluxFacade {
 
     public org.w3c.dom.Element getXFormsDOM(String sessionKey) throws FluxException {
         try {
-            Element resultElem = ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
+            Element resultElem = ((Document) FluxUtil.getProcessor(sessionKey, request, response, session).getXForms()).getDocumentElement();
             if (LOGGER.isDebugEnabled()) {
                 DOMUtil.prettyPrintDOM(resultElem);
             }
@@ -251,7 +251,7 @@ public class FluxFacade {
         // XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
         // XFormsSession xFormsSession = manager.getWebProcessor(sessionKey);
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey, request, response, session);
         if (webProcessor == null) {
             return this.renderErrorMessage("ERROR: session " + sessionKey + " does not exist");
         }
@@ -306,7 +306,7 @@ public class FluxFacade {
         XFormsSession xFormsSession = manager.getWebProcessor(sessionKey);
 */
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey, request, response, session);
 
         if (webProcessor == null) {
             XMLEvent errorEvent = new XercesXMLEventFactory().createXMLEvent(BetterFormEventNames.RENDER_MESSAGE);
@@ -341,7 +341,7 @@ public class FluxFacade {
         try {
 
             // don't use getWebProcessor to avoid needless error
-            WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+            WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey, request, response, session);
             if (webProcessor == null) {
                 return;
             }
@@ -355,7 +355,7 @@ public class FluxFacade {
 
 
     private List handleUIEvent(UIEvent uiEvent, String sessionKey) throws FluxException {
-        FluxProcessor processor = FluxUtil.getProcessor(sessionKey);
+        FluxProcessor processor = FluxUtil.getProcessor(sessionKey, request, response, session);
         if (processor != null) {
             try {
                 processor.handleUIEvent(uiEvent);

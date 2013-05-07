@@ -43,7 +43,11 @@
         change to WARN in production environments
     -->
     <category name="de.betterform">
-        <priority value="ERROR"/>
+        <priority value="DEBUG"/>
+    </category>
+
+    <category name="de.betterform.agent.web.cache">
+        <priority value="DEBUG"/>
     </category>
 
     <root>

@@ -752,6 +752,10 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     private void ensureContainerNotInitialized() throws XFormsException {
         if (this.container != null && this.container.isModelConstructDone()) {
             //check if we've been serialized
+            if(this.getXForms().getDocumentElement().hasAttributeNS(NamespaceConstants.BETTERFORM_NS,"serialized")){
+                LOGGER.debug("FORM WAS SERIALIZED");
+
+            }
             //if so, remove model event listeners and return else exception
 //            throw new XFormsException("document container already initialized");
         }
@@ -779,6 +783,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         String baseURI = (String) this.getContext().get("betterform.baseURI");
         try {
             getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
+            getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized","true");
         } catch (XFormsException e) {
             throw new IOException("baseURI couldn't be set");
         }

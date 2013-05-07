@@ -54,6 +54,10 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
     }
 */
 
+    public XFormsProcessorImpl getXformsProcessor() {
+        return xformsProcessor;
+    }
+
     public void setXformsProcessor(XFormsProcessor processor){
         this.xformsProcessor = (XFormsProcessorImpl) processor;
     }

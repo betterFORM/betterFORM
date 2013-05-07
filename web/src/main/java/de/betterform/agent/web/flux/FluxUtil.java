@@ -11,6 +11,10 @@ import de.betterform.agent.web.WebUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 // end of class
 
@@ -23,8 +27,8 @@ import org.apache.commons.logging.LogFactory;
 public class FluxUtil {
     private static final Log LOGGER = LogFactory.getLog(FluxUtil.class);
 
-    public static FluxProcessor getProcessor(String sessionKey) throws FluxException {
-        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey);
+    public static FluxProcessor getProcessor(String sessionKey, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws FluxException {
+        WebProcessor webProcessor = WebUtil.getWebProcessor(sessionKey, request, response, session);
         if (webProcessor == null) {
             LOGGER.fatal("WebProcessor not found - stopping");
             throw new FluxException("Sorry your session expired. Press Reload to start over.");

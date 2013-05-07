@@ -142,7 +142,7 @@ public class XFormsRepeater extends HttpServlet {
     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final Log LOG = LogFactory.getLog(XFormsRepeater.class);
         HttpSession session = request.getSession(false);
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         if (session != null && webProcessor != null) {
             if (LOG.isDebugEnabled()) {
                 Enumeration keys = session.getAttributeNames();

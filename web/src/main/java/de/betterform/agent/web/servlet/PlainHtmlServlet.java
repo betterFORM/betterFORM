@@ -63,7 +63,7 @@ public class PlainHtmlServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         WebUtil.nonCachingResponse(response);
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         try {
 
             webProcessor.setRequest(request);

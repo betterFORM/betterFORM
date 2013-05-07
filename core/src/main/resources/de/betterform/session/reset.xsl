@@ -28,7 +28,7 @@
 	<xsl:template match="@src"/>
     <xsl:template match="*[@ev:event='xforms-model-construct']"/>
     <xsl:template match="*[@ev:event='xforms-model-construct-done']"/>
-    <xsl:template match="*[@ev:event='xforms-ready']"/>
+    <xsl:template match="*[@ev:event='xforms-ready']" priority="10"/>
 
 	<xsl:template match="xf:repeat" priority="5">
 		<xsl:variable name="index" select="bf:data/@bf:index"/>

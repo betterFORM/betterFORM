@@ -8,6 +8,7 @@ package de.betterform.agent.web;
 
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
@@ -105,7 +106,7 @@ public class WebUtil {
      * @param request the HTTP Request
      * @return the xformsSession for the request
      */
-    public static WebProcessor getWebProcessor(HttpServletRequest request) {
+    public static WebProcessor getWebProcessor(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
 //        String key = request.getParameter("sessionKey");
 //        XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
@@ -115,56 +116,52 @@ public class WebUtil {
             LOGGER.warn("Request " + request + " has no parameter session key");
             return null;
         } else {
-            return getWebProcessor(key);
+            return getWebProcessor(key, request, response, session);
         }
     }
 
-    /**
-     * fetches the XFormsSession from the HTTP Session
-     *
-     * @param request the HTTP Request
-     * @param session the HTTP Session
-     * @return the xformsSession for the request
-     */
-    public static WebProcessor getWebProcessor(HttpServletRequest request, HttpSession session) {
-//        String key = request.getParameter("sessionKey");
-//        XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
-//        XFormsSession xFormsSession = manager.getWebProcessor(key);
-        return getWebProcessor(request);
-    }
-
-    public static WebProcessor getWebProcessor(String key) {
+    public static WebProcessor getWebProcessor(String key,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response,
+                                               HttpSession session) {
         if (key == null || key.equals("")) {
             LOGGER.warn("SessionKey is null");
             return null;
         }
 
         Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
-        printCache(cache);
+//        printCache(cache);
 
-        if(cache == null || cache.get(key) == null) {
+        if(cache == null || !(cache.isKeyInCache(key)) ) {
             LOGGER.warn("No xformsSession for key " + key + " in Cache");
             return null;
         }
 
+
+
         net.sf.ehcache.Element elem;
+        elem = cache.get(key);
         if(cache.isElementInMemory(key)){
-            elem = cache.get(key);
-        }else{
+            return  (WebProcessor) elem.getObjectValue();
+        } else{
             if(LOGGER.isDebugEnabled()){
-                LOGGER.debug("Element is read from disk");
+                LOGGER.debug("Element is read from disk" +  elem.toString());
             }
-            elem = null;
+            WebProcessor processor = (WebProcessor) elem.getObjectValue();
+            processor.setRequest(request);
+            processor.setResponse(response);
+            processor.setHttpSession(session);
+            try {
+                processor.configure();
+                processor.init();
+                return processor;
+            } catch (XFormsException xfe) {
+                LOGGER.error("Could not reload xformSession from disk.", xfe);
+            }
         }
 
+        return null;
 
-        WebProcessor webProcessor = (WebProcessor) elem.getObjectValue();
-        if (webProcessor == null) {
-            LOGGER.warn("Cached WebProcessor for key '" + key + "' is null");
-            return null;
-        }
-
-        return webProcessor;
     }
 
     public static void printCache(Cache cache) {

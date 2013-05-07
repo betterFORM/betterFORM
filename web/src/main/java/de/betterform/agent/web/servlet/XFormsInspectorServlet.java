@@ -82,7 +82,7 @@ public class XFormsInspectorServlet extends HttpServlet /* extends AbstractXForm
         } else {
             xformsSessionId = steps[steps.length-3];
         }
-        XFormsProcessor processor = WebUtil.getWebProcessor(xformsSessionId);
+        XFormsProcessor processor = WebUtil.getWebProcessor(xformsSessionId, request, response, session);
         if(processor == null){
             sendError(request, response, session, null,"Processor with sessionId '" + xformsSessionId + "' not found.");
             return;
