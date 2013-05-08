@@ -30,7 +30,7 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
-import de.betterform.xml.xslt.impl.FileResourceResolver;
+import de.betterform.xml.xslt.impl.ClasspathResourceResolver;
 import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.om.Item;
 import org.apache.commons.logging.Log;
@@ -1050,15 +1050,16 @@ public class Submission extends BindingElement implements DefaultAction {
             Initializer.initializeUIElements(model,embeddedNode,null,null);
 
             try {
-                CachingTransformerService transformerService = new CachingTransformerService(new FileResourceResolver());
-                // TODO: MUST NEVER EVER BE COMITTED TO DEVELOPMENT!!!!!!
+                CachingTransformerService transformerService = new CachingTransformerService(new ClasspathResourceResolver("unused"));
                 // TODO: MUST BE GENERIFIED USING USERAGENT MECHANISM
+                //TODO: check exploded mode!!!
                 String path = getClass().getResource("/META-INF/resources/xslt/xhtml.xsl").getPath();
-                String xslFilePath = "file:" + path;
-                transformerService.getTransformer(new URI(xslFilePath));
+
+                //String xslFilePath = "file:" + path;
+                transformerService.getTransformer(new URI(path));
                 XSLTGenerator generator = new XSLTGenerator();
                 generator.setTransformerService(transformerService);
-                generator.setStylesheetURI(new URI(xslFilePath));
+                generator.setStylesheetURI(new URI(path));
                 generator.setInput(embeddedNode);
                 generator.setOutput(domResult);
                 generator.generate();
