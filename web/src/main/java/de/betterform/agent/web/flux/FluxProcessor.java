@@ -319,13 +319,12 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
 */
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
-        this.xformsProcessor.writeExternal(objectOutput);
+            this.xformsProcessor.writeExternal(objectOutput);
     }
 
     public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
 
-
-        this.xformsProcessor.readExternal(objectInput);
+            this.xformsProcessor.readExternal(objectInput);
     }
 }
 // end of class

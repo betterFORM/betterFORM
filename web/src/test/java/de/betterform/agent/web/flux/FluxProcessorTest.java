@@ -9,7 +9,9 @@ import de.betterform.agent.web.session.SerializableObject;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
+import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -25,9 +27,10 @@ public class FluxProcessorTest extends TestCase {
 //        org.apache.log4j.BasicConfigurator.configure();
 //    }
 
-    private XFormsProcessor fluxProcessor;
+    private FluxProcessor fluxProcessor;
     private static final Log LOGGER = LogFactory.getLog(FluxProcessorTest.class);
     private String baseURI;
+    private String sessionKey;
 
 
     @Override
@@ -44,6 +47,7 @@ public class FluxProcessorTest extends TestCase {
         this.fluxProcessor.setBaseURI(baseURI);
         this.fluxProcessor.setXForms(getClass().getResourceAsStream("localization.xhtml"));
         this.fluxProcessor.init();
+        this.sessionKey = fluxProcessor.getKey();
     }
 
     @Override
@@ -51,6 +55,44 @@ public class FluxProcessorTest extends TestCase {
         super.tearDown();    //To change body of overridden methods use File | Settings | File Templates.
     }
 
+
+    public void testEhcache1() throws Exception {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################################################################################");
+            LOGGER.debug("####################################################################################");
+            LOGGER.debug("####################################################################################");
+        }
+        CacheManager manager = CacheManager.create();
+        Cache sessionCache = manager.getCache("xfTestConfigOneElementInMemory");
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################### put xformsProcessor into cache #############################");
+        }
+        Element e =new Element(this.sessionKey,this.fluxProcessor);
+        sessionCache.put(e);
+
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("### 1 in mem: " + sessionCache.isElementInMemory(this.sessionKey));
+            LOGGER.debug("### 1 on disk: " + sessionCache.isElementOnDisk(this.sessionKey));
+        }
+
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("####################### get xformsProcessor from cache #############################");
+            LOGGER.debug("####################### " + this.sessionKey);
+        }
+
+
+        FluxProcessor fluxProcessor1 = (FluxProcessor) sessionCache.get(this.sessionKey).getObjectValue();
+        Thread.sleep(1000);
+        String s = fluxProcessor1.getXForms().getDocumentElement().getAttribute("bf:serialized");
+        assertEquals("true",s);
+
+        fluxProcessor1.init();
+        fluxProcessor1.dispatchEvent("t-refresh");
+
+
+
+//        manager.shutdown();
+    }
 
     public void testEhcachSerialization() throws Exception {
         if(LOGGER.isDebugEnabled()){

@@ -65,10 +65,10 @@ public class XSLTGenerator implements UIGenerator {
      */
     public void setInput(Object input) {
         this.source = createInputSource(input);
-        if(LOGGER.isDebugEnabled() && input instanceof Node){
-            LOGGER.debug("XForms DOM received >>>");
-            DOMUtil.prettyPrintDOM((Node) input);
-        }
+//        if(LOGGER.isDebugEnabled() && input instanceof Node){
+//            LOGGER.debug("XForms DOM received >>>");
+//            DOMUtil.prettyPrintDOM((Node) input);
+//        }
     }
 
     /**

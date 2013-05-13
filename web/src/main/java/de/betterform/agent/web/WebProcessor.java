@@ -98,6 +98,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     private String uploadDestination;
     private String useragent;
     private String uploadDir;
+
     /*
     todo: push uigenerator up to XFormsFilter to make the WebProcessor independant of ui rendering.
 
@@ -285,7 +286,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         // init processor
         this.xformsProcessor.init();
-        registerXFormsSession();
+//        registerXFormsSession();
     }
 
     public XMLEvent checkForExitEvent() {
@@ -413,11 +414,17 @@ public class WebProcessor extends AbstractProcessorDecorator {
     }
 
     private void registerXFormsSession() throws XFormsException {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("adding to xfSessionCache - " + this.toString() + " - key: " + getKey());
+        }
         Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
         if(cache == null) {
             throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
         }
-        cache.put(new net.sf.ehcache.Element(this.getKey(), this.xformsProcessor));
+
+//        if(! cache.isKeyInCache(this.getKey())) {
+            cache.put(new net.sf.ehcache.Element(this.getKey(), this));
+//        }
 /*
         if(LOGGER.isDebugEnabled()){
             WebUtil.printCache(cache);

@@ -780,6 +780,9 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     }
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("serializing XFormsFormsProcessorImpl");
+        }
         String baseURI = (String) this.getContext().get("betterform.baseURI");
         try {
             getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
@@ -836,7 +839,6 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         } catch (XFormsException e) {
             throw new IOException("An XForms error occurred when passing the host document: " + e.getMessage());
         }
-        
     }
 
 }

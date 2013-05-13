@@ -77,11 +77,9 @@ public class DefaultSerializer {
         Document in = this.processor.getXForms();
         Document out = DOMUtil.newDocument(true,false);
 
-
         //resetting internal DOM to original state
         resetForm(in, out);
         inlineInstances(out);
-
         return out;
     }
 
@@ -91,7 +89,7 @@ public class DefaultSerializer {
      *
      * @param out the output document for serialization
      */
-    public void inlineInstances(Document out) {
+    public void inlineInstances(Document out) throws XFormsException {
         //imlining instances
         NodeInfo context = getDocumentElementContext(out);
         //iterate all models to get all instances
@@ -106,20 +104,20 @@ public class DefaultSerializer {
 
                 //get node from out
                 String search = "//*[@id='" + id + "']";
-                try {
-                    Node outInstance = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(context, search, Collections.EMPTY_MAP, null), 1);
-                    Node imported = out.adoptNode(instance.getInstanceDocument().getDocumentElement());
-                    Node firstChild = DOMUtil.getFirstChildElement(outInstance);
-
-                    if(firstChild != null){
-                        outInstance.removeChild(firstChild);
-                    }
-                    outInstance.appendChild(imported);
-//                    outInstance.replaceChild(imported,DOMUtil.getFirstChildElement(outInstance));
-                } catch (XFormsException e) {
-                    // You should never come here
-                    LOGGER.error(e.getMessage(), e);
+                Node outInstance = XPathUtil.getAsNode(XPathCache.getInstance().evaluate(context, search, Collections.EMPTY_MAP, null), 1);
+                Node imported = out.adoptNode(instance.getInstanceDocument().getDocumentElement());
+                if(imported == null){
+                    throw new XFormsException("Root Element for Instance '" + instance.getId() + "' not found");
                 }
+
+                Node firstChild = DOMUtil.getFirstChildElement(outInstance);
+
+                if(firstChild != null){
+                    outInstance.removeChild(firstChild);
+                }
+
+                outInstance.appendChild(imported);
+//                    outInstance.replaceChild(imported,DOMUtil.getFirstChildElement(outInstance));
 
             }
         }

@@ -43,7 +43,7 @@
                 replace="instance"
                 action="echo:hallo"
                     validate="false">
-
+                 <xf:setvalue ev:event="xforms-submit-done" ref="item[1]" value="'hello'"/>
             </xf:submission>
 
             <xf:setvalue ev:event="xforms-ready" ref="item[1]" value="'schade'"/>

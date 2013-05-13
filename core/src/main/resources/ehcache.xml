@@ -21,21 +21,22 @@
             />
 
     <cache name="xfSessionCache"
-        eternal="true"
+        eternal="false"
         timeToIdleSeconds="600"
         timeToLiveSeconds="1800"
         maxElementsInMemory="3"
         memoryStoreEvictionPolicy="LRU"
         maxElementsOnDisk="100"
         diskSpoolBufferSizeMB="30"
-        overflowToDisk="true"
-        diskPersistent="true"
+        overflowToDisk="false"
+        diskPersistent="false"
         diskExpiryThreadIntervalSeconds="3000"
 
             >
         <!--
             <cacheEventListenerFactory class="de.betterform.agent.web.cache.BFCacheManagerEventListenerFactory" properties=""/>
         -->
+        <cacheEventListenerFactory class="de.betterform.agent.web.cache.BFCacheManagerEventListenerFactory" properties=""/>
     </cache>
 
     <cache name="xfTestConfigOneElementInMemory"
@@ -45,8 +46,8 @@
            timeToIdleSeconds="300"
            timeToLiveSeconds="300"
            diskSpoolBufferSizeMB="30"
-           diskPersistent="true"
-           overflowToDisk="true"
+           diskPersistent="false"
+           overflowToDisk="false"
             diskExpiryThreadIntervalSeconds="300"
             memoryStoreEvictionPolicy="LRU"
             >
