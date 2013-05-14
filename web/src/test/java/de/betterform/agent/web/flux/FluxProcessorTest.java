@@ -56,6 +56,10 @@ public class FluxProcessorTest extends TestCase {
     }
 
 
+    /**
+     * put one processor into cache, fetch it again and interact (no serialization should interfere here)
+     * @throws Exception
+     */
     public void testEhcache1() throws Exception {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("####################################################################################");
@@ -64,11 +68,13 @@ public class FluxProcessorTest extends TestCase {
         }
         CacheManager manager = CacheManager.create();
         Cache sessionCache = manager.getCache("xfTestConfigOneElementInMemory");
+
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("####################### put xformsProcessor into cache #############################");
         }
         Element e =new Element(this.sessionKey,this.fluxProcessor);
         sessionCache.put(e);
+//        sessionCache.flush();
 
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("### 1 in mem: " + sessionCache.isElementInMemory(this.sessionKey));
@@ -82,12 +88,19 @@ public class FluxProcessorTest extends TestCase {
 
 
         FluxProcessor fluxProcessor1 = (FluxProcessor) sessionCache.get(this.sessionKey).getObjectValue();
-        Thread.sleep(1000);
-        String s = fluxProcessor1.getXForms().getDocumentElement().getAttribute("bf:serialized");
-        assertEquals("true",s);
+        Document doc = fluxProcessor1.getXForms() ;
+        String s = doc.getDocumentElement().getLocalName();
+        assertEquals("html",s);
 
-        fluxProcessor1.init();
+//        fluxProcessor1.init();
         fluxProcessor1.dispatchEvent("t-refresh");
+
+//        Thread.sleep(1000);
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("### 1 in mem: " + sessionCache.isElementInMemory(this.sessionKey));
+            LOGGER.debug("### 1 on disk: " + sessionCache.isElementOnDisk(this.sessionKey));
+            LOGGER.debug("### 1 on disk: " + sessionCache.getStatistics());
+        }
 
 
 
@@ -109,39 +122,30 @@ public class FluxProcessorTest extends TestCase {
         Element e =new Element("fluxProcessor",this.fluxProcessor);
         sessionCache.put(e);
 //        sessionCache.flush();
+
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("### 1: " + sessionCache.getStatistics());
             LOGGER.debug("### 1: " + sessionCache.isElementInMemory("fluxProcessor"));
             LOGGER.debug("### 1: " + sessionCache.isElementOnDisk("fluxProcessor"));
-        }
-
-
-
-        if(LOGGER.isDebugEnabled()){
             LOGGER.debug("####################### put second object into cache - should serialize xformsProcessor");
         }
+
         Element e1 =new Element("2",new SerializableObject("foo"));
         sessionCache.put(e1);
-        sessionCache.flush();
+        Element e2 =new Element("3",new SerializableObject("bar"));
+        sessionCache.put(e2);
+//        sessionCache.flush();
+
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("### 2: " + sessionCache.getStatistics());
             LOGGER.debug("### 2: " + sessionCache.isElementInMemory("2"));
             LOGGER.debug("### 2: " + sessionCache.isElementOnDisk("2"));
-        }
-
-
-//        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
-
-        if(LOGGER.isDebugEnabled()){
             LOGGER.debug("####################### access (serialized) xformsprocessor from cache");
         }
 
-        Thread.sleep(1000);
-
-        LOGGER.debug("Disk" + sessionCache.calculateOnDiskSize());
-        LOGGER.debug("Mem" + sessionCache.calculateInMemorySize());
         FluxProcessor syncedProcessor = (FluxProcessor) sessionCache.get("fluxProcessor").getValue();
         assertNotNull(syncedProcessor);
+        assertTrue(syncedProcessor.getContext()==null);
         syncedProcessor.init();
 
         if(LOGGER.isDebugEnabled()) LOGGER.debug("### 3: " + sessionCache.getStatistics());
@@ -155,9 +159,14 @@ public class FluxProcessorTest extends TestCase {
         }
 
         SerializableObject value2 = (SerializableObject) sessionCache.get("2").getValue();
-//        if(LOGGER.isDebugEnabled()) LOGGER.debug(sessionCache.getStatistics());
-
         assertEquals("foo", value2.getValue());
+        SerializableObject value3 = (SerializableObject) sessionCache.get("3").getValue();
+        assertEquals("bar", value3.getValue());
+
+        LOGGER.debug("### 3: " + sessionCache.getStatistics());
+        sessionCache.flush();
+
+
     }
 
 

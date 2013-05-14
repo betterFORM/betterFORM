@@ -95,7 +95,7 @@ public class SessionSerializerTest extends XMLTestBase {
         sessionCache.flush();
 
         sessionCache.evictExpiredElements();
-        Thread.sleep(1000);                                             
+//        Thread.sleep(1000);
         System.out.println(sessionCache.getStatistics());
 
         Element elem = sessionCache.get("xformsProcesssorImpl");

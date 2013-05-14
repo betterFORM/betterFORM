@@ -93,7 +93,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     protected transient HttpServletResponse response;
     protected transient HttpSession httpSession;
     protected transient ServletContext context;
-    protected boolean isXFormsPresent = false;
+//    protected boolean isXFormsPresent = false;
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     private String uploadDestination;
     private String useragent;
@@ -202,7 +202,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         } else {
             throw new XFormsException("no XForms input document found - init failed");
         }
-        isXFormsPresent = true;
+//        isXFormsPresent = true;
 
         if (this.configuration.getProperty("webprocessor.doIncludes").equals("true")) {
             doIncludes();
@@ -256,8 +256,12 @@ public class WebProcessor extends AbstractProcessorDecorator {
         if (this.context != null) {
             return context;
         }
-        // otherwise get the context from the http session.
-        return httpSession.getServletContext();
+
+        if(httpSession != null){
+            // otherwise get the context from the http session.
+            return httpSession.getServletContext();
+        }
+        return null;
     }
 
     /**

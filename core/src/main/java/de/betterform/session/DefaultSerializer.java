@@ -80,6 +80,11 @@ public class DefaultSerializer {
         //resetting internal DOM to original state
         resetForm(in, out);
         inlineInstances(out);
+
+//        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("##### resetted XForms #####");
+            DOMUtil.prettyPrintDOM(out);
+//        }
         return out;
     }
 
