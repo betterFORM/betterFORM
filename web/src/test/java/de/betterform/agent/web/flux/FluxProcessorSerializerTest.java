@@ -9,10 +9,7 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
-import org.infinispan.manager.CacheContainer;
-import org.infinispan.manager.CacheManager;
 import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
 import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,14 +37,15 @@ import java.util.Iterator;
         }
 
         if (this.cache == null) {
-            this.cache= new DefaultCacheManager("infinispan.xml").getCache("xfTestConfigOneElementInMemory");
+            this.cacheManager = new DefaultCacheManager("infinispan.xml");
+            this.cache = this.cacheManager.getCache("xfTestConfigOneElementInMemory");
         }
     }
 
     @Override
    protected void tearDown() throws Exception {
         super.tearDown();
-        this.cacheManager.removeCache("Test");
+        this.cacheManager.removeCache("xfTestConfigOneElementInMemory");
         /*
         CacheManager cacheManager = CacheManager.getInstance();
         Cache cache = cacheManager.getCache("xfTestConfigOneElementInMemory");
@@ -185,53 +183,53 @@ import java.util.Iterator;
         System.err.println("" + System.currentTimeMillis());
     }
 
-    /*
+
+
+/*
     public void testPutAndGetFluXProcessorCache() throws Exception {
         LOGGER.info("...::: testPutAndGetFluXProcessorCache :::...");
         Cache oneElementInMemory =initCache("xfTestConfigOneElementInMemory");
         Iterator<String> keys  =this.fluxProcessors.keySet().iterator();
 
-        String key = null;
-        if(keys.hasNext()) {
-            key = keys.next();
-            FluxProcessor processor  = this.fluxProcessors.get(key);
-            assertEquals(key, processor.getKey());
-            Element e =new Element(key, processor);
-            oneElementInMemory.put(e);
-        }
-
-
-       if(key != null) {
+        String key1 = keys.next();
+        String key2 = keys.next();
+        
+        FluxProcessor processor  = this.fluxProcessors.get(key1);
+        assertEquals(key1, processor.getKey());
+        oneElementInMemory.put(key1, processor);
+        processor  = this.fluxProcessors.get(key2);
+        assertEquals(key2, processor.getKey());
+        oneElementInMemory.put(key2, processor);
+       
            Exception exception = null;
-           oneElementInMemory.acquireWriteLockOnKey(key);
-           oneElementInMemory.acquireReadLockOnKey(key);
            try {
-               Element  element = oneElementInMemory.get(key);
-               assertNotNull(element);
-               FluxProcessor fluxProcessor = (FluxProcessor) element.getObjectValue();
-               assertNotNull(fluxProcessor);
-               assertNull(fluxProcessor.getContext());
-               Document document = fluxProcessor.getXForms() ;
+                processor = (FluxProcessor) oneElementInMemory.get(key1);
+               assertNotNull(processor);
+               assertNotNull(processor);
+               assertNull(processor.getContext());
+               Document document = processor.getXForms() ;
                String localName = document.getDocumentElement().getLocalName();
                assertEquals("html", localName);
-               fluxProcessor.init();
-               assertEquals("schade",   fluxProcessor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
-               fluxProcessor.dispatchEvent("t-refresh");
+               processor.init();
+               assertEquals("schade",   processor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
+               processor.dispatchEvent("t-refresh");
+
+               processor = (FluxProcessor) oneElementInMemory.get(key2);
+               assertNotNull(processor);
+               assertNotNull(processor);
+               assertNull(processor.getContext());
+               document = processor.getXForms() ;
+               localName = document.getDocumentElement().getLocalName();
+               assertEquals("html", localName);
+               processor.init();
+               assertEquals("schade",   processor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
+               processor.dispatchEvent("t-refresh");
            } catch (Exception e) {
                e.printStackTrace();
                exception = e;
-           } finally {
-                oneElementInMemory.releaseWriteLockOnKey(key);
-               oneElementInMemory.releaseReadLockOnKey(key);
            }
-
            assertNull(exception);
-        }
 
+    }              */
 
-        LOGGER.info("Stats: " + oneElementInMemory.getStatistics());
-
-         LOGGER.info("Keys: "  + oneElementInMemory.getKeys().size());
-    }
-    */
 }
