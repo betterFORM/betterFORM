@@ -6,14 +6,14 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.agent.web.cache.XFSessionCache;
+import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.cookie.ClientCookie;
@@ -129,28 +129,31 @@ public class WebUtil {
             return null;
         }
 
-        Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
+        org.infinispan.Cache<String, FluxProcessor> sessionCache;
+        try {
+            sessionCache = XFSessionCache.getCache();
+        } catch (XFormsException xfe) {
+              sessionCache = null;
+        }
 //        printCache(cache);
 
-        if(cache == null || !(cache.isKeyInCache(key)) ) {
+        if(sessionCache == null || !(sessionCache.containsKey(key)) ) {
             LOGGER.warn("No xformsSession for key " + key + " in Cache");
             return null;
         }
+        WebProcessor processor  = sessionCache.get(key);
 
-
-
-        net.sf.ehcache.Element elem;
-        elem = cache.get(key);
-        if(cache.isElementInMemory(key)){
-            return  (WebProcessor) elem.getObjectValue();
+        if(processor.getContext()  != null){
+            return  processor;
         } else{
             if(LOGGER.isDebugEnabled()){
-                LOGGER.debug("Element is read from disk" +  elem.toString());
+                LOGGER.debug("Element is read from disk" +  processor.toString());
             }
-            WebProcessor processor = (WebProcessor) elem.getObjectValue();
+            //WebProcessor processor = (WebProcessor) elem.getObjectValue();
             processor.setRequest(request);
             processor.setResponse(response);
             processor.setHttpSession(session);
+            processor.setKey(key);
             try {
                 processor.configure();
                 processor.init();
@@ -164,6 +167,7 @@ public class WebUtil {
 
     }
 
+    /*
     public static void printCache(Cache cache) {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("---------- ehcache sessions -------------");
@@ -176,16 +180,22 @@ public class WebUtil {
             }
         }
     }
+    */
 
     public static boolean removeSession(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("removing key: '" + key + "' from cache");
         }
-        Cache xfSessionCache = CacheManager.getInstance().getCache("xfSessionCache");
         boolean removedSession = false;
-        if (xfSessionCache != null) {
-            removedSession = xfSessionCache.remove(key);
-        }
+
+        try {
+            org.infinispan.Cache<String, FluxProcessor> sessionCache = XFSessionCache.getCache();
+            if (sessionCache != null) {
+                //TODO: rethink ...
+                removedSession = (sessionCache.remove(key)   != null);
+            }
+        } catch (XFormsException xfe) {  }
+
         return removedSession;
     }
 

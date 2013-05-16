@@ -205,10 +205,6 @@ public class XFormsFilter implements Filter {
                 webProcessor.setXForms();
                 webProcessor.init();
                 webProcessor.handleRequest();
-                if (LOG.isDebugEnabled() && CacheManager.getInstance().getCache("xfSessionCache") != null) {
-                    LOG.debug(CacheManager.getInstance().getCache("xfSessionCache").getStatistics());
-                    DOMUtil.prettyPrintDOM(webProcessor.getXForms());
-                }
             }
             catch (Exception e) {
                 LOG.error(e.getMessage(), e);

@@ -85,6 +85,12 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
         this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
         this.root.addEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
 		//TODO, see where BetterFormEventNames.SHOW/HIDE should be added? Lars: moved to WebProcessor
+
+        if ("true".equals( getXForms().getDocumentElement().getAttribute("bf:serialized"))) {
+                //String key = getXForms().getDocumentElement().getAttribute("bf:serialized");
+                getXForms().getDocumentElement().removeAttribute("bf:serialized");
+                //setKey(key);
+        }
     }
 
 
@@ -323,6 +329,22 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
 
     public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
         this.xformsProcessor.readExternal(objectInput);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        LOGGER.debug("FluxProcessor.equals()");
+        if (that instanceof  FluxProcessor) {
+            return this.getKey().equals(((FluxProcessor)that).getKey());
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        LOGGER.debug("FluxProcessor.hashCode()");
+        return new Long(this.getKey()).intValue();
     }
 }
 // end of class

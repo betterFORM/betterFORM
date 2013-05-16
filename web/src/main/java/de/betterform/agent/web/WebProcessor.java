@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -21,12 +22,10 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.AbstractProcessorDecorator;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
+import org.infinispan.Cache;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -132,6 +131,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
             this.key = generateXFormsSessionKey();
         }
         return this.key;
+    }
+
+    protected void setKey(String key) {
+        LOGGER.debug("Settting key: " + key );
+        this.key = key;
     }
 
     public void setRequest(HttpServletRequest request) {
@@ -290,7 +294,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         // init processor
         this.xformsProcessor.init();
-//        registerXFormsSession();
+       registerXFormsSession();
     }
 
     public XMLEvent checkForExitEvent() {
@@ -421,13 +425,13 @@ public class WebProcessor extends AbstractProcessorDecorator {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("adding to xfSessionCache - " + this.toString() + " - key: " + getKey());
         }
-        Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
-        if(cache == null) {
-            throw new XFormsException("Ehcache Error: 'xfSessionCache' is missing in WEB-INF/classes/ehcache.xml");
-        }
 
+
+        Cache<String, FluxProcessor>  sessionCache = XFSessionCache.getCache();
 //        if(! cache.isKeyInCache(this.getKey())) {
-            cache.put(new net.sf.ehcache.Element(this.getKey(), this));
+
+        /* TODO: double check */
+            sessionCache.put(this.getKey(), (FluxProcessor) this);
 //        }
 /*
         if(LOGGER.isDebugEnabled()){

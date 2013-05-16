@@ -6,7 +6,7 @@
         <eviction strategy="LIRS" maxEntries="100"/>
         <expiration lifespan="3000000" maxIdle="3000000" wakeUpInterval="10000"/>
         <loaders passivation="true" preload ="false"  shared="false">
-                <fileStore location="/tmp/xfFileCache" streamBufferSize="8192"/>
+                <fileStore location="/tmp/" streamBufferSize="8192"/>
         </loaders>
 
     </namedCache>
@@ -15,16 +15,16 @@
         <eviction strategy="LIRS" maxEntries="2000"/>
         <expiration lifespan="1800000" maxIdle="600000" wakeUpInterval="5000"/>
         <loaders passivation="true" preload ="false"  shared="false">
-            <fileStore location="/tmp/xfSessionCache" streamBufferSize="8192"/>
+            <fileStore location="/tmp/" streamBufferSize="8192"/>
         </loaders>
 
     </namedCache>
 
     <namedCache name="xfTestConfigOneElementInMemory" >
-        <eviction strategy="LIRS" maxEntries="1"/>
+    <eviction strategy="LIRS" maxEntries="1"/>
         <expiration lifespan="300000" maxIdle="300000" wakeUpInterval="5000"/>
         <loaders passivation="true" preload ="false"  shared="false">
-            <fileStore location="/tmp/xfTestConfigOneElementInMemory" streamBufferSize="8192"/>
+            <fileStore location="/tmp/" streamBufferSize="8192"/>
         </loaders>
     </namedCache>
 

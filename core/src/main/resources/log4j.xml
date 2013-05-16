@@ -51,6 +51,10 @@
         <priority value="INFO"/>
     </category>
 
+    <category name="de.betterform.xml.xforms.XFormsProcessorImpl">
+        <priority value="DEBUG"/>
+    </category>
+
 <!--
     <category name="de.betterform.xml.xforms.model.Model">
         <priority value="ERROR"/>

@@ -50,6 +50,10 @@
         <priority value="INFO"/>
     </category>
 
+    <category name="de.betterform.xml.xforms">
+        <priority value="DEBUG"/>
+    </category>
+
     <root>
         <priority value="ERROR"/>
         <appender-ref ref="SHELL"/>

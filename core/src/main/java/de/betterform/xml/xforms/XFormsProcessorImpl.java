@@ -780,11 +780,15 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     }
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        writeExternal(objectOutput, "XXX" + System.currentTimeMillis());
+    }
+
+    public void writeExternal(ObjectOutput objectOutput, String key) throws IOException {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("serializing XFormsFormsProcessorImpl");
         }
         try {
-            if ("true".equals( getXForms().getDocumentElement().getAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized"))) {
+            if ("true".equals( getXForms().getDocumentElement().getAttribute("bf:serialized"))) {
                 objectOutput.writeUTF(DOMUtil.serializeToString( getXForms()));
             }  else {
             String baseURI = (String) this.getContext().get("betterform.baseURI");
