@@ -783,29 +783,36 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("serializing XFormsFormsProcessorImpl");
         }
-        String baseURI = (String) this.getContext().get("betterform.baseURI");
         try {
-            getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
-            getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized","true");
+            if ("true".equals( getXForms().getDocumentElement().getAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized"))) {
+                objectOutput.writeUTF(DOMUtil.serializeToString( getXForms()));
+            }  else {
+            String baseURI = (String) this.getContext().get("betterform.baseURI");
+
+                getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
+                getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized","true");
+
+                DefaultSerializer serializer = new DefaultSerializer(this);
+                Document serializedForm = serializer.serialize();
+
+                StringWriter stringWriter = new StringWriter();
+                Transformer transformer = null;
+                StreamResult result = new StreamResult(stringWriter);
+                try {
+                    transformer = TransformerFactory.newInstance().newTransformer();
+                    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+                    transformer.transform(new DOMSource(serializedForm), result);
+                } catch (TransformerConfigurationException e) {
+                    throw new IOException("TransformerConfiguration invalid: " + e.getMessage());
+                } catch (TransformerException e) {
+                    throw new IOException("Error during serialization transform: " + e.getMessage());
+                }
+                objectOutput.writeUTF(stringWriter.getBuffer().toString());
+            }
         } catch (XFormsException e) {
             throw new IOException("baseURI couldn't be set");
         }
-        DefaultSerializer serializer = new DefaultSerializer(this);
-        Document serializedForm = serializer.serialize();
 
-        StringWriter stringWriter = new StringWriter();
-        Transformer transformer = null;
-        StreamResult result = new StreamResult(stringWriter);
-        try {
-            transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.transform(new DOMSource(serializedForm), result);
-        } catch (TransformerConfigurationException e) {
-            throw new IOException("TransformerConfiguration invalid: " + e.getMessage());
-        } catch (TransformerException e) {
-            throw new IOException("Error during serialization transform: " + e.getMessage());
-        }
-        objectOutput.writeUTF(stringWriter.getBuffer().toString());
         objectOutput.flush();
         objectOutput.close();
 

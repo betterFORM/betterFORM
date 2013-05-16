@@ -5,7 +5,9 @@
   -->
 
 <ehcache>
-    <diskStore path="/Users/joern/dev/tmp"/>
+    <!-- diskStore path="java.io.tmpdir"/ -->
+    <diskStore path="/tmp"/>
+    <cacheManagerEventListenerFactory class="" properties=""/>
 
     <cache name="xfFileCache"
             maxElementsInMemory="100"
@@ -40,18 +42,16 @@
 
     <cache name="xfTestConfigOneElementInMemory"
            maxElementsOnDisk="10000"
-           maxElementsInMemory="1"
+           maxElementsInMemory="25"
            eternal="false"
            timeToIdleSeconds="300"
            timeToLiveSeconds="300"
-           diskSpoolBufferSizeMB="0"
+           diskSpoolBufferSizeMB="30"
            diskPersistent="true"
-           overflowToDisk="true"
            diskExpiryThreadIntervalSeconds="300"
            memoryStoreEvictionPolicy="LRU"
             statistics="true"
            >
-            <!--<cacheEventListenerFactory class="de.betterform.agent.web.cache.BFCacheManagerEventListenerFactory" properties=""/>-->
     </cache>
 
     <defaultCache

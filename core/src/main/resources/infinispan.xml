@@ -1,0 +1,31 @@
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:infinispan:config:5.2 http://www.infinispan.org/schemas/infinispan-config-5.2.xsd"
+            xmlns="urn:infinispan:config:5.2">
+
+    <namedCache name="xfFileCache" >
+        <eviction strategy="LIRS" maxEntries="100"/>
+        <expiration lifespan="3000000" maxIdle="3000000" wakeUpInterval="10000"/>
+        <loaders passivation="true" preload ="false"  shared="false">
+                <fileStore location="/tmp/xfFileCache" streamBufferSize="8192"/>
+        </loaders>
+
+    </namedCache>
+
+    <namedCache name="xfSessionCache" >
+        <eviction strategy="LIRS" maxEntries="2000"/>
+        <expiration lifespan="1800000" maxIdle="600000" wakeUpInterval="5000"/>
+        <loaders passivation="true" preload ="false"  shared="false">
+            <fileStore location="/tmp/xfSessionCache" streamBufferSize="8192"/>
+        </loaders>
+
+    </namedCache>
+
+    <namedCache name="xfTestConfigOneElementInMemory" >
+        <eviction strategy="LIRS" maxEntries="1"/>
+        <expiration lifespan="300000" maxIdle="300000" wakeUpInterval="5000"/>
+        <loaders passivation="true" preload ="false"  shared="false">
+            <fileStore location="/tmp/xfTestConfigOneElementInMemory" streamBufferSize="8192"/>
+        </loaders>
+    </namedCache>
+
+</infinispan>

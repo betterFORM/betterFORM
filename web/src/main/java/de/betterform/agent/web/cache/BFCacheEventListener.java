@@ -57,8 +57,8 @@ public class BFCacheEventListener implements CacheEventListener {
     }
 
     private void log(String status, Ehcache ehcache, Element element) {
-        LOGGER.debug(status.toUpperCase() + ": Element: " + element.toString() + " Object " + element.getObjectValue() + " Cache: " + ehcache.toString());
-        LOGGER.debug(status.toUpperCase() + ": Cache Size : " + ehcache.getSize() + " Memory Size: " + ehcache.getMemoryStoreSize());
-        LOGGER.debug(status.toUpperCase() + ": Time : " + System.currentTimeMillis());
+        LOGGER.info(status.toUpperCase() + ": Element: " + element.toString() + " Object " + element.getObjectValue() + " Cache: " + ehcache.toString());
+        LOGGER.info(status.toUpperCase() + ": Cache Size : " + ehcache.getSize() + " Memory Size: " + ehcache.getMemoryStoreSize());
+        LOGGER.info(status.toUpperCase() + ": Time : " + System.currentTimeMillis());
     }
 }

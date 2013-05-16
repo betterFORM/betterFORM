@@ -83,7 +83,7 @@ public class DefaultSerializer {
 
 //        if(LOGGER.isDebugEnabled()){
             LOGGER.debug("##### resetted XForms #####");
-            DOMUtil.prettyPrintDOM(out);
+            //DOMUtil.prettyPrintDOM(out);
 //        }
         return out;
     }
