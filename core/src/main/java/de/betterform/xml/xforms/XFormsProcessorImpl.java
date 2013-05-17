@@ -56,7 +56,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     private static final Log LOGGER = LogFactory.getLog(XFormsProcessorImpl.class);
     private static String APP_INFO = null;
 
-    private static final long serialVersionUID = 140;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The document container object model.
@@ -780,21 +780,18 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     }
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
-        writeExternal(objectOutput, "XXX" + System.currentTimeMillis());
-    }
-
-    public void writeExternal(ObjectOutput objectOutput, String key) throws IOException {
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("serializing XFormsFormsProcessorImpl");
         }
         try {
-            if ("true".equals( getXForms().getDocumentElement().getAttribute("bf:serialized"))) {
+            if (getXForms().getDocumentElement().hasAttribute("bf:serialized")) {
                 objectOutput.writeUTF(DOMUtil.serializeToString( getXForms()));
             }  else {
             String baseURI = (String) this.getContext().get("betterform.baseURI");
 
                 getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
                 getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized","true");
+
 
                 DefaultSerializer serializer = new DefaultSerializer(this);
                 Document serializedForm = serializer.serialize();
@@ -841,7 +838,9 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         Document host=null;
         try {
             host = DOMUtil.parseString(read,true,false);
-            setContextParam("betterform.baseURI",host.getDocumentElement().getAttribute("bf:baseURI"));
+            String baseURI = host.getDocumentElement().getAttribute("bf:baseURI");
+            setContextParam("betterform.baseURI",baseURI);
+            setBaseURI(baseURI);
             setXForms(host.getDocumentElement());
         } catch (ParserConfigurationException e) {
             throw new IOException("Parser misconfigured: " + e.getMessage());
@@ -855,3 +854,4 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
 }
 
 // end of class
+

@@ -46,6 +46,7 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private transient EventQueue eventQueue;
+    private static final long serialVersionUID = 2L;
 
     public FluxProcessor() {
         super();
@@ -324,27 +325,35 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
 */
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("writeExternal this = " + this.xformsProcessor.getBaseURI());
+        }
         this.xformsProcessor.writeExternal(objectOutput);
     }
 
     public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
         this.xformsProcessor.readExternal(objectInput);
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("readExternal this = " + this.xformsProcessor.getBaseURI());
+        }
     }
 
     @Override
     public boolean equals(Object that) {
-        LOGGER.debug("FluxProcessor.equals()");
-        if (that instanceof  FluxProcessor) {
+        LOGGER.debug("equals");
+        if (that instanceof FluxProcessor) {
             return this.getKey().equals(((FluxProcessor)that).getKey());
         }
 
         return false;
     }
 
+    /*  TODO: do we need to implement??
     @Override
     public int hashCode() {
         LOGGER.debug("FluxProcessor.hashCode()");
         return new Long(this.getKey()).intValue();
     }
+    */
 }
 // end of class

@@ -170,6 +170,7 @@ public class WebFactory {
         boolean xsltCacheEnabled = Config.getInstance().getProperty(WebFactory.XSLT_CACHE_PROPERTY).equalsIgnoreCase("true");
 
         String xsltPath = WebProcessor.RESOURCE_DIR + "xslt/";
+//        String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
         String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
 
         if (xsltCacheEnabled) {

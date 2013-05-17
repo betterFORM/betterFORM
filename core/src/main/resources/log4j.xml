@@ -44,11 +44,17 @@
         change to WARN in production environments
     -->
     <category name="de.betterform.agent.web.flux">
-        <priority value="INFO"/>
+        <priority value="DEBUG"/>
     </category>
 
+    <category name="de.betterform.xml.xforms.XFormsProcessorImpl">
+        <priority value="DEBUG"/>
+    </category>
+
+
+
     <category name="de.betterform.agent.web.cache">
-        <priority value="INFO"/>
+        <priority value="DEBUG"/>
     </category>
 
     <category name="de.betterform.xml.xforms.XFormsProcessorImpl">

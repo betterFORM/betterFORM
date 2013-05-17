@@ -147,19 +147,24 @@ public class WebUtil {
             return  processor;
         } else{
             if(LOGGER.isDebugEnabled()){
-                LOGGER.debug("Element is read from disk" +  processor.toString());
+                LOGGER.debug("Element is read from disk " +  processor.toString());
             }
             //WebProcessor processor = (WebProcessor) elem.getObjectValue();
             processor.setRequest(request);
             processor.setResponse(response);
             processor.setHttpSession(session);
+
             processor.setKey(key);
+            processor.getHttpRequestHandler();
+            processor.setContext(session.getServletContext());
+
             try {
                 processor.configure();
+                processor.createUIGenerator();
                 processor.init();
                 return processor;
-            } catch (XFormsException xfe) {
-                LOGGER.error("Could not reload xformSession from disk.", xfe);
+            } catch (Exception e) {
+                LOGGER.error("Could not reload xformSession from disk.", e);
             }
         }
 

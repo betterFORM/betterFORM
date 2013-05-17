@@ -10,6 +10,7 @@ package de.betterform.agent.web.filter;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
+import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -25,12 +26,10 @@ import org.apache.commons.fileupload.FileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.infinispan.Cache;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -68,7 +67,8 @@ public class XFormsFilter implements Filter {
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
             webFactory.initTransformerService(this.filterConfig.getServletContext().getRealPath("."));
-            webFactory.initXFormsSessionCache();
+            webFactory.initXFormsSessionCache(); // todo: still needed????
+
         } catch (XFormsConfigException e) {
             throw new ServletException(e);
         }
@@ -129,7 +129,6 @@ public class XFormsFilter implements Filter {
                 LOG.warn("no contenttype set for internal request");
 //                throw new ServletException("Contenttype of " + requestURI + " unknown. Please configure your webcontainer appropriately.");
             }
-
 
             filterChain.doFilter(srvRequest, srvResponse);
             return;

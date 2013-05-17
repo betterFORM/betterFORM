@@ -22,6 +22,7 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.AbstractProcessorDecorator;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,8 +31,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.xml.sax.InputSource;
+import sun.misc.MessageUtils;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -94,9 +97,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
     protected transient ServletContext context;
 //    protected boolean isXFormsPresent = false;
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
-    private String uploadDestination;
-    private String useragent;
-    private String uploadDir;
+    protected String uploadDestination;
+    protected String useragent;
+    protected String uploadDir;
 
     /*
     todo: push uigenerator up to XFormsFilter to make the WebProcessor independant of ui rendering.
@@ -389,9 +392,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
                     response.setContentType(WebUtil.HTML_CONTENT_TYPE);
                     //we got an initialization request (GET) - the session is not registered yet
-                    this.uiGenerator = createUIGenerator();
-                    //store UIGenerator in this session as a property
-                    setContextParam(UIGENERATOR, uiGenerator);
+                    createUIGenerator();
                     //store queryString as 'referer' in XFormsSession
                     setContextParam(REFERER, request.getContextPath() + request.getServletPath() + "?" + referer);
 
@@ -411,6 +412,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
                     response.setContentLength(outputStream.toByteArray().length);
                     response.getOutputStream().write(outputStream.toByteArray());
+
+                    //context.getRequestDispatcher(request.getRequestURI() + "?xfsessionid=" + this.getKey()).forward(request,response);
                 }
             }
         } catch (IOException e) {
@@ -506,7 +509,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      * @throws de.betterform.xml.xforms.exception.XFormsException
      *
      */
-    private void initConfig() throws XFormsException {
+    protected void initConfig() throws XFormsException {
         final String initParameter = getContext().getInitParameter(WebFactory.BETTERFORM_CONFIG_PATH);
         String configPath = WebFactory.resolvePath(initParameter, getContext());
         if ((configPath != null) && !(configPath.equals(""))) {
@@ -542,7 +545,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
     }
 
     private String generateXFormsSessionKey() {
-        return "" + System.currentTimeMillis();
+        StringBuffer key = new StringBuffer(String.valueOf(System.currentTimeMillis()));
+        key.append(String.valueOf(Math.random()));
+        return DigestUtils.sha512Hex(key.toString());
     }
 
     protected HttpRequestHandler getHttpRequestHandler() {
@@ -573,7 +578,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         }
 
         //finally use the configuration
-        String configuredTransform = configuration.getStylesheet(this.useragent);
+//        String configuredTransform = configuration.getStylesheet(this.useragent);
+        String configuredTransform = configuration.getStylesheet("dojo");
         if(configuredTransform != null){
             return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
         }
@@ -591,7 +597,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      * @throws de.betterform.xml.xforms.exception.XFormsException
      *
      */
-    protected UIGenerator createUIGenerator() throws URISyntaxException, XFormsException {
+    protected void createUIGenerator() throws URISyntaxException, XFormsException {
         String relativeUris = configuration.getProperty(WebFactory.RELATIVE_URI_PROPERTY);
 
         URI uri = getTransformURI();
@@ -641,7 +647,10 @@ public class WebProcessor extends AbstractProcessorDecorator {
             }
         }
         generator.setParameter("locale", locale);
-        return generator;
+
+        this.uiGenerator = generator;
+        //store UIGenerator in this session as a property
+        setContextParam(UIGENERATOR, this.uiGenerator);
     }
 
     private void doIncludes() {

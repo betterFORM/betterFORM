@@ -11,35 +11,50 @@ import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
 import org.infinispan.manager.DefaultCacheManager;
 import org.w3c.dom.Document;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /*
  * @author Tobi Krebs <tobias.krebs@betterform.de>
 */
     public class FluxProcessorSerializerTest  extends TestCase {
     private static final Log LOGGER = LogFactory.getLog(FluxProcessorSerializerTest.class);
-    private HashMap<String,FluxProcessor> fluxProcessors;
+    private List fluxProcessors;
     private Cache<String, FluxProcessor>  cache = null;
     private DefaultCacheManager cacheManager;
 
     @Override
     protected void setUp() throws Exception {
+        LOGGER.debug(".....::::setting up tests::::::.....");
         String path = getClass().getResource("localization.xhtml").getPath();
         String  baseURI = "file://" + path.substring(0, path.lastIndexOf("localization.xhtml"));
-        this.fluxProcessors  = new HashMap<String,FluxProcessor>(100);
+        this.fluxProcessors  = new ArrayList<FluxProcessor>(100);
         for (int i = 0; i < 100; i++) {
             FluxProcessor processor = new FluxProcessor();
             processor.setBaseURI(baseURI);
             processor.setXForms(getClass().getResourceAsStream("localization.xhtml"));
+            processor.setContext(new HashMap());
+//            processor.setContextParam("key",i+"");
             processor.init();
-            this.fluxProcessors.put(processor.getKey(), processor);
+            this.fluxProcessors.add(processor);
+            LOGGER.debug(".....::::::::::..... " + i);
+            LOGGER.debug(".....::::::::::..... " + processor.toString());
+
         }
 
         if (this.cache == null) {
-            this.cacheManager = new DefaultCacheManager("infinispan.xml");
+            if (this.cacheManager == null) {
+                this.cacheManager = new DefaultCacheManager("infinispan.xml");
+            }
             this.cache = this.cacheManager.getCache("xfTestConfigOneElementInMemory");
         }
+        LOGGER.debug(".....::::setting up tests - done ::::::.....");
+        LOGGER.debug(".....::::setting up tests - done ::::::.....");
+        LOGGER.debug(".....::::setting up tests - done ::::::.....");
+
     }
 
     @Override
@@ -129,58 +144,38 @@ import java.util.Iterator;
         int errors = 0;
         LOGGER.info("...::: testPutAndGetFluXProcessorCache :::...");
         Cache oneElementInMemory =initCache("xfTestConfigOneElementInMemory");
-        Iterator<String> keys  =this.fluxProcessors.keySet().iterator();
 
-        while(keys.hasNext()) {
-            String key = keys.next();
-            FluxProcessor processor  = this.fluxProcessors.get(key);
-            assertEquals(key, processor.getKey());
+        for (int i=0;i<100;i++){
+            String key = i + "";
+            FluxProcessor processor  = (FluxProcessor) this.fluxProcessors.get(i);
             //Element e =new Element(key, processor);
+            processor.setContextParam("key",key);
+            LOGGER.debug("putting ... " + processor.getContextParam("key"));
             oneElementInMemory.put(key, processor);
         }
 
-        keys  =this.fluxProcessors.keySet().iterator();
-        while(keys.hasNext()) {
-            Exception exception = null;
-            String key = keys.next();
-            //oneElementInMemory.acquireWriteLockOnKey(key);
-           //oneElementInMemory.acquireReadLockOnKey(key);
-            try {
-                FluxProcessor  fluxProcessor = (FluxProcessor)  oneElementInMemory.get(key);
-                //assertNotNull(element);
-                //FluxProcessor fluxProcessor = (FluxProcessor) element.getObjectValue();
-                assertNotNull(fluxProcessor);
-                assertNull(fluxProcessor.getContext());
-                Document document = fluxProcessor.getXForms() ;
-                String localName = document.getDocumentElement().getLocalName();
-                assertEquals("html", localName);
-                fluxProcessor.init();
+        LOGGER.debug("####################### now reading");
 
+        for (int i=0;i<100;i++){
+            String key = i + "";
+            LOGGER.debug("");
+            LOGGER.debug("GETTING ... " + key);
+            LOGGER.debug("inCache ... " + oneElementInMemory.containsKey(key));
+            LOGGER.debug("inCache ... " + oneElementInMemory.containsKey(key));
+            FluxProcessor processor = (FluxProcessor) oneElementInMemory.get(key);
+            assertNotNull(processor);
+            processor.init();
+            assertEquals("schade",   processor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
 
-                assertEquals("schade",   fluxProcessor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
+            processor.dispatchEvent("t-refresh");
 
-                fluxProcessor.dispatchEvent("t-refresh");
+            assertEquals("hello", processor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
 
-                assertEquals("hello",   fluxProcessor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                exception = e;
-                errors++;
-            } finally {
-               //oneElementInMemory.releaseWriteLockOnKey(key);
-               //oneElementInMemory.releaseReadLockOnKey(key);
-            }
-
-            assertNull(exception);
+            LOGGER.debug("GET: key in processor: " + processor.getXForms().getDocumentElement().getAttribute("bf:serialized"));
+            assertNotNull(processor);
         }
 
-
-        //LOGGER.info("Stats: " + oneElementInMemory.getStatistics());
-
-        //LOGGER.info("Keys: "  + oneElementInMemory.getKeys().size());
-        LOGGER.info("Errors: "  + errors);
-        System.err.println("" + System.currentTimeMillis());
+        LOGGER.info("Errors: " + errors);
     }
 
 

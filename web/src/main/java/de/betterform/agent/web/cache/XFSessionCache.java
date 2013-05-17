@@ -24,7 +24,6 @@ import java.io.IOException;
     private static DefaultCacheManager cacheManager;
 
     public  XFSessionCache()  {
-
     }
 
     private  static void init() throws IOException {
