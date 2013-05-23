@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web.flux;
 
+import de.betterform.agent.web.cache.XFSessionCache;
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,6 +26,7 @@ import java.util.List;
     private List fluxProcessors;
     private Cache<String, FluxProcessor>  cache = null;
     private DefaultCacheManager cacheManager;
+    private Cache<String, FluxProcessor> oneElementInMemory;
 
     @Override
     protected void setUp() throws Exception {
@@ -44,13 +46,15 @@ import java.util.List;
             LOGGER.debug(".....::::::::::..... " + processor.toString());
 
         }
-
+        this.oneElementInMemory = XFSessionCache.getCache("xfTestConfigOneElementInMemory");
+/*
         if (this.cache == null) {
             if (this.cacheManager == null) {
                 this.cacheManager = new DefaultCacheManager("infinispan.xml");
             }
             this.cache = this.cacheManager.getCache("xfTestConfigOneElementInMemory");
         }
+*/
         LOGGER.debug(".....::::setting up tests - done ::::::.....");
         LOGGER.debug(".....::::setting up tests - done ::::::.....");
         LOGGER.debug(".....::::setting up tests - done ::::::.....");
@@ -60,7 +64,9 @@ import java.util.List;
     @Override
    protected void tearDown() throws Exception {
         super.tearDown();
-        this.cacheManager.removeCache("xfTestConfigOneElementInMemory");
+        XFSessionCache.unloadCache();
+        this.oneElementInMemory = null;
+//        this.cacheManager.removeCache("xfTestConfigOneElementInMemory");
         /*
         CacheManager cacheManager = CacheManager.getInstance();
         Cache cache = cacheManager.getCache("xfTestConfigOneElementInMemory");
@@ -143,7 +149,7 @@ import java.util.List;
         System.err.println("" + System.currentTimeMillis());
         int errors = 0;
         LOGGER.info("...::: testPutAndGetFluXProcessorCache :::...");
-        Cache oneElementInMemory =initCache("xfTestConfigOneElementInMemory");
+//        Cache oneElementInMemory =initCache("xfTestConfigOneElementInMemory");
 
         for (int i=0;i<100;i++){
             String key = i + "";

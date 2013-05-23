@@ -27,6 +27,7 @@ import java.util.Map;
  *
  * @author joern turner
  * @version $Id: ServletAdapter.java 2875 2007-09-28 09:43:30Z lars $
+ * @deprecated request/response model not supported any more
  */
 public class PlainHtmlProcessor extends WebProcessor implements EventListener {
 

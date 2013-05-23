@@ -193,7 +193,8 @@ public class XFormsFilter implements Filter {
 
             WebProcessor webProcessor = null;
             try {
-                webProcessor = WebFactory.createWebProcessor(request);
+//                webProcessor = WebFactory.createWebProcessor(request);
+                webProcessor = new FluxProcessor();
                 webProcessor.setXformsProcessor(new XFormsProcessorImpl());
                 webProcessor.setRequest(request);
                 webProcessor.setResponse(response);

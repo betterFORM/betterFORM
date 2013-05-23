@@ -136,12 +136,14 @@
         -->
         <property name="httpclient.ssl.keystore.path" value="PATH-TO-KEYSTORE" description="Location of the keystore to be used by httpclient."/>
 
+
         <!--
             Password to unlock JAVA keystore.
             Used by: KeyStoreSSLContext
         -->
         <property name="httpclient.ssl.keystore.passwd" value="KEYSTORE-PASSWD" description="Password to unlock keystore."/>
 
+        <property name="ui-transform" value="xhtml.xsl" description="xslt stylesheet used for generating the client-side UI"/>
     </properties>
 
     <error-messages>
@@ -159,6 +161,7 @@
         The internal name is used by the framework to identify
         entities and resolve these to the associated filenames.
     -->
+    <!-- todo: deprecated - remove after adapting config class -->
     <useragents>
         <useragent name="html"
                    processor="de.betterform.agent.web.servlet.PlainHtmlProcessor"
@@ -175,8 +178,9 @@
         <!-- todo: deprecate unscripted processing?-->
         <!-- todo: we probably shouldn't use the term 'useragent' here to avoid confusion with other meanings throughout betterform -->
         <ui-generator useragent="dojo" stylesheet="xhtml.xsl"/>
-        <ui-generator useragent="html" stylesheet="html4.xsl"/>
+        <!--<ui-generator useragent="html" stylesheet="html4.xsl"/>-->
     </ui-generators>
+
 
     <connectors>
         <!--

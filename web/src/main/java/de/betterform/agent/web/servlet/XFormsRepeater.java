@@ -9,6 +9,7 @@ package de.betterform.agent.web.servlet;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
+import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
@@ -228,7 +229,7 @@ public class XFormsRepeater extends HttpServlet {
 //        XFormsSession xFormsSession = null;
         WebProcessor webProcessor = null;
         try {
-            webProcessor = WebFactory.createWebProcessor(request);
+            webProcessor = new FluxProcessor();
             webProcessor.setRequest(request);
             webProcessor.setResponse(response);
             webProcessor.setHttpSession(session);

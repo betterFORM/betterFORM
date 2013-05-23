@@ -55,7 +55,6 @@ import java.net.URISyntaxException;
  * @see de.betterform.agent.web.servlet.PlainHtmlProcessor
  */
 public class WebProcessor extends AbstractProcessorDecorator {
-//public class WebProcessor extends AbstractProcessorDecorator {
 
     /**
      * Defines the key for accessing (HTTP) session ids.
@@ -100,14 +99,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
     protected String uploadDestination;
     protected String useragent;
     protected String uploadDir;
-
-    /*
-    todo: push uigenerator up to XFormsFilter to make the WebProcessor independant of ui rendering.
-
-    This will allow to create a XFormsSession from AJAX (in that case the ui is already there). This solves
-    the problem of sessions going stale (the user leaves the window open for a longer period) - any click or value
-    change will re-init the persistent session.
-    */
     protected transient UIGenerator uiGenerator;
 
     public WebProcessor() {
@@ -121,7 +112,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
         WebUtil.copyHttpHeaders(request, this);
         setLocale();
         configureUpload();
-//        configureSession();
     }
 
     /**
@@ -297,7 +287,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         // init processor
         this.xformsProcessor.init();
-       registerXFormsSession();
+        //todo: move?
+//       registerXFormsSession();
     }
 
     public XMLEvent checkForExitEvent() {
@@ -353,8 +344,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         /*
         todo: extract behavior that checks for exit events and move to init().
-
-
         */
         try {
             if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null) {
@@ -372,8 +361,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
                 String referer = null;
 
                 if (updating) {
-                    // updating ... - this is only called when PlainHtmlProcessor is in use
-//                    referer = (String) getProperty(XFormsSession.REFERER);
+                    //todo: check if this code is still needed (used by XFormsPostServlet?)
                     referer = (String) getContextParam(REFERER);
                     setContextParam("update", "true");
                     String forwardTo = request.getContextPath() + "/view?sessionKey=" + getKey() + "&referer=" + referer;
@@ -396,16 +384,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     //store queryString as 'referer' in XFormsSession
                     setContextParam(REFERER, request.getContextPath() + request.getServletPath() + "?" + referer);
 
-                    /*
-                    todo: move the cache code to init()
-                    */
-                    //actually register the XFormsSession with the manager
-                    // getManager().addXFormsSession(this);
-//                    registerXFormsSession();
-
-                    //todo:check if it's still necessary to set an attribute to the session
+                    //todo:check if it's still necessary to set an attribute to the session - at least it seems odd that this line is here and not at start or end of this method
                     httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
-//----- end move code
+
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
                     generateUI(this.xformsProcessor.getXForms(), outputStream);
@@ -413,7 +394,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     response.setContentLength(outputStream.toByteArray().length);
                     response.getOutputStream().write(outputStream.toByteArray());
 
-                    //context.getRequestDispatcher(request.getRequestURI() + "?xfsessionid=" + this.getKey()).forward(request,response);
                 }
             }
         } catch (IOException e) {
@@ -433,7 +413,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         Cache<String, FluxProcessor>  sessionCache = XFSessionCache.getCache();
 //        if(! cache.isKeyInCache(this.getKey())) {
 
-        /* TODO: double check */
+        /* TODO: double check - SHOULD BE MOVED: subclass used here - that smells badly */
             sessionCache.put(this.getKey(), (FluxProcessor) this);
 //        }
 /*
@@ -460,6 +440,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         if (BetterFormEventNames.REPLACE_ALL.equals(exitEvent.getType())) {
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/SubmissionResponse?sessionKey=" + getKey()));
         } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
+            //todo: this check seems insufficient - should be a load show="replace"
             if (exitEvent.getContextInfo("show") != null) {
                 String loadURI = (String) exitEvent.getContextInfo("uri");
 
@@ -518,32 +499,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         }
     }
 
-    /**
-     * allows to perform form specific initialization tasks like setting individual session lifetime, support
-     * of custom xslt switching etc.
-     *
-     * @throws XFormsException
-     */
-    protected void configureSession() throws XFormsException {
-        /*
-        Node n = this.xformsProcessor.getXForms();
-        if (!(n.getNodeType() == Node.DOCUMENT_NODE)) {
-        throw new XFormsException("returned Node is no Document");
-        }
-
-        Document hostDocument = (Document) this.xformsProcessor.getXForms();
-        Element root = hostDocument.getDocumentElement();
-
-        Element keepAlive = DOMUtil.findFirstChildNS(root, NamespaceConstants.BETTERFORM_NS, "keepalive");
-        if (keepAlive != null) {
-        String pulse = keepAlive.getAttributeNS(null, "pulse");
-        if (!(pulse == null || pulse.equals(""))) {
-        this.xformsProcessor.setContextParam(KEEPALIVE_PULSE, pulse);
-        }
-        }
-         */
-    }
-
+    //todo: might be pushed up
     private String generateXFormsSessionKey() {
         StringBuffer key = new StringBuffer(String.valueOf(System.currentTimeMillis()));
         key.append(String.valueOf(Math.random()));
@@ -579,7 +535,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         //finally use the configuration
 //        String configuredTransform = configuration.getStylesheet(this.useragent);
-        String configuredTransform = configuration.getStylesheet("dojo");
+        String configuredTransform = configuration.getProperty("ui-transform");
+
+        //todo: this forces to load the transform from filesystem - should be changed
         if(configuredTransform != null){
             return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
         }
@@ -603,53 +561,44 @@ public class WebProcessor extends AbstractProcessorDecorator {
         URI uri = getTransformURI();
 //        XSLTGenerator generator = setupTransformer(uri);
         XSLTGenerator generator = WebFactory.setupTransformer(uri,getContext());
+        generator.setParameter("sessionKey", getKey());
+        generator.setParameter("baseURI", getBaseURI());
+        generator.setParameter("locale", locale);
+        generator.setParameter("user-agent", request.getHeader("User-Agent"));
+        generator.setParameter("action-url", getActionURL()); //todo: check this
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
         } else {
             generator.setParameter("contextroot", WebUtil.getContextRoot(request));
         }
-        generator.setParameter("sessionKey", getKey());
+
+        //todo: keep-alive should be deprecated and removed everywhere
         if (getContextParam(KEEPALIVE_PULSE) != null) {
             generator.setParameter("keepalive-pulse", getContextParam(KEEPALIVE_PULSE));
         }
 
-        generator.setParameter("action-url", getActionURL());
         generator.setParameter("debug-enabled", String.valueOf(configuration.getProperty("betterform.debug-allowed").equals("true")));
         generator.setParameter("unloadingMessage", configuration.getProperty("betterform.unloading-message"));
-
-        generator.setParameter("baseURI", getBaseURI());
 
         String selectorPrefix = Config.getInstance().getProperty(HttpRequestHandler.SELECTOR_PREFIX_PROPERTY,
                 HttpRequestHandler.SELECTOR_PREFIX_DEFAULT);
         generator.setParameter("selector-prefix", selectorPrefix);
+
         String removeUploadPrefix = Config.getInstance().getProperty(HttpRequestHandler.REMOVE_UPLOAD_PREFIX_PROPERTY,
                 HttpRequestHandler.REMOVE_UPLOAD_PREFIX_DEFAULT);
         generator.setParameter("remove-upload-prefix", removeUploadPrefix);
+
         String dataPrefix = Config.getInstance().getProperty("betterform.web.dataPrefix");
         generator.setParameter("data-prefix", dataPrefix);
 
-        generator.setParameter("user-agent", request.getHeader("User-Agent"));
+
         String triggerPrefix = Config.getInstance().getProperty("betterform.web.triggerPrefix");
         generator.setParameter("trigger-prefix", triggerPrefix);
 
-        if (LOGGER.isDebugEnabled()) {
-            if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer() != null) {
-                try {
-                    if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel() != null) {
-                        if ( ((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance() != null) {
-                            DOMUtil.prettyPrintDOM(((XFormsProcessorImpl)  this.xformsProcessor).getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
-                        }
-                    }
-                } catch (XFormsException xfe) {
-                    LOGGER.debug(xfe.getMessage());
-                }
-            }
-        }
-        generator.setParameter("locale", locale);
 
         this.uiGenerator = generator;
-        //store UIGenerator in this session as a property
+        //store UIGenerator in context map of processor for use with load embed
         setContextParam(UIGENERATOR, this.uiGenerator);
     }
 
@@ -720,12 +669,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         setUploadDestination(new File(uploadDir).getAbsolutePath());
     }
-
-    /*
-    todo: review approach for events targetted at model + submission. Events will never arrive in case they are
-    handled with isEventUsed as registration of listeners happens before form init.
-     */
-
 
     private boolean noHttp() {
         if (this.request != null && this.response != null && this.httpSession != null) {

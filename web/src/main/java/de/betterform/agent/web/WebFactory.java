@@ -6,10 +6,12 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.ClasspathResourceResolver;
@@ -82,7 +84,7 @@ public class WebFactory {
      * @return
      * @throws XFormsConfigException
      */
-    public static WebProcessor createWebProcessor(HttpServletRequest request) throws XFormsConfigException {
+    /*public static WebProcessor createWebProcessor(HttpServletRequest request) throws XFormsConfigException {
         String useragent;
         if (request.getParameter(WebFactory.USER_AGENT) != null) {
             //passed as request param
@@ -130,7 +132,7 @@ public class WebFactory {
             LOGGER.info("using user agent: " + useragent + " : " + useragent);
         }
         throw new XFormsConfigException("Processor class : '" + className + "' cannot be instanciated");
-    }
+    }*/
 
     /**
      * reads the the context param 'betterform.configfile' to get the location of the configuration file. Then
@@ -171,7 +173,8 @@ public class WebFactory {
 
         String xsltPath = WebProcessor.RESOURCE_DIR + "xslt/";
 //        String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
-        String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
+//        String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
+        String xsltDefault = Config.getInstance().getProperty("ui-transform");
 
         if (xsltCacheEnabled) {
             if (LOGGER.isDebugEnabled()) {
@@ -264,7 +267,7 @@ public class WebFactory {
     }
 
 
-    public void initXFormsSessionCache() {
-        CacheManager.create();
+    public void initXFormsSessionCache() throws XFormsConfigException {
+        XFSessionCache.getCache();
     }
 }
