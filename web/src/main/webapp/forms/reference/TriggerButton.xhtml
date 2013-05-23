@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,41 +15,24 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <trigger1 constraint="true" readonly="false" required="false" relevant="true">
-                        
                         <value></value>
-                        
                      </trigger1>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:bind nodeset="trigger1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="string"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean" readonly="true()"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean" readonly="true()"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -63,8 +45,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d49e122" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
-                     <div data-dojo-type="dijit.Tooltip" connectId="d49e122">matches an Element that represents a XForms
+                  <td id="d95e110" onmouseover="showClass('xfTrigger');" onmouseout="hideClass('xfTrigger');">xfTrigger
+                     <div data-dojo-type="dijit.Tooltip" connectId="d95e110">matches an Element that represents a XForms
                         trigger
                         element
                         
@@ -184,24 +166,11 @@
          <div class="pageintro">
             <h1>Trigger control rendered as button</h1>
             <div class="description">
-               
-               <p>
-                  This form control is similar to the HTML element button and
-                  allows for user-triggered actions. This form control may
-                  also be used to construct other custom form controls.
-                  
+               <p>This form control is similar to the HTML element button and allows for user-triggered
+                  actions. This form control may also be used to construct other custom form controls.
                </p>
-               
-               <p>
-                  A
-                  <span class="keyword">trigger</span>
-                  without an
-                  <span class="keyword">appearance</span>
-                  attribute
-                  is rendered as a button.
-                  
+               <p>A <span class="keyword">trigger</span> without an <span class="keyword">appearance</span> attribute is rendered as a button.
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -219,54 +188,26 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:trigger id="trigger1" ref="trigger1/value" incremental="true">
-               
                <xf:label>a text</xf:label>
-               
                <xf:hint>a Hint for this control</xf:hint>
-               
-               <xf:help>help for trigger1</xf:help>
-               <script type="text/javascript">
-        alert('trigger was clicked, script action executed');
-    </script>
-               </xf:trigger>
+               <xf:help>help for trigger1</xf:help><script type="text/javascript">alert('trigger was clicked, script action executed');</script></xf:trigger> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="trigger1-readonly" ref="trigger1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
-               <xf:input id="trigger1-required" ref="trigger1/@required" incremental="true">
-                  
-                  <xf:label>required</xf:label>
-                  
-               </xf:input>
-               
                <xf:input id="trigger1-relevant" ref="trigger1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
-               <xf:input id="trigger1-valid" ref="trigger1/@constraint" incremental="true">
-                  
-                  <xf:label>valid</xf:label>
-                  
-               </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:trigger id="trigger1" ref="trigger1/value" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:trigger id="trigger1" ref="trigger1/value" incremental="true"&gt;
     &lt;xf:label&gt;a text&lt;/xf:label&gt;
     &lt;xf:hint&gt;a Hint for this control&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for trigger1&lt;/xf:help&gt;
@@ -303,5 +244,4 @@
                         }
                 );
             </script></body>
-   
 </html>

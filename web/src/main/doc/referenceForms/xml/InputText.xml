@@ -57,11 +57,9 @@
     <xf:alert>invalid</xf:alert>
 </xf:input>
                 </code>
-                <div class="output">
-                    <xf:output ref="input1/value">
-                        <xf:label>CurrentValue: </xf:label>
-                    </xf:output>
-                </div>
+                <xf:output ref="input1/value">
+                    <xf:label>CurrentValue: </xf:label>
+                </xf:output>
             </div>
             <div class="MIPS">
                 <xf:group appearance="full">

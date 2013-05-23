@@ -143,9 +143,13 @@
     </div>
     <xf:input ref="c">
         <xf:label>Ccc-label</xf:label>
+        <xf:hint>a hint to Ccc-label</xf:hint>
+        <xf:alert>an alert to Ccc-label</xf:alert>
     </xf:input>
     <xf:input ref="d">
         <xf:label>Dddd-label</xf:label>
+        <xf:hint>a hint to Dddd-label</xf:hint>
+        <xf:alert>an alert to Dddd-label</xf:alert>
     </xf:input>
 
 
@@ -310,9 +314,6 @@
                     <xf:label></xf:label>
                     <xf:input id="input1-readonly" ref="grouped-data/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
-                    </xf:input>
-                    <xf:input id="input1-required" ref="grouped-data/@required" incremental="true">
-                        <xf:label>required</xf:label>
                     </xf:input>
                     <xf:input id="input1-relevant" ref="grouped-data/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>

@@ -41,46 +41,47 @@
                             </grouped-data>
                         </data>
                     </xf:instance>
-                    <code class="ui">
+                    <code class="model">
 <xf:bind nodeset="grouped-data">
     <xf:bind nodeset="group">
         <xf:bind nodeset="a"  constraint="string-length(.) &gt; 5"/>
         <xf:bind nodeset="b"  type="xf:date"/>
         <xf:bind nodeset="c"  type="xf:integer"/>
-        <xf:bind nodeset="d"  />
+        <xf:bind nodeset="d"  type="xf:time"/>
     </xf:bind>
 </xf:bind>
                     </code>
                 </xf:model>
-                <code class="ui">
-<xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
-    <xf:label>a compact group with inline inputs - no initial data</xf:label>
-    <xf:input id="input1" ref="a">
-        <xf:label>A-label</xf:label>
-        <xf:alert id="input1-alert">Your input is not long enough</xf:alert>
-        <xf:hint id="input1-hint">The input must be longer than 5 characters</xf:hint>
-        <xf:help id="input1-help">Help für Control A</xf:help>
-    </xf:input>
-    <xf:input id="input2" ref="b">
-        <xf:label>Bb-label</xf:label>
-        <xf:alert id="input2-alert">Alert für Control B</xf:alert>
-        <xf:hint id="input2-hint">Type a valid date or pick one from the drowdown</xf:hint>
-        <xf:help id="input2-help">Help für Control B</xf:help>
-    </xf:input>
-    <xf:input id="input3" ref="c">
-        <xf:label>Ccc-label</xf:label>
-        <xf:alert id="input3-alert">The input must be an integer number</xf:alert>
-        <xf:hint id="input3-hint">Please input a number</xf:hint>
-        <xf:help id="input3-help">Help für Control C</xf:help>
-    </xf:input>
-    <xf:input id="input4" ref="d">
-        <xf:label>Dddd-label</xf:label>
-        <xf:alert id="input4-alert">Alert für Control D</xf:alert>
-        <xf:hint id="input4-hint">Hint für Control D</xf:hint>
-        <xf:help id="input4-help">Help für Control D</xf:help>
-    </xf:input>
-</xf:group>
-                </code>
+
+                <xf:group ref="grouped-data/group" appearance="full" class="InlineAlert">
+                    <xf:label>a compact group with inline inputs - no initial data</xf:label>
+                    <code class="ui">
+<xf:input id="input1" ref="a">
+    <xf:label>Text Constraint</xf:label>
+    <xf:alert id="input1-alert">Value is shorter than 6 characters (e.g. abcdef)</xf:alert>
+    <xf:hint id="input1-hint">at least 6 characters (e.g. abcdef)</xf:hint>
+    <xf:help id="input1-help">Help für Text Input Control</xf:help>
+</xf:input>
+<xf:input id="input2" ref="b">
+    <xf:label>Date Type</xf:label>
+    <xf:alert id="input2-alert">Value is not a valid date (MM/DD/YYYY)</xf:alert>
+    <xf:hint id="input2-hint">Date format MM/DD/YYYY</xf:hint>
+    <xf:help id="input2-help">Help für Control Date Type control</xf:help>
+</xf:input>
+<xf:input id="input3" ref="c">
+    <xf:label>Integer Type</xf:label>
+    <xf:alert id="input3-alert">Value is not an integer number (e.g. 5)</xf:alert>
+    <xf:hint id="input3-hint">Integer number (e.g. 5)</xf:hint>
+    <xf:help id="input3-help">This is a more detailed help for the integer type input control</xf:help>
+</xf:input>
+<xf:input id="input4" ref="d">
+    <xf:label>Time Type</xf:label>
+    <xf:alert id="input4-alert">Value is not a valid time (HH:MM:SS)</xf:alert>
+    <xf:hint id="input4-hint">Time Format HH:MM:SS</xf:hint>
+    <xf:help id="input4-help">This is a more detailed help for the time type input control</xf:help>
+</xf:input>
+                    </code>
+                </xf:group>
             </div>
             <div class="MIPS">
                 <xf:group appearance="full">

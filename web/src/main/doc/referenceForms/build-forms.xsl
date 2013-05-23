@@ -16,29 +16,43 @@
 
     <xsl:param name="webContext" select="'../..'"/>
 
-    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml"/>
+    <xsl:output method="xhtml" version="1.0" encoding="UTF-8" media-type="text/xml" indent="yes"/>
 
     <!--<xsl:strip-space elements="*"/>-->
 
     <xsl:preserve-space elements="code"/>
-
+    <xsl:variable name="root" select="."/>
     <xsl:template match="/">
         <xsl:apply-templates/>
     </xsl:template>
 
     <xsl:template match="head">
-        <xsl:copy>
-            <xsl:apply-templates/>
+        <head>
+            <xsl:apply-templates mode="head"/>
             <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8"/>
-            <link rel="stylesheet" type="text/css"
-                  href="../../bfResources/scripts/dojox/highlight/resources/highlight.css"/>
-            <!--
-                        <link rel="stylesheet" type="text/css"
-                              href="../../resources/scripts/dojox/highlight/resources/pygments/borland.css"/>
-            -->
+            <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css"/>
             <link rel="stylesheet" type="text/css" href="reference.css"/>
+        </head>
+    </xsl:template>
+
+    <xsl:template match="*|@*|text()" mode="head">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="head"/>
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="*|@*|text()" mode="head">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="head"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="comment()" mode="head"><xsl:text>
+        </xsl:text>
+        <xsl:copy/>
+    </xsl:template>
+
+
 
 
     <xsl:template match="title">
@@ -46,71 +60,44 @@
     </xsl:template>
 
     <xsl:template match="body">
-        <xsl:copy>
-            <xsl:attribute name="class" select="if(exists(@class)) then @class else 'soria'"/>
-            <xsl:attribute name="style">margin:30px</xsl:attribute>
-
+        <body class="{if(exists(@class)) then @class else 'soria'}" style="margin:30px">
             <div id="xforms">
                 <!-- the xforms model here -->
-                <xsl:apply-templates select="div[@class='sample']/div[@class='markup']//xf:model"/>
-                <!-- xsl:apply-templates select="div[@class='sample']/div[@class='markup']/code/xf:model"/-->
-                <!--
-                                <div style="display:none">
-                                    <xsl:apply-templates select="div[@class='sample']/div[@class='markup']/xf:model" mode="xforms"/>
-                                </div>
-                -->
-                <xsl:apply-templates select="div[@class='CSS']"/>
+                <xsl:apply-templates select="div[@class='sample']//xf:model" mode="xforms"/>
+
+                <xsl:apply-templates select="div[@class='CSS']" mode="css"/>
 
                 <div class="pageintro">
-                    <h1>
-                        <xsl:value-of select="//title"/>
-                    </h1>
+                    <h1><xsl:value-of select="//title"/></h1>
+                    <xsl:apply-templates select="*[@class='description']" mode="description"/>
 
-                    <xsl:copy-of select="div[@class='description']"/>
                     <xsl:call-template name="referenceTable">
                         <xsl:with-param name="specRef" select="div[@class='references']/a[1]/@href"/>
                         <xsl:with-param name="quickRef" select="div[@class='references']/a[2]/@href"/>
                     </xsl:call-template>
                 </div>
 
-                <!--
-                here the xforms code gets integrated into the page within a hidden div. Sections within <code class="ui">
-                are
-                 -->
-                <xsl:apply-templates select="div[@class='sample']"/>
-
-                <!-- here the highlighted code for the example will be generated -->
-                <!-- here the highlighted code for the example will be generated -->
-                <!-- here the highlighted code for the example will be generated -->
-                <h2>XForms Markup</h2>
-                <div class="Section markup">
-                    <pre>
-                        <code class="xml" data-dojo-type="dojox.highlight.Code">
-                            <!--<xsl:text>&#10;</xsl:text>-->
-                            <xsl:for-each select=".//code[@class='ui' or @class='model']/*">
-                                <xsl:apply-templates select="." mode="escape"/>
-                                <xsl:text>&#10;</xsl:text>
-                                <xsl:if test="position()!=last()">
-                                    <xsl:text>&#10;</xsl:text>
-                                </xsl:if>
-                            </xsl:for-each>
-                        </code>
-                    </pre>
-                </div>
-
-                <xsl:apply-templates select="div[@class='Notes']"/>
-                <xsl:apply-templates select="div[@class='Limitations']"/>
-                <!--
-                                <xsl:variable name="sampleDiv" select="div[@class='sample']"/>
-                                <xsl:for-each select="$sampleDiv/following-sibling::*">
-                                    <xsl:apply-templates select="."/>
-                                </xsl:for-each>
-                -->
-                <xsl:for-each select="div[@class='Other']">
+                <xsl:apply-templates select="div[@class='sample']" mode="sample"/>
+                <xsl:apply-templates select="//*[@class='MIPS']" mode="mips"/>
+                <xsl:call-template name="xformsMarkup"/>
+                <xsl:apply-templates select="//*[@class='notes']"/>
+                <xsl:apply-templates select="//*[@class='limitations']"/>
+                <xsl:for-each select="div[@class='other']">
                     <h2><xsl:value-of select="@title"/></h2>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
+
             </div>
+            <xsl:call-template name="javascript"/>
+        </body>
+    </xsl:template>
+
+
+
+
+
+    <xsl:template name="javascript">
+        <xsl:variable name="inlineScript">
             <script type="text/javascript">
                 function showClass(cssClass) {
                     require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
@@ -139,7 +126,37 @@
                         }
                 );
             </script>
-        </xsl:copy>
+        </xsl:variable>
+        <xsl:copy-of select="$inlineScript"/>
+    </xsl:template>
+
+
+    <!-- here the highlighted code for the example will be generated -->
+    <!-- here the highlighted code for the example will be generated -->
+    <!-- here the highlighted code for the example will be generated -->
+    <xsl:template name="xformsMarkup">
+
+        <h2>XForms Markup</h2>
+        <xsl:element name="div">
+            <xsl:attribute name="class">Section markup</xsl:attribute>
+            <xsl:element name="pre">
+                <xsl:element name="code">
+                    <xsl:attribute name="class">xml</xsl:attribute>
+                    <xsl:attribute name="data-dojo-type">dojox.highlight.Code</xsl:attribute>
+                            <xsl:text>
+</xsl:text>
+                    <xsl:for-each select="$root//*[@class='ui' or @class='model' or @class='escape']/*">
+                        <xsl:apply-templates select="." mode="escape"/>
+                        <xsl:text>&#10;</xsl:text>
+                        <xsl:if test="position()!=last()">
+                            <xsl:text>&#10;</xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+
+                </xsl:element>
+            </xsl:element>
+        </xsl:element>
+
     </xsl:template>
 
 
@@ -175,56 +192,107 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="div[@class='sample']">
+
+
+    <xsl:template match="div[@class='sample']" mode="sample" priority="10">
         <h2>Example</h2>
-        <xsl:apply-templates select="div[@class='markup']"/>
-        <xsl:apply-templates select="div[@class='markup']/following-sibling::*"/>
-    </xsl:template>
-
-
-    <xsl:template match="xf:model">
-        <div style="display:none">
-            <xsl:apply-templates select="." mode="xforms"/>
-        </div>
-    </xsl:template>
-
-    <xsl:template match="div[@class='sample']/div[@class='markup']/code/xf:model">
-        <div style="display:none">
-            <xsl:apply-templates select="." mode="xforms"/>
-        </div>
-    </xsl:template>
-
-    <xsl:template match="div[@class='markup']">
         <div class="Section sample">
-            <xsl:copy-of select=".//code[@class='ui']/*"/>
-            <!--<xsl:apply-templates select=".//code[@class='ui']/*"/>-->
-            <xsl:copy-of select=".//div[@class='output']/*"/>
+            <xsl:apply-templates select="*[@class='markup']" mode="sample"/>
         </div>
-
-
     </xsl:template>
 
-    <!--
-        <xsl:template match="h2[text()='CSS']">
-            <h2>CSS</h2>
-            <div style="font-size:0.8em;font-style:italic;">Hover the classes on the left to see the matching element(s) in
-                the example
-            </div>
-        </xsl:template>
-    -->
+    <xsl:template match="xf:model" mode="sample" priority="10"/>
+    <xsl:template match="*[@class='escape']" mode="sample" priority="10"/>
 
-    <xsl:template match="div[@class='CSS']">
-        <!--<h2><xsl:value-of select="@class"/></h2>-->
+    <xsl:template match="*[@class='markup']|*[@class='ui']|*[@class='model']" mode="sample" priority="10">
+        <xsl:apply-templates mode="sample"/>
+    </xsl:template>
+
+    <xsl:template match="@*|*" mode="sample" priority="1">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="sample"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="sample" priority="1">
+        <xsl:copy-of select="normalize-space(.)"/>
+    </xsl:template>
+    <xsl:template match="comment()" mode="sample"><xsl:text>
+        </xsl:text>
+        <xsl:copy/>
+    </xsl:template>
+
+    <!-- MIPS Markup -->
+    <!-- MIPS Markup -->
+    <!-- MIPS Markup -->
+    <xsl:template match="*[@class='mips']|*[@class='MIPS']" mode="mips" priority="10">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="mips"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="*|@*" mode="mips">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="mips"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="mips">
+        <xsl:copy-of select="normalize-space(.)"/>
+    </xsl:template>
+    <xsl:template match="comment()" mode="mips"><xsl:text>
+        </xsl:text>
+        <xsl:copy/>
+    </xsl:template>
+
+
+    <!-- XFORMS MARKUP -->
+    <!-- XFORMS MARKUP -->
+    <!-- XFORMS MARKUP -->
+    <xsl:template match="xf:model" mode="xforms">
+        <div style="display:none">
+            <xf:model>
+                <xsl:apply-templates select="@*|*" mode="xforms"/>
+            </xf:model>
+        </div>
+    </xsl:template>
+
+    <xsl:template match="*[@class='model']" mode="xforms" priority="10">
+        <xsl:apply-templates mode="xforms"/>
+    </xsl:template>
+
+    <xsl:template match="*|@*" mode="xforms">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="xforms"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="xforms">
+        <xsl:copy-of select="normalize-space(.)"/>
+    </xsl:template>
+
+    <xsl:template match="comment()" mode="xforms"><xsl:text>
+        </xsl:text>
+        <xsl:copy/>
+    </xsl:template>
+
+    <!-- CSS HIGHLIGHTING -->
+    <!-- CSS HIGHLIGHTING -->
+    <!-- CSS HIGHLIGHTING -->
+    <xsl:template match="div[@class='CSS']" mode="css">
         <xsl:if test="table">
             <div class="CSS">
-                <xsl:apply-templates select="table"/>
+                <xsl:apply-templates select="table" mode="css"/>
             </div>
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="div[@class='CSS']/table" priority="20">
+    <xsl:template match="table" mode="css">
         <table>
-            <!--<xsl:apply-templates/>-->
             <caption>CSS</caption>
             <tr>
                 <th style="font-style:italic;color:#C46B47;">
@@ -342,52 +410,78 @@
                 </tr>
             </xsl:if>
         </table>
-
     </xsl:template>
 
-    <xsl:template match="div[@class='Notes']">
+    <xsl:template match="*|@*|text()" mode="css">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="css"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="comment()" mode="css"><xsl:text>
+        </xsl:text>
+        <xsl:copy/>
+    </xsl:template>
+
+
+    <xsl:template match="div[@class='notes']">
         <h2>Notes</h2>
         <xsl:copy-of select="."/>
     </xsl:template>
 
-    <xsl:template match="div[@class='Limitations']">
+    <xsl:template match="div[@class='limitations']">
         <h2>Limitations</h2>
         <xsl:copy-of select="."/>
     </xsl:template>
 
 
-    <xsl:template match="table[@class='CSS']/tr/td[1]" priority="20">
-        <td onmouseover="showClass('{.}');"
-            onmouseout="hideClass('{.}');">
-            <xsl:value-of select="."/>
-        </td>
+
+    <xsl:template match="*[@class='description']" mode="description">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|*" mode="description"/>
+        </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="*|@*|text()">
+
+    <xsl:template match="*[@class='keyword']|a|strong" mode="description">
+        <xsl:text> </xsl:text><xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:copy-of select="text()"/>
+        </xsl:copy><xsl:text> </xsl:text>
+    </xsl:template>
+
+    <xsl:template match="*|@*" mode="description">
+        <xsl:copy>
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates mode="description"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="description">
+        <xsl:copy-of select="normalize-space(.)"/>
+    </xsl:template>
+
+    <xsl:template match="comment()" mode="description"><xsl:text>
+        </xsl:text>
+        <xsl:copy/>
+    </xsl:template>
+
+
+    <xsl:template match="*|@*">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="text()">
+        <xsl:copy-of select="normalize-space(.)"/>
+    </xsl:template>
+
     <xsl:template match="comment()"><xsl:text>
     </xsl:text>
     <xsl:copy/>
-    </xsl:template>
-
-    <xsl:template match="*|@*|text()|comment()" mode="xforms">
-        <xsl:copy>
-            <xsl:copy-of select="@*"/>
-            <xsl:apply-templates mode="xforms"/>
-        </xsl:copy>
-    </xsl:template>
-
-    <xsl:template match="code" mode="xforms" priority="10">
-        <xsl:apply-templates mode="xforms"/>
-    </xsl:template>
-
-    <xsl:template match="code[@class='model']" priority="10">
-        <xsl:apply-templates mode="xforms"/>
     </xsl:template>
 
     <xsl:template match="*" mode="escape" priority="10">

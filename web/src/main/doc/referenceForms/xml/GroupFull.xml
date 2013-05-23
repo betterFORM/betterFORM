@@ -83,9 +83,6 @@
                     <xf:input id="group1-readonly" ref="grouped-data/@readonly" incremental="true">
                         <xf:label>readonly</xf:label>
                     </xf:input>
-                    <xf:input id="group1-required" ref="grouped-data/@required" incremental="true">
-                        <xf:label>required</xf:label>
-                    </xf:input>
                     <xf:input id="group1-relevant" ref="grouped-data/@relevant" incremental="true">
                         <xf:label>relevant</xf:label>
                     </xf:input>
@@ -124,7 +121,7 @@
                 </tr>                
             </table>
         </div>
-        <div class="Limitations">
+        <div class="limitations">
             <p>There is no way to show the invalidity of a <span class="keyword">group</span> currently as the <span class="keyword">xfInvalid</span> class sits
             on the <span class="keyword">group</span> element itself.</p>
         </div>

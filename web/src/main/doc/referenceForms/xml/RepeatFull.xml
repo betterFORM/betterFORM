@@ -13,11 +13,8 @@
     <body>
         <div class="description">
             <p>
-                A repeat with no <span class="keyword">appearance</span>, 'minimal'
-                <span class="keyword">appearance</span>
-                or 'full'
-                <span class="keyword">appearance</span>
-                will be rendered
+                A repeat with <span class="keyword">no appearance</span>,
+                <span class="keyword">'minimal'</span> appearance or <span class="keyword">'full'</span> appearance will be rendered
                 vertically with labels on the left and controls on the right.
             </p>
         </div>

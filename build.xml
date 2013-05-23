@@ -65,7 +65,7 @@
             __== create optimized betterform.war file in ${target.dir}==__
         </echo>
         <!-- Create optimized JavaScript package-->
-        <ant antfile="${basedir}/resource/build-dojo.xml" inheritall="false" target="build-dojo"/>
+        <ant antfile="${basedir}/web/build-dojo.xml" inheritall="false" target="build-dojo"/>
         <!-- Create WAR for Installer -->
         <ant antfile="${basedir}/tools/installer/build-files/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="true">
             <property name="installer.target" value="${target.dir}"/>

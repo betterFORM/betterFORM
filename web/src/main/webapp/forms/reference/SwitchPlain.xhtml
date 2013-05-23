@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -24,20 +23,13 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
-                  <data xmlns="">
-                     
-                  </data>
-                  
+                  <data xmlns=""></data>
                </xf:instance>
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -50,8 +42,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d44e146" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
-                     <div data-dojo-type="dijit.Tooltip" connectId="d44e146">matches any Element that represents a XForms
+                  <td id="d85e146" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d85e146">matches any Element that represents a XForms
                         group
                         |
                         repeat
@@ -63,8 +55,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d44e164" onmouseover="showClass('xfSwitch');" onmouseout="hideClass('xfSwitch');">xfSwitch
-                     <div data-dojo-type="dijit.Tooltip" connectId="d44e164">matches an Element that represents a XForms
+                  <td id="d85e164" onmouseover="showClass('xfSwitch');" onmouseout="hideClass('xfSwitch');">xfSwitch
+                     <div data-dojo-type="dijit.Tooltip" connectId="d85e164">matches an Element that represents a XForms
                         switch
                         element
                         
@@ -72,8 +64,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d44e176" onmouseover="showClass('xfCase');" onmouseout="hideClass('xfCase');">xfCase
-                     <div data-dojo-type="dijit.Tooltip" connectId="d44e176">matches an Element that represents a XForms
+                  <td id="d85e176" onmouseover="showClass('xfCase');" onmouseout="hideClass('xfCase');">xfCase
+                     <div data-dojo-type="dijit.Tooltip" connectId="d85e176">matches an Element that represents a XForms
                         case
                         element
                         
@@ -81,8 +73,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d44e188" onmouseover="showClass('xfSelectedCase');" onmouseout="hideClass('xfSelectedCase');">xfSelectedCase
-                     <div data-dojo-type="dijit.Tooltip" connectId="d44e188">matches an Element that represents a selected XForms
+                  <td id="d85e188" onmouseover="showClass('xfSelectedCase');" onmouseout="hideClass('xfSelectedCase');">xfSelectedCase
+                     <div data-dojo-type="dijit.Tooltip" connectId="d85e188">matches an Element that represents a selected XForms
                         case
                         element
                         
@@ -90,8 +82,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d44e200" onmouseover="showClass('xfDeselectedCase');" onmouseout="hideClass('xfDeselectedCase');">xfDeselectedCase
-                     <div data-dojo-type="dijit.Tooltip" connectId="d44e200">matches an Element that represents a non-selected XForms
+                  <td id="d85e200" onmouseover="showClass('xfDeselectedCase');" onmouseout="hideClass('xfDeselectedCase');">xfDeselectedCase
+                     <div data-dojo-type="dijit.Tooltip" connectId="d85e200">matches an Element that represents a non-selected XForms
                         case
                         element
                         
@@ -130,14 +122,9 @@
          <div class="pageintro">
             <h1>XForms switch</h1>
             <div class="description">
-               
-               <p>
-                  A switch element is a container form control that allows the
-                  creation of user interfaces where the user interface can be
-                  varied based on user actions and events
-                  
+               <p>A switch element is a container form control that allows the creation of user interfaces
+                  where the user interface can be varied based on user actions and events
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -155,105 +142,59 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:group>
-               
                <xf:label class="blockLabel">Switch / Case</xf:label>
-               
                <xf:group id="menu" appearance="minimal">
-                  
                   <xf:label class="blockLabel">Triggers outside Switch / Case</xf:label>
-                  
                   <xf:trigger style="clear:none">
-                     
                      <xf:label>Case 1</xf:label>
-                     
                      <xf:toggle case="switch1-case1"></xf:toggle>
-                     
                   </xf:trigger>
-                  
                   <xf:trigger style="clear:none">
-                     
                      <xf:label>Case 2</xf:label>
-                     
                      <xf:toggle case="switch1-case2"></xf:toggle>
-                     
                   </xf:trigger>
-                  
                   <xf:trigger style="clear:none">
-                     
                      <xf:label>Case 3</xf:label>
-                     
                      <xf:toggle case="switch1-case3"></xf:toggle>
-                     
                   </xf:trigger>
-                  
                   <xf:trigger style="clear:none">
-                     
                      <xf:label>Case 4</xf:label>
-                     
                      <xf:toggle case="switch1-case4"></xf:toggle>
-                     
                   </xf:trigger>
-                  
                </xf:group>
-               
                <xf:switch id="switch1">
-                  
                   <xf:case id="switch1-case1" selected="true">
-                     
                      <div class="caseContent" style="background:#bbbbff">
-                        
                         <h2>CASE 1</h2>
-                        
                         <p>This is some content for the first case</p>
-                        
                      </div>
-                     
                   </xf:case>
-                  
                   <xf:case id="switch1-case2">
-                     
                      <div class="caseContent" style="background:#ccccff">
-                        
                         <h2>CASE 2</h2>
-                        
                         <p>This is some content for the second case</p>
-                        
                      </div>
-                     
                   </xf:case>
-                  
                   <xf:case id="switch1-case3">
-                     
                      <div class="caseContent" style="background:#ddddff">
-                        
                         <h2>CASE 3</h2>
-                        
                         <p>This is some content for the third case</p>
-                        
                      </div>
-                     
                   </xf:case>
-                  
                   <xf:case id="switch1-case4">
-                     
                      <div class="caseContent" style="background:#eeeeff">
-                        
                         <h2>CASE 4</h2>
-                        
                         <p>This is some content for the fourth case</p>
-                        
                      </div>
-                     
                   </xf:case>
-                  
                </xf:switch>
-               
-            </xf:group>
+            </xf:group> 
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:group&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:group&gt;
     &lt;xf:label class="blockLabel"&gt;Switch / Case&lt;/xf:label&gt;
     &lt;xf:group id="menu" appearance="minimal"&gt;
         &lt;xf:label class="blockLabel"&gt;Triggers outside Switch / Case&lt;/xf:label&gt;
@@ -330,5 +271,4 @@
                         }
                 );
             </script></body>
-   
 </html>

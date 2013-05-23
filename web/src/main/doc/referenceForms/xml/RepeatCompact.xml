@@ -147,7 +147,7 @@
 
             </table>
         </div>
-        <div class="Notes">
+        <div class="notes">
             The CSS class 'bfTableCol-[number of column] is automatically generated for every column in the compact
             <span class="keyword">repeat</span>.
         </div>

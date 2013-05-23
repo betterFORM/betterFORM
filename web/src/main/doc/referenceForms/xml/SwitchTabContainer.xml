@@ -156,7 +156,7 @@
                 </tr>
             </table>
         </div>
-        <div class="Notes">
+        <div class="notes">
             'bfTabContainer' class sets a fixed width in betterform.css. I you like to change the size you should
             overwrite this rule. E.g. the example above sets a height of 300px.
         </div>

@@ -35,7 +35,7 @@
                             </input1>
                         </data>
                     </xf:instance>
-<code>
+<code class="model">
                     <xf:bind nodeset="input1">
                         <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
                                  readonly="boolean-from-string(../@readonly)"
@@ -81,7 +81,7 @@
                     </xf:input>
                     <xf:trigger>
                         <xf:label>switch</xf:label>
-                        <xf:setvalue ref="input1/value" value="not(boolean-from-string(input1/value))"/>
+                        <xf:setvalue ref="input1/value" value="not(boolean-from-string(instance()/input1/value))"/>
                     </xf:trigger>
 
                 </xf:group>

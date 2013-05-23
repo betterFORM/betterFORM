@@ -5,9 +5,10 @@
 
 package de.betterform.connector.exist;
 
-import de.betterform.connector.URIResolver;
-import de.betterform.connector.http.AbstractHTTPConnector;
-import de.betterform.xml.xforms.exception.XFormsException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.exist.EXistException;
@@ -15,6 +16,7 @@ import org.exist.dom.BinaryDocument;
 import org.exist.dom.DocumentImpl;
 import org.exist.dom.QName;
 import org.exist.security.PermissionDeniedException;
+import org.exist.security.Subject;
 import org.exist.security.xacml.AccessContext;
 import org.exist.source.DBSource;
 import org.exist.source.Source;
@@ -24,14 +26,25 @@ import org.exist.storage.lock.Lock;
 import org.exist.storage.serializers.Serializer;
 import org.exist.util.MimeType;
 import org.exist.xmldb.XmldbURI;
-import org.exist.xquery.*;
-import org.exist.xquery.value.*;
+import org.exist.xquery.AnalyzeContextInfo;
+import org.exist.xquery.CompiledXQuery;
+import org.exist.xquery.ExternalModule;
+import org.exist.xquery.FunctionCall;
+import org.exist.xquery.Module;
+import org.exist.xquery.UserDefinedFunction;
+import org.exist.xquery.XPathException;
+import org.exist.xquery.XQuery;
+import org.exist.xquery.XQueryContext;
+import org.exist.xquery.value.FunctionReference;
+import org.exist.xquery.value.Item;
+import org.exist.xquery.value.NodeValue;
+import org.exist.xquery.value.Sequence;
+import org.exist.xquery.value.Type;
 import org.xml.sax.SAXException;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Map;
+import de.betterform.connector.URIResolver;
+import de.betterform.connector.http.AbstractHTTPConnector;
+import de.betterform.xml.xforms.exception.XFormsException;
 
 /**
  * This resolver is eXistdb-specific and allows resolving URIs when directly running within eXist. It does
@@ -51,46 +64,37 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
      *
      * @return a DOM node or document from the URI resolution
      * @throws de.betterform.xml.xforms.exception.XFormsException if any error occurred during link traversal.
+     * @throws EXistException 
      */
     public Object resolve() throws XFormsException {
+
         String uriString = getURI();
-        // TODO: User checken
-        // Credentials from Security Manager (Params, Header..)
-        // Subject user = BrokerPool.getInstance().getSecurityManager().authenticate(String username, String pwd)
-        // broker = pool.get(user) // authenticated broker that can be used for further requests
-        //
-        // Credentials from Session
-        // Session Attribut (Subject): _eXist_xmldb_user
-
-
-
-        Map appContext=this.getContext();
         BrokerPool pool = null;
         DBBroker broker = null;
         DocumentImpl xmlResource = null;
+        
         try {
             URI dbURI = new URI(uriString);
-            String rawFragment= dbURI.getRawFragment();
-            String fragment= dbURI.getFragment();
-            String query = dbURI.getQuery();
-            String rawquery = dbURI.getQuery();
-
-
             pool = BrokerPool.getInstance();
-            broker = pool.get(pool.getSecurityManager().getGuestSubject());
-            xmlResource = broker.getResource(XmldbURI.createInternal(dbURI.getRawPath()), Lock.READ_LOCK);
+            broker = getBroker(pool);
 
+            xmlResource = broker.getResource(XmldbURI.createInternal(dbURI.getRawPath()), Lock.READ_LOCK);
             Serializer serializer = broker.getSerializer();
 
             if(xmlResource == null) {
                 throw new XFormsException("eXist XML Resource is null");
             }
             else if(xmlResource.getResourceType() == DocumentImpl.XML_FILE){
-                return serializer.serialize(xmlResource);
+                String serialized = serializer.serialize(xmlResource);
+                if (LOGGER.isTraceEnabled()) {
+                  LOGGER.trace(serialized);
+                }
+                return serialized;
             } else if(MimeType.XQUERY_TYPE.getName().equals(xmlResource.getMetadata().getMimeType())){
+                
                 Sequence resultSequence = null;
-
                 boolean isModule = true;
+                
                 // check if the referenced resource is an XQuery
                 // TODO: parse URI to check if we have to handle an XQuery or XQuery module
                 if(isModule){
@@ -154,6 +158,20 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
             }
         }
         return null;
+    }
+
+    private DBBroker getBroker(BrokerPool pool) throws EXistException {
+      Subject subject = getSubject(pool);
+      DBBroker broker = pool.get(subject);
+      return broker;
+    }
+
+    private Subject getSubject(BrokerPool pool) {
+      Subject subject = (Subject) this.getContext().get("_eXist_xmldb_user");
+      if (null != subject) {
+        return subject;
+      }
+      return pool.getSecurityManager().getGuestSubject();
     }
 
 }

@@ -311,6 +311,7 @@
             depends="exploded-webapp-base"
             description="deploys classes and resources tree to WEB-INF/classes">
 
+        <delete dir="${webapp.dir}/WEB-INF/lib/betterform.jar"/>
         <antcall target="compile"/>
 
         <move file="${target}/classes"

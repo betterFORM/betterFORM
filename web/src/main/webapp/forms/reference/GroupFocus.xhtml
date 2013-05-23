@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -44,42 +43,26 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model id="modelChild">
-               
                <xf:instance>
-                  
                   <data xmlns=""></data>
-                  
                </xf:instance>
-               
                <xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn">
-                  
                   <xf:toggle case="c-input1"></xf:toggle>
-                  
                </xf:action>
-               
                <xf:toggle case="c-input2" ev:observer="observedGroup" ev:target="inputCase2" ev:event="DOMFocusIn"></xf:toggle>
-               
                <xf:toggle case="c-empty" ev:observer="observedGroup" ev:target="observedGroup" ev:event="DOMFocusOut"></xf:toggle>
-               
             </xf:model>
          </div>
          <div class="pageintro">
             <h1>Group Focus</h1>
             <div class="description">
-               
-               <p>
-                  Form demonstrates the
-                  <span class="keyword">observer</span> pattern for
-                  <span class="keyword">DOMFocusIn</span> and <span class="keyword">DOMFocusOut</span> events. In response to the xforms-ready event a setfocus actions is fired to set
-                  the focus into the first input within 'observed Group'
-                  
+               <p>Form demonstrates the <span class="keyword">observer</span> pattern for <span class="keyword">DOMFocusIn</span> and <span class="keyword">DOMFocusOut</span> events. In response to the xforms-ready event a setfocus actions is fired to set the
+                  focus into the first input within 'observed Group'
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -97,64 +80,43 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">    
             <xf:input id="input1" ref=".">
-               
                <xf:label>Input before observerd Group</xf:label>
-               
             </xf:input>
             <xf:group id="observedGroup" appearance="minimal">
-               
                <xf:label>Observed Group</xf:label>
-               
                <xf:input id="inputCase1" ref=".">
-                  
                   <xf:label>1</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="inputCase2" ref=".">
-                  
                   <xf:label>2</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
             <xf:switch>
-               
                <xf:case id="c-empty">
-                  
                   <p class="caseNull">No control within observed group is focused</p>
-                  
                </xf:case>
-               
                <xf:case id="c-input1">
-                  
                   <p class="caseOne">Input 1 has focus</p>
-                  
                </xf:case>
-               
                <xf:case id="c-input2">
-                  
                   <p class="caseTwo">Input 2 has focus</p>
-                  
                </xf:case>
-               
             </xf:switch>
             <xf:input id="input2" ref=".">
-               
                <xf:label>Input after observed Group</xf:label>
-               
             </xf:input>
+            
+            <!--Action within UI listening on Model action-->
             <xf:action ev:observer="modelChild" ev:event="xforms-ready">
-               
                <xf:setfocus control="inputCase1"></xf:setfocus>
-               
-            </xf:action>
+            </xf:action> 
          </div>
          <div class="MIPS"></div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:model id="modelChild"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:model id="modelChild"&gt;
     &lt;xf:instance&gt;
         &lt;data&gt;&lt;/data&gt;
     &lt;/xf:instance&gt;
@@ -200,7 +162,7 @@
 &lt;/xf:action&gt;
 </code></pre></div>
          <h2>Limitations</h2>
-         <div class="Limitations">
+         <div class="limitations">
             
          </div>
       </div><script type="text/javascript">
@@ -231,5 +193,4 @@
                         }
                 );
             </script></body>
-   
 </html>

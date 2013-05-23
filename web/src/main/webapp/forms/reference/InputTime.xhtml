@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -8,41 +7,24 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <input1 constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value>21:22:23</value>
-                        
                      </input1>
-                     
                   </data>
-                  
                </xf:instance>
-               
                <xf:bind nodeset="input1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)" type="time"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -55,8 +37,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d23e150" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d23e150">matches an Element that represents a XForms input element</div>
+                  <td id="d43e150" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d43e150">matches an Element that represents a XForms input element</div>
                   </td>
                </tr>
                <tr>
@@ -172,20 +154,12 @@
          <div class="pageintro">
             <h1>Time input control</h1>
             <div class="description">
-               
-               <p>
-                  This form control enables free-form data entry or a user
-                  interface component appropriate to the datatype of the bound
-                  node.
-                  
+               <p>This form control enables free-form data entry or a user interface component appropriate
+                  to the datatype of the bound node.
                </p>
-               
-               <p>
-                  An input with an appearance="bf:time" is rendered as a 3 slot time control. The value
+               <p>An input with an appearance="bf:time" is rendered as a 3 slot time control. The value
                   may also be be typed in directly.
-                  
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -203,79 +177,49 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:input id="input1" ref="input1/value" appearance="bf:dropdowntime" incremental="true">
-               
                <xf:label>time1:</xf:label>
-               
                <xf:hint>Hint for this input</xf:hint>
-               
                <xf:help>help for input1</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
             </xf:input>
             <xf:input id="input2" ref="input1/value" appearance="bf:timetextbox" incremental="true">
-               
                <xf:label>time2:</xf:label>
-               
                <xf:hint>Hint for this input</xf:hint>
-               
                <xf:help>help for input1</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
-            </xf:input>
-            <xf:output ref="input1/value">
-               
-               <xf:label>CurrentValue: </xf:label>
-               
-            </xf:output>
+            </xf:input> 
+            <div class="output">
+               <xf:output ref="input1/value">
+                  <xf:label>CurrentValue:</xf:label>
+               </xf:output>
+            </div>
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-required" ref="input1/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
                <xf:trigger>
-                  
                   <xf:label>now</xf:label>
-                  
                   <xf:setvalue ref="input1/value" value="substring-before(current-time(),'.')"></xf:setvalue>
-                  
                </xf:trigger>
-               
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:input id="input1" ref="input1/value" appearance="bf:dropdowntime" incremental="true"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:input id="input1" ref="input1/value" appearance="bf:dropdowntime" incremental="true"&gt;
     &lt;xf:label&gt;time1:&lt;/xf:label&gt;
     &lt;xf:hint&gt;Hint for this input&lt;/xf:hint&gt;
     &lt;xf:help&gt;help for input1&lt;/xf:help&gt;
@@ -317,5 +261,4 @@
                         }
                 );
             </script></body>
-   
 </html>

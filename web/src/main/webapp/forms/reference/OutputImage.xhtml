@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,43 +15,24 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
-               
                <xf:instance>
-                  
                   <data xmlns="">
-                     
                      <output1 constraint="true" readonly="false" required="false" relevant="true">
-                        
                         <value>images/bf_logo_482x195.png</value>
-                        
                      </output1>
-                     
                   </data>
-                  
                </xf:instance>
-               
-               
                <xf:bind nodeset="output1">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -65,8 +45,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d29e135" onmouseover="showClass('xfOutput');" onmouseout="hideClass('xfOutput');">xfOutput
-                     <div data-dojo-type="dijit.Tooltip" connectId="d29e135">matches an Element that represents a XForms
+                  <td id="d55e135" onmouseover="showClass('xfOutput');" onmouseout="hideClass('xfOutput');">xfOutput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d55e135">matches an Element that represents a XForms
                         output
                         element
                         
@@ -186,27 +166,11 @@
          <div class="pageintro">
             <h1>Image output control</h1>
             <div class="description">
-               
-               <p>
-                  This form control renders content based in part on instance
-                  data, but it provides no means for entering or changing data.
-                  
+               <p>This form control renders content based in part on instance data, but it provides
+                  no means for entering or changing data.
                </p>
-               
-               <p>
-                  If an
-                  <span class="keyword">output</span>
-                  uses the
-                  <span class="keyword">mediatype</span>
-                  attribute
-                  with a value of<span class="keyword">image/gif</span>,
-                  <span class="keyword">image/png</span>
-                  or
-                  <span class="keyword">image/jpg</span>
-                  the bound data are rendered as an image.
-                  
+               <p>If an <span class="keyword">output</span> uses the <span class="keyword">mediatype</span> attribute with a value of <span class="keyword">image/gif</span> , <span class="keyword">image/png</span> or <span class="keyword">image/jpg</span> the bound data are rendered as an image.
                </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -224,54 +188,34 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:output id="output1" ref="output1/value" mediatype="image/gif" incremental="true">
-               
                <xf:label>a label:</xf:label>
-               
                <xf:hint>a Hint for this control</xf:hint>
-               
                <xf:help>help for output1</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
-            </xf:output>
+            </xf:output> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="output1-readonly" ref="output1/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="output1-required" ref="output1/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="output1-relevant" ref="output1/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="output1-valid" ref="output1/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:instance&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:instance&gt;
     &lt;data&gt;
         &lt;output1 constraint="true" readonly="false" required="false" relevant="true"&gt;
             &lt;value&gt;images/bf_logo_482x195.png&lt;/value&gt;
@@ -287,7 +231,7 @@
 &lt;/xf:output&gt;
 </code></pre></div>
          <h2>Notes</h2>
-         <div class="Notes">
+         <div class="notes">
             
             <p>
                Though the Model Item Properties
@@ -338,5 +282,4 @@
                         }
                 );
             </script></body>
-   
 </html>

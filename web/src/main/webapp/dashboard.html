@@ -187,8 +187,8 @@
 
 	  <script type="text/javascript">
             require(["dojox/fx","dojo/_base/fx","dojo/fx","dojo/fx/easing", "dojo/dom-style","dojo/dom","dojo/query","dojo/dom-attr",
-                    "dijit/form/DropDownButton","dijit/TooltipDialog", "dijit/form/TextBox", "dijit/form/Button","dojo/parser", "dojo/_base/window"],
-                    function(fx, baseFx,coreFx, easing, domStyle,dom,query,domAttr,DropDownButton,TooltipDialog,TextBox,Button,parser,win){
+                    "dijit/form/DropDownButton","dijit/TooltipDialog", "dijit/form/TextBox", "dijit/form/Button","dojo/parser", "dojo/_base/window","dijit/registry"],
+                    function(fx, baseFx,coreFx, easing, domStyle,dom,query,domAttr,DropDownButton,TooltipDialog,TextBox,Button,parser,win,registry){
                 dojo.config.dojoBlankHtmlUrl = '/blank.html';
 
                 win.animateOne = function () {
@@ -274,7 +274,7 @@
                     var popups = query(".dijitPopup .dijitTooltipDialog");
                     popups.forEach(function(item) {
                         // console.debug("Dijit Popup item: ", item);
-                        var popUpDijit = dijit.byId(domAttr.get(item,"id"));
+                        var popUpDijit = registry.byId(domAttr.get(item,"id"));
                         // console.debug("destroy popup widget: ",popUpDijit);
                         popUpDijit.destroy();
                     });

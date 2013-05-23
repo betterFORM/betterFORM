@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
-   
    <head>
       <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
       
@@ -16,86 +15,44 @@
       <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
       <link rel="stylesheet" type="text/css" href="reference.css" />
    </head>
-   
    <body class="soria" style="margin:30px">
       <div id="xforms">
          <div style="display:none">
             <xf:model>
-               
-               <!--<code>-->
-               
                <xf:instance id="instance-1">
-                  
                   <data xmlns="">
-                     
                      <select constraint="true" readonly="false" required="true" relevant="true">
-                        
                         <value>AX DZ</value>
-                        
                      </select>
-                     
                   </data>
-                  
                </xf:instance>
-               
-               <!--</code>-->
-               
                <xf:bind nodeset="select">
-                  
                   <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)"></xf:bind>
-                  
                   <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@required" type="boolean"></xf:bind>
-                  
                   <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
-                  
                </xf:bind>
-               
-               
                <xf:instance id="codes">
-                  
                   <countrylist xmlns="">
-                     
                      <country>
-                        
                         <country-name>Afghanistan</country-name>
-                        
                         <code>AF</code>
-                        
                      </country>
-                     
                      <country>
-                        
                         <country-name>Land Island</country-name>
-                        
                         <code>AX</code>
-                        
                      </country>
-                     
                      <country>
-                        
                         <country-name>Albania</country-name>
-                        
                         <code>AL</code>
-                        
                      </country>
-                     
                      <country>
-                        
                         <country-name>Algeria</country-name>
-                        
                         <code>DZ</code>
-                        
                      </country>
-                     
                   </countrylist>
-                  
                </xf:instance>
-               
-               
             </xf:model>
          </div>
          <div class="CSS">
@@ -108,8 +65,8 @@
                   </th>
                </tr>
                <tr>
-                  <td id="d41e179" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
-                     <div data-dojo-type="dijit.Tooltip" connectId="d41e179">matches an Element that represents a XForms
+                  <td id="d79e179" onmouseover="showClass('xfSelect');" onmouseout="hideClass('xfSelect');">xfSelect
+                     <div data-dojo-type="dijit.Tooltip" connectId="d79e179">matches an Element that represents a XForms
                         select
                         element
                         
@@ -117,8 +74,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d41e191" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
-                     <div data-dojo-type="dijit.Tooltip" connectId="d41e191">matches all checkbox labels of the element that represents a XForms
+                  <td id="d79e191" onmouseover="showClass('xfCheckBoxLabel');" onmouseout="hideClass('xfCheckBoxLabel');">xfCheckBoxLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d79e191">matches all checkbox labels of the element that represents a XForms
                         select
                         element
                         
@@ -126,8 +83,8 @@
                   </td>
                </tr>
                <tr>
-                  <td id="d41e203" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
-                     <div data-dojo-type="dijit.Tooltip" connectId="d41e203">matches all checkbox values of the element that represents a XForms
+                  <td id="d79e203" onmouseover="showClass('xfCheckBoxValue');" onmouseout="hideClass('xfCheckBoxValue');">xfCheckBoxValue
+                     <div data-dojo-type="dijit.Tooltip" connectId="d79e203">matches all checkbox values of the element that represents a XForms
                         select
                         element
                         
@@ -247,24 +204,9 @@
          <div class="pageintro">
             <h1>select control rendered as a group of checkboxes</h1>
             <div class="description">
-               
-               <p>
-                  This form control allows the user to make multiple selections from a set of choices.
-                  
-                  
+               <p>This form control allows the user to make multiple selections from a set of choices.</p>
+               <p>A <span class="keyword">select</span> with <span class="keyword">appearance</span> 'full' is rendered as a list of checkboxes.
                </p>
-               
-               
-               <p>
-                  A
-                  <span class="keyword">select</span>
-                  with
-                  <span class="keyword">appearance</span>
-                  'full' is rendered
-                  as a list of checkboxes.
-                  
-               </p>
-               
             </div>
             <table id="references">
                <tr>
@@ -282,62 +224,38 @@
             </table>
          </div>
          <h2>Example</h2>
-         <div class="Section sample">
+         <div class="Section sample">  
             <xf:select id="select" ref="select/value" appearance="full" incremental="true">
-               
                <xf:label>a combobox select</xf:label>
-               
                <xf:hint>a Hint for this control</xf:hint>
-               
                <xf:help>help for select</xf:help>
-               
                <xf:alert>invalid</xf:alert>
-               
                <xf:itemset nodeset="instance('codes')/country">
-                  
                   <xf:label ref="country-name"></xf:label>
-                  
                   <xf:value ref="code"></xf:value>
-                  
                </xf:itemset>
-               
-            </xf:select>
+            </xf:select> 
          </div>
          <div class="MIPS">
-            
             <xf:group appearance="full">
-               
                <xf:label></xf:label>
-               
                <xf:input id="select-readonly" ref="select/@readonly" incremental="true">
-                  
                   <xf:label>readonly</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="select-required" ref="select/@required" incremental="true">
-                  
                   <xf:label>required</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="select-relevant" ref="select/@relevant" incremental="true">
-                  
                   <xf:label>relevant</xf:label>
-                  
                </xf:input>
-               
                <xf:input id="select-valid" ref="select/@constraint" incremental="true">
-                  
                   <xf:label>valid</xf:label>
-                  
                </xf:input>
-               
             </xf:group>
-            
          </div>
          <h2>XForms Markup</h2>
-         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">&lt;xf:instance id="codes"&gt;
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:instance id="codes"&gt;
     &lt;countrylist&gt;
         &lt;country&gt;
             &lt;country-name&gt;Afghanistan&lt;/country-name&gt;
@@ -397,5 +315,4 @@
                         }
                 );
             </script></body>
-   
 </html>
