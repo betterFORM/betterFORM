@@ -7,8 +7,8 @@ package de.betterform.connector.exist;
 
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.http.AbstractHTTPConnector;
-import de.betterform.connector.http.URIUtils;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
+import de.betterform.connector.util.URIUtils;
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;

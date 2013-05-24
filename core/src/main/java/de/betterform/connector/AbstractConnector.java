@@ -5,8 +5,8 @@
 
 package de.betterform.connector;
 
-import de.betterform.connector.http.URIUtils;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
+import de.betterform.connector.util.URIUtils;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;

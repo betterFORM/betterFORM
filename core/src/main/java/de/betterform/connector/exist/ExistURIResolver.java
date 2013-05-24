@@ -5,9 +5,8 @@
 
 package de.betterform.connector.exist;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,8 +14,6 @@ import org.exist.EXistException;
 import org.exist.dom.BinaryDocument;
 import org.exist.dom.DocumentImpl;
 import org.exist.dom.QName;
-import org.exist.security.PermissionDeniedException;
-import org.exist.security.Subject;
 import org.exist.security.xacml.AccessContext;
 import org.exist.source.DBSource;
 import org.exist.source.Source;
@@ -32,7 +29,6 @@ import org.exist.xquery.ExternalModule;
 import org.exist.xquery.FunctionCall;
 import org.exist.xquery.Module;
 import org.exist.xquery.UserDefinedFunction;
-import org.exist.xquery.XPathException;
 import org.exist.xquery.XQuery;
 import org.exist.xquery.XQueryContext;
 import org.exist.xquery.value.FunctionReference;
@@ -40,10 +36,10 @@ import org.exist.xquery.value.Item;
 import org.exist.xquery.value.NodeValue;
 import org.exist.xquery.value.Sequence;
 import org.exist.xquery.value.Type;
-import org.xml.sax.SAXException;
 
 import de.betterform.connector.URIResolver;
 import de.betterform.connector.http.AbstractHTTPConnector;
+import de.betterform.connector.util.URIUtils;
 import de.betterform.xml.xforms.exception.XFormsException;
 
 /**
@@ -76,7 +72,7 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
         try {
             URI dbURI = new URI(uriString);
             pool = BrokerPool.getInstance();
-            broker = getBroker(pool);
+            broker = ExistUtils.getBroker(pool, getContext());
 
             xmlResource = broker.getResource(XmldbURI.createInternal(dbURI.getRawPath()), Lock.READ_LOCK);
             Serializer serializer = broker.getSerializer();
@@ -93,30 +89,29 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
             } else if(MimeType.XQUERY_TYPE.getName().equals(xmlResource.getMetadata().getMimeType())){
                 
                 Sequence resultSequence = null;
-                boolean isModule = true;
+                Map<String, String> queryParameter = URIUtils.getQueryParameters(dbURI);
+                boolean isModule = URIUtils.hasParameterFromMap(queryParameter, "type", "module");
                 
-                // check if the referenced resource is an XQuery
-                // TODO: parse URI to check if we have to handle an XQuery or XQuery module
                 if(isModule){
-
                     XQueryContext tempContext = new XQueryContext(pool, AccessContext.REST);
                     tempContext.setModuleLoadPath(xmlResource.getCollection().getURI().toString());
                     Module module = tempContext.importModule(null, null, "xmldb:exist://"+dbURI.getRawPath());
-
-                    // UserDefinedFunction udf = tempContext.resolveFunction(new QName("test", module.getNamespaceURI(),module.getDefaultPrefix()),0);
-                    // TODO: replace 0 with calculated quantity
-                    UserDefinedFunction udf = ((ExternalModule)module).getFunction(new QName("test", module.getNamespaceURI(), module.getDefaultPrefix()), 0, tempContext);
+                    
+                    if (!URIUtils.hasParameterFromMap(queryParameter, "function")) {
+                      throw new XFormsException("No Function provided as Query Parameter");
+                    }
+                    String function = queryParameter.get("function");
+                    QName qname = new QName(function, module.getNamespaceURI(), module.getDefaultPrefix());
+                    int arity = ExistUtils.calculateArity(queryParameter);
+                    UserDefinedFunction udf = ((ExternalModule)module).getFunction(qname, arity, tempContext);
 
                     final FunctionReference fnRef = new FunctionReference(new FunctionCall(tempContext, udf));
                     fnRef.analyze(new AnalyzeContextInfo());
-                    // fill new Sequence[]{} with function parameters in correct order
-                    // can be only
-                    // new StringValue("hallo")
-                    resultSequence = fnRef.evalFunction(null, null, new Sequence[]{});
-                    // TODO: reset should be called on fnRef
+                    Sequence[] parameters = ExistUtils.getFunctionParameters(queryParameter).toArray(new Sequence[]{});
+                    resultSequence = fnRef.evalFunction(null, null, parameters);
                     udf.resetState(true);
-
-                }else {
+                    
+                } else {
                     Source source = new DBSource(broker, ((BinaryDocument)xmlResource),true);
                     XQuery xquery = broker.getXQueryService();
                     XQueryContext context = xquery.newContext(AccessContext.REST);
@@ -125,7 +120,7 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
                     CompiledXQuery compiledXQuery = xquery.compile(context, source);
                     resultSequence = xquery.execute(compiledXQuery, Sequence.EMPTY_SEQUENCE);
                 }
-                // verify results
+
                 if(resultSequence == null || resultSequence.getItemCount() != 1){
                     throw new XFormsException("XML is not well formed");
                 } else {
@@ -137,18 +132,10 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
                     }
                 }
             }
-        } catch (EXistException e) {
-            throw new XFormsException("eXistException:", e);
-        } catch (PermissionDeniedException e) {
-            throw new XFormsException("PermissionDeniedException:", e);
-        } catch (SAXException e) {
-            throw new XFormsException("SaxException:", e);
-        } catch (URISyntaxException e) {
-            throw new XFormsException("invalid URI " + uriString);
-        } catch (XPathException e) {
-            throw new XFormsException("XPathException: " + uriString);
-        } catch (IOException e) {
-            throw new XFormsException("IOException: " + uriString);
+
+        } catch (Exception e) {
+            throw new XFormsException(e.getMessage(), e);
+
         } finally {
             if(pool != null)  {
                 if(xmlResource != null) {
@@ -158,20 +145,6 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
             }
         }
         return null;
-    }
-
-    private DBBroker getBroker(BrokerPool pool) throws EXistException {
-      Subject subject = getSubject(pool);
-      DBBroker broker = pool.get(subject);
-      return broker;
-    }
-
-    private Subject getSubject(BrokerPool pool) {
-      Subject subject = (Subject) this.getContext().get("_eXist_xmldb_user");
-      if (null != subject) {
-        return subject;
-      }
-      return pool.getSecurityManager().getGuestSubject();
     }
 
 }
