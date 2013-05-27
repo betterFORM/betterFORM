@@ -19,7 +19,7 @@
             <version>1.6</version>
         </javac>
 
-        <dojo>dojo-release-1.8.3-src</dojo>
+        <dojo>dojo-release-1.7.2-src-patched</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
         <ckeditor>ckeditor_3.6.3</ckeditor>
         <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
