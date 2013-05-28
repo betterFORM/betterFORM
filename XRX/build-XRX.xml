@@ -189,7 +189,7 @@ Error: eXist is not installed in ${eXist.home}.
         </antcall>
   <!--        <antcall target="db.stop-eXist"/> -->
 
-        <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true" overwrite="true"/>
+        <copy file="${overwrites.dir}/webapp/dashboard.html" tofile="${eXist.home}/webapp/dashboard.html" overwrite="true"/>
     </target>
 
     <target name="install-forms" description="install reference and demo forms into db, eXist must(!) run">
