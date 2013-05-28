@@ -5,120 +5,113 @@
 
 package de.betterform.connector.exist;
 
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.SubmissionHandler;
-import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
-import de.betterform.connector.util.URIUtils;
-import de.betterform.xml.xforms.XFormsConstants;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.Submission;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Node;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Map;
 
 /**
- *  This handler submits instance data to an eXistdb instance via API.
+ * This handler submits instance data to an eXistdb instance via API.
  */
-public class ExistSubmissionHandler extends AbstractHTTPConnector implements SubmissionHandler {
-    /**
-     * The logger.
-     */
-    private static Log LOGGER = LogFactory.getLog(ExistSubmissionHandler.class);
+@SuppressWarnings({"unchecked", "rawtypes"})
+public class ExistSubmissionHandler extends AbstractConnector implements SubmissionHandler {
 
-    /**
-     *
-     *
-     * @param submission the submission issuing the request.
-     * @param instance   the instance data to be serialized and submitted.
-     * @return a map holding the response mime-type and the response stream.
-     * @throws de.betterform.xml.xforms.exception.XFormsException if any error occurred during submission.
-     */
-    public Map submit(Submission submission, Node instance) throws XFormsException {
-        try {
-            //in case we need the context for a connection or something...
-//            Map context = submission.getContainerObject().getProcessor().getContext();
+  private static Log LOGGER = LogFactory.getLog(ExistSubmissionHandler.class);
+  
+  /**
+   * {@inheritDoc}
+   */
+  public Map submit(Submission submission, Node instance) throws XFormsException {
+    try {
 
+      setContext(submission.getContainerObject().getProcessor().getContext());
 
+      Method method = Method.valueOf(submission.getMethod().toLowerCase());
 
-            String method = submission.getMethod();
+      String mediatype = "application/xml";
+      if (submission.getMediatype() != null) {
+        mediatype = submission.getMediatype();
+      }
+      
+      String encoding = submission.getEncoding();
+      if (submission.getEncoding() == null) {
+        encoding = getDefaultEncoding();
+      }
 
-            String mediatype = "application/xml";
-            if (submission.getMediatype() != null) {
-                mediatype = submission.getMediatype();
-            }
+      SerializerRequestWrapper wrapper = new SerializerRequestWrapper(new ByteArrayOutputStream());
+      serialize(submission, instance, wrapper);
+      ByteArrayOutputStream stream = (ByteArrayOutputStream) wrapper.getBodyStream();
 
-            String encoding = submission.getEncoding();
-            if (submission.getEncoding() == null) {
-                encoding = getDefaultEncoding();
-            }
+      boolean hasPayload = ! "".equals(stream.toString());
 
-            SerializerRequestWrapper wrapper = new SerializerRequestWrapper(new ByteArrayOutputStream());
-            serialize(submission, instance, wrapper);
-            ByteArrayOutputStream stream = (ByteArrayOutputStream) wrapper.getBodyStream();
-
-            /*
-             * Some extension mechanism here could be handy 
-             */
-             boolean streamNotEmpty = !("".equals(stream.toString()));
-            // HTTP POST
-            if (method.equals("post")) {
-                if(streamNotEmpty){
-//                    post(getURI(), stream.toString(encoding), mediatype, encoding);
-                }
-                else {
-//                    post(getURI(), mediatype, encoding);
-                }
-            }
-
-            // GET
-            else if (method.equals("get")) {
-                if(URIUtils.getURIWithoutFragment(getURI()).indexOf("?") == -1 && streamNotEmpty){
-//                    get(URIUtils.getURIWithoutFragment(getURI()) + "?" + stream.toString(encoding));
-                }else if(streamNotEmpty){
-//                    get(URIUtils.getURIWithoutFragment(getURI()) + "&" + stream.toString(encoding));
-                }else{
-//                    get(URIUtils.getURIWithoutFragment(getURI()));
-                }
-            }
-            // PUT
-            else if (method.equals("put")) {
-                if(streamNotEmpty){
-//                    put(getURI(), stream.toString(encoding), mediatype, encoding);
-                }
-                else {
-//                    put(getURI(), mediatype, encoding);
-                }
-            }
-            // HTTP DELETE
-            else if (method.equals("delete")) {
-            	if(getURI().indexOf("?") == -1 && streamNotEmpty){
-//                    delete(getURI() + "?" + stream.toString(encoding));
-                }else if(streamNotEmpty){
-//                	delete(getURI() + "&" + stream.toString(encoding));
-                }else {
-//                    delete(getURI());
-                }
-            }
-            else {
-                throw new XFormsException("submission method '" + method + "' not supported");
-            }
-
-            Map response = getResponseHeader();
-            response.put(XFormsProcessor.SUBMISSION_RESPONSE_STREAM, getResponseBody());
-            response.put(XFormsConstants.RESPONSE_STATUS_CODE, String.valueOf(statusCode));
-            response.put(XFormsConstants.RESPONSE_REASON_PHRASE, reasonPhrase);
-
-            return response;
-        } catch (Exception e) {
-            throw new XFormsException(e);
-        }
+      switch (method) {
+        case get:
+          if (hasPayload && LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Ignoring submission with payload for method " + Method.get);
+          }
+          return doGet(getURI(), mediatype, encoding);
+        case post:
+          if (!hasPayload && LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Ignoring submission using method " + Method.post + " without payload.");
+          }
+          doPost(getURI(), mediatype, encoding, stream);
+        case put:
+          if (!hasPayload && LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Ignoring submission using method " + Method.put + " without payload.");
+          }
+          return doPut(getURI(), mediatype, encoding, stream);
+        case delete:
+          if (hasPayload && LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Ignoring submission with payload for method " + Method.delete);
+          }
+          return doDelete(getURI(), mediatype, encoding);  
+        default:
+          throw new XFormsException("submission method '" + method + "' not supported");
+      }
+    } catch (Exception e) {
+      throw new XFormsException(e);
     }
+  }
 
+  private Map<String, Object> doDelete(String uri, String mediatype, String encoding) throws Exception {
+    boolean result = ExistUtils.deleteExistResource(uri, getContext());
+    Document doc = DOMUtil.parseString("<" + result + "/>", true, false);
+    
+    Map<String, Object> response = new HashMap<String, Object>();
+    response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, doc);
+    
+    return response;
+  }
+
+  private Map<String, Object> doPut(String uri, String mediatype, String encoding, ByteArrayOutputStream stream) {
+    return null;
+  }
+
+  private Map<String, Object> doPost(String uri, String mediatype, String encoding, ByteArrayOutputStream stream) {
+    return null;
+  }
+
+  private Map<String, Object> doGet(String uri, String mediatype, String encoding) throws Exception{
+    
+    Object result = ExistUtils.getExistResource(uri, getContext());
+    Document doc = DOMUtil.parseString((String) result, true, false);
+    
+    Map<String, Object> response = new HashMap<String, Object>();
+    response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, doc);
+    
+    return response;
+  }
 
 }
-
-//end of class
