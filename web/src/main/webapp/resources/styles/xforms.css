@@ -1,1 +1,108 @@
-.xfDisabled iframe,.xfDisabled label,.xfDisabled label,.xfDisabled .xfValue,.xfDisabled span,.xfDisabled .xfGroupLabel{display:none}.xfReadWrite .xfValue a:hover,.xfReadWrite .xfValue a:focus,.xfReadWrite .xfValue a:link,.xfReadWrite .xfValue a:visited,.xfReadWrite .xfValue a:active{color:#444}.xfReadOnly .xfValue a:focus,.xfReadOnly .xfValue a:hover,.xfReadOnly .xfValue a:link,.xfReadOnly .xfValue a:visited,.xfReadOnly .xfValue a:active{color:#e6e6e6;border:0}.xfReadOnly>.widgetContainer>.xfValue a,.xfReadOnly>.widgetContainer>.xfValue .dijitButtonNode,.xfReadOnly>.widgetContainer>.xfValue{background:#e6e6e6 url(../images/buttonDisabled.png) repeat-x scroll center top;border-color:#d5d5d5 #d5d5d5 #bdbdbd;cursor:not-allowed!important}.xfRequired>.xfLabel:after,.xfRequired>.bfTableLabel:after{content:'*';color:#8b0000}.xfOutput.xfRequired>.xfLabel:after,.xfOutput.xfRequired>.bfTableLabel:after{content:''}.xfRequired .xfValue .xfLabel{padding-left:0;font-weight:normal}.xfRequiredEmpty .xfValue{border:thin solid #8b0000}.xfSelectOpen .xfValue{width:100%}.xfControl{display:inline-block}.xfRepeatPrototype,.xfSelectorPrototype,.xfCompactRepeat td .xfDisabled{display:none}.xfMinimalRepeat{display:block}.xfMinimalRepeat .xfRepeatItem,.xfMinimalRepeat .xfRepeatIndex{float:left;clear:none}.xfSwitch .xfSelectedCase{display:inherit}.xfSwitch .xfDeselectedCase{display:none}.xfFullSwitch .caFillerTab{overflow:hidden}.xfTextarea .dijitEditor{background:white}
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+/* ***************************************************************************** */
+/* ************** XFORMS CSS STYLESHEET  *************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ****************** GENERAL XFORMS MIP AND COMMON-CHILD STYLES *************** */
+/* ***************************************************************************** */
+/*
+    The rules contained in this stylesheet have importance for the execution
+    of XForms logic such as hiding/showing non-relevant/relevant elements.
+
+    You may change the rendering of such styles but should do so by overwriting
+    these rules in your own stylesheet which you import in the document or by
+    inline style rules defined in the document.
+*/
+.xfDisabled iframe,
+.xfDisabled label,
+.xfDisabled label,
+.xfDisabled .xfValue,
+.xfDisabled span,
+.xfDisabled .xfGroupLabel {
+  display: none;
+}
+.xfReadWrite .xfValue a:hover,
+.xfReadWrite .xfValue a:focus,
+.xfReadWrite .xfValue a:link,
+.xfReadWrite .xfValue a:visited,
+.xfReadWrite .xfValue a:active {
+  color: #444444;
+}
+.xfReadOnly .xfValue a:focus,
+.xfReadOnly .xfValue a:hover,
+.xfReadOnly .xfValue a:link,
+.xfReadOnly .xfValue a:visited,
+.xfReadOnly .xfValue a:active {
+  color: #e6e6e6;
+  border: 0;
+}
+.xfReadOnly > .widgetContainer > .xfValue a,
+.xfReadOnly > .widgetContainer > .xfValue .dijitButtonNode,
+.xfReadOnly > .widgetContainer > .xfValue {
+  background: #e6e6e6 url(../images/buttonDisabled.png) repeat-x scroll center top;
+  border-color: #D5D5D5 #D5D5D5 #BDBDBD;
+  cursor: not-allowed !important;
+}
+/*********** styles character used for signaling 'required' (normally '*') ***********/
+.xfRequired > .xfLabel:after,
+.xfRequired > .bfTableLabel:after {
+  content: '*';
+  color: #8b0000;
+}
+.xfOutput.xfRequired > .xfLabel:after,
+.xfOutput.xfRequired > .bfTableLabel:after {
+  content: '';
+}
+.xfRequired .xfValue .xfLabel {
+  /*background:url(../images/required.gif) no-repeat left top;*/
+
+  padding-left: 0px;
+  font-weight: normal;
+}
+.xfRequiredEmpty .xfValue {
+  border: thin solid #8b0000;
+}
+.xfSelectOpen .xfValue {
+  width: 100%;
+}
+.xfControl {
+  display: inline-block;
+}
+/* ***************************************************************************** */
+/* **************************** REPEAT STYLES  ********************************* */
+/* ***************************************************************************** */
+.xfRepeatPrototype,
+.xfSelectorPrototype,
+.xfCompactRepeat td .xfDisabled {
+  display: none;
+}
+.xfRepeatSelector {
+  /*float: left;*/
+
+}
+.xfMinimalRepeat {
+  display: block;
+}
+.xfMinimalRepeat .xfRepeatItem,
+.xfMinimalRepeat .xfRepeatIndex {
+  float: left;
+  clear: none;
+}
+/* ***************************************************************************** */
+/* **************************** SWITCH STYLES ********************************** */
+/* ***************************************************************************** */
+.xfSwitch .xfSelectedCase {
+  display: inherit;
+}
+.xfSwitch .xfDeselectedCase {
+  display: none;
+}
+.xfFullSwitch .caFillerTab {
+  overflow: hidden;
+}
+.xfTextarea .dijitEditor {
+  background: white;
+}
