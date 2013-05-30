@@ -6,6 +6,6 @@ module namespace testdata="http://www.betterform.de/connector/module";
 
 declare function testdata:test() {
     <data>
-        <item>XQuery Module</item>    
+        <item>testdata.xqm - test()</item>    
     </data>
 };
