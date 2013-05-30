@@ -33,13 +33,13 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
      * @throws de.betterform.xml.xforms.exception.XFormsException if any error occurred during link traversal.
      * @throws EXistException 
      */
+    @SuppressWarnings("unchecked")
     public Object resolve() throws XFormsException {
-
         String uriString = getURI();
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("resolving uri '" + uriString + "'");
+        }
         return ExistUtils.getExistResource(uriString, getContext());
     }
 
 }
-
-//end of class
-

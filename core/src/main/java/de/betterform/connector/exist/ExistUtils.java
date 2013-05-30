@@ -1,19 +1,14 @@
 package de.betterform.connector.exist;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.exist.EXistException;
 import org.exist.collections.Collection;
 import org.exist.dom.BinaryDocument;
 import org.exist.dom.DocumentImpl;
 import org.exist.dom.QName;
-import org.exist.security.Subject;
 import org.exist.security.xacml.AccessContext;
 import org.exist.source.DBSource;
 import org.exist.source.Source;
@@ -21,9 +16,7 @@ import org.exist.storage.BrokerPool;
 import org.exist.storage.DBBroker;
 import org.exist.storage.lock.Lock;
 import org.exist.storage.serializers.Serializer;
-import org.exist.storage.txn.TransactionManager;
 import org.exist.storage.txn.Txn;
-import org.exist.util.MimeType;
 import org.exist.xmldb.XmldbURI;
 import org.exist.xquery.AnalyzeContextInfo;
 import org.exist.xquery.CompiledXQuery;
@@ -39,23 +32,44 @@ import org.exist.xquery.value.NodeValue;
 import org.exist.xquery.value.Sequence;
 import org.exist.xquery.value.StringValue;
 import org.exist.xquery.value.Type;
+import org.w3c.dom.Document;
 
 import de.betterform.connector.util.URIUtils;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
 
 public class ExistUtils {
-  
-  private static Log LOGGER = LogFactory.getLog(ExistUtils.class);
 
-  public static int calculateArity(Map<String, String> queryParameter) {
+  private static final String EXIST_PROTOCOLL = "xmldb:exist://";
+  public static final String URL_PARAM_FUNCTION = "function";
+  public static final String URL_PARAM_TYPE = "type";
+  public static final String URL_PARAM_TYPE_MODULE = "module";
+
+  public static int getXQueryFunctionArity(Map<String, String> queryParameter) {
     int i = 0;
     for (String key : queryParameter.keySet()) {
-      if (key.equals("type") || key.equals("function")) {
+      if (isTypeOrFunctionParameter(key)) {
         continue;
       }
       ++i;
     }
     return i;
+  }
+  
+  public static ExistResourceType getExistResourceType(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Collection collection) throws Exception {
+    
+    if (null == xmlResource && null == collection) {
+      throw new XFormsException("eXist resource is null");
+    }
+    
+    if (collection != null) {
+      return ExistResourceType.COLLECTION;
+    } else if (xmlResource.getResourceType() == DocumentImpl.XML_FILE) {
+      return ExistResourceType.XML;
+    } else if (xmlResource.getResourceType() == DocumentImpl.BINARY_FILE) {
+      return ExistResourceType.BINARY;
+    }
+    throw new XFormsException("Undefined eXist resource");
   }
 
   public static List<Sequence> getAsFunctionParameters(Map<String, String> queryParameter) {
@@ -65,7 +79,7 @@ public class ExistUtils {
 
     List<Sequence> results = new ArrayList<Sequence>();
     for (String key : queryParameter.keySet()) {
-      if (key.equals("type") || key.equals("function")) {
+      if (isTypeOrFunctionParameter(key)) {
         continue;
       }
       results.add(new StringValue(queryParameter.get(key)));
@@ -73,117 +87,47 @@ public class ExistUtils {
     return results;
   }
 
-  @SuppressWarnings("rawtypes")
-  public static DBBroker getBroker(BrokerPool pool, Map context) throws EXistException {
-    Subject subject = getSubject(pool, context);
-    DBBroker broker = pool.get(subject);
-    return broker;
+  private static boolean isTypeOrFunctionParameter(String key) {
+    return URL_PARAM_TYPE.equals(key) || URL_PARAM_FUNCTION.equals(key);
   }
 
-  @SuppressWarnings("rawtypes")
-  private static Subject getSubject(BrokerPool pool, Map context) {
-    Subject subject = (Subject) context.get("_eXist_xmldb_user");
-    if (null != subject) {
-      return subject;
-    }
-    return pool.getSecurityManager().getGuestSubject();
-  }
+  public static String getExistResource(String uri, Map<String, Object> context) throws XFormsException {
+    
+    ExistClient existClient = new ExistClient();
+    String result = existClient.execute(uri, Lock.WRITE_LOCK, context, new ExistResourceTypeCallback<String>() {
 
-  public static boolean deleteExistResource(String uriString, Map<String, Object> context) throws XFormsException {
-    BrokerPool pool = null;
-    DBBroker broker = null;
-    DocumentImpl xmlResource = null;
-
-    try {
-      URI dbURI = new URI(uriString);
-      pool = BrokerPool.getInstance();
-      broker = ExistUtils.getBroker(pool, context);
-
-      XmldbURI docUri = XmldbURI.createInternal(dbURI.getRawPath());
-      xmlResource = broker.getResource(docUri, Lock.WRITE_LOCK);
-      TransactionManager txManager = pool.getTransactionManager();
-      Txn tx = null;
-      
-      try {
-        tx = txManager.beginTransaction();
-
-        Collection collection = broker.getCollection(docUri);
-        if (collection != null) {
-            broker.removeCollection(tx, collection);
-            txManager.commit(tx);
-            
-            if (LOGGER.isDebugEnabled()) {
-              LOGGER.debug("collection removed: '" + collection.getURI() + "'");
-            }
-            return true;
-        } else {
-            if (xmlResource.getResourceType() == DocumentImpl.BINARY_FILE) {
-              xmlResource.getCollection().removeBinaryResource(tx, broker, docUri.lastSegment());
-            } else {
-              xmlResource.getCollection().removeXMLResource(tx, broker, docUri.lastSegment());
-            }
-            
-            txManager.commit(tx);
-
-            if (LOGGER.isDebugEnabled()) {
-              LOGGER.debug("document removed: '" + docUri.getURI() + "'");
-            }
-            
-            return true;
-          } 
-      } catch (Exception e) {
-        txManager.abort(tx);
-        throw new EXistException(e.getMessage(), e);
+      @Override
+      public String onCollection(BrokerPool pool, DBBroker broker, Collection collection, Txn tx) throws Exception {
+        // TODO return a directory listing
+        throw new XFormsException("'" + getUriString() + "' is not a eXist-db resource");
       }
-    } catch (Exception e) {
-      throw new XFormsException(e.getMessage(), e);
-    } finally {
-      if (pool != null) {
-        if (xmlResource != null) {
-          xmlResource.getUpdateLock().release(Lock.WRITE_LOCK);
-        }
-        pool.release(broker);
-      }
-    }
-  }
 
-  public static Object getExistResource(String uriString, Map<String, Object> context) throws XFormsException {
-
-    BrokerPool pool = null;
-    DBBroker broker = null;
-    DocumentImpl xmlResource = null;
-
-    try {
-      URI dbURI = new URI(uriString);
-      pool = BrokerPool.getInstance();
-      broker = ExistUtils.getBroker(pool, context);
-
-      xmlResource = broker.getResource(XmldbURI.createInternal(dbURI.getRawPath()), Lock.READ_LOCK);
-      Serializer serializer = broker.getSerializer();
-
-      if (xmlResource == null) {
-        throw new XFormsException("eXist XML Resource is null");
-      } else if (xmlResource.getResourceType() == DocumentImpl.XML_FILE) {
+      @Override
+      public String onXMLResource(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
+        Serializer serializer = broker.getSerializer();
         String serialized = serializer.serialize(xmlResource);
         return serialized;
-      } else if (MimeType.XQUERY_TYPE.getName().equals(xmlResource.getMetadata().getMimeType())) {
+      }
 
+      @Override
+      public String onBinaryResource(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
         Sequence resultSequence = null;
-        Map<String, String> queryParameter = URIUtils.getQueryParameters(dbURI);
-        boolean isModule = URIUtils.hasParameterFromMap(queryParameter, "type", "module");
+
+        Map<String, String> queryParameter = URIUtils.getQueryParameters(getUri());
+        boolean isModule = URIUtils.hasParameterFromMap(queryParameter, URL_PARAM_TYPE, URL_PARAM_TYPE_MODULE);
 
         if (isModule) {
           XQueryContext tempContext = new XQueryContext(pool, AccessContext.REST);
           tempContext.setModuleLoadPath(xmlResource.getCollection().getURI().toString());
-          Module module = tempContext.importModule(null, null, "xmldb:exist://" + dbURI.getRawPath());
+          Module module = tempContext.importModule(null, null, EXIST_PROTOCOLL + getUri().getRawPath());
 
-          if (!URIUtils.hasParameterFromMap(queryParameter, "function")) {
+          if (!URIUtils.hasParameterFromMap(queryParameter, URL_PARAM_FUNCTION)) {
             throw new XFormsException("no function provided as query parameter");
           }
 
-          String function = queryParameter.get("function");
+          String function = queryParameter.get(URL_PARAM_FUNCTION);
           QName qname = new QName(function, module.getNamespaceURI(), module.getDefaultPrefix());
-          int arity = ExistUtils.calculateArity(queryParameter);
+          int arity = ExistUtils.getXQueryFunctionArity(queryParameter);
           UserDefinedFunction udf = ((ExternalModule) module).getFunction(qname, arity, tempContext);
 
           final FunctionReference fnRef = new FunctionReference(new FunctionCall(tempContext, udf));
@@ -207,24 +151,31 @@ public class ExistUtils {
         } else {
           Item item = resultSequence.itemAt(0);
           if (Type.subTypeOf(item.getType(), Type.NODE)) {
+            Serializer serializer = broker.getSerializer();
             return serializer.serialize((NodeValue) item);
           } else {
             throw new XFormsException("The xquery did not return a valid XML node");
           }
         }
       }
-    } catch (Exception e) {
-      throw new XFormsException(e.getMessage(), e);
-    } finally {
-      if (pool != null) {
-        if (xmlResource != null) {
-          xmlResource.getUpdateLock().release(Lock.READ_LOCK);
-        }
-        pool.release(broker);
-      }
-    }
+    });
+    return result;
+  }
 
-    return null;
+  public static Document getExistResourceAsDocument(String uri, Map<String, Object> context) throws Exception {
+    String resultString = getExistResource(uri, context);
+    Document result = DOMUtil.parseString(resultString, true, false);
+    return result;
+  }
+  public static boolean isExistCollection(String uri, Map<String, Object> context) throws XFormsException {
+    ExistClient existClient = new ExistClient();
+    Boolean result = existClient.execute(uri, Lock.WRITE_LOCK, context, new ExistResourceTypeCallback<Boolean>() { 
+      @Override
+      public Boolean onCollection(BrokerPool posol, DBBroker broker, Collection collection, Txn tx) throws Exception {
+        return Boolean.TRUE;
+      }
+    });
+    return result;
   }
 
 }
