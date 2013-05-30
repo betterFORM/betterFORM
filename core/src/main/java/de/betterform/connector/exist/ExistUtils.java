@@ -55,7 +55,7 @@ public class ExistUtils {
     }
     return i;
   }
-  
+
   public static ExistResourceType getExistResourceType(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Collection collection) throws Exception {
     
     if (null == xmlResource && null == collection) {
@@ -92,9 +92,9 @@ public class ExistUtils {
   }
 
   public static String getExistResource(String uri, Map<String, Object> context) throws XFormsException {
-    
+
     ExistClient existClient = new ExistClient();
-    String result = existClient.execute(uri, Lock.WRITE_LOCK, context, new ExistResourceTypeCallback<String>() {
+    String result = existClient.execute(uri, Lock.READ_LOCK, context, new ExistResourceTypeCallback<String>() {
 
       @Override
       public String onCollection(BrokerPool pool, DBBroker broker, Collection collection, Txn tx) throws Exception {
@@ -167,9 +167,10 @@ public class ExistUtils {
     Document result = DOMUtil.parseString(resultString, true, false);
     return result;
   }
+
   public static boolean isExistCollection(String uri, Map<String, Object> context) throws XFormsException {
     ExistClient existClient = new ExistClient();
-    Boolean result = existClient.execute(uri, Lock.WRITE_LOCK, context, new ExistResourceTypeCallback<Boolean>() { 
+    Boolean result = existClient.execute(uri, Lock.READ_LOCK, context, new ExistResourceTypeCallback<Boolean>() { 
       @Override
       public Boolean onCollection(BrokerPool posol, DBBroker broker, Collection collection, Txn tx) throws Exception {
         return Boolean.TRUE;
@@ -177,5 +178,4 @@ public class ExistUtils {
     });
     return result;
   }
-
 }

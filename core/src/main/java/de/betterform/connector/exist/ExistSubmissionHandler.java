@@ -5,15 +5,15 @@
 
 package de.betterform.connector.exist;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.exist.collections.Collection;
-import org.exist.dom.BinaryDocument;
+import org.exist.collections.IndexInfo;
 import org.exist.dom.DocumentImpl;
 import org.exist.storage.BrokerPool;
 import org.exist.storage.DBBroker;
@@ -22,6 +22,7 @@ import org.exist.storage.txn.Txn;
 import org.exist.xmldb.XmldbURI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.SubmissionHandler;
@@ -134,6 +135,16 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
 
     return response;
   }
+  
+  private Map<String, Object> doGet(String uri, String mediatype, String encoding) throws Exception {
+
+    Document result = ExistUtils.getExistResourceAsDocument(uri, getContext());
+
+    Map<String, Object> response = new HashMap<String, Object>();
+    response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, result);
+
+    return response;
+  }
 
   /**
    * put is used to create or update an named resource. to create a resource,
@@ -141,16 +152,16 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
    */
   private Map<String, Object> doPut(final String uri, final String mediatype, final String encoding, final ByteArrayOutputStream stream) throws Exception {
 
-    existClient.execute(uri, Lock.WRITE_LOCK, getContext(), new ExistClientExecutable<Object>() {
+    existClient.execute(uri, Lock.WRITE_LOCK, getContext(), new ExistClientExecutable<DocumentImpl>() {
 
       @Override
-      public Object execute(Txn tx, BrokerPool pool, DBBroker broker, DocumentImpl xmlResrouce) throws Exception {
+      public DocumentImpl execute(Txn tx, BrokerPool pool, DBBroker broker, DocumentImpl xmlResrouce) throws Exception {
 
         String uri = getUri().getRawPath();
         String file = uri.substring(uri.lastIndexOf('/') + 1);
         String path = uri.substring(0, uri.lastIndexOf('/'));
 
-        DocumentImpl resource = broker.getResource(getXmlDbUri(), Lock.READ_LOCK);
+        DocumentImpl resource = broker.getResource(getXmlDbUri(), Lock.WRITE_LOCK);
         Collection collection = null;
 
         if (null == resource) {
@@ -161,18 +172,18 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
           collection = resource.getCollection();
         }
 
+        // try to avoid byte[]
         byte[] data = stream.toByteArray();
-        ByteArrayInputStream is = new ByteArrayInputStream(data);
-        BinaryDocument result = collection.addBinaryResource(tx, broker, XmldbURI.createInternal(file), is, mediatype, data.length);
-        return result;
+        String contents = new String(data, Charset.forName(encoding));
+        
+        IndexInfo info = collection.validateXMLResource(tx, broker, XmldbURI.createInternal(file), contents);
+        collection.store(tx, broker, info, contents, false);
+        
+        return info.getDocument();
       }
     });
-
-    String result = ExistUtils.getExistResource(uri, getContext());
-    Map<String, Object> response = new HashMap<String, Object>();
-    response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, result);
-
-    return response;
+    
+    return doGet(uri, mediatype, encoding);
   }
 
   /**
@@ -184,20 +195,18 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
    */
   private Map<String, Object> doPost(String uri, String mediatype, String encoding, ByteArrayOutputStream stream) throws Exception {
 
-    if (ExistUtils.isExistCollection(uri, getContext())) {
-      throw new XFormsException("POST is only available against collection urls");
+    if (!ExistUtils.isExistCollection(uri, getContext())) {
+      throw new XFormsException("POST is only eligible against collection urls");
     }
     uri = uri + "/" + System.currentTimeMillis() + ".xml";
-    return doPut(uri, mediatype, encoding, stream);
-  }
-
-  private Map<String, Object> doGet(String uri, String mediatype, String encoding) throws Exception {
-
-    Document result = ExistUtils.getExistResourceAsDocument(uri, getContext());
-
-    Map<String, Object> response = new HashMap<String, Object>();
-    response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, result);
-
+    Map<String, Object> response = doPut(uri, mediatype, encoding, stream);
+    
+    // TODO
+    // we need tell the new ur of this resource to the 
+    // client (eg. using a location header)
+    setURI(uri);
+    
     return response;
   }
+
 }
