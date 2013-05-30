@@ -191,7 +191,7 @@ public class XFormsFilter implements Filter {
             bufResponse.getOutputStream().close();
             LOG.info("Start Filter XForm");
 
-            WebProcessor webProcessor = null;
+            FluxProcessor webProcessor = null;
             try {
 //                webProcessor = WebFactory.createWebProcessor(request);
                 webProcessor = new FluxProcessor();
@@ -205,6 +205,16 @@ public class XFormsFilter implements Filter {
                 webProcessor.setXForms();
                 webProcessor.init();
                 webProcessor.handleRequest();
+
+                //add new xforms session to cache
+                Cache cache = XFSessionCache.getCache();
+                String key = webProcessor.getKey();
+                if(cache.containsKey(key)){
+                     //reload session
+                    LOG.warn("Session already exists - key: " + key);
+//                     cache.remove(key);
+                }
+                cache.put(key,webProcessor);
             }
             catch (Exception e) {
                 LOG.error(e.getMessage(), e);

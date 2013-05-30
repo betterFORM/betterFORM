@@ -46,7 +46,15 @@
                  <xf:setvalue ev:event="xforms-submit-done" ref="item[1]" value="'hello'"/>
             </xf:submission>
 
-            <xf:setvalue ev:event="xforms-ready" ref="item[1]" value="'schade'"/>
+            <xf:action ev:event="xforms-ready">
+                <xf:setvalue ref="item[1]" value="'schade'"/>
+                <xf:toggle case="other"/>
+            </xf:action>
+            <xf:instance id="template">
+                <data xmlns="">
+                    <item>new</item>
+                </data>
+            </xf:instance>
         </xf:model>
         <style type="text/css">
             .label{
@@ -149,11 +157,23 @@
                 </xf:input>
 -->
         </xf:group>
-        <!--<xf:repeat nodeset="item">
+        <xf:repeat nodeset="item">
             <xf:input ref=".">
                 <xf:label>an item</xf:label>
             </xf:input>
-        </xf:repeat>-->
+        </xf:repeat>
+        <xf:switch>
+            <xf:case id="default"></xf:case>
+            <xf:case id="other"></xf:case>
+        </xf:switch>
+        <xf:trigger id="toggle">
+            <xf:label>toggle</xf:label>
+            <xf:toggle case="default"/>
+        </xf:trigger>
+        <xf:trigger id="insert">
+            <xf:label>insert</xf:label>
+            <xf:insert nodeset="item" at="last()" origin="instance('template')/item" position="before"/>
+        </xf:trigger>
         <xf:trigger>
             <xf:label>Debug</xf:label>
             <xf:send submission="debug"/>

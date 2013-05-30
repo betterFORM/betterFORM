@@ -41,6 +41,7 @@
 
 	<xsl:template match="xf:case">
 		<xsl:copy>
+            <xsl:copy-of select="@*"/>
 			<xsl:variable name="selected" select="bf:data/@bf:selected"/>
 			<xsl:attribute name="selected"><xsl:value-of select="$selected"/></xsl:attribute>
 			<xsl:apply-templates/>

@@ -220,8 +220,10 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
                             }
                             
                             Element bfData = DOMUtil.getChildElement(control.getElement(), NamespaceConstants.BETTERFORM_PREFIX+":data");
-                            String internalType = bfData.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "type");
-                            xmlEvent.addProperty("type", internalType);
+                            if(bfData != null){
+                                String internalType = bfData.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "type");
+                                xmlEvent.addProperty("type", internalType);
+                            }
                         }
                     }
                     this.eventQueue.add(xmlEvent);

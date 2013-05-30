@@ -6,6 +6,8 @@
 package de.betterform.agent.web.flux;
 
 import de.betterform.agent.web.cache.XFSessionCache;
+import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,14 +29,16 @@ import java.util.List;
     private Cache<String, FluxProcessor>  cache = null;
     private DefaultCacheManager cacheManager;
     private Cache<String, FluxProcessor> oneElementInMemory;
+    private String baseURI;
+    private int cnt=10;
 
     @Override
     protected void setUp() throws Exception {
         LOGGER.debug(".....::::setting up tests::::::.....");
         String path = getClass().getResource("localization.xhtml").getPath();
-        String  baseURI = "file://" + path.substring(0, path.lastIndexOf("localization.xhtml"));
+        baseURI = "file://" + path.substring(0, path.lastIndexOf("localization.xhtml"));
         this.fluxProcessors  = new ArrayList<FluxProcessor>(100);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < cnt; i++) {
             FluxProcessor processor = new FluxProcessor();
             processor.setBaseURI(baseURI);
             processor.setXForms(getClass().getResourceAsStream("localization.xhtml"));
@@ -151,18 +155,24 @@ import java.util.List;
         LOGGER.info("...::: testPutAndGetFluXProcessorCache :::...");
 //        Cache oneElementInMemory =initCache("xfTestConfigOneElementInMemory");
 
-        for (int i=0;i<100;i++){
+        for (int i=0;i<cnt;i++){
             String key = i + "";
             FluxProcessor processor  = (FluxProcessor) this.fluxProcessors.get(i);
             //Element e =new Element(key, processor);
             processor.setContextParam("key",key);
             LOGGER.debug("putting ... " + processor.getContextParam("key"));
+
             oneElementInMemory.put(key, processor);
+
+            for(int j=0; j<10;j++){
+                processor.dispatchEvent("insert");
+            }
+
         }
 
         LOGGER.debug("####################### now reading");
 
-        for (int i=0;i<100;i++){
+        for (int i=0;i<cnt;i++){
             String key = i + "";
             LOGGER.debug("");
             LOGGER.debug("GETTING ... " + key);
@@ -171,14 +181,25 @@ import java.util.List;
             FluxProcessor processor = (FluxProcessor) oneElementInMemory.get(key);
             assertNotNull(processor);
             processor.init();
+            assertEquals(this.baseURI,processor.getBaseURI());
             assertEquals("schade",   processor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
 
             processor.dispatchEvent("t-refresh");
 
             assertEquals("hello", processor.getXFormsModel(null).getInstanceDocument("internal").getElementsByTagName("item").item(0).getTextContent());
 
+            LOGGER.debug("Instance >>>>>>>>>>>>>>>>>>>>>");
+            DOMUtil.prettyPrintDOM(processor.getXformsProcessor().getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument());
+
+            assertEquals("17", XPathUtil.evaluateAsString(processor.getXForms(), "//xf:repeat/bf:data/@bf:index"));
+
             LOGGER.debug("GET: key in processor: " + processor.getXForms().getDocumentElement().getAttribute("bf:serialized"));
-            assertNotNull(processor);
+
+            LOGGER.debug("TOGGLE");
+            processor.dispatchEvent("toggle");
+            assertEquals("default", XPathUtil.evaluateAsString(processor.getXForms(), "//xf:case[bf:data/@bf:selected = 'true']/@id"));
+
+
         }
 
         LOGGER.info("Errors: " + errors);

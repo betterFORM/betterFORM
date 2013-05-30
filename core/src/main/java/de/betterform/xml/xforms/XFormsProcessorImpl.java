@@ -787,11 +787,13 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
             if (getXForms().getDocumentElement().hasAttribute("bf:serialized")) {
                 objectOutput.writeUTF(DOMUtil.serializeToString( getXForms()));
             }  else {
-            String baseURI = (String) this.getContext().get("betterform.baseURI");
-
-                getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",baseURI);
+                getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",getBaseURI());
                 getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized","true");
 
+                if(LOGGER.isDebugEnabled()){
+                    LOGGER.debug("....::: XForms before writing ::::....");
+                    DOMUtil.prettyPrintDOM(getXForms());
+                }
 
                 DefaultSerializer serializer = new DefaultSerializer(this);
                 Document serializedForm = serializer.serialize();

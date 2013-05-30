@@ -287,8 +287,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         // init processor
         this.xformsProcessor.init();
-        //todo: move?
-//       registerXFormsSession();
     }
 
     public XMLEvent checkForExitEvent() {
@@ -402,25 +400,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
             throw new XFormsException(e);
         }
         WebUtil.printSessionKeys(this.httpSession);
-    }
-
-    private void registerXFormsSession() throws XFormsException {
-        if(LOGGER.isDebugEnabled()){
-            LOGGER.debug("adding to xfSessionCache - " + this.toString() + " - key: " + getKey());
-        }
-
-
-        Cache<String, FluxProcessor>  sessionCache = XFSessionCache.getCache();
-//        if(! cache.isKeyInCache(this.getKey())) {
-
-        /* TODO: double check - SHOULD BE MOVED: subclass used here - that smells badly */
-            sessionCache.put(this.getKey(), (FluxProcessor) this);
-//        }
-/*
-        if(LOGGER.isDebugEnabled()){
-            WebUtil.printCache(cache);
-        }
-*/
     }
 
     protected void generateUI(Object input, Object output) throws XFormsException {

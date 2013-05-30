@@ -13,7 +13,7 @@
 -->
 
    <namedCache name="xfTestConfigOneElementInMemory">
-        <eviction maxEntries="1"/>
+        <eviction maxEntries="3"/>
         <loaders passivation="true" shared="false" preload="false">
             <loader class="org.infinispan.loaders.file.FileCacheStore" fetchPersistentState="false" ignoreModifications="false" purgeOnStartup="true" purgeSynchronously="true">
                 <properties>
@@ -25,9 +25,9 @@
 
     <namedCache name="xfSessionCache" >
         <eviction strategy="LIRS" maxEntries="3"/>
-        <expiration lifespan="1800000" maxIdle="6000" wakeUpInterval="5000"/>
+        <expiration lifespan="-1" maxIdle="-1"/>
         <loaders passivation="true" preload ="false"  shared="false">
-            <fileStore location="/tmp/xfSessionCache" streamBufferSize="8192"/>
+            <fileStore location="/Users/joern/dev/tmp" streamBufferSize="8192"/>
         </loaders>
 
     </namedCache>
