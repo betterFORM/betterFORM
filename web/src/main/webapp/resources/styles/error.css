@@ -1,1 +1,61 @@
-body{font-family:Tahoma;font-size:14pt;background:url('../../bfResources/images/bgOne.gif') repeat-x scroll}pre{font-size:8pt}.errorContent{margin-top:50px;width:600px;border:thin solid steelblue;margin-left:auto;margin-right:auto;padding:20px;overflow:hidden}.message1{display:block;color:steelblue;font-weight:bold}.message2{display:block;color:darkred;font-size:12pt;padding-top:30px;font-weight:bold}.message3{display:block;font-size:10pt;color:steelblue;margin-top:10px}input{margin-top:20px;margin-left:0;margin-bottom:0}caption{font-size:10pt;font-weight:bold;text-align:left;color:steelblue;margin-top:10px}td{font-size:10pt;color:steelblue;padding:3px;background:white}table{background:whitesmoke;padding:3px}
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+body {
+  font-family: Tahoma;
+  font-size: 14pt;
+  background: url('../../bfResources/images/bgOne.gif') repeat-x scroll;
+}
+pre {
+  font-size: 8pt;
+}
+.errorContent {
+  margin-top: 50px;
+  width: 600px;
+  border: thin solid steelblue;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+  overflow: hidden;
+}
+.message1 {
+  display: block;
+  color: steelblue;
+  font-weight: bold;
+}
+.message2 {
+  display: block;
+  color: darkred;
+  font-size: 12pt;
+  padding-top: 30px;
+  font-weight: bold;
+}
+.message3 {
+  display: block;
+  font-size: 10pt;
+  color: steelblue;
+  margin-top: 10px;
+}
+input {
+  margin-top: 20px;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+caption {
+  font-size: 10pt;
+  font-weight: bold;
+  text-align: left;
+  color: steelblue;
+  margin-top: 10px;
+}
+td {
+  font-size: 10pt;
+  color: steelblue;
+  padding: 3px;
+  background: white;
+}
+table {
+  background: whitesmoke;
+  padding: 3px;
+}
