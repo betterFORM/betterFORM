@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Copyright (c) 2013. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -22,7 +22,6 @@ import org.exist.storage.txn.Txn;
 import org.exist.xmldb.XmldbURI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
 
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.SubmissionHandler;
@@ -54,7 +53,7 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
 
       setContext(submission.getContainerObject().getProcessor().getContext());
 
-      Method method = Method.valueOf(submission.getMethod().toLowerCase());
+      ExistConnectorMethod method = ExistConnectorMethod.valueOf(submission.getMethod().toUpperCase());
 
       String mediatype = "application/xml";
       if (submission.getMediatype() != null) {
@@ -73,24 +72,24 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
       boolean hasPayload = !"".equals(stream.toString());
 
       switch (method) {
-      case get:
+      case GET:
         if (hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission with payload for method " + Method.get);
+          LOGGER.debug("Ignoring submission with payload for method " + ExistConnectorMethod.GET);
         }
         return doGet(getURI(), mediatype, encoding);
-      case post:
+      case POST:
         if (!hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission using method " + Method.post + " without payload.");
+          LOGGER.debug("Ignoring submission using method " + ExistConnectorMethod.POST + " without payload.");
         }
         doPost(getURI(), mediatype, encoding, stream);
-      case put:
+      case PUT:
         if (!hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission using method " + Method.put + " without payload.");
+          LOGGER.debug("Ignoring submission using method " + ExistConnectorMethod.PUT + " without payload.");
         }
         return doPut(getURI(), mediatype, encoding, stream);
-      case delete:
+      case DELETE:
         if (hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission with payload for method " + Method.delete);
+          LOGGER.debug("Ignoring submission with payload for method " + ExistConnectorMethod.DELETE);
         }
         return doDelete(getURI(), mediatype, encoding);
       default:
@@ -138,7 +137,7 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
   
   private Map<String, Object> doGet(String uri, String mediatype, String encoding) throws Exception {
 
-    Document result = ExistUtils.getExistResourceAsDocument(uri, getContext());
+    Document result = ExistUtil.getExistResourceAsDocument(uri, getContext());
 
     Map<String, Object> response = new HashMap<String, Object>();
     response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, result);
@@ -195,7 +194,7 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
    */
   private Map<String, Object> doPost(String uri, String mediatype, String encoding, ByteArrayOutputStream stream) throws Exception {
 
-    if (!ExistUtils.isExistCollection(uri, getContext())) {
+    if (!ExistUtil.isExistCollection(uri, getContext())) {
       throw new XFormsException("POST is only eligible against collection urls");
     }
     uri = uri + "/" + System.currentTimeMillis() + ".xml";

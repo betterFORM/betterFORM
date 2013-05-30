@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2013. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 package de.betterform.connector.exist;
 
 import java.util.ArrayList;
@@ -34,11 +39,11 @@ import org.exist.xquery.value.StringValue;
 import org.exist.xquery.value.Type;
 import org.w3c.dom.Document;
 
-import de.betterform.connector.util.URIUtils;
+import de.betterform.connector.util.URIUtil;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
 
-public class ExistUtils {
+public class ExistUtil {
 
   private static final String EXIST_PROTOCOLL = "xmldb:exist://";
   public static final String URL_PARAM_FUNCTION = "function";
@@ -54,22 +59,6 @@ public class ExistUtils {
       ++i;
     }
     return i;
-  }
-
-  public static ExistResourceType getExistResourceType(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Collection collection) throws Exception {
-    
-    if (null == xmlResource && null == collection) {
-      throw new XFormsException("eXist resource is null");
-    }
-    
-    if (collection != null) {
-      return ExistResourceType.COLLECTION;
-    } else if (xmlResource.getResourceType() == DocumentImpl.XML_FILE) {
-      return ExistResourceType.XML;
-    } else if (xmlResource.getResourceType() == DocumentImpl.BINARY_FILE) {
-      return ExistResourceType.BINARY;
-    }
-    throw new XFormsException("Undefined eXist resource");
   }
 
   public static List<Sequence> getAsFunctionParameters(Map<String, String> queryParameter) {
@@ -91,6 +80,22 @@ public class ExistUtils {
     return URL_PARAM_TYPE.equals(key) || URL_PARAM_FUNCTION.equals(key);
   }
 
+  public static ExistResourceType getExistResourceType(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Collection collection) throws Exception {
+
+    if (null == xmlResource && null == collection) {
+      throw new XFormsException("eXist resource is null");
+    }
+
+    if (collection != null) {
+      return ExistResourceType.COLLECTION;
+    } else if (xmlResource.getResourceType() == DocumentImpl.XML_FILE) {
+      return ExistResourceType.XML;
+    } else if (xmlResource.getResourceType() == DocumentImpl.BINARY_FILE) {
+      return ExistResourceType.BINARY;
+    }
+    throw new XFormsException("Undefined eXist resource");
+  }
+  
   public static String getExistResource(String uri, Map<String, Object> context) throws XFormsException {
 
     ExistClient existClient = new ExistClient();
@@ -113,26 +118,26 @@ public class ExistUtils {
       public String onBinaryResource(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
         Sequence resultSequence = null;
 
-        Map<String, String> queryParameter = URIUtils.getQueryParameters(getUri());
-        boolean isModule = URIUtils.hasParameterFromMap(queryParameter, URL_PARAM_TYPE, URL_PARAM_TYPE_MODULE);
+        Map<String, String> queryParameter = URIUtil.getQueryParameters(getUri());
+        boolean isModule = URIUtil.hasParameterFromMap(queryParameter, URL_PARAM_TYPE, URL_PARAM_TYPE_MODULE);
 
         if (isModule) {
           XQueryContext tempContext = new XQueryContext(pool, AccessContext.REST);
           tempContext.setModuleLoadPath(xmlResource.getCollection().getURI().toString());
           Module module = tempContext.importModule(null, null, EXIST_PROTOCOLL + getUri().getRawPath());
 
-          if (!URIUtils.hasParameterFromMap(queryParameter, URL_PARAM_FUNCTION)) {
+          if (!URIUtil.hasParameterFromMap(queryParameter, URL_PARAM_FUNCTION)) {
             throw new XFormsException("no function provided as query parameter");
           }
 
           String function = queryParameter.get(URL_PARAM_FUNCTION);
           QName qname = new QName(function, module.getNamespaceURI(), module.getDefaultPrefix());
-          int arity = ExistUtils.getXQueryFunctionArity(queryParameter);
+          int arity = ExistUtil.getXQueryFunctionArity(queryParameter);
           UserDefinedFunction udf = ((ExternalModule) module).getFunction(qname, arity, tempContext);
 
           final FunctionReference fnRef = new FunctionReference(new FunctionCall(tempContext, udf));
           fnRef.analyze(new AnalyzeContextInfo());
-          Sequence[] parameters = ExistUtils.getAsFunctionParameters(queryParameter).toArray(new Sequence[] {});
+          Sequence[] parameters = ExistUtil.getAsFunctionParameters(queryParameter).toArray(new Sequence[] {});
           resultSequence = fnRef.evalFunction(null, null, parameters);
           udf.resetState(true);
 
@@ -170,7 +175,7 @@ public class ExistUtils {
 
   public static boolean isExistCollection(String uri, Map<String, Object> context) throws XFormsException {
     ExistClient existClient = new ExistClient();
-    Boolean result = existClient.execute(uri, Lock.READ_LOCK, context, new ExistResourceTypeCallback<Boolean>() { 
+    Boolean result = existClient.execute(uri, Lock.READ_LOCK, context, new ExistResourceTypeCallback<Boolean>() {
       @Override
       public Boolean onCollection(BrokerPool posol, DBBroker broker, Collection collection, Txn tx) throws Exception {
         return Boolean.TRUE;

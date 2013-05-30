@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2013. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 package de.betterform.connector.exist;
 
 import java.net.URI;
@@ -10,10 +15,7 @@ import org.exist.storage.DBBroker;
 import org.exist.storage.txn.Txn;
 import org.exist.xmldb.XmldbURI;
 
-/**
- * for this executable either {@link #execute(Txn, BrokerPool, DBBroker)} or {@link #execute(Txn, BrokerPool, DBBroker, DocumentImpl)}
- * is called by {@link ExistClient}
- */
+// TODO please give me a better name 
 public abstract class ExistClientExecutable<T> {
   
   private Map<String, Object> context;
@@ -22,15 +24,6 @@ public abstract class ExistClientExecutable<T> {
   private URI uri;
   private XmldbURI xmldbUri;
   
-  /**
-   * this method is called, if xmlResouce is not null
-   * @param tx
-   * @param pool
-   * @param broker
-   * @param xmlResrouce
-   * @return
-   * @throws Exception
-   */
   public T execute(Txn tx, BrokerPool pool, DBBroker broker, DocumentImpl xmlResrouce) throws Exception {
     return null;
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Copyright (c) 2013. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -39,7 +39,7 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
         if (LOGGER.isDebugEnabled()) {
           LOGGER.debug("resolving uri '" + uriString + "'");
         }
-        return ExistUtils.getExistResource(uriString, getContext());
+        return ExistUtil.getExistResource(uriString, getContext());
     }
 
 }

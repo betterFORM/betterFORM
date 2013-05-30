@@ -7,7 +7,7 @@ package de.betterform.connector.http;
 
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
-import de.betterform.connector.util.URIUtils;
+import de.betterform.connector.util.URIUtil;
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -79,12 +79,12 @@ public class HTTPSubmissionHandler extends AbstractHTTPConnector implements Subm
 
             // HTTP GET
             else if (method.equals("get")) {
-                if(URIUtils.getURIWithoutFragment(getURI()).indexOf("?") == -1 && streamNotEmpty){
-                    get(URIUtils.getURIWithoutFragment(getURI()) + "?" + stream.toString(encoding));
+                if(URIUtil.getURIWithoutFragment(getURI()).indexOf("?") == -1 && streamNotEmpty){
+                    get(URIUtil.getURIWithoutFragment(getURI()) + "?" + stream.toString(encoding));
                 }else if(streamNotEmpty){
-                    get(URIUtils.getURIWithoutFragment(getURI()) + "&" + stream.toString(encoding));
+                    get(URIUtil.getURIWithoutFragment(getURI()) + "&" + stream.toString(encoding));
                 }else{
-                    get(URIUtils.getURIWithoutFragment(getURI()));
+                    get(URIUtil.getURIWithoutFragment(getURI()));
                 }
             }
             // HTTP PUT

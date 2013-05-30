@@ -27,7 +27,7 @@
                 </xf:instance>
                 <xf:instance xmlns="" id="i-submission-update">
                     <data>
-                        <item>updated item</item>
+                        <item>new data</item>
                     </data>
                 </xf:instance>
                 <xf:instance id="i-data2">
@@ -45,13 +45,13 @@
                 </xf:submission>
                 
                 <!-- creating an unnamed ressource -->
-                <xf:submission method="post" id="s-create" replace="none" resource="exist:/db/apps/betterform/connector" ref="instance('i-submission-update')">
+                <xf:submission method="post" id="s-create" replace="none" resource="exist:/db/apps/betterform/connector">
                     <xf:message level="ephemeral" ev:event="xforms-submit-error">post submission failed</xf:message>
                     <xf:message level="ephemeral" ev:event="xforms-submit-done">post submission successful</xf:message>
                 </xf:submission>
                 
                 <!-- creating an named ressource -->
-                <xf:submission method="put" id="s-create2" replace="instance" instance="i-data2" ref="instance('i-submission-update')" resource="exist:/db/apps/betterform/connector/data2.xml">
+                <xf:submission method="put" id="s-create2" replace="instance" instance="i-data2" resource="exist:/db/apps/betterform/connector/data2.xml">
                     <xf:message level="ephemeral" ev:event="xforms-submit-error">put submission failed</xf:message>
                     <xf:message level="ephemeral" ev:event="xforms-submit-done">put submission successful</xf:message>
                 </xf:submission>
@@ -91,8 +91,6 @@
                 <xf:label>POST</xf:label>
                 <xf:send submission="s-create"/>
             </xf:trigger>
-            
-            
             <xf:input ref="instance('i-data2')/item">
                 <xf:label>Submissions:</xf:label>
             </xf:input>

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2013. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
 package de.betterform.connector.exist;
 
 import org.exist.collections.Collection;
@@ -14,7 +19,7 @@ public class ExistResourceTypeCallback<T> extends ExistClientExecutable<T> {
     Collection collection = broker.getCollection(getXmlDbUri());
     DocumentImpl xmlResource = broker.getResource(getXmlDbUri(), getLock());
 
-    switch (ExistUtils.getExistResourceType(pool, broker, xmlResource, collection)) {
+    switch (ExistUtil.getExistResourceType(pool, broker, xmlResource, collection)) {
     case COLLECTION:
       return onCollection(pool, broker, collection, tx);
     case XML:

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Copyright (c) 2013. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
 
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class URIUtils {
+public class URIUtil {
 
     /**
      * strips the fragment part  (the part that starts with '#') from the URI
