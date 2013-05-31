@@ -1,0 +1,183 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>eXist DB URI and Submission Handler Test Form</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+</head>
+<body>
+<div style="display:none">
+
+
+    <!--
+    todo: still missing example for RESTXQ usage
+    -->
+    <xf:model id="model-1">
+        <xf:instance id="i-default" src="exist:/db/apps/betterform/connector/testdata.xqm#test?param=1&amp;param=2">
+            <data xmlns="">
+                <item/>
+            </data>
+        </xf:instance>
+        <!-- TODO: ExistURIResolver must be fixed to support following URIResolvers -->
+        <!-- xf:instance id="i-exist-xquery" src="exist:/db/apps/betterform/connector/testdata.xql">
+            <data xmlns="">
+                <item/>
+            </data>
+        </xf:instance>
+        <xf:instance id="i-exist-uri-resolver" src="exist:/db/apps/betterform/connector/testdata.xml">
+            <data xmlns="">
+                <item/>
+            </data>
+        </xf:instance-->
+
+
+        <!-- get submission executing a xquery - covers use case found in ziziphus to load data -->
+        <xf:submission method="get"
+                       id="s-execute"
+                       replace="instance"
+                       resource="exist:/db/apps/betterform/modules/myQuery.xql?param1=foo&amp;param2=bar">
+
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">get submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">get submission successful</xf:message>
+        </xf:submission>
+
+        <!-- get submission executing a xquery - shouldn't / couldn't rather be a XPath Extension function? -->
+        <xf:submission method="get"
+                       id="s-call"
+                       replace="instance"
+                       resource="exist:/db/apps/betterform/modules/myLib.xqm#myFunc?param1=foo&amp;param2=bar">
+
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">get submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">get submission successful</xf:message>
+        </xf:submission>
+
+
+
+        <!-- execute as another user -->
+        <xf:submission method="put"
+                       id="s-createAsUser"
+                       replace="none"
+                       resource="exist:/db/apps/betterform/forms/connector/put.xml">
+
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">put submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">put submission successful</xf:message>
+
+            <xf:header>
+                <xf:name>username</xf:name>
+                <xf:value>admin</xf:value>
+            </xf:header>
+
+            <!--
+            Do we actually need the password here? Would be better if that's not needed.
+
+            If we expect that users running a form always already have logged in - wouldn't it be possible
+            to check the rights directly from the SubmissionHandler? -> isUserInRole:boolean (user).
+
+            What do we need to get the username within the SubmissionHandler ?
+
+            -->
+            <xf:header>
+                <xf:name>password</xf:name>
+                <xf:value value="HOW DO WE HANDLE PASSWORDS - really put them into forms?"/>
+            </xf:header>
+            <xf:header>
+                <xf:name>realm</xf:name>
+                <xf:value>exist</xf:value>
+            </xf:header>
+        </xf:submission>
+
+        <!-- post updating the resource destination with the data send by the submission -->
+        <xf:submission method="post" id="s-update" replace="none" resource="exist:/db/apps/betterform/forms/connector/post.xml">
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">post submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">post submission successful</xf:message>
+        </xf:submission>
+
+        <!-- standard get loads a resource optionally having an XPath fragment on the URI -->
+        <xf:submission method="get" id="s-load" replace="instance" resource="exist:/db/apps/betterform/forms/connector/get.xml">
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">get submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">get submission successful</xf:message>
+        </xf:submission>
+
+        <xf:submission method="put" id="s-create" replace="none" resource="exist:/db/apps/betterform/forms/connector/put.xml">
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">put submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">put submission successful</xf:message>
+        </xf:submission>
+
+
+        <!-- post request executing a xquery:
+            Example use case:
+            in Ziziphus only a part of a resource will be updated (e.g. AgentSet within a workrecord). The payload
+            in this case are the data send to the xquery. A GET method seems rather inappropriate here.
+            -->
+        <xf:submission method="post"
+                       id="s-post-query"
+                       replace="none"
+                       resource="exist:/db/apps/betterform/modules/myUpdateQuery.xql?id={@id}&amp;setname=AgentSet">
+
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">post submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">post submission successful</xf:message>
+        </xf:submission>
+
+
+        <xf:submission method="delete" id="s-delete" replace="none" resource="exist:/db/apps/betterform/forms/connector/delete.xml">
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">delete submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">delete submission successful</xf:message>
+        </xf:submission>
+
+        <xf:instance id="i-submission" xmlns="">
+            <data xmlns="">
+                <item>1</item>
+                <item>item 2 from i-submission</item>
+                <item>item 3 from i-submission</item>
+            </data>
+        </xf:instance>
+
+
+        <!--
+        *****************************
+        rather convenience - would not implement those for now as always substitutable by call of
+        xquery script.
+
+        <xf:submission id="s-update-collection"
+                       method="post"
+                       ref="instance('i-submission')/item[2]"
+                       resource="exist:collection('/db/apps/betterform/connector/submissions')//item">
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">submit done</xf:message>
+            <xf:message level="modal" ev:event="xforms-submit-done">submit error</xf:message>
+       </xf:submission>
+
+        <xf:submission id="s-update-resource"
+                       method="post"
+                       ref="instance('i-submission')/item[3]"
+                       resource="exist:document('/db/apps/betterform/connector/testdata.xml')//item">
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">submit done</xf:message>
+            <xf:message level="modal" ev:event="xforms-submit-done">submit error</xf:message>
+       </xf:submission>
+
+        -->
+    </xf:model>
+</div>
+<xf:group>
+    <xf:input ref="item">
+        <xf:label>hello from ...</xf:label>
+    </xf:input>
+    <xf:trigger>
+        <xf:label>load</xf:label>
+        <xf:send submission="s-load"/>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>create</xf:label>
+        <xf:send submission="s-create"/>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>update</xf:label>
+        <xf:send submission="s-update"/>
+    </xf:trigger>
+    <xf:trigger>
+        <xf:label>delete</xf:label>
+        <xf:send submission="s-delete"/>
+    </xf:trigger>
+</xf:group>
+</body>
+</html>

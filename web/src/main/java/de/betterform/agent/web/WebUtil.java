@@ -50,6 +50,7 @@ public class WebUtil {
     private static final Log LOGGER = LogFactory.getLog(WebUtil.class);
     public static final String HTML_CONTENT_TYPE = "text/html;charset=UTF-8";
     public static final String HTTP_SESSION_ID = "httpSessionId";
+    public static final String EXISTDB_USER = "_eXist_xmldb_user";
     private static final String FILENAME = "fileName";
     private static final String PLAIN_PATH = "plainPath";
     private static final String CONTEXT_PATH = "contextPath";
@@ -315,6 +316,8 @@ public class WebUtil {
         //adding session id to context
         processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
         //adding context absolute path to context
+        
+        processor.setContextParam(EXISTDB_USER, httpSession.getAttribute(EXISTDB_USER));
 
         //adding pathInfo to context - attention: this is only available when a servlet is requested
         String s1=request.getPathInfo();
