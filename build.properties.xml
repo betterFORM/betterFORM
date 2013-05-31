@@ -126,7 +126,7 @@
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
-                    <path refid="compile.class.path"/>
+                <path refid="compile.class.path"/>
             </classpath>
         </transform>
         <compile>
@@ -140,17 +140,17 @@
             <!-- Selenium Properties -->
 
             <selenium>
-              <!-- which browser to use for tests -->
-              <browser>*firefox</browser>
-              <url-to-test-forms>/betterform/forms</url-to-test-forms>
-              <!--server properties -->
-              <server>
-                <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
-                <host>localhost</host>
-                <port>4444</port>
-                <url>/selenium-server/core/index.html</url>
-                <errorsBeginAt>404</errorsBeginAt>
-              </server>
+                <!-- which browser to use for tests -->
+                <browser>*firefox</browser>
+                <url-to-test-forms>/betterform/forms</url-to-test-forms>
+                <!--server properties -->
+                <server>
+                    <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
+                    <host>localhost</host>
+                    <port>4444</port>
+                    <url>/selenium-server/core/index.html</url>
+                    <errorsBeginAt>404</errorsBeginAt>
+                </server>
             </selenium>
             <!-- home of the tomcat-server which serves testpages -->
             <tomcat>
