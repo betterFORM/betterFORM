@@ -16,7 +16,7 @@
             <deprecation>off</deprecation>
             <debug>on</debug>
             <optimize>off</optimize>
-            <version>1.6</version>
+            <version>1.7</version>
         </javac>
 
         <dojo>dojo-release-1.7.2-src-patched</dojo>
@@ -267,7 +267,7 @@
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Users/windauer/dev/exist/exist-git</home>
+         <home>/Users/windauer/dev/exist/exist-trunk</home>
         <!-- home>/Applications/eXist-ziziphus</home-->
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
