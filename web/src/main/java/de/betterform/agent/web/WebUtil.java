@@ -135,7 +135,6 @@ public class WebUtil {
         } catch (XFormsException xfe) {
               sessionCache = null;
         }
-//        printCache(cache);
 
         if(sessionCache == null || !(sessionCache.containsKey(key)) ) {
             LOGGER.warn("No xformsSession for key " + key + " in Cache");
@@ -149,11 +148,10 @@ public class WebUtil {
             if(LOGGER.isDebugEnabled()){
                 LOGGER.debug("Element is read from disk " +  processor.toString());
             }
-            //WebProcessor processor = (WebProcessor) elem.getObjectValue();
+            //re-initialize transient state
             processor.setRequest(request);
             processor.setResponse(response);
             processor.setHttpSession(session);
-
             processor.setKey(key);
             processor.getHttpRequestHandler();
             processor.setContext(session.getServletContext());
@@ -187,6 +185,12 @@ public class WebUtil {
     }
     */
 
+    /**
+     * remove session with given key from infinispan cache
+     *
+     * @param key the entry identifier
+     * @return true if session existed and could be removed
+     */
     public static boolean removeSession(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("removing key: '" + key + "' from cache");
@@ -200,6 +204,11 @@ public class WebUtil {
                 removedSession = (sessionCache.remove(key)   != null);
             }
         } catch (XFormsException xfe) {  }
+
+        if (LOGGER.isDebugEnabled()) {
+            String result = removedSession ? "successful":"unsuccessful";
+            LOGGER.debug("Removal of session '" + key + "' was " + result);
+        }
 
         return removedSession;
     }
