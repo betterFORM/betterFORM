@@ -24,7 +24,8 @@
     </namedCache>
 
     <namedCache name="xfSessionCache" >
-        <eviction strategy="LIRS" maxEntries="3"/>
+        <!-- ##### maximum elements in memory cache are '100' ##### -->
+        <eviction strategy="LIRS" maxEntries="100"/>
         <expiration lifespan="-1" maxIdle="-1"/>
         <loaders passivation="true" preload ="false"  shared="false">
             <fileStore location="/Users/joern/dev/tmp" streamBufferSize="8192"/>

@@ -71,10 +71,9 @@ public class WebUtil {
             LOGGER.debug("--------------- http session dump ---------------");
             Enumeration keys = session.getAttributeNames();
             if (keys.hasMoreElements()) {
-                LOGGER.debug("--- existing keys in session --- ");
                 while (keys.hasMoreElements()) {
                     String s = (String) keys.nextElement();
-                    LOGGER.debug("existing sessionkey: " + s + ":" + session.getAttribute(s));
+                    LOGGER.debug("sessionkey: " + s + ":" + session.getAttribute(s));
                 }
             } else {
                 LOGGER.debug("--- no keys present in session ---");

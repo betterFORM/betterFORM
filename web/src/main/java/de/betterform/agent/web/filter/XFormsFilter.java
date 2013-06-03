@@ -214,6 +214,9 @@ public class XFormsFilter implements Filter {
                     LOG.warn("Session already exists - key: " + key);
 //                     cache.remove(key);
                 }
+                if(LOG.isDebugEnabled()){
+                    LOG.debug("adding new session to cache. Key:" + key );
+                }
                 cache.put(key,webProcessor);
             }
             catch (Exception e) {
