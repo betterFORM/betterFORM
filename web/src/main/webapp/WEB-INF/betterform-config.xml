@@ -187,7 +187,7 @@
         <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver" description="Handler for the https protocol"/>
         <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver" description="Handler for the xmlrpc protocol"/>
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextMapResolver" description="Handler for the context protocol"/>
-        <uri-resolver scheme="exist" class="de.betterform.connector.exist.ExistURIResolver" description="Handler for eXist-db"/>
+        <uri-resolver scheme="exist" class="de.betterform.connector.exist.ExistURIResolver" description="Handler for local eXist-db connections"/>
 <!--
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
         <uri-resolver scheme="contextobject" class="de.betterform.connector.context.ContextObjectResolver"/>
