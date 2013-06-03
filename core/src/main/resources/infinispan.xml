@@ -17,7 +17,7 @@
         <loaders passivation="true" shared="false" preload="false">
             <loader class="org.infinispan.loaders.file.FileCacheStore" fetchPersistentState="false" ignoreModifications="false" purgeOnStartup="true" purgeSynchronously="true">
                 <properties>
-                    <property name="location" value="/Users/joern/dev/tmp"/>
+                    <property name="location" value="/tmp/bfCache"/>
                 </properties>
             </loader>
         </loaders>
@@ -28,7 +28,7 @@
         <eviction strategy="LIRS" maxEntries="100"/>
         <expiration lifespan="-1" maxIdle="-1"/>
         <loaders passivation="true" preload ="false"  shared="false">
-            <fileStore location="/Users/joern/dev/tmp" streamBufferSize="8192"/>
+            <fileStore location="/tmp/bfCache" streamBufferSize="8192"/>
         </loaders>
 
     </namedCache>

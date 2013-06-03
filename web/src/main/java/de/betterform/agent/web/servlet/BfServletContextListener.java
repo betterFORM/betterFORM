@@ -5,7 +5,7 @@
 
 package de.betterform.agent.web.servlet;
 
-import net.sf.ehcache.CacheManager;
+import de.betterform.agent.web.cache.XFSessionCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -25,9 +25,9 @@ public class BfServletContextListener implements ServletContextListener {
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         if(LOGGER.isDebugEnabled()){
-            LOGGER.debug("shutting down ehCache");
+            LOGGER.debug("shutting down infinispan");
         }
-        CacheManager.getInstance().shutdown();
+        XFSessionCache.unloadCache();
     }
 
     public void contextInitialized(ServletContextEvent servletContextEvent) {

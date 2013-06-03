@@ -10,24 +10,19 @@ import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.xforms.XFormsProcessor;
-import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.ClasspathResourceResolver;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import de.betterform.xml.xslt.impl.HttpResourceResolver;
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
 
 
 /**

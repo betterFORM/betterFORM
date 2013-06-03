@@ -100,7 +100,6 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
-                <pathelement location="${core.dir}/src/main/lib/ehcache-core-2.5.2.jar" groupid="net.sf.ehcache" version="2.5.2" artifactId="ehcache-core"/>
                 <pathelement location="${core.dir}/src/main/lib/jgroups-3.2.7.Final.jar" groupid="org.jgroups" version="3.2.7.Final" artifactId="jgroups"/>
                 <pathelement location="${core.dir}/src/main/lib/infinispan-core-5.2.1.Final.jar" groupid="org.jboss" version="5.2.1.Final" artifactId="infinispan-core"/>
                 <pathelement location="${core.dir}/src/main/lib/jboss-transaction-api_1.1_spec-1.0.0.Final.jar" groupid="org.jboss" version="1.0.0.Final" artifactId="jboss-transaction"/>

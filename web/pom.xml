@@ -404,11 +404,6 @@
 <version>3.1.2</version>
 </dependency>
 <dependency>
-<groupId>net.sf.ehcache</groupId>
-<artifactId>ehcache-core</artifactId>
-<version>2.5.2</version>
-</dependency>
-<dependency>
 <groupId>org.jgroups</groupId>
 <artifactId>jgroups</artifactId>
 <version>3.2.7.Final</version>
