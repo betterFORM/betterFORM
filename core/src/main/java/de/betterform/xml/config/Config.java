@@ -50,7 +50,7 @@ public abstract class Config {
 	/**
 	 * The useragent lookup map.
 	 */
-	protected Map useragents;
+	//protected Map useragents;
 
     protected Map generators;
     
@@ -227,9 +227,11 @@ public abstract class Config {
 		return (s != null) ? s : value;
 	}
 
+/*
     public Map getUserAgents(){
         return this.useragents;
     }
+*/
 
 
 	/**
@@ -332,9 +334,9 @@ public abstract class Config {
 	//        return (String) this.generators.get(key);
 	//    }
 
-    public Map getGenerators(){
-        return this.generators;
-    }
+//    public Map getGenerators(){
+//        return this.generators;
+//    }
 }
 
 // end of class
