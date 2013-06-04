@@ -8,12 +8,14 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import net.sf.saxon.expr.*;
 import net.sf.saxon.functions.SystemFunction;
-import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.trans.XPathException;
-import net.sf.saxon.type.*;
+import net.sf.saxon.type.BuiltInAtomicType;
+import net.sf.saxon.type.ItemType;
+import net.sf.saxon.type.Type;
+import net.sf.saxon.type.TypeHierarchy;
 import net.sf.saxon.value.*;
 
 import javax.xml.transform.SourceLocator;

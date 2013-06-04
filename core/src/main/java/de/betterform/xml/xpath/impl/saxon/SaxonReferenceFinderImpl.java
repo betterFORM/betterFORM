@@ -5,23 +5,16 @@
 
 package de.betterform.xml.xpath.impl.saxon;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
-import net.sf.saxon.expr.Assignation;
-import net.sf.saxon.expr.AxisExpression;
-import net.sf.saxon.expr.ContextItemExpression;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.FilterExpression;
-import net.sf.saxon.expr.FunctionCall;
-import net.sf.saxon.expr.ParentNodeExpression;
-import net.sf.saxon.expr.SlashExpression;
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.Instance;
 import de.betterform.xml.xpath.XPathReferenceFinder;
+import net.sf.saxon.expr.*;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 

@@ -22,7 +22,6 @@ import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.om.Item;
-import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;

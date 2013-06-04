@@ -4,11 +4,9 @@
  */
 package de.betterform.xml.xforms.model.bind;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.TestEventListener;
-import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;

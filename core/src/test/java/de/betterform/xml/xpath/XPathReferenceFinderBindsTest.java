@@ -4,19 +4,14 @@
  */
 package de.betterform.xml.xpath;
 
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import net.sf.saxon.dom.NodeWrapper;
-
-import org.w3c.dom.Document;
-
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @author Joern Turner

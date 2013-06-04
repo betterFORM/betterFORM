@@ -5,7 +5,6 @@
 
 package de.betterform.generator;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
 import org.apache.commons.logging.Log;

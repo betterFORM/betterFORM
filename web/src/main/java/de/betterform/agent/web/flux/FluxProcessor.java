@@ -12,7 +12,6 @@ import de.betterform.agent.web.WebUtil;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.EventQueue;
 import de.betterform.agent.web.event.UIEvent;
-import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;

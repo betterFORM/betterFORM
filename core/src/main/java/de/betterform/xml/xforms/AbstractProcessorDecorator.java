@@ -17,7 +17,6 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.xforms.XFormsModelElement;
 import org.xml.sax.InputSource;
 
-import java.io.Externalizable;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;

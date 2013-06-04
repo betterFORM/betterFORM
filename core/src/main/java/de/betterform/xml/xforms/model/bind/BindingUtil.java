@@ -7,10 +7,7 @@ package de.betterform.xml.xforms.model.bind;
 
 import de.betterform.xml.xforms.XFormsConstants;
 import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.exception.XFormsException;
 import org.w3c.dom.Element;
-
-import java.util.List;
 
 
 /**

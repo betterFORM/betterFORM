@@ -2,12 +2,10 @@ package de.betterform.agent.web.utils;
 
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebUtil;
-import de.betterform.agent.web.servlet.HttpRequestHandler;
 import de.betterform.generator.UIGenerator;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;

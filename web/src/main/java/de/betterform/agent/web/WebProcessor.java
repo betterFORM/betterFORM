@@ -5,7 +5,6 @@
 
 package de.betterform.agent.web;
 
-import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -15,7 +14,6 @@ import de.betterform.generator.UIGenerator;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
@@ -26,15 +24,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.infinispan.Cache;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.xml.sax.InputSource;
-import sun.misc.MessageUtils;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

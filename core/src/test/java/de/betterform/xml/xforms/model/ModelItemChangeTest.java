@@ -4,16 +4,14 @@
  */
 package de.betterform.xml.xforms.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import junit.framework.TestCase;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import junit.framework.TestCase;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Model item tests.

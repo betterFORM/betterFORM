@@ -6,12 +6,12 @@
 package de.betterform.xml.xforms.model.bind.impl;
 
 import de.betterform.xml.xforms.model.bind.DeclarationView;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Declaration viewport implementation.

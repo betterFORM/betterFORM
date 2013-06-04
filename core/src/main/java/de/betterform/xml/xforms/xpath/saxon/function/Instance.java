@@ -7,11 +7,11 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import de.betterform.xml.xforms.model.Model;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.tree.iter.ListIterator;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.ListIterator;
 
 import java.util.Collections;
 

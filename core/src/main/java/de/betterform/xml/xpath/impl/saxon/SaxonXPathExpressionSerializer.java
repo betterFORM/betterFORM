@@ -6,28 +6,28 @@
 package de.betterform.xml.xpath.impl.saxon;
 
 import net.sf.saxon.expr.*;
+import net.sf.saxon.expr.flwor.TupleExpression;
 import net.sf.saxon.expr.instruct.Instruction;
 import net.sf.saxon.expr.instruct.NumberInstruction;
-//import net.sf.saxon.expr.instruct.SimpleContentConstructor;
 import net.sf.saxon.expr.parser.Token;
-import net.sf.saxon.om.Axis;
-import net.sf.saxon.om.NamePool;
-import net.sf.saxon.pattern.NameTest;
-import net.sf.saxon.tree.util.FastStringBuffer;
-import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.pattern.NodeTest;
-import net.sf.saxon.pattern.PatternSponsor;
 import net.sf.saxon.expr.sort.ConditionalSorter;
 import net.sf.saxon.expr.sort.SortExpression;
-import net.sf.saxon.expr.flwor.TupleExpression;
-//import net.sf.saxon.sort.TupleSorter;
+import net.sf.saxon.om.Axis;
+import net.sf.saxon.om.NamePool;
+import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.pattern.NameTest;
+import net.sf.saxon.pattern.NodeTest;
+import net.sf.saxon.pattern.PatternSponsor;
+import net.sf.saxon.tree.util.FastStringBuffer;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.prefs.PreferenceChangeEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+//import net.sf.saxon.expr.instruct.SimpleContentConstructor;
+//import net.sf.saxon.sort.TupleSorter;
 
 /**
  * @author Nick Van den Bleeken

@@ -5,7 +5,6 @@
 
 package de.betterform.agent.web.cache;
 
-import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.exception.XFormsException;

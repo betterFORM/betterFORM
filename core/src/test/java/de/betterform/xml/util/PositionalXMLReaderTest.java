@@ -4,7 +4,6 @@
  */
 package de.betterform.xml.util;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import junit.framework.TestCase;
 import org.w3c.dom.Document;

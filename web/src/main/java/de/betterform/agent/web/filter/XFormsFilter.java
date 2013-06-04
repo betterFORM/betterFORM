@@ -27,7 +27,10 @@ import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
 
 import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.Iterator;

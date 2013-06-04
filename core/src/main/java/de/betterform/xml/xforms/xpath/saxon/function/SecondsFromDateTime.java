@@ -12,9 +12,6 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.DoubleValue;
 
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
 /**
  * Implementation of 7.9.6 The seconds-from-dateTime() Function <p/> This
  * function returns a possibly fractional number of seconds, according to the

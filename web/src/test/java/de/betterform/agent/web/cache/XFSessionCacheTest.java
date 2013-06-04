@@ -1,9 +1,9 @@
 package de.betterform.agent.web.cache;
 
 import org.infinispan.Cache;
-import org.junit.Test;
-import org.junit.Before;
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XFSessionCache Tester.

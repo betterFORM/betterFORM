@@ -24,7 +24,9 @@ import org.directwebremoting.WebContextFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 

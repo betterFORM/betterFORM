@@ -13,11 +13,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
 import org.infinispan.manager.DefaultCacheManager;
-import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /*
