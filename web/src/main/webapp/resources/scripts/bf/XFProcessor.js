@@ -1066,13 +1066,15 @@ define(["dojo/_base/declare",
                 this.removeSubscribers(itemId);
                 childDijit.destroy();
             } else {
-                var dijitId = domAttr.get(item, widgetID);
+                var dijitId = domAttr.get(dom.byId(itemId), widgetID);
+                if (dijitId != undefined) {
                 // console.debug("XFProcessor._unloadDOM: ChildDijit is null; dijitId:",dijitId);
                 self.removeSubscribers(dijitId);
                 childDijit = registry.byId(dijitId);
                 if (childDijit != undefined) {
                     childDijit.destroy();
                 }
+            }
             }
         },
 
