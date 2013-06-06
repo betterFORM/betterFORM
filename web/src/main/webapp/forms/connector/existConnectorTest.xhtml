@@ -15,7 +15,7 @@
                         <item/>
                     </data>
                 </xf:instance>
-                <xf:instance id="i-exist-xquerymodule" src="exist:/db/apps/betterform/connector/testdata.xqm?type=module&amp;function=test">
+                <xf:instance id="i-exist-xquerymodule" src="exist:/db/apps/betterform/connector/testdata.xqm?function=test">
                     <data xmlns="">
                         <item/>
                     </data>
@@ -59,6 +59,10 @@
                     <xf:message level="ephemeral" ev:event="xforms-submit-error">delete submission failed</xf:message>
                     <xf:message level="ephemeral" ev:event="xforms-submit-done">delete submission successful</xf:message>
                 </xf:submission>
+                <xf:submission method="execute" id="s-exec" replace="instance" instance="i-data2" resource="exist:/db/apps/betterform/connector/teststore.xql">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">execute submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">execute submission successful</xf:message>
+                </xf:submission>
             </xf:model>
         </div>
         <xf:group appearance="full">
@@ -101,6 +105,10 @@
             <xf:trigger>
                 <xf:label>DELETE</xf:label>
                 <xf:send submission="s-delete"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>EXECUTE</xf:label>
+                <xf:send submission="s-exec"/>
             </xf:trigger>
         </xf:group>
     </body>

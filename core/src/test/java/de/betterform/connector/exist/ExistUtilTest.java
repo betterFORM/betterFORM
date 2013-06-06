@@ -23,7 +23,7 @@ public class ExistUtilTest extends TestCase {
   @Override
   protected void setUp() throws Exception {
     uri1 = new URI("http://localhost:8080/path1/path2/uri1.xml");
-    uri2 = new URI("http://localhost:8080/file1.xqm?type=module&function=foo&k1=v1&k2=v2");
+    uri2 = new URI("http://localhost:8080/file1.xqm?function=foo&k1=v1&k2=v2&xsl=file1.xsl&xpath=//data");
     uri3 = new URI("http://localhost:8080/path1/path2/uri1.xml?function=foo&param1=value1&param2=value2");
     uri4 = new URI("http://localhost:8080");
   }
@@ -31,11 +31,15 @@ public class ExistUtilTest extends TestCase {
   
   public void testCalculateArity() throws URISyntaxException {
     
-    Map<String, String> p1 = URIUtil.getQueryParameters(uri4);
+    Map<String, String> p1 = URIUtil.getQueryParameters(uri1);
     Map<String, String> p2 = URIUtil.getQueryParameters(uri2);
-    
+    Map<String, String> p3 = URIUtil.getQueryParameters(uri3);
+    Map<String, String> p4 = URIUtil.getQueryParameters(uri4);
+
     assertEquals(0, ExistUtil.getXQueryFunctionArity(p1));
     assertEquals(2, ExistUtil.getXQueryFunctionArity(p2));
+    assertEquals(2, ExistUtil.getXQueryFunctionArity(p3));
+    assertEquals(0, ExistUtil.getXQueryFunctionArity(p4));
   }
   
   public void testGetAsFunctionParameters() throws URISyntaxException {

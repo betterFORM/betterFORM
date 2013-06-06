@@ -9,5 +9,6 @@ public enum ExistConnectorMethod {
   GET,
   PUT,
   POST,
-  DELETE
+  DELETE,
+  EXECUTE
 }

@@ -65,11 +65,13 @@ public class InstanceSerializerMap {
         registerSerializer("http", "urlencoded-post", "*", new UrlEncodedSerializer());
         registerSerializer("https", "urlencoded-post", "*", new UrlEncodedSerializer());
         registerSerializer("mailto", "urlencoded-post", "*", new UrlEncodedSerializer());
-        
+
         registerSerializer("file", "delete", "*", new UrlEncodedSerializer());
         registerSerializer("http", "delete", "*", new UrlEncodedSerializer());
         registerSerializer("https", "delete", "*", new UrlEncodedSerializer());
         registerSerializer("exist", "delete", "*", new UrlEncodedSerializer());
+
+        registerSerializer("exist", "execute", "*", new XMLSerializer());
 
         registerSerializer("echo", "*", "*", new XMLSerializer());
     }

@@ -44,6 +44,9 @@ public class ExistClient {
       try {
         tx = txManager.beginTransaction();
 
+        exec.setClient(this);
+        exec.setBrokerPool(pool);
+        exec.setDBBroker(broker);
         exec.setUriString(uri);
         exec.setLock(lock);
         exec.setContext(context);

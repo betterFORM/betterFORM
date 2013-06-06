@@ -7,8 +7,9 @@ package de.betterform.connector.exist;
 
 public enum ExistResourceType {
   XML,
+  BINARY,
   XQUERY,
   XQUERY_MODULE,
-  BINARY,
-  COLLECTION
+  COLLECTION, 
+  NOT_FOUND
 }

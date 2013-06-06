@@ -26,6 +26,7 @@ import org.w3c.dom.Node;
 import de.betterform.connector.AbstractConnector;
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
+import de.betterform.connector.util.URIUtil;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -70,34 +71,56 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
       ByteArrayOutputStream stream = (ByteArrayOutputStream) wrapper.getBodyStream();
 
       boolean hasPayload = !"".equals(stream.toString());
+      
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("submitting with method='" + method + "', has payload='" + hasPayload + "'");
+      }
 
       switch (method) {
       case GET:
-        if (hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission with payload for method " + ExistConnectorMethod.GET);
-        }
         return doGet(getURI(), mediatype, encoding);
+      case EXECUTE:
+        return doExecute(getURI(), mediatype, encoding, stream);
       case POST:
-        if (!hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission using method " + ExistConnectorMethod.POST + " without payload.");
-        }
-        doPost(getURI(), mediatype, encoding, stream);
+        return doPut(getURI(), mediatype, encoding, stream);
       case PUT:
-        if (!hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission using method " + ExistConnectorMethod.PUT + " without payload.");
-        }
         return doPut(getURI(), mediatype, encoding, stream);
       case DELETE:
-        if (hasPayload && LOGGER.isDebugEnabled()) {
-          LOGGER.debug("Ignoring submission with payload for method " + ExistConnectorMethod.DELETE);
-        }
         return doDelete(getURI(), mediatype, encoding);
       default:
         throw new XFormsException("submission method '" + method + "' not supported");
       }
     } catch (Exception e) {
-      throw new XFormsException(e);
+      Map<String, Object> failure = new HashMap<String, Object>();
+      failure.put("response-reason-phrase", e.getMessage());
+      failure.put("error-type", "target-error");
+      return failure;
     }
+  }
+
+  private Map<String, Object> doExecute(String uri, String mediatype, String encoding, final ByteArrayOutputStream stream) throws Exception {
+    
+    String resultString = ExistUtil.executeXQuery(uri, getContext(), mediatype, encoding, stream);
+    
+    Map<String, Object> result = new HashMap<String, Object>();
+    result.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, DOMUtil.parseString(resultString, true, true));
+    return result;
+    
+  }
+  
+  private Map<String, Object> doGet(String uri, String mediatype, String encoding) throws Exception {
+
+    String response = null;
+    if(URIUtil.hasFileExtension(uri, ExistUtil.EXTENSION_XQUERY, ExistUtil.EXTENSION_XQUERY_MODULE)) {
+      response = ExistUtil.executeXQuery(uri, getContext(), mediatype, encoding, null);
+    } else {
+      response = ExistUtil.getExistResource(uri, getContext(), mediatype, encoding, null);
+    }
+    
+    Document result = DOMUtil.parseString(response, true, true);
+    Map<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, result);
+    return resultMap;
   }
 
   private Map<String, Object> doDelete(String uri, String mediatype, String encoding) throws Exception {
@@ -135,30 +158,24 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
     return response;
   }
   
-  private Map<String, Object> doGet(String uri, String mediatype, String encoding) throws Exception {
 
-    Document result = ExistUtil.getExistResourceAsDocument(uri, getContext());
+  private Map<String, Object> doPut(String uri, final String mediatype, final String encoding, final ByteArrayOutputStream stream) throws Exception {
 
-    Map<String, Object> response = new HashMap<String, Object>();
-    response.put(XFormsProcessor.SUBMISSION_RESPONSE_DOCUMENT, result);
-
-    return response;
-  }
-
-  /**
-   * put is used to create or update an named resource. to create a resource,
-   * the client is responsible to create an unique resource name.
-   */
-  private Map<String, Object> doPut(final String uri, final String mediatype, final String encoding, final ByteArrayOutputStream stream) throws Exception {
-
+    Map<String, Object> resultMap = new HashMap<String, Object>();
+    
+    // TODO we may want to use another approach to generate filenames
+    if (ExistUtil.isExistCollection(uri, getContext())) {
+      uri = uri + "/" + System.currentTimeMillis() + ".xml";
+      resultMap.put("resource-uri", uri);
+    }
+    
     existClient.execute(uri, Lock.WRITE_LOCK, getContext(), new ExistClientExecutable<DocumentImpl>() {
 
       @Override
-      public DocumentImpl execute(Txn tx, BrokerPool pool, DBBroker broker, DocumentImpl xmlResrouce) throws Exception {
+      public DocumentImpl execute(Txn tx, BrokerPool pool, DBBroker broker, DocumentImpl xmlResource) throws Exception {
 
-        String uri = getUri().getRawPath();
-        String file = uri.substring(uri.lastIndexOf('/') + 1);
-        String path = uri.substring(0, uri.lastIndexOf('/'));
+        String file = URIUtil.getLastSegmentFromPath(getUri());
+        String path = URIUtil.getPathWithoutLastSegment(getUri());
 
         DocumentImpl resource = broker.getResource(getXmlDbUri(), Lock.WRITE_LOCK);
         Collection collection = null;
@@ -184,28 +201,4 @@ public class ExistSubmissionHandler extends AbstractConnector implements Submiss
     
     return doGet(uri, mediatype, encoding);
   }
-
-  /**
-   * post is used to send payload to an server endpoint without knowing the
-   * future resourcename. in this scenario, the client will only post the
-   * payload to an collection endpoint. the server creates automatically an
-   * resource with an unique resourcename . normally, this resourcename is
-   * returned using a location header.
-   */
-  private Map<String, Object> doPost(String uri, String mediatype, String encoding, ByteArrayOutputStream stream) throws Exception {
-
-    if (!ExistUtil.isExistCollection(uri, getContext())) {
-      throw new XFormsException("POST is only eligible against collection urls");
-    }
-    uri = uri + "/" + System.currentTimeMillis() + ".xml";
-    Map<String, Object> response = doPut(uri, mediatype, encoding, stream);
-    
-    // TODO
-    // we need tell the new ur of this resource to the 
-    // client (eg. using a location header)
-    setURI(uri);
-    
-    return response;
-  }
-
 }

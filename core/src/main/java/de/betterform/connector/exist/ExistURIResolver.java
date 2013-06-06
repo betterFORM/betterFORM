@@ -7,11 +7,11 @@ package de.betterform.connector.exist;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.exist.EXistException;
 
 import de.betterform.connector.URIResolver;
 import de.betterform.connector.http.AbstractHTTPConnector;
-import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.connector.util.URIUtil;
+import de.betterform.xml.dom.DOMUtil;
 
 /**
  * This resolver is eXistdb-specific and allows resolving URIs when directly running within eXist. It does
@@ -27,19 +27,28 @@ public class ExistURIResolver extends AbstractHTTPConnector implements URIResolv
     private static Log LOGGER = LogFactory.getLog(ExistURIResolver.class);
 
     /**
-     * resolve URI against root of eXistdb instance e.g. '/db/data/someData/one.xml[//someXPath]'
      *
      * @return a DOM node or document from the URI resolution
-     * @throws de.betterform.xml.xforms.exception.XFormsException if any error occurred during link traversal.
-     * @throws EXistException 
      */
     @SuppressWarnings("unchecked")
-    public Object resolve() throws XFormsException {
-        String uriString = getURI();
-        if (LOGGER.isDebugEnabled()) {
-          LOGGER.debug("resolving uri '" + uriString + "'");
+    public Object resolve() {
+      String uriString = getURI();
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("resolving uri '" + uriString + "'");
+      }
+      
+      try {
+        String s;
+        if(URIUtil.hasFileExtension(uriString, ExistUtil.EXTENSION_XQUERY, ExistUtil.EXTENSION_XQUERY_MODULE)) {
+          s = ExistUtil.executeXQuery(uriString, getContext(), null, null, null);
+        } else {
+          s = ExistUtil.getExistResource(uriString, getContext(),  null, null, null);
         }
-        return ExistUtil.getExistResource(uriString, getContext());
+        return DOMUtil.parseString(s, true, true);
+      } catch (Exception e) {
+        // TODO bad idea?
+        return null;
+      }
     }
 
 }
