@@ -101,14 +101,14 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="true" description="if true enables debug bar and event log viewer"/>
+        <property name="betterform.debug-allowed" value="false" description="if true enables debug bar and event log viewer"/>
 
         <property name="betterform.unloading-message" value="You are about to leave this XForms application" description="Set message which is shown to user if unsaved form is left."/>
 
         <!-- WARNING: not ready for production use -->
-        <property name="betterform.event-optimization-enabled" value="false" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
+        <property name="betterform.event-optimization-enabled" value="true" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
-        <property name="webprocessor.doIncludes" value="true" description="if true the incoming XForms will be scanned for bf:include tags and transformed accordingly"/>
+        <property name="webprocessor.doIncludes" value="false" description="if true the incoming XForms will be scanned for bf:include tags and transformed accordingly"/>
         <property name="admin.mail" value="foo@bar.de" description="a mail address to report problems and errors with forms"/>
 
         <!--
