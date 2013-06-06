@@ -3,8 +3,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
         return declare(_Widget, {
 
             currentValue:null,
-            lastItem:null,
-            itemSetLength:0,
 
             postCreate:function() {
                 // console.debug("Select1ComboBox postCreate id:",this.id);
@@ -29,17 +27,16 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 if (referenzedNode == undefined) {
                     referenzedNode = query('option[data-bf-itemset=\"'+ contextInfo.originalId + '\"]',this.id)[0];
                 }
-
+                var options = query('option',this.domNode);
                 if (referenzedNode == undefined) {
                     // console.info("referenced node is sill undefined");
-                    var emptyNode = query('option',this.domNode)[0];
+                    var emptyNode = options[0];
                     // console.debug("emptyNode",emptyNode, " id:generatedItemId ",generatedItemId);
                     var emptyOption = domConstruct.create("option", {id:generatedItemId}, emptyNode, "after");
                     domAttr.set(emptyOption, "data-bf-itemset", itemsetId);
                     // console.debug("emptyOption: ",emptyOption);
-
                 }
-
+                // console.debug("3. referenzedNode: ",referenzedNode, " position: ",position);
                 if(referenzedNode){
                     var item = undefined;
                     if(position == 1){
@@ -50,22 +47,8 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
 
                     }
                     else {
-                        var option = undefined;
-                        if(position == 2){
-                            option = referenzedNode;
-                        }else {
-			                if (position>this.itemSetLength) { // Append to the end
-	                    	    option = this.lastItem;
-                            } else {
-                                option = this.getNthSiblingOption(position-2, referenzedNode);
-			                }
-                        }
-                        item = domConstruct.create("option", {id:generatedItemId}, option, "after");
+                        item = domConstruct.create("option", {id:generatedItemId}, options[options.length-1], "after");
                     }
-                    if (position>this.itemSetLength) {
-                        this.lastItem = item;
-                    }
-                    this.itemSetLength++;
                     domClass.add(item, "xfSelectorItem");
                 }else {
                     console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
@@ -90,7 +73,6 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                 }else {
                     console.warn("Select1ComboBox: itemset '",itemsetId,"' does not exist for Select1 [id:'",this.id ,"']");
                 }
-                this.itemSetLength--;
                 // console.debug("handleDeleteItem: this.domNode",this.domNode);
             },
 
@@ -124,6 +106,7 @@ define(["dojo/_base/declare", "dijit/_Widget","dojo/dom-attr","dojo/dom-class","
                     siblingNode = siblingNode.nextSibling;
                     // console.debug("getNthSiblingOption: siblingNode:",   siblingNode, " position: ",counter);
                 }
+                // console.debug("for position " + position + " and referenceNdoe ", referenzedNode, " the siblingNode is",siblingNode );
                 return siblingNode;
             }
         });
