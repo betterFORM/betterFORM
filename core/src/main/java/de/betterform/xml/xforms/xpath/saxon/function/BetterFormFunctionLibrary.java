@@ -8,8 +8,13 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.extensions.BFSort;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.*;
+import net.sf.saxon.expr.Container;
+import net.sf.saxon.expr.Expression;
+import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.StandardFunction.Entry;
+import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.Type;
 
@@ -23,7 +28,7 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
 
     @Override
     protected String getFunctionNamespace() {
-        return BetterFormFunctionLibrary.functionNamespace;
+        return functionNamespace;
     }
 
     static {
@@ -36,6 +41,15 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}calcIPRange", CalcIPRange.class, 0, 2, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
+        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}isInIPRange", IsInIPRange.class, 0, 3, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
 
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}sort", BFSort.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
         arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
@@ -73,9 +87,7 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
 
 
 
-        e = register("{" + NamespaceConstants.BETTERFORM_NS + "}instanceOfModel", InstanceOfModel.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+
 
         e = register("{" + NamespaceConstants.BETTERFORM_NS + "}createAttributeNode", CreateAttributeNode.class, 0, 2, 2, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
@@ -98,4 +110,6 @@ public class BetterFormFunctionLibrary extends XPathFunctionLibrary {
         arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
         arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
     }
+
+
 }

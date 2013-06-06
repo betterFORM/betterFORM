@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Trigger control rendered as button with an image specified by the src-attribute</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                This form control is similar to the HTML element button and
+                allows for user-triggered actions. This form control may
+                also be used to construct other custom form controls.
+            </p>
+            <p>
+                A
+                <span class="keyword">trigger</span>
+                with a
+                <span class="keyword">src</span>
+                attribute pointing to a
+                image URL is rendered as a button with an image.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-trigger"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data>
+                            <trigger1 constraint="true" readonly="false" required="false" relevant="true">
+                                <value></value>
+                            </trigger1>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="trigger1">
+                        <xf:bind nodeset="value" constraint="true()"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="false()"
+                                 relevant="boolean-from-string(../@relevant)"
+                                 type="string"/>
+                        <xf:bind nodeset="@constraint" type="boolean" readonly="true()"></xf:bind>
+                        <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@required" type="boolean" readonly="true()"></xf:bind>
+                        <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                    </xf:bind>
+
+                </xf:model>
+                <code class="ui">
+<xf:trigger id="trigger1" ref="trigger1/value" src="images/bf_logo_67x27.png">
+    <xf:label></xf:label>
+    <xf:hint>a Hint for this control</xf:hint>
+    <xf:help>help for trigger1</xf:help>
+    <xf:message>The image trigger was clicked</xf:message>
+</xf:trigger>
+                </code>
+            </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="trigger1-readonly" ref="trigger1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="trigger1-relevant" ref="trigger1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+        </div>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfTrigger</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

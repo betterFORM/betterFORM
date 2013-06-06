@@ -10,6 +10,8 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.UIElementState;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
@@ -28,6 +30,7 @@ public class BoundElementState implements UIElementState {
     private BindingElement owner;
     protected Element state;
     private boolean[] currentProperties;
+    private Map<String, String> currentCustomProperties;
     private String currentType;
     private Object currentValue;
     private boolean dispatchValueChange;
@@ -113,7 +116,7 @@ public class BoundElementState implements UIElementState {
                 if(this.handleValue)
                 {
                 	//attempt to store the subtree (xforms:copy)
-                    if(modelItem.getNode() instanceof Element)
+                    if(modelItem.getNode() != null && modelItem.getNode() instanceof Element)
                     {
                     	this.currentValue = storeSubtree(modelItem);
                     	Element childElement = DOMUtil.getFirstChildElement((Element)modelItem.getNode());
@@ -127,7 +130,18 @@ public class BoundElementState implements UIElementState {
                     value = UIElementStateUtil.localiseValue(this.owner,this.state,this.currentType,value);
 	                DOMUtil.setElementValue(this.state, value);
 	                this.currentValue = value;
-                }  
+                }
+                
+                // There will normally not be that many custom MIPS so an initial value of 2 is good.
+                // Adding 1 will not increase the size since the default loadfactor is 0.75
+                this.currentCustomProperties = new HashMap<String, String>(2);
+                this.currentCustomProperties.putAll(modelItem.getLocalUpdateView().getCustomMIPValues());
+				if (this.currentCustomProperties != null) {
+					for (String key : this.currentCustomProperties.keySet()) {
+						UIElementStateUtil.setStateAttribute(this.state,
+								key, this.currentCustomProperties.get(key));
+					}
+				}
             }
         } else {
            modelItem = UIElementStateUtil.getModelItem(this.owner);
@@ -198,7 +212,7 @@ public class BoundElementState implements UIElementState {
             UIElementStateUtil.setStateAttribute(this.state, P3PTYPE_ATTRIBUTE, p3ptype);
 
             if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
-                if (modelItem.getNode() instanceof Element) {
+                if (modelItem != null && modelItem.getNode() != null && modelItem.getNode() instanceof Element) {
                     UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
                 }
             }
@@ -242,10 +256,12 @@ public class BoundElementState implements UIElementState {
             this.currentType = datatype;
             //Set base-type
             if (! KnownDataType.isKnownDataType(this.currentType, this.owner.getElement())) {
-                if (modelItem.getNode() instanceof Element) {
-                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
-                } else {
-                    UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                if ( modelItem != null && modelItem.getNode() != null) {
+                    if (modelItem.getNode() instanceof Element) {
+                        UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Element) modelItem.getNode()).getNamespaceURI()));
+                    } else {
+                        UIElementStateUtil.setStateAttribute(this.state, BASE_TYPE, UIElementStateUtil.getBaseType(modelItem.getModel().getSchemas(), this.currentType, ((Node) modelItem.getNode()).getNamespaceURI()));
+                    }
                 }
             }
         }
@@ -260,6 +276,19 @@ public class BoundElementState implements UIElementState {
         //store properties and value
         this.currentProperties = properties;
         this.currentValue = value;
+
+		if (modelItem != null) {
+			Map<String, String> customProperties = modelItem.getLocalUpdateView()
+					.getCustomMIPValues();
+			if (customProperties != null) {
+
+				UIElementStateUtil.dispatchBetterFormCustomMIPEvents(
+						this.owner, this.currentCustomProperties,
+						customProperties);
+				this.currentCustomProperties = new HashMap<String, String>();
+				this.currentCustomProperties.putAll(customProperties);
+			}
+		}
     }
 
     /**

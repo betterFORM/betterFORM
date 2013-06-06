@@ -369,7 +369,9 @@ public class XMLEventInitializerTest extends TestCase {
         assertEquals(XFormsEventNames.INVALID, this.xmlEvent.getType());
         assertEquals(true, this.xmlEvent.getBubbles());
         assertEquals(false, this.xmlEvent.getCancelable());
-        assertEquals(null, this.xmlEvent.getContextInfo(XMLEvent.DIRTY_DEFAULT_INFO));
+        assertNotNull(this.xmlEvent.getContextInfo(XMLEvent.DIRTY_DEFAULT_INFO));
+        assertEquals("context",this.xmlEvent.getContextInfo(XMLEvent.DIRTY_DEFAULT_INFO));
+
     }
 
     /**
@@ -783,6 +785,23 @@ public class XMLEventInitializerTest extends TestCase {
         assertEquals("context", this.xmlEvent.getContextInfo(XMLEvent.DIRTY_DEFAULT_INFO));
     }
 
+    /**
+     * Tests event initialization.
+     *
+     * @throws Exception in any error occurred during setup.
+     */
+    public void testInitCustomMIPToggledEvent() throws Exception {
+        String type = BetterFormEventNames.CUSTOM_MIP_CHANGED;
+        Map context = new HashMap();
+        context.put("diff", "true");
+        this.xmlEventInitializer.initXMLEvent(this.xmlEvent, type, true, false, context);
+
+        assertEquals(type, this.xmlEvent.getType());
+        assertEquals(true, this.xmlEvent.getBubbles());
+        assertEquals(false, this.xmlEvent.getCancelable());
+        assertEquals("true", this.xmlEvent.getContextInfo("diff"));
+    }
+    
     /**
      * Sets up the test.
      *

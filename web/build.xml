@@ -18,11 +18,10 @@
           is called - DO NOT MOVE
   ###  -->
 
-    <property name="root.dir" value=".."/>
-    <property name="resource.module.dir" value="../resource"/>
-    <property name="resource.src.dir" value="${resource.module.dir}/src"/>
-    <property name="core.dir" value="../core"/>
-    <property name="web.dir" value="."/>
+    <property name="root.dir" value="${basedir}/.."/>
+    <property name="resource.src.dir" value="${basedir}/src"/>
+    <property name="core.dir" value="${basedir}/../core"/>
+    <property name="web.dir" value="${basedir}"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
 
@@ -35,9 +34,9 @@
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <!--<property name="resources.dir" value="${webapp.dir}/resources"/>-->
     <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
-    <property name="targetname" value="${target}/${web.app.name}-${web.app.version}"/>
+    <property name="targetname" value="${target}/${web.app.name}-${app.version.number}"/>
 
-    <antversion property="antversion" atleast="1.7"/>
+    <antversion property="antversion" atleast="${properties.antversion}"/>
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -124,7 +123,7 @@
         ************************************************************************************
         </echo>
         <copy todir="${target}/classes/META-INF/resources">
-            <fileset dir="${resource.src.dir}/main/resources" includes="**/*" excludes="scripts/**" />
+            <fileset dir="${resource.src.dir}/main/webapp/resources" includes="**/*" excludes="scripts/**" />
         </copy>
 
 <!--
@@ -145,14 +144,14 @@
         unpacking optimized javascript library
         ************************************************************************************
         </echo>
-        <unzip src="${resource.src.dir}/main/lib/betterform-js-optimized.zip"
+        <unzip src="${resource.src.dir}/main/lib/${app.name}-js-optimized.zip"
                dest="${target}/classes/META-INF/resources/scripts"/>
         <echo>
         ************************************************************************************
         compressing classes plus resources into a single jar
         ************************************************************************************
         </echo>
-        <jar basedir="${target}/classes" compress="true" jarfile="${basedir}/target/betterform.jar" update="true"/>
+        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/ehcache.xml"/>
 
         <echo>
             ************************************************************************************
@@ -254,20 +253,11 @@
 
         </copy>
 
-        <!-- copy version.info to betterform-version.config -->
-        <filter token="app.name" value="${web.app.name}"/>
-        <filter token="app.version" value="${web.app.version}"/>
-        <tstamp>
-            <format property="current.time"
-                    pattern="yyyy-MM-dd HH:mm:ss"
-                    unit="millisecond"/>
-        </tstamp>
-        <filter token="timestamp" value="${current.time}"/>
-
         <copy tofile="${src.webinf.dir}/betterform-version.info"
-              file="${core.dir}/src/main/java/version.info"
-              filtering="true"
-              overwrite="true"/>
+                file="../core/src/main/resources/META-INF/version.info"
+                filtering="true"
+                overwrite="true"/>
+
 
         <!--TODO: URGENT: webapp dir should be urgently be cleaned up!!!! -->
         <copy description="copy WEB-INF dir"
@@ -277,6 +267,15 @@
             <fileset dir="${src.webapp.dir}">
                 <exclude name="WEB-INF/*.template.xml"/>
                 <exclude name="META-INF/context.xml"/>
+                <exclude name="**/images/**"/>
+            </fileset>
+        </copy>
+        <copy description="copy WEB-INF dir"
+              todir="${webapp.dir}"
+              overwrite="true"
+              filtering="false">
+            <fileset dir="${src.webapp.dir}">
+                <include name="**/images/**"/>
             </fileset>
         </copy>
 
@@ -284,7 +283,7 @@
         <mkdir dir="${webapp.dir}/resources"/>
         <copy description="copy resources dir"
               todir="${webapp.dir}/resources"
-              file="${resource.src.dir}/main/resources/images/blank.gif"/>
+              file="${resource.src.dir}/main/webapp/resources/images/blank.gif"/>
     </target>
 
     <target name="copy-libs" unless="should.not.copy.libs">
@@ -302,8 +301,8 @@
             <!-- todo: need a better solution here - not all libs form web/src/main/lib are runtime relevant.
                 Therefore only needed libs are copied directly here.
 			-->
-            <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${core.app.version}.jar">
-                <include name="**/dwr*"/>
+            <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${app.version}.jar">
+                <include name="dwr*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -312,6 +311,7 @@
             depends="exploded-webapp-base"
             description="deploys classes and resources tree to WEB-INF/classes">
 
+        <delete dir="${webapp.dir}/WEB-INF/lib/betterform.jar"/>
         <antcall target="compile"/>
 
         <move file="${target}/classes"
@@ -327,16 +327,16 @@
         </echo>
 
         <antcall target="copy-src-resources"/>
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
 
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
     </target>
 
-    <target name="deploy-exploded-resources" description="only deployes resources in resources/src/main/resources">
+    <target name="deploy-exploded-resources" description="only deployes resources in src/main/webapp/resources">
 
         <echo>
         ************************************************************************************
@@ -344,7 +344,7 @@
         ************************************************************************************
         </echo>
         <antcall target="copy-src-resources"/>
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
     </target>
@@ -364,7 +364,8 @@
         copying betterform.jar to WEB-INF/lib
         ************************************************************************************
         </echo>
-        <copy todir="${webapp.dir}/WEB-INF/lib" file="${web.dir}/target/betterform.jar"/>
+        <copy todir="${webapp.dir}/WEB-INF/lib" file="${target}/betterform.jar"/>
+        <copy todir="${webapp.dir}/WEB-INF/classes" file="${target}/classes/ehcache.xml"/>
     </target>
 
     <target name="deploy-forms" description="deploy the forms to target">
@@ -376,7 +377,7 @@
 
         <copy todir="${webapp.dir}/${forms.target}"
               overwrite="true">
-            <fileset dir="${resource.module.dir}/src/main/xforms" excludes="**/TimeTracker.xhtml"/>
+            <fileset dir="${basedir}/src/main/webapp/forms" excludes="**/TimeTracker.xhtml"/>
         </copy>
     </target>
 
@@ -390,18 +391,18 @@
          <copy description="copy resources from global 'src' directory"
               todir="${resources.dir}"
               includeemptydirs="true">
-            <fileset dir="${resource.src.dir}/main/resources">
+            <fileset dir="${resource.src.dir}/main/webapp/resources">
                 <exclude name="**/scripts/**"/>
             </fileset>
         </copy>
 
-        <ant antfile="${resource.module.dir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
+        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts/dojo"/>
         </ant>
     </target>
 
     <target name="check-ant-version" unless="antversion">
-        <echo>Apache Ant 1.7 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
     <target name="deploy-test-resources" description="copy all official XForms test suite files to webapp dir">
@@ -411,7 +412,7 @@
         <echo message="************************************************************************************"/>
         <echo/>
         <copy todir="${webapp.dir}/${forms.target}">
-            <fileset dir="../resource/src/test/resources"/>
+            <fileset dir="${basedir}/src/test/resources"/>
         </copy>
     </target>
 

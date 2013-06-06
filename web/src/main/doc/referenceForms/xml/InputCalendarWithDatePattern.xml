@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Calendar input control with Date pattern</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                This form control enables free-form data entry or a user
+                interface component appropriate to the datatype of the bound
+                node.
+            </p>
+            <p>
+                An input which binds to a Node of type 'date' is rendered as a popup calendar control. The value
+                may also be be typed in directly.
+            </p>
+            <p>
+                By setting the
+                <span class="keyword">appearance</span>
+                attribute to "iso8601:datePattern" the format of the Date value
+                can be customized.
+                Typical format strings apply. See
+                <a href="http://www.dojotoolkit.com/reference-guide/dojo/date/locale/format.html" target="_blank">Dojo
+                    Docs
+                </a>
+                for a full specification with examples.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-input"/>
+            <a href="#elems-form-controls"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data>
+                            <input1 constraint="true" readonly="false" required="true" relevant="true">
+                                <value>2011-09-07</value>
+                            </input1>
+                        </data>
+                    </xf:instance>
+                    <xf:bind nodeset="input1">
+                        <xf:bind nodeset="value" constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)"
+                                 type="date"/>
+                        <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                        <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                    </xf:bind>
+
+                </xf:model>
+                <code class="ui">
+<xf:input id="input1" ref="input1/value" appearance="bf:iso8601" data-bf-params="date:'dd.MMMM.yyyy'" incremental="true" >
+    <xf:label>a calendar with a date pattern</xf:label>
+    <xf:hint>a Hint for this control</xf:hint>
+    <xf:help>help for input1</xf:help>
+    <xf:alert>invalid</xf:alert>
+</xf:input>
+                </code>
+                <div class="output">
+                    <xf:output ref="input1/value">
+                        <xf:label>CurrentValue: </xf:label>
+                    </xf:output>
+                </div>
+
+            </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="input1-readonly" ref="input1/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-required" ref="input1/@required" incremental="true">
+                        <xf:label>required</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-relevant" ref="input1/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="input1-valid" ref="input1/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                    <xf:trigger>
+                        <xf:label>now</xf:label>
+                        <xf:setvalue ref="input1/value" value="substring-before(current-date(),'+')"/>
+                    </xf:trigger>
+
+                </xf:group>
+            </div>
+        </div>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfInput</td>
+                    <td>matches an Element that represents a XForms input element</td>
+                </tr>
+                <tr>
+                    <td>xsdDate</td>
+                    <td>matches an Element that is bound to a node widht datatype
+                        <code>date</code>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="notes">
+            There is no way to distinguish a standard date control from one with a date pattern. If that should be essential for you
+            please contact the betterform users mailing list.
+        </div>
+        <div class="limitations">
+            <p>
+                The date control is currently not fully accessible esp. keyboard navigation is not
+                working in the current version of Dojo.
+            </p>
+            <p>
+                Though locale-specific formatting of a date is supported there's no further support for
+                subformats like the Java short/medium/long date formatting.
+            </p>
+            <p>
+                Dojo only accepts 'date'-inputs in the format of the datePattern OR the ISO8601/RFC3339 format.
+            </p>
+        </div>
+    </body>
+</html>

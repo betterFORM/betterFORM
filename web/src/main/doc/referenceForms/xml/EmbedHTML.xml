@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Submission element with replace="embedHTML"</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                 This page demonstrates the use of a XForms submission element with replace <span class="keyword">embedHTML</span>
+            </p>
+            <p>
+
+            </p>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data/>
+                    </xf:instance>
+<code class="model">
+<xf:submission id="s-embedHTML-audio"
+   replace="embedHTML"
+   targetid="mountpoint-audio"
+   resource="resources/htmlToEmbed.html#HTMLToEmbed-audio"
+   method="get"/>
+
+<xf:submission id="s-embedHTML-plain"
+   replace="embedHTML"
+   targetid="mountpoint-plain"
+   resource="resources/htmlToEmbed.html#HTMLToEmbed-plain"
+   method="get"/>
+
+<xf:submission id="s-embedHTML-full"
+   replace="embedHTML"
+   targetid="mountpoint-full"
+   resource="resources/htmlToEmbed.html"
+   method="get"/>
+</code>
+                </xf:model>
+                <code class="ui">
+<xf:trigger id="trigger1">
+    <xf:label>Load HTML 5 audio element as part from an external file</xf:label>
+    <xf:send submission="s-embedHTML-audio"/>
+</xf:trigger>
+
+<div id="mountpoint-audio"/>
+
+<xf:trigger id="trigger2">
+    <xf:label>Load Plain HTML as part from an external file</xf:label>
+    <xf:send submission="s-embedHTML-plain"/>
+</xf:trigger>
+
+<div id="mountpoint-plain"/>
+
+<xf:trigger id="trigger3">
+    <xf:label>Load full external HTML file</xf:label>
+    <xf:send submission="s-embedHTML-full"/>
+</xf:trigger>
+
+<div id="mountpoint-full"/>
+                </code>
+            </div>
+        </div>
+    </body>
+</html>

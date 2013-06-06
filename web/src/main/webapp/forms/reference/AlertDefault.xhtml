@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      
+      <title>Default Alert Handler - inline alerts</title>
+      
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
+      <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               <xf:instance>
+                  <data xmlns="">
+                     <grouped-data>
+                        <group>
+                           <a></a>
+                           <b></b>
+                           <c></c>
+                           <d></d>
+                        </group>
+                     </grouped-data>
+                  </data>
+               </xf:instance>
+               <xf:submission id="echo" resource="echo:foo" method="GET" replace="none">
+                  <xf:message ev:event="xforms-submit-error">Submission failed: invalid data</xf:message>
+                  <xf:message ev:event="xforms-submit-done">Submission successfull</xf:message>
+               </xf:submission>
+               <xf:bind nodeset="grouped-data">
+                  <xf:bind nodeset="group">
+                     <xf:bind nodeset="a" constraint="string-length(.) &gt; 5"></xf:bind>
+                     <xf:bind nodeset="b" constraint="string-length(.) &gt; 5"></xf:bind>
+                     <xf:bind nodeset="c" constraint="string-length(.) &gt; 5"></xf:bind>
+                     <xf:bind nodeset="d" constraint="string-length(.) &gt; 5"></xf:bind>
+                  </xf:bind>
+               </xf:bind>
+            </xf:model>
+         </div>
+         <div class="CSS">
+            <table>
+               <caption>CSS</caption>
+               <tr>
+                  <th style="font-style:italic;color:#C46B47;">
+                     Hover the classes to see matching element(s) in the example
+                     
+                  </th>
+               </tr>
+               <tr>
+                  <td id="d3e158" onmouseover="showClass('InlineAlert');" onmouseout="hideClass('InlineAlert');">InlineAlert
+                     <div data-dojo-type="dijit.Tooltip" connectId="d3e158">matches a body that uses inline alerts</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d3e167" onmouseover="showClass('xfInput');" onmouseout="hideClass('xfInput');">xfInput
+                     <div data-dojo-type="dijit.Tooltip" connectId="d3e167">matches an Element that represents a XForms input element</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d3e176" onmouseover="showClass('xfAlert');" onmouseout="hideClass('xfAlert');">xfAlert
+                     <div data-dojo-type="dijit.Tooltip" connectId="d3e176">matches an Element that represents a XForms alert element</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
+                        matches an Element that represents a XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
+                        matches the label part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
+                        matches the widget part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="pageintro">
+            <h1>Default Alert Handler - inline alerts</h1>
+            <div class="description">
+               <p>This form shows the default alert handling which is choosen when you do not specify
+                  via some custom class (see other examples). This will show alert messages inline with
+                  their controls.
+               </p>
+               <p>By default alerts are displayed to the right of the widget but this can be influenced
+                  by overwriting the xfAlert styles.
+               </p>
+               <p>This form also uses hints and shows the coordination between alert and hint. A hint
+                  is always shown when focussing a field that has a hint. Alerts are shown once the
+                  data value attached to the control become invalid.
+               </p>
+            </div>
+            <table id="references">
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/TR/2009/REC-xforms-20091020#ui-input#ui-commonelems-alert" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#alert" target="_blank">
+                        Quick Reference
+                        </a></td>
+               </tr>
+            </table>
+         </div>
+         <h2>Example</h2>
+         <div class="Section sample">    
+            <xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert">
+               <xf:label>Each field must have more than 5 characters to become valid</xf:label>
+               <xf:input id="input1" ref="a">
+                  <xf:label>A-label</xf:label>
+                  <xf:alert id="input1-alert">Your input is not long enough</xf:alert>
+                  <xf:hint id="input1-hint">The input must be longer than 5 characters</xf:hint>
+               </xf:input>
+               <xf:input id="input2" ref="b">
+                  <xf:label>Bb-label</xf:label>
+                  <xf:alert id="input2-alert">Your input is not long enough</xf:alert>
+                  <xf:hint id="input2-hint">The input must be longer than 5 characters</xf:hint>
+               </xf:input>
+               <xf:input id="input3" ref="c">
+                  <xf:label>Ccc-label</xf:label>
+                  <xf:hint id="input3-hint">The input must be longer than 5 characters</xf:hint>
+                  <xf:alert id="input3-alert">Your input is not long enough</xf:alert>
+               </xf:input>
+               <xf:input id="input4" ref="d">
+                  <xf:label>Dddd-label</xf:label>
+                  <xf:hint id="input4-hint">The input must be longer than 5 characters</xf:hint>
+                  <xf:alert id="input4-alert">Your input is not long enough</xf:alert>
+               </xf:input>
+            </xf:group>
+            <xf:trigger>
+               <xf:label>Send</xf:label>
+               <xf:send submission="echo"></xf:send>
+            </xf:trigger> 
+         </div>
+         <h2>XForms Markup</h2>
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:model&gt;
+    &lt;xf:instance&gt;
+        &lt;data&gt;
+            &lt;grouped-data&gt;
+                &lt;group&gt;
+                    &lt;a&gt;&lt;/a&gt;
+                    &lt;b&gt;&lt;/b&gt;
+                    &lt;c&gt;&lt;/c&gt;
+                    &lt;d&gt;&lt;/d&gt;
+                &lt;/group&gt;
+            &lt;/grouped-data&gt;
+        &lt;/data&gt;
+    &lt;/xf:instance&gt;
+    &lt;xf:submission id="echo" resource="echo:foo" method="GET" replace="none"&gt;
+        &lt;xf:message ev:event="xforms-submit-error"&gt;Submission failed: invalid data&lt;/xf:message&gt;
+        &lt;xf:message ev:event="xforms-submit-done"&gt;Submission successfull&lt;/xf:message&gt;
+    &lt;/xf:submission&gt;
+
+    &lt;xf:bind nodeset="grouped-data"&gt;
+        &lt;xf:bind nodeset="group"&gt;
+            &lt;xf:bind nodeset="a" constraint="string-length(.) &gt; 5"&gt;&lt;/xf:bind&gt;
+            &lt;xf:bind nodeset="b" constraint="string-length(.) &gt; 5"&gt;&lt;/xf:bind&gt;
+            &lt;xf:bind nodeset="c" constraint="string-length(.) &gt; 5"&gt;&lt;/xf:bind&gt;
+            &lt;xf:bind nodeset="d" constraint="string-length(.) &gt; 5"&gt;&lt;/xf:bind&gt;
+        &lt;/xf:bind&gt;
+    &lt;/xf:bind&gt;
+&lt;/xf:model&gt;
+
+&lt;xf:group ref="grouped-data/group" appearance="compact" class="InlineAlert"&gt;
+    &lt;xf:label&gt;Each field must have more than 5 characters to become valid&lt;/xf:label&gt;
+    &lt;xf:input id="input1" ref="a"&gt;
+        &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+        &lt;xf:alert id="input1-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
+        &lt;xf:hint id="input1-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input id="input2" ref="b"&gt;
+        &lt;xf:label&gt;Bb-label&lt;/xf:label&gt;
+        &lt;xf:alert id="input2-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
+        &lt;xf:hint id="input2-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input id="input3" ref="c"&gt;
+        &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+        &lt;xf:hint id="input3-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+        &lt;xf:alert id="input3-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input id="input4" ref="d"&gt;
+        &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+        &lt;xf:hint id="input4-hint"&gt;The input must be longer than 5 characters&lt;/xf:hint&gt;
+        &lt;xf:alert id="input4-alert"&gt;Your input is not long enough&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+&lt;/xf:group&gt;
+
+&lt;xf:trigger&gt;
+    &lt;xf:label&gt;Send&lt;/xf:label&gt;
+    &lt;xf:send submission="echo"&gt;&lt;/xf:send&gt;
+&lt;/xf:trigger&gt;
+</code></pre></div>
+      </div><script type="text/javascript">
+                function showClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
+                );
+            </script></body>
+</html>

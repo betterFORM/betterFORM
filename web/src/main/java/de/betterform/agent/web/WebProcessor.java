@@ -17,6 +17,7 @@ import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.AbstractProcessorDecorator;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -25,6 +26,8 @@ import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.xml.sax.InputSource;
@@ -515,7 +518,31 @@ public class WebProcessor extends AbstractProcessorDecorator {
         return this.httpRequestHandler;
     }
 
+    private URI getTransformURI() throws XFormsException,URISyntaxException {
+        URI uri;
 
+        //if we find a xsl param on the request URI this takes precedence over all
+        String xslFile = request.getParameter(XSL_PARAM_NAME);
+        String xsltPath = RESOURCE_DIR + "/xslt";
+        if(xslFile != null){
+            return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
+        }
+
+        //if we find a 'bf:transform' attribute on the root element of a form this takes priority over the global configuration in betterform-config.xml
+        Element e  = this.xformsProcessor.getXForms().getDocumentElement();
+        if (e.hasAttributeNS(NamespaceConstants.BETTERFORM_NS, "transform")) {
+            String transformValue = e.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "transform");
+            return new URI(WebUtil.getRequestURI(request) + transformValue);
+        }
+
+        //finally use the configuration
+        String configuredTransform = configuration.getStylesheet(this.useragent);
+        if(configuredTransform != null){
+            return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
+        }
+
+        throw new XFormsConfigException("There was no xslt stylesheet found on the request URI, the root element of the form or in the configfile");
+    }
     /**
      * creates and configures a UIGenerator that transcodes the XHTML/XForms document into the desired target format.
      * <p/>
@@ -530,13 +557,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
     protected UIGenerator createUIGenerator() throws URISyntaxException, XFormsException {
         String relativeUris = configuration.getProperty(WebFactory.RELATIVE_URI_PROPERTY);
 
-        String xslFile = request.getParameter(XSL_PARAM_NAME);
-        if (xslFile == null) {
-            xslFile = configuration.getStylesheet(this.useragent);
-        }
-
-        String xsltPath = RESOURCE_DIR + "/xslt";
-        XSLTGenerator generator = setupTransformer(xsltPath, xslFile);
+        URI uri = getTransformURI();
+        XSLTGenerator generator = setupTransformer(uri);
 
         if (relativeUris.equals("true")) {
             generator.setParameter("contextroot", ".");
@@ -554,6 +576,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
             generator.setParameter("action-url", getActionURL(true));
         }
         generator.setParameter("debug-enabled", String.valueOf(isDebugOn()));
+        generator.setParameter("unloadingMessage", getUnloadingMessage());
 
         generator.setParameter("baseURI", getBaseURI());
 
@@ -594,7 +617,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         try {
             Node input = getXForms();
             String xsltPath = RESOURCE_DIR + "xslt/";
-            XSLTGenerator xsltGenerator = setupTransformer(xsltPath, "include.xsl");
+            URI styleURI = new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI("include.xsl"));
+            XSLTGenerator xsltGenerator = setupTransformer(styleURI);
             String baseURI = getBaseURI();
             String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);
 
@@ -614,17 +638,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     }
 
-    private XSLTGenerator setupTransformer(String xsltPath, String xslFile) throws URISyntaxException {
-/*
-        TransformerService transformerService = (TransformerService) getContext().getAttribute(TransformerService.class.getName());
-        URI uri = new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
-
-        XSLTGenerator generator = new XSLTGenerator();
-        generator.setTransformerService(transformerService);
-        generator.setStylesheetURI(uri);
-        return generator;
-*/
-        return WebFactory.setupTransformer(xsltPath,xslFile,getContext());
+    private XSLTGenerator setupTransformer(URI uri) throws URISyntaxException {
+        return WebFactory.setupTransformer(uri,getContext());
     }
 
     /**

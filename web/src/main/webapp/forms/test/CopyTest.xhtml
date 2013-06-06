@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+	<head>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+		<meta name="author" content="joern at users.sourceforge.net"/>
+		<meta name="description" content="test form for copy control"/>
+		<meta name="version" content="$Id: CopyTest.xhtml 2631 2007-08-08 13:39:22Z adam $"/>
+
+		<xf:model id="list_items">
+			<xf:instance xmlns="">
+				<options>
+					<address desc="work_address" label="work">
+						<email>mdubinko@example.info</email>
+						<item1>Item 1</item1>
+					</address>
+					<address desc="home_address" label="home">
+						<email>mdubinko@example.info</email>
+						<item2>Item 2</item2>
+					</address>
+					<address desc="alternate_address" label="alternate">
+						<email>nospam@example.net</email>
+						<item3>item 3</item3>
+					</address>
+				</options>
+			</xf:instance>
+			<xf:instance xmlns="" id="i-copy-attr">
+                <options>
+				    <address desc="work_address" label="work" href="http://my/work" role="worker"/>
+                </options>
+			</xf:instance>
+
+		</xf:model>
+
+		<xf:model id="form_data">
+			<xf:instance xmlns="">
+				<user_selection>
+					<address desc="alternate_address" label="alternate">
+						<email>nospam@example.net</email>
+						<item3>item 3</item3>
+					</address>
+				</user_selection>
+			</xf:instance>
+
+            <xf:instance xmlns="" id="i-attr-result">
+                <options>
+                    <address/>
+                </options>
+            </xf:instance>
+
+        </xf:model>
+
+	</head>
+	<body>
+		<xf:group appearance="full">
+            <xf:label>Copy XML Nodes</xf:label>
+            <xf:select1 ref="." model="form_data">
+                <xf:label>Send a copy to the following email addresses</xf:label>
+                <xf:itemset nodeset="address" model="list_items">
+                    <xf:label ref="@label"/>
+                    <xf:copy ref="."/>
+                </xf:itemset>
+            </xf:select1>
+            <xf:group appearance="full">
+                <xf:label>Result:</xf:label>
+                <xf:output ref="address/email" model="form_data">
+                    <xf:label>Email:</xf:label>
+                </xf:output>
+                <xf:output ref="address/@desc" model="form_data">
+                    <xf:label>Description:</xf:label>
+                </xf:output>
+                <xf:group ref="address" model="form_data" appearance="full">
+                    <xf:label>Items</xf:label>
+                    <xf:output ref="item1">
+                        <xf:label>Label Item 1</xf:label>
+                    </xf:output>
+                    <xf:output ref="item2">
+                        <xf:label>Label Item 2</xf:label>
+                    </xf:output>
+                    <xf:output ref="item3">
+                        <xf:label>Label Item 3</xf:label>
+                    </xf:output>
+                </xf:group>
+            </xf:group>
+
+        </xf:group>
+		<xf:group appearance="full">
+            <xf:label>Copy XML Nodes</xf:label>
+            <xf:select1 ref="instance('i-attr-result')/address" model="form_data">
+                <xf:label>Send a copy to the following email addresses</xf:label>
+                <xf:itemset nodeset="instance('i-copy-attr')/address/@*" model="list_items">
+                    <xf:label><xf:output value="local-name(.)"/></xf:label>
+                    <xf:copy ref="."/>
+                </xf:itemset>
+            </xf:select1>
+            <xf:group appearance="full" ref="instance('i-attr-result')/address" model="form_data">
+                <xf:label>Result:</xf:label>
+                <xf:input ref="@desc">
+                    <xf:label>Deskription Attr:</xf:label>
+                </xf:input>
+                <xf:input ref="@label">
+                    <xf:label>Label Attr:</xf:label>
+                </xf:input>
+            </xf:group>
+
+        </xf:group>
+	</body>
+</html>

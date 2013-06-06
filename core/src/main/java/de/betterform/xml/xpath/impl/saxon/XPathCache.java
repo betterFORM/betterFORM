@@ -22,11 +22,12 @@ import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
 import net.sf.saxon.om.Item;
-import net.sf.saxon.om.LookaheadIterator;
+import net.sf.saxon.om.NamePool;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.LookaheadIterator;
 import net.sf.saxon.xpath.XPathFunctionLibrary;
 import org.w3c.dom.Node;
 
@@ -50,13 +51,13 @@ public class XPathCache {
         fgXFormsFunctionLibrary = new FunctionLibraryList();
         fgXFormsFunctionLibrary.addFunctionLibrary(SystemFunctionLibrary.getSystemFunctionLibrary(Configuration.XPATH));
         fgXFormsFunctionLibrary.addFunctionLibrary(new ConstructorFunctionLibrary(XPathCache.kCONFIG));
-        fgXFormsFunctionLibrary.addFunctionLibrary(new XPathFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new XFormsFunctionLibrary());
         fgXFormsFunctionLibrary.addFunctionLibrary(new BetterFormFunctionLibrary());
+        fgXFormsFunctionLibrary.addFunctionLibrary(new XPathFunctionLibrary());
+
 //        fgXFormsFunctionLibrary.addFunctionLibrary(new JavaExtensionLibrary(XPathCache.kCONFIG));
 
     }
-
     public static XPathCache getInstance() {
         return fgXPathCache;
     }
@@ -148,7 +149,7 @@ public class XPathCache {
 
             int nrOfEntries;
             if ((it.getProperties() & SequenceIterator.LAST_POSITION_FINDER) != 0) {
-                nrOfEntries = ((LastPositionFinder) it).getLastPosition();
+                nrOfEntries = ((LastPositionFinder) it).getLength();
             } else {
                 nrOfEntries = -1;
             }
@@ -182,6 +183,7 @@ public class XPathCache {
     public XPathExpression getXPathExpression(String xpathString, Map prefixMapping, Configuration configuration) throws XPathException {
         XPathEvaluator xpe = new XPathEvaluator(configuration);
 
+        //IndependentContext independentContext = (IndependentContext) xpe.getStaticContext();
         IndependentContext independentContext = (IndependentContext) xpe.getStaticContext();
         independentContext.setDefaultFunctionNamespace(NamespaceConstants.XFORMS_NS);
         independentContext.setBackwardsCompatibilityMode(true);
@@ -196,7 +198,7 @@ public class XPathCache {
         // XXX declare variable
 
         independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
-
+       xpe.setStaticContext(independentContext);
 
         XPathExpression exp = xpe.createExpression(xpathString);
         return exp;
@@ -283,12 +285,12 @@ public class XPathCache {
             return LAST_POSITION_FINDER | LOOKAHEAD;
         }
 
-//		@Override
-		public int getLastPosition() throws XPathException {
+        //@Override
+        public int getLength() throws XPathException {
 			return nodeset.size();
 		}
 
-//		@Override
+        //@Override
 		public boolean hasNext() {
 			return position <= nodeset.size();
 		}

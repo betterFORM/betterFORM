@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--+ betterFORM XAR builder
+    + Current Status: only used to create the documentation XAR
+    +
+    + -->
+<project default="deploy" name="xar-builder">
+
+    <xmlproperty file="build.properties.xml"
+                semanticAttributes="true"
+                keepRoot="false"
+                description="build properties"/>
+
+    <property name="project.app" value="${docu.name}"/>
+    <property name="project.version" value="${docu.version}"/>
+
+
+    <property name="build.dir" value="${basedir}/target"/>
+    <property name="template.dir" value="${basedir}/templates"/>
+    <property name="xar.dir" value="${basedir}/xar"/>
+    <property name="webapp.dir" value="${basedir}/../../webapp"/>
+    <property name="forms.dir" value="${webapp.dir}/forms"/>
+
+    <target name="clean" description="cleans up the build directory">
+        <delete dir="${build.dir}"/>
+    </target>
+
+
+    <target name="filter">
+        <filter token="REP_DESC" value="${docu.desc}"/>
+        <filter token="REP_VERSION" value="${docu.version}"/>
+        <filter token="REP_TARGET" value="${docu.name}"/>
+        <filter token="REP_USER" value="${docu.permission.user}"/>
+        <filter token="REP_PWD" value="${docu.permission.pwd}"/>
+        <filter token="REP_GROUP" value="${docu.permission.group}"/>
+        <filter token="REP_MODE" value="${docu.permission.mode}"/>
+        <filter token="REP_LICENSE" value="${docu.license}"/>
+        <filter token="REP_WEBSITE" value="${docu.website}"/>
+        <copy file="${template.dir}/repo.xml" description="filter repo.xml from templates to xar dir"
+              tofile="${xar.dir}/repo.xml"
+              overwrite="true"
+              filtering="true">
+        </copy>
+
+
+        <!-- EXPath Properties -->
+        <filter token="EX_NAME" value="${docu.ex-name}"/>
+        <filter token="EX_ABBR" value="${docu.name}"/>
+        <filter token="EX_VERS" value="${docu.version}"/>
+        <filter token="EX_TITLE" value="${docu.title}"/>
+        <copy description="filter expath-pkg.xml from templates to xforms xar"
+              file="${template.dir}/expath-pkg.xml"
+              tofile="${xar.dir}/expath-pkg.xml"
+              overwrite="true"
+              filtering="true">
+        </copy>
+    </target>
+
+
+    <target name="deploy" depends="clean">
+        <mkdir dir="${build.dir}/xar"/>
+        <!-- FILTER REPO.XML AND EXPATH-PKG.XML -->
+        <antcall target="filter"   />
+
+        <!-- generate latest version of the reference files -->
+        <ant antfile="../build-reference.xml" target="deploy-forms" inheritall="no"/>
+        <!-- copy selected forms into the documentation xar -->
+        <copy todir="${build.dir}/xar">
+            <fileset dir="${xar.dir}"/>
+        </copy>
+        <copy todir="${build.dir}/xar" flatten="true">
+            <resources>
+                <file file="${forms.dir}/FeatureExplorer.xhtml"/>
+                <file file="${forms.dir}/Status.xhtml"/>
+                <file file="${webapp.dir}/dashboard.html"/>
+            </resources>
+        </copy>
+
+        <copy todir="${build.dir}/xar/example">
+            <fileset dir="${forms.dir}/example" />
+        </copy>
+
+        <copy todir="${build.dir}/xar/demo">
+            <fileset dir="${forms.dir}/demo" />
+        </copy>
+
+        <copy todir="${build.dir}/xar/reference">
+            <fileset dir="${forms.dir}/reference" />
+        </copy>
+        <copy todir="${build.dir}/xar" >
+            <fileset dir="${webapp.dir}" >
+                <filename name="Dashboard.html"/>
+            </fileset>
+        </copy>
+
+        <zip basedir="${build.dir}/xar" destfile="${build.dir}/${project.app}-${project.version}.xar"/>
+    </target>
+</project>

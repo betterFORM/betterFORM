@@ -6,6 +6,7 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.*;
@@ -29,10 +30,11 @@ public class DaysFromDate extends XFormsFunction {
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
-	
+
+
 	CalendarValue argAsValue = null;
         try {
-            argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(argAsString).asAtomic();
+            argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
         } catch (XPathException e1) {
             try {
         	argAsValue = new DateValue(argAsString);

@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      
+      <title>group with appearance 'minimal'</title>
+      
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
+      <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               <xf:instance>
+                  <data xmlns="">
+                     <repeat readonly="false" relevant="true">
+                        <items>
+                           <item>text 1</item>
+                           <item>2009-01-20</item>
+                           <item>true</item>
+                        </items>
+                        <items>
+                           <item>text 2</item>
+                           <item>2010-03-17</item>
+                           <item>false</item>
+                        </items>
+                        <items>
+                           <item>text 3</item>
+                           <item>2011-05-22</item>
+                           <item>true</item>
+                        </items>
+                        <items>
+                           <item>text 4</item>
+                           <item>2008-06-13</item>
+                           <item>false</item>
+                        </items>
+                     </repeat>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="repeat">
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+                  <xf:bind nodeset="items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)">
+                     <xf:bind nodeset="item[1]" type="xf:string"></xf:bind>
+                     <xf:bind nodeset="item[2]" type="xf:date"></xf:bind>
+                     <xf:bind nodeset="item[3]" type="xf:boolean"></xf:bind>
+                  </xf:bind>
+               </xf:bind>
+            </xf:model>
+         </div>
+         <div class="CSS">
+            <table>
+               <caption>CSS</caption>
+               <tr>
+                  <th style="font-style:italic;color:#C46B47;">
+                     Hover the classes to see matching element(s) in the example
+                     
+                  </th>
+               </tr>
+               <tr>
+                  <td id="d65e169" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d65e169">matches any Element that represents a XForms
+                        group
+                        |
+                        repeat
+                        |
+                        switch
+                        element
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d65e187" onmouseover="showClass('xfFullRepeat');" onmouseout="hideClass('xfFullRepeat');">xfFullRepeat
+                     <div data-dojo-type="dijit.Tooltip" connectId="d65e187">matches an Element that represents a XForms
+                        repeat
+                        element
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d65e199" onmouseover="showClass('xfRepeatItem');" onmouseout="hideClass('xfRepeatItem');">xfRepeatItem
+                     <div data-dojo-type="dijit.Tooltip" connectId="d65e199">matches all repeat items
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d65e211" onmouseover="showClass('xfRepeatIndex');" onmouseout="hideClass('xfRepeatIndex');">xfRepeatIndex
+                     <div data-dojo-type="dijit.Tooltip" connectId="d65e211">matches the currently selected repeat item
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
+                        matches an Element that represents a XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
+                        matches the label part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
+                        matches the widget part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfreadonly" onmouseover="showClass('xfReadOnly');" onmouseout="hideClass('xfReadOnly');">
+                     xfReadOnly
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfreadonly">
+                        matches a xforms control that is currently readonly
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfreadwrite" onmouseover="showClass('xfReadWrite');" onmouseout="hideClass('xfReadWrite');">
+                     xfReadWrite
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfreadwrite">
+                        matches a xforms control that is currently writable
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfrequired" onmouseover="showClass('xfRequired');" onmouseout="hideClass('xfRequired');">
+                     xfRequired
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfrequired">
+                        matches a xforms control that is currently required
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfoptional" onmouseover="showClass('xfOptional');" onmouseout="hideClass('xfOptional');">
+                     xfOptional
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfoptional">
+                        matches a xforms control that is currently optional
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfenabled" onmouseover="showClass('xfEnabled');" onmouseout="hideClass('xfEnabled');">
+                     xfEnabled
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfenabled">
+                        matches a xforms control that is currently relevant (enabled)
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfdisabled" onmouseover="showClass('xfDisabled');" onmouseout="hideClass('xfDisabled');">
+                     xfDisabled
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
+                        matches a xforms control that is currently disabled (can't be visualized here as the
+                        control gets hidden)
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfvalid" onmouseover="showClass('xfValid');" onmouseout="hideClass('xfValid');">
+                     xfValid
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalid">
+                        matches a xforms control that is currently valid
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfinvalid" onmouseover="showClass('xfInvalid');" onmouseout="hideClass('xfInvalid');">
+                     xfInvalid
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfinvalid">
+                        matches a xforms control that is currently invalid
+                        
+                     </div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="pageintro">
+            <h1>group with appearance 'minimal'</h1>
+            <div class="description">
+               <p>A repeat with <span class="keyword">no appearance</span> , <span class="keyword">'minimal'</span> appearance or <span class="keyword">'full'</span> appearance will be rendered vertically with labels on the left and controls on the
+                  right.
+               </p>
+            </div>
+            <table id="references">
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/TR/2009/REC-xforms-20091020#ui-input#ui-repeat" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#Switch" target="_blank">
+                        Quick Reference
+                        </a></td>
+               </tr>
+            </table>
+         </div>
+         <h2>Example</h2>
+         <div class="Section sample">  
+            <xf:repeat id="repeat1" nodeset="repeat/items" appearance="full">
+               <xf:input ref="item[1]">
+                  <xf:label>String:</xf:label>
+               </xf:input><br /><xf:input ref="item[2]">
+                  <xf:label>Date:</xf:label>
+               </xf:input><br /><xf:input ref="item[3]">
+                  <xf:label>Boolean:</xf:label>
+               </xf:input>
+            </xf:repeat> 
+         </div>
+         <div class="MIPS">
+            <xf:group appearance="full">
+               <xf:label></xf:label>
+               <xf:input id="repeat2-readonly" ref="repeat/@readonly" incremental="true">
+                  <xf:label>readonly</xf:label>
+               </xf:input>
+               <xf:input id="repeat2-relevant" ref="repeat/@relevant" incremental="true">
+                  <xf:label>relevant</xf:label>
+               </xf:input>
+            </xf:group>
+         </div>
+         <h2>XForms Markup</h2>
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:repeat id="repeat1" nodeset="repeat/items" appearance="full"&gt;
+    &lt;xf:input ref="item[1]"&gt;
+        &lt;xf:label&gt;String:&lt;/xf:label&gt;
+    &lt;/xf:input&gt;
+    &lt;br&gt;&lt;/br&gt;
+    &lt;xf:input ref="item[2]"&gt;
+        &lt;xf:label&gt;Date:&lt;/xf:label&gt;
+    &lt;/xf:input&gt;
+    &lt;br&gt;&lt;/br&gt;
+    &lt;xf:input ref="item[3]"&gt;
+        &lt;xf:label&gt;Boolean:&lt;/xf:label&gt;
+    &lt;/xf:input&gt;
+&lt;/xf:repeat&gt;
+</code></pre></div>
+      </div><script type="text/javascript">
+                function showClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
+                );
+            </script></body>
+</html>

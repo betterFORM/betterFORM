@@ -23,6 +23,8 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.submission.AttributeOrValueChild;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
+import de.betterform.xml.xslt.TransformerService;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
 import net.sf.saxon.dom.NodeWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,6 +36,10 @@ import org.w3c.dom.events.EventTarget;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -196,6 +202,13 @@ public class LoadAction extends AbstractBoundAction {
             LOGGER.debug("targetid evaluated to: " + evaluatedTarget);
         }
         Node embed = getEmbeddedDocument(absoluteURI);
+        if (embed == null) {
+            //todo: review: context info params containing a '-' fail during access in javascript!
+            //todo: the following property should have been 'resource-uri' according to spec
+            map.put("resourceUri", absoluteURI);
+            this.container.dispatch(this.target, XFormsEventNames.LINK_EXCEPTION, map);
+            return;
+        }
 
         // Check for 'ClientSide' events (DOMFocusIN / DOMFocusOUT / xforms-select)
         String utilizedEvents = this.getEventsInSubform(embed);
@@ -214,17 +227,14 @@ public class LoadAction extends AbstractBoundAction {
             inlineJavaScript = getInlineJavaScript(embed);
             externalJavaScript = getExternalJavaScript(embed);
         }
+
+        if (Config.getInstance().getProperty("webprocessor.doIncludes", "false").equals("true")) {
+            embed = doIncludes(embed, absoluteURI);
+        }
+
         embed = extractFragment(absoluteURI, embed);
         if(LOGGER.isDebugEnabled()){
             DOMUtil.prettyPrintDOM(embed);
-        }
-
-        if (embed == null) {
-            //todo: review: context info params containing a '-' fail during access in javascript!
-            //todo: the following property should have been 'resource-uri' according to spec
-            map.put("resourceUri", absoluteURI);
-            this.container.dispatch(this.target, XFormsEventNames.LINK_EXCEPTION, map);
-            return;
         }
 
         Element embeddedNode;
@@ -250,27 +260,28 @@ public class LoadAction extends AbstractBoundAction {
             DOMUtil.copyAttributes(targetElem, embeddedNode, null);
             targetElem.getParentNode().replaceChild(embeddedNode, targetElem);
 
-
-            map.put("uri", absoluteURI);
-            map.put("show", this.showAttribute);
-            map.put("targetElement", embeddedNode);
-            map.put("nameTarget", evaluatedTarget);
-            map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
-            map.put("inlineCSS", inlineCssRules);
-            map.put("externalCSS", externalCssRules);
-            map.put("inlineJavascript", inlineJavaScript);
-            map.put("externalJavascript", externalJavaScript);
-            map.put("utilizedEvents", utilizedEvents);
-
-            this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
             //create model for it
             this.container.createEmbeddedForm((Element) embeddedNode);
-
             // dispatch internal betterform event
             this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED_DONE, map);
 
+            if(getModel().isReady()){
+                map.put("uri", absoluteURI);
+                map.put("show", this.showAttribute);
+                map.put("targetElement", embeddedNode);
+                map.put("nameTarget", evaluatedTarget);
+                map.put("xlinkTarget", getXFormsAttribute(targetElem, "id"));
+                map.put("inlineCSS", inlineCssRules);
+                map.put("externalCSS", externalCssRules);
+                map.put("inlineJavascript", inlineJavaScript);
+                map.put("externalJavascript", externalJavaScript);
+                map.put("utilizedEvents", utilizedEvents);
 
-            this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
+                this.container.dispatch((EventTarget) embeddedNode, BetterFormEventNames.EMBED, map);
+                this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
+            }
+
+
     //        storeInContext(absoluteURI, this.showAttribute);
         } else {
             String message = "Element reference for targetid: " + this.targetAttribute + " not found. " + DOMUtil.getCanonicalPath(this.element);
@@ -295,7 +306,7 @@ public class LoadAction extends AbstractBoundAction {
         }
         try {
             if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='xforms-select']").size() != 0) {
-                events.append("useXFSelect:true");
+                    events.append("useXFSelect:true");
             }
         }catch(Exception e){
             if(LOGGER.isDebugEnabled()){
@@ -304,7 +315,11 @@ public class LoadAction extends AbstractBoundAction {
         }
         try {
             if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='DOMFocusIn']").size() != 0) {
-                events.append("useDOMFocusIN:true");
+                if (events.length() != 0) {
+                    events.append(", useDOMFocusIN:true");
+                } else {
+                    events.append("useDOMFocusIN:true");
+                }
             }
         }
         catch(Exception e){
@@ -314,7 +329,11 @@ public class LoadAction extends AbstractBoundAction {
         }
         try {
             if (XPathUtil.evaluate((Element) embed, "//*[@ev:event='DOMFocusOut']").size() != 0) {
-                events.append("useDOMFocusOUT:true");
+                if (events.length() != 0) {
+                    events.append(", useDOMFocusOUT:true");
+                } else {
+                    events.append("useDOMFocusOUT:true");
+                }
             }
         }
         catch(Exception e){
@@ -324,6 +343,28 @@ public class LoadAction extends AbstractBoundAction {
         }
         return events.toString();
     }
+
+
+    private Node doIncludes(Node embed, String absoluteURI) {
+        LOGGER.debug("LoadAction.doInclude: Node to embed: " + embed.toString()+ " URI: " + absoluteURI);
+        try {
+            String uri = absoluteURI.substring(0, absoluteURI.lastIndexOf("/") + 1);
+
+            CachingTransformerService transformerService  = (CachingTransformerService) this.container.getProcessor().getContext().get(TransformerService.TRANSFORMER_SERVICE);
+            Transformer transformer = transformerService.getTransformerByName("include.xsl");
+
+            DOMSource source = new DOMSource(embed);
+            DOMResult result = new DOMResult();
+            transformer.setParameter("root",uri);
+            transformer.transform(source, result);
+
+            return result.getNode();
+        } catch (TransformerException e) {
+            LOGGER.debug("LoadAction.doInclude: TransformerException:", e);
+        }
+        return embed;
+    }
+
     private String getInlineCSS(Node embed) throws XFormsException {
         //fetch style element(s) from Node to embed
         String cssRules = "";
@@ -475,7 +516,11 @@ public class LoadAction extends AbstractBoundAction {
 
     private Node extractFragment(String absoluteURI, Node embed) throws XFormsException {
         if (embed instanceof Document && absoluteURI.indexOf("#") != -1) {
+
             String s = absoluteURI.substring(absoluteURI.indexOf("#") + 1);
+            if(s.indexOf("?") != -1){
+                s = s.substring(0,s.indexOf("?"));
+            }
             embed = DOMUtil.getById((Document) embed, s);
         }
 

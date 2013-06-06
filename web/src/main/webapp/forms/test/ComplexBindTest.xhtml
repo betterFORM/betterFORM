@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+<head>
+    <title>Complex Bind Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+</head>
+<body>
+<div style="display:none">
+    <xf:model id="model-1">
+        <xf:instance id="i-default">
+            <data xmlns="">
+                    <test>Test me</test>
+                    <condition1 condition="B">A</condition1>
+                    <condition2>B</condition2>
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="test" relevant="instance('i-default')//condition1[@condition eq instance('i-default')/condition2/text()]/@condition eq 'B'" calculate="'Hello'"/>
+    </xf:model>
+</div>
+<xf:group>
+    <xf:input ref="test">
+        <xf:label>Test</xf:label>
+    </xf:input>
+</xf:group>
+</body>
+</html>

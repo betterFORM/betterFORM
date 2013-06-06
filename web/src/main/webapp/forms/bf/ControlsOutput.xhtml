@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Output Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+        .bf .xfControl .xfLabel {
+            width:200px;
+        }
+
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <output label="output[1]">output value</output>
+                <output label="output[2] image">/betterform/bfResources/images/logo.png</output>
+                <output label="output[3] anyURI">http://www.betterform.de</output>
+                <output label="output[4] html"><![CDATA[<b>Bold</b> and <i>italic</i> text]]></output>
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="output[1]" relevant="boolean-from-string(instance()/@relevant)"/>
+            <xf:bind nodeset="output[2]" relevant="boolean-from-string(instance()/@relevant)" />
+            <xf:bind nodeset="output[3]" relevant="boolean-from-string(instance()/@relevant)" type="anyURI"/>
+            <xf:bind nodeset="output[4]" relevant="boolean-from-string(instance()/@relevant)" />
+        </xf:bind>
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group appearance="minimal">
+
+        <xf:group>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger>
+                    <xf:label><xf:output value="concat('Relevant [',boolean-from-string(instance()/@relevant),']')"/></xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+            </div>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>Output:</span>
+                <xf:trigger>
+                    <xf:label>Output[1] Label</xf:label>
+                    <xf:setvalue ref="instance()/output[1]/@label" value="'new output label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Output[1] Value</xf:label>
+                    <xf:setvalue ref="instance()/output[1]" value="'new output value'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Output[2] Value</xf:label>
+                    <xf:setvalue ref="instance()/output[2]" value="'/betterform/bfResources/images/arrow-down.png'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Output[3] Value</xf:label>
+                    <xf:setvalue ref="instance()/output[3]" value="'http://exist-db.org/'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Output[4] Value</xf:label>
+                    <xf:setvalue ref="instance()/output[4]" value="'&lt;i&gt;Italic&lt;/i&gt; and &lt;b&gt;bold&lt;/b&gt; text'"/>
+                </xf:trigger>
+            </div>
+        </xf:group>
+        <xf:group ref="instance()" appearance="full" class="xfFullGroup">
+            <xf:label>Output</xf:label>
+
+            <xf:output ref="output[1]">
+                <xf:label ref="@label"/>
+            </xf:output>
+
+            <xf:output ref="output[2]" mediatype="image/gif">
+                <xf:label ref="@label"/>
+            </xf:output>
+
+            <xf:output ref="output[3]">
+                <xf:label ref="@label"/>
+            </xf:output>
+
+            <xf:output ref="output[4]" mediatype="text/html">
+                <xf:label ref="@label"/>
+            </xf:output>
+        </xf:group>
+    </xf:group>
+</body>
+</html>

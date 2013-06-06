@@ -168,6 +168,7 @@ public class BindingResolver {
     private static boolean hasNodesetBindingExpression(Element element) {
         return element.hasAttributeNS(NamespaceConstants.XFORMS_NS, XFormsConstants.NODESET_ATTRIBUTE) ||
                 element.hasAttributeNS(null, XFormsConstants.NODESET_ATTRIBUTE) ||
+                element.hasAttributeNS(NamespaceConstants.XFORMS_NS, XFormsConstants.REPEAT_REF_ATTRIBUTE) ||
                 element.hasAttributeNS(NamespaceConstants.XFORMS_NS, XFormsConstants.REPEAT_NODESET_ATTRIBUTE);
     }
 

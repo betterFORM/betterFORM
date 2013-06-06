@@ -1,0 +1,183 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:vra="http://www.vraweb.org/vracore4.htm"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Repeat with Complex Table that uses multiple tr elements in one repeat item</title>
+    </head>
+    <body>
+        <div id="xforms">
+            <!-- ###################### MODEL ################################## -->
+            <!-- ###################### MODEL ################################## -->
+            <!-- ###################### MODEL ################################## -->
+            <div style="display:none">
+                <xf:model id="m-child-model">
+                    <xf:instance id="i-agentSet">
+                        <agentSet xmlns="http://www.vraweb.org/vracore4.htm">
+                            <display dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab="" script=""
+                                     transliteration=""/>
+                            <notes dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab="" script=""
+                                   transliteration=""/>
+                            <agent dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab="" script=""
+                                   transliteration="">
+                                <attribution dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab=""
+                                             script="" transliteration=""/>
+                                <culture dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab=""
+                                         script="" transliteration=""/>
+                                <dates type="">
+                                    <earliestDate circa="false"/>
+                                    <latestDate circa="false"/>
+                                </dates>
+                                <name type="" dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab=""
+                                      script="" transliteration=""/>
+                                <role dataDate="" extent="" href="" xml:lang="" pref="false" refid="" rules="" source="" vocab="" script=""
+                                      transliteration=""/>
+                            </agent>
+                        </agentSet>
+                    </xf:instance>
+                    <xf:bind ref="instance()">
+                        <xf:bind ref="vra:agent">
+                            <xf:bind ref="@pref" type="boolean"/>
+
+                            <xf:bind ref="vra:name" required="true()">
+                                <!--<xf:bind nodeset="@type" type="vra:agentNameTypeType"/>-->
+                            </xf:bind>
+
+                            <xf:bind ref="vra:dates/*/@circa" type="boolean"/>
+                        </xf:bind>
+                    </xf:bind>
+                    <xf:instance id="i-templates">
+                        <templates xmlns="http://www.vraweb.org/vracore4.htm">
+                            <!-- todo: clarify: are agent attributes required? They are present in the schema but are they use for ziziphus? -->
+                            <agent dataDate="" extent="" href="" xml:lang="" pref="" refid="" rules="" source="" vocab="" script=""
+                                   transliteration="">
+                                <attribution dataDate="" extent="" href="" xml:lang="" pref="" refid="" rules="" source="" vocab=""
+                                             script="" transliteration=""/>
+                                <culture dataDate="" extent="" href="" xml:lang="" pref="" refid="" rules="" source="" vocab="" script=""
+                                         transliteration=""/>
+                                <dates type="">
+                                    <earliestDate circa=""/>
+                                    <latestDate circa=""/>
+                                </dates>
+                                <name type="" pref="false" vocab="" xml:lang="" script="" dataDate="" extent="" href="" refid="" rules=""
+                                      source="" transliteration=""/>
+                                <role dataDate="" extent="" href="" xml:lang="" pref="" refid="" rules="" source="" vocab="" script=""
+                                      transliteration=""/>
+                            </agent>
+                            <notes dataDate="" extent="" href="" xml:lang="" pref="" refid="" rules="" source="" vocab="" script=""
+                                  transliteration=""/>
+                            <display dataDate="" extent="" href="" xml:lang="" pref="" refid="" rules="" source="" vocab="" script=""
+                                  transliteration=""/>
+                        </templates>
+                    </xf:instance>
+
+                    <xf:instance id="i-itemset">
+                        <data xmlns="">
+                            <item label="Personal">personal</item>
+                            <item label="Corporate">corporate</item>
+                            <item label="Family">family</item>
+                            <item label="Other">other</item>
+                        </data>
+
+                    </xf:instance>
+                </xf:model>
+            </div>
+
+            <!-- ####################################### VISIBLE UI ####################################### -->
+            <!-- ####################################### VISIBLE UI ####################################### -->
+            <!-- ####################################### VISIBLE UI ####################################### -->
+            <div class="toolbar">
+                <xf:trigger class="t-plus" model="m-child-model" title="Add Agent">
+                    <xf:label>+</xf:label>
+                    <xf:insert ref="instance()/vra:agent[last()]" origin="instance('i-templates')/vra:agent"
+                               model="m-child-model"/>
+                </xf:trigger>
+            </div>
+
+            <h1>Example of complex repeat using multiple tr elements in one repeat item.</h1>
+            <xf:group appearance="full" ref="instance('i-agentSet')" model="m-child-model">
+                <xf:label/>
+
+                <table class="table table-condensed" border="1">
+                    <tbody  id="r-vraAgent" xf:repeat-ref="vra:agent" model="m-child-model">
+                        <!-- ### the name element ### -->
+                        <tr>
+                            <td rowspan="5">
+                                <xf:input ref="@pref">
+                                    <xf:label>pref</xf:label>
+                                </xf:input>
+                            </td>
+                            <td>
+                                <xf:input ref="vra:name" type="nodeValue" class="elementName">
+                                    <xf:label>Name</xf:label>
+                                </xf:input>
+                                <xf:select1 ref="vra:name/@type">
+                                    <xf:label>Type</xf:label>
+
+                                    <xf:itemset ref="instance('i-itemset')/item">
+                                        <xf:label ref="@label"/>
+                                        <xf:value ref="."/>
+                                    </xf:itemset>
+                                </xf:select1>
+                            </td>
+
+                            <td rowspan="5">
+                                <xf:trigger>
+                                    <xf:label>x</xf:label>
+                                    <xf:delete ref="instance('i-agentSet')/vra:agent[index('r-vraAgent')]"/>
+                                </xf:trigger>
+                            </td>
+                        </tr>
+
+                        <!-- ### the role element #### -->
+                        <tr>
+                            <td>
+                                <xf:input ref="vra:role">
+                                    <xf:label>Role</xf:label>
+                                </xf:input>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <xf:input ref="vra:attribution">
+                                    <xf:label>Attribution</xf:label>
+                                </xf:input>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <xf:input ref="vra:culture">
+                                    <xf:label>Culture</xf:label>
+                                </xf:input>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <xf:input ref="vra:dates/@type">
+                                    <xf:label>Dates</xf:label>
+                                </xf:input>
+                                <xf:input ref="vra:dates/vra:earliestDate">
+                                    <xf:label>earliest Date</xf:label>
+                                </xf:input>
+                                <xf:input ref="vra:dates/vra:earliestDate/@circa">
+                                    <xf:label>circa</xf:label>
+                                </xf:input>
+                                <xf:input ref="vra:dates/vra:latestDate">
+                                    <xf:label>latest Date</xf:label>
+                                </xf:input>
+                                    <xf:input ref="vra:dates/vra:latestDate/@circa">
+                                    <xf:label>circa</xf:label>
+                                </xf:input>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </xf:group>
+        </div>
+    </body>
+</html>
+

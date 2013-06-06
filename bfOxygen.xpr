@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="12.2">
+<project version="14.1">
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
-        <options/>
+        <options>
+            <serialized version="14.1" xml:space="preserve">
+                <map>
+                    <entry>
+                        <String>enable.project.master.files.support</String>
+                        <Boolean>false</Boolean>
+                    </entry>
+                </map>
+            </serialized>
+        </options>
     </meta>
     <projectTree name="bfOxygen.xpr">
         <folder path="."/>

@@ -90,6 +90,9 @@ public class DispatchAction extends AbstractBoundAction {
     public void perform() throws XFormsException {
         if(this.delay.getValue() != null && this.delay.getValue() != ""){
             long sleep = Long.parseLong(this.delay.getValue());
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("dispatch action - delaying for " + sleep + " milliseconds");
+            }
             try {
                 Thread.sleep(sleep);
             }catch(Exception e) {

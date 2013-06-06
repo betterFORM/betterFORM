@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+	<link rel="SHORTCUT ICON" href="../../images/betterform.ico"/>
+    <link rel="ICON" href="../../images/betterform.ico" type="image/x-icon"/>
+		
+        <title>Status</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            .welcome {
+                font-size: 14pt;
+            }
+
+            .xfGroupLabel {
+                border-bottom: thin dotted;
+                margin-bottom: 10px;
+                padding:5px;
+                border:thin solid;
+                background:#F0F0FF;
+            }
+
+			.xfGroupLabel .xfGroupLabel {
+				border:thin dotted #999999;
+			}
+
+            table {
+                border: thin dotted;
+                width:100%;
+            }
+            td{
+                padding:5px;
+            }
+            .xfRepeatHeader td  {
+                background:#F0F0FF;
+            }
+            .xfRepeatHeader td .xfLabel {
+            }
+            .xfGroup{
+                border:thin dotted;
+            }
+            .xfGroup .xfGroupLabel{
+                border:none;
+            }
+            .xfMinimalGroup .xfGroupLabel{
+                display:block;
+            }
+			.xfRepeatIndex, .xfRepeatIndex .xfValue{
+				background:transparent;
+			}
+			.xfRepeat{
+				width:100%;
+			}
+			.xfRepeatHeader{
+				font-size:0.9em;
+			}
+            .bf .bfVerticalTable .bfVerticalTableLabel{
+                white-space: nowrap;
+            }
+            .bf .bfVerticalTable .bfVerticalTableLabel .xfLabel{
+                padding-top: 0;
+            }
+            td{
+                padding: 6px;
+            }
+            #version{
+                text-align: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="display:none;">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data/>
+                </xf:instance>
+
+                <xf:instance id="webxml" src="{$webapp.realpath}/WEB-INF/web.xml"/>
+                <xf:instance id="i-config" src="{$webapp.realpath}/WEB-INF/betterform-config.xml"/>
+            </xf:model>
+        </div>
+
+
+        <xf:output id="version" value="bf:appContext('versionInfo')"/>
+        <xf:group appearance="bf:verticalTable" id="main">
+            <xf:label>betterFORM Configuration</xf:label>
+<!--
+            <div style="font-style: italic;color: orangered;text-align: center;width: 100%;">
+                Caution: if you change things here you should know what you are doing. Wrong configuration may
+                cause server malfunction.
+            </div>
+-->
+            <!--<xf:group appearance="bf:verticalTable" id="environment">-->
+                <!--<xf:label>Environment Parameters</xf:label>-->
+                <div class="xfGroupLabel">Request Parameters and Headers</div>
+                <xf:output value="bf:appContext('webapp.realpath')">
+                    <xf:label>Webapp Realpath</xf:label>
+                    <xf:hint>bf:appContext('webapp.realpath')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('requestURI')">
+                    <xf:hint>bf:appContext('requestURI')</xf:hint>
+                    <xf:label>Request-URI</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('betterform.baseURI')">
+                    <xf:label>baseURI</xf:label>
+                    <xf:hint>bf:appContext('betterform.baseURI')</xf:hint>
+                </xf:output>
+
+                <xf:output value="bf:appContext('requestURL')">
+                    <xf:hint>bf:appContext('requestURL')</xf:hint>
+                    <xf:label>Request-URL</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('contextPath')">
+                    <xf:hint>bf:appContext('contextPath')</xf:hint>
+                    <xf:label>Context Path</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('contextroot')">
+                    <xf:label>Contextroot</xf:label>
+                    <xf:hint>bf:appContext('contextroot')</xf:hint>
+                </xf:output>
+
+                <xf:output value="bf:appContext('plainPath')">
+                    <xf:hint>bf:appContext('plainPath')</xf:hint>
+                    <xf:label>Plain Path</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('fileName')">
+                    <xf:hint>bf:appContext('fileName')</xf:hint>
+                    <xf:label>File name</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('pathInfo')">
+                    <xf:hint>bf:appContext('pathInfo')</xf:hint>
+                    <xf:label>Path Info</xf:label>
+                </xf:output>
+                <xf:output value="bf:appContext('queryString')">
+                    <xf:label>Query string</xf:label>
+                    <xf:hint>bf:appContext('queryString')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('betterform.locale', 'uk')">
+                    <xf:label>Locale</xf:label>
+                    <xf:hint>bf:appContext('betterform.locale')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/host')">
+                    <xf:label>Host</xf:label>
+                    <xf:hint>bf:appContext('betterform.locale')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/user-agent')">
+                    <xf:label>User agent</xf:label>
+                    <xf:hint>bf:appContext('http-headers/user-agent')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/referer')">
+                    <xf:label>Referer</xf:label>
+                    <xf:hint>bf:appContext('http-headers/referer')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/accept')">
+                    <xf:label>accept</xf:label>
+                    <xf:hint>bf:appContext('http-headers/accept')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/accept-language')">
+                    <xf:label>accept-language</xf:label>
+                    <xf:hint>bf:appContext('http-headers/accept-language')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/accept-encoding')">
+                    <xf:label>accept-encoding</xf:label>
+                    <xf:hint>bf:appContext('http-headers/accept-encoding')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/connection')">
+                    <xf:label>connection</xf:label>
+                    <xf:hint>bf:appContext('http-headers/connection')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/cookie')">
+                    <xf:label>cookie</xf:label>
+                    <xf:hint>bf:appContext('http-headers/cookie')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/pragma')">
+                    <xf:label>pragma</xf:label>
+                    <xf:hint>bf:appContext('http-headers/pragma')</xf:hint>
+                </xf:output>
+                <xf:output value="bf:appContext('http-headers/cache-control')">
+                    <xf:label>cache-control</xf:label>
+                    <xf:hint>bf:appContext('http-headers/cache-control')</xf:hint>
+                </xf:output>
+            <!--</xf:group>-->
+
+            <!--<xf:group appearance="bf:verticalTable">-->
+                    <!--<xf:label>web.xml Settings</xf:label>-->
+<!--
+			<div class="xfGroupLabel">web.xml settings</div>
+                    <xf:input
+                            ref="instance('webxml')/j2ee:context-param[j2ee:param-name[.='betterform.configfile']]/j2ee:param-value">
+                        <xf:label>config file location</xf:label>
+                    </xf:input>
+                    <xf:output
+                            ref="instance('webxml')/j2ee:filter[j2ee:filter-name='XFormsFilter']/j2ee:init-param/j2ee:param-value">
+                        <xf:label>default useragent</xf:label>
+                    </xf:output>
+                    <xf:input ref="instance('webxml')/j2ee:filter-mapping[j2ee:filter-name='XFormsFilter']/j2ee:url-pattern">
+                        <xf:label>Filter mapping</xf:label>
+                    </xf:input>
+-->
+            <!--</xf:group>-->
+
+            <!--<xf:group appearance="minimal">-->
+                <!--<xf:label>configured URI Resolvers</xf:label>-->
+			<div class="xfGroupLabel">URI Resolvers</div>
+            <div style="font-style: italic;">
+                URI Resolvers are used to resolve URIs found in the 'src' attribute of element 'instance'.
+            </div>
+                <xf:repeat nodeset="instance('i-config')/connectors/uri-resolver" appearance="compact">
+                    <xf:output ref="@scheme">
+                        <xf:label>URI Scheme</xf:label>
+                    </xf:output>
+                    <xf:output ref="@class">
+                        <xf:label>Java Class</xf:label>
+                    </xf:output>
+                    <xf:output ref="@description">
+                        <xf:label>Description</xf:label>
+                    </xf:output>
+
+                </xf:repeat>
+            <!--</xf:group>-->
+
+            <!--<xf:group appearance="minimal">-->
+                <!--<xf:label>configured Submission Handler</xf:label>-->
+			<div class="xfGroupLabel">Submission Handler</div>
+                <xf:repeat nodeset="instance('i-config')/connectors/submission-handler" appearance="compact">
+                    <xf:output ref="@scheme">
+                        <xf:label>URI Scheme</xf:label>
+                    </xf:output>
+                    <xf:output ref="@class">
+                        <xf:label>Java Class</xf:label>
+                    </xf:output>
+                </xf:repeat>
+            <!--</xf:group>-->
+
+            <xf:group appearance="minimal">
+                <xf:label>Config Properties</xf:label>
+                <xf:repeat id="properties" appearance="compact" nodeset="instance('i-config')/properties/property">
+                    <xf:output ref="@name">
+                        <xf:label>Name</xf:label>
+                    </xf:output>
+                    <xf:output ref="@value">
+                        <xf:label>Value</xf:label>
+                    </xf:output>
+                    <xf:output ref="@description">
+                        <xf:label>Description</xf:label>
+                    </xf:output>
+                </xf:repeat>
+            </xf:group>
+        </xf:group>
+
+
+    </body>
+</html>

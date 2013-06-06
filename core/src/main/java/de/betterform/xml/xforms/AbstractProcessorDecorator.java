@@ -10,6 +10,7 @@ import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.DOMEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.xforms.exception.XFormsException;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
@@ -165,6 +166,8 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         this.root.addEventListener(BetterFormEventNames.HIDE, this, true);
         this.root.addEventListener(BetterFormEventNames.SHOW, this, true);
 
+        this.root.addEventListener(BetterFormEventNames.CUSTOM_MIP_CHANGED, this, true);
+
         if(isDebugOn()){
             this.root.addEventListener(BetterFormEventNames.INSTANCE_CREATED, this, true);
             this.root.addEventListener(BetterFormEventNames.MODEL_REMOVED, this, true);
@@ -222,6 +225,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
             this.root.removeEventListener(BetterFormEventNames.MODEL_REMOVED, this, true);
             this.root.removeEventListener(BetterFormEventNames.EXCEPTION, this, true);
             this.root.removeEventListener(BetterFormEventNames.SCRIPT_ACTION, this, true);
+			this.root.removeEventListener(BetterFormEventNames.CUSTOM_MIP_CHANGED, this, true);            
             this.root = null;
         }
     }
@@ -295,7 +299,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
         return this.xformsProcessor.removeContextParam(s);
     }
 
-    public Node getXForms() throws XFormsException {
+    public Document getXForms() throws XFormsException {
         return this.xformsProcessor.getXForms();
     }
 
@@ -331,6 +335,10 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
 
     protected boolean isDebugOn() {
         return configuration.getProperty("betterform.debug-allowed").equals("true");
+    }
+
+    protected String getUnloadingMessage() {
+        return configuration.getProperty("betterform.unloading-message");
     }
 
 

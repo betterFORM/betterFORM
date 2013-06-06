@@ -316,6 +316,7 @@ public class DOMUtil {
      * @param nsuri       the namespace uri
      * @param tag         the local name part of the wanted child
      * @return the first child found under the contextnode
+     * todo: should return Element instead of Node
      */
     public static Node getFirstChildByTagNameNS(Node contextNode, String nsuri, String tag) {
         Node n = null;
@@ -620,6 +621,7 @@ public class DOMUtil {
      * @param nsuri   the namespace uri of the child node
      * @param tagName the local name part of the child node
      * @return the found child casted to Element or null if no such child was found.
+     * todo: change name to 'findFirstChildElementNS'
      */
     public static Element findFirstChildNS(Node parent, String nsuri, String tagName) {
         if (tagName == null) {
@@ -1046,6 +1048,10 @@ public class DOMUtil {
         transformer.transform(new DOMSource(node), new StreamResult(stream));
     }
 
+
+    /*
+    * TODO: Lars: function looks wrong, Node output is not used at all, anyway: function is never called
+    */
     public static void prettyPrintDOM(Node node, Node output) throws TransformerException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -1142,7 +1148,8 @@ public class DOMUtil {
             StreamResult result = new StreamResult(writer);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.transform(domSource, result);
             writer.flush();
             return writer.toString();

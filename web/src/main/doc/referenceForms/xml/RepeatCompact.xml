@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>repeat with appearance 'compact'</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                Compact repeats are rendered as horizontally-oriented HTML tables.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-repeat"/>
+            <a href="#Switch"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance>
+                        <data xmlns="">
+                            <repeat readonly="false" relevant="true">
+                                <items>
+                                    <item>text 1</item>
+                                    <item>2009-01-20</item>
+                                    <item>true</item>
+                                </items>
+
+                                <items>
+                                    <item>text 2</item>
+                                    <item>2010-03-17</item>
+                                    <item>false</item>
+                                </items>
+
+                                <items>
+                                    <item>text 3</item>
+                                    <item>2011-05-22</item>
+                                    <item>true</item>
+                                </items>
+
+                                <items>
+                                    <item>text 4</item>
+                                    <item>2008-06-13</item>
+                                    <item>false</item>
+                                </items>
+                            </repeat>
+                        </data>
+                    </xf:instance>
+
+                    <xf:bind nodeset="repeat">
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                        <xf:bind nodeset="items" readonly="boolean-from-string(../@readonly)" relevant="boolean-from-string(../@relevant)">
+                            <xf:bind nodeset="item[1]" type="xf:string"/>
+                            <xf:bind nodeset="item[2]" type="xf:date"/>
+                            <xf:bind nodeset="item[3]" type="xf:boolean"/>
+                        </xf:bind>
+                    </xf:bind>
+                </xf:model>
+                <code class="ui">
+<xf:repeat id="repeat2" nodeset="repeat/items"
+           appearance="compact">
+    <xf:input ref="item[1]">
+        <xf:label>String:</xf:label>
+    </xf:input>
+    <xf:input ref="item[2]">
+        <xf:label>Date:</xf:label>
+    </xf:input>
+    <xf:input ref="item[3]">
+        <xf:label>Boolean:</xf:label>
+    </xf:input>
+</xf:repeat>
+                </code>
+            </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="repeat2-readonly" ref="repeat/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="repeat2-relevant" ref="repeat/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+
+        </div>
+        <div class="CSS">
+
+            <table class="CSS">
+                <tr>
+                    <td>xfContainer</td>
+                    <td>matches any Element that represents a XForms
+                        <span class="keyword">group</span>
+                        |
+                        <span class="keyword">repeat</span>
+                        |
+                        <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfCompactRepeat</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">repeat</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatHeader</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">repeat</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatItem</td>
+                    <td>matches all <span class="keyword">repeat</span> items
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfRepeatIndex</td>
+                    <td>matches the currently selected <span class="keyword">repeat</span> item
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTableCol-1</td>
+                    <td>matches the first column
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTableCol-2</td>
+                    <td>matches the second column
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTableCol-3</td>
+                    <td>matches the third column
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="notes">
+            The CSS class 'bfTableCol-[number of column] is automatically generated for every column in the compact
+            <span class="keyword">repeat</span>.
+        </div>
+    </body>
+</html>

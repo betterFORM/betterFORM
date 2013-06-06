@@ -4,6 +4,7 @@
   -->
 
 <project name="Installer" default="release" basedir="." >
+    <xmlproperty file="../../build.properties.local.xml" semanticAttributes="true" keepRoot="false"/>
     <xmlproperty file="../../release.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <xmlproperty file="../../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 

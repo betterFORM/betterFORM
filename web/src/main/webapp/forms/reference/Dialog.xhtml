@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bfc="http://betterform.sourceforge.net/xforms/controls">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      
+      <title>The Dialog Element</title>
+      
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
+      <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               <xf:instance id="instance-1">
+                  <data xmlns="">
+                     <login></login>
+                     <password></password>
+                  </data>
+               </xf:instance>
+            </xf:model>
+         </div>
+         <div class="CSS">
+            <table>
+               <caption>CSS</caption>
+               <tr>
+                  <th style="font-style:italic;color:#C46B47;">
+                     Hover the classes to see matching element(s) in the example
+                     
+                  </th>
+               </tr>
+               <tr>
+                  <td id="d9e128" onmouseover="showClass('xfDialog');" onmouseout="hideClass('xfDialog');">xfDialog
+                     <div data-dojo-type="dijit.Tooltip" connectId="d9e128">matches an Element that represents a betterFORM
+                        Dialog
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
+                        matches an Element that represents a XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
+                        matches the label part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
+                        matches the widget part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="pageintro">
+            <h1>The Dialog Element</h1>
+            <div class="description">
+               <p>A Dialog element is a container form control to aggregate various form controls.</p>
+               <p>The Dialog is unbound and rendered above the main form. betterFORM provides a <span class="keyword">show</span> and a <span class="keyword">hide</span> action to display and hide the dialog.
+               </p>
+               <p>XForms 1.1 does not provide any Dialog control, but the 1.2 recommendation will probably
+                  contain a <a href="http://www.w3.org/MarkUp/Forms/wiki/The_XForms_Dialog_Module" target="_blank">XForms Dialog Module</a> .
+               </p>
+            </div>
+            <table id="references">
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/TR/2009/REC-xforms-20091020#ui-input#ui-selectOne" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#elems-form-controls" target="_blank">
+                        Quick Reference
+                        </a></td>
+               </tr>
+            </table>
+         </div>
+         <h2>Example</h2>
+         <div class="Section sample">  
+            <xf:trigger id="trigger1">
+               <xf:label>show dialog</xf:label>
+               <bfc:show dialog="loginDialog" ev:event="DOMActivate"></bfc:show>
+            </xf:trigger>
+            <bfc:dialog id="loginDialog">
+               <xf:label>Login Dialog</xf:label>
+               <xf:group appearance="full">
+                  <xf:input>
+                     <xf:label>Username</xf:label>
+                     <xf:value ref="login"></xf:value>
+                  </xf:input>
+                  <xf:input>
+                     <xf:label>Password</xf:label>
+                     <xf:value ref="password"></xf:value>
+                  </xf:input>
+                  <table>
+                     <tr>
+                        <td>
+                           <xf:trigger style="float:left;margin-right:4px;">
+                              <xf:label>Login</xf:label>
+                              <bfc:hide dialog="loginDialog" ev:event="DOMActivate"></bfc:hide>
+                           </xf:trigger>
+                        </td>
+                        <td>
+                           <xf:trigger>
+                              <xf:label>Cancel</xf:label>
+                              <bfc:hide dialog="loginDialog" ev:event="DOMActivate"></bfc:hide>
+                           </xf:trigger>
+                        </td>
+                     </tr>
+                  </table>
+               </xf:group>
+            </bfc:dialog> 
+         </div>
+         <h2>XForms Markup</h2>
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:trigger id="trigger1"&gt;
+    &lt;xf:label&gt;show dialog&lt;/xf:label&gt;
+    &lt;bfc:show dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:show&gt;
+&lt;/xf:trigger&gt;
+
+&lt;bfc:dialog id="loginDialog"&gt;
+    &lt;xf:label&gt;Login Dialog&lt;/xf:label&gt;
+    &lt;xf:group appearance="full"&gt;
+        &lt;xf:input&gt;
+            &lt;xf:label&gt;Username&lt;/xf:label&gt;
+            &lt;xf:value ref="login"&gt;&lt;/xf:value&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input&gt;
+            &lt;xf:label&gt;Password&lt;/xf:label&gt;
+            &lt;xf:value ref="password"&gt;&lt;/xf:value&gt;
+        &lt;/xf:input&gt;
+        &lt;table&gt;
+            &lt;tr&gt;
+                &lt;td&gt;
+                    &lt;xf:trigger style="float:left;margin-right:4px;"&gt;
+                        &lt;xf:label&gt;Login&lt;/xf:label&gt;
+                         &lt;bfc:hide dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:hide&gt;
+                    &lt;/xf:trigger&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    &lt;xf:trigger&gt;
+                        &lt;xf:label&gt;Cancel&lt;/xf:label&gt;
+                        &lt;bfc:hide dialog="loginDialog" ev:event="DOMActivate"&gt;&lt;/bfc:hide&gt;
+                    &lt;/xf:trigger&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/xf:group&gt;
+&lt;/bfc:dialog&gt;
+</code></pre></div>
+      </div><script type="text/javascript">
+                function showClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
+                );
+            </script></body>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Group Focus</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+        <style type="text/css">
+            .bf #observedGroup .xfInput .xfValue {
+                width:50px;
+            }
+            #observedGroup {
+               border: 1px solid darkgray;
+                margin-bottom: 5px;
+                margin-top: 5px;
+                padding: 5px;
+                width: 345px;
+            }
+            #observedGroup .xfControl {
+                display:inline;
+            }
+            .caseNull {
+                width:360px;
+                background:#ffffe0;
+           }
+            .caseOne {
+                width:360px;
+                background:#add8e6;
+           }
+            .caseTwo {
+                width:360px;
+                background:#90ee90;
+           }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                Form demonstrates the
+                <span class="keyword">observer</span> pattern for
+                <span class="keyword">DOMFocusIn</span> and <span class="keyword">DOMFocusOut</span> events. In response to the xforms-ready event a setfocus actions is fired to set the focus into the first input within 'observed Group'
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-group"/>
+            <a href="#Switch"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <code class="model">
+<xf:model id="modelChild">
+    <xf:instance>
+        <data xmlns=""/>
+    </xf:instance>
+    <xf:action ev:observer="observedGroup" ev:target="inputCase1" ev:event="DOMFocusIn" >
+        <xf:toggle case="c-input1" />
+    </xf:action>
+    <xf:toggle case="c-input2" ev:observer="observedGroup" ev:target="inputCase2" ev:event="DOMFocusIn" />
+    <xf:toggle case="c-empty"  ev:observer="observedGroup" ev:target="observedGroup" ev:event="DOMFocusOut"/>
+</xf:model>
+
+                </code>
+                <code class="ui">
+<xf:input id="input1" ref=".">
+    <xf:label>Input before observerd Group</xf:label>
+</xf:input>
+<xf:group id="observedGroup" appearance="minimal">
+    <xf:label>Observed Group</xf:label>
+    <xf:input id="inputCase1" ref=".">
+        <xf:label>1</xf:label>
+    </xf:input>
+    <xf:input id="inputCase2" ref=".">
+        <xf:label>2</xf:label>
+    </xf:input>
+</xf:group>
+<xf:switch>
+    <xf:case id="c-empty">
+        <p class="caseNull">No control within observed group is focused</p>
+    </xf:case>
+    <xf:case id="c-input1">
+        <p class="caseOne">Input 1 has focus</p>
+    </xf:case>
+    <xf:case id="c-input2">
+        <p class="caseTwo">Input 2 has focus</p>
+    </xf:case>
+</xf:switch>
+<xf:input id="input2" ref=".">
+    <xf:label>Input after observed Group</xf:label>
+</xf:input>
+
+<!--Action within UI listening on Model action-->
+<xf:action ev:observer="modelChild" ev:event="xforms-ready">
+    <xf:setfocus control="inputCase1"/>
+</xf:action>
+
+
+                </code>
+            </div>
+            <div class="MIPS"/>
+        </div>
+        <div class="limitations">
+        </div>
+    </body>
+</html>

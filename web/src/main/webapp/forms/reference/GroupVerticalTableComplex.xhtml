@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+      
+      <title>Example of complex nested group layout</title>
+      
+      
+      <!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+      
+      
+      
+      <style type="text/css">
+            .sample .xfLabel,.sample .xfValue{
+				font-size:9pt;
+			}
+            .xfContainer .xfGroupLabel{
+				color:steelblue;
+				font-size:1.2em;
+				margin-bottom:10px;
+				border-bottom:thin solid;
+			}
+			.bfGroupLabelLeft .bfHorizontalTable .xfGroupLabel,
+			.bfGroupLabelLeft .bfHorizontalTable .bfHorizontalTableLabel{
+				/*display:none;*/
+			}
+			.xfContainer{
+				margin:2px;
+				border:thin dotted #b0c4de;
+			}
+            #xforms .xfContainer .xfContainer{
+                margin-top:20px;
+                margin-bottom:20px;
+				display:inline-block;
+            }
+			#VerticalGroupHTML{
+				overflow:auto;
+			}
+        </style>
+      <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+      <link rel="stylesheet" type="text/css" href="reference.css" />
+   </head>
+   <body class="soria" style="margin:30px">
+      <div id="xforms">
+         <div style="display:none">
+            <xf:model>
+               <xf:instance>
+                  <data xmlns="">
+                     <grouped-data constraint="true" readonly="false" required="true" relevant="true">
+                        <group>
+                           <a>aaa</a>
+                           <b>bbb</b>
+                           <c>ccc</c>
+                           <d>ddd</d>
+                        </group>
+                     </grouped-data>
+                  </data>
+               </xf:instance>
+               <xf:bind nodeset="grouped-data">
+                  <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)" readonly="boolean-from-string(../@readonly)" required="boolean-from-string(../@required)" relevant="boolean-from-string(../@relevant)">
+                     <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"></xf:bind>
+                  </xf:bind>
+                  <xf:bind nodeset="@constraint" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@readonly" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@required" type="boolean"></xf:bind>
+                  <xf:bind nodeset="@relevant" type="boolean"></xf:bind>
+               </xf:bind>
+            </xf:model>
+         </div>
+         <div class="CSS">
+            <table>
+               <caption>CSS</caption>
+               <tr>
+                  <th style="font-style:italic;color:#C46B47;">
+                     Hover the classes to see matching element(s) in the example
+                     
+                  </th>
+               </tr>
+               <tr>
+                  <td id="d27e596" onmouseover="showClass('xfContainer');" onmouseout="hideClass('xfContainer');">xfContainer
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e596">matches any Element that represents a XForms
+                        group
+                        |
+                        repeat
+                        |
+                        switch
+                        element
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e614" onmouseover="showClass('xfGroupLabel');" onmouseout="hideClass('xfGroupLabel');">xfGroupLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e614">matches the  label of a group</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e628" onmouseover="showClass('bfVerticalTable');" onmouseout="hideClass('bfVerticalTable');">bfVerticalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e628">matches an Element that represents a XForms
+                        group
+                        element with
+                        'bf:verticalTable'
+                        appearance
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e643" onmouseover="showClass('bfVerticalTableLabel');" onmouseout="hideClass('bfVerticalTableLabel');">bfVerticalTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e643">matches the label column of a vertical table layout
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e652" onmouseover="showClass('bfVerticalTableValue');" onmouseout="hideClass('bfVerticalTableValue');">bfVerticalTableValue
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e652">matches the value column of a vertical table layout
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e662" onmouseover="showClass('bfVerticalTableInfo');" onmouseout="hideClass('bfVerticalTableInfo');">bfVerticalTableInfo
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e662">matches the info column of a vertical table layout
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e671" onmouseover="showClass('xfGroup');" onmouseout="hideClass('xfGroup');">xfGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e671">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e680" onmouseover="showClass('xfMinimalGroup');" onmouseout="hideClass('xfMinimalGroup');">xfMinimalGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e680">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e689" onmouseover="showClass('xfCompactGroup');" onmouseout="hideClass('xfCompactGroup');">xfCompactGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e689">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e698" onmouseover="showClass('xfFullGroup');" onmouseout="hideClass('xfFullGroup');">xfFullGroup
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e698">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e707" onmouseover="showClass('bfHorizontalTable');" onmouseout="hideClass('bfHorizontalTable');">bfHorizontalTable
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e707">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e717" onmouseover="showClass('bfHorizontalTableLabel');" onmouseout="hideClass('bfHorizontalTableLabel');">bfHorizontalTableLabel
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e717">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="d27e726" onmouseover="showClass('bfGroupLabelLeft');" onmouseout="hideClass('bfGroupLabelLeft');">bfGroupLabelLeft
+                     <div data-dojo-type="dijit.Tooltip" connectId="d27e726">tbd</div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfcontrol" onmouseover="showClass('xfControl');" onmouseout="hideClass('xfControl');">xfControl
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfcontrol">
+                        matches an Element that represents a XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xflabel" onmouseover="showClass('xfLabel');" onmouseout="hideClass('xfLabel');">xfLabel
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xflabel">
+                        matches the label part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfvalue" onmouseover="showClass('xfValue');" onmouseout="hideClass('xfValue');">xfValue
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalue">
+                        matches the widget part of an XForms control
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfreadonly" onmouseover="showClass('xfReadOnly');" onmouseout="hideClass('xfReadOnly');">
+                     xfReadOnly
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfreadonly">
+                        matches a xforms control that is currently readonly
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfreadwrite" onmouseover="showClass('xfReadWrite');" onmouseout="hideClass('xfReadWrite');">
+                     xfReadWrite
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfreadwrite">
+                        matches a xforms control that is currently writable
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfrequired" onmouseover="showClass('xfRequired');" onmouseout="hideClass('xfRequired');">
+                     xfRequired
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfrequired">
+                        matches a xforms control that is currently required
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfoptional" onmouseover="showClass('xfOptional');" onmouseout="hideClass('xfOptional');">
+                     xfOptional
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfoptional">
+                        matches a xforms control that is currently optional
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfenabled" onmouseover="showClass('xfEnabled');" onmouseout="hideClass('xfEnabled');">
+                     xfEnabled
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfenabled">
+                        matches a xforms control that is currently relevant (enabled)
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfdisabled" onmouseover="showClass('xfDisabled');" onmouseout="hideClass('xfDisabled');">
+                     xfDisabled
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfdisabled">
+                        matches a xforms control that is currently disabled (can't be visualized here as the
+                        control gets hidden)
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfvalid" onmouseover="showClass('xfValid');" onmouseout="hideClass('xfValid');">
+                     xfValid
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfvalid">
+                        matches a xforms control that is currently valid
+                        
+                     </div>
+                  </td>
+               </tr>
+               <tr>
+                  <td id="xfinvalid" onmouseover="showClass('xfInvalid');" onmouseout="hideClass('xfInvalid');">
+                     xfInvalid
+                     
+                     <div data-dojo-type="dijit.Tooltip" connectId="xfinvalid">
+                        matches a xforms control that is currently invalid
+                        
+                     </div>
+                  </td>
+               </tr>
+            </table>
+         </div>
+         <div class="pageintro">
+            <h1>Example of complex nested group layout</h1>
+            <div class="description">
+               <p>This example shows how different appearances of groups can be used for layout.</p>
+               <p>This example uses an appearance of 'bf:VerticalTable' as outer group. This contains
+                  simple controls but also some HTML elements and nested groups.
+               </p>
+            </div>
+            <table id="references">
+               <tr>
+                  <td rowspan="3"><a href="http://www.w3c.org" class="link" id="linkLogo" style="margin-right:25px;" target="_blank"><img id="logo" class="image" src="images/w3c_home_nb.png" alt="W3C" /></a></td>
+                  <td style="color:#005A9C; font-size:16px;">XForms 1.1 Links</td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/TR/2009/REC-xforms-20091020#ui-input#ui-group" target="_blank">Recommendation</a></td>
+               </tr>
+               <tr>
+                  <td><a style="color:#005A9C;" href="http://www.w3.org/MarkUp/Forms/2010/xforms11-qr.html#Switch" target="_blank">
+                        Quick Reference
+                        </a></td>
+               </tr>
+            </table>
+         </div>
+         <h2>Example</h2>
+         <div class="Section sample">  
+            <xf:group ref="grouped-data/group" id="VerticalGroupHTML" appearance="bf:verticalTable">
+               <xf:label><b>Vertical Group</b>rendered as HTML Table
+               </xf:label>
+               <xf:input ref="a">
+                  <xf:label>A-label</xf:label>
+                  <xf:hint>a hint to A-label</xf:hint>
+                  <xf:alert>an alert to A-label</xf:alert>
+               </xf:input>
+               <xf:input ref="b">
+                  <xf:label>B-label</xf:label>
+                  <xf:hint>a hint to B-label</xf:hint>
+                  <xf:alert>an alert to B-label</xf:alert>
+               </xf:input>
+               <xf:input ref="c">
+                  <xf:label>C-label</xf:label>
+                  <xf:hint>a hint to C-label</xf:hint>
+                  <xf:alert>an alert to C-label</xf:alert>
+               </xf:input>
+               <xf:input ref="d">
+                  <xf:label>D-label</xf:label>
+                  <xf:hint>a hint to D-label</xf:hint>
+                  <xf:alert>an alert to D-label</xf:alert>
+               </xf:input>
+               <div style="padding:5px;color:darkgreen;font-size:14pt;">this is a simple DIV in between groups</div>
+               <xf:group>
+                  <xf:label>a first nested group with no appearance at all</xf:label>
+                  <xf:input ref="a">
+                     <xf:label>A-label</xf:label>
+                     <xf:hint>a hint to A-label</xf:hint>
+                     <xf:alert>an alert to A-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="b">
+                     <xf:label>B-label</xf:label>
+                     <xf:hint>a hint to B-label</xf:hint>
+                     <xf:alert>an alert to B-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="c">
+                     <xf:label>C-label</xf:label>
+                     <xf:hint>a hint to C-label</xf:hint>
+                     <xf:alert>an alert to C-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="d">
+                     <xf:label>D-label</xf:label>
+                     <xf:hint>a hint to D-label</xf:hint>
+                     <xf:alert>an alert to D-label</xf:alert>
+                  </xf:input>
+               </xf:group>
+               <div style="display:block;width:400px;font-size:10pt;margin:10px;">The following two controls are part of the outer group again. Please note that the
+                  column width is maintained though there are DIVs and other groups in between.
+               </div>
+               <xf:input ref="c">
+                  <xf:label>Ccc-label</xf:label>
+                  <xf:hint>a hint to Ccc-label</xf:hint>
+                  <xf:alert>an alert to Ccc-label</xf:alert>
+               </xf:input>
+               <xf:input ref="d">
+                  <xf:label>Dddd-label</xf:label>
+                  <xf:hint>a hint to Dddd-label</xf:hint>
+                  <xf:alert>an alert to Dddd-label</xf:alert>
+               </xf:input>
+               <xf:group appearance="minimal">
+                  <xf:label>minimal group</xf:label>
+                  <xf:input ref="a">
+                     <xf:label>A-label</xf:label>
+                     <xf:hint>a hint to A-label</xf:hint>
+                     <xf:alert>an alert to A-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="b">
+                     <xf:label>B-label</xf:label>
+                     <xf:hint>a hint to B-label</xf:hint>
+                     <xf:alert>an alert to B-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="c">
+                     <xf:label>C-label</xf:label>
+                     <xf:hint>a hint to C-label</xf:hint>
+                     <xf:alert>an alert to C-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="d">
+                     <xf:label>D-label</xf:label>
+                     <xf:hint>a hint to D-label</xf:hint>
+                     <xf:alert>an alert to D-label</xf:alert>
+                  </xf:input>
+               </xf:group>
+               <xf:group appearance="compact">
+                  <xf:label>compact group</xf:label>
+                  <xf:input ref="a">
+                     <xf:label>A-label</xf:label>
+                     <xf:hint>a hint to A-label</xf:hint>
+                     <xf:alert>an alert to A-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="b">
+                     <xf:label>B-label</xf:label>
+                     <xf:hint>a hint to B-label</xf:hint>
+                     <xf:alert>an alert to B-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="c">
+                     <xf:label>C-label</xf:label>
+                     <xf:hint>a hint to C-label</xf:hint>
+                     <xf:alert>an alert to C-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="d">
+                     <xf:label>D-label</xf:label>
+                     <xf:hint>a hint to D-label</xf:hint>
+                     <xf:alert>an alert to D-label</xf:alert>
+                  </xf:input>
+               </xf:group>
+               <xf:group appearance="full">
+                  <xf:label>full group</xf:label>
+                  <xf:input ref="a">
+                     <xf:label>A-label</xf:label>
+                     <xf:hint>a hint to A-label</xf:hint>
+                     <xf:alert>an alert to A-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="b">
+                     <xf:label>B-label</xf:label>
+                     <xf:hint>a hint to B-label</xf:hint>
+                     <xf:alert>an alert to B-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="c">
+                     <xf:label>C-label</xf:label>
+                     <xf:hint>a hint to C-label</xf:hint>
+                     <xf:alert>an alert to C-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="d">
+                     <xf:label>D-label</xf:label>
+                     <xf:hint>a hint to D-label</xf:hint>
+                     <xf:alert>an alert to D-label</xf:alert>
+                  </xf:input>
+               </xf:group>
+               <xf:group appearance="bf:horizontalTable">
+                  <xf:label>horizontal group</xf:label>
+                  <xf:input ref="a">
+                     <xf:label>A-label</xf:label>
+                     <xf:hint>a hint to A-label</xf:hint>
+                     <xf:alert>an alert to A-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="b">
+                     <xf:label>B-label</xf:label>
+                     <xf:hint>a hint to B-label</xf:hint>
+                     <xf:alert>an alert to B-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="c">
+                     <xf:label>C-label</xf:label>
+                     <xf:hint>a hint to C-label</xf:hint>
+                     <xf:alert>an alert to C-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="d">
+                     <xf:label>D-label</xf:label>
+                     <xf:hint>a hint to D-label</xf:hint>
+                     <xf:alert>an alert to D-label</xf:alert>
+                  </xf:input>
+               </xf:group>
+               <div style="display:block;width:400px;font-size:10pt;">The group below uses appearance="bf:GroupLabelLeft" inside a verticalTable layout
+                  to place labels in the left column while all controls will be rendered in the right
+                  column. With CSS the control labels can be hidden if wanted.
+               </div>
+               <xf:group appearance="bf:GroupLabelLeft">
+                  <xf:label style="border:thin solid lightsteelblue;">A-label / Bb-label</xf:label>
+                  <xf:input ref="a">
+                     <xf:label>A-label</xf:label>
+                     <xf:hint>a hint to A-label</xf:hint>
+                     <xf:alert>an alert to A-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="b">
+                     <xf:label>B-label</xf:label>
+                     <xf:hint>a hint to B-label</xf:hint>
+                     <xf:alert>an alert to B-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="c">
+                     <xf:label>C-label</xf:label>
+                     <xf:hint>a hint to C-label</xf:hint>
+                     <xf:alert>an alert to C-label</xf:alert>
+                  </xf:input>
+                  <xf:input ref="d">
+                     <xf:label>D-label</xf:label>
+                     <xf:hint>a hint to D-label</xf:hint>
+                     <xf:alert>an alert to D-label</xf:alert>
+                  </xf:input>
+               </xf:group>
+               <xf:group appearance="compact">
+                  <xf:label>two vertical groups wrapped in a compact group</xf:label>
+                  <xf:group appearance="bf:verticalTable">
+                     <xf:label>left group</xf:label>
+                     <xf:input ref="a">
+                        <xf:label>A-label</xf:label>
+                        <xf:hint>a hint to A-label</xf:hint>
+                        <xf:alert>an alert to A-label</xf:alert>
+                     </xf:input>
+                     <xf:input ref="b">
+                        <xf:label>B-label</xf:label>
+                        <xf:hint>a hint to B-label</xf:hint>
+                        <xf:alert>an alert to B-label</xf:alert>
+                     </xf:input>
+                  </xf:group>
+                  <xf:group appearance="bf:verticalTable">
+                     <xf:label>right group</xf:label>
+                     <xf:input ref="c">
+                        <xf:label>C-label</xf:label>
+                        <xf:hint>a hint to C-label</xf:hint>
+                        <xf:alert>an alert to C-label</xf:alert>
+                     </xf:input>
+                     <xf:input ref="d">
+                        <xf:label>D-label</xf:label>
+                        <xf:hint>a hint to D-label</xf:hint>
+                        <xf:alert>an alert to D-label</xf:alert>
+                     </xf:input>
+                  </xf:group>
+               </xf:group>
+            </xf:group> 
+         </div>
+         <div class="MIPS">
+            <xf:group appearance="full">
+               <xf:label></xf:label>
+               <xf:input id="input1-readonly" ref="grouped-data/@readonly" incremental="true">
+                  <xf:label>readonly</xf:label>
+               </xf:input>
+               <xf:input id="input1-relevant" ref="grouped-data/@relevant" incremental="true">
+                  <xf:label>relevant</xf:label>
+               </xf:input>
+               <xf:input id="input1-valid" ref="grouped-data/@constraint" incremental="true">
+                  <xf:label>valid</xf:label>
+               </xf:input>
+            </xf:group>
+         </div>
+         <h2>XForms Markup</h2>
+         <div class="Section markup"><pre><code class="xml" data-dojo-type="dojox.highlight.Code">
+&lt;xf:group ref="grouped-data/group" id="VerticalGroupHTML" appearance="bf:verticalTable"&gt;
+    &lt;xf:label&gt;
+        &lt;b&gt;Vertical Group&lt;/b&gt;
+        rendered as HTML Table
+    &lt;/xf:label&gt;
+    &lt;xf:input ref="a"&gt;
+        &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input ref="b"&gt;
+        &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input ref="c"&gt;
+        &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input ref="d"&gt;
+        &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+
+    &lt;div style="padding:5px;color:darkgreen;font-size:14pt;"&gt;this is a simple DIV in between groups&lt;/div&gt;
+
+    &lt;xf:group&gt;
+        &lt;xf:label&gt;a first nested group with no appearance at all&lt;/xf:label&gt;
+        &lt;xf:input ref="a"&gt;
+            &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="b"&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+    &lt;/xf:group&gt;
+    
+
+
+
+
+
+    &lt;div style="display:block;width:400px;font-size:10pt;margin:10px;"&gt;
+        The following two controls are part of the outer group again. Please note that the column width is maintained
+        though there are DIVs and other groups in between.
+    &lt;/div&gt;
+    &lt;xf:input ref="c"&gt;
+        &lt;xf:label&gt;Ccc-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to Ccc-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to Ccc-label&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+    &lt;xf:input ref="d"&gt;
+        &lt;xf:label&gt;Dddd-label&lt;/xf:label&gt;
+        &lt;xf:hint&gt;a hint to Dddd-label&lt;/xf:hint&gt;
+        &lt;xf:alert&gt;an alert to Dddd-label&lt;/xf:alert&gt;
+    &lt;/xf:input&gt;
+
+
+    &lt;xf:group appearance="minimal"&gt;
+        &lt;xf:label&gt;minimal group&lt;/xf:label&gt;
+        &lt;xf:input ref="a"&gt;
+            &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="b"&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+    &lt;/xf:group&gt;
+
+    &lt;xf:group appearance="compact"&gt;
+        &lt;xf:label&gt;compact group&lt;/xf:label&gt;
+        &lt;xf:input ref="a"&gt;
+            &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="b"&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+    &lt;/xf:group&gt;
+
+    &lt;xf:group appearance="full"&gt;
+        &lt;xf:label&gt;full group&lt;/xf:label&gt;
+        &lt;xf:input ref="a"&gt;
+            &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="b"&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+    &lt;/xf:group&gt;
+
+    &lt;xf:group appearance="bf:horizontalTable"&gt;
+        &lt;xf:label&gt;horizontal group&lt;/xf:label&gt;
+        &lt;xf:input ref="a"&gt;
+            &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="b"&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+    &lt;/xf:group&gt;
+
+    &lt;div style="display:block;width:400px;font-size:10pt;"&gt;The group below uses appearance="bf:GroupLabelLeft" inside a verticalTable layout to place labels
+    in the left column while all controls will be rendered in the right column. With CSS the control labels can
+    be hidden if wanted.&lt;/div&gt;
+    &lt;xf:group appearance="bf:GroupLabelLeft"&gt;
+        &lt;xf:label style="border:thin solid lightsteelblue;"&gt;A-label / Bb-label&lt;/xf:label&gt;
+        &lt;xf:input ref="a"&gt;
+            &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="b"&gt;
+            &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="c"&gt;
+            &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+        &lt;xf:input ref="d"&gt;
+            &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+            &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+            &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+        &lt;/xf:input&gt;
+    &lt;/xf:group&gt;
+
+    &lt;xf:group appearance="compact"&gt;
+        &lt;xf:label&gt;two vertical groups wrapped in a compact group&lt;/xf:label&gt;
+        &lt;xf:group appearance="bf:verticalTable"&gt;
+            &lt;xf:label&gt;left group&lt;/xf:label&gt;
+            &lt;xf:input ref="a"&gt;
+                &lt;xf:label&gt;A-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to A-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to A-label&lt;/xf:alert&gt;
+            &lt;/xf:input&gt;
+            &lt;xf:input ref="b"&gt;
+                &lt;xf:label&gt;B-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to B-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to B-label&lt;/xf:alert&gt;
+            &lt;/xf:input&gt;
+        &lt;/xf:group&gt;
+        &lt;xf:group appearance="bf:verticalTable"&gt;
+            &lt;xf:label&gt;right group&lt;/xf:label&gt;
+            &lt;xf:input ref="c"&gt;
+                &lt;xf:label&gt;C-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to C-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to C-label&lt;/xf:alert&gt;
+            &lt;/xf:input&gt;
+            &lt;xf:input ref="d"&gt;
+                &lt;xf:label&gt;D-label&lt;/xf:label&gt;
+                &lt;xf:hint&gt;a hint to D-label&lt;/xf:hint&gt;
+                &lt;xf:alert&gt;an alert to D-label&lt;/xf:alert&gt;
+            &lt;/xf:input&gt;
+        &lt;/xf:group&gt;
+    &lt;/xf:group&gt;
+
+&lt;/xf:group&gt;
+</code></pre></div>
+      </div><script type="text/javascript">
+                function showClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.add(item, 'showClass');
+                        });
+                    });
+                }
+
+                function hideClass(cssClass) {
+                    require(["dojo/query", "dojo/dom-class"], function (query, domClass) {
+                        query('.sample .' + cssClass).forEach(function (item) {
+                            domClass.remove(item, 'showClass');
+                        });
+                    });
+                }
+
+                require(["dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
+                        function (parser, connect, Tooltip, dom) {
+                            var xforms = dom.byId("xforms");
+                            // console.debug("parse ",xforms);
+                            parser.parse(xforms);
+                            connect.subscribe("/xf/ready", function () {
+                                fluxProcessor.skipshutdown = true;
+                            });
+                        }
+                );
+            </script></body>
+</html>

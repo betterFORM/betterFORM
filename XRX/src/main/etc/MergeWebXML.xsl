@@ -122,6 +122,11 @@
             <servlet-name>FormsServlet</servlet-name>
             <url-pattern>/forms/formslist</url-pattern>
         </servlet-mapping>
+
+        <listener>
+            <listener-class>de.betterform.agent.web.servlet.BfServletContextListener</listener-class>
+        </listener>
+
     </xsl:template>
 
 

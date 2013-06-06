@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Model-to-Model Submission</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                This page demonstrates the use of a "model-to-model" XForms submission.
+            </p>
+            <p>
+
+            </p>
+        </div>
+        <div class="sample">
+            <div class="markup">
+<code class="model">
+<xf:model id="m-model-1">
+    <xf:instance id="i-instance-1" xmlns="">
+        <data>
+            <item>model-1</item>
+        </data>
+    </xf:instance>
+</xf:model>
+
+<xf:model id="m-model-2">
+    <xf:instance id="i-instance-2" xmlns="">
+        <data>
+            <item>model-2</item>
+        </data>
+    </xf:instance>
+
+<xf:submission id="s-model-2-to-model-1"
+       validate="false"
+       replace="none"
+       method="post"
+       resource="model:m-model-1#instance('i-instance-1')/data">
+    <xf:action ev:event="xforms-submit-done">
+        <xf:message level="ephemeral">Submitted data from model-2 to model-1</xf:message>
+    </xf:action>
+    <xf:action ev:event="xforms-submit-error">
+        <xf:message>Submitted data from model-2 to model-1 failed</xf:message>
+    </xf:action>
+</xf:submission>
+
+<xf:submission id="s-model-1-to-model-2"
+       validate="false"
+       replace="instance"
+       method="get"
+       resource="model:m-model-1#instance('i-instance-1')/data">
+    <xf:action ev:event="xforms-submit-done">
+        <xf:message level="ephemeral">Submitted data from model-1 to model-2</xf:message>
+    </xf:action>
+    <xf:action ev:event="xforms-submit-error">
+        <xf:message>Submitted data from model-1 to model-2 failed.</xf:message>
+    </xf:action>
+</xf:submission>
+</xf:model>
+</code>
+
+<code class="ui">
+<xf:group>
+
+    <xf:input model="m-model-1" ref="instance()/item">
+        <xf:label>Model-1</xf:label>
+    </xf:input>
+
+
+    <xf:input model="m-model-2" ref="instance()/item">
+        <xf:label>Model-2</xf:label>
+    </xf:input>
+
+    <xf:trigger>
+        <xf:label>Trigger model-1 to model-2 submission. (Get)</xf:label>
+        <xf:send submission="s-model-1-to-model-2"/>
+    </xf:trigger>
+
+    <xf:trigger>
+        <xf:label>Trigger model-2 to model-1 submission. (Post)</xf:label>
+        <xf:send submission="s-model-2-to-model-1"/>
+    </xf:trigger>
+</xf:group>
+</code>
+
+            </div>
+        </div>
+    </body>
+</html>

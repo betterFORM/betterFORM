@@ -13,11 +13,13 @@ import de.betterform.xml.xforms.ui.AbstractUIElement;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.RepeatItem;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.ExpressionVisitor;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ import java.util.List;
  * @version $Id$
  */
 public class Context extends XFormsFunction {
+    private static final Log LOGGER = LogFactory.getLog(XFormsFunction.class);
     /**
      *
      */
@@ -67,7 +70,9 @@ public class Context extends XFormsFunction {
         XPathFunctionContext functionContext = getFunctionContext(xpathContext);
         XFormsElement xformsElement = functionContext.getXFormsElement();
 
-        DOMUtil.prettyPrintDOM(xformsElement.getElement());
+        if(LOGGER.isDebugEnabled()){
+            DOMUtil.prettyPrintDOM(xformsElement.getElement());
+        }
 
         int pos = 1;
         if (xformsElement instanceof BindingElement) {

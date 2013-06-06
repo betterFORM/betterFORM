@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <title>Input attribute/node value Test</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+    -->
+
+
+    <xf:model id="m-model-1">
+        <xf:instance id="i-1" xmlns="">
+            <data>
+                <input1 name="">
+                    <input2 name=""/>
+                </input1>
+
+            </data>
+        </xf:instance>
+        <xf:bind nodeset="instance('i-1')">
+            <xf:bind nodeset="input1/@name" type="xs:string" constraint="string-length(.) = 5" required="true()" relevant="true()"/>
+        </xf:bind>
+    </xf:model>
+</head>
+
+<body class="tundra">
+
+                    <xf:input ref="input1/@name">
+                        <xf:label>Attribute</xf:label>
+                        <xf:hint>Hint</xf:hint>
+                    </xf:input>
+
+                    <xf:textarea ref="input1">
+                        <xf:label>Node value</xf:label>
+                    </xf:textarea>
+
+
+
+</body>
+</html>

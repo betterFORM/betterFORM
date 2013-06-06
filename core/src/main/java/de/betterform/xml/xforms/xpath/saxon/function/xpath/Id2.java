@@ -14,11 +14,11 @@ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.ExpressionVisitor;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.om.ArrayIterator;
-import net.sf.saxon.om.EmptyIterator;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.tree.iter.ArrayIterator;
+import net.sf.saxon.tree.iter.EmptyIterator;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
@@ -87,9 +87,7 @@ public class Id2 extends XFormsFunction {
 
 	/**
 	 * Iterate over the contents of the collection
-	 * 
-	 * @param context
-	 *            the dynamic context
+	 *
 	 * @return an iterator, whose items will always be nodes (typically but not
 	 *         necessarily document nodes)
 	 * @throws XPathException

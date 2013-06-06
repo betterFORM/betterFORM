@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:xf="http://www.w3.org/2002/xforms"
+        xmlns:ev="http://www.w3.org/2001/xml-events"
+        >
+<head>
+    <title>Ant Submission Handler</title>
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+    -->
+    <!--
+         Standard template for embedded forms. Uses an additional div Element with @id="xforms" to allow addressing
+         by a xforms load action.
+         -->
+</head>
+<body>
+<div id="xforms">
+    <div style="display:none">
+        <xf:model id="model-1">
+            <xf:instance id="i-default">
+                <data xmlns=""/>
+            </xf:instance>
+
+            <xf:instance id="i-target">
+                <data xmlns="">
+                    <target>test</target>
+                </data>
+            </xf:instance>
+            <xf:instance xmlns="" id="i-result">
+                <data/>
+            </xf:instance>
+
+            <xf:submission id="s-ant-default-target"
+                           method="get"
+                           replace="instance"
+                           instance="i-result"
+                           ref="instance()"
+                           validate="false"
+                           resource="ant://{$webapp.realpath}/forms/test/antsubmission-handler-test.xml">
+                <xf:action ev:event="xforms-submit-error">
+                    <xf:message>Submission failed</xf:message>
+                </xf:action>
+            </xf:submission>
+            <xf:submission id="s-ant-instance-target"
+                           method="get"
+                           replace="instance"
+                           instance="i-result"
+                           ref="instance('i-target')"
+                           validate="false"
+                           resource="ant://{$webapp.realpath}/forms/test/antsubmission-handler-test.xml">
+                <xf:action ev:event="xforms-submit-error">
+                    <xf:message>Submission failed</xf:message>
+                </xf:action>
+            </xf:submission>
+
+            <xf:submission id="s-ant-uri-target"
+                           method="get"
+                           replace="instance"
+                           instance="i-result"
+                           ref="instance()"
+                           validate="false"
+                           resource="ant://{$webapp.realpath}/forms/test/antsubmission-handler-test.xml#test2">
+                <xf:action ev:event="xforms-submit-error">
+                    <xf:message>Submission failed</xf:message>
+                </xf:action>
+            </xf:submission>
+
+            <xf:instance id="i-ant-file" resource="antsubmission-handler-test.xml"/>
+        </xf:model>
+    </div>
+    <xf:group appearance="minimal">
+        <xf:label>Execute Ant Targets (ant build file can be viewed by clicking <i><b>Model:model-1 :: Instance:i-ant-file</b></i> in the debug bar)</xf:label>
+        <p>
+            <xf:trigger>
+                <xf:label>default</xf:label>
+                <xf:send submission="s-ant-default-target"/>
+            </xf:trigger>
+            If no target is given via the referenced instance nor an uri param the default target is executed
+        </p>
+        <p>
+            <xf:trigger>
+                <xf:label>test</xf:label>
+                <xf:send submission="s-ant-instance-target"/>
+            </xf:trigger>
+            Trigger references the instance 'i-target' which contains a node &lt;target/&gt; which value is taken as target (test)</p>
+        <p>
+            <xf:trigger>
+                <xf:label>test2</xf:label>
+                <xf:send submission="s-ant-uri-target"/>
+            </xf:trigger>
+            The Ant target is chosen via an URL fragment like 'antsubmission-handler-test.xml#test2'</p>
+    </xf:group>
+
+    <xf:group appearance="full" ref="instance('i-result')/@fileName">
+        <xf:label>Ant Result</xf:label>
+        <xf:output ref="instance('i-result')/@fileName">
+            <xf:label>Ant File:</xf:label>
+        </xf:output>
+        <xf:output ref="instance('i-result')/buildFile">
+            <xf:label>Path to Ant File:</xf:label>
+        </xf:output>
+        <xf:output ref="instance('i-result')/target">
+            <xf:label>Ant Target:</xf:label>
+        </xf:output>
+        <xf:output ref="instance('i-result')/output-stream">
+            <xf:label>Output Stream:</xf:label>
+        </xf:output>
+        <xf:output ref="instance('i-result')/error-stream">
+            <xf:label>Error Stream:</xf:label>
+        </xf:output>
+    </xf:group>
+</div>
+</body>
+</html>

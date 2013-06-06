@@ -100,7 +100,7 @@ public class TestProcessor implements XFormsProcessor, EventListener {
         this.root.addEventListener(BetterFormEventNames.RENDER_MESSAGE, this, true);
     }
 
-    public Node getXForms() throws XFormsException {
+    public Document getXForms() throws XFormsException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

@@ -48,8 +48,12 @@
     <available property="betterform.available" file="${target.dir}/betterform-src.zip"/>
     <available property="eXist.available" file="${target.dir}/exist-install.jar"/>
     <available property="xrx.installed" file="${xApp.target}/webapp/WEB-INF/betterform-config.xml"/>
+
     <antversion property="antversion" atleast="1.8.2"/>
 
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
 
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <!-- **************************************** HOUSEKEEPING **************************************** -->
@@ -62,11 +66,6 @@
         <echo message="************************************************************************************"/>
         <echo/>
         <delete dir="${xApp.target}"/>
-    </target>
-
-
-    <target name="check-ant-version" unless="antversion">
-        <echo>Apache Ant 1.8.2 or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.8.2. You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
     <target name="clean-all" description="clean build target directory">

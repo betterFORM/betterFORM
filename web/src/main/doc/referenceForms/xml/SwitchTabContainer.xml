@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>XForms switch rendered as tabcontainer</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+        <style type="text/css">
+            .caseContent{
+				height:100%;
+			}
+			.caseContent h2{
+				margin:0;
+			}
+			.bfTabContainer{
+				height:300px;
+			}
+        </style>
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                A switch Element with
+                <span class="keyword">appearance</span>
+                attribute set to 'dijit.TabContainer'
+                will be rendered as a tabbed panel which can be toggled by clicking a card or by navigating the cards
+                with the
+                keyboard.
+            </p>
+            <p>
+                As the author might need other actions besides simply activating another case ( to e.g. prepare
+                data for the new view) we need a explicit trigger that toggles the wanted case. On the other
+                hand when the user clicks a tab we have to let the processor know which trigger has to run
+                for the switching.
+            </p>
+            <p>
+                To allow mapping from active case to the trigger that performs the switch
+                you have to follow a convention to achieve the mapping:
+                <ol>
+                    <li>write one trigger for each case</li>
+                    <li>give the trigger an id of 't-' + CASE_ID where CASE_ID
+                references the respective case you want to activate</li>
+                    <li>put all triggers inside a div which you hide
+                from display with a style="display:none;"</li>
+                    <li>write your switch as normal and give it an
+                    <span class="keyword">appearance</span>
+                    of 'dijit.TabContainer.</li>
+                </ol>
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-switch"/>
+            <a href="#Switch"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance xmlns="">
+                        <data>
+                        </data>
+                    </xf:instance>
+                </xf:model>
+                <code class="ui">
+<xf:group>
+    <xf:label>Switch / Case</xf:label>
+    <div style="display:none;">
+        <xf:trigger id="t-case1">
+            <xf:label>Case 1</xf:label>
+            <xf:toggle case="case1"/>
+        </xf:trigger>
+        <xf:trigger id="t-case2">
+            <xf:label>Case 2</xf:label>
+            <xf:toggle case="case2"/>
+        </xf:trigger>
+        <xf:trigger id="t-case3">
+            <xf:label>Case 3</xf:label>
+            <xf:toggle case="case3"/>
+        </xf:trigger>
+        <xf:trigger id="t-case4">
+            <xf:label>Case 4</xf:label>
+            <xf:toggle case="case4"/>
+        </xf:trigger>
+    </div>
+    <xf:switch id="switch1" appearance="dijit:TabContainer">
+        <xf:case id="case1" selected="true">
+            <xf:label>Case 1</xf:label>
+            <div class="caseContent" style="background:#bbbbff">
+                <h2>CASE 1</h2>
+                <p>This is some content for the first case</p>
+            </div>
+        </xf:case>
+        <xf:case id="case2">
+            <xf:label>Case 2</xf:label>
+            <div class="caseContent" style="background:#ccccff">
+                <h2>CASE 2</h2>
+                <p>This is some content for the second case</p>
+            </div>
+        </xf:case>
+        <xf:case id="case3">
+            <xf:label>Case 3</xf:label>
+            <div class="caseContent" style="background:#ddddff">
+                <h2>CASE 3</h2>
+                <p>This is some content for the third case</p>
+            </div>
+        </xf:case>
+        <xf:case id="case4">
+            <xf:label>Case 4</xf:label>
+            <div class="caseContent" style="background:#eeeeff">
+                <h2>CASE 4</h2>
+                <p>This is some content for the fourth case</p>                
+            </div>
+        </xf:case>
+    </xf:switch>
+</xf:group>
+                </code>
+            </div>
+        </div>
+        <div class="CSS">
+
+            <table>
+                <tr>
+                    <td>xfContainer</td>
+                    <td>matches any Element that represents a XForms
+                        <span class="keyword">group</span>
+                        |
+                        <span class="keyword">repeat</span>
+                        |
+                        <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfSwitch</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfCase</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">case</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>bfTabContainer</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">switch</span>
+                        element and is rendered as a Dojo TabContainer
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="notes">
+            'bfTabContainer' class sets a fixed width in betterform.css. I you like to change the size you should
+            overwrite this rule. E.g. the example above sets a height of 300px.
+        </div>
+    </body>
+</html>

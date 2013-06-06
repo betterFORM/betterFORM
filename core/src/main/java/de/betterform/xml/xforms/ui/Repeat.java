@@ -11,6 +11,7 @@ import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.events.impl.XercesXMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsElement;
+import de.betterform.xml.xforms.XFormsElementFactory;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
@@ -88,6 +89,7 @@ public class Repeat extends BindingElement implements EventListener {
                     handleNodeInserted(event);
                     return;
                 }
+                // event is dispatched by Instance
                 if (BetterFormEventNames.NODE_DELETED.equals(event.getType())) {
                     handleNodeDeleted(event);
                     return;
@@ -204,8 +206,10 @@ public class Repeat extends BindingElement implements EventListener {
      *         <code>false</code>.
      */
     public boolean hasUIBinding() {
-        return getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE) != null ||
-                getXFormsAttribute(NODESET_ATTRIBUTE) != null;
+        return getXFormsAttribute(REPEAT_REF_ATTRIBUTE) != null ||
+               getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE) != null ||
+               getXFormsAttribute(REF_ATTRIBUTE) != null ||
+               getXFormsAttribute(NODESET_ATTRIBUTE) != null;
     }
 
     /**
@@ -230,6 +234,14 @@ public class Repeat extends BindingElement implements EventListener {
     public String getBindingExpression() {
         if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
+        }
+        String refAttribute = getXFormsAttribute(REF_ATTRIBUTE);
+        if(refAttribute != null){
+            return refAttribute;
+        }
+        refAttribute = getXFormsAttribute(REPEAT_REF_ATTRIBUTE);
+        if(refAttribute != null){
+            return refAttribute;
         }
 
         String nodesetAttribute = getXFormsAttribute(REPEAT_NODESET_ATTRIBUTE);
@@ -603,7 +615,7 @@ public class Repeat extends BindingElement implements EventListener {
         Node copy = prototype.cloneNode(false);
         if (copy.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) copy;
-            if (element.getAttributeNS(null, "id").length() == 0) {
+            if (element.getAttributeNS(null, "id").length() == 0 && XFormsElementFactory.isUIElement(element)) {
                 element.setAttributeNS(null, "id", this.container.generateId());
             }
 

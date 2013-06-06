@@ -67,7 +67,8 @@ public class ResourceServlet extends HttpServlet {
             }
         }
         this.lastModified = getLastModifiedValue();
-        if (new File(config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources")).exists()) {
+        final String path = config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources");
+        if (path != null && new File(path).exists()) {
             exploded = true;
         }
 
@@ -75,6 +76,7 @@ public class ResourceServlet extends HttpServlet {
         initResourceStreamers();
     }
 
+    // todo: shouldn't we move these definitions to web.xml and use servletContext.getMimeType?
     private void initMimeTypes() {
         mimeTypes = new HashMap<String, String>();
         mimeTypes.put("css", "text/css");
@@ -86,6 +88,7 @@ public class ResourceServlet extends HttpServlet {
         mimeTypes.put("gif", "image/gif");
         mimeTypes.put("html", "text/html");
         mimeTypes.put("swf", "application/x-shockwave-flash");
+        mimeTypes.put("xsl","application/xml+xslt");
     }
 
     private void initResourceStreamers() {
@@ -122,7 +125,7 @@ public class ResourceServlet extends HttpServlet {
                 if (LOG.isWarnEnabled()) {
                     LOG.warn("Resource \"{0}\" not found - " + resourcePath);
                 }
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource " + resourcePath + " not found" );
                 return;
             }
 
@@ -144,13 +147,17 @@ public class ResourceServlet extends HttpServlet {
             }else{
                 inputStream = ResourceServlet.class.getResourceAsStream(resourcePath);
             }
+
             String mimeType = getResourceContentType(resourcePath);
+            if(mimeType == null){
+                mimeType = getServletContext().getMimeType(resourcePath);
+            }
 
             if (mimeType == null) {
                 if(LOG.isTraceEnabled()){
                     LOG.trace("MimeType for \"{0}\" not found. Sending 'not found' response - " + resourcePath);
                 }
-                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+                resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "MimeType for " + resourcePath + " not found. Sending 'not found' response");
                 return;
             }
 
@@ -231,8 +238,7 @@ public class ResourceServlet extends HttpServlet {
         if(this.lastModified == 0){
             long bfTimestamp;
             try {
-                String path = this.getServletContext().getRealPath("WEB-INF/betterform-version.info");
-
+                String path = this.getServletContext().getRealPath("/WEB-INF/betterform-version.info");
                 StringBuilder versionInfo = new StringBuilder();
                 String NL = System.getProperty("line.separator");
                 Scanner scanner = new Scanner(new FileInputStream(path), "UTF-8");
@@ -243,6 +249,9 @@ public class ResourceServlet extends HttpServlet {
                 }
                 finally{
                     scanner.close();
+                }
+                if(LOG.isDebugEnabled()){
+                    LOG.debug("VersionInfo: " + versionInfo);
                 }
                 // String APP_NAME = APP_INFO.substring(0, APP_INFO.indexOf(" "));
                 // String APP_VERSION = APP_INFO.substring(APP_INFO.indexOf(" ") + 1, APP_INFO.indexOf("-") - 1);

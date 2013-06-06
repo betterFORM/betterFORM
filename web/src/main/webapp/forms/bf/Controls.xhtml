@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+        }
+
+        .triggers {
+            margin:4px
+            padding:4px;
+            border:thin dotted #808080;
+            clear:both;
+            display:block;
+            float:left;"
+        }
+        .triggers .xfControl {
+            display: inline;
+        }
+        hr {
+            clear: both;
+        }
+        .xfGroup .xfTextarea.mediatypeHtml .xfLabel {
+            display:block;
+            float:none;
+        }
+        .cke_skin_kama *,
+        .cke_skin_kama a:hover,
+        .cke_skin_kama a:link,
+        .cke_skin_kama a:visited,
+        .cke_skin_kama a:active {
+            white-space: normal;
+        }
+    </style>
+
+    <xf:model>
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <group>
+                    <label for="label1">GroupLabel 1</label>
+                    <label for="label2">GroupLabel 2</label>
+                </group>
+                <input>
+                    <value>input value</value>
+                    <label>input[1]</label>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>input[2]</label>
+                    <alert>Alert for input[2]</alert>
+                    <hint>Alert for input[2]</hint>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>input[3]</label>
+                    <alert>Alert for input[3]</alert>
+                    <hint>Hint Title</hint>
+                    <hint>Hint Body for appearance="bf:dropdowndate"</hint>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>input[4]</label>
+                    <alert>Alert for input[4]</alert>
+                    <hint>Hint Title</hint>
+                    <hint>Hint Body for date with appearance="iso8601:dd-MM-yyyy"</hint>
+                </input>
+                <input>
+                    <value>false</value>
+                    <label>input[5]</label>
+                    <alert>Alert for input[5]</alert>
+                </input>
+                <secret>
+                    <value>foo</value>
+                    <label>secret[1]</label>
+                    <alert>Alert for secret[1]</alert>
+                </secret>
+                <output>
+                    <value>output value</value>
+                    <label>output[1]</label>
+                </output>
+                <output>
+                    <value>/betterform/bfResources/images/logo.png</value>
+                    <label>output[2] image</label>
+                </output>
+                <output>
+                    <value>http://www.betterform.de</value>
+                    <label>output[3] anyURI</label>
+                </output>
+                <output>
+                    <value><b>Bold</b> and <i>italic</i> text</value>
+                    <label>output[4] html</label>
+                </output>
+                <textarea>
+                    <value>Some text</value>
+                    <label>textarea[1] text</label>
+                </textarea>
+                <textarea>
+                    <value><![CDATA[<b>Bold</b> and <i>italic</i> text]]></value>
+                    <label>textarea[2] html</label>
+                </textarea>
+                <select1>
+                    <value>00FF00</value>
+                    <label>select1 minimal</label>
+                </select1>
+                <select1>
+                    <value>0000FF</value>
+                    <label>select1 compact</label>
+                </select1>
+                <select1>
+                    <value>FF0000</value>
+                    <label>select1 full</label>
+                </select1>
+                <select>
+                    <value>00FF00</value>
+                    <label>select minimal</label>
+                </select>
+                <select>
+                    <value>FF0000</value>
+                    <label>select full</label>
+                </select>
+                <range>
+                    <value>5</value>
+                    <label>range</label>
+                    <hint>range hint</hint>
+                    <alert>range alert</alert>
+                </range>
+                <trigger>
+                    <label>trigger[1] minimal</label>
+                </trigger>
+                <trigger>
+                    <label>trigger[2] script</label>
+                </trigger>
+                <trigger>
+                    <label>trigger[3] customEvent</label>
+                </trigger>
+                <trigger>
+                    <label>message modal</label>
+                </trigger>
+                <trigger>
+                    <label>message ephemeral</label>
+                </trigger>
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="input[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[2]/value" type="date" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[3]/value" type="date" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[4]/value" type="date" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="input[5]/value" type="boolean" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="output[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="output[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="output[3]/value" type="anyURI" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="output[4]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="secret[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select1[3]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="select[3]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="textarea[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="textarea[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="range[1]/value" type="integer" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="trigger[1]/label" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="trigger[2]/label" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+            <xf:bind nodeset="trigger[3]/label" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"/>
+        </xf:bind>
+
+        <xf:instance id="colors">
+            <items xmlns="">
+                <color>
+                    <name>RED</name>
+                    <value>00FF00</value>
+                </color>
+                <color>
+                    <name>GREEN</name>
+                    <value>0000FF</value>
+                </color>
+                <color>
+                    <name>BLUE</name>
+                    <value>FF0000</value>
+                </color>
+            </items>
+        </xf:instance>
+        <xf:instance id="origin">
+            <items xmlns="">
+                <color>
+                    <name>BLACK</name>
+                    <value>000000</value>
+                </color>
+            </items>
+        </xf:instance>
+
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <h1>Various XForms Controls</h1>
+    <hr/>
+    <div style="display:block;">
+        <span>MIPS:</span>
+        <xf:trigger>
+            <xf:label>Required</xf:label>
+            <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label>Relevant</xf:label>
+            <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label>Valid</xf:label>
+            <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label>Readonly</xf:label>
+            <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+        </xf:trigger>
+    </div>
+    <hr/>
+    <xf:group ref="instance()" appearance="full" id="eventListener">
+        <xf:group>
+            <xf:label>Group</xf:label>
+            <xf:group ref="group[1]" id="groupWithEventListener">
+                <xf:action ev:event="customEvent">
+                    <xf:message>custom event arrived</xf:message>
+                </xf:action>
+                <p>
+                    <xf:label ref="group[1]/label[@for='label1']"/>
+                </p>
+                <p>
+                    <xf:label ref="group[1]/label[@for='label2']"/>
+                </p>
+                <span>Group with to labels listening to custom event 'customEvent'</span>
+            </xf:group>
+        </xf:group>
+        <hr/>
+        <xf:group appearance="minimal">
+            <xf:label>Select1</xf:label>
+            <div class="triggers" >
+                <xf:trigger style="float:left;">
+                    <xf:label>Item Label[2] = 'BLACK'</xf:label>
+                    <xf:setvalue ref="instance('colors')/color[2]/name" value="'BLACK'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[1]='0000FF'</xf:label>
+                    <xf:setvalue ref="instance()/select1[1]/value" value="'0000FF'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]='FF0000'</xf:label>
+                    <xf:setvalue ref="instance()/select1[2]/value" value="'FF0000'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[3]</xf:label>
+                    <xf:setvalue ref="instance()/select1[3]/value" value="'00FF00'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>insert color</xf:label>
+                    <xf:insert nodeset="instance('colors')/color[1]" position="before"
+                               origin="instance('origin')/color"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>delete color</xf:label>
+                    <xf:delete nodeset="instance('colors')/color" at="1"/>
+                </xf:trigger>
+
+            </div>
+
+            <!--################### SELECT1 SAMPLES #############################-->
+            <!--################### SELECT1 SAMPLES #############################-->
+            <!--################### SELECT1 SAMPLES #############################-->
+            <xf:select1 ref="select1[1]/value" id="colorselecter" incremental="false">
+                <xf:label>Select1 minimal</xf:label>
+                <xf:itemset nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                    <xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>
+                </xf:itemset>
+                <xf:message ev:event="xforms-value-changed" level="ephemeral">xf:message: xforms-value-changed</xf:message>
+            </xf:select1>
+            <xf:output ref="select1[1]/value">
+                <xf:label>Select1 minimal value:</xf:label>
+            </xf:output>
+
+
+            <xf:select1 ref="select1[2]/value" appearance="compact">
+                <xf:label>Select1 compact</xf:label>
+                <xf:itemset nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+<!--                        <xf:message ev:event="xforms-select">xf:message: xforms-select</xf:message>-->
+                </xf:itemset>
+                <!--<xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
+            </xf:select1>
+
+            <xf:output ref="select1[2]/value">
+                <xf:label>Select1 compact value:</xf:label>
+            </xf:output>
+
+
+            <xf:select1 ref="select1[3]/value" appearance="full">
+                <xf:label>Select1 full</xf:label>
+                <xf:itemset nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+<!--                        <xf:message ev:event="xforms-select">xf:message: xforms-select</xf:message>-->
+                </xf:itemset>
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
+            </xf:select1>
+
+            <xf:output ref="select1[3]/value">
+                <xf:label>Select1 full value:</xf:label>
+            </xf:output>
+        </xf:group>
+        <hr/>
+        <xf:group>
+            <xf:label>Select</xf:label>
+            <div class="triggers">
+                <span>Select:</span>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/select[1]/value" value="'0000FF FF0000'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/select[2]/value" value="'00FF00 FF0000'"/>
+                </xf:trigger>
+
+            </div>
+
+            <!--################### SELECT SAMPLES #############################-->
+            <!--################### SELECT SAMPLES #############################-->
+            <!--################### SELECT SAMPLES #############################-->
+
+            <xf:select ref="select[1]/value" appearance="minimal">
+                <xf:label>Select minimal</xf:label>
+                <xf:itemset nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                    <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
+                </xf:itemset>
+<!--                    <xf:message ev:event="xforms-value-changed">xf:message: xforms-value-changed</xf:message>-->
+            </xf:select>
+
+            <xf:output ref="select[1]/value">
+                <xf:label>Select minimal value:</xf:label>
+            </xf:output>
+
+            <xf:select ref="select[2]/value" appearance="full" incremental="false">
+                <xf:label>Select full</xf:label>
+                <xf:itemset nodeset="instance('colors')/color">
+                    <xf:label ref="name"/>
+                    <xf:value ref="value"/>
+                    <!--<xf:message ev:event="xforms-select" level="ephemeral">xf:message: xforms-select</xf:message>-->
+                </xf:itemset>
+            </xf:select>
+
+            <xf:output ref="select[2]/value">
+                <xf:label>Select value(s):</xf:label>
+            </xf:output>
+        </xf:group>
+        <hr/>
+        <!--################### INPUT SAMPLES #############################-->
+        <!--################### INPUT SAMPLES #############################-->
+        <!--################### INPUT SAMPLES #############################-->
+        <xf:group>
+            <xf:label>Input</xf:label>
+            <div class="triggers" >
+                <xf:trigger>
+                    <xf:label>Label[1]</xf:label>
+                    <xf:setvalue ref="instance()/input/label" value="'new input label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/input/value" value="'new input value'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/input[2]/value" value="'2011-11-11'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[3]</xf:label>
+                    <xf:setvalue ref="instance()/input[3]/value" value="'2011-11-11'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[4]</xf:label>
+                    <xf:setvalue ref="instance()/input[4]/value" value="'2011-11-11'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[5]</xf:label>
+                    <xf:setvalue ref="instance()/input[5]/value" value="true()"/>
+                </xf:trigger>
+            </div>
+
+            <xf:input ref="input[1]/value">
+                <xf:label ref="../label"/>
+            </xf:input>
+
+            <xf:input ref="input[2]/value">
+                <xf:label ref="../label"/>
+                <xf:alert ref="../alert"/>
+                <xf:action ev:event="xforms-value-changed">
+                    <script type="text/javascript">
+                        console.debug("xforms-value-changed input[2]");
+                    </script>
+                </xf:action>
+            </xf:input>
+
+
+            <xf:input ref="input[3]/value" appearance="bf:dropdowndate">
+                <xf:label ref="../label"/>
+<!--
+                <xf:alert ref="../alert"/>
+                <xf:hint>
+                    <span class="help-title"><xf:output ref="../hint[1]"/></span>
+                    <span class="help-body"><xf:output ref="../hint[2]"/></span>
+                </xf:hint>
+-->
+            </xf:input>
+
+
+            <xf:input ref="input[3]/value" appearance="bf:dropdowndate" data-bf-params="date:'17:-100'">
+                <xf:label>dropdowndate bound to the same node as above date control</xf:label>
+                <xf:alert ref="../alert"/>
+                <xf:hint>
+                    <span class="help-title"><xf:output ref="../hint[1]"/></span>
+                    <span class="help-body"><xf:output ref="../hint[2]"/></span>
+                </xf:hint>
+            </xf:input>
+
+            <xf:input ref="input[4]/value" appearance="bf:iso8601" data-bf-params="date:'dd-MM-yyyy'">
+                <xf:label ref="../label"/>
+                <xf:alert ref="../alert"/>
+                <xf:hint>input 4 hint</xf:hint>
+            </xf:input>
+
+            <xf:input ref="input[5]/value">
+                <xf:label ref="../label"/>
+                <xf:alert ref="../alert"/>
+                <xf:hint>input 5 hint</xf:hint>
+            </xf:input>
+        </xf:group>
+
+        <xf:group appearance="minimal">
+            <xf:label>Input Controls Values</xf:label>
+            <xf:output ref="input[1]/value">
+                <xf:label>Input[1]</xf:label>
+            </xf:output>
+            <xf:output ref="input[2]/value">
+                <xf:label>Input[2]</xf:label>
+            </xf:output>
+            <xf:output ref="input[3]/value">
+                <xf:label>Input[3]</xf:label>
+            </xf:output>
+            <xf:output ref="input[4]/value">
+                <xf:label>Input[4]</xf:label>
+            </xf:output>
+            <xf:output ref="input[5]/value">
+                <xf:label>Input[5]</xf:label>
+            </xf:output>
+        </xf:group>
+
+        <hr/>
+        <xf:group>
+            <xf:label>Secret</xf:label>
+            <xf:secret ref="secret[1]/value">
+                <xf:label ref="../label"/>
+            </xf:secret>
+        </xf:group>
+        <xf:group appearance="minimal">
+            <xf:label>Secret Controls Values</xf:label>
+            <xf:output ref="secret[1]/value">
+                <xf:label>secret[1]</xf:label>
+            </xf:output>
+        </xf:group>
+        <hr/>
+
+
+        <xf:group>
+            <xf:label>Output</xf:label>
+            <div class="triggers">
+                <xf:trigger>
+                    <xf:label>Label[1]</xf:label>
+                    <xf:setvalue ref="instance()/output[1]/label" value="'new output label'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[1]</xf:label>
+                    <xf:setvalue ref="instance()/output[1]/value" value="'new output value'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[2]</xf:label>
+                    <xf:setvalue ref="instance()/output[2]/value" value="'/betterform/bfResources/images/arrow-down.png'"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Value[3]</xf:label>
+                    <xf:setvalue ref="instance()/output[3]/value" value="'http://exist-db.org/'"/>
+                </xf:trigger>
+            </div>
+
+            <xf:output ref="output[1]/value">
+                <xf:label ref="../label"/>
+            </xf:output>
+            <xf:output ref="output[2]/value" mediatype="image/gif">
+                <xf:label ref="../label"/>
+                <xf:hint>a Hint for this control</xf:hint>
+                <xf:help>help for output1</xf:help>
+                <xf:alert>invalid</xf:alert>
+            </xf:output>
+
+            <xf:output ref="output[3]/value">
+                <xf:label ref="../label"/>
+            </xf:output>
+        </xf:group>
+        <hr/>
+        <xf:group>
+            <xf:label>Textarea Text</xf:label>
+            <div class="triggers">
+                <xf:trigger>
+                    <xf:label>setvalue</xf:label>
+                    <xf:setvalue ref="instance()/textarea[1]/value" value="'new text'"/>
+                </xf:trigger>
+            </div>
+            <xf:textarea ref="textarea[1]/value">
+                <xf:label ref="../label"/>
+            </xf:textarea>
+        </xf:group>
+        <xf:group appearance="minimal">
+            <xf:label>Textarea Text Value:</xf:label>
+            <xf:output ref="textarea[1]/value">
+                <xf:label>textarea[1]</xf:label>
+            </xf:output>
+        </xf:group>
+
+        <xf:group appearance="full">
+            <xf:label>Textarea HTML</xf:label>
+            <div class="triggers">
+                <xf:trigger>
+                    <xf:label>setvalue</xf:label>
+                    <xf:setvalue ref="instance()/textarea[2]/value" value="'new html markup with &lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text'"/>
+                </xf:trigger>
+            </div>
+
+            <xf:textarea ref="textarea[2]/value" mediatype="text/html">
+                <xf:label ref="../label"/>
+            </xf:textarea>
+            <xf:output ref="textarea[2]/value">
+                <xf:label>Textarea HTML Value</xf:label>
+            </xf:output>
+        </xf:group>
+
+        <hr/>
+        <xf:group>
+            <xf:label>Range</xf:label>
+            <div class="triggers">
+                <span>Range:</span>
+                <xf:trigger>
+                    <xf:label>Value </xf:label>
+                    <xf:setvalue ref="instance()/range[1]/value" value="2"/>
+                </xf:trigger>
+            </div>
+
+
+            <xf:range ref="range[1]/value" start="0" step="1" end="10" incremental="true">
+                <xf:label ref="../label"/>
+                <xf:hint ref="../hint"/>
+                <xf:alert ref="../alert"/>
+            </xf:range>
+            <xf:output ref="range[1]/value">
+                <xf:label>Selected range value:</xf:label>
+            </xf:output>
+        </xf:group>
+        <hr/>
+        <xf:group>
+            <xf:label>XF:Trigger</xf:label>
+            <xf:trigger ref="trigger[1]/label" appearance="minimal">
+                <xf:label ref="."/>
+                <xf:message>trigger works</xf:message>
+            </xf:trigger>
+
+            <xf:trigger ref="trigger[2]/label">
+                <xf:label ref="."/>
+                <xf:action>
+                    <script type="text/javascript">
+                        alert("message from JavaScript");
+                    </script>
+                </xf:action>
+            </xf:trigger>
+            <xf:trigger ref="trigger[3]/label">
+                <xf:label ref="."/>
+                <xf:dispatch name="customEvent" targetid="groupWithEventListener"/>
+            </xf:trigger>
+            <xf:trigger ref="trigger[4]">
+                <xf:label ref="label"/>
+                <xf:message level="modal">showing modal xf:message</xf:message>
+            </xf:trigger>
+            <xf:trigger ref="trigger[5]">
+                <xf:label ref="label"/>
+                <xf:message level="ephemeral">showing ephemeral xf:message</xf:message>
+            </xf:trigger>
+        </xf:group>
+    </xf:group>
+</body>
+</html>

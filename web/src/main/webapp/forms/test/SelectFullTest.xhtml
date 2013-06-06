@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xf="http://www.w3.org/2002/xforms"
+	  xmlns:v="http://tests.ca/2011/ns/Variables">
+	<head>
+		<title>Select Full Test</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+        -->
+		<xf:model >
+			<xf:instance xmlns="" id="default">
+                <data/>
+			</xf:instance>
+
+			<xf:instance xmlns="" id="prototype">
+                <data>
+                    <select value="2 4">
+                        <item value="1">1</item>
+                        <item value="2">2</item>
+                        <item value="3">3</item>
+                        <item value="4">4</item>
+                    </select>
+                    <select1 value="3">
+                        <item value="1">1</item>
+                        <item value="2">2</item>
+                        <item value="3">3</item>
+                        <item value="4">4</item>
+                    </select1>
+                </data>
+			</xf:instance>
+
+            <xf:submission id="s-replace-instance"
+                           ref="instance('prototype')"
+                           replace="instance"
+                           instance="default"
+                           method="get"
+                           resource="echo:test"/>
+		</xf:model>
+	</head>
+	<body>
+		<xf:group appearance="full">
+			<xf:label>Select Tests</xf:label>
+            <xf:trigger>
+                <xf:label>Replace Instance</xf:label>
+                <xf:send submission="s-replace-instance"/>
+            </xf:trigger>
+
+        <xf:group appearance="full">
+
+            <xf:select appearance="full" ref="select/@value">
+                    <xf:itemset nodeset="instance()/select/item">
+                        <xf:label ref="."/>
+                        <xf:value ref="."/>
+                    </xf:itemset>
+                </xf:select>
+
+                <xf:input ref="instance()/select/@value">
+                    <xf:label>Select Values:</xf:label>
+                </xf:input>
+                <xf:output ref="instance()/select/@value">
+                    <xf:label>Select Values:</xf:label>
+                </xf:output>
+
+
+		</xf:group>
+        <xf:group appearance="full">
+            <xf:select1  ref="select1/@value">
+                <xf:itemset nodeset="instance()/select/item">
+                    <xf:label ref="."/>
+                    <xf:value ref="."/>
+                </xf:itemset>
+            </xf:select1>
+            <xf:input ref="instance()/select1/@value">
+                <xf:label>Select1 Values:</xf:label>
+            </xf:input>
+            <xf:output ref="instance()/select1/@value">
+                <xf:label>Select1 Values:</xf:label>
+            </xf:output>
+
+        </xf:group>
+    </xf:group>
+</body>
+</html>

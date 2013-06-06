@@ -16,6 +16,7 @@
 
 
 <project name="eXist DB helper targets" default="install-files-into-eXist-DB" basedir=".">
+    <xmlproperty file="../build.properties.local.xml" semanticAttributes="true" keepRoot="false"/>
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
     <property name="root.dir" value="${basedir}/.."/>
     <property name="src.dir" value="${basedir}/../resource/src"/>
@@ -44,7 +45,7 @@
     <!-- Generic xdb:store target. Set properties as needed when you call it. -->
     <target name="install-files-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
-        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db.uri" value="xmldb:exist://localhost:8080/${exist.context}/xmlrpc/db/apps/betterform/resources"/>
         <property name="db.user" value="betterform"/>
         <property name="db.passwd" value="betterform"/>
 
@@ -59,14 +60,14 @@
                    createcollection="true"
                    user="${db.user}"
                    password="${db.passwd}">
-            <fileset dir="${file-source-dir}" excludes="**/.svn **/.svn/**"/>
+            <fileset dir="${file-source-dir}" excludes="**/.html **/.svn **/.svn/**"/>
         </xdb:store>
     </target>
 
     <!-- Generic xdb:store target. Set properties as needed when you call it -->
      <target name="install-file-into-eXist-DB" >
         <property name="file-source-dir" value="${basedir}/db-resources"/>
-        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/betterform/resources"/>
+        <property name="db.uri" value="xmldb:exist://localhost:8080/betterform/xmlrpc/db/apps/betterform/resources"/>
         <property name="db.user" value="betterform"/>
         <property name="db.passwd" value="betterform"/>
 

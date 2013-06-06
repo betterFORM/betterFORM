@@ -70,19 +70,11 @@ public class FluxFacade {
         FluxProcessor processor = null;
         try {
             processor = FluxUtil.getProcessor(sessionKey);
-            // ##### event queue is not flushed here as FluxProcessor handles this ####
-        } catch (FluxException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        try {
             processor.dispatchEvent(id);
             return processor.getEventQueue().getEventList();
         } catch (FluxException e) {
             return this.renderErrorMessage(e.getMessage());
         }
-
     }
 
     private List<XMLEvent> renderErrorMessage(String message) {

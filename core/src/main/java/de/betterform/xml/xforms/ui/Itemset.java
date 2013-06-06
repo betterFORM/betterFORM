@@ -137,20 +137,9 @@ public class Itemset extends BindingElement {
      *         <code>false</code>.
      */
     public boolean hasUIBinding() {
-        return getXFormsAttribute(NODESET_ATTRIBUTE) != null;
+        return getXFormsAttribute(REF_ATTRIBUTE) != null || getXFormsAttribute(NODESET_ATTRIBUTE) != null;
     }
 
-    /**
-     * Returns the binding expression.
-     *
-     * @return the binding expression.
-     */
-    public String getBindingExpression() {
-	if (hasModelBinding()) {
-            return getModelBinding().getBindingExpression();
-        }
-        return getXFormsAttribute(NODESET_ATTRIBUTE);
-    }
 
     // lifecycle template methods
 

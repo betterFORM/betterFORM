@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:xf="http://www.w3.org/2002/xforms"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:cmip="urn:my:custom:namespace">
+    <head>
+	<title></title>
+
+                <style type="text/css">
+                    .xfGroup {
+                        border: thin solid;
+                        padding: 20px !important;
+                        display: block;
+                    }
+                    input {
+                        width: 400px;
+                        color: black;
+                    }
+                    .cmipDiffTrue .xfValue  {
+                            color: red;
+                    }
+                    .cmipDiffTrue .xfValue:after  {
+                            content:" - This item differs from the one below";
+                    }
+                    .cmipDiffFalse .xfValue  {
+                            color: inherit;
+                    }
+                    .cmipDiffFalse .xfValue:after  {
+                        content:" - This item does not differ to the one below";
+                    }
+
+                    .cmipColorOrange input  {
+                            background-color: inherit !important;
+                    }
+
+                    .cmipColorGreen input  {
+                            background-color: #77FF77 !important;
+                    }
+                    .cmipColorGreen input  {
+                        content:" - This item is smaller to the one above";
+                    }
+
+                    .cmipColorRed input  {
+                            background-color: #FF7777 !important;
+                    }
+
+                    .cmipColorOrange:after  {
+                        content:" - This item is equal to the one above";
+                    }
+                    .cmipColorGreen:after{
+                        content:" - This item is smaller than the one above";
+                    }
+                    .cmipColorRed:after {
+                        content: " - This item is bigger than the one above";
+                    }
+                </style>
+
+
+        <xf:model id="model-1">
+            <xf:instance id="instance-1" xmlns="">
+                <data>
+                    <item xsi:type="xs:integer">5</item>
+                    <item xsi:type="xs:integer">5</item>
+                </data>                
+            </xf:instance>
+            <xf:bind id="bind-item-1" nodeset="item[1]"
+            	cmip:diff=". != ../item[2]"
+            />
+            <xf:bind id="bind-item-2" nodeset="item[2]"
+            	cmip:color="if (. = ../item[1]) then 'orange' else if (. lt ../item[1]) then 'green' else 'red'"
+            />
+        </xf:model>
+
+    </head>
+    <body>
+        <h1>Custom MIP example</h1>
+        <p>
+            This form uses 2 custom Model Item Properties (MIPs) 'cmip:diff' and 'cmip:color'.
+        </p>
+        <p>
+            When the value of the 'cmip:diff' MIP changes the CSS classes 'cmipDiffTrue' or 'cmipDiffFalse' will be applied
+            to the output control
+        </p>
+        <p>
+            When the value of the 'cmip:color' MIP changes the CSS classes 'cmipColorOrange', 'cmipColorGreen' or
+            'cmipColorRed' will be applied to the input control.
+        </p>
+        <xf:group appearance="full">
+            <xf:output id="output-item-1" bind="bind-item-1">
+            <xf:label>Base value</xf:label>
+            </xf:output>
+            <xf:input id="input-item-2" bind="bind-item-2">
+                <xf:label>New value</xf:label>
+                <xf:hint>Try values lower, higher and then equal to the base value</xf:hint>
+            </xf:input>
+        </xf:group>
+
+        <p>
+            See the <a href="CustomMIPs.xhtml?source" target="_blank">source</a> to understand how to use it.
+        </p>
+    </body>
+</html>

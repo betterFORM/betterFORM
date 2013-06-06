@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+<head>
+    <title>Input Control Tests</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+
+    <style type="text/css">
+        .hideLabel .xfLabel {
+            display:none;
+            width:0;
+        }
+        .xfGroupLabel {
+            font-size: large;
+            font-weight:bold;
+        }
+        .triggers {
+            margin:4px
+            padding:4px;
+            border:thin dotted #808080;
+            clear:both;
+            display:block;
+            float:left;"
+        }
+        .triggers .xfControl {
+            display: inline;
+        }
+        hr {
+            clear: both;
+        }
+
+    </style>
+    <xf:model>
+        <xf:instance xmlns="">
+            <data required="true" relevant="true" valid="true" readonly="false">
+                <input>
+                    <value>2012-01-01</value>
+                    <label>2012-01-01</label>
+                    <alert>Alert for input[1]</alert>
+                    <hint>Alert for input[1]</hint>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>2012-01-01</label>
+                    <alert>Alert for input[2]</alert>
+                    <hint>Alert for input[2]</hint>
+                </input>
+                <input>
+                    <value>2012-01-01</value>
+                    <label>2012-01-01</label>
+                    <alert>Alert for input[3]</alert>
+                    <hint>Alert for input[3]</hint>
+                </input>
+                <input>
+                    <value>2012-04-19T17:08:00</value>
+                    <label>2012-04-19T17:08:00</label>
+                    <alert>Alert for input[4]</alert>
+                    <hint>Alert for input[4]</hint>
+                </input>
+                <input>
+                    <value>2012-04-19T17:08:00Z</value>
+                    <label>2012-04-19T17:08:00Z:</label>
+                    <alert>Alert for input[5]</alert>
+                    <hint>Alert for input[5]</hint>
+                </input>
+                <input>
+                    <value>2012-04-19T17:08:00+04:30</value>
+                    <label>2012-04-19T17:08:00+04:30</label>
+                    <alert>Alert for input[6]</alert>
+                    <hint>Alert for input[6]</hint>
+                </input>
+                <input>
+                    <value>17:08:00</value>
+                    <label>17:08:00</label>
+                    <alert>Alert for input[7]</alert>
+                    <hint>Alert for input[7]</hint>
+                </input>
+                <input>
+                    <value>17:08:00</value>
+                    <label>17:08:00</label>
+                    <alert>Alert for input[8]</alert>
+                    <hint>Alert for input[8]</hint>
+                </input>
+                <input>
+                    <value>17:08:00</value>
+                    <label>17:08:00</label>
+                    <alert>Alert for input[9]</alert>
+                    <hint>Alert for input[9]</hint>
+                </input>
+                <input>
+                    <value>free text</value>
+                    <label>Text</label>
+                    <alert>Free Text Alert[10]</alert>
+                    <hint>Free Text Hint[10]</hint>
+                </input>
+                <input>
+                    <value>true</value>
+                    <label>Boolean</label>
+                    <alert>Boolean Alert[11]</alert>
+                    <hint>Boolean Hint[11]</hint>
+                </input>
+                <input>
+                    <value>10.14</value>
+                    <label>Decimal</label>
+                    <alert>Decimal Alert[12]</alert>
+                    <hint>Decimal Hint[12]</hint>
+                </input>
+                <secret>
+                    <value>secret phrase</value>
+                    <label>Secret</label>
+                    <alert>Secret Alert[1]</alert>
+                    <hint>Secret Hint[1]</hint>
+                </secret>
+            </data>
+        </xf:instance>
+
+        <xf:bind nodeset="instance()">
+            <xf:bind nodeset="input[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="date"/>
+            <xf:bind nodeset="input[2]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="date"/>
+            <xf:bind nodeset="input[3]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="date"/>
+
+            <!-- DATE_TIME BINDING  -->
+            <xf:bind nodeset="input[4]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="dateTime"/>
+            <xf:bind nodeset="input[5]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="dateTime"/>
+            <xf:bind nodeset="input[6]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="dateTime"/>
+            <!-- TIME BINDING  -->
+            <xf:bind nodeset="input[7]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="time"/>
+            <xf:bind nodeset="input[8]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="time"/>
+            <xf:bind nodeset="input[9]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" type="time"/>
+            <xf:bind nodeset="input[10]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
+            <xf:bind nodeset="input[11]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"  type="boolean"/>
+            <xf:bind nodeset="input[12]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)"  type="decimal"/>
+            <xf:bind nodeset="secret[1]/value" required="boolean-from-string(instance()/@required)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     constraint="boolean-from-string(instance()/@valid)"
+                     readonly="boolean-from-string(instance()/@readonly)" />
+        </xf:bind>
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group appearance="minimal">
+
+        <xf:group>
+            <div style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger>
+                    <xf:label>Required</xf:label>
+                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Relevant</xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Valid</xf:label>
+                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Readonly</xf:label>
+                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </div>
+        </xf:group>
+        <hr/>
+        <xf:group ref="instance()" appearance="full">
+            <xf:label>Input Date</xf:label>
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <div class="triggers">
+                            <xf:trigger>
+                                <xf:label>Change Label[1]</xf:label>
+                                <xf:setvalue ref="instance()/input/label" value="'new input label'"/>
+                            </xf:trigger>
+                            <xf:trigger>
+                                <xf:label>Value[1] '2013-01-01'</xf:label>
+                                <xf:setvalue ref="instance()/input[1]/value" value="'2013-01-01'"/>
+                            </xf:trigger>
+                            <xf:trigger>
+                                <xf:label>Value[2] '2013-01-01'</xf:label>
+                                <xf:setvalue ref="instance()/input[2]/value" value="'2013-01-01'"/>
+                            </xf:trigger>
+                            <xf:trigger>
+                                <xf:label>Value[3] '2013-01-01'</xf:label>
+                                <xf:setvalue ref="instance()/input[3]/value" value="'2013-01-01'"/>
+                            </xf:trigger>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[1]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[1]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[2]/value" appearance="bf:iso8601" data-bf-params="date:'dd-MM-yyyy',time:'hh:mm:ss'" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[2]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[3]/value" appearance="bf:dropdowndate" data-bf-params="date:'-17:-100'" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[3]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+            </table>
+        </xf:group>
+        <hr/>
+        <xf:group ref="instance()" appearance="full">
+            <xf:label>Input DateTime</xf:label>
+            <table>
+                <tr>
+                    <td>
+                        <xf:input ref="input[4]/value" data-bf-params="date:'dd-MM-yyyy',time:'hh:mm:ss'" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[4]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[5]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[5]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[6]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[6]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+            </table>
+
+
+        </xf:group>
+        <hr/>
+        <xf:group ref="instance()" appearance="full">
+            <xf:label>Input Time</xf:label>
+            <table>
+                <tr>
+                    <td>
+                        <xf:input ref="input[7]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[7]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[8]/value" appearance="bf:dropdowntime" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[8]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[9]/value" appearance="bf:timetextbox" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[9]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+
+            </table>
+        </xf:group>
+        <hr/>
+        <xf:group appearance="full">
+            <xf:label>Various</xf:label>
+            <table>
+                <tr>
+                    <td>
+                        <xf:input ref="input[10]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[10]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[11]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[11]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <xf:input ref="input[12]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:input>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="input[12]/value">
+                            <xf:label/>
+                        </xf:output>
+                    </td>
+                </tr>
+            </table>
+        </xf:group>
+        <hr/>
+        <xf:group appearance="full">
+            <xf:label>Secret</xf:label>
+            <table>
+                <tr>
+                    <td>
+                        <xf:secret ref="secret[1]/value" incremental="true">
+                            <xf:label ref="../label"/>
+                            <xf:hint ref="../hint"/>
+                            <xf:alert ref="../alert"/>
+                        </xf:secret>
+                    </td>
+                    <td class="hideLabel">
+                        <xf:output ref="secret[1]/value" >
+                            <xf:label>Secret 1:</xf:label>
+                        </xf:output>
+                    </td>
+                </tr>
+            </table>
+        </xf:group>
+    </xf:group>
+</body>
+</html>

@@ -117,6 +117,11 @@ public interface BetterFormEventNames {
      * Interaction event constant, might move to XFormsEventNames for XForms 1.2
      */
     String SHOW = "betterform-dialog-open";
+    
+    /**
+	 * betterFORM custom mip changed event constant
+     */
+    String CUSTOM_MIP_CHANGED  = "betterform-custom-mip-changed";
 
 
     String AVT_CHANGED = "betterform-AVT-changed";

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:xf="http://www.w3.org/2002/xforms"
+  >
+  <head>
+    <title>XPathReferenceFinderTest - Binds</title>
+    <!--
+        ~ Copyright (c) 2013. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+        <style type="text/css">
+          .xfGroup {
+            border: 1px solid #001100;
+            margin: 10px;
+            padding: 5px;
+          }
+          .xfGroupLabel {
+            font-weight: bolder;
+            font-size: large;
+          }
+        </style>
+  </head>
+  <body>
+    <div style="display:none">
+      <xf:model id="model-1">
+        <xf:instance id="i-default">
+          <data xmlns="">
+            <a>Homer Simpson</a>
+            <a>Marge Simpson</a>
+            <b>Barney Gumble</b>
+            <c>Jacqueline Bouvier</c>
+            <a>Maggie Simpson</a>
+            <d>Kent Brockman</d>
+            <e>Scott Christian</e>
+            <a>Bart Simpson</a>
+            <c>Patty Bouvier</c>
+            <e>Disco Stu</e>
+            <c>Selma Bouvier</c>
+            <f>Maude Flanders</f>
+            <f>Rod Flanders</f>
+            <!-- <g>there is no g</g> -->
+            <a>Lisa Simpson</a>
+            <f>Ned Flanders</f>
+            <f>Todd Flanders</f>
+            <!-- <h>there is no h</h> -->
+            <i>Apu Nahasapeemapetilon</i>
+            <i>Manjula Nahasapeemapetilon</i>
+            <i>Sanjay Nahasapeemapetilon</i>
+            <j>Helen Lovejoy</j>
+            <j>Reverend Timothy Lovejoy</j>
+            <k>Lenny Leonard</k>
+            <k>Carl Carlson</k>
+            <l>Monty Burns</l>
+            <l>Waylon Smithers</l>
+            <m>Herbert Powell</m>
+            <n>Clancy Wiggum</n>
+            <n>Ralph Wiggum</n>
+          </data>
+        </xf:instance>
+        <xf:bind ref="a" constraint="exists(../g) or exists(../h)"/>
+        <xf:bind ref="b" constraint="exists(parent::date)"/>
+        <xf:bind ref="c[2]" constraint="string-length(.) = (3 * 3 + 5 - 3)"/>
+        <xf:bind ref="c[3]" constraint="string-length(.) = 10"/>
+        <xf:bind ref="d[1]" constraint="exists(following-sibling::b)"/>
+        <xf:bind ref="e|g" constraint="exists(../h)"/>
+        <xf:bind ref="(f,h)" constraint="count((//f, ../h)) = 3"/>
+
+        <xf:bind ref="i" constraint="some $item in //i satisfies (string-length($item) lt 15)"/>
+        <xf:bind ref="j" constraint="every $item in //j satisfies (string-length($item) gt 15)"/>
+        
+        <xf:bind ref="k[1]" constraint="current() >> //k[2]"/>
+        <xf:bind ref="l[1]" constraint="//l[2] &lt;&lt; current()"/>
+        <xf:bind ref="m" constraint="current() is //b"/>
+        <xf:bind ref="n[2]" constraint="string-length(.) > string-length(string-join((for $wiggum in //n return $wiggum), ''))"/>
+
+          <xf:instance id="i-complexBind">
+              <data xmlns="">
+                  <test>Test me</test>
+                  <condition1 condition="B">A</condition1>
+                  <condition2>B</condition2>
+              </data>
+          </xf:instance>
+
+          <xf:bind nodeset="instance('i-complexBind')/test" relevant="instance('i-complexBind')//condition1[@condition eq instance('i-complexBind')/condition2/text()]/@condition eq 'B'" calculate="'Hello'"/>
+      </xf:model>
+    </div>
+    <h1>XPathReferenceFinderTest - Binds</h1>
+    <xf:group appearance="full">
+      <xf:label>Simple Constraints</xf:label>
+      <xf:input id="a" ref="a">
+        <xf:label>expression</xf:label>
+        <xf:hint>a: exists(../g) or exists(../h)</xf:hint>
+        <xf:alert>'g' and 'h' are not existent</xf:alert>
+      </xf:input>
+      <xf:input id="b" ref="b">
+        <xf:label>parent</xf:label>
+        <xf:hint>b: exists(parent::date)</xf:hint>
+        <xf:alert>there is no parent element named 'date'</xf:alert>
+      </xf:input>
+      <xf:input id="c2" ref="c[4 div 2]">
+        <xf:label>arithmetic expression</xf:label>
+        <xf:hint>c[4 div 2]: string-length(.) = 3 * 3 + 5 - 3</xf:hint>
+        <xf:alert>c[4 div 2] has not a string-length of 3 * 3 + 5 - 3</xf:alert>
+      </xf:input>
+      <xf:input id="c3" ref="c[3]">
+        <xf:label>string-length</xf:label>
+        <xf:hint>c[3]: string-length(.) = 2</xf:hint>
+        <xf:alert>c[3] has not a string-length of 10</xf:alert>
+      </xf:input>
+      <xf:input id="d" ref="d[1]">
+        <xf:label>following-sibling</xf:label>
+        <xf:hint>d[1]: exists(following-sibling::b)</xf:hint>
+        <xf:alert>the following-sibling of d[1] is not 'b'</xf:alert>
+      </xf:input>
+    </xf:group>
+
+    <xf:group appearance="full">
+      <xf:label>Union and Sequence References with Constraints</xf:label>
+      <xf:input id="e" ref="e">
+        <xf:label>union</xf:label>
+        <xf:hint>e|g: exists(../h)</xf:hint>
+        <xf:alert>there is no sibling 'h' for 'e' and 'g'</xf:alert>
+      </xf:input>
+      <xf:input id="f" ref="f">
+        <xf:label>sequnce</xf:label>
+        <xf:hint>(f,h): count((//f, ../h))=3</xf:hint>
+        <xf:alert>the count of all 'f' and 'h' are is 3</xf:alert>
+      </xf:input>
+    </xf:group>
+
+    <xf:group appearance="full">
+      <xf:label>Quantified and For Expressions as Constraints</xf:label>
+      <xf:input id="i" ref="i">
+        <xf:label>some</xf:label>
+        <xf:hint>i: some $item in //i satisfies (string-length($item) lt 15)</xf:hint>
+        <xf:alert>There is no 'i' with a length of less than 15 characters</xf:alert>
+      </xf:input>
+      <xf:input id="j" ref="j">
+        <xf:label>every</xf:label>
+        <xf:hint>j: every $item in //j satisfies (string-length($item) gt 15)</xf:hint>
+        <xf:alert>Not every 'j' has a length of more than 15 characters</xf:alert>
+      </xf:input>
+      <xf:input id="n2" ref="n[2]">
+        <xf:label>for</xf:label>
+        <xf:hint>n: string-length(.) > string-length(string-join((for $wiggum in //n return $wiggum), ''))</xf:hint>
+        <xf:alert>The string-length of the current element is not higher than string-length of all 'n'.</xf:alert>
+      </xf:input>
+    </xf:group>
+
+    <xf:group appearance="full">
+      <xf:label>Node Comparisons</xf:label>
+      <xf:input id="k1" ref="k[1]">
+        <xf:label>follows</xf:label>
+        <xf:hint>k[1]: current() >> //k[2]</xf:hint>
+        <xf:alert>k[2] is not followed by k[1]</xf:alert>
+      </xf:input>
+      <xf:input id="l1" ref="l[1]">
+        <xf:label>precedes</xf:label>
+        <xf:hint>l[1]: //l[2] &lt;&lt; current()</xf:hint>
+        <xf:alert>l[1] is not preceded by l[2]</xf:alert>
+      </xf:input>
+      <xf:input id="m" ref="m">
+        <xf:label>identity</xf:label>
+        <xf:hint>m: current() is //b</xf:hint>
+        <xf:alert>current() and //b are not identical</xf:alert>
+      </xf:input>
+    </xf:group>
+
+    <xf:group>
+        <xf:input id="relevantTest" ref="instance('i-complexBind')/test">
+            <xf:label>Test</xf:label>
+        </xf:input>
+    </xf:group>
+  </body>
+</html>

@@ -34,35 +34,35 @@ public class XPathReferenceFinderTest extends TestCase {
      * @throws Exception if an error occurred during the test.
      */
     public void testGetReferences() throws Exception {
-        assertReferences(new String[]{"child::element(data, xs:anyType)"},
+        assertReferences(new String[]{"child::data"},
                 this.referenceFinder.getReferences("data", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::element(observation, xs:anyType)/child::element(data, xs:anyType)", "child::element(observation, xs:anyType)"},
+        assertReferences(new String[]{"child::observation/child::data", "child::observation"},
                 this.referenceFinder.getReferences("observation/data", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::element(observation, xs:anyType)", "child::element(observation, xs:anyType)/child::element(data, xs:anyType)"},
+        assertReferences(new String[]{"child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("observation[data != '']", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::element(observation, xs:anyType)", "child::element(observation, xs:anyType)/child::element(data, xs:anyType)"},
+        assertReferences(new String[]{"child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("count(observation[data != '']) > 0", Collections.EMPTY_MAP, fDummyContainer));
-	assertReferences(new String[]{".."},
-	              this.referenceFinder.getReferences("..", Collections.EMPTY_MAP, fDummyContainer));
-	assertReferences(new String[]{"..", "../child::element(data, xs:anyType)"},
-              this.referenceFinder.getReferences("../data", Collections.EMPTY_MAP, fDummyContainer));
-	assertReferences(new String[]{"child::element(f, xs:anyType)", "child::element(f, xs:anyType)/child::element(g, xs:anyType)"},
-	              this.referenceFinder.getReferences("f[g != '']", Collections.EMPTY_MAP, fDummyContainer));
-	assertReferences(new String[]{"(child::element(observation, xs:anyType)[(child::element(data, xs:anyType)!=\"\")])/child::element(code, xs:anyType)", "child::element(observation, xs:anyType)", "child::element(observation, xs:anyType)/child::element(data, xs:anyType)"},
+        assertReferences(new String[]{".."},
+                this.referenceFinder.getReferences("..", Collections.EMPTY_MAP, fDummyContainer));
+        assertReferences(new String[]{"..", "../child::data"},
+                this.referenceFinder.getReferences("../data", Collections.EMPTY_MAP, fDummyContainer));
+        assertReferences(new String[]{"child::f", "child::f/child::g"},
+                this.referenceFinder.getReferences("f[g != '']", Collections.EMPTY_MAP, fDummyContainer));
+        assertReferences(new String[]{"child::observation[child::data != \"\"]/child::code", "child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("observation[data != '']/code", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"(child::element(observation, xs:anyType)[(child::element(data, xs:anyType)!=\"\")])/child::element(code, xs:anyType)", "child::element(observation, xs:anyType)", "child::element(observation, xs:anyType)/child::element(data, xs:anyType)"},
+        assertReferences(new String[]{"child::observation[child::data != \"\"]/child::code", "child::observation", "child::observation/child::data"},
                 this.referenceFinder.getReferences("count(observation[data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"child::element(observation, xs:anyType)", "/child::element(data, xs:anyType)", "(child::element(observation, xs:anyType)[((/child::element(data, xs:anyType))!=\"\")])/child::element(code, xs:anyType)"},
+        assertReferences(new String[]{"child::observation", "/child::data", "child::observation[/child::data != \"\"]/child::code"},
                 this.referenceFinder.getReferences("count(observation[/data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"(/(child::element(observation, xs:anyType)[((/child::element(data, xs:anyType))!=\"\")]))/child::element(code, xs:anyType)", "/child::element(observation, xs:anyType)", "/child::element(data, xs:anyType)"},
+        assertReferences(new String[]{"/child::observation[/child::data != \"\"]/child::code", "/child::observation", "/child::data"},
                 this.referenceFinder.getReferences("count(/observation[/data != '']/code) > 0", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{},
                 this.referenceFinder.getReferences("current()", Collections.EMPTY_MAP, fDummyContainer));
-	assertReferences(new String[]{"child::element(a, xs:anyType)", "child::element(b, xs:anyType)"},
-		this.referenceFinder.getReferences("a * b", Collections.EMPTY_MAP, fDummyContainer));
-	assertReferences(new String[]{"../child::element(item, xs:anyType)", ".."},
-		this.referenceFinder.getReferences("IF(index('repeat') > 0, ../item[index('repeat')], '')", Collections.EMPTY_MAP, fDummyContainer));
-	
+        assertReferences(new String[]{"child::a", "child::b"},
+                this.referenceFinder.getReferences("a * b", Collections.EMPTY_MAP, fDummyContainer));
+        assertReferences(new String[]{"../child::item", ".."},
+                this.referenceFinder.getReferences("IF(index('repeat') > 0, ../item[index('repeat')], '')", Collections.EMPTY_MAP, fDummyContainer));
+
     }
 
     /**
@@ -75,7 +75,7 @@ public class XPathReferenceFinderTest extends TestCase {
                 this.referenceFinder.getReferences("instance(\"test\")", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{"instance(\"test\")"},
                 this.referenceFinder.getReferences("count(instance(\"test\"))", Collections.EMPTY_MAP, fDummyContainer));
-        assertReferences(new String[]{"instance(\"test\")/child::element(observation, xs:anyType)", "instance(\"test\")/child::element(observation, xs:anyType)/child::element(data, xs:anyType)", "instance(\"test\")"},
+        assertReferences(new String[]{"instance(\"test\")/child::observation", "instance(\"test\")/child::observation/child::data", "instance(\"test\")"},
                 this.referenceFinder.getReferences("count(instance(\"test\")/observation[data != '']) > 0", Collections.EMPTY_MAP, fDummyContainer));
         /*
             This test failed as reference finder returns xs:anySimpleType instead of xs:anyAtomicType as assumed by the assertion.
@@ -87,19 +87,21 @@ public class XPathReferenceFinderTest extends TestCase {
             As a consequence i adapt the test assertion to expect a xs:anySimpleType now and it runs green. Actually for the processing in betterFORM the type of the attribute value should be of no importance
             at all so the test is just too restrictive here. Anyway i leave the original assertion here for reference and investigation for the unlikely case that problems should come up later on.
          */
-//        assertReferences(new String[]{"instance(\"test\")/child::element(observation, xs:anyType)", "instance(\"list\")/attribute::attribute(data, xs:anyAtomicType)", "instance(\"list\")", "instance(\"test\")/child::element(observation, xs:anyType)/child::element(data, xs:anyType)", "instance(\"test\")"},
+        // review if test is valid and can be fixed
+//        assertReferences(new String[]{"instance(\"test\")/child::observation", "instance(\"list\")/attribute::attribute(data, xs:anyAtomicType)", "instance(\"list\")", "instance(\"test\")/child::observation/child::data", "instance(\"test\")"},
 //                this.referenceFinder.getReferences("count(instance(\"test\")/observation[data != instance('list')/@data]) > 0", Collections.EMPTY_MAP, fDummyContainer));
 
-        assertReferences(new String[]{"instance(\"test\")/child::element(observation, xs:anyType)", "instance(\"list\")/attribute::attribute(data, xs:anySimpleType)", "instance(\"list\")", "instance(\"test\")/child::element(observation, xs:anyType)/child::element(data, xs:anyType)", "instance(\"test\")"},
+        assertReferences(new String[]{"instance(\"test\")/child::observation", "instance(\"list\")/attribute::data", "instance(\"list\")", "instance(\"test\")/child::observation/child::data", "instance(\"test\")"},
                 this.referenceFinder.getReferences("count(instance(\"test\")/observation[data != instance('list')/@data]) > 0", Collections.EMPTY_MAP, fDummyContainer));
 
 
-        assertReferences(new String[]{"instance(\"editModes\")", "child::element(consumerId, xs:anyType)", "instance(\"version-data\")", "instance(\"editModes\")/child::element(editable, xs:anyType)", "instance(\"version-data\")/child::element(selectedVersion, xs:anyType)"},
+        assertReferences(new String[]{"instance(\"editModes\")", "child::consumerId", "instance(\"version-data\")", "instance(\"editModes\")/child::editable", "instance(\"version-data\")/child::selectedVersion"},
                 this.referenceFinder.getReferences("concat(concat('sampleConsentQuestionnaireWorkflow?consumerId=', consumerId), IF(instance('version-data')/selectedVersion != '', concat('&versionNumber=', instance('version-data')/selectedVersion), ''), '&editable=', instance('editModes')/editable)", Collections.EMPTY_MAP, fDummyContainer));
-//        assertReferences(new String[]{"instance(\"y\")/child::element(node, xs:anyType)", "instance(\"z\")", "child::element(element, xs:anyType)", "../child::element(no, xs:anyType)", "child::element(data, xs:anyType)", "..", "instance(\"x\")", "instance(\"y\")", "child::element(element, xs:anyType)/attribute::attribute(id, xs:anyAtomicType)", "(../child::element(no, xs:anyType))/child::element(data, xs:anyType)"},
+        // review if test is valid and can be fixed
+//        assertReferences(new String[]{"instance(\"y\")/child::node", "instance(\"z\")", "child::element", "../child::no", "child::data", "..", "instance(\"x\")", "instance(\"y\")", "child::element/attribute::attribute(id, xs:anyAtomicType)", "(../child::no)/child::data"},
 //                this.referenceFinder.getReferences("concat(instance('x'), data or ../no/data, instance('y')/node, element[@id = instance('z')])", Collections.EMPTY_MAP, fDummyContainer));
 
-        assertReferences(new String[]{"instance(\"y\")/child::element(node, xs:anyType)", "instance(\"z\")", "child::element(element, xs:anyType)", "../child::element(no, xs:anyType)", "child::element(data, xs:anyType)", "..", "instance(\"x\")", "instance(\"y\")", "child::element(element, xs:anyType)/attribute::attribute(id, xs:anySimpleType)", "(../child::element(no, xs:anyType))/child::element(data, xs:anyType)"},
+        assertReferences(new String[]{"instance(\"y\")/child::node", "instance(\"z\")", "child::element", "../child::no", "child::data", "..", "instance(\"x\")", "instance(\"y\")", "child::element/attribute::id", "../child::no/child::data"},
                 this.referenceFinder.getReferences("concat(instance('x'), data or ../no/data, instance('y')/node, element[@id = instance('z')])", Collections.EMPTY_MAP, fDummyContainer));
     }
 

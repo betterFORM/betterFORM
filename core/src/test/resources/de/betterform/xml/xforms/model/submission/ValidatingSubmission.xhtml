@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+
+    <title>Default Alert Handler - inline alerts</title>
+
+
+    <!--
+~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+~ Licensed under the terms of BSD License
+-->
+
+
+
+    <link rel="stylesheet" type="text/css" href="../../bfResources/scripts/dojox/highlight/resources/highlight.css" />
+    <link rel="stylesheet" type="text/css" href="reference.css" />
+</head>
+
+    <body class="soria" style="margin:30px">
+        <div style="display:none">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data>
+                        <grouped-data>
+                            <group>
+                                <a></a>
+                                <b></b>
+                                <c></c>
+                                <d></d>
+                            </group>
+                        </grouped-data>
+                        <result>empty</result>
+                    </data>
+                </xf:instance>
+                <xf:submission id="s-validate" resource="echo:foo" method="GET" replace="none" validate="true">
+                    <xf:setvalue ev:event="xforms-submit-error" ref="instance()/result" value="'invalid'"/>
+                    <xf:setvalue ev:event="xforms-submit-done"  ref="instance()/result" value="'valid'"/>
+                </xf:submission>
+
+                <xf:bind nodeset="grouped-data">
+                    <xf:bind nodeset="group">
+                        <xf:bind nodeset="a" constraint="string-length(.) &gt; 5"/>
+                        <xf:bind nodeset="b" constraint="string-length(.) &gt; 5"/>
+                        <xf:bind nodeset="c" constraint="string-length(.) &gt; 5"/>
+                        <xf:bind nodeset="d" constraint="string-length(.) &gt; 5"/>
+                    </xf:bind>
+                </xf:bind>
+            </xf:model>
+        </div>
+        <div class="Section sample">
+            <xf:group ref="grouped-data/group" appearance="compact">
+                <xf:label>Each field must have more than 5 characters to become valid</xf:label>
+                <xf:input id="input1" ref="a">
+                    <xf:label>A-label</xf:label>
+                    <xf:alert id="input1-alert">Your input is not long enough</xf:alert>
+                    <xf:hint id="input1-hint">The input must be longer than 5 characters</xf:hint>
+                </xf:input>
+
+                <xf:input id="input2" ref="b">
+                    <xf:label>Bb-label</xf:label>
+                    <xf:alert id="input2-alert">Your input is not long enough</xf:alert>
+                    <xf:hint id="input2-hint">The input must be longer than 5 characters</xf:hint>
+                </xf:input>
+
+                <xf:input id="input3" ref="c">
+                    <xf:label>Ccc-label</xf:label>
+                    <xf:hint id="input3-hint">The input must be longer than 5 characters</xf:hint>
+                    <xf:alert id="input3-alert">Your input is not long enough</xf:alert>
+                </xf:input>
+
+                <xf:input id="input4" ref="d">
+                    <xf:label>Dddd-label</xf:label>
+                    <xf:hint id="input4-hint">The input must be longer than 5 characters</xf:hint>
+                    <xf:alert id="input4-alert">Your input is not long enough</xf:alert>
+                </xf:input>
+            </xf:group>
+
+            <xf:output id="result" ref="result">
+                <xf:label>Result</xf:label>
+            </xf:output>
+
+            <xf:trigger id="t-validate">
+                <xf:label>Validate</xf:label>
+                <xf:send submission="s-validate"></xf:send>
+            </xf:trigger>
+        </div>
+    </body>
+</html>

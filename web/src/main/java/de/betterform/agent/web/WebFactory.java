@@ -192,6 +192,10 @@ public class WebFactory {
                     URI highlightingDocument = getXsltURI(xsltPath,"highlightDocument.xsl");
                     transformerService.getTransformer(highlightingDocument);
                 }
+                if(Config.getInstance().getProperty("webprocessor.doIncludes", "false").equals("true")){
+                    URI IncludeDocument = getXsltURI(xsltPath,"include.xsl");
+                    transformerService.getTransformer(IncludeDocument);
+                }
             }
             catch (Exception e) {
                 throw new XFormsConfigException(e);
@@ -203,9 +207,8 @@ public class WebFactory {
         servletContext.setAttribute(TransformerService.TRANSFORMER_SERVICE, transformerService);
     }
 
-     public static XSLTGenerator setupTransformer(String xsltPath, String xslFile, ServletContext context) throws URISyntaxException {
+     public static XSLTGenerator setupTransformer(URI uri, ServletContext context) throws URISyntaxException {
         TransformerService transformerService = (TransformerService) context.getAttribute(TransformerService.TRANSFORMER_SERVICE);
-        URI uri = new File(WebFactory.resolvePath(xsltPath, context)).toURI().resolve(new URI(xslFile));
 
         XSLTGenerator generator = new XSLTGenerator();
         generator.setTransformerService(transformerService);
@@ -220,13 +223,19 @@ public class WebFactory {
 
     public void initLogging(Class theClass) throws XFormsConfigException {
         String initLogging = this.config.getProperty(WebFactory.DO_INIT_LOGGING);
-        if(initLogging.equals("true")){
-            String logConfig = this.config.getProperty(WebFactory.LOG_CONFIG);
 
-            DOMConfigurator.configure(resolvePath(logConfig, servletContext));
-            Log logger = LogFactory.getLog(theClass);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Logger initialized");
+        if(initLogging.equals("true")){
+            String pathToLog4jConfig = resolvePath(this.config.getProperty(WebFactory.LOG_CONFIG), servletContext);
+            File log4jFile = new File(pathToLog4jConfig);
+            if(log4jFile.exists()){
+                DOMConfigurator.configure(pathToLog4jConfig);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Logger initialized");
+                }
+            }else {
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Could not find " + pathToLog4jConfig);
+                }
             }
         }
     }

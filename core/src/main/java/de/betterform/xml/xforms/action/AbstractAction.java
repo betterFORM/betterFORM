@@ -139,7 +139,7 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
     /**
      * Initializes this action.
      */
-    protected final void initializeAction() {
+    private final void initializeAction() throws XFormsException{
         if (!(getParentObject() instanceof XFormsAction)) {
             String event = this.element.getAttributeNS(NamespaceConstants.XMLEVENTS_NS, XMLEventConstants.EVENT_ATTRIBUTE);
             if (event.length() == 0) {
@@ -168,7 +168,7 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
             }
 
 
-            EventTarget targetElement;
+            EventTarget targetElement=null;
             if(eventTargetId != null && !(eventTargetId.equals(""))){
             	final XFormsElement xformsElement = this.container.lookup(this.eventTargetId);
             	if (xformsElement != null) {
@@ -176,10 +176,10 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
             	}
             	else {
             		// In some cases the xforms element isn't registered yet (e.g.: action refers to an Instance, or a forward reference)
-            		targetElement = null;
-            		try {
-						targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id = '" + eventTargetId + "']"), 1);
-					} catch (XFormsException e) { }
+                    targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id = '" + eventTargetId + "']"), 1);
+                    if(targetElement==null){
+                        throw new XFormsException("targetElement with id '" + eventTargetId + "' is not present in this form");
+                    }
             	}
                 addListener(targetElement);
             }
@@ -191,11 +191,11 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
             	}
             	else {
             		// In some cases the xforms element isn't registered yet (e.g.: action refers to an Instance, or a forward reference)
-            		targetElement = null;
-            		try {
-						targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id = '" + observer + "']"), 1);
-					} catch (XFormsException e) { }
-            	}
+                    targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id = '" + observer + "']"), 1);
+                    if(targetElement==null){
+                        throw new XFormsException("targetElement with id '" + observer + "' is not present in this form");
+                    }
+                }
                 addListener(targetElement);
             }else {
                 XFormsElement parent = getParentObject();

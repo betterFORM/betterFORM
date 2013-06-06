@@ -5,10 +5,10 @@
 
 <root>
     <app>
-        <name>betterform</name>
+        <name>betterFORM</name>
         <version>
             <name>springBud</name>
-            <number>5.0</number>
+            <number>5.0rc3</number>
         </version>
     </app>
     <properties>
@@ -23,6 +23,7 @@
         <timeline>timeline_libraries_v2.3.0</timeline>
         <ckeditor>ckeditor_3.6.3</ckeditor>
         <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
+        <antversion>1.8.2</antversion>
     </properties>
 
     <config>
@@ -45,9 +46,9 @@
         <bfconfig>
             <generateDefaultAlerts>false</generateDefaultAlerts>
             <debugComponents>true</debugComponents>
-            <enableEventOptimization>true</enableEventOptimization>
+            <enableEventOptimization>false</enableEventOptimization>
             <initLogging>true</initLogging>
-            <doIncludes>false</doIncludes>
+            <doIncludes>true</doIncludes>
             <mailadmin>foo@bar.de</mailadmin>
         </bfconfig>
         <!--+ log4j.xml Configuration
@@ -71,47 +72,42 @@
     <core>
         <app>
             <name>betterform-core</name>
-            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.2.1.5.jar" groupid="net.sf.saxon" version="9.2.1.5" artifactId="saxon"/>
+                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="saxon"/>
             </classpath>
         </transform>
         <compile>
             <classpath pathid="compile.class.path" description="classpath for compiling core classes">
                 <pathelement path="${core.dir}/target/classes"/>
                 <path refid="transform.class.path"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec"
-                             version="1.6" artifactId="commons-codec"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar"
-                             groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec" version="1.6" artifactId="commons-codec"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar" groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
                 <!-- <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/> -->
-                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="httpcomponents" version="4.1"
-                             artifactId="httpcomponents-core"/>
-                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="httpcomponents"
-                             version="4.1.1" artifactId="httpcomponents-client"/>
-                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="httpcomponents" version="4.1.1"
-                             artifactId="httpcomponents-mime"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1"
-                             artifactId="commons-io"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="commons-lang"
-                             version="3.1" artifactId="commons-lang"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging"
-                             version="1.1.1" artifactId="commons-logging"/>
-                <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation"
-                             version="1.1.1" artifactId="activation"/>
-                <pathelement location="${core.dir}/src/main/lib/mail-1.4.2.jar" groupid="javax.mail" version="1.4.2"
-                             artifactId="mail"/>
-                <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15"
-                             artifactId="log4j"/>
+                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="org.apache.httpcomponents" version="4.1" artifactId="httpcomponents-core"/>
+                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-client"/>
+                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-mime"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-net-3.1.jar" groupid="commons-net" version="3.1" artifactId="commons-net"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1" artifactId="commons-io"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="org.apache.commons" version="3.1" artifactId="commons-lang3"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging" version="1.1.1" artifactId="commons-logging"/>
+                <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation" version="1.1.1" artifactId="activation"/>
+                <pathelement location="${core.dir}/src/main/lib/mail-1.4.2.jar" groupid="javax.mail" version="1.4.2" artifactId="mail"/>
+                <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15" artifactId="log4j"/>
                 <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.11.02.jar" groupid="xerces" version="2.11.02" artifactId="xercesImpl"/>
                 <pathelement location="${core.dir}/src/main/lib/xml-apis-1.4.01.jar" groupid="xml-apis" artifactId="xml-apis" version="1.4.01"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
-                <pathelement location="${core.dir}/src/main/lib/ehcache-1.6.2.jar" groupid="net.sf.ehcache" version="1.6.2" artifactId="ehcache"/>
+                <pathelement location="${core.dir}/src/main/lib/ehcache-core-2.5.2.jar" groupid="net.sf.ehcache" version="2.5.2" artifactId="ehcache-core"/>
+                <pathelement location="${core.dir}/src/main/lib/slf4j-api-1.6.1.jar" groupid="org.slf4j" version="1.6.1" artifactId="slf4j-api"/>
                 <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
+
+                <!-- eXist -->
+                <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>
+                <pathelement location="${core.dir}/src/main/lib/exist-2.1-trunk.jar" groupid="org.exist" version="2.1-trunk" artifactId="exist"/>
+                <pathelement location="${core.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="1.0" artifactId="xmldb"/>
             </classpath>
         </compile>
         <test>
@@ -127,17 +123,16 @@
     <web>
         <app>
             <name>betterform</name>
-            <version>5.0</version>
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
-                    <path refid="compile.class.path"/>
+                <path refid="compile.class.path"/>
             </classpath>
         </transform>
         <compile>
             <classpath pathid="web.class.path" description="classpath for compiling web classes">
                 <path refid="compile.class.path"/>
-                <pathelement location="${web.dir}/src/main/lib/dwr-2.0.5.jar" groupid="org.directwebremoting.dwr" version="2.0.5" artifactId="dwr"/>
+                <pathelement location="${web.dir}/src/main/lib/dwr-3.0.RC2.jar" groupid="org.directwebremoting.dwr" version="3.0.RC2" artifactId="dwr"/>
                 <pathelement location="${web.dir}/src/main/lib/servlet-api-2.4.jar" groupid="javax.servlet" version="2.4" artifactId="servlet-api" scope="provided"/>
             </classpath>
         </compile>
@@ -145,17 +140,17 @@
             <!-- Selenium Properties -->
 
             <selenium>
-              <!-- which browser to use for tests -->
-              <browser>*firefox</browser>
-              <url-to-test-forms>/betterform/forms</url-to-test-forms>
-              <!--server properties -->
-              <server>
-                <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
-                <host>localhost</host>
-                <port>4444</port>
-                <url>/selenium-server/core/index.html</url>
-                <errorsBeginAt>404</errorsBeginAt>
-              </server>
+                <!-- which browser to use for tests -->
+                <browser>*firefox</browser>
+                <url-to-test-forms>/betterform/forms</url-to-test-forms>
+                <!--server properties -->
+                <server>
+                    <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
+                    <host>localhost</host>
+                    <port>4444</port>
+                    <url>/selenium-server/core/index.html</url>
+                    <errorsBeginAt>404</errorsBeginAt>
+                </server>
             </selenium>
             <!-- home of the tomcat-server which serves testpages -->
             <tomcat>
@@ -253,28 +248,14 @@
             </tomcat-webdriver>
         </test>
     </web>
-    <betty>
-        <app>
-            <name>betty</name>
-            <version>1.0</version>
-        </app>
-        <compile>
-            <classpath pathid="betty.class.path" description="classpath for compiling web classes">
-                <pathelement location="${betty.dir}/src/main/lib/plugin.jar" groupid="netscape" version="1.0" artifactId="netscape" scope="provided"/>
-                <path refid="compile.class.path"/>
-            </classpath>
-        </compile>
-    </betty>
     <zaphod>
         <app>
             <name>zaphod</name>
-            <version>1.0</version>
         </app>
     </zaphod>
     <xapp>
         <app>
             <name>xApplication</name>
-            <version>1.0</version>
         </app>
     </xapp>
 
@@ -286,7 +267,8 @@
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Users/windauer/dev/eXist/exist-trunk</home>
+        <home>/Users/windauer/dev/exist/exist-git</home>
+        <!-- home>/Applications/eXist-ziziphus</home-->
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
         <context>/exist</context>

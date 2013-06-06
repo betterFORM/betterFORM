@@ -8,6 +8,7 @@ import de.betterform.xml.xforms.BetterFormTestCase;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.AbstractFormControl;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
+import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.DateValue;
 import org.w3c.dom.Node;
@@ -152,7 +153,7 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
      */
     public void testLocalDataTime() throws Exception {
         GregorianCalendar before = new GregorianCalendar();
-        final DateTimeValue localdateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(evaluateInDefaultContextAsString("local-dateTime()")).asAtomic();
+        final DateTimeValue localdateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(evaluateInDefaultContextAsString("local-dateTime()"), new ConversionRules()).asAtomic();
         GregorianCalendar after = new GregorianCalendar();
 
         assertTrue(localdateTime.getCalendar().compareTo(before) >= 0);
@@ -240,8 +241,7 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
     }
 
     private String convertToLocalTimeZone(String dateTime) throws Exception {
-        DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(dateTime).asAtomic();
-
+        DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(dateTime, new ConversionRules()).asAtomic();
         return argAsDateTime.adjustTimezone(kLOCAL_TIME_OFFSET_IN_MINUTES).getStringValue();
     }
 

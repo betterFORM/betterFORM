@@ -32,6 +32,20 @@
         <exec command="ant -p" dir="${basedir}" />
     </target>
 
+    <target name="update-project-pom"
+            description="update the Core pom.xml file with dependencies from build.properties.xml">
+        <echo message="Ant Module: ${app.name}"/>
+        <xslt in="${project.dir}/pom.xml"
+              out="${project.dir}/pom.new.xml"
+              style="${project.dir}/tools/maven/updatePOM.xsl"
+              force="true">
+            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
+            <param name="module" expression="betterform-project"/>
+        </xslt>
+        <move file="${project.dir}/pom.xml" tofile="${project.dir}/pom.xml.old"/>
+        <move file="${project.dir}/pom.new.xml" tofile="${project.dir}/pom.xml"/>
+    </target>
+
     <target name="update-core-pom"
             description="update the Core pom.xml file with dependencies from build.properties.xml">
         <echo message="Ant Module: ${core.app.name}"/>
@@ -42,12 +56,13 @@
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="module" expression="${core.app.name}"/>
         </xslt>
-        <rename src="${project.dir}/core/pom.xml" dest="${project.dir}/core/pom.xml.old"/>
-        <rename src="${project.dir}/core/pom.new.xml" dest="${project.dir}/core/pom.xml"/>
+        <move file="${project.dir}/core/pom.xml" tofile="${project.dir}/core/pom.xml.old"/>
+        <move file="${project.dir}/core/pom.new.xml" tofile="${project.dir}/core/pom.xml"/>
     </target>
 
     <target name="update-web-pom"
             description="update the web pom.xml file with dependencies from build.properties.xml">
+        <echo message="Ant Module: ${web.app.name}"/>
         <xslt in="${project.dir}/web/pom.xml"
               out="${project.dir}/web/pom.new.xml"
               style="${project.dir}/tools/maven/updatePOM.xsl"
@@ -55,22 +70,10 @@
             <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
             <param name="module" expression="${web.app.name}"/>
         </xslt>
-        <rename src="${project.dir}/web/pom.xml" dest="${project.dir}/web/pom.xml.old"/>
-        <rename src="${project.dir}/web/pom.new.xml" dest="${project.dir}/web/pom.xml"/>
+        <move file="${project.dir}/web/pom.xml" tofile="${project.dir}/web/pom.xml.old"/>
+        <move file="${project.dir}/web/pom.new.xml" tofile="${project.dir}/web/pom.xml"/>
     </target>
 
-    <target name="update-betty-pom"
-            description="update the betty pom.xml file with dependencies from build.properties.xml">
-        <xslt in="${project.dir}/betty/pom.xml"
-              out="${project.dir}/betty/pom.new.xml"
-              style="${project.dir}/tools/maven/updatePOM.xsl"
-              force="true">
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="module" expression="${betty.app.name}"/>
-        </xslt>
-        <rename src="${project.dir}/betty/pom.xml" dest="${project.dir}/betty/pom.xml.old"/>
-        <rename src="${project.dir}/betty/pom.new.xml" dest="${project.dir}/betty/pom.xml"/>
-    </target>
 
     <target name="create-core-install" depends="update-core-pom">
         <xslt in="${project.dir}/core/build.xml"
@@ -97,23 +100,10 @@
         </xslt>
     </target>
 
-    <target name="create-betty-install" depends="update-betty-pom">
-        <xslt in="${project.dir}/betty/build.xml"
-              out="${project.dir}/betty/install-files.xml"
-              style="${project.dir}/tools/maven/install-libs.xsl"
-              force="true">
-            <classpath refid="transform.class.path"/>
-            <param name="buildprops" expression="${project.dir}/build.properties.xml"/>
-            <param name="core.dir" expression="${project.dir}/core"/>
-            <param name="betty.dir" expression="${project.dir}/betty"/>
-            <param name="module" expression="${betty.app.name}"/>
-        </xslt>
-    </target>
 
     <target name="create-maven-install">
         <antcall target="create-core-install"/>
         <antcall target="create-web-install"/>
-        <antcall target="create-betty-install"/>
     </target>
 
     <target name="install-core-dependencies" depends="create-core-install" description="installs core dependencies for Maven">
@@ -126,22 +116,16 @@
         <delete file="${project.dir}/web/install-files.xml"/>
     </target>
 
-    <target name="install-betty-dependencies" depends="create-betty-install" description="installs betty dependencies for Maven">
-        <ant antfile="${project.dir}/betty/install-files.xml" target="install-dependencies"/>
-        <delete file="${project.dir}/betty/install-files.xml"/>
-    </target>
-
 
 
     <target name="install-maven-dependencies" depends="create-maven-install"
             description="executes generated Ant file and install needed libraries in Maven repository">
 
         <antcall target="install-core-dependencies"/>
-        <!-- Create needed core.jar for web and betty mvn -->
+        <!-- Create needed core.jar for web mvn -->
         
         <ant antfile="${project.dir}/core/build.xml" target="package" dir="${project.dir}/core" inheritall="false"/>
         <antcall target="install-web-dependencies"/>
-        <antcall target="install-betty-dependencies"/>
     </target>
 
 

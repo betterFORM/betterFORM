@@ -114,6 +114,7 @@ public class RepeatedModelItemsTest extends XMLTestBase {
         assertItemInputData(4, 2, false, false, false, true, "xs:string", "four");
         assertItemInputData(4, 3, false, false, false, true, "xs:token", "four");
 
+        dump(this.xformsProcesssorImpl.getXForms());
         assertItemData(5, false, false, false, false);
         assertItemInputData(5, 1, false, false, false, true, "xs:integer", "5");
         assertItemInputData(5, 2, false, false, false, false, "xs:string", "four");

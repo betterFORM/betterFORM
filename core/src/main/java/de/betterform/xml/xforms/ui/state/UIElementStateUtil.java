@@ -16,10 +16,13 @@ import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.bind.Constraint;
 import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.UIElementState;
+
+import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.xs.XSModel;
@@ -88,6 +91,17 @@ public class UIElementStateUtil {
                 (currentProperties != null && newProperties == null) ||
                 (currentProperties != null && currentProperties[index] != newProperties[index]);
     }
+    
+    public static boolean hasPropertyChanged(Map<String, String> currentCustomProperties, Map<String, String> newCustomProperties, String key) {
+    	boolean hasChanged = false;
+        if ((currentCustomProperties == null && newCustomProperties != null) ||
+                (currentCustomProperties != null && newCustomProperties == null)) { 
+        	hasChanged = true;
+        } else {
+    	hasChanged  = (currentCustomProperties != null && currentCustomProperties.containsKey(key) && currentCustomProperties.get(key) != newCustomProperties.get(key));
+        }
+    	return hasChanged;
+    }
 
     public static boolean hasValueChanged(Object currentValue, Object newValue) {
         if(currentValue instanceof Element && newValue instanceof Element){
@@ -149,6 +163,7 @@ public class UIElementStateUtil {
     }
 
     public static void dispatchXFormsEvents(BindingElement bindingElement, ModelItem modelItem) throws XFormsException {
+
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("dispatching refresh events for " + DOMUtil.getCanonicalPath(bindingElement.getElement()));
         }
@@ -169,7 +184,12 @@ public class UIElementStateUtil {
                 }
                 container.dispatch(eventTarget, properties[ENABLED] ? XFormsEventNames.ENABLED : XFormsEventNames.DISABLED, null);
                 container.dispatch(eventTarget, XFormsEventNames.VALUE_CHANGED, null);
-                container.dispatch(eventTarget, properties[VALID] ? XFormsEventNames.VALID : XFormsEventNames.INVALID, null);
+                if (properties[VALID]) {
+                    container.dispatch(eventTarget, XFormsEventNames.VALID, null);
+                } else {
+                    Map<String, Object> context = getAlertInfo(bindingElement, modelItem, refreshView);
+                    container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
+                }
                 container.dispatch(eventTarget, properties[READONLY] ? XFormsEventNames.READONLY : XFormsEventNames.READWRITE, null);
                 container.dispatch(eventTarget, properties[REQUIRED] ? XFormsEventNames.REQUIRED : XFormsEventNames.OPTIONAL, null);
                 somethingChanged = true;
@@ -190,10 +210,8 @@ public class UIElementStateUtil {
                     }
                 }
                 if (refreshView.isInvalidMarked()) {
-                    container.dispatch(eventTarget, XFormsEventNames.INVALID, null);
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");
-                    }
+                    Map<String, Object> context = getAlertInfo(bindingElement, modelItem, refreshView);
+                    container.dispatch(eventTarget, XFormsEventNames.INVALID, context);
                 }
                 if (refreshView.isReadonlyMarked()) {
                     container.dispatch(eventTarget, XFormsEventNames.READONLY, null);
@@ -239,6 +257,42 @@ public class UIElementStateUtil {
         }
     }
 
+    private static Map<String, Object> getAlertInfo(BindingElement bindingElement, ModelItem modelItem, RefreshView refreshView) {
+        Element alertElem = (Element) DOMUtil.getFirstChildByTagNameNS(bindingElement.getElement(), NamespaceConstants.XFORMS_NS, "alert");
+        Map<String, Object> context=new HashMap<String, Object>();
+        ;
+        if (alertElem != null) {
+            if (alertElem.hasAttribute("srcBind")) {
+                buildConstraintContextInfo(context, modelItem, refreshView);
+            } else {
+//                Element e = XFormsUtil.getFirstXFormsElement(bindingElement.getElement(), XFormsConstants.ALERT);
+                String alertMsg = DOMUtil.getTextNodeAsString(alertElem);
+                //use standard alert element from UI
+                List invalidConstraints = new ArrayList(1);
+                invalidConstraints.add(alertMsg);
+                context.put("alerts", invalidConstraints);
+            }
+
+        }
+        return context;
+    }
+
+    private static void buildConstraintContextInfo(Map context,ModelItem modelItem, RefreshView refreshView) {
+        List<Constraint> invalids = refreshView.getInvalids();
+        List invalidConstraints = new ArrayList(10);
+        for(int i=0;i < invalids.size();i++){
+            invalidConstraints.add(invalids.get(i).getAlert());
+        }
+        context.put("alerts",invalidConstraints);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(DOMUtil.getCanonicalPath((Node) modelItem.getNode()) + " is now invalid");
+            for(int i=0;i < invalids.size();i++){
+                LOGGER.debug("invalid constraint:" + invalids.get(i).getXPathExpr());
+            }
+        }
+    }
+
     public static void dispatchBetterFormEvents(BindingElement bindingElement, boolean[] currentProperties, boolean[] newProperties) throws XFormsException {
         dispatchBetterFormEvents(bindingElement, currentProperties, null, null, newProperties, null, null);
     }
@@ -253,7 +307,7 @@ public class UIElementStateUtil {
 
     public static void dispatchBetterFormEvents(BindingElement bindingElement, boolean[] currentProperties, Object currentValue, String currentType, boolean[] newProperties, Object newValue, String newType) throws XFormsException {
         // determine changes
-        Map context = new HashMap();
+        Map<String, Object> context = new HashMap<String, Object>();
         if (hasPropertyChanged(currentProperties, newProperties, VALID)) {
             context.put(UIElementState.VALID_PROPERTY, String.valueOf(newProperties[VALID]));
         }
@@ -293,6 +347,33 @@ public class UIElementStateUtil {
 
         }
     }
+    
+	public static void dispatchBetterFormCustomMIPEvents(BindingElement bindingElement,
+			Map<String, String> currentCustomProperties,
+			Map<String, String> newCustomProperties)
+			throws XFormsException {
+
+		Set<String> keySet = new HashSet<String>(); 
+		if (currentCustomProperties != null) {
+			keySet.addAll(currentCustomProperties.keySet());
+		}
+		if (newCustomProperties != null) {
+			keySet.addAll(newCustomProperties.keySet());
+		}
+		Map<String, String> customMIP = new HashMap<String, String>();
+		for (String key : keySet) {
+			if (hasPropertyChanged(currentCustomProperties, newCustomProperties, key)) {
+				customMIP.put(key, ""+WordUtils.capitalize(newCustomProperties.get(key)));
+			}
+		}
+		if (!customMIP.isEmpty()) {
+			Container container = bindingElement.getContainerObject();
+			EventTarget eventTarget = bindingElement.getTarget();
+			container.dispatch(eventTarget,
+				BetterFormEventNames.CUSTOM_MIP_CHANGED, customMIP);
+		}
+
+	}
 
     /**
      * localize a string value depending on datatype and locale
@@ -444,13 +525,33 @@ public class UIElementStateUtil {
                 XSTypeDefinition xsTypeDefinition = schema.getTypeDefinition(typeName, schemaNamespace);
 
                 if (xsTypeDefinition != null) {
-                    //Search BaseType/PrimitiveType
-                    while (xsTypeDefinition.getBaseType() != null) {
-                        xsTypeDefinition = xsTypeDefinition.getBaseType();
+                    if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
+                        XSSimpleTypeDefinition xsSimpleTypeDefinition = (XSSimpleTypeDefinition) xsTypeDefinition;
+                        if (xsSimpleTypeDefinition.getVariety() == XSSimpleTypeDefinition.VARIETY_UNION) {
+                            Iterator itemTypeIterator = xsSimpleTypeDefinition.getMemberTypes().listIterator();
 
-                        if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
-                            XSSimpleTypeDefinition xsSimpleTypeDefinition = (XSSimpleTypeDefinition) xsTypeDefinition;
-                            return xsSimpleTypeDefinition.getPrimitiveType().getName();
+                            if (itemTypeIterator.hasNext()) {
+                                Object item = itemTypeIterator.next();
+                                if (item instanceof XSSimpleTypeDefinition) {
+                                    XSSimpleTypeDefinition xsSimpleTypeDefinition2 = (XSSimpleTypeDefinition) item;
+                                    if (xsSimpleTypeDefinition2.getBaseType() != null) {
+                                        return xsSimpleTypeDefinition2.getBaseType().getName();
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            //Search BaseType/PrimitiveType
+                            while (xsTypeDefinition.getBaseType() != null) {
+                                xsTypeDefinition = xsTypeDefinition.getBaseType();
+
+                                if (xsTypeDefinition instanceof XSSimpleTypeDefinition) {
+                                    XSSimpleTypeDefinition xsSimpleTypeDefinition3 = (XSSimpleTypeDefinition) xsTypeDefinition;
+                                    if ( xsSimpleTypeDefinition3.getVariety() == XSSimpleTypeDefinition.VARIETY_ATOMIC) {
+                                        return xsSimpleTypeDefinition3.getPrimitiveType().getName();
+                                    }
+                                }
+                            }
                         }
                     }
                 }

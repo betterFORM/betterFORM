@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Compact group</title>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+-->
+
+
+    </head>
+    <body>
+        <div class="description">
+            <p>
+                A compact group renders the labels of any containing control above the actual control and
+                therefore provides a very narrow layout of a group.
+            </p>
+        </div>
+        <div class="references">
+            <a href="#ui-group"/>
+            <a href="#Switch"/>
+        </div>
+        <div class="sample">
+            <div class="markup">
+                <xf:model>
+                    <xf:instance>
+                        <data xmlns="">
+                            <grouped-data constraint="true" readonly="false" required="true" relevant="true">
+                                <group>
+                                    <a>aaa</a>
+                                    <b>bbb</b>
+                                    <c>ccc</c>
+                                    <d>ddd</d>
+                                </group>
+                            </grouped-data>
+                        </data>
+                    </xf:instance>
+
+                    <xf:bind nodeset="grouped-data">
+                        <xf:bind nodeset="group" constraint="boolean-from-string(../@constraint)"
+                                 readonly="boolean-from-string(../@readonly)"
+                                 required="boolean-from-string(../@required)"
+                                 relevant="boolean-from-string(../@relevant)">
+                            <xf:bind nodeset="(a, b,c,d)" constraint="boolean-from-string(../../@constraint)"/>
+                        </xf:bind>
+                        <xf:bind nodeset="@constraint" type="boolean"/>
+                        <xf:bind nodeset="@readonly" type="boolean"/>
+                        <xf:bind nodeset="@required" type="boolean"/>
+                        <xf:bind nodeset="@relevant" type="boolean"/>
+                    </xf:bind>
+                </xf:model>
+                <code class="ui">
+<xf:group id="group1" ref="grouped-data/group" appearance="compact">
+    <xf:label>Group with compact appearance</xf:label>
+    <xf:alert>invalid group</xf:alert>
+    <xf:input id="input1" ref="a">
+        <xf:label>A-label</xf:label>
+        <xf:hint>a hint to A-label</xf:hint>
+        <xf:alert>an alert to A-label</xf:alert>
+    </xf:input>
+    <xf:input id="input2" ref="b">
+        <xf:label>B-label</xf:label>
+        <xf:hint>a hint to B-label</xf:hint>
+        <xf:alert>an alert to B-label</xf:alert>
+    </xf:input>
+    <xf:input id="input3" ref="c">
+        <xf:label>C-label</xf:label>
+        <xf:hint>a hint to C-label</xf:hint>
+        <xf:alert>an alert to C-label</xf:alert>
+    </xf:input>
+    <xf:input id="input4" ref="d">
+        <xf:label>D-label</xf:label>
+        <xf:hint>a hint to D-label</xf:hint>
+        <xf:alert>an alert to D-label</xf:alert>
+    </xf:input>
+</xf:group>
+                </code>
+            </div>
+            <div class="MIPS">
+                <xf:group appearance="full">
+                    <xf:label></xf:label>
+                    <xf:input id="group1-readonly" ref="grouped-data/@readonly" incremental="true">
+                        <xf:label>readonly</xf:label>
+                    </xf:input>
+                    <xf:input id="group1-relevant" ref="grouped-data/@relevant" incremental="true">
+                        <xf:label>relevant</xf:label>
+                    </xf:input>
+                    <xf:input id="group1-valid" ref="grouped-data/@constraint" incremental="true">
+                        <xf:label>valid</xf:label>
+                    </xf:input>
+                </xf:group>
+            </div>
+        </div>
+        <div class="CSS">
+            <table class="CSS">
+                <tr>
+                    <td>xfContainer</td>
+                    <td>matches any Element that represents a XForms
+                        <span class="keyword">group</span>
+                        |
+                        <span class="keyword">repeat</span>
+                        |
+                        <span class="keyword">switch</span>
+                        element
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfCompactGroup</td>
+                    <td>matches an Element that represents a XForms
+                        <span class="keyword">group</span>
+                        element with
+                        'compact'
+                        <span class="keyword">appearance</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>xfGroupLabel</td>
+                    <td>matches the <span class="keyword"> label</span> of a <span class="keyword">group</span></td>
+                </tr>                
+            </table>
+        </div>
+        <div class="limitations">
+            <p>There is no way to show the invalidity of a <span class="keyword">group</span> currently as the <span class="keyword">xfInvalid</span> class sits
+            on the <span class="keyword">group</span> element itself.</p>
+        </div>        
+    </body>
+</html>

@@ -1,0 +1,162 @@
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+
+#registration {
+  * {
+    font-size: 11pt;
+    font-family: sans-serif;
+    color: #666666;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  .dijitButtonNode {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+  }
+  .dijitTextBoxFocused,
+  .dijitComboBoxFocused,
+  .dijitSpinnerFocused,
+  .dijitSpinnerUpArrowActive,
+  .dijitSpinnerDownArrowActive,
+  .dijitTextAreaFocused {
+    border-color: gray;
+  }
+
+  .dijitInputField input,
+  .dijitTextBox,
+  .dijitComboBox,
+  .dijitSpinner {
+    margin: 0;
+  }
+
+  .bfVerticalTable {
+    border: none;
+    padding: 20px;
+    padding-bottom: 0px;
+    width: 700px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bfVerticalTable td {
+    padding-top: 10px;
+  }
+
+  .bfVerticalTableLabel {
+    padding-right: 5px;
+    width: 23%;
+    text-align: right;
+  }
+
+  .bfVerticalTableValue {
+    width: 24%;
+  }
+
+  .bfVerticalTableInfo {
+    width: 120px;
+    position: relative;
+
+  }
+
+  .xfValue {
+
+  }
+
+  .xfInvalid .xfValue {
+    background: white;
+  }
+  /* overwritten betterorm style*/
+  .xfAlert, .xfHint {
+    height: 1.8em;
+    top: 0.7em;
+  }
+
+
+  .xfAlert,
+  .xfHint,
+  .xfHelp,
+  .info {
+    white-space: nowrap;
+    display: block;
+
+  }
+
+  .xfAlert {
+    background: #FFCFCF url(../images/error.png) no-repeat scroll 5px center;
+    border-color: #E5A3A3 !important;
+  }
+  .xfHint {
+  /*display: block;*/
+    background: #F2F2F2 url(../images/hint.png) no-repeat 5px center;
+    color: #666666;
+    border-color: #DBDBDB !important;
+    padding:12px 20px 0 28px !important;
+  }
+
+  .info {
+    background: #F0FEE9 url(../images/ok.png) no-repeat 3% 7px;
+    color: #666666;
+    border-color: #E1EFDB !important;
+  }
+  .xfInput .xfValue, .xfSecret .xfValue {
+    display: block;
+    padding: 3px;
+    width: 16em;
+    height: 26px;
+
+  }
+
+  .xfInput .xfValue,.xfSecret .xfValue, .xfAlert, .xfHint, .info {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+    -moz-border-radius-topleft: 8px;
+    -moz-border-radius-topright: 8px;
+    -moz-border-radius-bottomright: 8px;
+    -moz-border-radius-bottomleft: 8px;
+
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+  }
+
+  .xfGroupLabel {
+    font-size: 1.5em; /*border-bottom: 4px double #999999;*/
+    padding-bottom: 5px;
+    color: #333333;
+  }
+
+  .xfTriggerMiddleColumnTrigger {
+    float: right;
+  }
+}
+
+#signin {
+  float: right;
+  font-size: 8pt;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  width: 216px;
+  color: blue;
+  text-decoration: underline;
+}
+
+#subtitle {
+  display: block;
+  font-size: 8pt;
+
+}
+
+.xfLabel {
+  padding-top: 6px;
+  display: block;
+}

@@ -4,34 +4,40 @@
  */
 
 package de.betterform.xml.xpath.impl.saxon.sxpath;
-import net.sf.saxon.AugmentedSource;
+
+import net.sf.saxon.expr.Container;
+import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.ExpressionTool;
-import net.sf.saxon.expr.ExpressionVisitor;
-import net.sf.saxon.instruct.Executable;
-import net.sf.saxon.instruct.SlotManager;
-import net.sf.saxon.om.Item;
+import net.sf.saxon.expr.instruct.Executable;
+import net.sf.saxon.expr.instruct.SlotManager;
+import net.sf.saxon.expr.parser.ExpressionTool;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.NamespaceResolver;
-import net.sf.saxon.om.NodeInfo;
-import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.pattern.Pattern;
+import net.sf.saxon.pattern.PatternSponsor;
 import net.sf.saxon.sxpath.IndependentContext;
+import net.sf.saxon.sxpath.SimpleContainer;
 import net.sf.saxon.sxpath.XPathStaticContext;
 import net.sf.saxon.sxpath.XPathVariable;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.type.ItemType;
 import net.sf.saxon.type.Type;
-import net.sf.saxon.value.Whitespace;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 
 /**
- * This class provide a native Saxon API for free-standing evaluation of XPath expressions. Unlike the
+ * This class provides a native Saxon API for free-standing evaluation of XPath expressions. Unlike the
  * JAXP API offered by {@link net.sf.saxon.xpath.XPathEvaluator} it exposes Saxon classes and interfaces
  * and thus provides a more strongly-typed interface with greater control over the detailed behaviour.
  *
+ * <p>However, the preferred API for user applications calling XPath is the s9api {@link net.sf.saxon.s9api.XPathCompiler}
+ * interface.</p>
+ *
   * @author Michael H. Kay
+ * @since 8.4
   */
 
 public class XPathEvaluator {
@@ -54,7 +60,7 @@ public class XPathEvaluator {
      * Construct an XPathEvaluator with a specified configuration.
      * @param config the configuration to be used. If the XPathEvaluator is
      * to be used to run schema-aware XPath expressions this must be an instance
-     * of {@link com.saxonica.validate.SchemaAwareConfiguration}
+     * of {@link com.saxonica.config.EnterpriseConfiguration}
      */
     public XPathEvaluator(Configuration config) {
         staticContext = new IndependentContext(config);
@@ -67,45 +73,6 @@ public class XPathEvaluator {
 
     public Configuration getConfiguration() {
         return staticContext.getConfiguration();
-    }
-
-    /**
-    * Indicate whether all whitespace text nodes in source documents are to be
-    * removed. This affects the action of the {@link #build} method, and of all
-     * other methods that take a Source as input.
-    * @param strip True if all whitespace text nodes are to be stripped from the source document,
-    * false otherwise. The default if the method is not called is false.
-     * @deprecated since 8.9. The preferred way to build a source document is to use
-     * {@link Configuration#buildDocument}
-    */
-
-    public void setStripSpace(boolean strip) {
-        stripSpace = strip;
-    }
-
-    /**
-    * Build a source document.
-     * <p><i>This method is retained for backwards compability. The preferred way to build a document
-     * tree is to call the method {@link Configuration#buildDocument}</i></p>
-     * @param source a JAXP Source object. This may be any implementation of Source that Saxon recognizes:
-     * not only the standard kinds of source such as StreamSource, SAXSource, and DOMSource, but also for
-     * example a JDOM or XOM DocumentWrapper. For the way in which the source document is built, see
-     *      {@link net.sf.saxon.Configuration#buildDocument}
-     * @return the NodeInfo representing the root of the constructed tree.
-     * @throws XPathException if, for example, XML parsing fails.
-     * @deprecated since 8.9. The preferred way to build a source document is to use
-     * {@link Configuration#buildDocument}
-    */
-
-    public NodeInfo build(Source source) throws XPathException {
-        if (stripSpace) {
-            AugmentedSource as = AugmentedSource.makeAugmentedSource(source);
-            as.setStripSpace(Whitespace.ALL);
-            source = as;
-        } else if (source instanceof NodeInfo) {
-            return (NodeInfo)source;
-        }
-        return getConfiguration().buildDocument(source);
     }
 
     /**
@@ -151,16 +118,6 @@ public class XPathEvaluator {
     }
 
     /**
-     * Get the executable
-     * @return the executable. This holds details of function bindings and collations.
-     */
-
-    public Executable getExecutable() {
-        return staticContext.getExecutable();
-    }
-   
-
-    /**
     * Prepare (compile) an XPath expression for subsequent evaluation.
     * @param expression The XPath expression to be compiled, supplied as a string.
     * @return an XPathExpression object representing the prepared expression
@@ -169,16 +126,61 @@ public class XPathEvaluator {
     */
 
     public XPathExpression createExpression(String expression) throws XPathException {
-        Expression exp = ExpressionTool.make(expression, staticContext, 0, -1, 1, false);
-        exp.setContainer(staticContext);
-        ExpressionVisitor visitor = ExpressionVisitor.make(staticContext);
-        visitor.setExecutable(getExecutable());
-        exp = visitor.typeCheck(exp, Type.ITEM_TYPE);
+        Executable exec = new Executable(getConfiguration());
+        SimpleContainer container = new SimpleContainer(exec);
+        exec.setSchemaAware(staticContext.isSchemaAware());
+        Expression exp = ExpressionTool.make(expression, staticContext, container, 0, -1, 1, null);
+        //exp.setContainer(staticContext);
+        exp.setContainer(container);
+        ExpressionVisitor visitor = ExpressionVisitor.make(staticContext, exec);
+        visitor.setExecutable(exec);
+        ItemType contextItemType = staticContext.getRequiredContextItemType();
+        ExpressionVisitor.ContextItemType cit = new ExpressionVisitor.ContextItemType(contextItemType, true);
+        exp = visitor.typeCheck(exp, cit);
+        exp = visitor.optimize(exp, cit);
+        exp.setContainer(container);    // might have lost its container during optimization
         SlotManager map = staticContext.getStackFrameMap();
         int numberOfExternalVariables = map.getNumberOfVariables();
         ExpressionTool.allocateSlots(exp, numberOfExternalVariables, map);
         XPathExpression xpe = new XPathExpression(this, exp);
         xpe.setStackFrameMap(map, numberOfExternalVariables);
+        return xpe;
+    }
+     /*
+    Expression exp = ExpressionTool.make(expression, staticContext, 0, -1, 1, false);
+    exp.setContainer(staticContext);
+    ExpressionVisitor visitor = ExpressionVisitor.make(staticContext);
+    visitor.setExecutable(getExecutable());
+    exp = visitor.typeCheck(exp, Type.ITEM_TYPE);
+    SlotManager map = staticContext.getStackFrameMap();
+    int numberOfExternalVariables = map.getNumberOfVariables();
+    ExpressionTool.allocateSlots(exp, numberOfExternalVariables, map);
+    XPathExpression xpe = new XPathExpression(this, exp);
+    xpe.setStackFrameMap(map, numberOfExternalVariables);
+    return xpe;
+     */
+    /**
+     * Prepare (compile) an XSLT pattern for subsequent evaluation. The result is an XPathExpression
+     * object representing a (pseudo-) expression that when evaluated returns a boolean result: true
+     * if the context node matches the pattern, false if it does not.
+     * @param pattern the XSLT pattern to be compiled, supplied as a string
+     * @return an XPathExpression object representing the pattern, wrapped as an expression
+     * @throws XPathException if the syntax of the expression is wrong, or if it references namespaces,
+     * variables, or functions that have not been declared.
+     * @since 9.1
+     */
+
+    /*@NotNull*/ public XPathExpression createPattern(String pattern) throws XPathException {
+        Executable exec = new Executable(getConfiguration());
+        Pattern pat = Pattern.make(pattern, staticContext, exec);
+        ExpressionVisitor visitor = ExpressionVisitor.make(staticContext, exec);
+        pat.analyze(visitor, new ExpressionVisitor.ContextItemType(Type.NODE_TYPE, true));
+        SlotManager map = staticContext.getStackFrameMap();
+        int slots = map.getNumberOfVariables();
+        slots = pat.allocateSlots(staticContext, map, slots);
+        PatternSponsor sponsor = new PatternSponsor(pat);
+        XPathExpression xpe = new XPathExpression(this, sponsor);
+        xpe.setStackFrameMap(map, slots);
         return xpe;
     }
 
@@ -215,38 +217,8 @@ public class XPathEvaluator {
         staticContext.setDefaultElementNamespace(uri);
     }
 
-    /**
-     * For testing only
-     */
 
-    public static void main(String[] args) throws Exception {
-        XPathEvaluator xpe = new XPathEvaluator();
-//        XPathVariable in = xpe.declareVariable("", "in");
-        XPathExpression exp = xpe.createExpression(
-                "for $v in distinct-values(tokenize($in, '/')) return concat(' +', $v)");
-        NodeInfo doc = xpe.getConfiguration().buildDocument(new StreamSource(new File(args[0])));
-        XPathDynamicContext context = exp.createDynamicContext(doc);
-        //context.setVariable(in, new StringValue(args[1]));
-        SequenceIterator results = exp.iterate(context);
-        while (true) {
-            Item item = results.next();
-            if (item == null) break;
-            System.err.println(item);
         }
-//        if (args.length != 2) {
-//            System.err.println("format: java XPathEvaluator source.xml \"expression\"");
-//            return;
-//        }
-//        XPathEvaluator xpe = new XPathEvaluator();
-//        XPathExpression exp = xpe.createExpression(args[1]);
-//        List results = exp.evaluate(new StreamSource(new File(args[0])));
-//        for (int i = 0; i < results.size(); i++) {
-//            Object o = results.get(i);
-//            System.err.println(o);
-//        }
-    }
-
-}
 
 //
 // The contents of this file are subject to the Mozilla Public License Version 1.0 (the "License");
@@ -257,9 +229,10 @@ public class XPathEvaluator {
 // WITHOUT WARRANTY OF ANY KIND, either express or implied.
 // See the License for the specific language governing rights and limitations under the License.
 //
-// The Original Code is: all this file.
+// The Original Code is: all this file
 //
-// The Initial Developer of the Original Code is Michael H. Kay
+// The Initial Developer of the Original Code is Saxonica Limited.
+// Portions created by ___ are Copyright (C) ___. All rights reserved.
 //
 // Contributor(s):
 //

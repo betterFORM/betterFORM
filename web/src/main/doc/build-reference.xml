@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<project name="betterFORM reference page generator" default="deploy-forms" basedir="../../../../web">
+    <!--<xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>-->
+    <property name="core.dir" value="${basedir}/../core"/>
+    <xmlproperty file="${basedir}/../build.properties.xml"  semanticAttributes="true" keepRoot="false"/>
+    <property name="web.dir" value="${basedir}"/>
+    <property name="form.src" value="${web.dir}/src/main/doc/referenceForms"/>
+    <property name="form.dest" value="${web.dir}/src/main/webapp/forms/reference"/>
+
+
+    <target name="generate-forms" description="generate reference forms">
+        <echo>
+        ************************************************************************************
+        generating reference forms in resource module ...
+        ************************************************************************************
+        </echo>
+
+        <xslt basedir="${form.src}/xml"
+              destdir="${form.dest}"
+              style="${form.src}/build-forms.xsl"
+              force="true"
+              includes="*.xml"
+              extension=".xhtml">
+            <classpath refid="transform.class.path"/>
+            <param name="webContext" expression="${app.name}"/>
+        </xslt>
+    </target>
+
+    <target name="deploy-forms" depends="generate-forms" description="builds and deploys reference forms to target">
+        <ant antfile="${web.dir}/build.xml" target="deploy-forms" dir="${web.dir}"/>
+    </target>
+</project>

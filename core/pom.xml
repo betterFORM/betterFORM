@@ -5,14 +5,14 @@
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>4.1</version>
+        <version>5.0rc3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.betterform</groupId>
-    <artifactId xmlns="">betterform-core</artifactId>
-    <version xmlns="">5.0</version>
+    <artifactId>betterform-core</artifactId>
+    <version>5.0rc3</version>
 
     <packaging>jar</packaging>
 
@@ -67,7 +67,7 @@
                          <filter token="app.version" value="${project.version}"/>
                          <filter token="app.build" value="${buildNumber}"/>
                          <filter token="revision.number" value="${Revision}"/>
-                         <copy todir="${basedir}/src/main/resources/META-INF" file="${basedir}/src/main/java/version.info" filtering="true" overwrite="true"/>
+                         <copy todir="${basedir}/src/main/resources/META-INF" file="${basedir}/src/main/java/version.info.tmpl" filtering="true" overwrite="true"/>
                          <echo/>
                     </tasks>
                   </configuration>
@@ -90,119 +90,144 @@
     and execute ant update-maven-poms
     -->
 
-    <dependencies xmlns="">
-      <dependency>
-         <groupId>net.sf.saxon</groupId>
-         <artifactId>saxon</artifactId>
-         <version>9.2.1.5</version>
-      </dependency>
-      <dependency>
-         <groupId>commons-codec</groupId>
-         <artifactId>commons-codec</artifactId>
-         <version>1.6</version>
-      </dependency>
-      <dependency>
-         <groupId>commons-fileupload</groupId>
-         <artifactId>commons-fileupload</artifactId>
-         <version>1.2.1</version>
-      </dependency>
-      <dependency>
-         <groupId>httpcomponents</groupId>
-         <artifactId>httpcomponents-core</artifactId>
-         <version>4.1</version>
-      </dependency>
-      <dependency>
-         <groupId>httpcomponents</groupId>
-         <artifactId>httpcomponents-client</artifactId>
-         <version>4.1.1</version>
-      </dependency>
-      <dependency>
-         <groupId>httpcomponents</groupId>
-         <artifactId>httpcomponents-mime</artifactId>
-         <version>4.1.1</version>
-      </dependency>
-      <dependency>
-         <groupId>commons-io</groupId>
-         <artifactId>commons-io</artifactId>
-         <version>2.1</version>
-      </dependency>
-      <dependency>
-         <groupId>commons-lang</groupId>
-         <artifactId>commons-lang</artifactId>
-         <version>3.1</version>
-      </dependency>
-      <dependency>
-         <groupId>commons-logging</groupId>
-         <artifactId>commons-logging</artifactId>
-         <version>1.1.1</version>
-      </dependency>
-      <dependency>
-         <groupId>javax.activation</groupId>
-         <artifactId>activation</artifactId>
-         <version>1.1.1</version>
-      </dependency>
-      <dependency>
-         <groupId>javax.mail</groupId>
-         <artifactId>mail</artifactId>
-         <version>1.4.2</version>
-      </dependency>
-      <dependency>
-         <groupId>log4j</groupId>
-         <artifactId>log4j</artifactId>
-         <version>1.2.15</version>
-         <exclusions>
-            <exclusion>
-               <artifactId>jmxtools</artifactId>
-               <groupId>com.sun.jdmk</groupId>
-            </exclusion>
-            <exclusion>
-               <artifactId>jmxri</artifactId>
-               <groupId>com.sun.jmx</groupId>
-            </exclusion>
-         </exclusions>
-      </dependency>
-      <dependency>
-         <groupId>xerces</groupId>
-         <artifactId>xercesImpl</artifactId>
-         <version>2.11.02</version>
-      </dependency>
-      <dependency>
-         <groupId>xml-apis</groupId>
-         <artifactId>xml-apis</artifactId>
-         <version>1.4.01</version>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.xmlrpc</groupId>
-         <artifactId>xmlrpc-common</artifactId>
-         <version>3.1.2</version>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.xmlrpc</groupId>
-         <artifactId>xmlrpc-client</artifactId>
-         <version>3.1.2</version>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.xmlrpc</groupId>
-         <artifactId>xmlrpc-server</artifactId>
-         <version>3.1.2</version>
-      </dependency>
-      <dependency>
-         <groupId>net.sf.ehcache</groupId>
-         <artifactId>ehcache</artifactId>
-         <version>1.6.2</version>
-      </dependency>
-      <dependency>
-         <groupId>org.apache.ant</groupId>
-         <artifactId>ant</artifactId>
-         <version>1.8.2</version>
-      </dependency>
-      <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <version>4.10</version>
-         <scope>test</scope>
-      </dependency>
-   </dependencies>
+    <dependencies>
+<dependency>
+<groupId>net.sf.saxon</groupId>
+<artifactId>saxon</artifactId>
+<version>9.4.0.7</version>
+</dependency>
+<dependency>
+<groupId>commons-codec</groupId>
+<artifactId>commons-codec</artifactId>
+<version>1.6</version>
+</dependency>
+<dependency>
+<groupId>commons-fileupload</groupId>
+<artifactId>commons-fileupload</artifactId>
+<version>1.2.1</version>
+</dependency>
+<dependency>
+<groupId>org.apache.httpcomponents</groupId>
+<artifactId>httpcomponents-core</artifactId>
+<version>4.1</version>
+</dependency>
+<dependency>
+<groupId>org.apache.httpcomponents</groupId>
+<artifactId>httpcomponents-client</artifactId>
+<version>4.1.1</version>
+</dependency>
+<dependency>
+<groupId>org.apache.httpcomponents</groupId>
+<artifactId>httpcomponents-mime</artifactId>
+<version>4.1.1</version>
+</dependency>
+<dependency>
+<groupId>commons-net</groupId>
+<artifactId>commons-net</artifactId>
+<version>3.1</version>
+</dependency>
+<dependency>
+<groupId>commons-io</groupId>
+<artifactId>commons-io</artifactId>
+<version>2.1</version>
+</dependency>
+<dependency>
+<groupId>org.apache.commons</groupId>
+<artifactId>commons-lang3</artifactId>
+<version>3.1</version>
+</dependency>
+<dependency>
+<groupId>commons-logging</groupId>
+<artifactId>commons-logging</artifactId>
+<version>1.1.1</version>
+</dependency>
+<dependency>
+<groupId>javax.activation</groupId>
+<artifactId>activation</artifactId>
+<version>1.1.1</version>
+</dependency>
+<dependency>
+<groupId>javax.mail</groupId>
+<artifactId>mail</artifactId>
+<version>1.4.2</version>
+</dependency>
+<dependency>
+<groupId>log4j</groupId>
+<artifactId>log4j</artifactId>
+<version>1.2.15</version>
+<exclusions>
+<exclusion>
+<artifactId>jmxtools</artifactId>
+<groupId>com.sun.jdmk</groupId>
+</exclusion>
+<exclusion>
+<artifactId>jmxri</artifactId>
+<groupId>com.sun.jmx</groupId>
+</exclusion>
+</exclusions>
+</dependency>
+<dependency>
+<groupId>xerces</groupId>
+<artifactId>xercesImpl</artifactId>
+<version>2.11.02</version>
+</dependency>
+<dependency>
+<groupId>xml-apis</groupId>
+<artifactId>xml-apis</artifactId>
+<version>1.4.01</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-common</artifactId>
+<version>3.1.2</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-client</artifactId>
+<version>3.1.2</version>
+</dependency>
+<dependency>
+<groupId>org.apache.xmlrpc</groupId>
+<artifactId>xmlrpc-server</artifactId>
+<version>3.1.2</version>
+</dependency>
+<dependency>
+<groupId>net.sf.ehcache</groupId>
+<artifactId>ehcache-core</artifactId>
+<version>2.5.2</version>
+</dependency>
+<dependency>
+<groupId>org.slf4j</groupId>
+<artifactId>slf4j-api</artifactId>
+<version>1.6.1</version>
+</dependency>
+<dependency>
+<groupId>org.apache.ant</groupId>
+<artifactId>ant</artifactId>
+<version>1.8.2</version>
+</dependency>
+<dependency>
+<groupId>commons-pool</groupId>
+<artifactId>commons-pool</artifactId>
+<version>1.5.6</version>
+</dependency>
+<dependency>
+<groupId>org.exist</groupId>
+<artifactId>exist</artifactId>
+<version>2.1-trunk</version>
+</dependency>
+<dependency>
+<groupId>org.xmldb</groupId>
+<artifactId>xmldb</artifactId>
+<version>1.0</version>
+</dependency>
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>4.10</version>
+<scope>test</scope>
+</dependency>
+</dependencies>
     <!-- END OF GENERATED DEPENDENCIES - configure libs in ../build.properties.xml -->
 
     <developers>
@@ -233,43 +258,74 @@
         <contributor>
             <name>Willian Boyd</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Loren Cahlander</name>
+            <roles>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Oliver Charlet</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Flavio Costa</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Mark Dimon</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Brian Dueck</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Dave Finton</name>
+            <roles>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Matt Flaherty</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Jochen Graf</name>
+            <roles>
+                <role>Donator</role>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Simon Gunzenreiner</name>
+            <roles>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Jason Harrop</name>
+            <roles>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Terence Jacyno</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
@@ -282,72 +338,80 @@
             <name>Ronald van Kuijk</name>
             <roles>
                 <role>Developer</role>
+                <role>Contributor</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Manuel Lautenschlager</name>
+            <roles>
+                <role>Promoter</role>
             </roles>
         </contributor>
         <contributor>
             <name>Robert Leftwich</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Peter Mikula</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Eduardo Millán</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Chris Picton</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Sophie Ramel</name>
             <roles>
                 <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>John Spackman</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Andrzej Jan Taramina</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Péter Varga</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Suhail Ahmed</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Adrian Baker</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Dario Bahena</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
@@ -355,24 +419,25 @@
             <organization>Inventive Designers</organization>
             <roles>
                 <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Tomislav Bodor</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Michael Bridgen</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>
             <name>Ben Cochran</name>
             <roles>
-                <role>Developer</role>
+                <role>Contributor</role>
             </roles>
         </contributor>
         <contributor>

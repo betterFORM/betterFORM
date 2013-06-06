@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+        >
+    <!--<bf:keepalive pulse="900"/>-->
+    <head>
+        <title>Actions</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+        <style type="text/css">
+            .buttons{background:silver;}
+            #switchmsg{font-size:14pt;padding:10px;background:#A42322;color:white;text-align:center;}
+            .caHorizontalTableLabel{display:none;}
+        </style>
+
+        <xf:model id="model-1" functions="bf:appContext">
+            <xf:instance xmlns="" id="default">
+                <data>
+                    <helloworld hw="4711">Hello World</helloworld>
+                    <repeatdata>
+                        <input>aaa</input>
+                        <input>bbb</input>
+                        <input>ccc</input>
+                    </repeatdata>
+                    <extra>Got it!</extra>
+                    <message>Hello !</message>
+                    <titletext>These are examples of XForms Action usage.</titletext>
+                </data>
+            </xf:instance>
+            <xf:instance id="template">
+                <data xmlns="">
+                    <message>Hello !</message>
+                </data>
+            </xf:instance>
+
+            <xf:bind id="repeat1" nodeset="repeatdata/input[position() != last()]" constraint="count(../*) &gt; 3">
+                <xf:bind id="entry" nodeset="." />
+            </xf:bind>
+            <xf:bind id="helloworld" nodeset="helloworld" constraint="string-length(.) &gt; 5" required="true()" type="string"/>
+            <xf:bind id="hw" nodeset="helloworld/@hw" required="true()" type="integer"/>
+            <xf:bind id="extra" nodeset="extra" relevant="count(../repeatdata/input) &gt; 3"/>
+            <xf:bind id="message-action" nodeset="message"/>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group appearance="bf:verticalTable">
+            <xf:label>
+                <!--<b>XForms Actions</b> - <xf:output ref="titletext"/>-->
+            </xf:label>
+
+            <xf:group id="dispatchGroup" class="buttons" appearance="bf:horizontalTable">
+                <xf:message level="ephemeral">Event foo was dispatched</xf:message>
+                <xf:label/>
+                <xf:trigger>
+                    <xf:label>dispatch</xf:label>
+                    <xf:dispatch name="foo" targetid="dispatchGroup" />
+                </xf:trigger>
+            </xf:group>
+            
+            <xf:group class="buttons" appearance="bf:horizontalTable">
+                <xf:label/>
+                <xf:trigger id="btnDeleteMsg">
+                    <xf:label>delete</xf:label>
+                    <xf:delete nodeset="message" />
+                </xf:trigger>
+                <xf:output ref="message" id="outputMsg">
+                    <xf:label>Node to delete</xf:label>
+                </xf:output>
+            </xf:group>
+
+            <xf:group class="buttons" appearance="bf:horizontalTable">
+                <xf:label/>
+                <xf:trigger id="btnInsertMsg">
+                    <xf:label>insert</xf:label>
+                    <xf:message if="exists(instance()/message)">Please delete Node with the delete button first</xf:message>
+                    <xf:insert context="/data" origin="instance('template')/message" if="not(exists(instance()/message))"/>
+                </xf:trigger>
+            </xf:group>
+
+            <xf:group class="buttons" appearance="bf:horizontalTable">
+                <xf:label/>
+                <xf:trigger>
+                    <xf:label>rebuild</xf:label>
+                    <xf:rebuild/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>recalculate</xf:label>
+                    <xf:recalculate/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>revalidate</xf:label>
+                    <xf:revalidate/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>refresh</xf:label>
+                    <xf:refresh/>
+                </xf:trigger>
+            </xf:group>
+
+            
+            <xf:group appearance="minimal">
+                <xf:label>setValue</xf:label>
+                <xf:trigger id="btnSetvalueHello">
+                    <xf:label>setvalue 'Hello'</xf:label>
+                    <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
+                    <xf:setvalue bind="helloworld" value="'Hello'"/>
+                </xf:trigger>
+                <xf:trigger id="btnSetvalueHelloWorld">
+                    <xf:label>setvalue 'Hello World'</xf:label>
+                    <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
+                    <xf:action>
+                        <xf:setvalue bind="helloworld" value="'Hello World'"/>
+                    </xf:action>
+                </xf:trigger>
+                <br/>
+                <xf:input bind="helloworld" incremental="true" id="firstInput">
+                    <xf:label>input 1</xf:label>
+                    <xf:help>
+                        In <b>scripted mode</b> you can check out the <b>incremental</b> feature here. You will see your input
+                        will be validated as you type. As soon as you have input 5 characters the red background
+                        will disappear and the control will become valid.
+                    </xf:help>
+                    <xf:hint>you <b>have</b> to provide a "text" with more than 5 characters</xf:hint>
+                    <xf:alert>please specify a text longer than 5 characters</xf:alert>
+                </xf:input>
+            </xf:group>
+            <xf:group appearance="minimal">
+                <xf:label>setValue2</xf:label>
+                <xf:trigger id="btnSetvalueText">
+                    <xf:label>setvalue 'text'</xf:label>
+                    <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
+                    <xf:action>
+                        <xf:setvalue bind="hw" value="'text'"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="btnSetvalue4711">
+                    <xf:label>setvalue '4711'</xf:label>
+                    <xf:hint>Use setvalue to explicitly set specific values to nodes in the instance.</xf:hint>
+                    <xf:action>
+                        <xf:setvalue bind="hw" value="'4711'"/>
+                    </xf:action>
+                </xf:trigger>
+                <br/>
+                <xf:input bind="hw" id="secondInput">
+                    <xf:label>input 2</xf:label>
+                    <xf:hint>this field only accepts numbers</xf:hint>
+                    <xf:alert>please specify a number</xf:alert>
+                    <xf:help>Another help text just to show it's working. Only one of them can be visible
+                    at a time but for most cases this should be sufficient. If you need a global help file you can
+                    use a load/@show="new" to open up a new window with a complete textfile.</xf:help>
+                </xf:input>
+            </xf:group>
+            <xf:group appearance="minimal">
+                <xf:label>Repeat - insert, delete, move top, move bottom</xf:label>
+                <xf:trigger>
+                    <xf:label>Append</xf:label>
+                    <xf:hint>appends a new entry at the end of this collection</xf:hint>
+                    <xf:action>
+                        <xf:insert nodeset="repeatdata/input" at="last()" position="before"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Insert after selected</xf:label>
+                    <xf:hint>appends a new entry at the end of this collection</xf:hint>
+                    <xf:action>
+                        <xf:insert nodeset="repeatdata/input" at="index('repeatid')" position="after"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Delete selected</xf:label>
+                    <xf:hint>deletes selected entry from this collection</xf:hint>
+                    <xf:action>
+                        <xf:delete nodeset="repeatdata/input" at="index('repeatid')"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Delete last entry</xf:label>
+                    <xf:hint>deletes last entry from this collection</xf:hint>
+                    <xf:action>
+                        <xf:delete nodeset="repeatdata/input" at="last() - 1"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Top of List</xf:label>
+                    <xf:hint>move cursor to top of list</xf:hint>
+                    <xf:action>
+                        <xf:setindex index="1" repeat="repeatid"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Bottom of list</xf:label>
+                    <xf:hint>move cursor to bottom of list</xf:hint>
+                    <xf:action>
+                        <xf:setindex index="count(repeatdata/input[position() != last()])" repeat="repeatid"/>
+                    </xf:action>
+                </xf:trigger>
+                <div style="float:left;font-weight:bold;width:100px;margin:10px;">There must be at least 3 entries in this repeat to be valid</div>
+                <xf:repeat id="repeatid" bind="repeat1" appearance="full">
+                    <xf:input bind="entry" id="repeatInput">
+                        <xf:label>repeated input:</xf:label>
+                        <xf:hint>repeated enty</xf:hint>
+                    </xf:input>
+                </xf:repeat>
+                <xf:output bind="extra"/>
+            </xf:group>
+            <xf:group appearance="minimal">
+                <xf:label>switch / toggle</xf:label>
+                <xf:trigger id="on-button">
+                    <xf:label>ON</xf:label>
+                    <xf:hint>toggles switch to on</xf:hint>
+                    <xf:action>
+                        <xf:toggle case="case1"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger id="off-button">
+                    <xf:label>OFF</xf:label>
+                    <xf:hint>toggles switch to off</xf:hint>
+                    <xf:action>
+                        <xf:toggle case="case2"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:switch id="switch">
+                    <xf:case id="case1" selected="false">
+                        <div id="switchmsg">
+                            Switch is turned on!
+                        </div>
+                    </xf:case>
+                    <xf:case id="case2" selected="true">
+                        <h1>Switch is turned off!</h1>
+                    </xf:case>
+                </xf:switch>
+            </xf:group>
+            <xf:group class="buttons" appearance="minimal">
+                <xf:label>Misc</xf:label>
+                <xf:trigger>
+                    <xf:label>Dispatch (toggle ON)</xf:label>
+                    <xf:hint>dispatches DOMActivate to the 'ON' button</xf:hint>
+                    <xf:action>
+                        <xf:dispatch name="DOMActivate" targetid="on-button"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger bind="message-action">
+                    <xf:label>Load (new)</xf:label>
+                    <xf:action>
+                        <xf:load resource="{$contextroot}/bfResources/images/logo.png" show="new"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Load (replace)</xf:label>
+                    <xf:action>
+                        <xf:load resource="{$contextroot}/forms/uitest/Boolean.xhtml"  show="replace"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Message</xf:label>
+                    <xf:action>
+                        <xf:message level="modal" bind="message-action"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Message ephemeral</xf:label>
+                    <xf:action>
+                        <xf:message level="ephemeral" bind="message-action"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+            <xf:group class="buttons" appearance="minimal">
+                <xf:trigger>
+                    <xf:label>setFocus</xf:label>
+                    <xf:hint>sets focus to first input on this page</xf:hint>
+                    <xf:action>
+                        <xf:setfocus control="firstInput"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>setFocus to repeat</xf:label>
+                    <xf:hint>sets focus to first input on this page</xf:hint>
+                    <xf:action>
+                        <xf:setfocus control="repeatInput"/>
+                    </xf:action>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Reset</xf:label>
+                    <xf:hint>reset instance data to original values</xf:hint>
+                    <xf:action>
+                        <xf:reset/>
+                        <xf:toggle case="case2"/>
+                    </xf:action>
+                </xf:trigger>
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

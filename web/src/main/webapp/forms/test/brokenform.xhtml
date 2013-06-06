@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:xforms="http://www.w3.org/2002/xforms"
+        >
+<head xmlns="">
+    <title>
+        hello
+    </title>
+    <!--
+        Copyright (c) 2012.
+
+        betterFORM Project
+        http://www.betterform.de
+    -->
+</head>
+<body xmlns="">
+<div style="display:none">
+    <xforms:model id="model-1">
+        <xforms:instance>
+            <data>
+                <hello>Hello World!</hello>
+            </data>
+        </xforms:instance>
+    </xforms:model>
+    <xforms:bind id="foo" nodeset="hello"/>
+</div>
+
+<!-- broken bind to raise error -->
+<xforms:output bind="bar" id="ui">
+    <xforms:label>Hello from XForms: </xforms:label>
+</xforms:output>
+</body>
+</html>

@@ -74,16 +74,4 @@ public class XSLTSubmissionHandlerTest extends TestCase {
         this.xformsProcesssorImpl = null;
     }
 
-
-    private DOMComparator getComparator() {
-        DOMComparator comparator = new DOMComparator();
-        comparator.setIgnoreNamespaceDeclarations(true);
-        comparator.setIgnoreWhitespace(true);
-        comparator.setIgnoreComments(true);
-        comparator.setErrorHandler(new DOMComparator.SystemErrorHandler());
-
-        return comparator;
-    }
-
-
 }

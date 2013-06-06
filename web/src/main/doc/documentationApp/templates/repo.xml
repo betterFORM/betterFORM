@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta xmlns="http://exist-db.org/xquery/repo">
+    <description>@REP_DESC@</description>
+    <author>Lars Windauer</author>
+    <author>Joern Turner</author>
+    <author>Tobias Krebs</author>
+    <author>Robert Netzschwitz</author>
+    <website>@REP_WEBSITE@</website>
+    <status>stable</status>
+    <license>@REP_LICENSE@</license>
+    <copyright>true</copyright>
+    <type>application</type>
+    <target>@REP_TARGET@</target>
+    <version>@REP_VERSION@</version>
+    <prepare>pre-install.xql</prepare>
+    <finish/>
+    <permissions user="@REP_USER@" password="@REP_PWD@" group="@REP_GROUP@" mode="@REP_MODE@"/>
+</meta>

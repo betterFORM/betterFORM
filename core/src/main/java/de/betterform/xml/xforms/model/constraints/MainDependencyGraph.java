@@ -18,6 +18,7 @@ import org.w3c.dom.Node;
 
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -56,14 +57,26 @@ public class MainDependencyGraph extends DependencyGraph {
      */
     private void addReferredNodesToGraph(BetterFormXPathContext relativeContext, Node instanceNode,
                                          String expression, short property, Set references) throws XFormsException {
+    	addReferredNodesToGraph(relativeContext, instanceNode, expression, property, references, null);
+    }
+    
+    /**
+     * Adds a single bind's ref node to the Main Graph
+     * called by MainDependencyGraph.buildBindGraph()
+     */
+    private void addReferredNodesToGraph(BetterFormXPathContext relativeContext, Node instanceNode,
+                                         String expression, short property, Set references, String customMIP) throws XFormsException {
         //creates a new vertex for this Node or return it, in case it already existed
-        Vertex vertex = this.addVertex(relativeContext, instanceNode, expression, property);
+    	//RKU
+        Vertex vertex = this.addVertex(relativeContext, instanceNode, expression, property, customMIP);
         boolean hadVertex = vertex.wasAlreadyInGraph;
         vertex.wasAlreadyInGraph = false;
 
         // Analyze the Xpath Expression 'calculate'. Read nodeset RefNS
         // (the nodes this XPAth references)
         String xpath = vertex.getXPathExpression();
+//        String xpath = expression;
+        vertex.setXpathExpression(expression);
 
         if ((xpath == null) || (xpath.length() == 0)) {
             // bind without xpath, remove vertex
@@ -104,7 +117,7 @@ public class MainDependencyGraph extends DependencyGraph {
             Node referencedNode = (Node) enumeration.nextElement();
 
             // pre-build vertex
-            Vertex refVertex = this.addVertex(null, referencedNode, null, Vertex.CALCULATE_VERTEX);
+            Vertex refVertex = this.addVertex(null, referencedNode, null, Vertex.CALCULATE_VERTEX, null);
             this.addEdge(refVertex, vertex);
         }
     }
@@ -128,7 +141,7 @@ public class MainDependencyGraph extends DependencyGraph {
         final List nodeset = bind.getNodeset();
         for (int i = 0; i < nodeset.size(); i++) {
             BetterFormXPathContext relativeContext = new BetterFormXPathContext(nodeset, i + 1, bind.getPrefixMapping(), bind.getXPathFunctionContext());
-            Node node = (Node) XPathUtil.getAsNode(nodeset, i + 1);
+            Node node = XPathUtil.getAsNode(nodeset, i + 1);
             ModelItem modelItem = instance.getModelItem(node);
             
 
@@ -158,8 +171,21 @@ public class MainDependencyGraph extends DependencyGraph {
 
             property = bind.getConstraint();
             if (property != null) {
+                List constraints = bind.getConstraints();
+                modelItem.getDeclarationView().setConstraints(constraints);
                 modelItem.getDeclarationView().setConstraint(property);
                 this.addReferredNodesToGraph(relativeContext, node, property, Vertex.CONSTRAINT_VERTEX, bind.getConstraintReferences());
+            }
+            
+            //RKU
+            //property = bind.getCustomMIPs();
+            Map<String, String> customMIPs = bind.getCustomMIPs();
+            if (!customMIPs.isEmpty()) {
+            	modelItem.getDeclarationView().setCustomMIPs(customMIPs);
+            	for (String key : customMIPs.keySet()) {
+                    
+                    this.addReferredNodesToGraph(relativeContext, node, customMIPs.get(key), Vertex.CUSTOM_VERTEX, bind.getCustomMIPReferences(key), key);
+				}
             }
 
             property = bind.getDatatype();

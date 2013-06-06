@@ -9,7 +9,7 @@
     <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
 
     <path id="saxon.libs" description="classpath for Saxon">
-        <pathelement location="${basedir}/../core/src/main/lib/saxon-9.2.1.5.jar"/>
+        <pathelement location="${basedir}/../core/src/main/lib/saxon-9.4.0.7.jar"/>
     </path>
     <property name="baseURL" value="http://localhost:8001/betterform/forms/"/>
 

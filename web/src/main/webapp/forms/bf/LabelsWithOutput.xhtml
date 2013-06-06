@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+<head>
+    <title>Labels with xf:output childs</title>
+    <!--
+    ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+    ~ Licensed under the terms of BSD License
+
+    -->
+    <style type="text/css">
+        .xfFullGroup .xfGroupLabel {
+            font-size: large;
+            font-weight: bold;
+            padding-top: 6px;
+        }
+        .xfControl {
+            border:1px solid #808080;
+            padding:6px;
+        }
+        .xfGroup .xfControl .xfLabel {
+            float: left;
+            width: 200px;
+        }
+
+    </style>
+    <!-- TODO: implement outputs as child of xf:label -->
+    <xf:model>
+        <xf:instance xmlns="">
+            <data>
+                <output>true</output>
+                <input>foo</input>
+            </data>
+        </xf:instance>
+    </xf:model>
+</head>
+
+<body class="tundra">
+    <xf:group appearance="full" class="xfFullGroup">
+        <p>Activating the first trigger switches the node value at instance()/output to true / false"</p>
+        <xf:output ref="instance()/output">
+            <xf:label>Output Value: </xf:label>
+        </xf:output>
+        <xf:trigger appearance="minimal">
+            <xf:label><xf:output value="concat('Dynamic Trigger Label ', instance()/output)"/></xf:label>
+            <xf:setvalue ref="instance()/output" value="not(boolean-from-string(instance()/output))" />
+        </xf:trigger>
+        <xf:trigger>
+            <xf:label><xf:output value="concat('Dynamic Trigger Label ', instance()/output)"/></xf:label>
+            <xf:setvalue ref="instance()/output" value="not(boolean-from-string(instance()/output))" />
+        </xf:trigger>
+
+        <xf:input ref="input">
+            <xf:label><xf:output value="concat('Input with output: ', instance()/output)"/></xf:label>
+        </xf:input>
+
+        <xf:output ref="input">
+            <xf:label>Input1 Value: </xf:label>
+        </xf:output>
+
+        <xf:trigger>
+            <xf:label>Message</xf:label>
+            <xf:message>Message with current xf:output value:'<xf:output value="instance()/output"/>'</xf:message>
+        </xf:trigger>
+    </xf:group>
+</body>
+</html>

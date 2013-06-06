@@ -10,6 +10,7 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.model.bind.Bind;
 import de.betterform.xml.xforms.model.bind.Binding;
 import de.betterform.xml.xforms.model.bind.BindingResolver;
+import de.betterform.xml.xforms.model.bind.BindingUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -159,8 +160,10 @@ public abstract class AbstractBoundAction extends AbstractAction implements Bind
     public String getBindingExpression() {
         if (hasModelBinding()) {
             return getModelBinding().getBindingExpression();
+        } else if(BindingUtil.hasRef(this.element)){
+            return getXFormsAttribute(REF_ATTRIBUTE);
         }
-        return getXFormsAttribute(REF_ATTRIBUTE);
+        return getXFormsAttribute(NODESET_ATTRIBUTE);
     }
 
     /**

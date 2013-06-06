@@ -50,6 +50,11 @@ public abstract class Vertex {
      * constant for constraint Vertex
      */
     public static final short CONSTRAINT_VERTEX = 5;
+    
+    /**
+     * constant for custom Vertex
+     */
+    public static final short CUSTOM_VERTEX = 6;
 
     //    protected Vertex index;
 
@@ -128,6 +133,9 @@ public abstract class Vertex {
         return this.xpathExpression;
     }
 
+    public void setXpathExpression(String expr){
+        this.xpathExpression = expr;
+    }
     /**
      * adds a dependent Vertex to the depList
      *

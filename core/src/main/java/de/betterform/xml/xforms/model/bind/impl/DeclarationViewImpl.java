@@ -6,6 +6,10 @@
 package de.betterform.xml.xforms.model.bind.impl;
 
 import de.betterform.xml.xforms.model.bind.DeclarationView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,13 +28,15 @@ public class DeclarationViewImpl implements DeclarationView {
     private String relevant;
     private String calculate;
     private String constraint;
+    private List constraints;
+    private Map<String,String> customMIPs;
     private String p3ptype;
 
     /**
      * Creates a new declaration viewport implementation.
      */
     public DeclarationViewImpl() {
-        // NOP
+        this.constraints=new ArrayList();
     }
 
     // implementation of 'de.betterform.xml.xforms.model.bind.DeclarationView'
@@ -133,8 +139,13 @@ public class DeclarationViewImpl implements DeclarationView {
      *
      * @return the <code>constraint</code> declaration of a model item.
      */
+    @Deprecated
     public String getConstraint() {
         return this.constraint;
+    }
+
+    public List getConstraints() {
+        return this.constraints;
     }
 
     /**
@@ -143,8 +154,17 @@ public class DeclarationViewImpl implements DeclarationView {
      * @param constraint the <code>constraint</code> declaration of a model
      * item.
      */
+    @Deprecated
     public void setConstraint(String constraint) {
         this.constraint = constraint;
+    }
+
+    public void setConstraints(List constraints) {
+        this.constraints = constraints;
+    }
+
+    public void addConstraint(String constraint) {
+        this.constraints.add(constraint);
     }
 
     /**
@@ -165,4 +185,12 @@ public class DeclarationViewImpl implements DeclarationView {
         this.p3ptype = p3ptype;
     }
 
+    public Map<String, String> getCustomMIPs() {
+        return this.customMIPs;
+    }
+
+    public void setCustomMIPs(Map<String, String>  customMIPs) {
+        this.customMIPs = customMIPs;
+    } 
+      
 }

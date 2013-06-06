@@ -1,6 +1,6 @@
-betterFORM orangeRed (Version 5.0)
+betterFORM springBud (Version 5.0)
 ----------------------------------------------------------------------------------
-See http://betterform.wordpress.com/2012/05/10/whats-new-in-betterform-orangered/
+See http://betterform.wordpress.com/
 
 
 
