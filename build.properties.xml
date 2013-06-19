@@ -82,37 +82,47 @@
             <classpath pathid="compile.class.path" description="classpath for compiling core classes">
                 <pathelement path="${core.dir}/target/classes"/>
                 <path refid="transform.class.path"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec" version="1.6" artifactId="commons-codec"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar" groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
-                <!-- <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/> -->
-                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="org.apache.httpcomponents" version="4.1" artifactId="httpcomponents-core"/>
-                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-client"/>
-                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-mime"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-net-3.1.jar" groupid="commons-net" version="3.1" artifactId="commons-net"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1" artifactId="commons-io"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-codec-1.8.jar" groupid="commons-codec" version="1.8" artifactId="commons-codec"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.3.jar" groupid="commons-fileupload" version="1.3" artifactId="commons-fileupload"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-net-3.3.jar" groupid="commons-net" version="3.3" artifactId="commons-net"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-io-2.4.jar" groupid="commons-io" version="2.4" artifactId="commons-io"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="org.apache.commons" version="3.1" artifactId="commons-lang3"/>
-                <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.1.jar" groupid="commons-logging" version="1.1.1" artifactId="commons-logging"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-logging-1.1.3.jar" groupid="commons-logging" version="1.1.3" artifactId="commons-logging"/>
                 <pathelement location="${core.dir}/src/main/lib/activation-1.1.1.jar" groupid="javax.activation" version="1.1.1" artifactId="activation"/>
-                <pathelement location="${core.dir}/src/main/lib/mail-1.4.2.jar" groupid="javax.mail" version="1.4.2" artifactId="mail"/>
-                <pathelement location="${core.dir}/src/main/lib/log4j-1.2.15.jar" groupid="log4j" version="1.2.15" artifactId="log4j"/>
+                <pathelement location="${core.dir}/src/main/lib/mail-1.4.7.jar" groupid="javax.mail" version="1.4.7" artifactId="mail"/>
+                <pathelement location="${core.dir}/src/main/lib/log4j-1.2.17.jar" groupid="log4j" version="1.2.17" artifactId="log4j"/>
                 <pathelement location="${core.dir}/src/main/lib/xercesImpl-2.11.02.jar" groupid="xerces" version="2.11.02" artifactId="xercesImpl"/>
-                <pathelement location="${core.dir}/src/main/lib/xml-apis-1.4.01.jar" groupid="xml-apis" artifactId="xml-apis" version="1.4.01"/>
-                <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-common"/>
-                <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-client"/>
-                <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
+                <pathelement location="${core.dir}/src/main/lib/xml-apis-1.4.01.jar" groupid="xml-apis" version="1.4.01" artifactId="xml-apis"/>
+
+                <!-- httpcomponents -->
+                <pathelement location="${core.dir}/src/main/lib/httpcore-4.2.4.jar" groupid="org.apache.httpcomponents" version="4.2.4" artifactId="httpcomponents-core"/>
+                <pathelement location="${core.dir}/src/main/lib/httpclient-4.2.5.jar" groupid="org.apache.httpcomponents" version="4.2.5" artifactId="httpcomponents-client"/>
+                <pathelement location="${core.dir}/src/main/lib/httpmime-4.2.5.jar" groupid="org.apache.httpcomponents" version="4.2.5" artifactId="httpcomponents-mime"/>
+
+                <!-- apache-xmlrpc -->
+                <pathelement location="${core.dir}/src/main/lib/ws-commons-util-1.0.2.jar" groupid="org.apache.xmlrpc" version="1.0.2" artifactId="ws-commons-util"/>
+                <pathelement location="${core.dir}/src/main/lib/xmlrpc-common-3.1.3.jar" groupid="org.apache.xmlrpc" version="3.1.3" artifactId="xmlrpc-common"/>
+                <pathelement location="${core.dir}/src/main/lib/xmlrpc-client-3.1.3.jar" groupid="org.apache.xmlrpc" version="3.1.3" artifactId="xmlrpc-client"/>
+                <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.3.jar" groupid="org.apache.xmlrpc" version="3.1.3" artifactId="xmlrpc-server"/>
+
+                <!-- ehCache -->
                 <pathelement location="${core.dir}/src/main/lib/ehcache-core-2.5.2.jar" groupid="net.sf.ehcache" version="2.5.2" artifactId="ehcache-core"/>
                 <pathelement location="${core.dir}/src/main/lib/slf4j-api-1.6.1.jar" groupid="org.slf4j" version="1.6.1" artifactId="slf4j-api"/>
-                <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
+
+                <!-- Ant-Submissionhandler -->
+                <pathelement location="${core.dir}/src/main/lib/ant-1.9.1.jar" groupid="org.apache.ant" version="1.9.1" artifactId="ant"/>
 
                 <!-- eXist -->
-                <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>
-                <pathelement location="${core.dir}/src/main/lib/exist-2.1-trunk.jar" groupid="org.exist" version="2.1-trunk" artifactId="exist"/>
-                <pathelement location="${core.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="1.0" artifactId="xmldb"/>
+                <pathelement location="${core.dir}/src/main/lib/commons-pool-1.6.jar" groupid="commons-pool" version="1.6" artifactId="commons-pool"/>
+                <pathelement location="${core.dir}/src/main/lib/exist-2.0-rev18252.jar" groupid="org.exist" version="2.0-rev18252" artifactId="exist"/>
+                <pathelement location="${core.dir}/src/main/lib/xmldb-exist-2.0-rev18252.jar" groupid="org.xmldb" version="exist-2.0-rev18252" artifactId="xmldb"/>
             </classpath>
         </compile>
         <test>
             <classpath pathid="test.class.path" description="classpath for compiling core with test classes">
-                <pathelement location="${core.dir}/src/test/lib/junit-4.10.jar" groupid="junit" version="4.10" artifactId="junit" scope="test"/>
+                <pathelement location="${core.dir}/src/test/lib/junit-4.11.jar" groupid="junit" version="4.11" artifactId="junit" scope="test"/>
+                <pathelement location="${core.dir}/src/test/lib/hamcrest-core-1.3.jar" groupid="hamcrest" version="1.3" artifactId="hamcrest" scope="test"/>
+
                 <path refid="compile.class.path"/>
                 <pathelement path="${core.dir}/target/test-classes"/>
                 <pathelement path="${core.dir}/src/test/lib/jmdns.jar"/>
