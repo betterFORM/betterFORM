@@ -1,0 +1,25 @@
+<script src="jquery.js"></script>
+<polymer-element name="tk-element"  attributes="mode value readonly wrap ">
+    <template>
+
+        <span>I'm <b>tk-element</b>. This is my Shadow DOM. <span  class="foo"> </span></span>
+    </template>
+    <script>
+        Polymer('tk-element', {
+            mode: 'javascript',
+            readonly: false,
+            value: null,
+            wrap: false,
+            // allow styling from the outside world!
+            applyAuthorStyles: true,
+
+            ready: function() {
+                console.log("component ready",this);
+                $(document).ready(function() {
+                    console.log("component ready",this);
+                    $("#message").html("changed it");
+                });
+            }
+        });
+    </script>
+</polymer-element>
