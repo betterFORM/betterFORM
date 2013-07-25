@@ -1,0 +1,22 @@
+<polymer-element name="tk-element">
+    <template>
+        <span>I'm <b>tk-element</b>. This is my Shadow DOM.</span>
+        <p>Date: <input type="text" id="datepicker"/></p>
+    </template>
+    <script>
+        Polymer('tk-element', {
+            ready: function() {
+                require(['jquery','jquery.ui.datepicker'],
+                        function (jquery, datepicker) {
+                            //console.log();
+                            //var myVar = this.datepicker;
+                            //jquery(myVar).datepicker();
+                            jquery("#datepicker").datepicker()
+
+                        }
+                );
+            }
+        });
+    </script>
+</polymer-element>
+
