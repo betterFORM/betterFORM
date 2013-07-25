@@ -1,9 +1,12 @@
-define(["require", "jQuery", "jQueryUI"], function (req, $)
-{
-        req(['jQueryUI/datepicker', 'jQueryUI-datepicker-de'],
+require(['require', 'jquery', 'polymer'], function( req, $ ) {
+        Polymer('tk-element', {
+            ready: function() {
+                //...
+            }
+        });
+        req(['jquery.ui.datepicker'],
             function () {
                 $('#datepicker').datepicker();
             }
         );
 });
-
