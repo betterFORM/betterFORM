@@ -175,7 +175,7 @@ public class XFormsFilter implements Filter {
 
 
                 // check if request session has been invalidated
-                if (! request.isRequestedSessionIdValid()) {
+                if (! request.isRequestedSessionIdValid() || request.getAttribute("org.exist.forward" ) != null ) {
                     srvResponse.getOutputStream().write(bufResponse.getData());
                     srvResponse.getOutputStream().close();
                     return;
