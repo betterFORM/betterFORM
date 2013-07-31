@@ -150,7 +150,7 @@ public class XFormsFilter implements Filter {
             handleUpload(request,response,session);
         }else if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter("submissionResponse") != null) {
             doSubmissionReplaceAll(request, response);
-        }else {
+        } else {
 
             /* before servlet request */
             if (isXFormUpdateRequest(request)) {
@@ -173,6 +173,10 @@ public class XFormsFilter implements Filter {
                 filterChain.doFilter(srvRequest, bufResponse);
                 LOG.info("Returned from Chain");
 
+                // response is contains no betterFORM relevant content so it is not buffered and cannot be processed
+                if ( ! bufResponse.isBuffered()) {
+                    return;
+                }
 
                 // check if request session has been invalidated
                 if (! request.isRequestedSessionIdValid() || request.getAttribute("org.exist.forward" ) != null ) {
@@ -182,8 +186,9 @@ public class XFormsFilter implements Filter {
                 }
                 // response is already committed to the client, so nothing is to
                 // be done
-                if (bufResponse.isCommitted() )
+                if (bufResponse.isCommitted()) {
                     return;
+                }
 
                 //pass to request object
                 request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
