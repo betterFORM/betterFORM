@@ -173,13 +173,17 @@ public class XFormsFilter implements Filter {
                 filterChain.doFilter(srvRequest, bufResponse);
                 LOG.info("Returned from Chain");
 
+
+                // check if request session has been invalidated
+                if (! request.isRequestedSessionIdValid()) {
+                    srvResponse.getOutputStream().write(bufResponse.getData());
+                    srvResponse.getOutputStream().close();
+                    return;
+                }
                 // response is already committed to the client, so nothing is to
                 // be done
-                if (bufResponse.isCommitted())
+                if (bufResponse.isCommitted() )
                     return;
-
-
-
 
                 //pass to request object
                 request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
