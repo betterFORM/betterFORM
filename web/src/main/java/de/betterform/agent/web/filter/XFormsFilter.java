@@ -178,12 +178,6 @@ public class XFormsFilter implements Filter {
                     return;
                 }
 
-                // check if request session has been invalidated
-                if (! request.isRequestedSessionIdValid() || request.getAttribute("org.exist.forward" ) != null ) {
-                    srvResponse.getOutputStream().write(bufResponse.getData());
-                    srvResponse.getOutputStream().close();
-                    return;
-                }
                 // response is already committed to the client, so nothing is to
                 // be done
                 if (bufResponse.isCommitted()) {
@@ -357,6 +351,9 @@ public class XFormsFilter implements Filter {
 
         //[4] otherwise check response body for XForms markup
         String strResponse = bufResponse.getDataAsString();
+
+        //EXIST WORKAROUND: Test if String starts with "<" like <html or <DOCTYPE
+        if (! strResponse.trim().startsWith("<")) return false;
 
         //[5]find the xforms namespace local name
         int xfNSDeclEnd = strResponse.indexOf("=\"" + NamespaceConstants.XFORMS_NS + "\"");

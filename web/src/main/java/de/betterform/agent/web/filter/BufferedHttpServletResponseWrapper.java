@@ -27,8 +27,6 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
     private boolean usingOutputStream = false;
     private boolean usingWriter = false;
     private int contentLength;
-    private String strSubType = null;
-    private String strMediaType = null;
     private boolean buffered = false;
 
     /** GenericResponseWrapper constructor
@@ -138,17 +136,16 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
     }
 
     public String getMediaType() {
-
         // try to get the content type
         String strContentType = getContentType();
+        String strMediaType = null;
+        String strSubType = null;
+
         if (strContentType == null) {
             return "";
         }
         HeaderElement[] aHeaderelementTmp = BasicHeaderValueParser.parseElements(strContentType, new BasicHeaderValueParser());
 
-
-        strMediaType = null;
-        strSubType = null;
         if (aHeaderelementTmp.length >= 1) {
             // try to identify the content
             java.util.StringTokenizer stringtokenizerTmp = new java.util.StringTokenizer(aHeaderelementTmp[0].getName());
@@ -165,7 +162,7 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         }
 
         if (strMediaType != null && strSubType != null) {
-            return (strMediaType + "/" + strSubType);
+            return (strMediaType + "/" + strSubType).toLowerCase();
         } else {
             return "";
         }
@@ -180,10 +177,8 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
 
         // detect XML documents
         boolean isXML = false;
-        strMediaType = strMediaType.toLowerCase();
-        strSubType = strSubType.toLowerCase();
         // see RFC 3023 for details
-        return WebUtil.isMediaTypeXML(strMediaType);
+        return WebUtil.isMediaTypeXML(result);
     }
 
     private boolean shouldBuffer() {
