@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../../resources/scripts/polymer/polymer.min.js"></script>
+        <script src="../../resources/scripts/polymer/polymer-all/PointerEvents/pointerevents.js"></script>
+        <script src="jquery.js"></script>
+        <!-- Load custom element -->
+        <link rel="import" href="component/bf-editable.html">
+    </head>
+    <body>
+
+        <div>
+            <span id="message">click to make editable via jquery+contenteditable</span>
+
+
+            <!-- Instantiate custom element -->
+            <div is="bf-editable" touch-action="pointerdown">Click to edit via polymer component</div>
+        </div>
+
+        <script type="text/javascript">
+            $("#message").on("click",function(e){
+                $("#message").attr("contenteditable","true");
+                $("#message").focus();
+            });
+        </script>
+
+    </body>
+</html>

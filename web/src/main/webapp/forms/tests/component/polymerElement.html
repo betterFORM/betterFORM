@@ -1,25 +1,36 @@
-<script src="../jquery.js"></script>
-<polymer-element name="tk-element"  attributes="mode value readonly wrap ">
-    <template>
-
-        <span>I'm <b>tk-element</b>. This is my Shadow DOM. <span  class="foo"> </span></span>
-    </template>
+<!--<script src="../jquery.js"></script>-->
+<polymer-element name="tk-element" touch-action="none" on-tap="makeEditable">
     <script>
         Polymer('tk-element', {
-            mode: 'javascript',
-            readonly: false,
-            value: null,
-            wrap: false,
-            // allow styling from the outside world!
-            applyAuthorStyles: true,
 
-            ready: function() {
-                console.log("component ready",this);
-                $(document).ready(function() {
-                    console.log("component ready",this);
-                    $("#message").html("changed it");
-                });
-            }
+
+                ready: function() {
+                    console.log(this);
+
+                    //to add an eventhandler from within
+/*
+                    var self=this;
+                    this.addEventListener("click", function(e){
+                        console.log(self , "vor");
+                        // self.isEditable=true;
+                        self.setAttribute("contenteditable","true");
+                        self.focus();
+                        e.preventDefault();
+                        e.stopPropagation();
+                    });
+*/
+
+                },
+
+                 makeEditable:function(e){
+                     console.log("makeEditable", this );
+                     // this.isEditable=true;
+                     this.setAttribute("contenteditable","true");
+                     this.focus();
+                }
+
         });
+
+
     </script>
 </polymer-element>

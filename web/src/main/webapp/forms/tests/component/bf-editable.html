@@ -1,0 +1,21 @@
+<!--<script src="../jquery.js"></script>-->
+<polymer-element name="bf-editable" touch-action="none" on-tap="makeEditable">
+    <script>
+        Polymer('bf-editable', {
+
+
+            ready: function() {
+                console.log(this);
+            },
+
+            makeEditable:function(e){
+                console.log("makeEditable", this );
+                this.setAttribute("contenteditable","true");
+                this.focus();
+            }
+
+        });
+
+
+    </script>
+</polymer-element>
