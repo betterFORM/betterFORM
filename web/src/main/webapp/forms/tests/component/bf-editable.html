@@ -12,7 +12,10 @@
                 console.log("makeEditable", this );
                 this.setAttribute("contenteditable","true");
                 this.focus();
+
+                document.getElementById("app").changed({id:this.id});
             }
+
 
         });
 

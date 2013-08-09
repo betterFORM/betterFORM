@@ -6,15 +6,16 @@
         <script src="jquery.js"></script>
         <!-- Load custom element -->
         <link rel="import" href="component/bf-editable.html">
+        <link rel="import" href="component/app.html">
     </head>
     <body>
-
+        <bf-app id="app"></bf-app>
         <div>
             <span id="message">click to make editable via jquery+contenteditable</span>
 
 
             <!-- Instantiate custom element -->
-            <div is="bf-editable" touch-action="pointerdown">Click to edit via polymer component</div>
+            <div id="foo" is="bf-editable" touch-action="pointerdown">Click to edit via polymer component</div>
         </div>
 
         <script type="text/javascript">
@@ -24,5 +25,7 @@
             });
         </script>
 
+
+        <button onclick="$('#app').submit();">submit</button>
     </body>
 </html>
