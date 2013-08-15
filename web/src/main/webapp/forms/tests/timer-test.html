@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>betterform timer test</title>
+        <script src="../../resources/scripts/polymer/polymer.min.js"></script>
+        <script type="text/javascript" src="../../resources/scripts/jquery/jquery-2.0.3.js"></script>
+
+        <!--<script src="jquery.js"/>-->
+        <link rel="import" href="betterform-timer.html"> </link>
+    </head>
+    <body>
+        <div is="betterform-timer" id="timer">foo</div>
+
+
+        <button id="start">start</button>
+        <button id="stop">stop</button>
+        <button id="gettime">get time</button>
+
+        <!--<div id="plain"></div>-->
+
+        <script type="text/javascript">
+            jQuery('#start').on('click', function(e){
+                document.getElementById('timer').start();
+            });
+            jQuery('#stop').on('click', function(e){
+                document.getElementById('timer').stop();
+            });
+            jQuery('#gettime').on('click', function(e){
+                document.getElementById('timer').getTime();
+            });
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+<polymer-element name="betterform-epiclock-timer">
+    <!-- a timer component wrapping a jquery plugin (epiclock). -->
+    <template>
+        <div id="timer2"></div>
+    </template>
+    <script>
+        Polymer('betterform-epiclock-timer', {
+
+            ready: function () {
+                jQuery(this.$.timer2).epiclock();
+                console.log("end");
+            }
+        });
+    </script>
+</polymer-element>
