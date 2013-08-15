@@ -13,22 +13,26 @@
             timer:null,
 
             start:function(){
-                console.log("start");
                 this.timer.start();
 
                 var currentdate = new Date();
                 var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-                console.log("current time: ", currentTime);
             },
 
             stop:function(){
-                console.log("stop");
-
                 this.timer.stop();
             },
 
             getTime:function(){
-                console.log("time is", this.timer.getTime());
+                return this.timer.getTime();
+            },
+
+            getStatus:function(){
+                return this.timer.getStatus();
+            },
+
+            reset:function(){
+                this.timer.reset();
             },
 
             ready: function () {
@@ -45,8 +49,6 @@
                 );
                 this.timer.reset(0);
                 this.timer.mode(1);
-//                this.timer.start(1000);
-                console.log("created timer: ", this.timer);
             }
 
 
@@ -58,12 +60,10 @@
             var mode = 1;     //    Mode: count up or count down
             var status = 0;    //    Status: timer is running or stoped
             var timer_id;    //    This is used by setInterval function
-            console.log("timer creation....");
 
             // this will start the timer ex. start the timer with 1 second interval timer.start(1000)
             this.start = function(interval)
             {
-                console.log("timer creation start....");
 
                 interval = (typeof(interval) !== 'undefined') ? interval : 1000;
 
@@ -133,7 +133,7 @@
             }
 
             // This methode return the status of the timer running (1) or stoped (1)
-            this.getStatus
+            this.getStatus = function()
             {
                 return status;
             }
@@ -142,7 +142,6 @@
             // This methode will render the time variable to hour:minute:second format
             function generateTime()
             {
-                console.log("generateTime");
                 var second = time % 60;
                 var minute = Math.floor(time / 60) % 60;
                 var hour = Math.floor(time / 3600) % 60;
