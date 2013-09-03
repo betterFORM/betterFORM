@@ -11,20 +11,31 @@
     <script>
         Polymer('betterform-timer', {
             timer:null,
+            startDateTime:null,
+            endDateTime:null,
 
             start:function(){
                 this.timer.start();
-
-                var currentdate = new Date();
-                var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+                this.startDateTime = new Date().toISOString();
+                // var currentdate = new Date();
+                // var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
             },
 
             stop:function(){
                 this.timer.stop();
+                this.endDateTime = new Date().toISOString();
             },
 
             getTime:function(){
                 return this.timer.getTime();
+            },
+
+            getStartDateTime:function(){
+                return this.startDateTime;
+            },
+
+            getEndDateTime:function(){
+                return this.endDateTime;
             },
 
             getStatus:function(){

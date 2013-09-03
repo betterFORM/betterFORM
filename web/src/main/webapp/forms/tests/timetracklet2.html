@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>betterform timer test</title>
+        <script src="../../resources/scripts/polymer/polymer.min.js"></script>
+        <script type="text/javascript" src="../../resources/scripts/jquery/jquery-2.0.3.js"></script>
+
+        <!--<script src="jquery.js"/>-->
+        <link rel="import" href="betterform-timer.html">
+        </link>
+
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+
+            #controls{
+                display: none;
+            }
+            #container{
+                width: 400px;
+                margin: 0 auto;
+            }
+            table{
+                width: 100%;
+            }
+            td{
+                border: thin solid;
+            }
+            .project{
+                width: 200px;
+            }
+            .timerHook{
+                width: 150px;
+                text-align: center;
+            }
+            .controls{
+                width: 100px;
+            }
+
+            #actions{
+                display: none;
+            }
+            #actions li:hover {
+                background: #b0c4de;
+            }
+            #description{
+                resize:none;
+                width: 116px;
+            }
+        </style>
+        <link rel="import" href="betterform-timer.html">
+        </link>
+    </head>
+    <body>
+        <betterform-timer id="timer"></betterform-timer>
+        <span id="controls">
+            <img id="pause" src="images/pause.png" width="20" height="20"/>
+            <img id="stop" src="images/stop32.png" width="32" height="32"/>
+        </span>
+
+        <div id="actions">
+            <ul>
+                <li>Pre-Sales</li>
+                <li>Planning</li>
+                <li>Coordination</li>
+                <li>Implementation</li>
+                <li style="border-bottom:none;">Support</li>
+            </ul>
+            <textarea id="description"></textarea>
+        </div>
+
+        <div id="container">
+            <table>
+                <tr class="record">
+                    <td class="project">Ziziphus</td>
+                    <td class="timerHook"></td>
+                    <td class="controls"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="record">
+                    <td class="project">Eichhorn</td>
+                    <td class="timerHook"></td>
+                    <td class="controls"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="record">
+                    <td class="project">Support Jason Harrop</td>
+                    <td class="timerHook"></td>
+                    <td class="controls"></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <script type="text/javascript">
+            var timerElement = document.getElementById('timer');
+
+            // move timer and controls to listitem that was clicked
+            jQuery(".record").on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var record = jQuery(e.target).closest("tr");
+
+                var isActive = jQuery(record).hasClass("active");
+                console.log("isActive ", isActive);
+
+
+                //if it's not the active item we activated...
+                if (isActive == false) {
+                    console.log("active=false");
+                    //if there's an already active item...
+                    var activeItem = jQuery(".active");
+                    var trackItem;
+                    if (activeItem.length != 0) {
+                        console.debug("there's another active item");
+                        trackItem = timerElement.getTime();
+                        console.debug("tracked for: ", jQuery(activeItem).find('.project').text(), " elapsed time: ", trackItem);
+                        timerElement.reset();
+                        //todo:save item to storage
+                    }
+                }
+
+                timerElement.start();
+                jQuery(".active").css({"opacity": "1.0"});
+
+                //positioning of timer and controls
+                var isActiveItem = jQuery(record).hasClass("active");
+                if (!isActive) {
+                    jQuery(timerElement).appendTo(jQuery(record).find(".timerHook"));
+                    jQuery('#controls').appendTo(record);
+                    jQuery(".active").removeClass("active");
+                    jQuery(record).addClass("active");
+                }
+            });
+
+            jQuery("#pause").on("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (timerElement.getStatus() == 0) {
+                    timerElement.start();
+                    jQuery(".active").css({"opacity": "1.0"});
+                } else {
+                    timerElement.stop();
+                    jQuery(".active").css({"opacity": "0.7"});
+                }
+            });
+
+            jQuery("#stop").on("click", function (e) {
+                console.log("stopping......");
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (timerElement.getStatus() == 1) {
+                    //show actions list
+                    jQuery("#actions").appendTo(jQuery(".active"));
+                    timerElement.stop();
+/*
+                    trackItem = timerElement.getTime();
+                    console.debug("tracked for: ", jQuery("li.active").find('.project').text(), " elapsed time: ", trackItem);
+                    timerElement.reset();
+                    jQuery("li.active").removeClass("active");
+                    jQuery(timerElement).appendTo(jQuery("body"));
+                    jQuery('#controls').appendTo("body");
+*/
+
+                    //todo: save item to storage
+                }
+            });
+
+            /*
+             function storeRecord(){
+             var records = window.localStorage.getItem("records");
+             records[]
+             }
+             */
+        </script>
+    </body>
+</html>

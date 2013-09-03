@@ -10,10 +10,17 @@
         </link>
 
         <style>
-            ul {
+            body {
+                font-family: sans-serif;
+            }
+            #container{
                 width: 400px;
+                margin: 0 auto;
+                position: relative;
+            }
+            ul {
                 margin: 0;
-                padding: 0;
+                padding: 10px;
                 margin: 0 auto;
             }
 
@@ -21,13 +28,21 @@
                 list-style: none;
                 border-bottom: thin solid #999999;
                 line-height: 24px;
-                padding: 3px;
+                padding: 5px;
             }
 
             #controls {
                 display: none;
                 float: right;
-                height: 22px;
+                height: 40px;
+                position: relative;
+                margin-top: -8px;
+            }
+
+            #pause {
+                position: absolute;
+                top: 7px;
+                right: 36px;
             }
 
             li:hover {
@@ -63,7 +78,42 @@
             .active {
                 color: #4682b4;
                 background: #e3e3e3;
-                padding: 10px 3px;
+                padding: 10px 5px;
+            }
+
+            #actions {
+                display: none;
+                width:100%;
+            }
+
+            #actions li {
+                text-align: right;
+                font-size: 0.7em;
+                line-height: 1;
+            }
+
+            #actions li:hover {
+                background: #b0c4de;
+            }
+            #container #actions{
+                display: inline-block;
+            }
+            #description{
+                resize:none;
+                width: 280px;
+                margin: 7px;
+                height: 56px;
+            }
+            #save{
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: transparent;
+                float: right;
+            }
+            .selected{
+                font-weight: bold;
+                font-size: 0.9em !important;
             }
         </style>
         <link rel="import" href="betterform-timer.html">
@@ -73,52 +123,81 @@
         <betterform-timer id="timer"></betterform-timer>
         <span id="controls">
             <img id="pause" src="images/pause.png" width="20" height="20"/>
-            <img id="stop" src="images/stop.png" width="20" height="20"/>
+            <img id="stop" src="images/stop32.png" width="32" height="32"/>
         </span>
-        <ul>
-            <li>
-                <span class="project">Ziziphus</span>
-                <span class="timerHook"></span>
-            </li>
-            <li>
-                <span class="project">Eichhorn</span>
-                <span class="timerHook"></span>
-            </li>
-            <li>
-                <span class="project">Support Jason Harrop</span>
-                <span class="timerHook"></span>
-            </li>
-        </ul>
+
+        <div id="actions">
+            <ul>
+                <li>Pre-Sales</li>
+                <li>Planning</li>
+                <li>Coordination</li>
+                <li>Implementation</li>
+                <li style="border-bottom:none;">Support</li>
+            </ul>
+            <textarea id="description"></textarea>
+            <button id="save">
+                <img src="images/ok-sign.png" width="64" height="64" tabindex="0"/>
+            </button>
+        </div>
+
+        <div id="container">
+            <ul id="projects">
+                <li class="record">
+                    <span class="project">Ziziphus</span>
+                    <span class="timerHook"></span>
+                </li>
+                <li class="record">
+                    <span class="project">Eichhorn</span>
+                    <span class="timerHook"></span>
+                </li>
+                <li class="record">
+                    <span class="project">Support Jason Harrop</span>
+                    <span class="timerHook"></span>
+                </li>
+            </ul>
+        </div>
+
 
         <script type="text/javascript">
             var timerElement = document.getElementById('timer');
-
+            var records = new Array();
             // move timer and controls to listitem that was clicked
-            jQuery("li").on("click", function (e) {
+            jQuery(".record").on("click", function (e) {
+
                 e.preventDefault();
                 e.stopPropagation();
+
                 var listItem = jQuery(e.target).closest("li");
+                console.log("closest ", listItem);
+                console.log("e.target", e.target);
+
+                //rather upgly but....
+                if(!jQuery(listItem).hasClass("record")){
+                    return false;
+                }
+                if(e.target.id=="description" || e.target.id == "save"){
+                    return false;
+                }
 
                 var isActive = jQuery(listItem).hasClass("active");
-                console.log("isActive ", isActive);
-
 
                 //if it's not the active item we activated...
                 if (isActive == false) {
-                    console.log("active=false");
                     //if there's an already active item...
                     var activeItem = jQuery("li.active");
                     var trackItem;
                     if (activeItem.length != 0) {
-                        console.debug("there's another active item");
                         trackItem = timerElement.getTime();
                         console.debug("tracked for: ", jQuery(activeItem).find('.project').text(), " elapsed time: ", trackItem);
+                        //todo:save !
+
                         timerElement.reset();
-                        //todo:save item to storage
                     }
                 }
 
                 timerElement.start();
+
+                jQuery("li.active").css({"opacity": "1.0"});
 
                 //positioning of timer and controls
                 var isActiveItem = jQuery(listItem).hasClass("active");
@@ -128,6 +207,11 @@
                     jQuery("li.active").removeClass("active");
                     jQuery(listItem).addClass("active");
                 }
+                return false;
+            });
+
+            jQuery("#actions ul li").on("click",function(e){
+                jQuery(e.target).toggleClass("selected");
             });
 
             jQuery("#pause").on("click", function (e) {
@@ -135,32 +219,79 @@
                 e.stopPropagation();
                 if (timerElement.getStatus() == 0) {
                     timerElement.start();
-                    jQuery("li.active").css({"opacity":"1.0"});
+                    jQuery("li.active").css({"opacity": "1.0"});
                 } else {
                     timerElement.stop();
-                    jQuery("li.active").css({"opacity":"0.7"});
+                    jQuery("li.active").css({"opacity": "0.7"});
                 }
             });
 
             jQuery("#stop").on("click", function (e) {
-                console.log("stopping......") ;
                 e.preventDefault();
                 e.stopPropagation();
-                if(timerElement.getStatus() == 1){
+
+                if (timerElement.getStatus() == 1) {
+                    //show actions list
+                    jQuery("#actions").appendTo(jQuery(".active"));
                     timerElement.stop();
-                    trackItem = timerElement.getTime();
-                    console.debug("tracked for: ", jQuery("li.active").find('.project').text(), " elapsed time: ", trackItem);
-                    timerElement.reset();
-                    jQuery("li.active").removeClass("active");
-                    jQuery(timerElement).appendTo(jQuery("body"));
-                    jQuery('#controls').appendTo("body");
-                    //todo: save item to storage
                 }
             });
 
-            function storeRecord(){
+            jQuery("#save").on("click",function(){
+                storeRecord();
+                hide();
+            });
+
+            function hide(){
+                jQuery("li.active").removeClass("active");
+                jQuery("#actions").appendTo(jQuery("body"));
+                jQuery('#controls').appendTo("body");
+                jQuery('#timer').appendTo("body");
+            }
+
+            function storeRecord() {
+                //todo: ...
+                var activeItem = jQuery("li.active");
+
+                var record = {
+                    date: new Date().toISOString(),
+                    start:timerElement.getStartDateTime(),
+                    end :timerElement.getEndDateTime(),
+                    duration:timerElement.getTime(),
+                    project:activeItem.find('.project').text(),
+                    action:jQuery("#actions .selected"),
+                    url:"",
+                    description:jQuery("#description").val()
+                };
+                records.push(record);
+                // debug output
+                for(var index in records){
+                    console.log("Properties for project: ",records[index].project);
+                    var properties = records[index];
+                    for(var property in properties){
+                        console.log("property: " , property, " value: ",properties[property]);
+                    }
+
+                }
+                jQuery.ajax({
+                    type: "POST",
+                    url: "modules/storeRecords.xql",
+                    data:records,
+
+                    success: function(data) {
+                        console.log("stored data successsfully on server! [msg: '",data, ']');
+                        records = {};
+                    },
+                    error: function(data) {
+                        // TODO: error handling, local storage?
+                        console.warn("error storing data [msg: ",data,"]");
+                    }
+                });
+
+
 
             }
+
         </script>
     </body>
 </html>
