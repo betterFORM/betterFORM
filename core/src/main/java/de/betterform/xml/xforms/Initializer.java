@@ -200,6 +200,8 @@ public class Initializer {
     	Container container = model.getContainer();
         XFormsElementFactory xformsFactory = container.getElementFactory();
         CustomElementFactory customFactory = container.getCustomElementFactory();
+        WebComponentElementFactory webComponentElementFactory = container.getWebComponentElementFactory();
+
         NodeList childNodes = element.getChildNodes();
 
         for (int index = 0; index < childNodes.getLength(); index++) {
@@ -222,8 +224,14 @@ public class Initializer {
                     if(hasXFormsParent(elementImpl)) {
                         initializeActionElement(model,repeatItemId,xformsFactory,elementImpl);
                     }
-                }
-                else if (customFactory.isCustomElement(elementImpl)) {
+                }else if(webComponentElementFactory.isUIElement(elementImpl)){
+                    //todo: continue
+                    Model contextModel = Initializer.getContextModel(model, elementImpl);
+                    AbstractUIElement component = (AbstractUIElement) webComponentElementFactory.createXFormsElement(elementImpl,contextModel);
+                    if(component != null)
+                        initXFormsObject(model,repeatItemId,component);
+
+                }else if (customFactory.isCustomElement(elementImpl)) {
                 	//initializes a custom element
                     Model contextModel = Initializer.getContextModel(model, elementImpl);
 

@@ -95,9 +95,7 @@ public class BoundElementState implements UIElementState {
                 // set types
                 if (this.handleTypes) {
                     String datatype = UIElementStateUtil.getDatatype(modelItem, this.owner.getElement());
-                    String p3ptype = modelItem.getDeclarationView().getP3PType();
                     UIElementStateUtil.setStateAttribute(this.state, TYPE_ATTRIBUTE, datatype);
-                    UIElementStateUtil.setStateAttribute(this.state, P3PTYPE_ATTRIBUTE, p3ptype);
 
                     // keep datatype
                     this.currentType = datatype;

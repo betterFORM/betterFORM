@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      bf:transform="/betterform/resources/xslt/webcomponents.xsl">
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+        <link rel="import" href="xf-input.html"/>
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <name>nobody</name>
+                    </data>
+                </xf:instance>
+
+                <xf:bind id="foo" required="true()" match="#name"/>
+
+                <xf:submission id="xf-submit" method="post" resource="someUrl" replace="none"/>
+            </xf:model>
+
+
+        </div>
+
+        <form action="#xf-submit">
+            <input type="text" name="name" id="name" ref="name" is="xf-input"/>
+        </form>
+
+    </body>
+</html>

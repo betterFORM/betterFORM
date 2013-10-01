@@ -65,6 +65,7 @@ public class Container {
     private Map xFormsElements;
     private XFormsElementFactory elementFactory;
     private CustomElementFactory customElementFactory;
+    private WebComponentElementFactory webcomponentFactory;
     private boolean modelConstructDone = false;
     private int idCounter = 0;
     private List eventExceptions;
@@ -153,6 +154,13 @@ public class Container {
         }
 
         return this.customElementFactory;
+    }
+
+    public WebComponentElementFactory getWebComponentElementFactory() throws XFormsException {
+        if (this.webcomponentFactory == null){
+            this.webcomponentFactory = new WebComponentElementFactory();
+        }
+        return this.webcomponentFactory;
     }
 
     /**

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+        >
+    <head>
+        <title>[PUT YOUR TITLE HERE]</title>
+        <!--
+        ~ Copyright (c) 2013. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <name></name>
+                    </data>
+                </xf:instance>
+
+                <xf:bind id="foo" required="true()" match="#name"/>
+            </xf:model>
+
+
+        </div>
+
+        <input type="text" name="name" id="name" ref="name" is="xf-bound-control"/>
+
+<!--
+        <input type="text" name="name" id="name" data-ref="'foo'" />
+        <input type="text" name="name" id="name" data-ref="instance('i-default')/name" />
+        <div class="greeting">hello {name}</div>
+-->
+    </body>
+</html>
