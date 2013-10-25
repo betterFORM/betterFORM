@@ -4,13 +4,15 @@
  */
 package de.betterform.xml.xpath;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import junit.framework.TestCase;
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.SaxonReferenceFinderImpl;
-import junit.framework.TestCase;
-
-import java.util.Collections;
-import java.util.Set;
 
 /**
  * Tests reference detection.
@@ -65,6 +67,13 @@ public class XPathReferenceFinderTest extends TestCase {
 
     }
 
+    public void testGetReferencesWithNamespaces() throws Exception {
+    	Map prefixes = new HashMap();
+    	prefixes.put("ns", "http://example.com");
+       
+    	assertReferences(new String[]{"child::ns:data"},
+                this.referenceFinder.getReferences("ns:data", prefixes, fDummyContainer));
+    }
     /**
      * Tests reference detection for expressions with instance() function.
      *
