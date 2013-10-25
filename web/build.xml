@@ -349,6 +349,18 @@
         </ant>
     </target>
 
+    <target name="deploy-web-resources" description="only deploys resources in src/main/webapp/resources">
+
+        <echo>
+        ************************************************************************************
+        deploying classes + resources tree to webapp/resources (developer mode)
+        ************************************************************************************
+        </echo>
+        <copy todir="${webapp.dir}/resources">
+            <fileset dir="${basedir}/src/main/webapp/resources"/>
+        </copy>
+    </target>
+
 
     <target name="deploy" depends="compile, exploded-webapp-base, create-single-jar" description="default deployment as single jar">
         <echo>

@@ -19,13 +19,6 @@
     -->
     <xsl:param name="contextroot" select="''"/>
 
-    <!---
-    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    relative path to javascript files within resources
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    -->
-    <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>
-
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     resources are served by ResourceServlet. This param passes the mapping path
@@ -88,10 +81,10 @@
 
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            Polymer import - the only js file imported directly by betterFORM
+            Polymer import - the only js file imported directly
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <script type="text/javascript" src="concat($contextroot,$scriptPath,'polymer/polymer.min.js')"/>
+            <script type="text/javascript" src="{concat($contextroot,$scriptPath,'polymer/polymer.min.js')}"/>
 
 
             <!--
@@ -106,7 +99,7 @@
                 var model = {
                     <xsl:for-each select="//bf:data">
                         <xsl:message>data:<xsl:value-of select="."/></xsl:message>
-                        node:{
+                        <xsl:value-of select="../@id"/>:{
                             id:"<xsl:value-of select="../@id"/>",
                             readonly:<xsl:value-of select="@bf:readonly"/>,
                             required:<xsl:value-of select="@bf:required"/>,

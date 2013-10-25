@@ -5,7 +5,7 @@
       bf:transform="/betterform/resources/xslt/webcomponents.xsl">
     <head>
         <title>[PUT YOUR TITLE HERE]</title>
-        <link rel="import" href="xf-input.html"/>
+        <link rel="import" href="../../../resources/components/xf-input.html"/>
 
     </head>
     <body>
@@ -14,6 +14,7 @@
                 <xf:instance id="i-default">
                     <data xmlns="">
                         <name>nobody</name>
+                        <name>somebody</name>
                     </data>
                 </xf:instance>
 
@@ -26,7 +27,10 @@
         </div>
 
         <form action="#xf-submit">
-            <input type="text" name="name" id="name" ref="name" is="xf-input"/>
+            <!-- instead of using 'ref' just using 'name' for the binding should be ok as long as an atomic name is used e.g. 'foo' and not 'foo/bar'.
+            If pathes are needed 'ref' must be used. -->
+            <input type="text" name="name" id="nobodyControl" ref="name[1]" is="xf-input"/>
+            <input type="text" name="name" id="sombodyControl" ref="name[2]" is="xf-input"/>
         </form>
 
     </body>
