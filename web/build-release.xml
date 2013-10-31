@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!--
+    author: Joern Turner
+    author: Lars Windauer
+ -->
+<project id="web" name="betterForm single jar release" default="release" basedir=".">
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- ###
+          ATTENTION - the properties below must be set before build.properties.xml
+          is called - DO NOT MOVE
+  ###  -->
+
+    <property name="root.dir" value="${basedir}/.."/>
+    <property name="resource.src.dir" value="${basedir}/src"/>
+    <property name="core.dir" value="${basedir}/../core"/>
+    <property name="web.dir" value="${basedir}"/>
+    <xmlproperty file="../build.properties.local.xml" semanticAttributes="true" keepRoot="false"/>
+    <xmlproperty file="../release.properties.xml" semanticAttributes="true" keepRoot="false"/>
+    <xmlproperty file="../build.properties.xml" semanticAttributes="true" keepRoot="false"/>
+
+
+    <!-- local Web properties -->
+    <property name="forms.target" value="forms"/>
+    <property name="lib.dir" value="${basedir}/src/main/lib"/>
+    <property name="src.webapp.dir" value="${basedir}/src/main/webapp"/>
+    <property name="src.webinf.dir" value="${src.webapp.dir}/WEB-INF"/>
+    <property name="target" value="${basedir}/target"/>
+    <property name="webapp.dir" value="${target}/${web.app.name}"/>
+        <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
+    <property name="targetname" value="${target}/${web.app.name}-${app.version.number}"/>
+
+    <antversion property="antversion" atleast="${properties.antversion}"/>
+    
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <!-- **************************************** HOUSEKEEPING **************************************** -->
+    <target name="check-ant-version" unless="antversion">
+        <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
+    </target>
+    
+    <target name="clean" description="clean build target directory">
+        <echo>
+        ************************************************************************************
+        cleaning up web...
+        ************************************************************************************
+        </echo>
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <!-- **************************************** PREPARATION **************************************** -->
+    <target name="prepare" description="init the build process" depends="check-ant-version" if="antversion">
+        <echo>
+        ************************************************************************************
+        copying Core classes...
+        ************************************************************************************
+        </echo>
+
+        <tstamp/>
+        <mkdir dir="${target}/classes"/>
+
+        <ant antfile="build.xml" target="compile" dir="${core.dir}" inheritall="true"/>
+
+        <copy todir="${target}/classes">
+            <fileset dir="${core.dir}/target/classes"/>
+        </copy>
+    </target>
+
+    <target name="compile" depends="prepare" description="compile all web sources">
+        <echo>
+        ************************************************************************************
+        compiling Web classes...
+        ************************************************************************************
+        JavaOptions:
+            version:     ${properties.javac.version}
+            debug:       ${properties.javac.debug}
+            deprecation: ${properties.javac.deprecation}
+            optimize:    ${properties.javac.optimize}
+
+        ************************************************************************************
+        </echo>
+
+        <javac description="compile source files"
+               srcdir="${basedir}/src/main/java"
+               destdir="${target}/classes"
+               classpathref="web.class.path"
+               target="${properties.javac.version}"
+               debug="${properties.javac.debug}"
+               deprecation="${properties.javac.deprecation}"
+               optimize="${properties.javac.optimize}"
+               includeantruntime="false"
+               nowarn="true"
+                />
+    </target>
+
+    <target name="create-single-jar" description="creates a single jar for all classes and resources">
+
+        <!--<antcall target="create-jar"/>-->
+        <antcall target="compile"/>
+
+        <echo>
+        ************************************************************************************
+        copy resources to META-INF/resources
+        ************************************************************************************
+        </echo>
+        <copy todir="${target}/classes/META-INF/resources">
+            <fileset dir="${resource.src.dir}/main/webapp/resources" includes="**/*" excludes="scripts/**" />
+        </copy>
+
+        <echo>
+        ************************************************************************************
+        unpacking optimized javascript library
+        ************************************************************************************
+        </echo>
+        <unzip src="${resource.src.dir}/main/lib/${app.name}-js-optimized.zip"
+               dest="${target}/classes/META-INF/resources/scripts"/>
+        <echo>
+        ************************************************************************************
+        compressing classes plus resources into a single jar
+        ************************************************************************************
+        </echo>
+	
+	<filter token="app.version" value="${app.version.number}"/>
+        <filter token="timestamp" value="${current.time}"/>
+        <filter token="build.number" value="${build.number}"/>
+
+	<copy
+              tofile="${basedir}/src/main/webapp/WEB-INF/betterform-version.info"
+              file="${core.dir}/src/main/java/version.info.tmpl"
+              filtering="true"
+              overwrite="true"/>
+
+        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/ehcache.xml"/>
+
+        <echo>
+            ************************************************************************************
+            copying jar to WEB-INF/lib
+            ************************************************************************************
+        </echo>
+        <!--<copy todir="${webapp.dir}/WEB-INF/lib" file="${web.dir}/target/betterform.jar"/>-->
+
+        <echo>
+            ************************************************************************************
+            deleting exploded classes folder to avoid conflicts
+            ************************************************************************************
+        </echo>
+        <!--<delete dir="${webapp.dir}/WEB-INF/classes"/>-->
+
+
+
+    </target>
+
+
+    <target name="prepare-release" description="Prepare betterFORM single jar release">
+      <echo>
+	__== Update Maven POMS ==__
+      </echo>
+
+      <ant antfile="${root.dir}/build.xml" inheritall="false" target="update-maven-poms"/>
+
+      <echo>
+	__== Create Custom Dojo Build ==__
+      </echo>
+      <ant antfile="build-dojo.xml" inheritall="false" target="build-dojo"/>
+    </target>
+    
+    <target name="release" depends="prepare-release, create-single-jar" description="Build betterFORM single jar release"/>
+</project>

@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:c="http://betterform.de/clinton"
+      xmlns:xf="http://www.w3.org/2002/xforms" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Test calcualtions on namespaced data</title>
+    <!-- Le styles -->
+</head>
+<body id="subscription">
+<div style="display:none">
+    <xf:model>
+        <xf:instance id="i-namespace" xmlns="http://betterform.de/clinton" xmlns:c="http://betterform.de/clinton">
+            <data xmlns="http://betterform.de/clinton">
+                <integer/>
+                <calculated/>
+            </data>
+        </xf:instance>
+
+        <xf:bind ref="instance('i-namespace')">
+            <xf:bind ref="c:integer" type="xsd:integer"/>
+            <xf:bind ref="c:calculated" calculate="../c:integer * 2"/>
+        </xf:bind>
+
+
+        <xf:instance id="i-nonamespace" xmlns="" >
+            <data>
+                <integer/>
+                <calculated/>
+            </data>
+        </xf:instance>
+
+
+        <xf:bind ref="instance('i-nonamespace')" >
+            <xf:bind ref="integer" type="xsd:integer"/>
+            <xf:bind ref="calculated" calculate="../integer * 2"/>
+        </xf:bind>
+
+    </xf:model>
+</div>
+<xf:group ref="instance('i-nonamespace')" appearance="full">
+    <xf:label>No Namespace</xf:label>
+    <xf:input ref="integer">
+        <xf:label>integer</xf:label>
+    </xf:input>
+    <xf:input ref="calculated">
+        <xf:label>calculated</xf:label>
+    </xf:input>
+
+</xf:group>
+<xf:group ref="instance('i-namespace')" appearance="full">
+    <xf:label>With Namespace</xf:label>
+    <xf:input ref="c:integer">
+        <xf:label>c:integer</xf:label>
+    </xf:input>
+    <xf:input ref="c:calculated">
+        <xf:label>c:calculated</xf:label>
+    </xf:input>
+</xf:group>
+<xf:group>
+    <xf:label>Controls</xf:label>
+    <xf:trigger id="changedNotNamespaceValue">
+        <xf:label>integer = 5</xf:label>
+        <xf:setvalue ref="instance('i-nonamespace')//integer" value="5"/>
+    </xf:trigger>
+    <xf:trigger id="changedNamespaceValue">
+        <xf:label>c:integer = 5</xf:label>
+        <xf:setvalue ref="instance('i-namespace')//c:integer" value="5"/>
+    </xf:trigger>
+</xf:group>
+</body>
+</html>
