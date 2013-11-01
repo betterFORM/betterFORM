@@ -26,7 +26,6 @@ import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
@@ -42,6 +41,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -106,7 +106,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     public void configure() throws XFormsException {
         this.key = generateXFormsSessionKey();
         initConfig();
-        WebUtil.storeCookies(request, this);
+        WebUtil.storeCookies(Arrays.asList(request.getCookies()), this);
         WebUtil.setContextParams(request, httpSession, this, this.key);
         WebUtil.copyHttpHeaders(request, this);
         setLocale();
