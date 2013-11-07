@@ -22,7 +22,12 @@
     "grunt-open": "~0.2.0",
     "matchdep": "~0.1.2",
     "connect-livereload": "~0.2.0",
-    "time-grunt": "~0.1.0"
+    "time-grunt": "~0.1.0",
+    "grunt-htmlcompressor": "~0.1.8",
+    "vulcanize": "~0.1.1",
+    "grunt-exec": "~0.4.2",
+    "cheerio": "~0.12.3",
+    "nopt": "~2.1.2"
   },
   "engines": {
     "node": ">=0.8.0"

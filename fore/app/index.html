@@ -10,36 +10,39 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="../styles/main.css">
         <!-- build:js scripts/vendor/modernizr.js -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
+        <script src="../bower_components/modernizr/modernizr.js"></script>
         <!-- endbuild -->
 
         <!-- Place your HTML imports here -->
+        <link rel="import" href="button.html">
     </head>
     <body>
-        <div class="container">
-            <div class="hero-unit">
-                <h1>'Allo, 'Allo!</h1>
-                <p>You now have</p>
-                <ul>
-                    <li>HTML5 Boilerplate</li>
-                    <li>Polymer</li>
-                </ul>
-                <p>installed.</p>
-                <h3>Enjoy coding! - Yeoman</h3>
-            </div>
+    <div class="container">
+        <div class="hero-unit">
+            <h1>'Allo, 'Allo!</h1>
+            <p>You now have</p>
+            <ul>
+                <li>HTML5 Boilerplate</li>
+                <li>Polymer</li>
+            </ul>
+            <p>installed.</p>
+            <h3>Enjoy coding! - Yeoman</h3>
         </div>
+    </div>
 
 
-      <script>
+    <script>
         document.addEventListener('WebComponentsReady', function() {
             // Perform some behaviour
         });
-      </script>
+    </script>
 
-        <!-- build:js scripts/vendor.js -->
-        <script src="bower_components/polymer/polymer.min.js"></script>
-        <!-- endbuild -->
-</body>
+
+    <!-- build:js scripts/vendor.js -->
+    <script src="../bower_components/polymer/polymer.min.js"> </script>
+    <!-- endbuild -->
+    <button-element></button-element>
+    </body>
 </html>

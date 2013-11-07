@@ -43,6 +43,14 @@ module.exports = function (grunt) {
                 ]
             }
         },
+        // command: 'node bin/vulcanize -csp -i app/layouter.html -o dist/layouter.html',
+        exec: {
+            vulcan: {
+                command: 'node bin/vulcanize -csp -i app/index.html -o dist/index.html',
+                stdout: true,
+                stderr: true
+            }
+        },
         connect: {
             options: {
                 port: 9000,
@@ -143,9 +151,25 @@ module.exports = function (grunt) {
                 }
             }
         },
+        htmlcompressor : {
+
+            dist: {
+                options: {
+                    preserveLineBreaks: true
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    src: '*.html',
+                    dest: '<%= yeoman.dist %>'
+                }]
+            }
+        },
         htmlmin: {
             dist: {
                 options: {
+                    removeOptionalTags: false,
+                    removeEmptyAttributes: false
                     /*removeCommentsFromCDATA: true,
                     // https://github.com/yeoman/grunt-usemin/issues/44
                     //collapseWhitespace: true,
@@ -163,6 +187,11 @@ module.exports = function (grunt) {
                     dest: '<%= yeoman.dist %>'
                 }]
             }
+        },
+        uglify: {
+            'dist/elements/bf-app.js' : '<%= yeoman.app %>/elements/bf-app.js',
+            'dist/elements/bf-spread.js' : '<%= yeoman.app %>/elements/bf-spread.js',
+            'dist/elements/styles.js' : '<%= yeoman.app %>/elements/styles.js'
         },
         copy: {
             dist: {
@@ -204,6 +233,10 @@ module.exports = function (grunt) {
         ]);
     });
 
+    grunt.registerTask('wcbuild',[
+        'exec:vulcan'
+    ]);
+
     grunt.registerTask('test', [
         'clean:server',
         
@@ -217,12 +250,13 @@ module.exports = function (grunt) {
         
         'useminPrepare',
         'imagemin',
-        'htmlmin',
+        'htmlcompressor',
         'concat',
         'cssmin',
         'uglify',
         'copy',
-        'usemin'
+        'usemin',
+        'wcbuild'
     ]);
 
     grunt.registerTask('default', [
