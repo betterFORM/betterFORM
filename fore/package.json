@@ -27,7 +27,9 @@
     "vulcanize": "~0.1.1",
     "grunt-exec": "~0.4.2",
     "cheerio": "~0.12.3",
-    "nopt": "~2.1.2"
+    "nopt": "~2.1.2",
+    "grunt-rsync": "~0.2.1",
+    "grunt-contrib-less": "~0.8.1"
   },
   "engines": {
     "node": ">=0.8.0"

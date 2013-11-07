@@ -1,0 +1,18 @@
+<polymer-element name="fore-processor"  attributes="">
+  <template>
+    <style>
+      @host { :scope {display: none;} }
+    </style>
+    <span>I'm <b>foreProcessor-element</b>. This is my Shadow DOM.</span>
+  </template>
+  <script>
+    Polymer('fore-processor', {
+      //applyAuthorStyles: true,
+      //resetStyleInheritance: true,
+      created: function() { },
+      enteredView: function() { },
+      leftView: function() { },
+      attributeChanged: function(attrName, oldVal, newVal) { }
+    });
+  </script>
+</polymer-element>

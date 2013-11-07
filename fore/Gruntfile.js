@@ -22,31 +22,45 @@ module.exports = function (grunt) {
         dist: 'dist'
     };
 
+    var foreConfig = {
+        newFile: '',
+        target: '../../web/target/betterform/'
+    }
+
     grunt.initConfig({
         yeoman: yeomanConfig,
+        fore: foreConfig,
+
         watch: {
             options: {
-                nospawn: true,
-                livereload: true
+            nospawn: true
+            //    livereload: true
             },
-        
-            livereload: {
-                options: {
-                    livereload: LIVERELOAD_PORT
-                },
-                files: [
-                    '<%= yeoman.app %>/*.html',
-                    '<%= yeoman.app %>/elements/**/*.html',
-                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp}'
-                ]
+
+            dummy : {
+                files:['<%= yeoman.app%>/robots.txt']
+            },
+            forms : {
+                files:['<%= yeoman.app%>/forms/{,*/}*.xhtml'],
+                tasks: ['rsync:forms']
+            },
+            script : {
+                files:['<%= yeoman.app%>/scripts/**/*.js'],
+                tasks: ['rsync:scripts']
+            },
+            style : {
+                files:['<%= yeoman.app%>/styles/*.less'],
+                tasks: ['less:development']
+            },
+            images : {
+                files:['<%= yeoman.app%>/images/**/*'],
+                tasks: ['rsync:images']
             }
         },
         // command: 'node bin/vulcanize -csp -i app/layouter.html -o dist/layouter.html',
         exec: {
             vulcan: {
-                command: 'node bin/vulcanize -csp -i app/index.html -o dist/index.html',
+                command: 'node node_modules/vulcanize/bin/vulcanize -csp -i dist/index.html -o dist/build.html',
                 stdout: true,
                 stderr: true
             }
@@ -205,8 +219,16 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'elements/**',
                         'lib-elements/**',
-                        'images/{,*/}*.{webp,gif}'
+                        'images/{,*/}*.{webp,gif}',
+                        '*.xhtml'
                     ]
+                }]
+            },
+            new: {
+                files: [{
+                    expand: true,
+                    src: '<%= fore.newFile %>',
+                    dest: '../../web/target/betterform/forms/ng'
                 }]
             }
         },
@@ -214,9 +236,51 @@ module.exports = function (grunt) {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
+        },
+
+        rsync: {
+            options: {
+                args: ["--verbose"]
+            },
+            forms: {
+                options: {
+                    recursive: true,
+                    src: '<%= yeoman.app%>/forms/',
+                    dest: '<%= fore.target %>forms'
+                }
+            },
+            images: {
+                options: {
+                    src: '<%= yeoman.app%>/images/',
+                    dest: '<%= fore.target %>resources/images'
+                }
+            },
+            scripts: {
+                options: {
+                    src: '<%= yeoman.app%>/scripts/',
+                    dest: '<%= fore.target %>resources/scripts'
+                }
+            }
+        },
+
+
+        less: {
+            development: {
+            options: {
+                paths: ['<%= yeoman.app%>/styles']
+            },
+            // target name
+            development: {
+                // no need for files, the config below should work
+                expand: true,
+                cwd:    '<%= yeoman.app%>/styles',
+                src:    '*.less',
+                ext:    '.css',
+                dest: '<%= fore.target %>resources/styles'
+            }
+            }
         }
     });
-
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
@@ -247,14 +311,13 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        
         'useminPrepare',
         'imagemin',
-        'htmlcompressor',
+        'htmlmin',
         'concat',
         'cssmin',
         'uglify',
-        'copy',
+        'copy:dist',
         'usemin',
         'wcbuild'
     ]);
