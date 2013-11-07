@@ -60,7 +60,7 @@ module.exports = function (grunt) {
         // command: 'node bin/vulcanize -csp -i app/layouter.html -o dist/layouter.html',
         exec: {
             vulcan: {
-                command: 'node node_modules/vulcanize/bin/vulcanize -csp -i dist/index.html -o dist/build.html',
+                command: 'node node_modules/vulcanize/bin/vulcanize -csp -i dist/index.xhtml -o dist/build.xhtml',
                 stdout: true,
                 stderr: true
             }
@@ -133,13 +133,13 @@ module.exports = function (grunt) {
         },
     
         useminPrepare: {
-            html: '<%= yeoman.app %>/index.html',
+            html: '<%= yeoman.app %>/index.xhtml',
             options: {
                 dest: '<%= yeoman.dist %>'
             }
         },
         usemin: {
-            html: ['<%= yeoman.dist %>/{,*/}*.html'],
+            html: ['<%= yeoman.dist %>/{,*/}*.xhtml'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
             options: {
                 dirs: ['<%= yeoman.dist %>']
@@ -173,7 +173,7 @@ module.exports = function (grunt) {
                 },
                 files: [{
                     expand: true,
-                    cwd: '<%= yeoman.app %>',
+                    cwd: '<%= yeoman.dist %>',
                     src: '*.html',
                     dest: '<%= yeoman.dist %>'
                 }]
@@ -220,7 +220,8 @@ module.exports = function (grunt) {
                         'elements/**',
                         'lib-elements/**',
                         'images/{,*/}*.{webp,gif}',
-                        '*.xhtml'
+                        '*.xhtml',
+                        '*.html'
                     ]
                 }]
             },
@@ -313,13 +314,12 @@ module.exports = function (grunt) {
         'clean:dist',
         'useminPrepare',
         'imagemin',
-        'htmlmin',
         'concat',
         'cssmin',
-        'uglify',
         'copy:dist',
         'usemin',
-        'wcbuild'
+        'wcbuild',
+        'htmlmin'
     ]);
 
     grunt.registerTask('default', [

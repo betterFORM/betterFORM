@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bfc="http://betterform.sourceforge.net/xforms/controls" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:a="abc">
+    <head>
+        <xf:model>
+            <xf:instance xmlns:a="abc" id="collection">
+                <data>
+                    <a:element>bar</a:element>
+                </data>
+            </xf:instance>
+            <xf:submission id="load" resource="echo:test" replace="instance" instance="collection" method="get" ref="instance('collection')"/>
+            <xf:action ev:event="xforms-ready">
+                <xf:send submission="load"/>
+            </xf:action>
+        </xf:model>
+    </head>
+    <body>
+        <xf:output ref="instance('collection')/a:element"/>
+    </body>
+</html>
