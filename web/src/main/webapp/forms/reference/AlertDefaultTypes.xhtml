@@ -304,15 +304,11 @@
                     });
                 }
 
-                require(["dojo/parser", "dojo/_base/connect", "dijit/Tooltip", "dojo/dom", "dojox/highlight", "dojox/highlight/languages/_all", "dojox/highlight/widget/Code", "dojo/domReady!"],
-                        function (parser, connect, Tooltip, dom) {
-                            var xforms = dom.byId("xforms");
-                            // console.debug("parse ",xforms);
-                            parser.parse(xforms);
-                            connect.subscribe("/xf/ready", function () {
-                                fluxProcessor.skipshutdown = true;
-                            });
-                        }
-                );
+                require(["dojo/ready","dojo/domReady!"], function(ready){
+                    ready(function(){
+                        console.debug("skipshutdown = true")
+                        fluxProcessor.skipshutdown=true;
+                    })
+                });
             </script></body>
 </html>
