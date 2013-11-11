@@ -32,12 +32,12 @@
     <timeoutErr>true</timeoutErr>
   </splash>
   <versionInfo>
-	<fileVersion>5.0.0.0</fileVersion>
-	<txtFileVersion>5.0.0</txtFileVersion>
+	<fileVersion>5.0rc4.0.0</fileVersion>
+	<txtFileVersion>5.0rc4.0</txtFileVersion>
 	<fileDescription>betterFORM Installer</fileDescription>
 	<copyright>betterFORM Project</copyright>
-	<productVersion>5.0.0.0</productVersion>
-	<txtProductVersion>5.0.0</txtProductVersion>
+	<productVersion>5.0rc4.0.0</productVersion>
+	<txtProductVersion>5.0rc4.0</txtProductVersion>
 	<productName>betterFORM springBud</productName>
 	<internalName>betterFORM</internalName>
 	<originalFilename>betterFORM-install.exe</originalFilename>

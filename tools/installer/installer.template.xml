@@ -130,26 +130,26 @@
 
         <pack name="Forms" required="no" preselected="no" >
             <description>betterFORM demos, reference and test forms</description>
-            <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
+            <fileset dir="../../../web/src/main/webapp/forms/demo" targetdir="$INSTALL_PATH/betterform/forms/demo"
                   condition="bf"/>
-            <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/betterform/forms/reference"
+            <fileset dir="../../../web/src/main/webapp/forms/reference" targetdir="$INSTALL_PATH/betterform/forms/reference"
                   condition="bf"/>
-<!--        <fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/betterform/forms/incubator/editor" condition="bf"/> -->
-            <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/betterform/forms/FeatureExplorer.xhtml" condition="bf"/>
-            <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/betterform/forms/Status.xhtml" condition="bf"/>
+<!--        <fileset dir="../../../web/src/main/webapp/forms/incubator/editor" targetdir="$INSTALL_PATH/betterform/forms/incubator/editor" condition="bf"/> -->
+            <singlefile src="../../../web/src/main/webapp/forms/FeatureExplorer.xhtml" target="$INSTALL_PATH/betterform/forms/FeatureExplorer.xhtml" condition="bf"/>
+            <singlefile src="../../../web/src/main/webapp/forms/Status.xhtml" target="$INSTALL_PATH/betterform/forms/Status.xhtml" condition="bf"/>
 
 
-            <fileset dir="../../../resource/src/main/xforms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo" condition="jetty"/>
-            <fileset dir="../../../resource/src/main/xforms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference" condition="jetty"/>
-            <!--<fileset dir="../../../resource/src/main/xforms/incubator/editor" targetdir="$INSTALL_PATH/web/root/forms/incubator/editor" condition="jetty"/>-->
-            <singlefile src="../../../resource/src/main/xforms/FeatureExplorer.xhtml" target="$INSTALL_PATH/web/root/forms/FeatureExplorer.xhtml" condition="jetty"/>
-            <singlefile src="../../../resource/src/main/xforms/Status.xhtml" target="$INSTALL_PATH/web/root/forms/Status.xhtml" condition="jetty"/>
+            <fileset dir="../../../web/src/main/webapp/forms/demo" targetdir="$INSTALL_PATH/web/root/forms/demo" condition="jetty"/>
+            <fileset dir="../../../web/src/main/webapp/forms/reference" targetdir="$INSTALL_PATH/web/root/forms/reference" condition="jetty"/>
+            <!--<fileset dir="../../../web/src/main/webapp/forms/incubator/editor" targetdir="$INSTALL_PATH/web/root/forms/incubator/editor" condition="jetty"/>-->
+            <singlefile src="../../../web/src/main/webapp/forms/FeatureExplorer.xhtml" target="$INSTALL_PATH/web/root/forms/FeatureExplorer.xhtml" condition="jetty"/>
+            <singlefile src="../../../web/src/main/webapp/forms/Status.xhtml" target="$INSTALL_PATH/web/root/forms/Status.xhtml" condition="jetty"/>
         </pack>
 
         <pack name="Testsuite1.1" id ="testsuite" required="no" preselected="no">
             <description>official XForms 1.1 Conformance Test Suite</description>
-            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1" condition="bf"/>
-            <fileset dir="../../../resource/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1" condition="jetty"/>
+            <fileset dir="../../../web/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/betterform/forms/XFormsTestSuite1.1E1" condition="bf"/>
+            <fileset dir="../../../web/src/test/resources/XFormsTestSuite1.1E1" targetdir="$INSTALL_PATH/web/root/forms/XFormsTestSuite1.1E1" condition="jetty"/>
         </pack>
     </packs>
 
