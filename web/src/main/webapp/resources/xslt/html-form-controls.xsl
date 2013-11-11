@@ -577,15 +577,22 @@
             <xsl:call-template name="get-control-classes"/>
         </xsl:variable>
         <xsl:variable name="widgetClasses" select="normalize-space(concat($widgetClass,' ',$authorClasses))"/>
-
+		
+		 <xsl:variable name="label">
+            <xsl:call-template name="create-label">
+                <xsl:with-param name="label-elements" select="xf:label"/>
+            </xsl:call-template>
+        </xsl:variable>
+ 		
         <span id="{$id}" class="{$classes}">
+        	
             <input  id="{$id}-value"
                     name="{$name}"
                     class="{$widgetClasses}"
                     tabindex="{$navindex}"
                     title="{xf:hint/text()}"
                     type="submit"
-                    value="{xf:label}">
+                    value="{$label}">
                 <xsl:if test="bf:data/@bf:readonly='true'">
                     <xsl:attribute name="readonly">readonly</xsl:attribute>
                 </xsl:if>
@@ -639,7 +646,9 @@
                     <xsl:if test="bf:data/@bf:readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
-                    <xsl:value-of select="xf:label"/>
+                    <xsl:call-template name="create-label">
+                        <xsl:with-param name="label-elements" select="xf:label"/>
+                    </xsl:call-template>
                 </a>
             </xsl:when>
             <xsl:otherwise>
@@ -661,7 +670,9 @@
                             <xsl:value-of select="normalize-space(xf:hint)"/>- KEY: [ALT]+ <xsl:value-of select="@accesskey"/>
                         </xsl:attribute>
                     </xsl:if>
-                    <xsl:value-of select="xf:label"/>
+                    <xsl:call-template name="create-label">
+                        <xsl:with-param name="label-elements" select="xf:label"/>
+                    </xsl:call-template>
                 </button>
             </xsl:otherwise>
         </xsl:choose>

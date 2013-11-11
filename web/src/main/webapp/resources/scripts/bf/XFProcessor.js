@@ -611,7 +611,9 @@ define(["dojo/_base/declare",
                     var formWrapper = dom.byId("formWrapper");
                     if(formWrapper){
                         // console.debug("formWrapper:",formWrapper);
-                        domStyle.set(formWrapper,"display","block");
+                        domStyle.set(formWrapper,"visibility","visible");
+                        // betterform-styles.less sets this to hidden initially
+                        domStyle.set(document.body,"overflow","auto");
                     }else {
                         console.debug("form wrapper not present. continue processing");
                     }
