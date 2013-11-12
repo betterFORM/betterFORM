@@ -12,9 +12,14 @@
 
 
     <!--<link rel="stylesheet" type="text/css" href="/betterform/forms/demo/styles/registration.css"/>-->
+    <script type="text/javascript" src="foo.js"/>
+    <script type="text/javascript">
+        console.log("this is just a test");
+    </script>
 	<style type="text/css">
 		@import "styles/registration.css";
 	</style>
+
 </head>
 <body>
 <div id="xforms">
@@ -51,6 +56,7 @@
     <div id="signin">
         Already a member? Sign in here
     </div>
+    <label for="registration-ui">This is the registration form</label>
     <xf:group id="registration-ui" appearance="bf:verticalTable">
 			<xf:label>Join the group<span id="subtitle">Enjoy being a part of it!</span></xf:label>
 			<xf:input id="first" ref="firstname">
