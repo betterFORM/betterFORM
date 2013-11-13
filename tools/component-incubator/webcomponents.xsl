@@ -113,6 +113,7 @@
             pages.
             *******************************************************************************
             -->
+<!--
             <script type="text/javascript">
 
 
@@ -134,6 +135,7 @@
 
                 };
             </script>
+-->
 
             <xsl:comment> ##### global web components #####</xsl:comment>
             <xsl:value-of select="$CR"/>
@@ -171,9 +173,11 @@
     <xsl:template match="xf:model" priority="20"/>
 
     <xsl:template match="bf:data">
+<!--
         <xf-state>
             <xsl:copy-of select="@*"/>
         </xf-state>
+-->
     </xsl:template>
 
     <xsl:template match="xf:input[bf:data/@type eq 'email']" priority="10">
@@ -214,6 +218,19 @@
             <xsl:copy-of select="@*[name() != 'appearance']"/>
             <xsl:apply-templates/>
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="xf:input" priority="10">
+        <xsl:variable name="type" select="if(bf:data/@type != '') then bf:data/@type else 'text'"/>
+        <label for="{@id}"><xsl:value-of select="xf:label"/></label>
+        <input id="{@id}" type="{$type}" name="{@ref}" value="{bf:data/text()}" is="xf-input">
+            <xsl:apply-templates/>
+        </input>
+<!--
+        <label for="{@id}" class="xfHint"><xsl:value-of select="xf:hint"/></label>
+        <label for="{@id}" class="xfAlert"><xsl:value-of select="xf:alert"/></label>
+        <label for="{@id}" class="xfHelp"><xsl:value-of select="xf:help"/></label>
+-->
     </xsl:template>
 
 
