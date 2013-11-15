@@ -18,7 +18,7 @@
     <target name="transform2WebComponents" description="transforms xhtml/xforms to html5 web components">
         <delete dir="${basedir}/target"/>
         <xslt basedir="${basedir}"
-              in="${basedir}/registration.xhtml"
+
               destdir="${basedir}/target"
               style="${basedir}/webcomponents.xsl"
               force="true"
