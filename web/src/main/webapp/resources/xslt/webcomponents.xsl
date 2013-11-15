@@ -27,14 +27,14 @@
     of ResourceServlet
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:param name="resourcesPath" select="'/resources/'"/>
+    <xsl:param name="resourcesPath" select="'/bfResources/'"/>
 
     <!---
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     relative path to javascript files within resources
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>
+    <xsl:param name="scriptPath" select="concat($resourcesPath,'bower_components/')"/>
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -257,13 +257,26 @@
     </xsl:template>
 
 
+    <xsl:template match="*[@startsize]">
+        <xsl:copy copy-namespaces="no">
+            <xsl:copy-of select="@*" copy-namespaces="no"/>
+            <xsl:attribute name="is">xf-repeat</xsl:attribute>
+            <xsl:apply-templates/>
+        </xsl:copy>
+    </xsl:template>
     <!--
     ##############################################################################################################
     imports web components for existing xforms controls.
     ##############################################################################################################
     -->
     <xsl:template name="importWebComponents">
+        <!-- this does handle only vanilla XForms syntax.
+        todo: refine for HTML syntax
+        -->
         <xsl:comment> ##### xforms web components #####</xsl:comment>
+        <xsl:if test="exists(//xf:repeat) or exists(//*[@startsize])"><link rel="import" href="{$contextroot}/bfResources/elements/xf-repeat.html"><xsl:text> </xsl:text></link></xsl:if>
+        <xsl:if test="exists(//xf:group)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-group.html"><xsl:text> </xsl:text></link></xsl:if>
+        <xsl:if test="exists(//xf:switch)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-switch.html"><xsl:text> </xsl:text></link></xsl:if>
         <xsl:if test="exists(//xf:input)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-input.html"><xsl:text> </xsl:text></link></xsl:if>
         <xsl:if test="exists(//xf:output)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-output.html"><xsl:text> </xsl:text></link></xsl:if>
         <xsl:if test="exists(//xf:range)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-range.html"><xsl:text> </xsl:text></link></xsl:if>
@@ -311,7 +324,7 @@
 
     <xsl:template name="getLinkAndStyle"><xsl:text>
 </xsl:text>
-        <xsl:for-each select="link">
+        <xsl:for-each select="link[not(@rel='import')]">
             <xsl:element name="{local-name()}">
                 <xsl:copy-of select="@*" copy-namespaces="no"/>
             </xsl:element>

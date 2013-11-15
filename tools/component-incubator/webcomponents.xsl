@@ -27,14 +27,14 @@
     of ResourceServlet
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:param name="resourcesPath" select="'/resources/'"/>
+    <xsl:param name="resourcesPath" select="'/bfResources/'"/>
 
     <!---
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     relative path to javascript files within resources
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:param name="scriptPath" select="concat($resourcesPath,'scripts/')"/>
+    <xsl:param name="scriptPath" select="concat($resourcesPath,'bower_components/')"/>
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -324,7 +324,7 @@
 
     <xsl:template name="getLinkAndStyle"><xsl:text>
 </xsl:text>
-        <xsl:for-each select="link">
+        <xsl:for-each select="link[not(@rel='import')]">
             <xsl:element name="{local-name()}">
                 <xsl:copy-of select="@*" copy-namespaces="no"/>
             </xsl:element>

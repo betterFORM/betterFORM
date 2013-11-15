@@ -328,6 +328,7 @@
         </echo>
 
         <antcall target="copy-src-resources"/>
+        <!--
         <ant antfile="${basedir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
@@ -335,6 +336,7 @@
         <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
+        -->
     </target>
 
     <target name="deploy-exploded-resources" description="only deployes resources in src/main/webapp/resources">
@@ -345,9 +347,11 @@
         ************************************************************************************
         </echo>
         <antcall target="copy-src-resources"/>
+<!--
         <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
+        -->
     </target>
 
     <target name="deploy-web-resources" description="only deploys resources in src/main/webapp/resources">
@@ -408,10 +412,11 @@
                 <exclude name="**/scripts/**"/>
             </fileset>
         </copy>
-
+        <!--
         <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts/dojo"/>
         </ant>
+        -->
     </target>
 
     <target name="check-ant-version" unless="antversion">

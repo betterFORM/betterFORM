@@ -6,49 +6,64 @@ module.exports = function(grunt) {
 
     var foreConfig = {
         srcDir: 'app',
-        webDir: '../web',
+        webModule: '../web',
         dist: 'dist',
-        devTarget: '/target/betterform/WEB-INF/classes/META-INF/resources'
+        pagesTarget: '/target/betterform',
+        devTarget: '/target/betterform/WEB-INF/classes/META-INF/resources',
+        elements:'/elements'
     };
 
     grunt.initConfig({
         fore: foreConfig,
-        webDevTarget: foreConfig.webDir + foreConfig.devTarget,
-        
+        webDevTarget: foreConfig.webModule + foreConfig.devTarget,
+        webPagesTarget: foreConfig.webModule + foreConfig.pagesTarget,
+        elementsTarget: foreConfig.webModule + foreConfig.devTarget + foreConfig.elements,
+
+
         //WATCH tasks
         watch: {
             options: {
                 nospawn: true
             },
-            elementsScripts : {
+            elementsScripts: {
                 files:['<%= fore.srcDir %>/elements/**/*.js'],
                 tasks: ['rsync:developmentElements']
             },
-            elementsHTML : {
+            elementsHTML: {
                 files:['<%= fore.srcDir %>/elements/**/*.html'],
                 tasks: ['rsync:developmentElements']
             },
-            styles : {
+            styles: {
                 files:['<%= fore.srcDir %>/styles/*.less'],
                 tasks: ['less:development']
             },
-            images : {
+            images: {
                 files:['<%= fore.srcDir %>/images/**/*'],
                 tasks: ['rsync:developmentImages']
+            },
+            pages: {
+                files:['<%= fore.srcDir %>/pages/**/*'],
+                tasks: ['rsync:developmentPages']
+            },
+            target: {
+                options: {
+                    livereload: true
+                },
+                files: ['<%= webPagesTarget %>/pages/*.xhtml','<%= elementsTarget %>/*.html']
             }
         },
         
         //RSYNC tasks
         rsync: {
             options: {
-                args: ["-vc"],
+                args: ["-vpc"],
                 recursive: true
             },
             developmentScripts: {
                 options: {
                     // !!! The last "/" is IMPORTANT here!!!!
-                    src: '<%= fore.srcDir %>/bower_components/',
-                    dest: '<%= webDevTarget %>/scripts/'
+                    src: '<%= fore.srcDir %>/bower_components',
+                    dest: '<%= webDevTarget %>'
                 }
             },
             developmentElements: {
@@ -69,12 +84,18 @@ module.exports = function(grunt) {
                     dest: '<%= webDevTarget %>'
                 }
             },
+            developmentPages: {
+                options: {
+                    src: '<%= fore.srcDir %>/pages',
+                    dest: '<%= webPagesTarget %>'
+                }
+            },
             dist: {
                 options: {
                     // !!! The last "/" is IMPORTANT here!!!!
                     src: ['<%= fore.dist %>/', '<%= fore.srcDir %>/elements'],
                     dest: '<%= webDevTarget %>',
-                    exclude: 'build.html'
+                    exclude: ['build.html', 'pages']
                 }
             }
         },
@@ -132,15 +153,16 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('createDevTarget', function() {
-        if (!grunt.file.exists(foreConfig.webdir + foreConfig.devTarget)) {
-            grunt.file.mkdir(foreConfig.webDir + foreConfig.devTarget+"/scripts");
+        if (!grunt.file.exists(foreConfig.webModule + foreConfig.devTarget)) {
+            grunt.file.mkdir(foreConfig.webModule + foreConfig.devTarget+"/scripts");
+            grunt.file.mkdir(foreConfig.webModule + foreConfig.pagesTarget);
         }
     });
 
     grunt.registerTask('default', [
-        'createDevTarget',
         'rsync:developmentScripts',
         'rsync:developmentElements',
+        'rsync:developmentPages',
         'less:development'
     ]);
     
@@ -155,3 +177,4 @@ module.exports = function(grunt) {
         'rsync:dist'
     ]);
 };
+
