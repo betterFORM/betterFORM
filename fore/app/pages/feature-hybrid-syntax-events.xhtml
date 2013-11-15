@@ -46,7 +46,7 @@
                 </xf:model>
             </div>
             <div id="registration">
-                <h1>does it work really -hjkhkjhjkh  ?</h1>
+
                 <!--
                 ###############################################
                 vanilla XForms
@@ -56,6 +56,9 @@
                     <xf:label id="C12">Firstname:</xf:label>
                     <xf:alert>That's not a firstname</xf:alert>
                     <xf:hint> your name hugh? </xf:hint>
+                    <xf:action ev:event="xforms-value-changed">
+                        <xf:message>changed</xf:message>
+                    </xf:action>
                 </xf:input>
 
 
@@ -69,6 +72,11 @@
                 <label for="second" is="xf-alert">That's not right</label>
                 <label for="second" is="xf-hint"> your name hugh?</label>
 
+                <script type="text/javascript">
+                    document.getElementById("second").on("xforms-value-changed",function(e){
+                        fore.message("changed");
+                    });
+                </script>
 
             </div>
         </div>

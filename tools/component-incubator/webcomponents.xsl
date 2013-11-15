@@ -259,7 +259,7 @@
 
     <xsl:template match="*[@startsize]">
         <xsl:copy copy-namespaces="no">
-            <xsl:copy-of select="@*[not(name()='startsize')]" copy-namespaces="no"/>
+            <xsl:copy-of select="@*" copy-namespaces="no"/>
             <xsl:attribute name="is">xf-repeat</xsl:attribute>
             <xsl:apply-templates/>
         </xsl:copy>
@@ -270,7 +270,13 @@
     ##############################################################################################################
     -->
     <xsl:template name="importWebComponents">
+        <!-- this does handle only vanilla XForms syntax.
+        todo: refine for HTML syntax
+        -->
         <xsl:comment> ##### xforms web components #####</xsl:comment>
+        <xsl:if test="exists(//xf:repeat) or exists(//*[@startsize])"><link rel="import" href="{$contextroot}/bfResources/elements/xf-repeat.html"><xsl:text> </xsl:text></link></xsl:if>
+        <xsl:if test="exists(//xf:group)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-group.html"><xsl:text> </xsl:text></link></xsl:if>
+        <xsl:if test="exists(//xf:switch)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-switch.html"><xsl:text> </xsl:text></link></xsl:if>
         <xsl:if test="exists(//xf:input)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-input.html"><xsl:text> </xsl:text></link></xsl:if>
         <xsl:if test="exists(//xf:output)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-output.html"><xsl:text> </xsl:text></link></xsl:if>
         <xsl:if test="exists(//xf:range)"><link rel="import" href="{$contextroot}/bfResources/elements/xf-range.html"><xsl:text> </xsl:text></link></xsl:if>
