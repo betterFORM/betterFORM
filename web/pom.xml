@@ -5,13 +5,13 @@
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>5.0rc4</version>
+        <version>5.0rc5</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
     <artifactId>betterform</artifactId>
-    <version>5.0rc4</version>
+    <version>5.0rc5</version>
 
 
 
@@ -97,7 +97,7 @@
 <dependency>
 <groupId>de.betterform</groupId>
 <artifactId>betterform-core</artifactId>
-<version>5.0rc4</version>
+<version>5.0rc5</version>
 </dependency>
 <dependency>
 <groupId>org.directwebremoting.dwr</groupId>
@@ -148,7 +148,7 @@
 <scope>test</scope>
 </dependency>
 <!-- Up to here ^^^^ -->
-<!-- 
+<!--
 <dependency>
 <groupId>org.seleniumhq.selenium</groupId>
 <artifactId>apache-mime</artifactId>

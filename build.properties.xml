@@ -262,12 +262,12 @@
     <installer>
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
-        <izPack>/home/zwobit/Development/bin/IzPack-4.3.4</izPack>
-        <launch4j>/home/zwobit/Development/bin/launch4j-3.0.2</launch4j>
+        <izPack>/Users/windauer/dev/tools/IzPack-4.3.5</izPack>
+        <launch4j>/Users/windauer/dev/tools/launch4j-3.0.2</launch4j>
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Users/windauer/dev/exist/exist-trunk</home>
+        <home>/Users/windauer/dev/exist/exist-git</home>
         <!-- home>/Applications/eXist-ziziphus</home-->
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
