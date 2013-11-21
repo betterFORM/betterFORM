@@ -44,7 +44,7 @@
         <echo>
             __== Create Custom Dojo Build ==__
         </echo>
-        <ant antfile="${project.dir}/resource/build-dojo.xml" inheritall="false" target="build-dojo"/>
+        <ant antfile="${project.dir}/web/build-dojo.xml" inheritall="false" target="build-dojo"/>
 
         <echo>
             __== Create WAR file ==__

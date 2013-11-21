@@ -717,11 +717,12 @@ public class Repeat extends BindingElement implements EventListener {
                         // register *all* children
                         registerChildren(xFormsElement.getElement());
                     }
+                } else {
+                    registerChildren(node);
                 }
             }
         }
     }
-
 }
 
 // end of class

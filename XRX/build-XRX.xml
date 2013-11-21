@@ -39,10 +39,6 @@
 
     <available file="${betterFORM.extension}/backup-libs/betterform.jar" property="eXist.libs.backuped"/>
 
-    <property name="saxon-version-new" value="9.4.0.7"/>
-    <property name="saxon-version-old" value="9.2.1.5"/>
-    <property name="dwr-version-new" value="3.0.RC2"/>
-    <property name="dwr-version-old" value="2.0.5"/>
     <!--
         <property name="betterFORM.libs" value="${betterFORM.extension}/main/lib"/>
     -->
@@ -52,7 +48,7 @@
     <!-- classpaths -->
     <!-- Saxon for xslt-transformation -->
     <path id="generator.libs" description="classpath for using Saxon XSLT">
-        <pathelement location="${betterFORM.libs}/saxon-${saxon-version-new}.jar"/>
+        <pathelement location="${betterFORM.libs}/saxon-9.4.0.7.jar"/>
     </path>
 
     <!-- check if eXist is available (command must be placed before includes(!) -->
@@ -338,16 +334,10 @@ Error: eXist is not installed in ${eXist.home}.
 
         <delete file="${eXist.web.inf}/betterFORM.config.patched"/>
         <delete file="${eXist.web.inf}/betterFORM.installed"/>
-        <delete file="${betterFORM.extension}/main/lib/dwr-${dwr-version-new}.jar"/>
-        <delete file="${eXist.home}/lib/endorsed/saxonhe-${saxon-version-new}.jar"/>
-
         <echo>
             __== Reverting betterFORM resources in exist ==__
         </echo>
 
-
-        <copy file="${betterFORM.extension}/backup-libs/saxonhe-${saxon-version-old}.jar" tofile="${eXist.home}/lib/endorsed/saxonhe-${saxon-version-old}.jar" overwrite="true"/>
-        <copy file="${betterFORM.extension}/backup-libs/dwr-${dwr-version-old}.jar" tofile="${betterFORM.extension}/main/lib/dwr-${dwr-version-old}.jar" overwrite="true"/>
         <copy file="${betterFORM.extension}/backup-libs/betterform.jar" tofile="${betterFORM.extension}/main/lib/betterform.jar" overwrite="true"/>
     </target>
 
@@ -355,8 +345,6 @@ Error: eXist is not installed in ${eXist.home}.
         <echo>
             __== backup original resources If betterFORM wasn't updated yet==__
         </echo>
-        <copy file="${eXist.home}/lib/endorsed/saxonhe-${saxon-version-old}.jar" todir="${betterFORM.extension}/backup-libs" />
-        <copy file="${betterFORM.extension}/main/lib/dwr-${dwr-version-old}.jar" todir="${betterFORM.extension}/backup-libs"  />
         <copy file="${betterFORM.extension}/main/lib/betterform.jar" todir="${betterFORM.extension}/backup-libs"  />
     </target>
     <!--
@@ -382,7 +370,7 @@ Error: eXist is not installed in ${eXist.home}.
         </ant>
     </target>
 
-    <target name="update-resources-exploded" depends="update-saxon-dwr-in-eXist">
+    <target name="update-resources-exploded">
         <echo>
             __== Deploying betterFORM resources in exploded Mode ==__
         </echo>
@@ -409,15 +397,6 @@ Error: eXist is not installed in ${eXist.home}.
     </target>
 
 
-    <target name="update-saxon-dwr-in-eXist" description="delete old and copy updated libs to eXist-db">
-        <!-- update Saxon to ${saxon-version-new} -->
-        <delete file="${eXist.home}/lib/endorsed/saxonhe-${saxon-version-old}.jar"/>
-        <copy file="${core.dir}/src/main/lib/saxon-${saxon-version-new}.jar" tofile="${eXist.home}/lib/endorsed/saxonhe-${saxon-version-new}.jar" failonerror="true"/>
-        <!-- update DWR to ${saxon-version-new} -->
-        <delete file="${betterFORM.extension}/main/lib/dwr-${dwr-version-old}.jar"/>
-        <copy file="${web.dir}/src/main/lib/dwr-${dwr-version-new}.jar" tofile="${betterFORM.extension}/main/lib/dwr-${dwr-version-new}.jar" failonerror="true"/>
-    </target>
-
     <!-- *********************************************************************************************************** -->
 
     <!--
@@ -432,7 +411,7 @@ Error: eXist is not installed in ${eXist.home}.
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <target name="deploy-resources" depends="update-saxon-dwr-in-eXist">
+    <target name="deploy-resources">
         <echo>
             __== Deploying betterFORM resources in single JAR Mode ==__
         </echo>

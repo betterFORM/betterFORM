@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head>
+        <title>Replace "all" with XForms Content</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+        -->
+
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <none/>
+                    </data>
+                </xf:instance>
+
+                <xf:submission id="s-replace-all-xforms-post" replace="all" resource="InputSingle.xhtml"  method="post" mediatype="application/xhtml+xforms">
+                    <xf:message ev:event="xforms-submit">About to replace="all"  with XForms-content. POST</xf:message>
+                    <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+                    <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+                </xf:submission>
+
+                <xf:submission id="s-replace-all-xforms-get" replace="all" resource="InputSingle.xhtml"  method="get" mediatype="application/xhtml+xforms">
+                    <xf:message ev:event="xforms-submit">About to replace="all"  with XForms-content. GET</xf:message>
+                    <xf:message ev:event="xforms-submit-error">Something went wrong.</xf:message>
+                    <xf:message ev:event="xforms-submit-done">Done.</xf:message>
+                </xf:submission>
+
+                <xf:action ev:event="xforms-model-construct-done">
+                    <xf:send submission="s-replace-all-xforms-get"/>
+                </xf:action>
+            </xf:model>
+        </div>
+        <xf:group>
+            <xf:label/>
+            <xf:output>Replace "all" with XForms Content on "xforms.model-construct-done"</xf:output>
+        </xf:group>
+    </body>
+</html>

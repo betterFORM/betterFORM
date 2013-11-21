@@ -21,6 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,9 +38,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Collection of static methods to be re-used by different Servlets/Filter implementations.
@@ -188,17 +187,41 @@ public class WebUtil {
      * NOTE: this method should be called *before* the Adapter is initialized cause the cookies may
      * already be needed for setup (e.g. loading of XForms via Http)
      */
-    public static void storeCookies(HttpServletRequest request, XFormsProcessor processor) {
-        javax.servlet.http.Cookie[] cookiesIn = request.getCookies();
-        if (cookiesIn != null) {
-            BasicClientCookie[] commonsCookies = new BasicClientCookie[cookiesIn.length];
-            for (int i = 0; i < cookiesIn.length; i += 1) {
-                javax.servlet.http.Cookie c = cookiesIn[i];
-                commonsCookies[i] = new BasicClientCookie(c.getName(),c.getValue());
-                commonsCookies[i].setDomain(c.getDomain());
-                commonsCookies[i].setPath(c.getPath());
-                commonsCookies[i].setAttribute(ClientCookie.MAX_AGE_ATTR, Integer.toString(c.getMaxAge()));
-                commonsCookies[i].setSecure(c.getSecure());
+    public static void storeCookies(List<Cookie> requestCookies,  XFormsProcessor processor) {
+        Vector<BasicClientCookie> commonsCookies = new Vector<BasicClientCookie>();
+
+        if (requestCookies != null && requestCookies.size() > 0) {
+            commonsCookies = saveAsBasicClientCookie(requestCookies.iterator(), commonsCookies );
+        }
+
+        /*
+        if (responseCookies != null && responseCookies.size() > 0) {
+            commonsCookies= saveAsBasicClientCookie(responseCookies.iterator(), commonsCookies);
+        }
+        */
+        if(commonsCookies.size() == 0) {
+            BasicClientCookie sessionCookie = new BasicClientCookie("JSESSIONID", ((WebProcessor)processor).httpSession.getId());
+            sessionCookie.setSecure(false);
+            sessionCookie.setDomain(null);
+            sessionCookie.setPath(null);
+
+            commonsCookies.add(sessionCookie);
+
+        }
+        processor.setContextParam(AbstractHTTPConnector.REQUEST_COOKIE, commonsCookies.toArray(new BasicClientCookie[0]));
+    }
+
+
+    private static Vector<BasicClientCookie> saveAsBasicClientCookie(Iterator iterator, Vector<BasicClientCookie> commonsCookies){
+        while(iterator.hasNext()) {
+            javax.servlet.http.Cookie c = (Cookie)iterator.next();
+            BasicClientCookie commonsCookie = new BasicClientCookie(c.getName(),c.getValue());
+            commonsCookie.setDomain(c.getDomain());
+            commonsCookie.setPath(c.getPath());
+            commonsCookie.setAttribute(ClientCookie.MAX_AGE_ATTR, Integer.toString(c.getMaxAge()));
+            commonsCookie.setSecure(c.getSecure());
+
+            commonsCookies.add(commonsCookie);
 
                 if (WebUtil.LOGGER.isDebugEnabled()) {
                     WebUtil.LOGGER.debug("adding cookie >>>>>");
@@ -210,9 +233,12 @@ public class WebUtil {
                     WebUtil.LOGGER.debug("adding cookie done <<<<<");
                 }
             }
-            processor.setContextParam(AbstractHTTPConnector.REQUEST_COOKIE, commonsCookies);
+
+        return commonsCookies;
         }
-    }
+
+
+
 
     /**
      * copy all http headers from client request into betterForm context map as map HTTP_HEADERS. This map
@@ -316,8 +342,12 @@ public class WebUtil {
         //adding session id to context
         processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
         //adding context absolute path to context
-        
-        processor.setContextParam(EXISTDB_USER, httpSession.getAttribute(EXISTDB_USER));
+
+        //EXIST-WORKAROUND: TODO triple check ...
+        //TODO: triple check where this is used.
+        if (request.isRequestedSessionIdValid()) {
+            processor.setContextParam(EXISTDB_USER, httpSession.getAttribute(EXISTDB_USER));
+        }
 
         //adding pathInfo to context - attention: this is only available when a servlet is requested
         String s1=request.getPathInfo();
@@ -362,13 +392,12 @@ public class WebUtil {
 
     }
 
-    public static boolean isMediaTypeXML(String s) {
+    public static boolean isMediaTypeXML(String mediatype) {
         boolean isXML;
-        isXML = s.endsWith("+xml")
-		|| ((s.equals("text")
-		|| s.equals("application"))
-		&& (s.equals("xml")
-		|| s.equals("xml-external-parsed-entity")));
+        isXML = mediatype.startsWith("text") || mediatype.startsWith("application");
+        if (isXML) {
+            isXML = isXML && (mediatype.contains("xml") || mediatype.contains("xhtml+xml"));
+        }
 
         return isXML;
     }

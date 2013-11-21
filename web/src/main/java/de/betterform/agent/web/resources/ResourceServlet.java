@@ -123,7 +123,7 @@ public class ResourceServlet extends HttpServlet {
 
             if (error) {
                 if (LOG.isWarnEnabled()) {
-                    LOG.warn("Resource \"{0}\" not found - " + resourcePath);
+                    LOG.warn("Resource "+ resourcePath + " not found");
                 }
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Resource " + resourcePath + " not found" );
                 return;
@@ -132,7 +132,7 @@ public class ResourceServlet extends HttpServlet {
         }
 
         if (LOG.isTraceEnabled()){
-            LOG.trace("Streaming resource \"{0}\" - " + resourcePath);
+            LOG.trace("Streaming resource " + resourcePath);
         }
 
         InputStream inputStream = null;
@@ -155,7 +155,7 @@ public class ResourceServlet extends HttpServlet {
 
             if (mimeType == null) {
                 if(LOG.isTraceEnabled()){
-                    LOG.trace("MimeType for \"{0}\" not found. Sending 'not found' response - " + resourcePath);
+                    LOG.trace("MimeType for "+ resourcePath + " not found. Sending 'not found' response" );
                 }
                 resp.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "MimeType for " + resourcePath + " not found. Sending 'not found' response");
                 return;
@@ -167,10 +167,10 @@ public class ResourceServlet extends HttpServlet {
             streamResource(req, resp, mimeType, inputStream);
 
             if(LOG.isTraceEnabled()){
-                LOG.trace( "Resource \"{0}\" streamed succesfully - " + resourcePath);
+                LOG.trace( "Resource "+ resourcePath + " streamed succesfully");
             }
         } catch (Exception exception) {
-            LOG.error("Error in streaming resource \"{0}\". Exception is \"{1}\" - " + new Object[]{resourcePath, exception.getMessage()});
+            LOG.error("Error in streaming resource "+ resourcePath + ". Exception is " + exception.getMessage());
         } finally {
             if (inputStream != null) {
                 inputStream.close();

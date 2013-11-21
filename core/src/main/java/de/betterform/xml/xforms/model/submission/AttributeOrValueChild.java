@@ -31,7 +31,7 @@ public class AttributeOrValueChild {
 		this.parentEl = parentEl;
 		this.name = name;
 		
-		Element child = (Element) DOMUtil.getFirstChildByTagNameNS(this.parentEl, NamespaceConstants.XFORMS_NS, this.name);
+		Element child = (Element) DOMUtil.findFirstChildNS(this.parentEl, NamespaceConstants.XFORMS_NS, this.name);
 		if (child != null) {
 			valueChild = new ValueChild(child, model);
 			attrValue = null;
