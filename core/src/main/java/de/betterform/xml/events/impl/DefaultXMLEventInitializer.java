@@ -82,6 +82,7 @@ public class DefaultXMLEventInitializer implements XMLEventInitializer {
         INITIALIZATION_RULES.put(BetterFormEventNames.LOAD_URI, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(BetterFormEventNames.RENDER_MESSAGE, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(BetterFormEventNames.REPLACE_ALL, new boolean[]{true, false, true});
+        INITIALIZATION_RULES.put(BetterFormEventNames.REPLACE_ALL_XFORMS, new boolean[]{true, false, true});
 
         INITIALIZATION_RULES.put(BetterFormEventNames.STATE_CHANGED, new boolean[]{true, false, true});
         INITIALIZATION_RULES.put(BetterFormEventNames.NODE_INSERTED, new boolean[]{true, false, true});

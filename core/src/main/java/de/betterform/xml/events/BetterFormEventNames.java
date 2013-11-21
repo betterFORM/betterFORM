@@ -38,6 +38,8 @@ public interface BetterFormEventNames {
      * betterForm interaction event constant.
      */
     String REPLACE_ALL = "betterform-replace-all";
+     /* XForms mediatype was set on submission handle replace akl for XFORMS*/
+    static final String REPLACE_ALL_XFORMS = "betterform-replace-all-xforms";
 
     // betterForm notification events
 

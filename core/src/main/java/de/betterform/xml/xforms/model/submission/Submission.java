@@ -5,6 +5,7 @@
 
 package de.betterform.xml.xforms.model.submission;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.generator.XSLTGenerator;
@@ -851,7 +852,12 @@ public class Submission extends BindingElement implements DefaultAction {
             this.container.dispatch(this.target, BetterFormEventNames.LOAD_URI, map);
             return;
         } else {
-            this.container.dispatch(this.target, BetterFormEventNames.REPLACE_ALL, map);
+            if (getMediatype().equals(BetterFORMConstants.XFORMS_MEDIATYPE)) {
+                map.put(BetterFORMConstants.SUBMISSION_REDIRECT_XFORMS, this.action);
+                this.container.dispatch(this.target, BetterFormEventNames.REPLACE_ALL_XFORMS, map);
+            }  else {
+                this.container.dispatch(this.target, BetterFormEventNames.REPLACE_ALL, map);
+            }
             this.container.dispatch(this.target, XFormsEventNames.MODEL_DESTRUCT, null);
         }
 
