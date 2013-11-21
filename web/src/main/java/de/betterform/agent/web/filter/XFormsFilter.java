@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -155,12 +154,8 @@ public class XFormsFilter implements Filter {
         //TODO: XFORMS  PROCESSING: do we need to exit?
         }else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE) != null) {
             doSubmissionReplaceAll(request, response);
-        
-         /*
         }  else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE_XFORMS) != null) {
              doSubmissionReplaceAllXForms(request, response,session);
-         }
-         */
         } else {
 
             /* before servlet request */
@@ -209,60 +204,7 @@ public class XFormsFilter implements Filter {
                 if (handleRequestAttributes(request)) {
                     bufResponse.getOutputStream().close();
                     LOG.info("Start Filter XForm");
-
-
                     processXForms(request, response, session);
-                    /*
-                    WebProcessor webProcessor = null;
-                    try {
-                        webProcessor = WebFactory.createWebProcessor(request);
-                        webProcessor.setRequest(request);
-                        webProcessor.setResponse(response);
-                        webProcessor.setHttpSession(session);
-                        webProcessor.setBaseURI(request.getRequestURL().toString());
-                        webProcessor.setContext(webFactory.getServletContext());
-                        webProcessor.configure();
-                        webProcessor.setXForms();
-                        webProcessor.init();
-                        webProcessor.handleRequest();
-                        if (LOG.isDebugEnabled() && CacheManager.getInstance().getCache("xfSessionCache") != null) {
-                            LOG.debug(CacheManager.getInstance().getCache("xfSessionCache").getStatistics());
-                            DOMUtil.prettyPrintDOM(webProcessor.getXForms());
-                        }
-                    }
-                    catch (Exception e) {
-                        LOG.error(e.getMessage(), e);
-                        if (webProcessor != null) {
-                            //reset xforms to state before init and serialize it to StreamResult
-                            //reparse with PositionalXMLReader for error summary
-
-                            if(e instanceof XFormsErrorIndication){
-                                try {
-                                    session.setAttribute("betterform.hostDoc",webProcessor.getXForms());
-                                } catch (XFormsException e1) {
-                                    e1.printStackTrace();
-                                }
-                            }
-
-                            // attempt to shutdown processor
-                            try {
-                                webProcessor.shutdown();
-                            } catch (XFormsException xfe) {
-                                LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
-                            }
-                            // store exception
-                            session.setAttribute("betterform.exception", e);
-                            session.setAttribute("betterform.exception.message", e.getMessage());
-                            session.setAttribute("betterform.referer", request.getRequestURL());
-                            //remove session from XFormsSessionManager
-                            WebUtil.removeSession(webProcessor.getKey());
-
-                            String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
-                            webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
-                        }
-                    }
-                    */
-
                     LOG.info("End Render XForm");
                 } else {
                     srvResponse.getOutputStream().write(bufResponse.getData());
