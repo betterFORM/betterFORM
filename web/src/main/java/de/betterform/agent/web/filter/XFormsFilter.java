@@ -20,8 +20,6 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
 import net.sf.ehcache.CacheManager;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -282,17 +280,8 @@ public class XFormsFilter implements Filter {
             UIEvent uiEvent = new DefaultUIEventImpl();
             uiEvent.initEvent("http-request", null, request);
             webProcessor.handleUIEvent(uiEvent);
-
-            boolean isUpload = FileUpload.isMultipartContent(new ServletRequestContext(request));
-
-            if (isUpload) {
-                /*ServletOutputStream out = response.getOutputStream();
-                out.println("<html><body><textarea>status</textarea></body></html>");
-                out.close();*/
-            }
         } catch (Exception e) {
             throw new ServletException(e);
-            // webProcessor.close(e);
         }
     }
 
