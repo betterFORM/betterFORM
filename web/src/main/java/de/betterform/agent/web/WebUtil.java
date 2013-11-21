@@ -342,8 +342,12 @@ public class WebUtil {
         //adding session id to context
         processor.setContextParam(HTTP_SESSION_ID, httpSession.getId());
         //adding context absolute path to context
-        
-        processor.setContextParam(EXISTDB_USER, httpSession.getAttribute(EXISTDB_USER));
+
+        //EXIST-WORKAROUND: TODO triple check ...
+        //TODO: triple check where this is used.
+        if (request.isRequestedSessionIdValid()) {
+            processor.setContextParam(EXISTDB_USER, httpSession.getAttribute(EXISTDB_USER));
+        }
 
         //adding pathInfo to context - attention: this is only available when a servlet is requested
         String s1=request.getPathInfo();
@@ -388,13 +392,12 @@ public class WebUtil {
 
     }
 
-    public static boolean isMediaTypeXML(String s) {
+    public static boolean isMediaTypeXML(String mediatype) {
         boolean isXML;
-        isXML = s.endsWith("+xml")
-		|| ((s.equals("text")
-		|| s.equals("application"))
-		&& (s.equals("xml")
-		|| s.equals("xml-external-parsed-entity")));
+        isXML = mediatype.startsWith("text") || mediatype.startsWith("application");
+        if (isXML) {
+            isXML = isXML && (mediatype.contains("xml") || mediatype.contains("xhtml+xml"));
+        }
 
         return isXML;
     }

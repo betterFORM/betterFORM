@@ -336,7 +336,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         WebUtil.nonCachingResponse(response);
 
         try {
-            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null) {
+            //EXIST-WORKAROUND: TODO triple check ...
+            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null && request.getAttribute("org.exist.forward" ) == null ) {
                 updating = true;
                 // updating ... - this is only called when PlainHtmlProcessor is in use or an upload happens
                 UIEvent uiEvent = new DefaultUIEventImpl();
@@ -385,7 +386,10 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     cache.put(new net.sf.ehcache.Element(this.getKey(), this));
 
                     //todo:check if it's still necessary to set an attribute to the session
-                    httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
+                    //EXIST-WORKAROUND: TODO triple check ...
+                    if(request.isRequestedSessionIdValid()) {
+                        httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
+                    }
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

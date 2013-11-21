@@ -22,13 +22,12 @@ import java.io.*;
 public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapper {
 
     private ByteArrayOutputStream output = null;
-    private BufferedServletOutputStream servletOutputStream = null;
+    private ServletOutputStream servletOutputStream = null;
     private PrintWriter printWriter = null;
     private boolean usingOutputStream = false;
     private boolean usingWriter = false;
     private int contentLength;
-    private String strSubType = null;
-    private String strMediaType = null;
+    private boolean buffered = false;
 
     /** GenericResponseWrapper constructor
      *
@@ -68,6 +67,15 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         return (new String(getData(), getCharacterEncoding()));
     }
 
+
+    private  ServletOutputStream getInternalOutputStream() throws IOException {
+        if (shouldBuffer()) {
+            this.buffered = true;
+            return new BufferedServletOutputStream(this.output);
+        }
+        return super.getOutputStream();
+    }
+
     /** getOutputStream
      * overridden method to capture the output written to the ServletOutputStream
      * Referring to Java Servlet Specification 2.4 this method throws an IllegalStateException
@@ -81,7 +89,7 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
 
         usingOutputStream = true;
         if (servletOutputStream == null) {
-            servletOutputStream = new BufferedServletOutputStream(output);
+            servletOutputStream = getInternalOutputStream();
         }
         return servletOutputStream;
     }
@@ -101,7 +109,7 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         usingWriter = true;
         if (printWriter == null) {
             if (servletOutputStream == null) {
-                servletOutputStream = new BufferedServletOutputStream(output, getCharacterEncoding());
+                servletOutputStream = getInternalOutputStream();
             }
             printWriter = new PrintWriter(servletOutputStream);
         }
@@ -128,17 +136,16 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
     }
 
     public String getMediaType() {
-
         // try to get the content type
         String strContentType = getContentType();
+        String strMediaType = null;
+        String strSubType = null;
+
         if (strContentType == null) {
             return "";
         }
         HeaderElement[] aHeaderelementTmp = BasicHeaderValueParser.parseElements(strContentType, new BasicHeaderValueParser());
 
-
-        strMediaType = null;
-        strSubType = null;
         if (aHeaderelementTmp.length >= 1) {
             // try to identify the content
             java.util.StringTokenizer stringtokenizerTmp = new java.util.StringTokenizer(aHeaderelementTmp[0].getName());
@@ -155,7 +162,7 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         }
 
         if (strMediaType != null && strSubType != null) {
-            return (strMediaType + "/" + strSubType);
+            return (strMediaType + "/" + strSubType).toLowerCase();
         } else {
             return "";
         }
@@ -170,12 +177,22 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
 
         // detect XML documents
         boolean isXML = false;
-        strMediaType = strMediaType.toLowerCase();
-        strSubType = strSubType.toLowerCase();
         // see RFC 3023 for details
-        return WebUtil.isMediaTypeXML(strMediaType);
+        return WebUtil.isMediaTypeXML(result);
     }
 
+    private boolean shouldBuffer() {
+        String contentType =  getResponse().getContentType();
+        //If content-type is set check if it is a "valid" one.
+        if (contentType != null) {
+            if (contentType.contains(";")) {
+                contentType = contentType.substring(0, contentType.indexOf(";"));
+            }
+            return "text/html".equalsIgnoreCase(contentType) || hasXMLContentType();
+        }
+        //else Old behavior cahce everything
+        return true;
+    }
 
     public InputStream getInputStream() {
         return new ByteArrayInputStream(this.getData());
@@ -192,5 +209,9 @@ public class BufferedHttpServletResponseWrapper extends HttpServletResponseWrapp
         } catch (IOException ex) {
             System.out.println("WARNING: Caught Exception while Reading from input stream in BufferedHttpServletResponse!");
         }
+    }
+
+    public boolean isBuffered() {
+        return this.buffered;
     }
 }

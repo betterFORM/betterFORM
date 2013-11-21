@@ -150,7 +150,7 @@ public class XFormsFilter implements Filter {
             handleUpload(request,response,session);
         }else if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter("submissionResponse") != null) {
             doSubmissionReplaceAll(request, response);
-        }else {
+        } else {
 
             /* before servlet request */
             if (isXFormUpdateRequest(request)) {
@@ -173,13 +173,16 @@ public class XFormsFilter implements Filter {
                 filterChain.doFilter(srvRequest, bufResponse);
                 LOG.info("Returned from Chain");
 
+                // response is contains no betterFORM relevant content so it is not buffered and cannot be processed
+                if ( ! bufResponse.isBuffered()) {
+                    return;
+                }
+
                 // response is already committed to the client, so nothing is to
                 // be done
-                if (bufResponse.isCommitted())
+                if (bufResponse.isCommitted()) {
                     return;
-
-
-
+                }
 
                 //pass to request object
                 request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
@@ -348,6 +351,9 @@ public class XFormsFilter implements Filter {
 
         //[4] otherwise check response body for XForms markup
         String strResponse = bufResponse.getDataAsString();
+
+        //EXIST WORKAROUND: Test if String starts with "<" like <html or <DOCTYPE
+        if (! strResponse.trim().startsWith("<")) return false;
 
         //[5]find the xforms namespace local name
         int xfNSDeclEnd = strResponse.indexOf("=\"" + NamespaceConstants.XFORMS_NS + "\"");
