@@ -67,6 +67,17 @@ public class SaxonXPathExpressionSerializer {
               NameTest nt = (NameTest) nodeTest;
               NamePool namePool = nt.getNamePool();
               String localName = namePool.getLocalName(nt.getFingerprint());
+              String prefix = namePool.getPrefix(nt.getFingerprint());
+              String uri = namePool.getURI(nt.getFingerprint());
+              
+              localName = (uri != null && !uri.trim().isEmpty())
+            		  	? ("{" + uri +"}" + localName)
+            		  	: localName;
+              
+              localName = (prefix != null && ! prefix.trim().isEmpty()) 
+            		  		  ? (prefix + ":"+localName) 
+            				  : localName;
+              
               result.append(fixPreFixes(localName, reversePrefixMapping));
             } else {
               result.append(fixPreFixes(nodeTest.toString(), reversePrefixMapping));

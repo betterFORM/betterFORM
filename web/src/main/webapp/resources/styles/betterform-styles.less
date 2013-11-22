@@ -32,6 +32,7 @@ body {
   font-family:@fontFamily;
   padding: 0; /*overflow: hidden;*/
   font-size: @fontSize;
+  overflow:hidden; /* just while initializing the form, will be set to 'auto' when loaded
 }
 
 .xfControl .xfValue {
@@ -163,10 +164,17 @@ a:active {
 
   .xfAlert{
     display: inline-block !important;
+    vertical-align: top;
+    margin: 2px 3px;
   }
+  .xfLabel {
+    color:@invalid-color !important;
+  }
+/*
   .widgetContainer {
     outline: 1px solid @invalid-color !important;
   }
+  */
 }
 
 .xfAlert, .xfHint{
@@ -835,6 +843,11 @@ table .xfContainer{
 
 .widgetContainer .dijitTextBox {
   width: auto;
+  /* width:13.8em;*/
+  -moz-user-modify: read-write !important;
+}
+.widgetContainer .dijitInputInner {
+  border: 2px inset threedface;
 }
 
 .tundra .dijitInputContainer input {

@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebUtil;
 import de.betterform.xml.dom.DOMUtil;
@@ -52,8 +53,8 @@ public class XFormsRequestURIServlet extends HttpServlet {
             //locate it
             String formRequestURI = request.getRequestURI().substring(request.getContextPath().length()+1);
             File xfDoc = new File(getServletContext().getRealPath(formRequestURI));
-
-        if (request.getHeader("betterform-internal") != null) {
+        //TODO: XFORMS  PROCESSING
+        if (request.getHeader(BetterFORMConstants.BETTERFORM_INTERNAL) != null) {
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(xfDoc));
             BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
             

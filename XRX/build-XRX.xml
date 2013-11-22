@@ -21,16 +21,23 @@
     <property name="overwrites.dir" value="${etc.dir}/overwrites/betterFORM-context"/>
 
     <!-- betterFORM installation directories -->
-    <property name="betterFORM.extension" value="${eXist.home}/extensions/betterform/"/>
+    <property name="betterFORM.extension" value="${eXist.home}/extensions/betterform"/>
+    <property name="betterFORM.extension.target" value="${betterFORM.extension}/target"/>
+    <property name="betterFORM.extension.target.web-inf" value="${betterFORM.extension.target}/WEB-INF"/>
+
+    <!-- exist install dircs -->
+    <property name="eXist.web.inf" value="${eXist.home}/webapp/WEB-INF"/>
 
     <!--Check for layout of betterform extension directory -->
-    <condition property="betterFORM.libs" value="${betterFORM.extension}src/main/lib">
-        <available file="${betterFORM.extension}src/main/lib" />
+    <condition property="betterFORM.libs" value="${betterFORM.extension}/src/main/lib">
+        <available file="${betterFORM.extension}/src/main/lib" />
     </condition>
 
-    <condition property="betterFORM.libs" value="${betterFORM.extension}main/lib">
-        <available file="${betterFORM.extension}main/lib" />
+    <condition property="betterFORM.libs" value="${betterFORM.extension}/main/lib">
+        <available file="${betterFORM.extension}/main/lib" />
     </condition>
+
+    <available file="${betterFORM.extension}/backup-libs/betterform.jar" property="eXist.libs.backuped"/>
 
     <!--
         <property name="betterFORM.libs" value="${betterFORM.extension}/main/lib"/>
@@ -63,18 +70,19 @@ Error: eXist is not installed in ${eXist.home}.
     <include file="build-utils-eXist.xml" as="db"/>
 
 
+
     <!-- Available properties -->
     <!-- betterFORM installed -->
-    <property name="betterFORM.install.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.installed"/>
+    <property name="betterFORM.install.marker" value="${eXist.web.inf}/betterFORM.installed"/>
 
-    <property name="betterFORM.config.patch.marker" value="${eXist.home}/webapp/WEB-INF/betterFORM.config.patched"/>
+    <property name="betterFORM.config.patch.marker" value="${eXist.web.inf}/betterFORM.config.patched"/>
     <available file="${betterFORM.config.patch.marker}" property="betterFORM.config.patched"/>
 
-    <property name="eXist.conf.patch.marker" value="${eXist.home}/webapp/WEB-INF/eXist.conf.patched"/>
+    <property name="eXist.conf.patch.marker" value="${eXist.web.inf}/eXist.conf.patched"/>
     <available file="${eXist.conf.patch.marker}" property="eXist.conf.patched"/>
 
     <!-- Exploded mode -->
-    <available file="${eXist.home}/webapp/WEB-INF/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
+    <available file="${eXist.web.inf}/classes/de/betterform/agent/web/WebFactory.class" property="betterFORM.exploded.mode"/>
     <!-- Single JAR mode -->
     <condition property="betterFORM.single.jar.mode">
         <or>
@@ -122,7 +130,7 @@ Error: eXist is not installed in ${eXist.home}.
             __== Patching betterFORM-config.xml ==__
         </echo>
         <copy file="${etc.dir}/MergeBetterformConfig.xsl" tofile="${eXist.home}/MergeBetterformConfig.xsl" failonerror="true"/>
-        <xslt in="${eXist.home}/webapp/WEB-INF/betterform-config.xml" out="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" force="true"
+        <xslt in="${eXist.web.inf}/betterform-config.xml" out="${eXist.web.inf}/betterform-config.xml.out" force="true"
               style="${eXist.home}/MergeBetterformConfig.xsl">
             <classpath refid="generator.libs"/>
             <param name="context" expression="betterform"/>
@@ -130,7 +138,7 @@ Error: eXist is not installed in ${eXist.home}.
         <delete file="${eXist.home}/MergeBetterformConfig.xsl"/>
 
 
-        <move file="${eXist.home}/webapp/WEB-INF/betterform-config.xml.out" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
+        <move file="${eXist.web.inf}/betterform-config.xml.out" tofile="${eXist.web.inf}/betterform-config.xml" overwrite="true"/>
         <touch file="${betterFORM.config.patch.marker}"/>
     </target>
 
@@ -138,22 +146,22 @@ Error: eXist is not installed in ${eXist.home}.
         <echo>
             __== Patching web.xml ==__
         </echo>
-        <copy file="${etc.dir}/MergeDisplayNameAndErrorPage.xsl" tofile="${eXist.home}/MergeDisplayNameAndErrorPage.xsl" failonerror="true"/>
-        <xslt in="${eXist.home}/webapp/WEB-INF/web.xml" out="${eXist.home}/webapp/WEB-INF/web.xml.out" force="true"
+        <copy file="${etc.dir}/MergeDisplayNameAndErrorPage.xsl" tofile="${eXist.home}/MergeDisplayNameAndErrorPage.xsl" failonerror="true" overwrite="true"/>
+        <xslt in="${eXist.web.inf}/web.xml.tmpl" out="${eXist.web.inf}/web.xml.out" force="true"
               style="${eXist.home}/MergeDisplayNameAndErrorPage.xsl">
             <classpath refid="generator.libs"/>
         </xslt>
         <delete file="${eXist.home}/MergeDisplayNameAndErrorPage.xsl"/>
 
 
-        <move file="${eXist.home}/webapp/WEB-INF/web.xml.out" tofile="${eXist.home}/webapp/WEB-INF/web.xml"/>
+        <move file="${eXist.web.inf}/web.xml.out" tofile="${eXist.web.inf}/web.xml" overwrite="true"/>
     </target>
 
     <target name="patch-eXist-config" unless="eXist.conf.patched">
         <echo>
             __== Patching conf.xml ==__
         </echo>
-        <copy file="${etc.dir}/MergeExistConf.xsl" tofile="${eXist.home}/MergeExistConf.xsl" failonerror="true"/>
+        <copy file="${etc.dir}/MergeExistConf.xsl" tofile="${eXist.home}/MergeExistConf.xsl" failonerror="true" overwrite="true"/>
         <xslt in="${eXist.home}/conf.xml" out="${eXist.home}/conf.xml.out" force="true"
               style="${eXist.home}/MergeExistConf.xsl">
             <classpath refid="generator.libs"/>
@@ -161,7 +169,7 @@ Error: eXist is not installed in ${eXist.home}.
         <delete file="${eXist.home}/MergeBetterformConfig.xsl"/>
 
 
-        <move file="${eXist.home}/conf.xml.out" tofile="${eXist.home}/conf.xml"/>
+        <move file="${eXist.home}/conf.xml.out" tofile="${eXist.home}/conf.xml" overwrite="true"/>
         <touch file="${eXist.conf.patch.marker}"/>
     </target>
 
@@ -311,27 +319,45 @@ Error: eXist is not installed in ${eXist.home}.
 
     <!-- *********************************************************************************************************** -->
 
+    <target name="revert-betterFORM" depends="backup-exist-resources">
+        <echo>
+            __== Uninstalling betterFORM resource in exist ==__
+        </echo>
+
+        <delete file="${betterFORM.jar.1}"/>
+        <delete file="${betterFORM.jar.2}"/>
+
+        <delete includeemptydirs="true">
+            <fileset dir="${eXist.web.inf}/classes" includes="**/*" excludes="CatalogManager.properties"/>
+        </delete>
+
+
+        <delete file="${eXist.web.inf}/betterFORM.config.patched"/>
+        <delete file="${eXist.web.inf}/betterFORM.installed"/>
+        <echo>
+            __== Reverting betterFORM resources in exist ==__
+        </echo>
+
+        <copy file="${betterFORM.extension}/backup-libs/betterform.jar" tofile="${betterFORM.extension}/main/lib/betterform.jar" overwrite="true"/>
+    </target>
+
+    <target name="backup-exist-resources" unless="eXist.libs.backuped">
+        <echo>
+            __== backup original resources If betterFORM wasn't updated yet==__
+        </echo>
+        <copy file="${betterFORM.extension}/main/lib/betterform.jar" todir="${betterFORM.extension}/backup-libs"  />
+    </target>
     <!--
         Exploded Mode
     -->
-    <target name="update-betterFORM-exploded" depends="check-ant-version" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
+    <target name="update-betterFORM-exploded" depends="check-ant-version, revert-betterFORM" description="update betterFORM in exploded mode into eXist, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in exlopded Mode ==__
         </echo>
-
-        <antcall target="uninstall-betterFORM-single-jar-mode"/>
         <antcall target="update-resources-exploded"/>
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <!-- removes betterFORM from eXist if installed in single jar mode -->
-    <target name="uninstall-betterFORM-single-jar-mode" if="betterFORM.single.jar.mode" >
-        <echo>
-            __== betterFORM in single jar mode found! It will be uninstalled now. ==__
-        </echo>
-        <delete file="${betterFORM.jar.1}"/>
-        <delete file="${betterFORM.jar.2}"/>
-    </target>
 
     <target name="deploy-resources-exploded">
         <echo>
@@ -344,66 +370,48 @@ Error: eXist is not installed in ${eXist.home}.
         </ant>
     </target>
 
-    <target name="update-resources-exploded" depends="update-libs">
+    <target name="update-resources-exploded">
         <echo>
             __== Deploying betterFORM resources in exploded Mode ==__
         </echo>
         <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
         <ant antfile="${web.dir}/build.xml" target="deploy-exploded" usenativebasedir="true" inheritall="false">
-            <property name="webapp.dir" value="${betterFORM.extension}/target"/>
+            <property name="webapp.dir" value="${betterFORM.extension.target}"/>
             <property name="should.not.copy.libs" value="YES MA´AM"/>
         </ant>
 
-        <move todir="${eXist.home}/webapp/WEB-INF/classes" overwrite="true">
-            <fileset dir="${betterFORM.extension}/target/WEB-INF/classes"/>
+        <move todir="${eXist.web.inf}/classes" overwrite="true">
+            <fileset dir="${betterFORM.extension.target.web-inf}/classes"/>
         </move>
 
         <echo>
             _== Moving needed files from betterFROM WEB-INF directory to eXist WEB-INF directory ==_
         </echo>
-        <move file="${betterFORM.extension}/target/WEB-INF/betterform-config.xml" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml" overwrite="true"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/betterform-version.info" tofile="${eXist.home}/webapp/WEB-INF/betterform-version.info" overwrite="true"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/dwr.xml" tofile="${eXist.home}/webapp/WEB-INF/dwr.xml" overwrite="true"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/betterform-config.xml" tofile="${eXist.web.inf}/betterform-config.xml" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/betterform-version.info" tofile="${eXist.web.inf}/betterform-version.info" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/dwr.xml" tofile="${eXist.web.inf}/dwr.xml" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/dwr20.dtd" tofile="${eXist.web.inf}/dwr20.dtd" overwrite="true"/>
 
-        <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
+        <delete dir="${betterFORM.extension.target}" includeemptydirs="true"/>
         <antcall target="patch-betterFORM-config"/>
     </target>
 
-    <target name="update-libs">
-        <delete file="${eXist.home}/lib/endorsed/saxonhe-9.2.1.5.jar"/>
-        <copy file="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" tofile="${eXist.home}/lib/endorsed/saxonhe-9.4.0.7.jar"/>
-        <delete file="${betterFORM.extension}/main/lib/dwr-2.0.5.jar"/>
-        <copy file="${web.dir}/src/main/lib/dwr-3.0.RC2.jar" tofile="${betterFORM.extension}/main/lib/dwr-3.0.RC2.jar"/>
-    </target>
 
     <!-- *********************************************************************************************************** -->
 
     <!--
         Single JAR Mode
     -->
-    <target name="update-betterFORM" depends="check-ant-version" description="update betterFORM in single jar mode, eXist must not(!) run">
+    <target name="update-betterFORM" depends="check-ant-version, revert-betterFORM" description="update betterFORM in single jar mode, eXist must not(!) run">
         <echo>
             __== Updating betterFORM-extension in single JAR Mode ==__
         </echo>
 
-        <antcall target="uninstall-betterFORM-exploded-mode"/>
         <antcall target="deploy-resources"/>
         <touch file="${betterFORM.install.marker}"/>
     </target>
 
-    <!-- removes betterFORM from eXist if installed in exploded mode -->
-    <target name="uninstall-betterFORM-exploded-mode" if="betterFORM.exploded.mode">
-        <echo>
-            __== betterFORM in exploded mode found! It will be uninstalled now. ==__
-        </echo>
-
-        <delete includeemptydirs="true">
-            <fileset dir="${eXist.home}/webapp/WEB-INF/classes" includes="**/*" excludes="CatalogManager.properties"/>
-        </delete>
-    </target>
-
-    <target name="deploy-resources" depends="update-libs">
+    <target name="deploy-resources">
         <echo>
             __== Deploying betterFORM resources in single JAR Mode ==__
         </echo>
@@ -412,22 +420,22 @@ Error: eXist is not installed in ${eXist.home}.
         <ant antfile="${web.dir}/build.xml" target="clean" usenativebasedir="true" inheritall="false"/>
 
         <ant antfile="${web.dir}/build.xml" target="deploy" usenativebasedir="true" inheritall="false">
-            <property name="webapp.dir" value="${betterFORM.extension}/target"/>
+            <property name="webapp.dir" value="${betterFORM.extension.target}"/>
             <property name="should.not.copy.libs" value="YES MA´AM"/>
         </ant>
 
-        <move file="${betterFORM.extension}/target/WEB-INF/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/classes/ehcache.xml" todir="${eXist.home}/webapp/WEB-INF/classes/"/>
+        <move file="${betterFORM.extension.target.web-inf}/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/classes/ehcache.xml" todir="${eXist.web.inf}/classes/" overwrite="true"/>
 
 
         <echo>
             _== Moving needed files from betterFROM WEB-INF directory to eXist WEB-INF directory ==_
         </echo>
-        <move file="${betterFORM.extension}/target/WEB-INF/betterform-config.xml" tofile="${eXist.home}/webapp/WEB-INF/betterform-config.xml"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/betterform-version.info" tofile="${eXist.home}/webapp/WEB-INF/betterform-version.info"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/dwr.xml" tofile="${eXist.home}/webapp/WEB-INF/dwr.xml"/>
-        <move file="${betterFORM.extension}/target/WEB-INF/dwr20.dtd" tofile="${eXist.home}/webapp/WEB-INF/dwr20.dtd"/>
-        <delete dir="${betterFORM.extension}/target" includeemptydirs="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/betterform-config.xml" tofile="${eXist.web.inf}/betterform-config.xml" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/betterform-version.info" tofile="${eXist.web.inf}/betterform-version.info" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/dwr.xml" tofile="${eXist.web.inf}/dwr.xml" overwrite="true"/>
+        <move file="${betterFORM.extension.target.web-inf}/dwr20.dtd" tofile="${eXist.web.inf}/dwr20.dtd" overwrite="true"/>
+        <delete dir="${betterFORM.extension.target}" includeemptydirs="true"/>
         <antcall target="patch-betterFORM-config"/>
     </target>
 

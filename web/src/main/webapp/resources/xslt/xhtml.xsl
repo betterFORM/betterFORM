@@ -301,6 +301,7 @@
     <!-- ############################## BODY ############################## -->
     <xsl:template match="body">
         <!-- todo: add 'overflow:hidden' to @style here -->
+        <!-- don't do this here, do it via CSS -->
 
         <xsl:variable name="theme">
             <xsl:choose>
@@ -369,7 +370,8 @@
             actual content of the form starts here
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             -->
-            <div id="formWrapper" style="display:none">
+            <!-- display:none breaks displaying e.g. tabs (switches) which will be rendered with width:0  -->
+            <div id="formWrapper" style="visibility:hidden">
                 <!--
                 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 creates the client-side processor
@@ -581,7 +583,7 @@
         todo: attributes from xf controls should probably be 'tunneled' to widget e.g. 'placeholder' of html5
         todo: remove dojotype here and add with behavior?
         -->
-        <span id="{@id}" class="{$control-classes}">
+        <div id="{@id}" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="@bf:incremental-delay">
@@ -597,14 +599,14 @@
                     <xsl:with-param name="label-elements" select="xf:label"/>
                 </xsl:call-template>
             </label>
-            <span class="widgetContainer">
+            <div class="widgetContainer">
                 <xsl:call-template name="buildControl"/>
                 <xsl:apply-templates select="xf:alert"/>
                 <xsl:apply-templates select="xf:hint"/>
                 <xsl:apply-templates select="xf:help"/>
-            </span>
+            </div>
             <xsl:copy-of select="script"/>
-        </span>
+        </div>
     </xsl:template>
 
 
@@ -624,7 +626,7 @@
         todo: attributes from xf controls should probably be 'tunneled' to widget e.g. 'placeholder' of html5
         todo: remove dojotype here and add with behavior?
         -->
-        <span id="{$id}" class="{$control-classes}">
+        <div id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="exists(@bf:name)">
                 <xsl:attribute name="data-bf-name" select="@bf:name"/>
@@ -642,7 +644,7 @@
             <xsl:apply-templates select="xf:hint"/>
             <xsl:apply-templates select="xf:help"/>
             <xsl:copy-of select="script"/>
-        </span>
+        </div>
     </xsl:template>
 
     <!-- todo: review - what was the intend here? is never used within the stylesheets - remove? -->
@@ -657,7 +659,7 @@
             <xsl:call-template name="assemble-label-classes"/>
         </xsl:variable>
 
-        <span id="{$id}" class="{$control-classes}">
+        <div id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
             <xsl:if test="exists(@bf:name)">
                 <xsl:attribute name="data-bf-name" select="@bf:name"/>
@@ -675,7 +677,7 @@
             <!--<xsl:apply-templates select="xf:help"/>-->
 
             <xsl:copy-of select="script"/>
-        </span>
+        </div>
     </xsl:template>
 
     <!-- ############################## TRIGGER / SUBMIT ############################## -->
@@ -688,13 +690,13 @@
             </xsl:call-template>
         </xsl:variable>
 
-        <span id="{@id}" class="{$control-classes}">
+        <div id="{@id}" class="{$control-classes}">
             <xsl:if test="exists(@bf:name)">
                 <xsl:attribute name="data-bf-name" select="@bf:name"/>
             </xsl:if>
 
             <xsl:call-template name="trigger"/>
-        </span>
+        </div>
     </xsl:template>
 
     <!-- ######################################################################################################## -->
@@ -734,9 +736,9 @@
     <!-- ############################## HELP ############################## -->
     <!-- ############################## HELP ############################## -->
     <xsl:template match="xf:help">
-        <span id="{../@id}-help-text" class="bfHelpText" style="display:none;">
+        <div id="{../@id}-help-text" class="bfHelpText" style="display:none;">
             <xsl:apply-templates/>
-        </span>
+        </div>
     </xsl:template>
 
     <!-- ############################## ALERT ############################## -->

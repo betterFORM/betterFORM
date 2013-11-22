@@ -105,7 +105,7 @@ public class BufferedHttpServletResponseWrapperTest extends TestCase {
 
 	class DummyHttpResponse implements HttpServletResponse {
 
-		private String contentType;
+		private String contentType = "text/html";
 
 		public void addCookie(Cookie arg0) {
 			// TODO Auto-generated method stub

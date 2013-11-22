@@ -1,0 +1,18 @@
+language: java
+jdk:
+    - openjdk6
+    - openjdk7
+    - oraclejdk7
+install: 
+    - ant install-maven-dependencies
+before-script: 
+    - ant -f core/build.xml prepare-test
+script: 
+    - ant -f core/build.xml test
+branches:
+    only:
+        - master
+        - development
+cache:
+    directories:
+    - $HOME/.m2

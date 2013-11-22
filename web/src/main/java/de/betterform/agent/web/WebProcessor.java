@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -39,6 +40,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -102,8 +104,13 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     public void configure() throws XFormsException {
         initConfig();
+<<<<<<< HEAD
         WebUtil.storeCookies(request, this);
         WebUtil.setContextParams(request, httpSession, this, getKey());
+=======
+        WebUtil.storeCookies(Arrays.asList(request.getCookies()), this);
+        WebUtil.setContextParams(request, httpSession, this, this.key);
+>>>>>>> origin/development
         WebUtil.copyHttpHeaders(request, this);
         setLocale();
         configureUpload();
@@ -339,7 +346,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         todo: extract behavior that checks for exit events and move to init().
         */
         try {
-            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null) {
+            //EXIST-WORKAROUND: TODO triple check ...
+            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null && request.getAttribute("org.exist.forward" ) == null ) {
                 updating = true;
                 // updating ... - this is only called when PlainHtmlProcessor is in use or an upload happens
                 UIEvent uiEvent = new DefaultUIEventImpl();
@@ -377,8 +385,16 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     //store queryString as 'referer' in XFormsSession
                     setContextParam(REFERER, request.getContextPath() + request.getServletPath() + "?" + referer);
 
+<<<<<<< HEAD
                     //todo:check if it's still necessary to set an attribute to the session - at least it seems odd that this line is here and not at start or end of this method
                     httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
+=======
+                    //todo:check if it's still necessary to set an attribute to the session
+                    //EXIST-WORKAROUND: TODO triple check ...
+                    if(request.isRequestedSessionIdValid()) {
+                        httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
+                    }
+>>>>>>> origin/development
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -412,9 +428,17 @@ public class WebProcessor extends AbstractProcessorDecorator {
      */
     public void handleExit(XMLEvent exitEvent) throws IOException {
         if (BetterFormEventNames.REPLACE_ALL.equals(exitEvent.getType())) {
+<<<<<<< HEAD
             response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/SubmissionResponse?sessionKey=" + getKey()));
         } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
             //todo: this check seems insufficient - should be a load show="replace"
+=======
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/" + BetterFORMConstants.SUBMISSION_RESPONSE  + "?sessionKey=" + getKey()));
+        } else if (BetterFormEventNames.REPLACE_ALL_XFORMS.equals(exitEvent.getType()) ) {
+            WebUtil.removeSession(getKey());
+            response.sendRedirect(response.encodeRedirectURL((String) exitEvent.getContextInfo(BetterFORMConstants.SUBMISSION_REDIRECT_XFORMS)));
+    } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
+>>>>>>> origin/development
             if (exitEvent.getContextInfo("show") != null) {
                 String loadURI = (String) exitEvent.getContextInfo("uri");
 

@@ -5,8 +5,8 @@
 
 package de.betterform.connector;
 
-import de.betterform.connector.http.URIUtils;
 import de.betterform.connector.serializer.SerializerRequestWrapper;
+import de.betterform.connector.util.URIUtil;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -151,7 +151,7 @@ public class AbstractConnector implements Connector {
      * @return URI string with fragment cut off
      */
     protected String getURIWithoutFragment() {
-        return URIUtils.getURIWithoutFragment(this.uri);
+        return URIUtil.getURIWithoutFragment(this.uri);
     }
 
     protected final void serialize(Submission submission, Node instance, SerializerRequestWrapper wrapper) throws Exception {

@@ -1,4 +1,4 @@
-betterFORM springBud (Version 5.0)
+betterFORM springBud (Version 5.0) RC5
 ----------------------------------------------------------------------------------
 See http://betterform.wordpress.com/
 

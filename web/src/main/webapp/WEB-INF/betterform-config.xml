@@ -101,14 +101,14 @@
         -->
         <property name="betterform.ui.defaultAlertText" value="The specified value is invalid"/>
 
-        <property name="betterform.debug-allowed" value="true" description="if true enables debug bar and event log viewer"/>
+        <property name="betterform.debug-allowed" value="false" description="if true enables debug bar and event log viewer"/>
 
         <property name="betterform.unloading-message" value="You are about to leave this XForms application" description="Set message which is shown to user if unsaved form is left."/>
 
         <!-- WARNING: not ready for production use -->
-        <property name="betterform.event-optimization-enabled" value="false" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
+        <property name="betterform.event-optimization-enabled" value="true" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
-        <property name="webprocessor.doIncludes" value="true" description="if true the incoming XForms will be scanned for bf:include tags and transformed accordingly"/>
+        <property name="webprocessor.doIncludes" value="false" description="if true the incoming XForms will be scanned for bf:include tags and transformed accordingly"/>
         <property name="admin.mail" value="foo@bar.de" description="a mail address to report problems and errors with forms"/>
 
         <!--
@@ -191,6 +191,7 @@
         <uri-resolver scheme="https" class="de.betterform.connector.http.HTTPURIResolver" description="Handler for the https protocol"/>
         <uri-resolver scheme="xmlrpc" class="de.betterform.connector.xmlrpc.XMLRPCURIResolver" description="Handler for the xmlrpc protocol"/>
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextMapResolver" description="Handler for the context protocol"/>
+        <uri-resolver scheme="exist" class="de.betterform.connector.exist.ExistURIResolver" description="Handler for local eXist-db connections"/>
 <!--
         <uri-resolver scheme="context" class="de.betterform.connector.context.ContextResolver"/>
         <uri-resolver scheme="contextobject" class="de.betterform.connector.context.ContextObjectResolver"/>
@@ -215,6 +216,7 @@
         <submission-handler scheme="xslt" class="de.betterform.connector.xslt.XSLTSubmissionHandler"/>
         <submission-handler scheme="model" class="de.betterform.connector.ModelSubmissionHandler"/>
         <submission-handler scheme="context" class="de.betterform.connector.context.ContextMapSubmissionHandler"/>
+        <submission-handler scheme="exist" class="de.betterform.connector.exist.ExistSubmissionHandler"/>
         <!--        <submission-handler scheme="jms" class="de.betterform.connector.jms.JMSSubmissionHandler"/>-->
         <!--
             These connector types are deprecated. Their usage is strongly discouraged,
