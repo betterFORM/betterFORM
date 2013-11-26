@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Nick Van den Bleeken
+ * @author Ronald van Kuijk
  * @version $Id$
  */
 public class SaxonXPathExpressionSerializer {
@@ -108,11 +109,34 @@ public class SaxonXPathExpressionSerializer {
         } else if (expr instanceof FunctionCall) {
             FunctionCall functionCall = (FunctionCall) expr;
             StructuredQName name = functionCall.getFunctionName();
+            
+
+            // From the docs:
+            // saxon:item-at($seq as item()*, $index as numeric?) ==> item()?
+            // This function returns the item at a given position in a sequence. 
+            // The index counts from one. If the index is an empty sequence, or less than one,
+            // or not a whole number, or greater than the length of the sequence, 
+            // the result is an empty sequence.
+            //
+            // This function is provided largely because it is used internally by the Saxon optimizer.
+            // For user applications, it is better to use $seq[$index] which will return the 
+            // same result provided there are no context-dependencies in $index, or subsequence($seq, $index, 1)
+            // which will return the same result in all cases where $index evaluates to an integer.
+            
+            // Since it returns saxon:item-at here we rewrite this.
+            
             if (name.getPrefix() != null && name.getPrefix().length() > 0) {
-                result.append(name.getPrefix());
-                result.append(":");
+          
+            	if(!(name.getPrefix().equals("saxon") && name.getLocalPart().equals("item-at"))) {
+            		result.append(name.getPrefix());
+                	result.append(":");
+            	}
             }
-            result.append(name.getLocalPart());
+            if(name.getPrefix().equals("saxon") && name.getLocalPart().equals("item-at")) {
+        		result.append("subsequence");
+        	} else {
+        		result.append(name.getLocalPart());
+        	}
             result.append("(");
 
             Iterator iter = functionCall.iterateSubExpressions();
@@ -122,6 +146,10 @@ public class SaxonXPathExpressionSerializer {
                 SaxonXPathExpressionSerializer.serialize(result, (Expression) iter.next(), reversePrefixMapping);
                 first = false;
             }
+            
+        	if(name.getPrefix().equals("saxon") && name.getLocalPart().equals("item-at")) {
+        		result.append(",1");
+        	}
 
             result.append(")");
         } else if (expr instanceof Instruction) {
