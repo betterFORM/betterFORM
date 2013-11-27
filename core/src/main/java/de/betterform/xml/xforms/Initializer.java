@@ -303,6 +303,7 @@ public class Initializer {
         for(String attribute : attrs){
 
             if(element.hasAttribute(attribute) && element.getAttribute(attribute).indexOf("{")!=-1){
+                if(element.getAttribute(attribute).indexOf("{{") != -1) return false;//we hit some double moustache
                 return true;
             }
         }

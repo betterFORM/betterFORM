@@ -34,6 +34,7 @@
         </style>
         <link rel="import" href="../bfResources/elements/global-deps.html"> </link>
     </head>
+
     <body>
         <global-deps></global-deps>
         <div id="xforms">
@@ -46,35 +47,29 @@
                     </xf:instance>
                 </xf:model>
             </div>
-            <div id="registration">
+            <template id="registration" bind="{{ data }}">
                 <h1>simple input in XForms and HTML syntax</h1>
 
-                <!--
-                ###############################################
-                vanilla XForms
-                ###############################################
-                -->
-                <xf:input id="first" ref="firstname" incremental="true">
-                    <xf:label id="C12">Firstname:</xf:label>
-                    <xf:alert>That's not a firstname</xf:alert>
-                    <xf:hint> your name hugh? </xf:hint>
-                </xf:input>
-
-
-                <!--
-                ######
-                plain vanilla HTML syntax. Not even an 'is' attribute occurs (will be added by transform).
-                ######
-                -->
                 <label for="second">second name !!!!</label>
-                <input id="second" type="text" name="firstname" value="" incremental="true"/>
-                <label for="second" is="xf-alert">That's not right</label>
-                <label for="second" is="xf-hint"> your name hugh?</label>
+                <input id="second" type="text" name="firstname" value="{{ thevalue }}" />
 
 
-            </div>
+            </template>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var t = document.getElementById('registration');
+                t.model = {
+                    data: {
+                        thevalue: 'funkyOlMcDonald'
+                    }
+                };
 
+                // Needed to detect model changes if Object.observe
+                // is not available in the JS VM.
+                Platform.performMicrotaskCheckpoint();
+            });
+        </script>
         <script src="//localhost:35729/livereload.js?snipver=1"></script>
     </body>
 </html>

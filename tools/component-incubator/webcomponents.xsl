@@ -324,7 +324,7 @@
 
     <xsl:template name="getLinkAndStyle"><xsl:text>
 </xsl:text>
-        <xsl:for-each select="link[not(@rel='import')]">
+        <xsl:for-each select="link">
             <xsl:element name="{local-name()}">
                 <xsl:copy-of select="@*" copy-namespaces="no"/>
             </xsl:element>
