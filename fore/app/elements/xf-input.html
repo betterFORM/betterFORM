@@ -1,0 +1,17 @@
+<polymer-element name="xf-input">
+    <template>
+        <!-- not much here yet - used it for alerts, hints, helps ??? -->
+        <div>a test
+            <content></content>
+        </div>
+    </template>
+    <script>
+        Polymer('xf-input', {
+
+            ready:function(){
+                console.log("xf-input created",this.getAttribute("id"));
+            }
+
+        });
+    </script>
+</polymer-element>
