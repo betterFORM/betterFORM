@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.2",
     "grunt-contrib-copy": "~0.4.0",
     "grunt-contrib-concat": "~0.2.0",
     "grunt-contrib-uglify": "~0.2.0",
@@ -28,7 +28,14 @@
     "cheerio": "~0.12.3",
     "nopt": "~2.1.2",
     "grunt-rsync": "~0.2.1",
-    "grunt-contrib-less": "~0.8.1"
+    "grunt-contrib-less": "~0.8.1",
+    "grunt-dalek": "~0.2.0",
+    "dalekjs": "0.0.8",
+    "dalek-browser-chrome": "0.0.8",
+    "dalek-reporter-html": "0.0.3",
+    "dalek-reporter-junit": "0.0.1",
+    "dalek-browser-firefox": "0.0.5",
+    "dalek-driver-sauce": "0.0.1"
   },
   "engines": {
     "node": ">=0.8.0"

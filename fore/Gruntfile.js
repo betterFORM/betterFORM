@@ -148,11 +148,30 @@ module.exports = function(grunt) {
                 },
                 src: ['<%= webDevTarget %>/scripts', '<%= webDevTarget %>/elements', '<%= webDevTarget %>/images', '<%= webDevTarget %>/styles' ]
             }
+        },
+        dalek: {
+            options: {
+                // invoke phantomjs, chrome & chrome canary
+                browser: ['chrome', 'firefox','sauce'],
+                reporter: ['html', 'junit'],
+                driver: {
+                    sauce: {
+                        "user": "windauer",
+                        "key": "b4e5c3ba-8b80-44e4-94dd-e62b04385c76"
+                    }
+                }
+            },
+
+
+            dist: {
+                src: ['test/samples/test_google.js']
+            }
         }
+
     });
 
 
-    grunt.registerTask('createDevTarget', function() {
+    grunt.registerTask('createDevTarget', function( ) {
         if (!grunt.file.exists(foreConfig.webModule + foreConfig.devTarget)) {
             grunt.file.mkdir(foreConfig.webModule + foreConfig.devTarget+"/scripts");
             grunt.file.mkdir(foreConfig.webModule + foreConfig.pagesTarget);
