@@ -304,6 +304,7 @@
     <!-- ############################## BODY ############################## -->
     <xsl:template match="body">
         <!-- todo: add 'overflow:hidden' to @style here -->
+        <!-- don't do this here, do it via CSS -->
 
         <xsl:variable name="theme">
             <xsl:choose>
@@ -372,7 +373,8 @@
             actual content of the form starts here
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             -->
-            <div id="formWrapper" style="display:none">
+            <!-- display:none breaks displaying e.g. tabs (switches) which will be rendered with width:0  -->
+            <div id="formWrapper" style="visibility:hidden">
                 <!--
                 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                 creates the client-side processor

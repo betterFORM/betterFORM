@@ -6,8 +6,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
-    <artifactId xmlns="">betterform-project</artifactId>
-    <version xmlns="">5.0rc4</version>
+    <artifactId>betterform-project</artifactId>
+    <version>5.0rc5</version>
     <packaging>pom</packaging>
 
     <name>betterForm Project</name>
@@ -77,9 +77,9 @@
     <!-- Repository management, including extra repositories if needed -->
     <repositories>
         <repository>
-            <id>ibiblio</id>
-            <name>ibiblio</name>
-            <url>http://repo1.maven.org/maven2</url>
+            <id>maven-central</id>
+            <name>maven-central</name>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
@@ -93,8 +93,7 @@
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Maven Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public
-            </url>
+            <url>https://repository.jboss.org/nexus/content/groups/public</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
@@ -108,7 +107,7 @@
         <repository>
             <id>third-party-repository-group</id>
             <name>Third Party Repository Group</name>
-            <url>https://repository.jboss.org/nexus/content/groups/public-thirdparty-releases/</url>
+            <url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/</url>
             <layout>default</layout>
             <releases>
                 <enabled>true</enabled>
@@ -119,20 +118,8 @@
                 <updatePolicy>never</updatePolicy>
             </snapshots>
         </repository>
-        <repository>
-            <id>maven-central-repository</id>
-            <name>Maven Central Repository</name>
-            <url>https://repository.jboss.org/nexus/content/repositories/central</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
+        
+        
     </repositories>
 
     <issueManagement>

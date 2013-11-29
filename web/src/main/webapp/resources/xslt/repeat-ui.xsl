@@ -1007,13 +1007,13 @@
         <xsl:call-template name="repeat-attribute"/>
     </xsl:template>
 
-    <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-nodeset]/xf:group[count(xhtml:tr) &gt; 1])]" priority="10" name="repeat-attribute">
+    <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-nodeset]/xf:group[count(xhtml:tr) &gt;= 1])]" priority="10" name="repeat-attribute">
         <xsl:variable name="repeat-id" select="xhtml:tbody/@id"/>
         <xsl:variable name="repeat-index" select="xhtml:tbody/bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">
             <xsl:call-template name="assemble-compound-classes"/>
         </xsl:variable>
-
+        
         <table>
             <xsl:copy-of select="@*"/>
             <xsl:attribute name="id"><xsl:value-of select="$repeat-id"/></xsl:attribute>
@@ -1038,7 +1038,7 @@
             <xsl:for-each select="xhtml:tbody/bf:data/xf:group[@appearance='repeated']//xf:itemset">
                 <xsl:call-template name="processItemsetPrototype"/>
             </xsl:for-each>
-
+             
             <xsl:for-each select="xhtml:tbody/xf:group[@appearance='repeated']">
                 <xsl:variable name="id" select="@id"/>
 
@@ -1068,7 +1068,7 @@
 
 
 
-    <xsl:template match="*[@xf:repeat-bind|@xf:repeat-ref|@xf:repeat-nodeset|@repeat-bind|@repeat-ref|@repeat-nodeset]">
+    <xsl:template match="*[@xf:repeat-bind|@xf:repeat-ref|@xf:repeat-nodeset]">
         <xsl:variable name="repeat-id" select="@id"/>
         <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
         <xsl:variable name="repeat-classes">
@@ -1109,7 +1109,7 @@
                     </xsl:call-template>
                 </xsl:variable>
 
-                <xsl:for-each select="xhtml:*">
+                <xsl:for-each select="*">
 
                     <xsl:element name="{name(.)}">
                         <!--<xsl:attribute name="id"><xsl:value-of select="generate-id()"/></xsl:attribute>-->

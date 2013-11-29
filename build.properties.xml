@@ -8,7 +8,7 @@
         <name>betterFORM</name>
         <version>
             <name>springBud</name>
-            <number>5.0rc4</number>
+            <number>5.0rc5</number>
         </version>
     </app>
     <properties>
@@ -75,7 +75,7 @@
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="saxon"/>
+                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="Saxon-HE"/>
             </classpath>
         </transform>
         <compile>
@@ -85,9 +85,9 @@
                 <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec" version="1.6" artifactId="commons-codec"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar" groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
                 <!-- <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/> -->
-                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="org.apache.httpcomponents" version="4.1" artifactId="httpcomponents-core"/>
-                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-client"/>
-                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-mime"/>
+                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="org.apache.httpcomponents" version="4.1" artifactId="httpcore"/>
+                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpclient"/>
+                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpmime"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-net-3.1.jar" groupid="commons-net" version="3.1" artifactId="commons-net"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1" artifactId="commons-io"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="org.apache.commons" version="3.1" artifactId="commons-lang3"/>
@@ -262,12 +262,12 @@
     <installer>
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
-        <izPack>/home/zwobit/Development/bin/IzPack-4.3.4</izPack>
-        <launch4j>/home/zwobit/Development/bin/launch4j-3.0.2</launch4j>
+        <izPack>/Users/windauer/dev/tools/IzPack-4.3.5</izPack>
+        <launch4j>/Users/windauer/dev/tools/launch4j-3.0.2</launch4j>
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->
-        <home>/Users/windauer/dev/exist/exist-trunk</home>
+        <home>/Users/windauer/dev/exist/exist-git</home>
         <!-- home>/Applications/eXist-ziziphus</home-->
         <!-- Leave this empty if you run eXist in root context -->
         <!-- If you use the betterform XRX bundle this is 'betterform' -->
