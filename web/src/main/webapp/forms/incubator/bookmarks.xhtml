@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <html xmlns:ev="http://www.w3.org/2001/xml-events"
-      xmlns:xforms="http://www.w3.org/2002/xforms"
+      xmlns:xf="http://www.w3.org/2002/xforms"
       xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <!--
@@ -9,19 +9,19 @@
         -->
 
         <style type="text/css">
-            xforms|input.editField {
+            xf|input.editField {
                 font-weight: bold;
                 font-size: 20px;
                 width: 500px
             }
 
-            xforms|label.sectionLabel {
+            xf|label.sectionLabel {
                 font-weight: bold;
                 color: white;
                 background-color: blue;
             }
 
-            xforms|submit {
+            xf|submit {
                 font-family: Arial;
                 font-size: 20px;
                 font-style: bold;
@@ -131,60 +131,76 @@
             .caHorizontalTableLabel{display:none;}
         </style>
         <title>Editing Hierarchical Bookmarks In X-Smiles </title>
-        <xforms:model id="bookmarks">
-            <xforms:instance src="data/bookmarks.xml"/>
-            <xforms:submission id="s01" method="post" action="{$contextroot}/jsp/debug-instance.jsp"/>
-            <xforms:action ev:event="xforms-link-exception">
-                <xforms:message>Instance loading failed.</xforms:message>
-            </xforms:action>
-        </xforms:model>
+        <xf:model id="bookmarks">
+            <xf:instance src="data/bookmarks.xml"/>
+            <xf:submission id="s01" method="post" action="{$contextroot}/jsp/debug-instance.jsp"/>
+            <xf:action ev:event="xforms-link-exception">
+                <xf:message>Instance loading failed.</xf:message>
+            </xf:action>
+        </xf:model>
     </head>
     <body>
         <div style="font-size:14pt;">Bookmarks Sample</div>
-        <xforms:group appearance="bf:horizontalTable">
-            <xforms:label/>
+        <xf:group appearance="bf:horizontalTable">
+            <xf:label/>
             <!-- INSERT SECTION BUTTON -->
-            <xforms:trigger id="insertsectionbutton">
-                <xforms:label>Insert section</xforms:label>
-                <xforms:insert nodeset="section" at="index('repeatSections')" position="after" ev:event="DOMActivate"/>
-            </xforms:trigger>
+            <xf:trigger id="insertsectionbutton">
+                <xf:label>Insert section</xf:label>
+                <xf:insert nodeset="section" at="index('repeatSections')" position="after" ev:event="DOMActivate"/>
+            </xf:trigger>
             <!-- DELETE SECTION BUTTON -->
-            <xforms:trigger id="deletesectionbutton">
-                <xforms:label>Delete section</xforms:label>
-                <xforms:delete nodeset="section" at="index('repeatSections')" ev:event="DOMActivate"/>
-            </xforms:trigger>
+            <xf:trigger id="deletesectionbutton">
+                <xf:label>Delete section</xf:label>
+                <xf:delete nodeset="section" at="index('repeatSections')" ev:event="DOMActivate"/>
+            </xf:trigger>
             <!-- INSERT BOOKMARK BUTTON -->
-            <xforms:trigger id="insertbutton">
-                <xforms:label>Insert bookmark</xforms:label>
-                <xforms:insert nodeset="section[index('repeatSections')]/bookmark" at="index('repeatBookmarks')"
+            <xf:trigger id="insertbutton">
+                <xf:label>Insert bookmark</xf:label>
+                <xf:insert nodeset="section[index('repeatSections')]/bookmark" at="index('repeatBookmarks')"
                                position="after" ev:event="DOMActivate"/>
-            </xforms:trigger>
+            </xf:trigger>
             <!-- DELETE BOOKMARK BUTTON -->
-            <xforms:trigger id="delete">
-                <xforms:label>Delete bookmark</xforms:label>
-                <xforms:delete nodeset="section[index('repeatSections')]/bookmark" at="index('repeatBookmarks')"
+            <xf:trigger id="delete">
+                <xf:label>Delete bookmark</xf:label>
+                <xf:delete nodeset="section[index('repeatSections')]/bookmark" at="index('repeatBookmarks')"
                                ev:event="DOMActivate"/>
-            </xforms:trigger>
-        </xforms:group>
-        <xforms:repeat nodeset="section" id="repeatSections" appearance="full">
-            <xforms:input id="section" ref="@name" class="editField">
-                <xforms:label class="sectionLabel">Section</xforms:label>
-            </xforms:input>
+            </xf:trigger>
+        </xf:group>
+
+        <xf:output value="index('repeatSections')">
+            <xf:label>repeat sections:</xf:label>
+        </xf:output>
+        <xf:output value="index('repeatBookmarks')">
+            <xf:label>repeat bookmarks:</xf:label>
+        </xf:output>
+
+        <div xf:repeat-nodeset="section" id="repeatSections">
+            <xf:group>
+            <xf:input id="section" ref="@name" class="editField">
+                <xf:label class="sectionLabel">Section</xf:label>
+            </xf:input>
             <!-- BOOKMARK REPEAT START -->
-            <xforms:repeat nodeset="bookmark" id="repeatBookmarks" appearance="compact">
-                <xforms:input ref="@name">
-                    <xforms:label>Bookmark name</xforms:label>
-                </xforms:input>
-                <xforms:input ref="@href" class="URL">
-                    <xforms:label>URL</xforms:label>
-                </xforms:input>
-            </xforms:repeat>
-        </xforms:repeat>
+            <xf:repeat nodeset="bookmark" id="repeatBookmarks" appearance="compact">
+                <xf:input ref="@name">
+                    <xf:label>Bookmark name</xf:label>
+                </xf:input>
+                <xf:input ref="@href" class="URL">
+                    <xf:label>URL</xf:label>
+                </xf:input>
+                <xf:trigger id="delete">
+                    <xf:label>Delete this bookmark</xf:label>
+                    <xf:delete nodeset="context()" at="index('repeatBookmarks')"
+                                   ev:event="DOMActivate"/>
+                </xf:trigger>
+
+            </xf:repeat>
+            </xf:group>
+        </div>
         <!-- SUBMIT BUTTON -->
-        <!--<xforms:submit submission="s01">
-            <xforms:label>Save</xforms:label>
-            <xforms:hint>Click to submit</xforms:hint>
-        </xforms:submit>-->
+        <!--<xf:submit submission="s01">
+            <xf:label>Save</xf:label>
+            <xf:hint>Click to submit</xf:hint>
+        </xf:submit>-->
         <div style="color:red">
             saving is disabled in this sample
         </div>

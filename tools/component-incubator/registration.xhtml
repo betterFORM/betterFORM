@@ -1,18 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xf="http://www.w3.org/2002/xforms">
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms" xmlns:xf="http://www.w3.org/2002/xforms">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Registration </title>
         <!--
       ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
       ~ Licensed under the terms of BSD License
       -->
-        <!--<link rel="stylesheet" type="text/css" href="/betterform/forms/demo/styles/registration.css"/>--><script src="foo.js" type="text/javascript"></script><script type="text/javascript">
-        console.log("this is just a test");
-    </script><style type="text/css">
-        @import "styles/registration.css";
-    </style>
+        <!--<link rel="stylesheet" type="text/css" href="/betterform/forms/demo/styles/registration.css"/>-->
+        <script src="foo.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            console.log("this is just a test");
+        </script>
+        <style type="text/css">
+            @import "styles/registration.css";
+        </style>
 
-        <link rel="import" href="xf-input-calendar.html"> </link>
+        <link rel="import" href="xf-input-calendar.html"></link>
 
     </head>
     <body>
@@ -21,9 +26,12 @@
                 <div id="xf1" style="display:none">
                     <xf:model id="m-registration">
                         <xf:instance id="C1" src="registration.xml"></xf:instance>
-                        <xf:bind constraint="string-length(.) &gt; 3" id="C2" nodeset="alias" required="true()"></xf:bind>
-                        <xf:bind constraint="string-length(.) &gt; 3" id="C3" nodeset="email" required="true()" type="email"></xf:bind>
-                        <xf:bind constraint="string-length(.) &gt;= 6" id="C4" nodeset="pass1" required="true()"></xf:bind>
+                        <xf:bind constraint="string-length(.) &gt; 3" id="C2" nodeset="alias"
+                                 required="true()"></xf:bind>
+                        <xf:bind constraint="string-length(.) &gt; 3" id="C3" nodeset="email" required="true()"
+                                 type="email"></xf:bind>
+                        <xf:bind constraint="string-length(.) &gt;= 6" id="C4" nodeset="pass1"
+                                 required="true()"></xf:bind>
                         <xf:bind constraint=". = ../pass1" id="C5" nodeset="pass2" required="true()"></xf:bind>
                         <xf:bind id="C6" nodeset="agreement" type="boolean"></xf:bind>
                         <xf:submission id="s-send" method="get" replace="instance" resource="echo:test">
@@ -40,75 +48,90 @@
                 <div id="signin">
                     Already a member? Sign in here
 
-                </div><label for="registration-ui">This is the registration form</label><xf:group appearance="bf:verticalTable" id="registration-ui">
-                <xf:label id="C11">Join the group<span id="subtitle">Enjoy being a part of it!</span></xf:label>
-                <xf:input id="first" ref="firstname">
-                    <xf:label id="C12">Firstname:</xf:label>
-                    <xf:hint id="C13">enter your firstname</xf:hint>
-                    <bf:data enabled="true" readonly="false" required="false" schema-value="" type="string" valid="true"></bf:data>
-                </xf:input>
-                <xf:input id="C14" ref="lastname">
-                    <xf:label id="C15">Lastname:</xf:label>
-                    <xf:hint id="C16">enter your lastname</xf:hint>
-                    <bf:data enabled="true" readonly="false" required="false" schema-value="" type="string" valid="true"></bf:data>
-                </xf:input>
-                <xf:input id="C17" ref="alias">
-                    <xf:label id="C18">Username:</xf:label>
-                    <xf:hint id="C19">please choose a username</xf:hint>
-                    <xf:alert id="C20">enter more than 3 characters</xf:alert>
-                    <bf:data enabled="true" readonly="false" required="true" schema-value="" type="string" valid="false"></bf:data>
-                </xf:input>
-                <!--
-                use a custom user-defined mapping by specifying a custom appearance
+                </div>
+                <form name="data">
+                    <label for="registration-ui">This is the registration form</label>
+                    <xf:group appearance="bf:verticalTable" id="registration-ui">
+                        <xf:label id="C11">Join the group
+                            <span id="subtitle">Enjoy being a part of it!</span>
+                        </xf:label>
+                        <xf:input id="first" ref="firstname">
+                            <xf:label id="C12">Firstname:</xf:label>
+                            <xf:hint id="C13">enter your firstname</xf:hint>
+                            <bf:data enabled="true" readonly="false" required="false" schema-value="" type="string"
+                                     valid="true"></bf:data>
+                        </xf:input>
+                        <xf:input id="C14" ref="lastname">
+                            <xf:label id="C15">Lastname:</xf:label>
+                            <xf:hint id="C16">enter your lastname</xf:hint>
+                            <bf:data enabled="true" readonly="false" required="false" schema-value="" type="string"
+                                     valid="true"></bf:data>
+                        </xf:input>
+                        <xf:input id="C17" ref="alias">
+                            <xf:label id="C18">Username:</xf:label>
+                            <xf:hint id="C19">please choose a username</xf:hint>
+                            <xf:alert id="C20">enter more than 3 characters</xf:alert>
+                            <bf:data enabled="true" readonly="false" required="true" schema-value="" type="string"
+                                     valid="false"></bf:data>
+                        </xf:input>
+                        <!--
+                        use a custom user-defined mapping by specifying a custom appearance
 
-                 Note:
-                 Author must import the component manually!
-                 -->
-                <xf:input id="custom" appearance="component:xf-input-calendar" ref="date">
-                    <xf:label>Date</xf:label>
-                </xf:input>
-                <xf:select1 ref="country" appearance="full">
-                    <xf:label>Country</xf:label>
-                    <xf:action ev:event="xforms-value-changed"><xf:message>the value changed</xf:message></xf:action>
-                    <xf:item>
-                        <xf:label>Dötschland</xf:label>
-                        <xf:value>DE</xf:value>
-                    </xf:item>
-                    <xf:item>
-                        <xf:label>Öschtreich</xf:label>
-                        <xf:value>A</xf:value>
-                    </xf:item>
-                    <xf:item>
-                        <xf:label>Frönkreisch</xf:label>
-                        <xf:value>FR</xf:value>
-                    </xf:item>
-                </xf:select1>
-                <xf:input id="C21" ref="email">
-                    <xf:label id="C22">Email:</xf:label>
-                    <xf:alert id="C23">is not a valid email address</xf:alert>
-                    <xf:hint id="C24">enter a valid email address</xf:hint>
-                    <bf:data enabled="true" readonly="false" required="true" schema-value="" type="email" valid="false"></bf:data>
-                </xf:input>
-                <xf:secret id="C25" ref="pass1">
-                    <xf:label id="C26">password:</xf:label>
-                    <xf:alert id="C27">must be at least 6 characters</xf:alert>
-                    <xf:hint id="C28">more than 6 characters required</xf:hint>
-                    <bf:data enabled="true" readonly="false" required="true" schema-value="" type="string" valid="false"></bf:data>
-                </xf:secret>
-                <xf:secret id="C29" ref="pass2">
-                    <xf:label id="C30">reenter password:</xf:label>
-                    <xf:hint id="C31">please retype your password</xf:hint>
-                    <xf:alert id="C32">password does not match</xf:alert>
-                    <bf:data enabled="true" readonly="false" required="true" schema-value="" type="string" valid="true"></bf:data>
-                </xf:secret>
-                <xf:trigger appearance="triggerMiddleColumn" id="C33">
-                    <xf:label id="C34">Create my account</xf:label>
-                    <xf:hint id="C35">Be calm - this is just a demo! ;)</xf:hint>
-                    <xf:send id="C36" submission="s-send"></xf:send>
-                </xf:trigger>
+                         Note:
+                         Author must import the component manually!
+                         -->
+                        <xf:input id="custom" appearance="component:xf-input-calendar" ref="date">
+                            <xf:label>Date</xf:label>
+                        </xf:input>
+                        <xf:select1 ref="country" appearance="full">
+                            <xf:label>Country</xf:label>
+                            <xf:action ev:event="xforms-value-changed">
+                                <xf:message>the value changed</xf:message>
+                            </xf:action>
+                            <xf:item>
+                                <xf:label>Dötschland</xf:label>
+                                <xf:value>DE</xf:value>
+                            </xf:item>
+                            <xf:item>
+                                <xf:label>Öschtreich</xf:label>
+                                <xf:value>A</xf:value>
+                            </xf:item>
+                            <xf:item>
+                                <xf:label>Frönkreisch</xf:label>
+                                <xf:value>FR</xf:value>
+                            </xf:item>
+                        </xf:select1>
+                        <xf:input id="C21" ref="email">
+                            <xf:label id="C22">Email:</xf:label>
+                            <xf:alert id="C23">is not a valid email address</xf:alert>
+                            <xf:hint id="C24">enter a valid email address</xf:hint>
+                            <bf:data enabled="true" readonly="false" required="true" schema-value="" type="email"
+                                     valid="false"></bf:data>
+                        </xf:input>
+                        <xf:secret id="C25" ref="pass1">
+                            <xf:label id="C26">password:</xf:label>
+                            <xf:alert id="C27">must be at least 6 characters</xf:alert>
+                            <xf:hint id="C28">more than 6 characters required</xf:hint>
+                            <bf:data enabled="true" readonly="false" required="true" schema-value="" type="string"
+                                     valid="false"></bf:data>
+                        </xf:secret>
+                        <xf:secret id="C29" ref="pass2">
+                            <xf:label id="C30">reenter password:</xf:label>
+                            <xf:hint id="C31">please retype your password</xf:hint>
+                            <xf:alert id="C32">password does not match</xf:alert>
+                            <bf:data enabled="true" readonly="false" required="true" schema-value="" type="string"
+                                     valid="true"></bf:data>
+                        </xf:secret>
+                        <xf:trigger appearance="triggerMiddleColumn" id="C33">
+                            <xf:label id="C34">Create my account</xf:label>
+                            <xf:hint id="C35">Be calm - this is just a demo! ;)</xf:hint>
+                            <xf:send id="C36" submission="s-send"></xf:send>
+                        </xf:trigger>
 
-                <div is="xf-input" ref="name"></div>
-            </xf:group>
+                        <input type="text" is="xf-input" ref="name"></input>
+
+                    </xf:group>
+                </form>
             </div>
         </div>
     </body>

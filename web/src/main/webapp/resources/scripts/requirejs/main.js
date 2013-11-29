@@ -1,2 +1,0 @@
-require(['require'], function( req, $ ) {
-});
