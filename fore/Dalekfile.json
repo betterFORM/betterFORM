@@ -1,0 +1,17 @@
+{
+  "logLevel": 4,
+  "driver": ["sauce"],
+  "driver.sauce": {
+      "user": "windauer",
+      "key": "b4e5c3ba-8b80-44e4-94dd-e62b04385c76",
+      "name": "DalekTest",
+      "tags": ["dalek", "testproject"]
+    },
+    "browsers": [{
+        "ie": {
+            "platform": "OS X 10.6",
+            "actAs": "chrome"
+
+        }
+    }]
+}

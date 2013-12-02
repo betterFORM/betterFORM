@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         dist: 'dist',
         pagesTarget: '/target/betterform',
         devTarget: '/target/betterform/WEB-INF/classes/META-INF/resources',
-        elements:'/elements'
+        elements: '/elements'
     };
 
     grunt.initConfig({
@@ -26,23 +26,23 @@ module.exports = function(grunt) {
                 nospawn: true
             },
             elementsScripts: {
-                files:['<%= fore.srcDir %>/elements/**/*.js'],
+                files: ['<%= fore.srcDir %>/elements/**/*.js'],
                 tasks: ['rsync:developmentElements']
             },
             elementsHTML: {
-                files:['<%= fore.srcDir %>/elements/**/*.html'],
+                files: ['<%= fore.srcDir %>/elements/**/*.html'],
                 tasks: ['rsync:developmentElements']
             },
             styles: {
-                files:['<%= fore.srcDir %>/styles/*.less'],
+                files: ['<%= fore.srcDir %>/styles/*.less'],
                 tasks: ['less:development']
             },
             images: {
-                files:['<%= fore.srcDir %>/images/**/*'],
+                files: ['<%= fore.srcDir %>/images/**/*'],
                 tasks: ['rsync:developmentImages']
             },
             pages: {
-                files:['<%= fore.srcDir %>/pages/**/*'],
+                files: ['<%= fore.srcDir %>/pages/**/*'],
                 tasks: ['rsync:developmentPages']
             },
             target: {
@@ -112,33 +112,52 @@ module.exports = function(grunt) {
                 cwd: '<%= fore.srcDir %>/styles',
                 src:    '*.less',
                 ext:    '.css',                
-                dest: '<%= webDevTarget %>/styles'
+                dest: '<%= fore.srcDir %>/styles'
             },
+
             dist: {
                 // no need for files, the config below should work
                 expand: true,
                 cwd: '<%= fore.srcDir %>/styles',
                 src:    '*.less',
                 ext:    '.css',                
-                dest: '<%= fore.dist %>/styles'
+                dest: '<%= fore.dist %>/styles',
+                options: {
+                    compress:true
+                }
+
+
+
             }
         },
-        
+
         //USEMIN tasks
         useminPrepare: {
-            html: '<%= fore.srcDir %>/build.html',
+            html: ['<%= fore.srcDir %>/*.html'],
             options: {
                 dest: '<%= fore.dist %>'
             }
         },
-        
+
         usemin: {
-            html: '<%= fore.dist %>/build.html',
+            html: '<%= fore.dist %>/*.html',
             options: {
                 dirs: ['<%= fore.dist %>']
             }
         },
-        
+
+        imagemin: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= fore.srcDir %>/images',
+                    src: '{,*/}*.{png,jpg,jpeg}',
+                    dest: '<%= fore.dist %>/images'
+                }]
+            }
+        },
+
+
         //CLEAN tasks
         clean: {
             dist: ['.tmp', '<%= fore.dist %>/*'],
@@ -149,10 +168,40 @@ module.exports = function(grunt) {
                 src: ['<%= webDevTarget %>/scripts', '<%= webDevTarget %>/elements', '<%= webDevTarget %>/images', '<%= webDevTarget %>/styles' ]
             }
         },
+
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= fore.srcDir %>',
+                    dest: '<%= fore.dist %>',
+                    src: [
+                        '*.{ico,txt}',
+                        '.htaccess',
+                        'elements/**'
+                    ]
+                }]
+            },
+            html: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= fore.srcDir %>',
+                    dest: '<%= fore.dist %>',
+                    src: [
+                        '*.html'
+                    ]
+                }]
+            }
+
+        },
+
+
         dalek: {
             options: {
                 // invoke phantomjs, chrome & chrome canary
-                browser: ['chrome', 'firefox','sauce'],
+                browser: ['chrome', 'firefox', 'sauce'],
                 reporter: ['html', 'junit'],
                 driver: {
                     sauce: {
@@ -166,8 +215,29 @@ module.exports = function(grunt) {
             dist: {
                 src: ['test/samples/test_google.js']
             }
+        },
+        htmlmin: {
+            dist: {
+                options: {
+                    removeCommentsFromCDATA: true,
+                    removeComments:true,
+                    // https://github.com/yeoman/grunt-usemin/issues/44
+                    collapseWhitespace: true,
+                    collapseBooleanAttributes: true,
+                    removeAttributeQuotes: true,
+                    removeRedundantAttributes: true,
+                    useShortDoctype: true,
+                    removeEmptyAttributes: true,
+                    removeOptionalTags: false
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= fore.dist %>',
+                    src: '*.html',
+                    dest: '<%= fore.dist %>'
+                }]
+            }
         }
-
     });
 
 
@@ -184,16 +254,27 @@ module.exports = function(grunt) {
         'rsync:developmentPages',
         'less:development'
     ]);
-    
+
+
     grunt.registerTask('dist', [
         'clean:dist',
         'useminPrepare',
+        'imagemin',
         'concat',
         'uglify',
+        'copy',
         'usemin',
         'less:dist',
-        'clean:webDevTarget',
-        'rsync:dist'
+        'htmlmin'
+
+
+        // 'clean:webDevTarget'
+        // ,'rsync:dist'
+
+    ]);
+    grunt.registerTask('test', [
+        'dist',
+        'dalek'
     ]);
 };
 
