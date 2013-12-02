@@ -43,6 +43,9 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import javax.servlet.http.Cookie;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -107,7 +110,16 @@ public class WebProcessor extends AbstractProcessorDecorator {
     public void configure() throws XFormsException {
         this.key = generateXFormsSessionKey();
         initConfig();
-        WebUtil.storeCookies(Arrays.asList(request.getCookies()), this);
+        Cookie[] cookies = request.getCookies();
+        List<Cookie> cookiesList;
+        
+        if(cookies != null) {
+            cookiesList = Arrays.asList(request.getCookies());
+        } else {
+            cookiesList = Collections.EMPTY_LIST;
+        }
+        
+        WebUtil.storeCookies(cookiesList, this);
         WebUtil.setContextParams(request, httpSession, this, this.key);
         WebUtil.copyHttpHeaders(request, this);
         setLocale();
