@@ -63,7 +63,7 @@ public class FluxFacade {
 
     //todo: should be named 'dispatchActivateEvent'
     public List<XMLEvent> dispatchEvent(String id, String sessionKey) throws XFormsException {
-        FluxProcessor processor = null;
+        FluxProcessor processor;
         try {
             processor = FluxUtil.getProcessor(sessionKey);
             processor.dispatchEvent(id);
@@ -110,8 +110,10 @@ public class FluxFacade {
         }
         try {
             if (contextInfo != null && (!contextInfo.isEmpty())) {
+                assert processor != null:"Processor is null - you likely have no valid session.";
                 processor.dispatch(id, eventType, contextInfo, true, false);
             } else {
+                assert processor != null:"Processor is null - you likely have no valid session.";
                 processor.dispatch(id, eventType);
             }
         } catch (XFormsException e) {
@@ -142,7 +144,7 @@ public class FluxFacade {
         }
         UIEvent event = new DefaultUIEventImpl();
         event.initEvent("SETVALUE", id, value);
-        List results = null;
+        List results;
         try {
             results = handleUIEvent(event, sessionKey);
         } catch (FluxException e) {
@@ -202,7 +204,7 @@ public class FluxFacade {
      }*/
     public org.w3c.dom.Element getXFormsDOM(String sessionKey) throws FluxException {
         try {
-            Element resultElem = ((Document) FluxUtil.getProcessor(sessionKey).getXForms()).getDocumentElement();
+            Element resultElem = FluxUtil.getProcessor(sessionKey).getXForms().getDocumentElement();
             if (LOGGER.isDebugEnabled()) {
                 DOMUtil.prettyPrintDOM(resultElem);
             }
@@ -238,7 +240,6 @@ public class FluxFacade {
             if (uploadInfo.isInProgress()) {
                 double p = uploadInfo.getBytesRead() / uploadInfo.getTotalSize();
 
-                progress = p + "";
                 float total = uploadInfo.getTotalSize();
                 float read = uploadInfo.getBytesRead();
                 int iProgress = (int) Math.ceil((read / total) * 100);
