@@ -179,7 +179,8 @@ module.exports = function(grunt) {
                     src: [
                         '*.{ico,txt}',
                         '.htaccess',
-                        'elements/**'
+                        'elements/**',
+                        'pages/**'
                     ]
                 }]
             },
