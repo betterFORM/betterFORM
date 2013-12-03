@@ -15,7 +15,6 @@ Run the following commands to setup the project and download all needed libs
 ## Running Fore
 
 
-
 ## Update build infrastructure
 
 ### Add node dependencies to project
@@ -29,7 +28,15 @@ Run the following commands to setup the project and download all needed libs
 
 ## Execute Test Suite
 
-1. ç
+All Fore tests are written as Webdriver tests and executed by DalekJS (http://dalekjs.com/) via Grunt.
+The Fore Tests are placed at $FORE/test/dalekjs
+
+To execute all tests on the app directory (exploded resources, development) execute
+1. grunt test-dev
+
+analogue all test on the dist directory (optimized resources, deployment) can be run by calling
+1. grunt test-dist
+
 
 
 

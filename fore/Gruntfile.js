@@ -205,7 +205,7 @@ module.exports = function(grunt) {
                 reporter: ['html']
             },
 
-            dist: {
+            tests: {
                 src: ['test/dalekjs/test_index_page.js']
             }
         },
@@ -240,7 +240,7 @@ module.exports = function(grunt) {
                     keepalive:true
                 }
             },
-            test: {
+            dev: {
                 options: {
                     port: 9001,
                     base:  '<%= fore.srcDir %>',
