@@ -5,12 +5,18 @@
       "user": "windauer",
       "key": "b4e5c3ba-8b80-44e4-94dd-e62b04385c76",
       "name": "DalekTest",
-      "tags": ["dalek", "testproject"]
+      "tags": ["dalekjs", "bfAppTests"]
     },
     "browsers": [{
-        "ie": {
-            "platform": "OS X 10.6",
+        "chrome": {
+            "platform": "OS X 10.8",
             "actAs": "chrome"
+
+        },
+
+        "firefox": {
+            "platform": "OS X 10.8",
+            "actAs": "firefox"
 
         }
     }]

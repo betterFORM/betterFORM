@@ -52,7 +52,7 @@ module.exports = function(grunt) {
                 files: ['<%= webPagesTarget %>/pages/*.xhtml','<%= elementsTarget %>/*.html']
             }
         },
-        
+
         //RSYNC tasks
         rsync: {
             options: {
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        
+
         //LESS compiler tasks
         less: {
             options: {
@@ -111,7 +111,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: '<%= fore.srcDir %>/styles',
                 src:    '*.less',
-                ext:    '.css',                
+                ext:    '.css',
                 dest: '<%= fore.srcDir %>/styles'
             },
 
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: '<%= fore.srcDir %>/styles',
                 src:    '*.less',
-                ext:    '.css',                
+                ext:    '.css',
                 dest: '<%= fore.dist %>/styles',
                 options: {
                     compress:true
@@ -200,20 +200,13 @@ module.exports = function(grunt) {
 
         dalek: {
             options: {
-                // invoke phantomjs, chrome & chrome canary
-                browser: ['chrome', 'firefox', 'sauce'],
-                reporter: ['html', 'junit'],
-                driver: {
-                    sauce: {
-                        "user": "windauer",
-                        "key": "b4e5c3ba-8b80-44e4-94dd-e62b04385c76"
-                    }
-                }
+                dalekfile:false,
+                browser: ['chrome'],
+                reporter: ['html']
             },
 
-
             dist: {
-                src: ['test/samples/test_google.js']
+                src: ['test/dalekjs/test_index_page.js']
             }
         },
         htmlmin: {
@@ -236,6 +229,31 @@ module.exports = function(grunt) {
                     src: '*.html',
                     dest: '<%= fore.dist %>'
                 }]
+            }
+        },
+
+        connect: {
+            livedev: {
+                options: {
+                    port: 9001,
+                    base:  '<%= fore.srcDir %>',
+                    keepalive:true
+                }
+            },
+            test: {
+                options: {
+                    port: 9001,
+                    base:  '<%= fore.srcDir %>',
+                    keepalive:false
+                }
+            },
+
+            dist: {
+                options: {
+                    port: 9001,
+                    base:  '<%= fore.dist %>',
+                    keepalive:false
+                }
             }
         }
     });
@@ -272,8 +290,15 @@ module.exports = function(grunt) {
         // ,'rsync:dist'
 
     ]);
-    grunt.registerTask('test', [
+
+    grunt.registerTask('test-dev', [
         'dist',
+        'connect:dev',
+        'dalek'
+    ]);
+    grunt.registerTask('test-dist', [
+        'dist',
+        'connect:dist',
         'dalek'
     ]);
 };
