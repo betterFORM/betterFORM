@@ -4,6 +4,9 @@ module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
     require('time-grunt')(grunt);
 
+    var httpServerPort = 9001;
+
+
     var foreConfig = {
         srcDir: 'app',
         webModule: '../web',
@@ -179,7 +182,8 @@ module.exports = function(grunt) {
                     src: [
                         '*.{ico,txt}',
                         '.htaccess',
-                        'elements/**'
+                        'elements/**',
+                        'pages/**'
                     ]
                 }]
             },
@@ -233,16 +237,23 @@ module.exports = function(grunt) {
         },
 
         connect: {
-            livedev: {
+            live: {
                 options: {
-                    port: 9001,
-                    base:  '<%= fore.srcDir %>',
+                    port: httpServerPort,
+                    base:  '',
                     keepalive:true
+                }
+            },
+            root: {
+                options: {
+                    port: httpServerPort,
+                    base:  '',
+                    keepalive:false
                 }
             },
             dev: {
                 options: {
-                    port: 9001,
+                    port: httpServerPort,
                     base:  '<%= fore.srcDir %>',
                     keepalive:false
                 }
@@ -250,9 +261,17 @@ module.exports = function(grunt) {
 
             dist: {
                 options: {
-                    port: 9001,
+                    port: httpServerPort,
                     base:  '<%= fore.dist %>',
                     keepalive:false
+                }
+            }
+        },
+        jasmine: {
+            pivotal: {
+                src: 'app/scripts/*.js',
+                options: {
+                    specs: 'test/jasmine/spec/*Spec.js'
                 }
             }
         }
@@ -301,5 +320,14 @@ module.exports = function(grunt) {
         'connect:dist',
         'dalek'
     ]);
+    grunt.registerTask('test-js', [
+        'connect:root',
+        'jasmine'
+    ]);
+    grunt.registerTask("dev",  [
+        "connect:root",
+        "watch"
+    ]);
+
 };
 

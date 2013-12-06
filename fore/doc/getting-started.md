@@ -24,6 +24,12 @@ Run the following commands to setup the project and download all needed libs
 1. to update bower run **bower update**
 
 
+## Deployment
+To create an optimized version of the App run
+1. grunt dist
+This will optimize all JavaScript, CSS and Image files and create an optimized app in the created dist directory
+
+
 ## Testing
 
 ## Execute Test Suite
