@@ -13,6 +13,7 @@ import de.betterform.xml.xforms.exception.XFormsComputeException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Instance;
 import de.betterform.xml.xforms.model.Model;
+import de.betterform.xml.xforms.model.bind.BindingUtil;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import net.sf.saxon.om.Item;
 import org.apache.commons.logging.Log;
@@ -153,6 +154,9 @@ public class InsertAction extends AbstractBoundAction {
 			if (hasModelBinding()) {
 				return getModelBinding().getBindingExpression();
 			}
+            if(BindingUtil.hasRef(element)){
+                return getXFormsAttribute(REF_ATTRIBUTE);
+            }
 			return getXFormsAttribute(NODESET_ATTRIBUTE);
 		}
 

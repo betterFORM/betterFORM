@@ -118,6 +118,13 @@
                     <xf:insert nodeset="item" at="2" position="before"/>
                 </xf:action>
             </xf:trigger>
+            <xf:trigger id="insert-before-second-with-ref">
+                <xf:label>Insert before second</xf:label>
+                <xf:action>
+                    <xf:insert ref="item" at="2" position="before"/>
+                </xf:action>
+            </xf:trigger>
+
             <xf:trigger id="insert-before-non-existing">
                 <xf:label>Insert before non-existing</xf:label>
                 <xf:action>
