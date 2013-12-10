@@ -178,7 +178,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     var position = parseInt(contextInfo.position,"10");
                     var itemToRemove = this._getRepeatItems()[position - 1];
                     var repeatNode = this.srcNodeRef;
-                    if (this.appearance == "compact") {
+                    if (this.appearance == "compact"|| this.srcNodeRef.classList.contains('xfTable')) {
                         query("> tbody", repeatNode)[0].removeChild(itemToRemove);
                     } else {
                         repeatNode.removeChild(itemToRemove);
@@ -314,7 +314,7 @@ define(["dojo/_base/declare","bf/XFBinding","dojo/query","dojo/dom", "dojo/dom-s
                     var repeatItems = undefined;
                     var repeatNode = this.srcNodeRef;
                     // console.debug("Repeat._getRepeatItems repeatNode: ",repeatNode);
-                    if (this.appearance == "compact") {
+                    if (this.appearance == "compact" || this.srcNodeRef.classList.contains('xfTable')) {
                         repeatItems = query("> tbody > .xfRepeatItem", repeatNode);
                     } else {
                         repeatItems = query("> .xfRepeatItem", repeatNode);

@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head/>
+    <body xmlns:ev="http://www.w3.org/2001/xml-events">
+
+        <xf:model id="m-problem">
+            <xf:instance xmlns="" id="i-ui-problem">
+                <problem>
+                    <block>
+                        <index/>
+                        <label>ONE</label>
+                    </block>
+                    <block>
+                        <index/>
+                        <label>TWO</label>
+                    </block>
+                    <block>
+                        <index/>
+                        <label>THREE</label>
+                    </block>
+                </problem>
+            </xf:instance>
+
+            <xf:bind ref="instance('i-ui-problem')/block">
+                <xf:bind ref="index" calculate="position()"/>
+            </xf:bind>
+        </xf:model>
+
+        <table xf:repeat-ref="instance('i-ui-problem')/block">
+            <tr>
+                <td>
+                    <xf:trigger>
+                        <xf:label>Delete <xf:output value='label'/></xf:label>
+                        <xf:message> Delete row <xf:output value="context()/index"/> </xf:message>
+                        <xf:delete ref="instance('i-ui-problem')/block" at="context()/index"/>
+                        <xf:rebuild/>
+                    </xf:trigger>
+                </td>
+
+            </tr>
+        </table>
+
+        <table xf:repeat-ref="instance('i-ui-problem')/block">
+            <tr>
+                <td>
+                    <xf:output value="concat(index, label)"/>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
