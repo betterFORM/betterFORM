@@ -443,9 +443,7 @@
                cellspacing="0"
                 >
             <!-- build table header -->
-            <!-- <xsl:for-each select="bf:data/xf:group[@appearance='repeated'][1]"> -->
-            <!-- Don´t use Prototype for RepeatHeader but first Repeatitem -->
-            <xsl:for-each select="xf:group[@appearance='repeated'][1]">
+            <xsl:for-each select="bf:data/xf:group[@appearance='repeated'][1]">
                 <tr class="xfRepeatHeader">
                     <xsl:call-template name="processCompactHeader"/>
                 </tr>
