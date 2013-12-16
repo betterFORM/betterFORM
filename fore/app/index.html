@@ -1,57 +1,61 @@
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8"> </meta>
-    <title>betterFORM</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> </meta>
-    <meta name="description" content=""> </meta>
-    <meta name="viewport" content="width=device-width"> </meta>
+    <head>
+        <meta charset="utf-8">
+        </meta>
+        <title>betterFORM</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        </meta>
+        <meta name="description" content="">
+        </meta>
+        <meta name="viewport" content="width=device-width">
+        </meta>
 
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="stylesheet" href="styles/main.css"> </link>
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="styles/main.css">
+        </link>
 
-    <!-- Place your HTML imports here -->
-    <link rel="import" href="elements/fore-processor.html"> </link>
+        <!-- Place your HTML imports here -->
+        <link rel="import" href="elements/fore-processor.html"></link>
+        <link rel="import" href="elements/fore-input.html"></link>
 
-</head>
-<body>
+    </head>
+    <body>
 
-<fore-processor>
-
-    <!--
-    The processor is here used to host the xforms model(s). This is of course by no means necessary but
-    might be a convenient place to put them.
-
-    Questions:
-    - use shadowDom to hide the model from rest of document can be attractive?
-    - even complete forms might be web components and have the xforms as template?
-    -->
-</fore-processor>
+        <fore-processor></fore-processor>
 
 
+        <div>
+            <form action="">
+                <!--
+                <fore-model>
+                    <fore-instance>
+                        <data>
+                            <foo></foo>
+                        </data>
+                    </fore-instance>
+                </fore-model>
+                -->
+                <label for="foo">Foo</label>
+                <input id="foo" name="foo" type="text"/>
 
-<div class="container" id="container">
-    <div class="hero-unit">
-        <h1>'Allo, 'Allo!</h1>
-        <p>You now have</p>
-        <ul>
-            <li>HTML5 Boilerplate</li>
-            <li>Polymer</li>
-        </ul>
-        <p>installed.</p>
-        <h3>Enjoy coding! - Yeoman</h3>
-    </div>
-</div>
+                <label for="foo2">Foo</label>
+                <input id="foo2" name="foo2" type="text" value="hello"/>
+            </form>
+        </div>
 
 
-<script>
-    document.addEventListener('WebComponentsReady', function() {
-        // Perform some behaviour
-    });
-</script>
 
-<!-- build:js scripts/polymer/polymer.js -->
-<script src="bower_components/polymer/polymer.min.js"></script>
-<!-- endbuild -->
-</body>
+        <!-- build:js scripts/polymer/polymer.js -->
+        <script src="bower_components/platform/platform.js"  log="bind,ready,data"></script>
+        <!-- endbuild -->
+
+
+
+        <script>
+            window.addEventListener('WebComponentsReady', function() {
+               console.log('All done ...');
+            });
+        </script>
+    </body>
 </html>

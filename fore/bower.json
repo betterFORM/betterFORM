@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "dependencies": {
     "modernizr": "~2.6.2",
-    "polymer": "0.0.20131107",
-    "jquery-ui": "1.10.3"
+    "polymer": "Polymer/polymer#~0.1.1",
+    "jquery-ui": "1.10.3",
+    "platform": "Polymer/platform#~0.1.1"
   },
   "devDependencies": {}
 }

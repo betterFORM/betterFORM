@@ -1,4 +1,4 @@
-# W3Forms
+# Isomer - extending HTML5 forms
 ### Green Paper 26. Nov 2013
 
 Version: 1.0
@@ -17,116 +17,50 @@ So keep in mind - this is a proposal AND subject to change.
 
 # Abstract
 
+This paper proposes a framework enhancing the form processing capabilities of HTML5 subsumed as 'Isomer'. Isomer defines a set of attributes, web components, events and a JavaScript API to selectively and incrementally enhance simple HTML forms into model-driven, secure and highly dynamic web applications. 
 
+# Introduction
 
-This paper presents 'W3Forms' - a successor of the (unfortunately stalled) [XForms for HTML](http://www.w3.org/TR/XForms-for-HTML) Working Draft dated from 19 December 2008. It outlines an opinionated approach[^1] of evolving the orginal approach into todays' HTML5 ecosystem.
+Forms are a cornerstone of most web applications but building browser-based form applications is still a cumbersome process. Existing standards like [XForms](http://www.w3.org/TR/2009/REC-xforms-20091020/) have failed to succeed in the wild and native support for advanced form functionality is lacking in the current HTML standard as well as in browser implementations. 
 
-Cite from original document:
+The mobile revolution brings new challenges that developers need to address: offline-capability, responsiveness, notifications etc. These require the orchestration of many standards, tools and libraries to deliver state-of-the-art solutions.
 
-> XForms for HTML provides a set of attributes and script methods that can be used by the tags or elements of an HTML or XHTML web page to simplify the integration of data-intensive interactive processing capabilities from XForms. The semantics of the attributes are mapped to the rich XForms model-view-controller-connector architecture, thereby allowing web application authors a smoother, selective migration path to the higher-order behaviors available from the full element markup available in modules of XForms.
+Isomer picks up the good parts of XForms and other standards and integrates them into the HTML world. It builds on the common ground of existing standards and best practices to give easy access to the advanced functionality required by todays' applications.
 
+Most web applications today are developed with an iterative or agile process. Forms, with are a vital part of many of them, often start simple but quickly grow complex when validations, calculations or dependencies between data items enter the picture. But the price of using powerful form frameworks right from the start often seems too high. This becomes a problem once when developers realize that the amount of script code quickly grows and becomes messy. The hurdles to switch to a more powerful tool is often painful as they force re-implementation of already running functionality which - under pressing timelines - often is no option. Isomer will allow to start with standard HTML forms and progressively enhance them into full-blown model-driven form applications.
 
-# Motivation
+Isomer is a community effort. All interested parties are invited to participate in the effort.
 
-The W3C XForms 1.1 recommendation has set the standard for the next generation of forms on the web. However with its steep learning curve and the perception of being bound exclusively to the XML world it lacks broad acceptence[^2].
+## Relations to other work
 
-As a reaction XForms for HTML was drafted to more closely meet the skills and expectations of HTML or Web developers[^3] and naturally enhance HTML with (limited) XForms capabilities.
+Many ideas of Isomer will be borrowed from work already done in other places:
 
-Unfortunately XForms for HTML was discontinued[^4] and HTML5 has not addressed the functional gap. While typing and some declarative enhancements esp. to the ìnput`element have been made there's still a lack for e.g. a repeat model or a data binding mechanism (except in detail areas).
+* W3C [XForms 1.1](http://www.w3.org/TR/2009/REC-xforms-20091020/) has set a standard for XML-based forms that offers a huge, powerful toolkit to address even to most complex scenarios.
+* [XForms for HTML](http://www.w3.org/TR/XForms-for-HTML) was an effort that tried to re-integrate the ideas of XForms into the HTML world. Unfortunately the effort has been discontinued after a first draft document.
+* [Web Components](http://www.w3.org/TR/components-intro/) are a new standard that will allow well-encapsulated functionality within a browser and addresses the needs of web application developers. Isomer builds upon this upcoming standard to implement its functionality.
 
-W3Forms is an attempt to revive the spirit of XForms for HTML while staying as close to (existing and evolving) web standards as possible and finally offer a advanced form processing platform in HTML. 
-
-But why not simply implement XForms for HTML but have another spec? X4H is dated back to 2008 before the mobile revolution has really taken speed. The web platform and associated tooling has evolved quite a bit during the past 5 years requiring appropriate answers for the new challenges.
-
-It is unlikely that native support for XForms for HTML will come from any browser vendor. The solution is to provide a JavaScript-driven implementation that builds upon the extensibility features of HTML5 (namely extension elements).
-
-# Relation to other work
-
-The evolving W3C [Web Components](http://www.w3.org/TR/components-intro/) specification is an ideal candidate for the implementation of W3Forms. It offers a HTML5-based component model for extending common HTML elements to create new custom elements which enhance the original element.
-
-[Polymer](http://polymer-project.org) is an polyfill by Google implementing Web Components. It implements large parts of the specification in JavaScript polyfilling browsers that do not yet support a feature natively. Google and Netscape mainly drive the initiative now but major companies begin to adapt Web Components so there's a chance of native support for most major browsers.
-
-
-## Introduction
-
-The goals of W3Forms are fully in sync with the ones given in [XForms for HTML](http://www.w3.org/TR/XForms-for-HTML/#intro-reading). A final implementation should feel as simple, intuitive and consistent with widespread standards as possible and must allow developers to turn existing HTML forms into production-grade, model-driven form applications.
-
-In addition W3Forms will take the mobile world into account which has evolved dramatically since 2008 and forces to address new requirements such as offline-capability, touch events, push notifications and responsive layout.
-
-Starting with a simple and fully client-side approach the goal is to connect W3Forms to the full XForms capabilities defined by XForms 1.1. W3Forms intends to allow an iterative appraoch to form applications which start with simple HTML forms with implied models and allow developers to switch to an explicit model with advanced capabilities on the go. Further it shall address the requirements of production-grade applications by providing transparent validation on client and server.
-
- 
-### Conventions
-
-When referring to original XForms elements the prefix 'xf' is used to imply that the respective element is from the XForms namespace.
-
-Extension (or custom) elements in the Web Components spec must use a name with a dash ('-') character in its name. For W3Forms elements the prefix 'fore-' will be used.
 
 ## Approach
 
-This paper is not a specification in the strict sense. It just tries to outline the functionality to a reasonable extend to give users a clear impression of what to expect from the implementation. 
+This paper is not a specification in the strict sense. It just tries to outline the functionality to a reasonable extend to give users a clear impression of what to expect from an implementation. 
 
-Some decisions about the implementation have already been taken (e.g. to use Polymer) so it's not specifying things in an technology-agnostic way but will make use of work done elsewhere. For instance the Web Components Specification is still under construction and likely things will change here in detail. Where possible these changes will be shielded away by the implementation. However this might not always be possible and users will probably need to change details of their already running forms to catch up with the ongoing development. So we're on the bleeding edge - you have been warned.
+## Model-driven forms
 
-As developers (as opposed to spec writers) we are taking a pragmatic approach to get things running. This means that not each and every edge case might get considered in full detail or at all. But we're addicted to standards and will try to align our decisions with common practices and standards whereever possible. 
+Isomer takes a model-driven approach to forms to make them more maintainable and extensible.
 
-As already mentioned W3Forms is an attempt to revive and modernize XForms for HTML and as such we'll work along the existing draft but will rephrase most of the text trying to catch the spirit of it but making it more consumable for the reader.
+Both XML and JSON models will be supported for the following reasons:
 
-## XForms as component
+* JSON is the de-facto standard on the client-side today. It provides a lightweight data representation and is efficient to process in JavaScript and to transfer via the wire.
+* XML on the other hand is the standard for data exchange and representation in countless industries and domains. Namespaces, a rich set of datatypes, validation  and i18n support are just a few arguments that distinguishes it from the simple JSON structures.
 
-HTML5 allows to extend the native DOM through extension elements. The only requirement for extension elements is that the name must contain a dash ('-') character (e.g. my-element).
-
-The Web Components standard provides a set of technologies that build on top of extension elements and allow to specify custom element behavior and rendering in an encapsulated fashion.
-
-W3Forms will use Web Components to implement the functionality of X4H and give web developers access to the rich processing model of XForms. The syntax is considered an important factor for the acceptance of the solution and must meet the expectations of the developers and re-use existing HTML syntax whereever possible and appropriate.
-
-### Syntax
-X4H mainly uses attributes on existing HTML elements to add its functionality. This however is not possible for the XForms model which has no correspondence in HTML. 
-
-### Avoid requiring XML namespaces
-XML Namespaces are often considered an entry hurdle for Web developers not familiar with XML. To keep the syntax easy W3Forms will not use XML-namespaced elements within its DOM at runtime. It will be able to consume those though.
-
-
-## Models in forms
-
-W3Forms will support these different ways of using an XForms model.
-
-todo: say some more about usage of models
-
-### Importing a model
-
-`<form model-src="myXFormsModel.xml">`
-
-myXFormsModel.xml must contain fully XForms 1.1 conformant markup and will be resolved relative to `document.location.href` 
-
-If the URL contains a fragment identifier (#) it will be resolved as idref in context of the current document.
-
-By using linked models the host document no longer needs to be well-formed and namespaced XHTML. 
- 
-[full example](examples/linked-model.html)
-
-### Using an inline model
-
-To use an inline XForms model the containing document must be XHTML and declare the appropriate namespaces. The model can be referenced by a fragment identifier:
-
-
-    <xf:model id="myModel">
-    
-        ...
-    </xf:model>
-            
-    <form model-src="#myModel">
-    ...
-    </form>
-    
-
-
-[full example](examples/inline-model.html)
-
+Models can be either implicit (auto-generated) or explicit. Details are given in the following sections.
 
 ### Implicit model
 
-If a form does not have a `model-src` attribute, the an implicit 'xf-model' element is generated and prepended before the first child element of the form element. The generated `<xf-model>` element is required as it is used as target of model events.
+** Editorial Note:** element names that contain a dash ('-') character signify an HTML5 extension element. These are used by Isomer to extend the HTML functionality with the functionality described in this paper.  
+
+
+If a form does not use an explicit model (see following sections), then an implicit 'xf-model' element is generated and prepended before the first child element of the form element. The generated `<xf-model>` element is required as it is used as target of model events.
 
 Example:
 
@@ -143,7 +77,7 @@ Example:
 
     </form>
 
-The above input form will create the following implicit model at runtime:
+In XML mode the above input form will create the following implicit model at runtime:
 
     <form>
         <xf-model>
@@ -167,16 +101,47 @@ The above input form will create the following implicit model at runtime:
 
     </form>
     
+** Editorial Note:**     
+
+    
+
+### Using an inline model
+
+To use an inline XForms model the containing document must be XHTML and declare the appropriate namespaces. The model can be referenced by a fragment identifier:
+
+
+    <xf:model id="myModel">
+    
+        ...
+    </xf:model>
+            
+    <form model-src="#myModel">
+    ...
+    </form>
+    
+
+
+[full example](examples/inline-model.html)
+
+
+### Importing a model
+
+`<form model-src="myXFormsModel.xml">`
+
+myXFormsModel.xml must contain fully XForms 1.1 conformant markup and will be resolved relative to `document.location.href` 
+
+If the URL contains a fragment identifier (#) it will be resolved as idref in context of the current document.
+
+By using linked models the host document no longer needs to be well-formed and namespaced XHTML. 
+ 
+[full example](examples/linked-model.html)
 
 
 
 
 ## Data instances
 
-#
-
-
-XForms uses XML and the XPath data model for representing instance data while JSON has established as a de-facto standard in the web development world. W3Forms will support both data models.
+XForms uses XML and the XPath data model for representing instance data while JSON has established as a de-facto standard in the web development world. Isomer will support both data models.
 
 Instances can either be explicitly given as part of an `xf:model` or generated based upon the element structure of the UI controls. The latter are called **generated data instances**.
 
@@ -331,7 +296,7 @@ tbd
 
 ## Overview of HTML enhancements
 
-This section describes the additional attributes provided by W3Forms to enhance native HTML behavior.
+This section describes the additional attributes provided by Isomer to enhance native HTML behavior.
 
 Two controls that share the same name (specifiy the same value for the `name`attribute) they are bound to the same data node. If the bound data node changes all bound controls will be updated to reflect the new value. 
 
@@ -362,7 +327,7 @@ type | xsd:string | String denoting an HTML datatype (e.g. 'number') or an XSD d
 
 ### Enhancements to the `label`element
 
-W3Forms maps `xf:label`, `xf:alert`, `xf:hint` and `xf:help`to the HTML `label`element to attach their specific behavior.
+Isomer maps `xf:label`, `xf:alert`, `xf:hint` and `xf:help`to the HTML `label`element to attach their specific behavior.
 
 
 Attribute    | Content Model  | Description

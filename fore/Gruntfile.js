@@ -1,4 +1,10 @@
 'use strict';
+var LIVERELOAD_PORT = 35729;
+var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+
 module.exports = function(grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -26,7 +32,8 @@ module.exports = function(grunt) {
         //WATCH tasks
         watch: {
             options: {
-                nospawn: true
+                nospawn: true,
+                livereload: true
             },
             elementsScripts: {
                 files: ['<%= fore.srcDir %>/elements/**/*.js'],
@@ -47,6 +54,9 @@ module.exports = function(grunt) {
             pages: {
                 files: ['<%= fore.srcDir %>/pages/**/*'],
                 tasks: ['rsync:developmentPages']
+            },
+            html: {
+                files: ['<%= fore.srcDir %>/*.html']
             },
             target: {
                 options: {
@@ -210,7 +220,7 @@ module.exports = function(grunt) {
             },
 
             tests: {
-                src: ['test/dalekjs/test_index_page.js']
+                src: ['test/dalekjs/test_index_page.js','test/dalekjs/test_index_page1.js']
             }
         },
         htmlmin: {
@@ -237,13 +247,17 @@ module.exports = function(grunt) {
         },
 
         connect: {
-            live: {
+            //Run "app" in grunt server
+            livereload: {
                 options: {
                     port: httpServerPort,
-                    base:  '',
-                    keepalive:true
+                    base:  'app',
+                    keepalive:false,
+                    open: true,
+                    livereload: true
                 }
             },
+            //Testing targets
             root: {
                 options: {
                     port: httpServerPort,
@@ -258,7 +272,6 @@ module.exports = function(grunt) {
                     keepalive:false
                 }
             },
-
             dist: {
                 options: {
                     port: httpServerPort,
@@ -267,6 +280,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         jasmine: {
             pivotal: {
                 src: 'app/scripts/*.js',
@@ -311,7 +325,6 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('test-dev', [
-        'dist',
         'connect:dev',
         'dalek'
     ]);
@@ -324,10 +337,9 @@ module.exports = function(grunt) {
         'connect:root',
         'jasmine'
     ]);
-    grunt.registerTask("dev",  [
-        "connect:root",
-        "watch"
+    grunt.registerTask('server',  [
+        'connect:livereload',
+        'watch'
     ]);
-
 };
 
