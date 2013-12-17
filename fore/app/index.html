@@ -32,6 +32,8 @@
                     <fore-instance>
                         <data>
                             <foo></foo>
+                            <item name="foo" readonly="true" ...>
+                                <item name="bar" required="true"
                         </data>
                     </fore-instance>
                 </fore-model>
@@ -55,6 +57,16 @@
         <script>
             window.addEventListener('WebComponentsReady', function() {
                console.log('All done ...');
+/*
+                 model = {
+                    foo: 'joern',
+                    foo2: 'barbar'
+                };
+*/
+                var myModel= document.getElementById('defaultModel').model;
+                //this.bind('value', new PathObserver(model, 'foo'));
+
+//                document.getElementById("foo2").bind('value',model,'foo2')
             });
         </script>
     </body>

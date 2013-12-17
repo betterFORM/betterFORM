@@ -1,20 +1,44 @@
-<polymer-element name="fore-input" attributes="value">
+<polymer-element name="fore-input" attributes="name value type">
     <script>
         Polymer('fore-input', {
+            path: '',
+            model: '',
+
+            observe : {
+                path: 'validate'
+            },
+
+
+
             created: function () {
 
                 console.log("fore-input created ...");
                 console.log("this: ", this);
                 console.log("this: ", this.getAttribute('name'));
-                var instance = document.getElementById('defaultInstance').getInstance();
-                console.log("Instance: ", instance);
-                this.bind('value', instance, this.getAttribute('name'));
+
+
+
+                var myModel= document.getElementById('defaultModel').model;
+                this.model = myModel;
+                this.path = 'model.' + this.getAttribute('name');
+                this.bind('value', myModel, this.getAttribute('name'));
+                //this.bind('value', new PathObserver(myModel, 'foo'));
+//                this.bind('value',myModel,'foo2')
+//                var instance = document.getElementById('defaultInstance').getInstance();
+//                console.log("Instance: ", instance);
+//                this.bind('value', instance, this.getAttribute('name'));
 
                 //maybe?
-                Platform.performMicrotaskCheckpoint();
+                //Platform.performMicrotaskCheckpoint();
             },
 
+            validate: function(oldValue, newValue) {
+                console.log('Jippie Yeah Schweinebacke!');
+            }
 
+
+
+/*
             bind: function (name, obj, path) {
                 console.log("custom binding",this);
                 if (name === 'value') {
@@ -25,6 +49,7 @@
                     HTMLElement.prototype.bind.call(this, name, obj, path);
                 }
             }
+*/
 
 
         });

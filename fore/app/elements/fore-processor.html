@@ -45,11 +45,10 @@
                 // enhance native elements as custom elements by applying appropriate 'is' attribute
                 // components must still be linked statically into input document
                 var instance = document.getElementById('defaultInstance');
-
                 var controls = document.querySelectorAll('body input');
                 for (var i = 0; i < controls.length; i++) {
                     controls[i].setAttribute('is', 'fore-input');
-                    console.log("input init:", controls[i]);
+//                    console.log("input init:", controls[i]);
 //                    controls[i].bind('value', instance, 'foo2');
                 }
 

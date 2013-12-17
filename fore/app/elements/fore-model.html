@@ -1,10 +1,19 @@
 <link rel="import" href="fore-instance.html">
 
-<polymer-element name="fore-model"  attributes="">
+<polymer-element name="fore-model" attributes="">
     <script>
+
         Polymer('fore-model', {
 
-            created: function() {
+            ready: function () {
+                this.model = {
+                    foo: 'joern',
+                    foo2: 'barbar'
+                };
+            },
+
+
+            created: function () {
                 console.log("fore-model created ...");
 
                 var foreInstance = document.createElement('div', 'fore-instance');
@@ -12,7 +21,7 @@
                 this.appendChild(foreInstance);
             },
 
-            getInstance: function() {
+            getInstance: function () {
                 console.log(this);
                 console.log("getInstance()");
                 return document.getElementById('defaultInstance').getInstance();

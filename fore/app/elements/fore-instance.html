@@ -4,12 +4,8 @@
 
 
 
-        Polymer('fore-instance', {
-            model:  {
 
-                foo:'joern',
-                foo2:'barbar'
-            },
+        Polymer('fore-instance', {
 
             created: function() {
                 console.log("fore-instance created ...");
@@ -39,7 +35,7 @@
 
                 this.appendChild(data);
 
-                console.log('INSTANCE: ', this.instance);
+//                console.log('INSTANCE: ', this.instance);
             },
 
             setValue:function(newVal){
@@ -49,7 +45,7 @@
 
 
             getInstance: function() {
-                console.log('INSTANCE getInstance(): ', this.instance);
+//                console.log('INSTANCE getInstance(): ', this.instance);
                 return this.model;
             }
         });
