@@ -36,7 +36,8 @@
     "dalek-reporter-junit": "0.0.1",
     "dalek-browser-firefox": "0.0.5",
     "dalek-driver-sauce": "0.0.1",
-    "grunt-contrib-jasmine": "~0.5.2"
+    "grunt-contrib-jasmine": "~0.5.2",
+    "grunt-mocha-test": "~0.8.1"
   },
   "engines": {
     "node": ">=0.8.0"
