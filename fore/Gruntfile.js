@@ -288,6 +288,15 @@ module.exports = function(grunt) {
                     specs: 'test/jasmine/spec/*Spec.js'
                 }
             }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    require: ['app/scripts/Betterform.js']
+                },
+                src: ['test/mocha/SimpleTest.js']
+            }
         }
     });
 
