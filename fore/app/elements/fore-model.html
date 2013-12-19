@@ -1,30 +1,78 @@
 <link rel="import" href="fore-instance.html">
 
-<polymer-element name="fore-model" attributes="">
+<polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}">
+
+    <template>
+        <fore-instance id="defaultInstance"></fore-instance>
+    </template>
+
     <script>
 
         Polymer('fore-model', {
+            modelId:'d-model',
+            ownerForm:this.parentNode,
+
 
             ready: function () {
+
                 this.model = {
                     foo: 'joern',
                     foo2: 'barbar'
                 };
+
             },
 
 
             created: function () {
-                console.log("fore-model created ...");
-
-                var foreInstance = document.createElement('div', 'fore-instance');
-                foreInstance.setAttribute('id', 'defaultInstance');
-                this.appendChild(foreInstance);
+                console.log("### FORE-MODEL :: created : this=",this);
             },
 
             getInstance: function () {
                 console.log(this);
                 console.log("getInstance()");
                 return document.getElementById('defaultInstance').getInstance();
+            },
+            enteredView: function () {
+                console.log("fore model parent",this.parentNode);
+                this.ownerForm = this.parentNode.host;
+                console.log("fore ownerForm",this.ownerForm.name);
+
+                var formName = this.ownerForm.name;
+                console.log("### FORE-MODEL :: fore ownerForm : ",formName);
+
+            },
+
+            getOwnerForm:function(){
+                return this.ownerForm;
+            },
+
+            modelConstruct:function(e,details,sender){
+                console.log("### FORE-MODEL :: model construct : event=",e);
+                console.log("### FORE-MODEL :: model construct : name=",details.name);
+
+
+                var data = document.createElement('data');
+                var myInst = this.$.defaultInstance;
+                myInst.appendChild(data);
+
+                var controls = this.ownerForm.querySelectorAll('[name]');
+
+                for(var i = 0; i < controls.length; i++) {
+                    console.log('>>> element with name: ',controls[i]);
+                    var control = controls[i];
+                    var name = control.getAttribute('name');
+                    console.log('Creating instance element: ', name);
+                    var instanceElement = document.createElement(name);
+
+                    var value = '';
+                    if(control.getAttribute('value') !== null) {
+                        value = control.getAttribute('value');
+                        instanceElement.appendChild(document.createTextNode(value));
+                    }
+                    data.appendChild(instanceElement);
+
+                }
+
             }
 
         });

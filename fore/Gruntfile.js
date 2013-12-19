@@ -220,7 +220,7 @@ module.exports = function(grunt) {
             },
 
             tests: {
-                src: ['test/dalekjs/test_index_page.js','test/dalekjs/test_index_page1.js']
+                src: ['test/dalekjs/test_launcher.js']
             }
         },
         htmlmin: {

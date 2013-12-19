@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         </meta>
-        <title>betterFORM</title>
+        <title>Fore Bootstrap Page</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         </meta>
         <meta name="description" content="">
@@ -16,33 +16,48 @@
         </link>
 
         <!-- Place your HTML imports here -->
-        <link rel="import" href="elements/fore-processor.html"></link>
-        <link rel="import" href="elements/fore-input.html"></link>
+        <link rel="import" href="elements/fore-launcher.html"></link>
+        <link rel="import" href="elements/fore-form.html"></link>
 
     </head>
     <body>
 
-        <fore-processor></fore-processor>
+        <!--<fore-launcher></fore-launcher>-->
+        <div class="container">
+            <form dataformat="xml" is="fore-form" name="contact">
+                <label for="firstname">Firstname</label>
+                <input id="firstname" name="firstname" type="text" value="Brat"/>
 
+                <label for="lastname">Lastname</label>
+                <input id="lastname" name="lastname" type="text" value="Pitt"/>
 
-        <div>
-            <form action="">
-                <!--
+<!--
                 <fore-model>
                     <fore-instance>
-                        <data>
-                            <foo></foo>
-                            <item name="foo" readonly="true" ...>
-                                <item name="bar" required="true"
-                        </data>
+                        <contact>
+                            <firstname></firstname>
+                            <lastname></lastname>
+                        </contact>
                     </fore-instance>
+                    <script>
+                        var myInstance = {
+                            contact:{
+                                firstname:'',
+                                lastname:''
+                            }
+                        }
+                    </script>
                 </fore-model>
-                -->
-                <label for="foo">Foo</label>
-                <input id="foo" name="foo" type="text"/>
+-->
+            </form>
+            <form is="fore-form">
+                <div name="contact">
+                    <label for="contacttype">Type of contact</label>
+                    <input id="contacttype" name="contacttype" type="text" value="Phone"/>
 
-                <label for="foo2">Foo</label>
-                <input id="foo2" name="foo2" type="text" value="hello"/>
+                    <label for="phone">Phone</label>
+                    <input id="phone" name="phone" type="text" value="001-12345678"/>
+                </div>
             </form>
         </div>
 
@@ -52,21 +67,13 @@
         <script src="bower_components/platform/platform.js"  log="bind,ready,data"></script>
         <!-- endbuild -->
 
-
-
         <script>
             window.addEventListener('WebComponentsReady', function() {
-               console.log('All done ...');
-/*
-                 model = {
-                    foo: 'joern',
-                    foo2: 'barbar'
-                };
-*/
-                var myModel= document.getElementById('defaultModel').model;
-                //this.bind('value', new PathObserver(model, 'foo'));
+               console.log('# WebComponentsReady fired');
+//                $('body').fadeIn();
 
-//                document.getElementById("foo2").bind('value',model,'foo2')
+//                document.getElementById('defaultModel').fire('model-construct',{name:'foo'});
+
             });
         </script>
     </body>

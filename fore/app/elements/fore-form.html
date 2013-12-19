@@ -1,0 +1,64 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="fore-model.html">
+
+<polymer-element name="fore-form" attributes="name dataformat">
+    <template>
+        <style>
+            /*template, fore-json-instance, fore-xml-instance{display: none;}*/
+        </style>
+
+        <fore-model id="defaultModel"></fore-model>
+        <content></content>
+    </template>
+    <script>
+
+        Polymer('fore-form', {
+            dataformat:'json', //default format is JSON
+            name:'data',
+
+            created: function () {
+
+            },
+
+            ready:function(){
+                console.log("## FORE-FORM :: ready : enhancing form : this=",this);
+
+                /*
+                console.log("data format:",this.dataformat)
+                if(this.dataformat == 'json' || this.dataformat == undefined){
+                    console.log("creating JSON instance");
+                    var newInstance = document.createElement('fore-json-instance');
+                    var into = this.querySelector("fore-model");
+                    into.appendChild(newInstance);
+
+                }else if(this.dataformat== 'xml'){
+                    console.log("creating XML instance");
+                    var newInstance = document.createElement('fore-xml-instance');
+
+                    var into = this.querySelector("fore-model");
+                    into.appendChild(newInstance);
+
+                }
+*/
+                var that=this;
+                window.addEventListener("WebComponentsReady", function(e){
+                    console.log('++++++++++++++++++++++ yeah');
+                    console.log("name: ",that.name);
+                    console.log("name: ", that.$.defaultModel);
+                    that.$.defaultModel.fire('model-construct',{name:that.name,format:that.dataformat});
+                    //document.getElementById('defaultModel').fire('model-construct',{name:that.name});
+                });
+
+            },
+
+            enteredView: function () {
+                console.log("## FORE-FORM ::  name=",this.name);
+                console.log("## FORE-FORM :: form enhancement done");
+            },
+            leftView: function () {
+            },
+            attributeChanged: function (attrName, oldVal, newVal) {
+            }
+        });
+    </script>
+</polymer-element>                                                                                                 ^

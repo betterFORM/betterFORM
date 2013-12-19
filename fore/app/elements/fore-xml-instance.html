@@ -1,4 +1,4 @@
-<polymer-element name="fore-instance" attributes="modelId">
+<polymer-element name="fore-xml-instance" >
 <!--
     <template>
         <fore-node name="foo">
@@ -18,12 +18,11 @@
 
 
 
-        Polymer('fore-instance', {
-            modelId:'',
+        Polymer('fore-xml-instance', {
+
             ready: function() {
-                console.log("#### initializing instance ...");
+                console.log("#### initializing xml instance ...");
 //                var myself = wrap(this);
-/*
                 console.log("parent",this.parentNode);
                 var controls = document.querySelectorAll('body *[name]');
                 console.log('Controls with name attribute: ', controls);
@@ -46,7 +45,6 @@
                  }
 
                 this.appendChild(data);
-*/
 
 //                console.log('INSTANCE: ', this.instance);
             },
@@ -63,14 +61,7 @@
             getInstance: function() {
 //                console.log('INSTANCE getInstance(): ', this.instance);
                 return this.model;
-            },
-            enteredView: function () {
-                console.log("### fore-instance created ...",this);
-                console.log("fore instance parent",this.parentNode);
-                console.log("modelId",this.modelId);
-//                console.log("fore instance parent of parent",this.parentNode.getOwnerForm());
-
-            },
+            }
         });
     </script>
 </polymer-element>
