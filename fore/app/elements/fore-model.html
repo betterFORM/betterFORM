@@ -1,30 +1,31 @@
-<link rel="import" href="fore-instance.html">
+<link rel="import" href="fore-json-instance.html">
+<link rel="import" href="fore-xml-instance.html">
+
 
 <polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}">
-
+    <!--
     <template>
         <fore-instance id="defaultInstance"></fore-instance>
+    </template>
+    -->
+    <template>
+        <content></content>
     </template>
 
     <script>
 
         Polymer('fore-model', {
-            modelId:'d-model',
-            ownerForm:this.parentNode,
-
-
+            isJSON: false,
+            isMXL: true,
+            modelId: 'd-model',
+            ownerForm: this.parentNode,
             ready: function () {
-
-                this.model = {
-                    foo: 'joern',
-                    foo2: 'barbar'
-                };
-
+                console.log("### FORE-MODEL :: ready");
             },
 
 
             created: function () {
-                console.log("### FORE-MODEL :: created : this=",this);
+                console.log("### FORE-MODEL :: created : this=", this);
             },
 
             getInstance: function () {
@@ -33,44 +34,137 @@
                 return document.getElementById('defaultInstance').getInstance();
             },
             enteredView: function () {
-                console.log("fore model parent",this.parentNode);
+                console.log("fore model parent", this.parentNode);
                 this.ownerForm = this.parentNode.host;
-                console.log("fore ownerForm",this.ownerForm.name);
+                console.log("fore ownerForm", this.ownerForm.name);
 
                 var formName = this.ownerForm.name;
-                console.log("### FORE-MODEL :: fore ownerForm : ",formName);
+                console.log("### FORE-MODEL :: fore ownerForm : ", formName);
 
             },
 
-            getOwnerForm:function(){
+            getOwnerForm: function () {
                 return this.ownerForm;
             },
 
-            modelConstruct:function(e,details,sender){
-                console.log("### FORE-MODEL :: model construct : event=",e);
-                console.log("### FORE-MODEL :: model construct : name=",details.name);
+            modelConstruct: function (e, details, sender) {
+                console.log("### FORE-MODEL :: model construct : event=", e);
+                console.log("### FORE-MODEL :: model construct : name=", details.name);
 
 
-                var data = document.createElement('data');
-                var myInst = this.$.defaultInstance;
-                myInst.appendChild(data);
 
-                var controls = this.ownerForm.querySelectorAll('[name]');
+                console.log("### FORE-MODEL :: shadowRoot", this.shadowRoot);
 
-                for(var i = 0; i < controls.length; i++) {
-                    console.log('>>> element with name: ',controls[i]);
-                    var control = controls[i];
-                    var name = control.getAttribute('name');
-                    console.log('Creating instance element: ', name);
+                var inst;
+                if(this.ownerForm.dataformat === 'xml') {
+                    inst = document.createElement('fore-instance', 'fore-xml-instance');
+                    inst.setAttribute('instanceid', 'defaultInstance');
+                    inst.setAttribute('dataformat', 'xml');
+                    this.shadowRoot.appendChild(inst);
+                } else if(this.ownerForm.dataformat === 'json') {
+                    inst = document.createElement('fore-instance', 'fore-json-instance');
+                    inst.setAttribute('instanceid', 'defaultInstance');
+                    inst.setAttribute('dataformat', 'json');
+                    this.shadowRoot.appendChild(inst);
+                }
+
+
+                var controls = this.ownerForm.querySelectorAll('*[name]');
+
+                console.log("controls: ", controls);
+                console.log("data format: ", this.ownerForm.dataformat);
+
+                if (this.ownerForm.dataformat == 'xml') {
+                    var data = document.createElement('data');
+                    //var myInst = this.$.defaultInstance;
+                    //myInst.appendChild(data);
+                    inst.appendChild(data);
+                    this.buildXMLInstance(this.ownerForm, data);
+                } else {
+                    //this.$.defaultInstance.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+                    inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+                    //console.log("JSON: ", this.$.defaultInstance.data);
+                    console.log("JSON: ", inst.data);
+                }
+
+            },
+
+            buildXMLInstance: function (node, instance) {
+                //console.log("hazName: ", node.hasAttribute('name'));
+
+                if (node.hasAttribute('name')) {
+                    var name = node.getAttribute('name');
+                    var value = node.getAttribute('value');
                     var instanceElement = document.createElement(name);
 
-                    var value = '';
-                    if(control.getAttribute('value') !== null) {
-                        value = control.getAttribute('value');
-                        instanceElement.appendChild(document.createTextNode(value));
-                    }
-                    data.appendChild(instanceElement);
+                    //console.log("Name: ", node.getAttribute('name'));
+                    //console.log("Value: ", node.getAttribute('value'));
 
+                    var childNodes = node.children;
+                    //console.log("L: ", childNodes.length);
+
+                    if (childNodes.length == 0) {
+                        if (value === null) {
+                            value = '';
+                        }
+                        instanceElement.appendChild(document.createTextNode(value));
+                    } else {
+                        //console.log("loop");
+                        for (var n = 0; n < childNodes.length; n++) {
+                            this.buildXMLInstance(childNodes[n], instanceElement);
+                        }
+
+                    }
+
+                    instance.appendChild(instanceElement);
+                } else {
+                    var childNodes = node.children;
+
+                    for (var n = 0; n < childNodes.length; n++) {
+                        this.buildXMLInstance(childNodes[n], instance);
+                    }
+                }
+
+            },
+
+            buildJSONInstance: function (node) {
+                //console.log("Name: ", node.getAttribute('name'));
+                //console.log("Name: ", node.tagName);
+                if (node.hasAttribute('name')) {
+                    var nameName = node.getAttribute('name');
+                    var value = node.getAttribute('value');
+
+                    //console.log("Name: ", node.getAttribute('name'));
+                    //console.log("Value: ", node.getAttribute('value'));
+
+                    var childNodes = node.children;
+                    //console.log("L: ", childNodes.length);
+
+                    if (childNodes.length == 0) {
+                        if (value == null) {
+                            value = '';
+                        }
+                        return '"' + nameName + '":"' + value + '"';
+                    } else {
+//                        console.log("loop");
+                        var result = '"' + nameName+ '":{';
+                        for (var n = 0; n < childNodes.length; n++) {
+                            if(childNodes[n].hasAttribute('name')) {
+                                result += this.buildJSONInstance(childNodes[n]);
+                                if (n < childNodes.length -1) {
+                                    result += ',';
+                                }
+                            }
+                        }
+                        return result += '}';
+                    }
+                } else {
+                    var childNodes = node.children;
+                    var result = '';
+                    for (var n = 0; n < childNodes.length; n++) {
+                         result += this.buildJSONInstance(childNodes[n]);
+                    }
+                    return result;
                 }
 
             }
@@ -78,3 +172,4 @@
         });
     </script>
 </polymer-element>
+

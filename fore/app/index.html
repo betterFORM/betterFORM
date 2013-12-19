@@ -33,24 +33,16 @@
 
 <!--
                 <fore-model>
-                    <fore-instance>
+                    <fore-xml-instance>
                         <contact>
-                            <firstname></firstname>
-                            <lastname></lastname>
+                            <firstname>Brat</firstname>
+                            <lastname>Pitt</lastname>
                         </contact>
-                    </fore-instance>
-                    <script>
-                        var myInstance = {
-                            contact:{
-                                firstname:'',
-                                lastname:''
-                            }
-                        }
-                    </script>
+                    </fore-xml-instance>
                 </fore-model>
 -->
             </form>
-            <form is="fore-form">
+            <form is="fore-form"  id="first">
                 <div name="contact">
                     <label for="contacttype">Type of contact</label>
                     <input id="contacttype" name="contacttype" type="text" value="Phone"/>
@@ -58,6 +50,19 @@
                     <label for="phone">Phone</label>
                     <input id="phone" name="phone" type="text" value="001-12345678"/>
                 </div>
+                <!--
+                <script>
+                        Polymer('fore-json-instance', {
+                            data: {
+                                contact:{
+                                    contacttype:'Phone',
+                                    phone:'001-12345678'
+                                }
+                            },
+                            (...)
+                    </script>
+
+                -->
             </form>
         </div>
 

@@ -1,4 +1,6 @@
-<polymer-element name="fore-xml-instance" >
+<link rel="import" href="fore-instance.html">
+
+<polymer-element name="fore-xml-instance" extends="fore-instance">
 <!--
     <template>
         <fore-node name="foo">
@@ -19,49 +21,17 @@
 
 
         Polymer('fore-xml-instance', {
+            instanceid:'',
 
             ready: function() {
-                console.log("#### initializing xml instance ...");
-//                var myself = wrap(this);
-                console.log("parent",this.parentNode);
-                var controls = document.querySelectorAll('body *[name]');
-                console.log('Controls with name attribute: ', controls);
 
-                var data = document.createElement('data');
-                for(var i = 0; i < controls.length; i++) {
-                    console.log('>>> element with name: ',controls[i]);
-                     var control = controls[i];
-                     var name = control.getAttribute('name');
-                     console.log('Creating instance element: ', name);
-                     var instanceElement = document.createElement(name);
-
-                     var value = '';
-                     if(control.getAttribute('value') !== null) {
-                         value = control.getAttribute('value');
-                         instanceElement.appendChild(document.createTextNode(value));
-                     }
-                     data.appendChild(instanceElement);
-
-                 }
-
-                this.appendChild(data);
-
-//                console.log('INSTANCE: ', this.instance);
+                console.log("#### initializing xml instance ...",this);
             },
 
-            setForm:function(form){
-                this.myForm = form;
-            },
-            setValue:function(newVal){
-                //document.querySelector("foo2").innerHTML=newVal;
-            },
-
-
-
-            getInstance: function() {
-//                console.log('INSTANCE getInstance(): ', this.instance);
-                return this.model;
+            enteredView: function () {
+                console.log("#### initializing xml instance ...",this.instanceid);
             }
-        });
+
+            });
     </script>
 </polymer-element>

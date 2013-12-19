@@ -1,59 +1,13 @@
-<polymer-element name="fore-json-instance"  lightdom>
+<link rel="import" href="fore-instance.html">
+<polymer-element name="fore-json-instance"  extends="fore-instance">
     <script>
         Polymer('fore-json-instance', {
 
             ready: function() {
                 console.log("#### initializing JSON data instance ");
-
-                /*
-                instance = { data: { }};
-
-                instance.data = { foo: { foo2: { readOnly: 'true', value: 'foo2' }, foo3: { readOnly: 'true', value: 'foo2' }, readOnly: 'true', value: 'foo'} };
-
-                instance.data.foo.readOnly;
-
-                */
-
-
-                var controls = this.querySelectorAll('body *[name]');
-                console.log('Controls with name attribute: ', controls);
-
-                var data = document.createElement('data');
-
-                for(var i = 0; i < controls.length; i++) {
-                    var control = controls[i];
-                    var name = control.getAttribute('name');
-                    console.log('Creating instance element: ', name);
-                    var instanceElement = document.createElement(name);
-
-                    var value = '';
-                    if(control.getAttribute('value') !== null) {
-                        value = control.getAttribute('value');
-                        instanceElement.appendChild(document.createTextNode(value));
-                    }
-                    data.appendChild(instanceElement);
-
-
-
-                    /* this.instance[name] = value;*/
-                }
-
-
-                this.appendChild(data);
-
-//                console.log('INSTANCE: ', this.instance);
-            },
-
-            setValue:function(newVal){
-                //document.querySelector("foo2").innerHTML=newVal;
-            },
-
-
-
-            getInstance: function() {
-//                console.log('INSTANCE getInstance(): ', this.instance);
-                return this.model;
+                console.log("#### ID: ", this.instanceid);
             }
+
         });
     </script>
 </polymer-element>

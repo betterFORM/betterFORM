@@ -1,76 +1,21 @@
-<polymer-element name="fore-instance" attributes="modelId">
-<!--
-    <template>
-        <fore-node name="foo">
-            <fore-property name="readonly">false</fore-node>
-            <fore-property name="required">false</fore-node>
-            <fore-property name="value">the content of this node</fore-property>
-            <fore-property name="myProp">custom property</fore-property>
-            <fore-node>
-                ....
-            </fore-node>
-        </fore-node>
-    </template>
--->
-
+<polymer-element name="fore-instance" attributes="instanceid">
     <script>
-
-
-
-
         Polymer('fore-instance', {
-            modelId:'',
+            instanceid: '',
+            data: { },
+
             ready: function() {
                 console.log("#### initializing instance ...");
-//                var myself = wrap(this);
-/*
-                console.log("parent",this.parentNode);
-                var controls = document.querySelectorAll('body *[name]');
-                console.log('Controls with name attribute: ', controls);
-
-                var data = document.createElement('data');
-                for(var i = 0; i < controls.length; i++) {
-                    console.log('>>> element with name: ',controls[i]);
-                     var control = controls[i];
-                     var name = control.getAttribute('name');
-                     console.log('Creating instance element: ', name);
-                     var instanceElement = document.createElement(name);
-
-                     var value = '';
-                     if(control.getAttribute('value') !== null) {
-                         value = control.getAttribute('value');
-                         instanceElement.appendChild(document.createTextNode(value));
-                     }
-                     data.appendChild(instanceElement);
-
-                 }
-
-                this.appendChild(data);
-*/
-
-//                console.log('INSTANCE: ', this.instance);
+                console.log("#### ID: ", this.instanceid);
             },
 
-            setForm:function(form){
-                this.myForm = form;
-            },
-            setValue:function(newVal){
-                //document.querySelector("foo2").innerHTML=newVal;
-            },
-
-
-
-            getInstance: function() {
-//                console.log('INSTANCE getInstance(): ', this.instance);
-                return this.model;
-            },
-            enteredView: function () {
-                console.log("### fore-instance created ...",this);
-                console.log("fore instance parent",this.parentNode);
-                console.log("modelId",this.modelId);
-//                console.log("fore instance parent of parent",this.parentNode.getOwnerForm());
+            buildInstance: function(){
 
             },
+
+            getInstanceId:function(){
+                return this.instanceid;
+            }
         });
     </script>
 </polymer-element>
