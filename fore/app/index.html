@@ -18,6 +18,7 @@
         <!-- Place your HTML imports here -->
         <link rel="import" href="elements/fore-launcher.html"></link>
         <link rel="import" href="elements/fore-form.html"></link>
+        <link rel="import" href="elements/fore-input.html"></link>
 
     </head>
     <body>
@@ -26,10 +27,10 @@
         <div class="container">
             <form dataformat="xml" is="fore-form" name="contact">
                 <label for="firstname">Firstname</label>
-                <input id="firstname" name="firstname" type="text" value="Brat"/>
+                <input id="firstname" name="firstname" type="text" value="Brat" is="fore-input"/>
 
                 <label for="lastname">Lastname</label>
-                <input id="lastname" name="lastname" type="text" value="Pitt"/>
+                <input id="lastname" name="lastname" type="text" value="Pitt" is="fore-input"/>
 
 <!--
                 <fore-model>
@@ -45,10 +46,10 @@
             <form is="fore-form"  id="first">
                 <div name="contact">
                     <label for="contacttype">Type of contact</label>
-                    <input id="contacttype" name="contacttype" type="text" value="Phone"/>
+                    <input id="contacttype" name="contacttype" type="text" value="Phone" is="fore-input"/>
 
                     <label for="phone">Phone</label>
-                    <input id="phone" name="phone" type="text" value="001-12345678"/>
+                    <input id="phone" name="phone" type="text" value="001-12345678" is="fore-input"/>
                 </div>
                 <!--
                 <script>

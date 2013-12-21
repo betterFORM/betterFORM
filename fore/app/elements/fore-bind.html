@@ -1,0 +1,50 @@
+<polymer-element name="fore-bind" constructor="ForeBind" attributes="ref">
+    <template>
+        <!--
+        <calculate>{{calculateExpr}}</calculate>
+        <readonly>{{readonlyExpr}}</readonly>
+        <required>{{requiredExpr}}</required>
+        <relevant>{{relevantExpr}}</relevant>
+        <type>{{datatypeExpr}}</type>
+        <constraint>{{validExpr}}</constraint>
+        -->
+    </template>
+    <script>
+        Polymer('fore-bind', {
+
+            ref: '',
+
+            calculateExpr: '3+2',
+            readonlyExpr: '',
+            requiredExpr: '',
+            relevantExpr: '',
+            validExpr: '',
+            datatypeExpr: 'string',
+
+
+            created: function () {
+                console.log("fore-bind created ...");
+            },
+
+            ready: function () {
+                 //this.bind('calculate', this, 'calculateExpr');
+//                console.log('XXX: ', Object.keys(this));
+
+            },
+
+            enteredView: function () {
+                console.log("AbsoluteRef: ", this.getRef());
+            },
+
+            getRef: function () {
+                var absoluteRef = this.ref;
+                var node = this;
+                while (node.parentNode.host !== undefined && node.parentNode.host.tagName === 'FORE-BIND') {
+                    absoluteRef = node.parentNode.host.ref + '.' + absoluteRef;
+                    node = node.parentNode.host;
+                }
+                return absoluteRef;
+            }
+        });
+    </script>
+</polymer-element>

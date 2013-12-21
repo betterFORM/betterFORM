@@ -4,10 +4,6 @@
             path: '',
             model: '',
 
-            observe : {
-                path: 'validate'
-            },
-
 
 
             created: function () {
@@ -18,10 +14,10 @@
 
 
 
-                var myModel= document.getElementById('defaultModel').model;
-                this.model = myModel;
-                this.path = 'model.' + this.getAttribute('name');
-                this.bind('value', myModel, this.getAttribute('name'));
+//                var myModel= document.getElementById('defaultModel').model;
+//                this.model = myModel;
+//                this.path = 'model.' + this.getAttribute('name');
+//                this.bind('value', myModel, this.getAttribute('name'));
                 //this.bind('value', new PathObserver(myModel, 'foo'));
 //                this.bind('value',myModel,'foo2')
 //                var instance = document.getElementById('defaultInstance').getInstance();

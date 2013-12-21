@@ -1,5 +1,6 @@
 <link rel="import" href="fore-json-instance.html">
 <link rel="import" href="fore-xml-instance.html">
+<link rel="import" href="fore-bind.html">
 
 
 <polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}">
@@ -19,6 +20,8 @@
             isMXL: true,
             modelId: 'd-model',
             ownerForm: this.parentNode,
+            states:[],
+
             ready: function () {
                 console.log("### FORE-MODEL :: ready");
             },
@@ -79,7 +82,7 @@
                     //var myInst = this.$.defaultInstance;
                     //myInst.appendChild(data);
                     inst.appendChild(data);
-                    this.buildXMLInstance(this.ownerForm, data);
+                    this.buildXMLInstance(this.ownerForm, data, this);
                 } else {
                     //this.$.defaultInstance.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
                     inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
@@ -89,13 +92,18 @@
 
             },
 
-            buildXMLInstance: function (node, instance) {
+            buildXMLInstance: function (node, instance, model) {
                 //console.log("hazName: ", node.hasAttribute('name'));
-
                 if (node.hasAttribute('name')) {
                     var name = node.getAttribute('name');
                     var value = node.getAttribute('value');
                     var instanceElement = document.createElement(name);
+
+                    var bind = new ForeBind();
+                    //document.createElement('span', 'fore-bind');
+                    bind.setAttribute('ref', name);
+
+
 
                     //console.log("Name: ", node.getAttribute('name'));
                     //console.log("Value: ", node.getAttribute('value'));
@@ -111,17 +119,17 @@
                     } else {
                         //console.log("loop");
                         for (var n = 0; n < childNodes.length; n++) {
-                            this.buildXMLInstance(childNodes[n], instanceElement);
+                            this.buildXMLInstance(childNodes[n], instanceElement, bind);
                         }
 
                     }
-
                     instance.appendChild(instanceElement);
+                    model.shadowRoot.appendChild(bind);
                 } else {
                     var childNodes = node.children;
 
                     for (var n = 0; n < childNodes.length; n++) {
-                        this.buildXMLInstance(childNodes[n], instance);
+                        this.buildXMLInstance(childNodes[n], instance, model);
                     }
                 }
 
