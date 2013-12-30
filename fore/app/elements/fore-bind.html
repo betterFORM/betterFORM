@@ -1,5 +1,20 @@
-<polymer-element name="fore-bind" constructor="ForeBind" attributes="ref">
-    <template>
+<polymer-element name="fore-bind" constructor="ForeBind" attributes="ref debug">
+    <template if="{{ debug }}">
+        <fore-calculate expr="{{calculateExpr}}"></fore-calculate>
+        <fore-readonly expr="{{readonly}}"></fore-readonly>
+        <fore-required expr="{{required}}"></fore-required>
+        <fore-valid expr="{{valid}}"></fore-valid>
+        <fore-relevant expr="{{relevant}}"></fore-relevant>
+        <fore-type expr="type"></fore-type>
+
+<!--
+        <property type="calculate" expr="{{calculateExpr}}" value="123"></property>
+        <property type="readonly" expr="false" value="false"></property>
+        <property type="required" expr="false" value="false"></property>
+        <property type="relevant" expr="true" value="true"></property>
+        <property type="valid" expr="true" value="true"></property>
+        <property type="type" expr="string" value="text"></property>
+-->
         <!--
         <calculate>{{calculateExpr}}</calculate>
         <readonly>{{readonlyExpr}}</readonly>
@@ -12,18 +27,33 @@
     <script>
         Polymer('fore-bind', {
 
+            // static expressions
             ref: '',
+            calculate: '',
+            readonly: '',
+            required: '',
+            relevant: '',
+            valid: '',
+            datatype: 'string',
 
-            calculateExpr: '3+2',
-            readonlyExpr: '',
-            requiredExpr: '',
-            relevantExpr: '',
-            validExpr: '',
-            datatypeExpr: 'string',
+
+
+            /**
+             * this object holds the current, evaluated state
+             */
+            state:{
+                readonly:false,
+                required:false,
+                relevant:true,
+                valid:true,
+                dataType:'string'
+            },
+
 
 
             created: function () {
                 console.log("fore-bind created ...");
+                this.debug='false';
             },
 
             ready: function () {

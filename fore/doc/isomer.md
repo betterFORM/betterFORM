@@ -55,12 +55,42 @@ Both XML and JSON models will be supported for the following reasons:
 
 Models can be either implicit (auto-generated) or explicit. Details are given in the following sections.
 
+### Model lifecycle
+
+Models are constructed/inited right after page load by dispatching a model-construct event to each `form`element found in a document.
+
+During `model-construct`following steps are performed by each respective model:
+
+if a form does NOT use an explicit model (see section "Implicit model"):
+
+* a data instance is generated from the occurrences of the `name` attribute within the given form.
+* 'bind objects' will be created for each element having a `name`attribute by inspecting the other attributes on the given element. It's open to an implementation how 'bind objects' are represented. 
+* each bind object will be bound to its corresponding instance data node holding the states for that node.
+
+if a form USES an explicit model:
+
+* each instance element found in a model will be processed in turn
+* if it has a `src` attribute this will be resolved and the response will be treated as data instance
+* if it has no `src`attribute but provides an inline data structure this is used for the data instance.
+* if neither is given ...
+* each `bind`element found in a model will be processed in turn...
+* a bind object will be created linking the states defined by the bind to a instance data node referenced by the `ref`attribute
+
+Once all elements are processed a 'model-construct-done' event is dispatched to the repective model element.
+ 
+
+
 ### Implicit model
 
-** Editorial Note:** element names that contain a dash ('-') character signify an HTML5 extension element. These are used by Isomer to extend the HTML functionality with the functionality described in this paper.  
+** Editorial Note:** ISSUE? - is implied (implicit) mode useless? Under a security view the implied mode seems questionable as a whole - generally the policy of secure processing is to never trust the client. That said it seems necessary to control what a client is allowed to imply. E.g. a given form authored without explicit model would imply a certain model in xforms. So far so good. But only if the server has access to the original file that was loaded by the client it is able to validate the implied policy by converting it in the way the client does. 
+
+So for each serious application the server needs access to a valid model that exists outside/aside of the data submitted by a client (browser) for re-validation on the server. Does that also mean that a secure app MUST always load the form document from a server (not from local filesystem that means)?
 
 
-If a form does not use an explicit model (see following sections), then an implicit 'xf-model' element is generated and prepended before the first child element of the form element. The generated `<xf-model>` element is required as it is used as target of model events.
+** Editorial Note:** element names that contain a dash ('-') character signify an HTML5 extension element (web component). These are used by Isomer to extend the HTML functionality with the functionality described in this paper.  
+
+
+If a form does not use an explicit model (see following sections), then an implicit 'xf-model' element is generated during model construction and prepended before the first child element of the form element. The generated `<xf-model>` element is required as it is used as target of model events.
 
 Example:
 
@@ -313,7 +343,7 @@ name    | xsd:QName            | any HTML element in the `body` **Editorial Note
 
 Attribute    | Content Model  | Description
 ------------ | -------------  | ------------
-model-src    | URL            | URL pointing to external XForms model
+xfModel      | URL            | URL pointing to XForms model
 instance     | IDREF | indicates the default instance of a form 
 
 ### Enhancements to HTML controls

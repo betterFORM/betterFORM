@@ -1,13 +1,9 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="fore-model.html">
 
-<polymer-element name="fore-form" attributes="name dataformat">
-    <template>
-        <style>
-            /*template, fore-json-instance, fore-xml-instance{display: none;}*/
-        </style>
-
-        <fore-model id="defaultModel"></fore-model>
+<polymer-element name="fore-form" attributes="name dataformat mode">
+    <template class="foo">
+        <!--<fore-model id="defaultModel" if="{{ createDefaultModel }}"></fore-model>-->
         <content></content>
     </template>
     <script>
@@ -15,45 +11,50 @@
         Polymer('fore-form', {
             dataformat:'json', //default format is JSON
             name:'data',
+            xfModel:null,
+            createDefaultModel:false,
+            mode:'explicit',
+
 
             created: function () {
-
+                console.log("## FORE-FORM :: created : enhancing form : id=",this.id);
             },
 
             ready:function(){
-                console.log("## FORE-FORM :: ready : enhancing form : this=",this);
+                var inlineModel = this.querySelector('fore-model');
 
-                /*
-                console.log("data format:",this.dataformat)
-                if(this.dataformat == 'json' || this.dataformat == undefined){
-                    console.log("creating JSON instance");
-                    var newInstance = document.createElement('fore-json-instance');
-                    var into = this.querySelector("fore-model");
-                    into.appendChild(newInstance);
-
-                }else if(this.dataformat== 'xml'){
-                    console.log("creating XML instance");
-                    var newInstance = document.createElement('fore-xml-instance');
-
-                    var into = this.querySelector("fore-model");
-                    into.appendChild(newInstance);
-
+                // check for existence of inline model and create one if none existed
+                if(inlineModel == null){
+                    console.log("## FORE-FORM :: ready : !!! no inline model found - creating default model !!!");
+                    var myModel = document.createElement('span','fore-model');
+                    // $.defaultModel will not work with programmatically set ids - use this.querySelector('#defaultModel') instead
+                    myModel.setAttribute('id','defaultModel');
+                    //todo: jt: no idea why appending myModel to shadowRoot does not work here - shouldn't it be there?
+                    this.appendChild(myModel);
+                    this.xfModel=myModel;
+                    this.mode='implicit';
                 }
-*/
+
+
+
+                /**
+                 * triggers model construction when all components are ready.
+                 */
                 var that=this;
                 window.addEventListener("WebComponentsReady", function(e){
-                    console.log('++++++++++++++++++++++ yeah');
+                    console.log('## FORE-FORM :: WebComponentsReady - bootstrapping model construction');
                     console.log("name: ",that.name);
-                    console.log("name: ", that.$.defaultModel);
-                    that.$.defaultModel.fire('model-construct',{name:that.name,format:that.dataformat});
-                    //document.getElementById('defaultModel').fire('model-construct',{name:that.name});
+//                    console.log("name: ", that.$.defaultModel);
+//                    that.$.defaultModel.fire('model-construct',{name:that.name,format:that.dataformat});
+                    that.querySelector('#defaultModel').fire('model-construct',{name:that.name,format:that.dataformat});
                 });
 
             },
 
             enteredView: function () {
-                console.log("## FORE-FORM ::  name=",this.name);
-                console.log("## FORE-FORM :: form enhancement done");
+                var myModel = this.querySelector("fore-model");
+                console.log("## FORE-FORM :: enteredView : myModel: ",myModel);
+                console.log("############# ");
             },
             leftView: function () {
             },

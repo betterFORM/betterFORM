@@ -1,19 +1,32 @@
 <polymer-element name="fore-instance" attributes="instanceid">
+<!--
+    Using this style rule really hides the element from display in the browser (even in inspect mode)
+
+    <template>
+        <style>
+            @host{
+                :scope {
+                    display:none;
+                }
+            }
+        </style>
+    </template>
+-->
     <script>
         Polymer('fore-instance', {
             instanceid: '',
             data: { },
 
-            ready: function() {
+            ready: function () {
                 console.log("#### initializing instance ...");
                 console.log("#### ID: ", this.instanceid);
             },
 
-            buildInstance: function(){
+            buildInstance: function () {
 
             },
 
-            getInstanceId:function(){
+            getInstanceId: function () {
                 return this.instanceid;
             }
         });

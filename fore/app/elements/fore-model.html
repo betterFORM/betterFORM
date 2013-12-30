@@ -16,14 +16,10 @@
     <script>
 
         Polymer('fore-model', {
-            isJSON: false,
-            isMXL: true,
-            modelId: 'd-model',
-            ownerForm: this.parentNode,
+            ownerForm: null,
             states:[],
 
             ready: function () {
-                console.log("### FORE-MODEL :: ready");
             },
 
 
@@ -37,12 +33,14 @@
                 return document.getElementById('defaultInstance').getInstance();
             },
             enteredView: function () {
-                console.log("fore model parent", this.parentNode);
-                this.ownerForm = this.parentNode.host;
-                console.log("fore ownerForm", this.ownerForm.name);
-
-                var formName = this.ownerForm.name;
-                console.log("### FORE-MODEL :: fore ownerForm : ", formName);
+                this.ownerForm = this.parentNode;
+                console.log("### FORE-MODEL :: enteredView : ownerform :", this.ownerForm);
+//
+//                this.ownerForm = this.parentNode.host;
+//                console.log("fore ownerForm", this.ownerForm.name);
+//
+//                var formName = this.ownerForm.name;
+//                console.log("### FORE-MODEL :: fore ownerForm : ", formName);
 
             },
 
@@ -50,47 +48,65 @@
                 return this.ownerForm;
             },
 
+            /**
+             * pre model construction tasks:
+             * - resolution of linked instances
+             * - construction of implied instance if any
+             * @param e
+             * @param details
+             * @param sender
+             */
+            initFore:function(e,details,sender){
+                //todo: move relevant code here.
+            },
+
             modelConstruct: function (e, details, sender) {
                 console.log("### FORE-MODEL :: model construct : event=", e);
                 console.log("### FORE-MODEL :: model construct : name=", details.name);
-
-
-
                 console.log("### FORE-MODEL :: shadowRoot", this.shadowRoot);
+                console.log("### FORE-MODEL :: mode", this.ownerForm.mode);
 
-                var inst;
-                if(this.ownerForm.dataformat === 'xml') {
-                    inst = document.createElement('fore-instance', 'fore-xml-instance');
-                    inst.setAttribute('instanceid', 'defaultInstance');
-                    inst.setAttribute('dataformat', 'xml');
-                    this.shadowRoot.appendChild(inst);
-                } else if(this.ownerForm.dataformat === 'json') {
-                    inst = document.createElement('fore-instance', 'fore-json-instance');
-                    inst.setAttribute('instanceid', 'defaultInstance');
-                    inst.setAttribute('dataformat', 'json');
-                    this.shadowRoot.appendChild(inst);
-                }
+                // todo: support multiple instances
+
+                if(this.ownerForm.mode == 'implicit'){
+                    var inst;
+                    if(this.ownerForm.dataformat === 'xml') {
+                        inst = document.createElement('fore-instance', 'fore-xml-instance');
+                        inst.setAttribute('instanceid', 'defaultInstance');
+                        inst.setAttribute('dataformat', 'xml');
+                        this.shadowRoot.appendChild(inst);
+                    } else if(this.ownerForm.dataformat === 'json') {
+                        inst = document.createElement('fore-instance', 'fore-json-instance');
+                        inst.setAttribute('instanceid', 'defaultInstance');
+                        inst.setAttribute('dataformat', 'json');
+                        this.shadowRoot.appendChild(inst);
+                    }
 
 
-                var controls = this.ownerForm.querySelectorAll('*[name]');
+                    var controls = this.ownerForm.querySelectorAll('*[name]');
 
-                console.log("controls: ", controls);
-                console.log("data format: ", this.ownerForm.dataformat);
+                    console.log("controls: ", controls);
+                    console.log("data format: ", this.ownerForm.dataformat);
 
-                if (this.ownerForm.dataformat == 'xml') {
-                    var data = document.createElement('data');
-                    //var myInst = this.$.defaultInstance;
-                    //myInst.appendChild(data);
-                    inst.appendChild(data);
-                    this.buildXMLInstance(this.ownerForm, data, this);
+                    if (this.ownerForm.dataformat == 'xml') {
+                        var data = document.createElement('data');
+                        //var myInst = this.$.defaultInstance;
+                        //myInst.appendChild(data);
+                        inst.appendChild(data);
+                        this.buildXMLInstance(this.ownerForm, data, this);
+                    } else {
+                        //this.$.defaultInstance.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+                        //console.log("JSON: ", this.$.defaultInstance.data);
+                        console.log("JSON: ", inst.data);
+                    }
                 } else {
-                    //this.$.defaultInstance.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
-                    inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
-                    //console.log("JSON: ", this.$.defaultInstance.data);
-                    console.log("JSON: ", inst.data);
+                    //todo: implement inline model initialization
+                    console.log("to be implemented...");
                 }
 
             },
+
 
             buildXMLInstance: function (node, instance, model) {
                 //console.log("hazName: ", node.hasAttribute('name'));
@@ -102,6 +118,7 @@
                     var bind = new ForeBind();
                     //document.createElement('span', 'fore-bind');
                     bind.setAttribute('ref', name);
+//                    bind.setAttribute('debug', 'true');
 
 
 

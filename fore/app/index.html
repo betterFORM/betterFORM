@@ -16,21 +16,29 @@
         </link>
 
         <!-- Place your HTML imports here -->
-        <link rel="import" href="elements/fore-launcher.html"></link>
         <link rel="import" href="elements/fore-form.html"></link>
         <link rel="import" href="elements/fore-input.html"></link>
+        <!--<link rel="import" href="elements/fore-xml-instance.html"></link>-->
+
+        <!-- hiding elements here still allows to inspect them in the browser. -->
+        <style type="text/css">
+            fore-xml-instance{
+                display: none;
+
+
+            }
+        </style>
 
     </head>
     <body>
 
-        <!--<fore-launcher></fore-launcher>-->
         <div class="container">
-            <form dataformat="xml" is="fore-form" name="contact">
+            <form dataformat="xml" id="first" is="fore-form" name="contact">
                 <label for="firstname">Firstname</label>
-                <input id="firstname" name="firstname" type="text" value="Brat" is="fore-input"/>
+                <input id="firstname" name="firstname" type="text" value="Brat" />
 
                 <label for="lastname">Lastname</label>
-                <input id="lastname" name="lastname" type="text" value="Pitt" is="fore-input"/>
+                <input id="lastname" name="lastname" type="text" value="Pitt" />
 
 <!--
                 <fore-model>
@@ -40,16 +48,23 @@
                             <lastname>Pitt</lastname>
                         </contact>
                     </fore-xml-instance>
+
+
                 </fore-model>
 -->
             </form>
-            <form is="fore-form"  id="first">
+            <form is="fore-form"  id="second" instance="">
+<!--
+                <fore-model modelid="myModel">
+                    <fore-xml-instance instanceid="myInst1"></fore-xml-instance>
+                </fore-model>
+-->
                 <div name="contact">
                     <label for="contacttype">Type of contact</label>
-                    <input id="contacttype" name="contacttype" type="text" value="Phone" is="fore-input"/>
+                    <input id="contacttype" name="contacttype" type="text" value="Phone" />
 
                     <label for="phone">Phone</label>
-                    <input id="phone" name="phone" type="text" value="001-12345678" is="fore-input"/>
+                    <input id="phone" name="phone" type="text" value="001-12345678" />
                 </div>
                 <!--
                 <script>
@@ -64,6 +79,10 @@
                     </script>
 
                 -->
+            </form>
+            <form is="fore-form" id="third" name="dummy">
+                <fore-model src="something" id="defaultModel"></fore-model>
+
             </form>
         </div>
 
