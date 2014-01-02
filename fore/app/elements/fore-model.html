@@ -19,6 +19,7 @@
             ownerForm: null,
             states:[],
 
+
             ready: function () {
             },
 
@@ -70,24 +71,34 @@
 
                 if(this.ownerForm.mode == 'implicit'){
                     var inst;
+                    console.log("data format: ", this.ownerForm.dataformat);
+
                     if(this.ownerForm.dataformat === 'xml') {
                         inst = document.createElement('fore-instance', 'fore-xml-instance');
                         inst.setAttribute('instanceid', 'defaultInstance');
                         inst.setAttribute('dataformat', 'xml');
                         this.shadowRoot.appendChild(inst);
+
+                        var data = document.createElement('data');
+                        //var myInst = this.$.defaultInstance;
+                        //myInst.appendChild(data);
+                        inst.appendChild(data);
+                        this.buildXMLInstance(this.ownerForm, data, this);
+
                     } else if(this.ownerForm.dataformat === 'json') {
                         inst = document.createElement('fore-instance', 'fore-json-instance');
                         inst.setAttribute('instanceid', 'defaultInstance');
                         inst.setAttribute('dataformat', 'json');
                         this.shadowRoot.appendChild(inst);
+
+                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+                        //console.log("JSON: ", this.$.defaultInstance.data);
+
+                        console.log("JSON: ", inst.data);
                     }
 
 
-                    var controls = this.ownerForm.querySelectorAll('*[name]');
-
-                    console.log("controls: ", controls);
-                    console.log("data format: ", this.ownerForm.dataformat);
-
+/*
                     if (this.ownerForm.dataformat == 'xml') {
                         var data = document.createElement('data');
                         //var myInst = this.$.defaultInstance;
@@ -96,15 +107,23 @@
                         this.buildXMLInstance(this.ownerForm, data, this);
                     } else {
                         //this.$.defaultInstance.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+
                         inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
                         //console.log("JSON: ", this.$.defaultInstance.data);
+
                         console.log("JSON: ", inst.data);
                     }
+*/
                 } else {
                     //todo: implement inline model initialization
                     console.log("to be implemented...");
+
+                    this.querySelector('fore-instance').data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+
                 }
 
+
+                //todo: detach model-construct listener
             },
 
 

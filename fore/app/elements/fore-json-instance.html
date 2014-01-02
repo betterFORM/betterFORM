@@ -1,12 +1,25 @@
 <link rel="import" href="fore-instance.html">
-<polymer-element name="fore-json-instance"  extends="fore-instance">
+<polymer-element name="fore-json-instance" extends="fore-instance" attributes="instanceid">
+    <template>
+        <content></content>
+    </template>
     <script>
         Polymer('fore-json-instance', {
 
-            ready: function() {
-                console.log("#### initializing JSON data instance ");
-                console.log("#### ID: ", this.instanceid);
+            data: {},
+
+            ready: function () {
+                this.super();
+                console.log("#### FORE-JSON-INSTANCE :: initializing JSON data instance ");
+                console.log("#### FORE-JSON-INSTANCE :: ID : ", this.instanceid);
+            },
+            enteredView: function () {
+                console.log("#### FORE-JSON-INSTANCE :: data: ", this.data);
+                console.log("innmnnnnnerhtml ", this.textContent);
+                var test = JSON.parse(this.textContent);
+//                console.log("parsed model ", test);
             }
+
 
         });
     </script>

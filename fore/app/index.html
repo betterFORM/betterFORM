@@ -18,7 +18,7 @@
         <!-- Place your HTML imports here -->
         <link rel="import" href="elements/fore-form.html"></link>
         <link rel="import" href="elements/fore-input.html"></link>
-        <!--<link rel="import" href="elements/fore-xml-instance.html"></link>-->
+        <link rel="import" href="elements/fore-json-instance.html"></link>
 
         <!-- hiding elements here still allows to inspect them in the browser. -->
         <style type="text/css">
@@ -42,7 +42,7 @@
 
 <!--
                 <fore-model>
-                    <fore-xml-instance>
+                    <fore-xml-instance type="application/xml">
                         <contact>
                             <firstname>Brat</firstname>
                             <lastname>Pitt</lastname>
@@ -75,15 +75,30 @@
                                     phone:'001-12345678'
                                 }
                             },
+                            bind:{
+                                ref:'foo',
+                                required:true
+                            }
                             (...)
                     </script>
 
                 -->
             </form>
             <form is="fore-form" id="third" name="dummy">
-                <fore-model src="something" id="defaultModel"></fore-model>
-
+                <fore-model src="something" id="defaultModel">
+                    <fore-instance type="application/json" instanceid="myInline">
+                        {
+                            'foo': 'bar'
+                        }
+                    </fore-instance>
+                    <!--<fore-bind ref="foo" required="true"></fore-bind>-->
+                    <!--<fore-bind ref="items.item[2]" required="true"></fore-bind>-->
+                    <!--<fore-bind ref="items/item" relevant="true"></fore-bind>-->
+                </fore-model>
+                <label for="thirdinput">another</label>
+                <input id="thirdinput" type="text" name="foo">
             </form>
+
         </div>
 
 
@@ -94,7 +109,15 @@
 
         <script>
             window.addEventListener('WebComponentsReady', function() {
+/*
                console.log('# WebComponentsReady fired');
+                document.getElementById('third').setInstance('defaultInstance',{
+                    data:{
+                        foo:'bar'
+                    }
+                });
+*/
+
 //                $('body').fadeIn();
 
 //                document.getElementById('defaultModel').fire('model-construct',{name:'foo'});
