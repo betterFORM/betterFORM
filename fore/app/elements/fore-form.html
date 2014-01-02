@@ -17,6 +17,7 @@
             xfModel:null,
             createDefaultModel:false,
             mode:'explicit',
+            instance:'',
 
 
             created: function () {
@@ -27,16 +28,16 @@
                 var inlineModel = this.querySelector('fore-model');
 
                 // check for existence of inline model and create one if none existed
-                if(inlineModel == null){
+                if(inlineModel === null){
                     console.log("## FORE-FORM :: ready : !!! no inline model found - creating default model !!!");
                     var myModel = document.createElement('span','fore-model');
                     // $.defaultModel will not work with programmatically set ids - use this.querySelector('#defaultModel') instead
                     myModel.setAttribute('id','defaultModel');
                     //todo: jt: no idea why appending myModel to shadowRoot does not work here - shouldn't it be there?
                     this.appendChild(myModel);
-                    this.xfModel=myModel;
+                    //this.xfModel=myModel;
                     this.mode='implicit';
-                }
+                } 
 
 
 
@@ -49,14 +50,14 @@
                     console.log("name: ",that.name);
 //                    console.log("name: ", that.$.defaultModel);
 //                    that.$.defaultModel.fire('model-construct',{name:that.name,format:that.dataformat});
-                    that.querySelector('#defaultModel').fire('model-construct',{name:that.name,format:that.dataformat});
+                      that.querySelector('fore-model').fire('model-construct',{name:that.name,format:that.dataformat});
                 });
 
             },
 
             enteredView: function () {
-                var myModel = this.querySelector("fore-model");
-                console.log("## FORE-FORM :: enteredView : myModel: ",this.xfModel);
+                //var myModel = this.querySelector("fore-model");
+                console.log("## FORE-FORM :: enteredView : xfModel ",this.xfModel);
                 console.log("############# ");
             },
             leftView: function () {

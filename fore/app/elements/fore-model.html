@@ -3,7 +3,7 @@
 <link rel="import" href="fore-bind.html">
 
 
-<polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}">
+<polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}" on-model-construct-done="{{ modelConstructDone }}">
     <!--
     <template>
         <fore-instance id="defaultInstance"></fore-instance>
@@ -17,10 +17,10 @@
 
         Polymer('fore-model', {
             ownerForm: null,
-            states:[],
-
-
+           
             ready: function () {
+                this.states = []
+                this.instances = [];
             },
 
 
@@ -33,6 +33,11 @@
                 console.log("getInstance()");
                 return document.getElementById('defaultInstance').getInstance();
             },
+            
+            getInstance: function (id) {
+                return this.instances[id];
+            },
+            
             enteredView: function () {
                 this.ownerForm = this.parentNode;
                 console.log("### FORE-MODEL :: enteredView : ownerform :", this.ownerForm);
@@ -66,16 +71,21 @@
                 console.log("### FORE-MODEL :: model construct : name=", details.name);
                 console.log("### FORE-MODEL :: shadowRoot", this.shadowRoot);
                 console.log("### FORE-MODEL :: mode", this.ownerForm.mode);
+                //console.log("### FORE-MODEL :: instances", this.instances);
 
                 // todo: support multiple instances
 
-                if(this.ownerForm.mode == 'implicit'){
+                if(this.ownerForm.mode === 'implicit'){
                     var inst;
                     console.log("data format: ", this.ownerForm.dataformat);
 
                     if(this.ownerForm.dataformat === 'xml') {
                         inst = document.createElement('fore-instance', 'fore-xml-instance');
-                        inst.setAttribute('instanceid', 'defaultInstance');
+                        if(this.ownerForm.instance === '') {
+                            inst.setAttribute('id', 'defaultInstance');
+                        } else {
+                            inst.setAttribute('id', this.ownerForm.instance);
+                        }
                         inst.setAttribute('dataformat', 'xml');
                         this.shadowRoot.appendChild(inst);
 
@@ -84,17 +94,22 @@
                         //myInst.appendChild(data);
                         inst.appendChild(data);
                         this.buildXMLInstance(this.ownerForm, data, this);
+                        this.instances['defaultInstance'] = inst;
 
                     } else if(this.ownerForm.dataformat === 'json') {
                         inst = document.createElement('fore-instance', 'fore-json-instance');
-                        inst.setAttribute('instanceid', 'defaultInstance');
+                         if(this.ownerForm.instance === '') {
+                            inst.setAttribute('id', 'defaultInstance');
+                        } else {
+                            inst.setAttribute('id', this.ownerForm.instance);
+                        }
                         inst.setAttribute('dataformat', 'json');
                         this.shadowRoot.appendChild(inst);
 
-                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
+                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm, this) + '}');
                         //console.log("JSON: ", this.$.defaultInstance.data);
-
-                        console.log("JSON: ", inst.data);
+                        this.instances['defaultInstance'] = inst;
+                        //console.log("JSON: ", inst.data);
                     }
 
 
@@ -115,15 +130,29 @@
                     }
 */
                 } else {
-                    //todo: implement inline model initialization
+                    //todo: implement inline model bind initialization
                     console.log("to be implemented...");
-
-                    this.querySelector('fore-instance').data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
-
+                    
+                    var foreInstances = this.querySelectorAll('fore-json-instance');
+                    //console.log("foreInstances:" , foreInstances);
+                    for(var j = 0; j < foreInstances.length; j++) {
+                        //console.log("fore-instance ID:" , foreInstances[j].getAttribute('id'));
+                        var data = foreInstances[j].textContent;
+                        foreInstances[j].setAttribute('dataformat', 'json');
+                        foreInstances[j].data = JSON.parse(data);
+                        this.instances[foreInstances[j].getAttribute('id')] = foreInstances[j];
+                        //this.querySelector('fore-instance').data = JSON.parse(data);
+                    }
+                    //console.log("foreInstances:" ,this.instances);
                 }
 
-
+                this.ownerForm.xfModel=this;
                 //todo: detach model-construct listener
+                this.fire('model-construct-done',{});
+            },
+            
+            modelConstructDone: function (e, details, sender) {
+                console.log("Model: ", this.getAttribute('id'), " model-construct-done");
             },
 
 
@@ -134,20 +163,14 @@
                     var value = node.getAttribute('value');
                     var instanceElement = document.createElement(name);
 
-                    var bind = new ForeBind();
-                    //document.createElement('span', 'fore-bind');
-                    bind.setAttribute('ref', name);
-//                    bind.setAttribute('debug', 'true');
-
-
-
+                    var bind = this.buildForeBind(node);
                     //console.log("Name: ", node.getAttribute('name'));
                     //console.log("Value: ", node.getAttribute('value'));
 
                     var childNodes = node.children;
                     //console.log("L: ", childNodes.length);
 
-                    if (childNodes.length == 0) {
+                    if (childNodes.length === 0) {
                         if (value === null) {
                             value = '';
                         }
@@ -171,7 +194,7 @@
 
             },
 
-            buildJSONInstance: function (node) {
+            buildJSONInstance: function (node, model) {
                 //console.log("Name: ", node.getAttribute('name'));
                 //console.log("Name: ", node.tagName);
                 if (node.hasAttribute('name')) {
@@ -184,33 +207,81 @@
                     var childNodes = node.children;
                     //console.log("L: ", childNodes.length);
 
-                    if (childNodes.length == 0) {
-                        if (value == null) {
+                    var bind = this.buildForeBind(node);
+                    if (childNodes.length === 0) {
+                        if (value === null) {
                             value = '';
                         }
+                        
+                        model.shadowRoot.appendChild(bind);
                         return '"' + nameName + '":"' + value + '"';
                     } else {
 //                        console.log("loop");
                         var result = '"' + nameName+ '":{';
                         for (var n = 0; n < childNodes.length; n++) {
                             if(childNodes[n].hasAttribute('name')) {
-                                result += this.buildJSONInstance(childNodes[n]);
+                                result += this.buildJSONInstance(childNodes[n], bind);
                                 if (n < childNodes.length -1) {
                                     result += ',';
                                 }
                             }
                         }
+                        
+                        model.shadowRoot.appendChild(bind);                        
                         return result += '}';
                     }
                 } else {
                     var childNodes = node.children;
                     var result = '';
                     for (var n = 0; n < childNodes.length; n++) {
-                         result += this.buildJSONInstance(childNodes[n]);
+                         result += this.buildJSONInstance(childNodes[n], model);
                     }
                     return result;
                 }
 
+            },
+            
+            buildForeBinds: function (node, model) {
+                if (node.hasAttribute('name')) {
+                    var bind = this.buildForeBind(node);
+                    var childNodes = node.children;
+                    for (var n = 0; n < childNodes.length; n++) {
+                        this.buildForeBinds(childNodes[n], bind);
+                    }
+                    model.shadowRoot.appendChild(bind);
+                } else {
+                    var childNodes = node.children;
+                    for (var n = 0; n < childNodes.length; n++) {
+                        this.buildForeBinds(childNodes[n], model);
+                    }
+                }
+            },
+            
+            buildForeBind: function (node) {
+                var bind = new ForeBind();
+                bind.ref = node.getAttribute('name');
+                bind.debug = false;
+
+                if(node.hasAttribute('type')) {
+                    if( node.getAttribute('type') === 'text') {
+                        bind.datatype = 'string'; 
+                    } else {
+                        bind.datatype = node.getAttribute('type'); 
+                    }
+                }        
+                if(node.hasAttribute('calculate')) {
+                   bind.calculate = node.getAttribute('calculate'); 
+                }
+                if(node.hasAttribute('readonly')) {
+                    bind.readonly = node.getAttribute('readonly');
+                }
+                if(node.hasAttribute('required')) {
+                    bind.required = node.getAttribute('required');
+                }
+                if(node.hasAttribute('relevant')) {
+                   bind.relevant = node.getAttribute('relevant'); 
+                }
+                return bind;
             }
 
         });

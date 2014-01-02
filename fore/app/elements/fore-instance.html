@@ -1,4 +1,4 @@
-<polymer-element extends="div" name="fore-instance" attributes="instanceid">
+<polymer-element name="fore-instance">
 <!--
     Using this style rule really hides the element from display in the browser (even in inspect mode)
 
@@ -14,23 +14,20 @@
 -->
     <script>
         Polymer('fore-instance', {
-            instanceid: '',
-            data: { },
+            id: '',
+            data: null,
 
             ready: function () {
-                console.log("#### FORE-INSTANCE :: initializing instance ...");
-                console.log("#### ID: ", this.instanceid);
-                console.log("#### Fore-Instance :: ready : data ", this.data);
-
-
+                console.log("#### FORE-INSTANCE :: ready()");
             },
-
-            buildInstance: function () {
-
+            
+            enteredView: function () {
+                this.id = this.getAttribute('id');
+                console.log("#### FORE-INSTANCE :: enteredView() ID:" , this.id);
             },
 
             getInstanceId: function () {
-                return this.instanceid;
+                return this.id;
             }
 
 

@@ -5,22 +5,16 @@
     </template>
     <script>
         Polymer('fore-json-instance', {
-
-            data: {},
-
+            dataformat:'json',
+            
             ready: function () {
+                console.log("#### FORE-JSON-INSTANCE :: ready()");        
                 this.super();
-                console.log("#### FORE-JSON-INSTANCE :: initializing JSON data instance ");
-                console.log("#### FORE-JSON-INSTANCE :: ID : ", this.instanceid);
             },
             enteredView: function () {
-                console.log("#### FORE-JSON-INSTANCE :: data: ", this.data);
-                console.log("innmnnnnnerhtml ", this.textContent);
-                var test = JSON.parse(this.textContent);
-//                console.log("parsed model ", test);
+                console.log("#### FORE-JSON-INSTANCE :: enteredView()");        
+                this.super();
             }
-
-
         });
     </script>
 </polymer-element>

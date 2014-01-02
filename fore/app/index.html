@@ -24,8 +24,6 @@
         <style type="text/css">
             fore-xml-instance{
                 display: none;
-
-
             }
         </style>
 
@@ -35,10 +33,10 @@
         <div class="container">
             <form dataformat="xml" id="first" is="fore-form" name="contact">
                 <label for="firstname">Firstname</label>
-                <input id="firstname" name="firstname" type="text" value="Brat" />
+                <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"/>
 
                 <label for="lastname">Lastname</label>
-                <input id="lastname" name="lastname" type="text" value="Pitt" />
+                <input id="lastname" name="lastname" type="number" value="Pitt" required="true"/>
 
 <!--
                 <fore-model>
@@ -53,7 +51,7 @@
                 </fore-model>
 -->
             </form>
-            <form is="fore-form"  id="second" instance="">
+            <form is="fore-form"  id="second" instance="ourInstance">
 <!--
                 <fore-model modelid="myModel">
                     <fore-xml-instance instanceid="myInst1"></fore-xml-instance>
@@ -85,18 +83,26 @@
                 -->
             </form>
             <form is="fore-form" id="third" name="dummy">
-                <fore-model src="something" id="defaultModel">
-                    <fore-instance type="application/json" instanceid="myInline">
-                        {
-                            'foo': 'bar'
-                        }
-                    </fore-instance>
+                <fore-model src="something" id="myModel">
+                    <fore-json-instance id="myInline">
+                        {"foo":"bar"}
+                    </fore-json-instance>
+                    <fore-bind ref="myInline.foo" readonly="false"></fore-bind>
+                    
+                    <fore-json-instance id="myInline2">
+                        {"bar":"foo"}
+                    </fore-json-instance>
+                    <fore-bind ref="myInline2.bar" readonly="string-lenght(.)"></fore-bind>
+                    
                     <!--<fore-bind ref="foo" required="true"></fore-bind>-->
                     <!--<fore-bind ref="items.item[2]" required="true"></fore-bind>-->
                     <!--<fore-bind ref="items/item" relevant="true"></fore-bind>-->
                 </fore-model>
                 <label for="thirdinput">another</label>
-                <input id="thirdinput" type="text" name="foo">
+                <input id="thirdinput" type="text" name="foo" ref="myInline.foo">
+                
+                <label for="fourthinput">bar</label>
+                <input id="thirdinput" type="text" name="bar" ref="myInline2.bar">
             </form>
 
         </div>

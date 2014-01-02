@@ -16,20 +16,16 @@
 -->
 
     <script>
-
-
-
-
         Polymer('fore-xml-instance', {
-            instanceid:'',
+            dataformat:'xml',
 
-            ready: function() {
-
-                console.log("#### FORE-XML-INSTANCE :: initializing xml instance ...",this);
+            ready: function () {
+                console.log("#### FORE-XML-INSTANCE :: ready()");        
+                this.super();
             },
-
             enteredView: function () {
-                console.log("#### initializing xml instance ...",this.instanceid);
+                console.log("#### FORE-XML-INSTANCE :: enteredView()");        
+                this.super();
             }
 
             });
