@@ -1,36 +1,34 @@
-<polymer-element name="fore-input" attributes="name value type">
+<polymer-element name="fore-input" extends="HTMLInputElement" attributes="name type" on-fore-bind="foreBind" on-keyup="{{updateValue}}" on-blur="{{updateValue}}" >
+    <template>
+        <content></content>
+    </template>
     <script>
         Polymer('fore-input', {
             path: '',
             model: '',
 
-            created: function () {
+/*
+            observe : {
+                value: 'valueChanged'
+            },
+*/
 
+            created: function () {
                 console.log("fore-input created ...");
                 console.log("this: ", this);
                 console.log("this: ", this.getAttribute('name'));
-
-
-
-//                var myModel= document.getElementById('defaultModel').model;
-//                this.model = myModel;
-//                this.path = 'model.' + this.getAttribute('name');
-//                this.bind('value', myModel, this.getAttribute('name'));
-                //this.bind('value', new PathObserver(myModel, 'foo'));
-//                this.bind('value',myModel,'foo2')
-//                var instance = document.getElementById('defaultInstance').getInstance();
-//                console.log("Instance: ", instance);
-//                this.bind('value', instance, this.getAttribute('name'));
-
-                //maybe?
-                //Platform.performMicrotaskCheckpoint();
             },
 
-            validate: function(oldValue, newValue) {
-                console.log('Jippie Yeah Schweinebacke!');
-            }
-
-
+            updateValue:function(e){
+                console.log("Event: ", e);
+                console.log("updatevalue: ", e.originalTarget.value);
+                //this.value= e.originalTarget.value;
+                //this.model.getInstance('defaultInstance').data.contact.contacttype = e.originalTarget.value;
+                Path.get(this.getPath()).setValueFrom(this.model.getInstance('defaultInstance'), e.originalTarget.value);
+                this.super();
+                //this.model.getInstance('defaultInstance').setValue('contact.' + this.name, e.originalTarget.value)
+                //Platform.performMicrotaskCheckpoint();
+            },
 
 /*
             bind: function (name, obj, path) {
@@ -44,7 +42,55 @@
                 }
             }
 */
+            enteredView: function () {
+//                console.log("FORE-INPUT :: enteredView : Path : ", this.getPath());
+            },
 
+            foreBind: function(e, details, sender) {
+//                console.log("fore-input foreBind ...");
+
+                sender.model = details.form.xfModel;
+                //var pp = "" + sender.getPath();
+                console.log("VALUE: " , Path.get(sender.getPath()).getValueFrom(details.form.xfModel.getInstance('defaultInstance')));
+
+                sender.observer = new PathObserver(sender.model.getInstance('defaultInstance'), sender.getPath(), function(newValue, oldValue) {
+
+                    var currentValue = ShadowDOMPolyfill.unwrap(this);
+                    console.log("newValue ", newValue);
+                    if(currentValue.value != newValue){
+                        console.log("PathObserver changed: old: ", oldValue, ' new:', newValue);
+
+                        $(ShadowDOMPolyfill.unwrap(this)).val(newValue);
+                    }
+//                    Platform.performMicrotaskCheckpoint();
+
+                },sender);
+                console.log("obs: " , sender.observer);
+//                Platform.performMicrotaskCheckpoint();
+            },
+
+
+            getInstance: function() {
+                this.parentNode.host;
+            },
+
+            getPath: function() {
+                var absolutePath = this.name;
+                var node = this;
+
+//                console.log("node name : ",absolutePath);
+//                console.log("node.parentNode : ",node.parentNode);
+//                console.log("node.parentNode.name : ",node.parentNode.getAttribute('name'));
+//                console.log("node.parentNode.tagname : ",node.parentNode.localName);
+
+                while (node.parentNode !== undefined && node.parentNode.tagName.toUpperCase() != 'FORM') {
+//                while (node.parentNode !== undefined && node.parentNode.hasAttribute("name")) {
+//                    console.log("step : " , node.parentNode.getAttribute('name'));
+                    absolutePath = node.parentNode.getAttribute('name') + '.' + absolutePath;
+                    node = node.parentNode;
+                }
+                return this.ownerForm.name  + '.' + absolutePath;
+            }
 
         });
     </script>

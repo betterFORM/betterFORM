@@ -1,10 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="fore-model.html">
+<link rel="import" href="fore-input.html">
 
 <script src="../bower_components/jquery/jquery.js"></script>
 <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
-<polymer-element name="fore-form" attributes="name dataformat mode instance">
+<polymer-element name="fore-form" attributes="name dataformat mode instance" on-init-ui="initUI">
     <template class="foo">
         <!--<fore-model id="defaultModel" if="{{ createDefaultModel }}"></fore-model>-->
         <content></content>
@@ -39,7 +40,7 @@
                     this.mode='implicit';
                 } 
 
-
+                this.createUI();
 
                 /**
                  * triggers model construction when all components are ready.
@@ -59,7 +60,36 @@
                 //var myModel = this.querySelector("fore-model");
                 console.log("## FORE-FORM :: enteredView : xfModel ",this.xfModel);
                 console.log("############# ");
+
+                /*
+                var controls = this.querySelectorAll('input');
+                for (var i = 0; i < controls.length; i++) {
+                    console.log("Control: ", controls[i]);
+                    controls[i].fire('fore-bind', {});
+//                    console.log("input init:", controls[i]);
+//                    controls[i].bind('value', instance, 'foo2');
+                }
+
+                */
             },
+
+            createUI: function () {
+                console.log("FORM: ", this.getAttribute('id'), " createUI");
+                var controls = this.querySelectorAll('input');
+                for (var i = 0; i < controls.length; i++) {
+                    controls[i].setAttribute('is', 'fore-input');
+                    controls[i].ownerForm = this;
+                }
+            },
+
+            initUI: function() {
+                var controls = this.querySelectorAll('input');
+                for (var i = 0; i < controls.length; i++) {
+                    console.log("Control: ", controls[i]);
+                    controls[i].fire('fore-bind', {form: this});
+                }
+            },
+
             leftView: function () {
             },
             attributeChanged: function (attrName, oldVal, newVal) {
@@ -67,4 +97,4 @@
 
         });
     </script>
-</polymer-element>                                                                                                 ^
+</polymer-element>

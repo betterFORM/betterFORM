@@ -6,7 +6,7 @@
     <script>
         Polymer('fore-json-instance', {
             dataformat:'json',
-            
+
             ready: function () {
                 console.log("#### FORE-JSON-INSTANCE :: ready()");        
                 this.super();
@@ -14,6 +14,15 @@
             enteredView: function () {
                 console.log("#### FORE-JSON-INSTANCE :: enteredView()");        
                 this.super();
+            },
+
+            getValue: function() {
+
+            },
+
+            setValue: function(path, value) {
+                var evaluate = 'this.data.' + path + '="' + value + '"';
+                eval(evaluate);
             }
         });
     </script>

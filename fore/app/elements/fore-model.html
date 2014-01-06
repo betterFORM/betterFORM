@@ -3,6 +3,7 @@
 <link rel="import" href="fore-bind.html">
 
 
+<script src="../bower_components/jquery/jquery.js"></script>
 <polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}" on-model-construct-done="{{ modelConstructDone }}">
     <!--
     <template>
@@ -21,6 +22,8 @@
             ready: function () {
                 this.states = []
                 this.instances = [];
+
+
             },
 
 
@@ -153,6 +156,8 @@
             
             modelConstructDone: function (e, details, sender) {
                 console.log("Model: ", this.getAttribute('id'), " model-construct-done");
+
+                this.ownerForm.fire('init-ui',{});
             },
 
 

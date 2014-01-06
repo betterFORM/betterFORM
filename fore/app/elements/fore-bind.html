@@ -64,17 +64,17 @@
             },
 
             enteredView: function () {
-                console.log("AbsoluteRef: ", this.getRef());
+//                console.log("AbsoluteRef: ", this.getRef());
             },
 
             getRef: function () {
-                var absoluteRef = this.ref;
-                var node = this;
-                while (node.parentNode.host !== undefined && node.parentNode.host.tagName === 'FORE-BIND') {
-                    absoluteRef = node.parentNode.host.ref + '.' + absoluteRef;
-                    node = node.parentNode.host;
-                }
-                return absoluteRef;
+//                var absoluteRef = this.ref;
+//                var node = this;
+//                while (node.parentNode.host !== undefined && node.parentNode.host.tagName === 'FORE-BIND') {
+//                    absoluteRef = node.parentNode.host.ref + '.' + absoluteRef;
+//                    node = node.parentNode.host;
+//                }
+//                return absoluteRef;
             }
         });
     </script>
