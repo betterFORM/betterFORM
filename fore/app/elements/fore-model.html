@@ -4,7 +4,7 @@
 
 
 <script src="../bower_components/jquery/jquery.js"></script>
-<polymer-element name="fore-model" on-model-construct="{{ modelConstruct }}" on-model-construct-done="{{ modelConstructDone }}">
+<polymer-element name="fore-model" on-model-construct-done="{{ modelConstructDone }}">
     <!--
     <template>
         <fore-instance id="defaultInstance"></fore-instance>
@@ -34,7 +34,7 @@
             getInstance: function () {
                 console.log(this);
                 console.log("getInstance()");
-                return document.getElementById('defaultInstance').getInstance();
+                return this.instances['defaultInstance'];
             },
             
             getInstance: function (id) {
@@ -50,7 +50,7 @@
 //
 //                var formName = this.ownerForm.name;
 //                console.log("### FORE-MODEL :: fore ownerForm : ", formName);
-
+                 this.modelConstruct();
             },
 
             getOwnerForm: function () {
@@ -69,14 +69,10 @@
                 //todo: move relevant code here.
             },
 
-            modelConstruct: function (e, details, sender) {
-                console.log("### FORE-MODEL :: model construct : event=", e);
-                console.log("### FORE-MODEL :: model construct : name=", details.name);
+            modelConstruct: function () {
+                this.fire('model-construct',{});
                 console.log("### FORE-MODEL :: shadowRoot", this.shadowRoot);
                 console.log("### FORE-MODEL :: mode", this.ownerForm.mode);
-                //console.log("### FORE-MODEL :: instances", this.instances);
-
-                // todo: support multiple instances
 
                 if(this.ownerForm.mode === 'implicit'){
                     var inst;
@@ -115,23 +111,6 @@
                         //console.log("JSON: ", inst.data);
                     }
 
-
-/*
-                    if (this.ownerForm.dataformat == 'xml') {
-                        var data = document.createElement('data');
-                        //var myInst = this.$.defaultInstance;
-                        //myInst.appendChild(data);
-                        inst.appendChild(data);
-                        this.buildXMLInstance(this.ownerForm, data, this);
-                    } else {
-                        //this.$.defaultInstance.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
-
-                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm) + '}');
-                        //console.log("JSON: ", this.$.defaultInstance.data);
-
-                        console.log("JSON: ", inst.data);
-                    }
-*/
                 } else {
                     //todo: implement inline model bind initialization
                     console.log("to be implemented...");
@@ -149,15 +128,15 @@
                     //console.log("foreInstances:" ,this.instances);
                 }
 
-                this.ownerForm.xfModel=this;
+                this.ownerForm.xfmodel=this;
                 //todo: detach model-construct listener
-                this.fire('model-construct-done',{});
+                this.fire('model-construct-done',{model: this});
             },
             
             modelConstructDone: function (e, details, sender) {
                 console.log("Model: ", this.getAttribute('id'), " model-construct-done");
 
-                this.ownerForm.fire('init-ui',{});
+                sender.ownerForm.fire('init-ui',{model:sender});
             },
 
 
@@ -174,6 +153,26 @@
 
                     var childNodes = node.children;
                     //console.log("L: ", childNodes.length);
+
+                    if(node.hasAttribute('type')) {
+                        if( node.getAttribute('type') === 'text') {
+                            instanceElement.setAttribute('type', 'string');
+                        } else {
+                            instanceElement.setAttribute('type', node.getAttribute('type'));
+                        }
+                    }
+                    if(node.hasAttribute('calculate')) {
+                        instanceElement.setAttribute('calculate', node.getAttribute('calculate'));
+                    }
+                    if(node.hasAttribute('readonly')) {
+                        instanceElement.setAttribute('readonly', node.getAttribute('readonly'));
+                    }
+                    if(node.hasAttribute('required')) {
+                        instanceElement.setAttribute('required', node.getAttribute('required'));
+                    }
+                    if(node.hasAttribute('relevant')) {
+                        instanceElement.setAttribute('relevant', node.getAttribute('relevant'));
+                    }
 
                     if (childNodes.length === 0) {
                         if (value === null) {
@@ -261,7 +260,7 @@
                     }
                 }
             },
-            
+
             buildForeBind: function (node) {
                 var bind = new ForeBind();
                 bind.ref = node.getAttribute('name');

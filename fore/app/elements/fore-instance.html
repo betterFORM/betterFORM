@@ -13,9 +13,17 @@
     </template>
 -->
     <script>
+        function State() {
+            this.value = 'from state';
+            this.readonly= false;
+            this.required = false;
+            this.relevant = true;
+            this.datatype = 'string';
+            this.valid = true;
+        }
+
         Polymer('fore-instance', {
             id: '',
-//            data: null,
 
             ready: function () {
                 console.log("#### FORE-INSTANCE :: ready()");
@@ -29,8 +37,24 @@
 
             getInstanceId: function () {
                 return this.id;
-            }
+            },
 
+
+            /*
+             * ###########################
+             * API API API API API API API
+             * ###########################
+             */
+            setValue: function(path, value) {
+            },
+
+            getValue: function(path) {
+                return '';
+            },
+
+            getItem: function(path) {
+                return {};
+            }
 
         });
     </script>

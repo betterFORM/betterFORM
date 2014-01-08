@@ -1,0 +1,45 @@
+<polymer-element name="implied-xml-form">
+    
+    <template>
+        <content></content>
+        <form dataformat="xml" id="first2" is="fore-form" name="contact">
+            <label for="firstname">Firstname</label>
+            <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"/>
+
+            <label for="lastname">Lastname</label>
+            <input id="lastname" name="lastname" type="number" value="Pitt" required="true"/>
+
+            <!-- ################################################################################
+
+            Implied model resulting after model construction:
+
+                <fore-model>
+                    <fore-xml-instance type="application/xml">
+                        <contact>
+                            <firstname>Brat</firstname>
+                            <lastname>Pitt</lastname>
+                        </contact>
+                    </fore-xml-instance>
+                </fore-model>
+
+            #################################################################################### -->
+
+        </form>
+    </template>
+    <script>
+        Polymer('implied-xml-form', {
+
+
+
+            created: function () {
+            },
+
+            ready: function () {
+            },
+
+            enteredView: function () {
+            },
+
+        });
+    </script>
+</polymer-element>

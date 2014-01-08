@@ -7,22 +7,48 @@
         Polymer('fore-json-instance', {
             dataformat:'json',
 
+
             ready: function () {
                 console.log("#### FORE-JSON-INSTANCE :: ready()");        
                 this.super();
+                this.itemStates = this.getItemState('');
             },
             enteredView: function () {
                 console.log("#### FORE-JSON-INSTANCE :: enteredView()");        
                 this.super();
             },
 
-            getValue: function() {
-
+            getItemState:function(path){
+                return {
+                    value:'from state',
+                    readonly:false,
+                    required:false,
+                    relevant:true,
+                    datatype:'string',
+                    valid:true
+                }
             },
 
             setValue: function(path, value) {
-                var evaluate = 'this.data.' + path + '="' + value + '"';
-                eval(evaluate);
+                //console.log("#### FORE-JSON-INSTANCE :: setValue()");
+                //console.log("#### FORE-JSON-INSTANCE :: path:" , path);
+                //console.log("#### FORE-JSON-INSTANCE :: value:" , value);
+
+                Path.get(path).setValueFrom(this, value);
+            },
+
+            getValue: function(path) {
+                //console.log("#### FORE-JSON-INSTANCE :: setValue()");
+                //console.log("#### FORE-JSON-INSTANCE :: path:" , path);
+                //console.log("#### FORE-JSON-INSTANCE :: value:" , Path.get(path).getValueFrom(this));
+                return Path.get(path).getValueFrom(this);
+            },
+
+            getItem: function(path) {
+                //console.log("#### FORE-JSON-INSTANCE :: getItem()");
+                //console.log("#### FORE-JSON-INSTANCE :: Path:" , path);
+                //console.log("#### FORE-JSON-INSTANCE :: Item:" , item);
+                return this.itemState;
             }
         });
     </script>

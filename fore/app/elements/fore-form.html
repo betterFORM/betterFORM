@@ -6,8 +6,7 @@
 <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
 <polymer-element name="fore-form" attributes="name dataformat mode instance" on-init-ui="initUI">
-    <template class="foo">
-        <!--<fore-model id="defaultModel" if="{{ createDefaultModel }}"></fore-model>-->
+    <template>
         <content></content>
     </template>
     <script>
@@ -15,11 +14,18 @@
         Polymer('fore-form', {
             dataformat:'json', //default format is JSON
             name:'data',
-            xfModel:null,
+            xfmodel:null,
             createDefaultModel:false,
             mode:'explicit',
             instance:'',
 
+            observe:{
+                xfmodel:'modelChanged'
+            },
+
+            modelChanged:function(oldVal, newVal){
+                console.log("modelChanged +++++++++++++++++++++++++++++++++++++++++++++");
+            },
 
             created: function () {
                 console.log("## FORE-FORM :: created : enhancing form : id=",this.id);
@@ -38,57 +44,40 @@
                     this.appendChild(myModel);
                     //this.xfModel=myModel;
                     this.mode='implicit';
-                } 
-
-                this.createUI();
-
-                /**
-                 * triggers model construction when all components are ready.
-                 */
-                var that=this;
-                window.addEventListener("WebComponentsReady", function(e){
-                    console.log('## FORE-FORM :: WebComponentsReady - bootstrapping model construction');
-                    console.log("name: ",that.name);
-//                    console.log("name: ", that.$.defaultModel);
-//                    that.$.defaultModel.fire('model-construct',{name:that.name,format:that.dataformat});
-                      that.querySelector('fore-model').fire('model-construct',{name:that.name,format:that.dataformat});
-                });
+                }
 
             },
 
             enteredView: function () {
                 //var myModel = this.querySelector("fore-model");
-                console.log("## FORE-FORM :: enteredView : xfModel ",this.xfModel);
                 console.log("############# ");
-
-                /*
-                var controls = this.querySelectorAll('input');
-                for (var i = 0; i < controls.length; i++) {
-                    console.log("Control: ", controls[i]);
-                    controls[i].fire('fore-bind', {});
-//                    console.log("input init:", controls[i]);
-//                    controls[i].bind('value', instance, 'foo2');
-                }
-
-                */
+                this.createUI();
             },
 
             createUI: function () {
-                console.log("FORM: ", this.getAttribute('id'), " createUI");
+                console.log("## FORE-FORM (",this.getAttribute('id'), ") :: createUI");
                 var controls = this.querySelectorAll('input');
+                console.log("Controls: ", controls);
                 for (var i = 0; i < controls.length; i++) {
                     controls[i].setAttribute('is', 'fore-input');
                     controls[i].ownerForm = this;
+                    //Platform.performMicrotaskCheckpoint();
                 }
             },
 
             initUI: function() {
+                console.log("## FORE-FORM initUI");
+
                 var controls = this.querySelectorAll('input');
                 for (var i = 0; i < controls.length; i++) {
                     console.log("Control: ", controls[i]);
-                    controls[i].fire('fore-bind', {form: this});
+                    console.log("Control: ", controls[i].name);
+//                    controls[i].xfmodel = details.model;
+//                    console.log("Control: ", controls[i].xfModel);
+                    //controls[i].fire('fore-bind', {form: this});
                 }
             },
+
 
             leftView: function () {
             },
