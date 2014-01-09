@@ -1,4 +1,4 @@
-<polymer-element name="fore-instance">
+<polymer-element name="fore-instance" class="foreInstance">
 <!--
     Using this style rule really hides the element from display in the browser (even in inspect mode)
 
@@ -28,6 +28,7 @@
             ready: function () {
                 console.log("#### FORE-INSTANCE :: ready()");
                 this.data=null;
+                this.itemStates = [];
             },
             
             enteredView: function () {
@@ -53,7 +54,15 @@
             },
 
             getItem: function(path) {
-                return {};
+                var state = 'NO NO'
+                if(this.itemStates[path] === undefined) {
+                    state = new State();
+                    console.log("#### FORE-INSTANCE :: State:" , state);
+                    state.value = this.getValue(path);
+                    this.itemStates[path] = state;
+                }
+                console.log("#### FORE-INSTANCE :: ItemStates:" , this.itemStates);
+                return this.itemStates[path];
             }
 
         });

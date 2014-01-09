@@ -23,7 +23,7 @@
             ready: function () {
                 console.log("#### FORE-XML-INSTANCE :: ready()");        
                 this.super();
-                this.itemStates = [];
+                //this.itemStates = [];
             },
             enteredView: function () {
                 console.log("#### FORE-XML-INSTANCE :: enteredView()");        
@@ -53,26 +53,7 @@
 
                 myValue.textContent = value;
                 this.itemStates[path].value = value;
-            },
-
-            /** @Override */
-            getItem: function(path) {
-                var cssPath = path.replace(/\./g, ' ');
-                var item = this.querySelector(cssPath);
-
-                var state = 'NO NO'
-                if(this.itemStates[path] === undefined) {
-                    state = new State();
-                    console.log("#### FORE-XML-INSTANCE :: State:" , state);
-                    state.value = this.getValue(path);
-                    this.itemStates[path] = state;
-                }
-                //console.log("#### FORE-XML-INSTANCE :: getItem()");
-                //console.log("#### FORE-XML-INSTANCE :: CSSPath:" , cssPath);
-                console.log("#### FORE-XML-INSTANCE :: ItemStates:" , this.itemStates);
-                return this.itemStates[path];
             }
-
             });
     </script>
 </polymer-element>

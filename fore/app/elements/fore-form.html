@@ -5,7 +5,7 @@
 <script src="../bower_components/jquery/jquery.js"></script>
 <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
-<polymer-element name="fore-form" attributes="name dataformat mode instance" on-init-ui="initUI">
+<polymer-element name="fore-form" attributes="name dataformat mode instanceId" on-init-ui="initUI">
     <template>
         <content></content>
     </template>
@@ -17,7 +17,7 @@
             xfmodel:null,
             createDefaultModel:false,
             mode:'explicit',
-            instance:'',
+            instanceId:null,
 
             observe:{
                 xfmodel:'modelChanged'
@@ -33,7 +33,6 @@
 
             ready:function(){
                 var inlineModel = this.querySelector('fore-model');
-
                 // check for existence of inline model and create one if none existed
                 if(inlineModel === null){
                     console.log("## FORE-FORM :: ready : !!! no inline model found - creating default model !!!");
@@ -46,12 +45,18 @@
                     this.mode='implicit';
                 }
 
+                var that = this;
+                window.addEventListener("WebComponentsReady", function(e){
+                    console.log('## FORE-FORM :: WebComponentsReady');
+                    console.log("name: ",that.name);
+                    that.createUI();
+                });
             },
 
             enteredView: function () {
                 //var myModel = this.querySelector("fore-model");
                 console.log("############# ");
-                this.createUI();
+                //this.createUI();
             },
 
             createUI: function () {

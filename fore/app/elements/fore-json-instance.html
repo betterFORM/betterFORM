@@ -11,7 +11,7 @@
             ready: function () {
                 console.log("#### FORE-JSON-INSTANCE :: ready()");        
                 this.super();
-                this.itemStates = this.getItemState('');
+
             },
             enteredView: function () {
                 console.log("#### FORE-JSON-INSTANCE :: enteredView()");        
@@ -34,21 +34,15 @@
                 //console.log("#### FORE-JSON-INSTANCE :: path:" , path);
                 //console.log("#### FORE-JSON-INSTANCE :: value:" , value);
 
-                Path.get(path).setValueFrom(this, value);
+                Path.get(path).setValueFrom(this.data, value);
+                this.itemStates[path].value = value;
             },
 
             getValue: function(path) {
-                //console.log("#### FORE-JSON-INSTANCE :: setValue()");
-                //console.log("#### FORE-JSON-INSTANCE :: path:" , path);
-                //console.log("#### FORE-JSON-INSTANCE :: value:" , Path.get(path).getValueFrom(this));
-                return Path.get(path).getValueFrom(this);
-            },
-
-            getItem: function(path) {
-                //console.log("#### FORE-JSON-INSTANCE :: getItem()");
-                //console.log("#### FORE-JSON-INSTANCE :: Path:" , path);
-                //console.log("#### FORE-JSON-INSTANCE :: Item:" , item);
-                return this.itemState;
+                console.log("#### FORE-JSON-INSTANCE :: getValue()");
+                console.log("#### FORE-JSON-INSTANCE :: path:" , path);
+                console.log("#### FORE-JSON-INSTANCE :: value:" , Path.get(path).getValueFrom(this));
+                return Path.get(path).getValueFrom(this.data);
             }
         });
     </script>

@@ -22,13 +22,6 @@
             ready: function () {
                 this.states = []
                 this.instances = [];
-
-
-            },
-
-
-            created: function () {
-                console.log("### FORE-MODEL :: created : this=", this);
             },
 
             getInstance: function () {
@@ -40,17 +33,26 @@
             getInstance: function (id) {
                 return this.instances[id];
             },
-            
+
+            getDefaultInstance:function(){
+                console.log("### FORE-MODEL: getDefaultInstance()");
+                console.log("### FORE-MODEL: " , this.instances);
+                var defInst=ShadowDOMPolyfill.unwrap(this).querySelector('.foreInstance');
+                return (defInst.hasAttribute('id'))? defInst.getAttribute('id') : 'defaultInstance';
+            },
+
+            getItem: function(path){
+
+            },
+
+            created: function () {
+                console.log("### FORE-MODEL :: created : this=", this);
+            },
+
             enteredView: function () {
                 this.ownerForm = this.parentNode;
                 console.log("### FORE-MODEL :: enteredView : ownerform :", this.ownerForm);
-//
-//                this.ownerForm = this.parentNode.host;
-//                console.log("fore ownerForm", this.ownerForm.name);
-//
-//                var formName = this.ownerForm.name;
-//                console.log("### FORE-MODEL :: fore ownerForm : ", formName);
-                 this.modelConstruct();
+                this.modelConstruct();
             },
 
             getOwnerForm: function () {
@@ -74,43 +76,33 @@
                 console.log("### FORE-MODEL :: shadowRoot", this.shadowRoot);
                 console.log("### FORE-MODEL :: mode", this.ownerForm.mode);
 
+
+
+                var instId = (this.ownerForm.instance == null) ? 'defaultInstance' : this.ownerForm.instance;
+                var rootElemName =this.ownerForm.getAttribute('name');
+
                 if(this.ownerForm.mode === 'implicit'){
                     var inst;
                     console.log("data format: ", this.ownerForm.dataformat);
 
+
                     if(this.ownerForm.dataformat === 'xml') {
                         inst = document.createElement('fore-instance', 'fore-xml-instance');
-                        if(this.ownerForm.instance === '') {
-                            inst.setAttribute('id', 'defaultInstance');
-                        } else {
-                            inst.setAttribute('id', this.ownerForm.instance);
-                        }
-                        inst.setAttribute('dataformat', 'xml');
-                        this.shadowRoot.appendChild(inst);
-
-                        var data = document.createElement('data');
-                        //var myInst = this.$.defaultInstance;
-                        //myInst.appendChild(data);
+                        //var data = document.createElement('data');
+                        var data = document.createElement(rootElemName);
                         inst.appendChild(data);
+                        inst.setAttribute('dataformat', 'xml');
                         this.buildXMLInstance(this.ownerForm, data, this);
-                        this.instances['defaultInstance'] = inst;
-
                     } else if(this.ownerForm.dataformat === 'json') {
                         inst = document.createElement('fore-instance', 'fore-json-instance');
-                         if(this.ownerForm.instance === '') {
-                            inst.setAttribute('id', 'defaultInstance');
-                        } else {
-                            inst.setAttribute('id', this.ownerForm.instance);
-                        }
                         inst.setAttribute('dataformat', 'json');
-                        this.shadowRoot.appendChild(inst);
-
                         inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm, this) + '}');
-                        //console.log("JSON: ", this.$.defaultInstance.data);
-                        this.instances['defaultInstance'] = inst;
-                        //console.log("JSON: ", inst.data);
                     }
+                    inst.setAttribute('id', instId);
 
+                    this.shadowRoot.appendChild(inst);
+
+                    this.instances['defaultInstance'] = inst;
                 } else {
                     //todo: implement inline model bind initialization
                     console.log("to be implemented...");
@@ -121,7 +113,9 @@
                         //console.log("fore-instance ID:" , foreInstances[j].getAttribute('id'));
                         var data = foreInstances[j].textContent;
                         foreInstances[j].setAttribute('dataformat', 'json');
-                        foreInstances[j].data = JSON.parse(data);
+                        //foreInstances[j].data = JSON.parse(data);
+                        console.log("Parse me ...", '{"' + rootElemName + '":' + data + '}');
+                        foreInstances[j].data = JSON.parse('{"' + rootElemName + '":' + data + '}');
                         this.instances[foreInstances[j].getAttribute('id')] = foreInstances[j];
                         //this.querySelector('fore-instance').data = JSON.parse(data);
                     }
@@ -138,6 +132,7 @@
 
                 sender.ownerForm.fire('init-ui',{model:sender});
             },
+
 
 
             buildXMLInstance: function (node, instance, model) {
@@ -235,7 +230,7 @@
                         return result += '}';
                     }
                 } else {
-                    var childNodes = node.children;
+                    var childNodes = node.children;          F
                     var result = '';
                     for (var n = 0; n < childNodes.length; n++) {
                          result += this.buildJSONInstance(childNodes[n], model);

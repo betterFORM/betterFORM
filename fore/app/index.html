@@ -16,10 +16,13 @@
         </link>
 
         <!-- Place your HTML imports here -->
+        <link rel="import" href="elements/explicit-model.html"></link>
         <link rel="import" href="elements/implied-xml-form.html"></link>
+        <link rel="import" href="elements/implied-json-form.html"></link>
         <link rel="import" href="elements/fore-form.html"></link>
         <link rel="import" href="elements/fore-input.html"></link>
         <link rel="import" href="elements/fore-json-instance.html"></link>
+        <link rel="import" href="elements/fore-output.html"></link>
 
         <!-- hiding elements here still allows to inspect them in the browser. -->
         <style type="text/css">
@@ -27,75 +30,33 @@
                 display: none;
             }
         </style>
-
     </head>
     <body>
 
 
         <div class="container">
 
-            <implied-xml-form>
 
+            <implied-xml-form></implied-xml-form>
+             <!--
             <form dataformat="xml" id="first" is="fore-form" name="contact">
                 <label for="firstname">Firstname</label>
                 <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"/>
 
                 <label for="lastname">Lastname</label>
                 <input id="lastname" name="lastname" type="number" value="Pitt" required="true"/>
+
+
+                <span is="fore-output" value="Hello, {{firstname}} , {{instance().contact.lastname}}">
+                        &lt;!&ndash;<span>{{name}}, {{lastname}}</span>&ndash;&gt;
+                    </span>
+
             </form>
+               -->
 
-<!--             <form is="fore-form"  id="second"> -->
-<!--
-                <fore-model modelid="myModel">
-                    <fore-xml-instance instanceid="myInst1"></fore-xml-instance>
-                </fore-model>
--->
-            <!--
-                <div name="contact">
-                    <label for="contacttype">Type of contact</label>
-                    <input id="contacttype" name="contacttype" type="text" value="Phone"/>
+            <implied-json-form></implied-json-form>
 
-                    <label for="phone">Phone</label>
-                    <input id="phone" name="phone" type="text" value="001-12345678" />
-                </div>
-            -->
-                <!--
-                <script>
-                        Polymer('fore-json-instance', {
-                            data: {
-                                contact:{
-                                    contacttype:'Phone',
-                                    phone:'001-12345678'
-                                }
-                            },
-                            bind:{
-                                ref:'foo',
-                                required:true
-                            }
-                            (...)
-                    </script>
-
-
-                    <script>
-                        ['data':state,'data.contact':state,'data.contact.contacttype':state]
-
-                        data: {
-                                contact:{
-                                    state: {readonly:'', relevant:'', ... },
-                                    contacttype: {
-                                        state: { value:'Phone', readonly:'', relevant:'', ....}
-                                    }
-                                    phone: {
-                                        [ state: { value:'001-12345678', readonly:'', relevant:'', ....},
-                                          state: { value:'001-12345678', readonly:'', relevant:'', ....}
-                                        ]
-                                        state: { value:'001-12345678', readonly:'', relevant:'', ....}
-                                    }
-                                }
-                            }
-                    </script>
-                -->
-            <!-- </form> -->
+            <!--<explicit-model></explicit-model>-->
             <!--
             <form is="fore-form" id="third" name="dummy">
                 <fore-model src="something" id="myModel">
@@ -103,22 +64,21 @@
                         {"foo":"bar"}
                     </fore-json-instance>
                     <fore-bind ref="myInline.foo" readonly="false"></fore-bind>
-                    
+
                     <fore-json-instance id="myInline2">
                         {"bar":"foo"}
                     </fore-json-instance>
+
                     <fore-bind ref="myInline2.bar" readonly="string-lenght(.)"></fore-bind>
-            -->
-                    <!--<fore-bind ref="foo" required="true"></fore-bind>-->
-                    <!--<fore-bind ref="items.item[2]" required="true"></fore-bind>-->
-                    <!--<fore-bind ref="items/item" relevant="true"></fore-bind>-->
-            <!--
-            </fore-model>
+                </fore-model>
+
                 <label for="thirdinput">another</label>
-                <input id="thirdinput" type="text" name="foo" ref="myInline.foo">
-                
+                <input id="thirdinput" type="text" name="foo">
+
+                <span ref="#myInline2">
                 <label for="fourthinput">bar</label>
-                <input id="thirdinput" type="text" name="bar" ref="myInline2.bar">
+                <input id="fourthinput" type="text" name="bar">
+                </span>
             </form>
             -->
         </div>

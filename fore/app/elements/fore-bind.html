@@ -1,29 +1,6 @@
-<polymer-element name="fore-bind" constructor="ForeBind" attributes="ref debug readonly">
+<polymer-element name="fore-bind" constructor="ForeBind" attributes="ref calculate required readonly relevant valid datatype">
     
-    <template if="{{ debug }}">
-        <fore-calculate expr="{{calculateExpr}}"></fore-calculate>
-        <fore-readonly expr="{{readonly}}"></fore-readonly>
-        <fore-required expr="{{required}}"></fore-required>
-        <fore-valid expr="{{valid}}"></fore-valid>
-        <fore-relevant expr="{{relevant}}"></fore-relevant>
-        <fore-type expr="{{datatype}}"></fore-type>
-
-<!--
-        <property type="calculate" expr="{{calculateExpr}}" value="123"></property>
-        <property type="readonly" expr="false" value="false"></property>
-        <property type="required" expr="false" value="false"></property>
-        <property type="relevant" expr="true" value="true"></property>
-        <property type="valid" expr="true" value="true"></property>
-        <property type="type" expr="string" value="text"></property>
--->
-        <!--
-        <calculate>{{calculateExpr}}</calculate>
-        <readonly>{{readonlyExpr}}</readonly>
-        <required>{{requiredExpr}}</required>
-        <relevant>{{relevantExpr}}</relevant>
-        <type>{{datatypeExpr}}</type>
-        <constraint>{{validExpr}}</constraint>
-        -->
+    <template>
     </template>
     <script>
         Polymer('fore-bind', {
@@ -54,7 +31,7 @@
 
             created: function () {
                 console.log("fore-bind created ...");
-                this.debug='false';
+//                this.debug='false';
             },
 
             ready: function () {
