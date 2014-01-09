@@ -50,6 +50,19 @@ analogue all test on the dist directory (optimized resources, deployment) can be
 1. `grunt test-dist`
 
 
+##  Karma and Polymer
+The Karma Config file is place at fore/karma.conf.js
+
+### Web Resources:
+* http://japhr.blogspot.de/2013/11/getting-started-with-karma-for-polymer.html
+
+
+### Install
+1. npm install -g karma
+
+### Run Karma
+1. karma start
+
 
 
 
