@@ -1,4 +1,4 @@
-<polymer-element name="fore-input" extends="HTMLInputElement" attributes="name type"  on-keyup="{{updateValue}}" on-blur="{{updateValue}}" >
+<polymer-element name="fore-input" extends="HTMLInputElement" attributes="name type"  on-keyup="{{updateValue}}" on-blur="{{updateValue}}">
 <!--
     <template bind if="{{ isElement }}">
         <input type="text" name="{{ name }}" id="{{ name }}" value="{{ value }}" isElement="{{ isElement }}">
@@ -13,8 +13,6 @@
             xfmodel: '',
             state:{},
             isElement:false,
-//            value:"lkjsdf",
-
 
             observe:{
                 xfmodel:'modelChanged'
@@ -37,24 +35,12 @@
             },
             ready:function(){
 //                this.isElement = (this.name.toLowerCase() == 'fore-input' ? true : false);
-
             },
 
             updateValue:function(e){
-                console.log("Event: ", e);
                 console.log("updatevalue: ", e.originalTarget.value);
-                //this.value= e.originalTarget.value;
-                //this.model.getInstance('defaultInstance').data.contact.contacttype = e.originalTarget.value;
-
-
-                //this.xfmodel.getInstance('defaultInstance').setValue(this.getPath(), e.originalTarget.value);
                 this.getInstance().setValue(this.ref, e.originalTarget.value);
-                console.log("DONE!")
-                //JSON
-                //Path.get(this.getPath()).setValueFrom(this.xfmodel.getInstance('defaultInstance'), e.originalTarget.value);
                 this.super();
-                //this.xfmodel.getInstance('defaultInstance').setValue('contact.' + this.name, e.originalTarget.value)
-                //Platform.performMicrotaskCheckpoint();
             },
 
 /*
@@ -76,47 +62,44 @@
                 console.log("model : ", this.xfmodel, ' form', this.ownerForm);
 
                 this.xfmodel = this.ownerForm.xfmodel;
+                Platform.performMicrotaskCheckpoint();
 
                 //this.value="bar";
                 //this.bindControl(null, {form: this.ownerForm}, this)
             },
 
-            bindControl: function() {
+
+            bindControl: function () {
                 if(this.xfmodel != null) {
                     console.log("fore-input foreBind ...");
-
-    //                sender.xfmodel = details.form.xfModel;
-                    //var pp = "" + sender.getPath();
-
-                        console.log("INSTANCE: " , this.getInstance());
-                        //console.log("VALUE: " , this.xfmodel.getInstance(this.getInstance()).getValue(this.path));
-                    //JSON
-                    //console.log("VALUE: " , Path.get(sender.getPath()).getValueFrom(details.form.xfModel.getInstance('defaultInstance')));
-
-                    //var itemState = this.xfmodel.getInstance('defaultInstance').getItem(this.getPath());
 
                     var itemState = this.getInstance().getItem(this.ref);
                     console.log("itemstate : ", itemState);
 
                     this.obObserver = new ObjectObserver(itemState,function(added, removed, changed, getOldValueFn) {
                         var self = ShadowDOMPolyfill.unwrap(this);
-                        console.log("################################################################# object observer called");
+
                         Object.keys(changed).forEach(function(property) {
+                            console.log("################################################################ object observer", getOldValueFn(property));
                             console.log("Prop: ", property); // a property on obj which has changed value.
                             console.log("Value:" ,changed[property]); // its value
                             console.log("Self:" , self); // its value
+                            console.log("Self:" , changed); // its value
 
                             if(property === 'value') {
                                 if(self.value !== changed[property]){
                                     console.log("ObjectObserver changed value: old: ", self.value, ' new:', changed[property]);
                                     $(self).val(changed[property]);
+                                    this.asyncFire("value-changed",{oldVal: getOldValueFn(property), newVal: changed[property]});
                                 }
                             } else if (property === 'readonly') {
                                 if(typeof changed[property] === 'boolean') {
                                     $(self).readOnly(changed[property]);
                                 }
                             }
-                        });
+                        }, this);
+
+
                     },this);
 
                     this.value =  itemState.value;
@@ -124,54 +107,14 @@
                     Platform.performMicrotaskCheckpoint();
                 }
 
-                /*
-                sender.observer = new PathObserver(sender.model.getInstance('defaultInstance'), sender.getPath(), function(newValue, oldValue) {
-
-                    var currentValue = ShadowDOMPolyfill.unwrap(this);
-                    console.log("newValue ", newValue);
-                    if(currentValue.value != newValue){
-                        console.log("PathObserver changed: old: ", oldValue, ' new:', newValue);
-
-                        $(ShadowDOMPolyfill.unwrap(this)).val(newValue);
-                    }
-
-
-//                    Platform.performMicrotaskCheckpoint();
-
-                },sender);
-                */
-               // console.log("obs: " , sender.observer);
-//                Platform.performMicrotaskCheckpoint();
             },
-
-
-
-//
-//            getPath: function() {
-//                var absolutePath = this.name;
-//                var node = this;
-//
-////                console.log("node name : ",absolutePath);
-////                console.log("node.parentNode : ",node.parentNode);
-////                console.log("node.parentNode.name : ",node.parentNode.getAttribute('name'));
-////                console.log("node.parentNode.tagname : ",node.parentNode.localName);
-//
-//                while (node.parentNode !== undefined && node.parentNode.tagName.toUpperCase() != 'FORM') {
-////                while (node.parentNode !== undefined && node.parentNode.hasAttribute("name")) {
-////                    console.log("step : " , node.parentNode.getAttribute('name'));
-//                    absolutePath = node.parentNode.getAttribute('name') + '.' + absolutePath;
-//                    node = node.parentNode;
-//                }
-//                return this.ownerForm.name  + '.' + absolutePath;
-//            },
 
             getInstance: function() {
                 if(this.instance === '') {
                     this.path = this.getPath();
                     this.ref = this.path.substring(this.path.indexOf('.') +1, this.path.lenght);
-                    console.log("FORE-INPUT: PATH:" , this.path);
                     this.instance = this.xfmodel.getInstance(this.path.substring(1, this.path.indexOf('.')));
-                    console.log("FORE-INPUT: INSTANCE:" , this.instance);
+//                    console.log("FORE-INPUT: INSTANCE:" , this.instance);
                 }
 
                 return this.instance;
@@ -179,26 +122,21 @@
 
             getPath: function(){
                 var path = this.name;
-                console.log('PATH1: ' , path);
                 var node = this;
                 while (node.parentNode !== undefined && node.parentNode.tagName.toUpperCase() != 'FORM') {
-                    console.log('PATH2: ' , path);
                     if (node.parentNode.hasAttribute('ref')){
-                        console.log('PATH3: ref');
                         var ref = node.parentNode.getAttribute('ref');
                         if(ref.indexOf('#') != -1) {
-                            console.log('PATH4: ' , path);
                             return ref +  '.' + this.ownerForm.name +  '.' + path;
                         }
                         path = ref + '.' + path;
                     } else if(node.parentNode.hasAttribute('name')){
-                        console.log('PATH5: ' , path);
                         path = node.parentNode.getAttribute('name') + '.' + path;
 
                     }
                     node = node.parentNode;
                 }
-                console.log("FORE-INPUT: PATH6:" , this.ownerForm.xfmodel, ' ', this.ownerForm.name);
+//                console.log("FORE-INPUT: PATH6:" , this.ownerForm.xfmodel, ' ', this.ownerForm.name);
                 return '#' + this.ownerForm.xfmodel.getDefaultInstance()  + '.' + this.ownerForm.name + '.' + path;
             }
 

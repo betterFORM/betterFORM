@@ -15,6 +15,7 @@
     <script>
         function State() {
             this.value = 'from state';
+            this.calculate='';
             this.readonly= false;
             this.required = false;
             this.relevant = true;
@@ -26,7 +27,6 @@
             id: '',
 
             ready: function () {
-                console.log("#### FORE-INSTANCE :: ready()");
                 this.data=null;
                 this.itemStates = [];
             },
@@ -53,13 +53,21 @@
                 return '';
             },
 
+            /**
+             * returns State object for given path. Will create one when none existed already in the internal
+             * itemStates array.
+             *
+             * @param path
+             * @returns {*}
+             */
             getItem: function(path) {
-                var state = 'NO NO'
+                var state;
+                //lazy State object creation
                 if(this.itemStates[path] === undefined) {
                     state = new State();
-                    console.log("#### FORE-INSTANCE :: State:" , state);
                     state.value = this.getValue(path);
                     this.itemStates[path] = state;
+                    console.log("#### FORE-INSTANCE :: created State for :", path , state);
                 }
                 console.log("#### FORE-INSTANCE :: ItemStates:" , this.itemStates);
                 return this.itemStates[path];

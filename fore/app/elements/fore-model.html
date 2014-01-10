@@ -24,13 +24,10 @@
                 this.instances = [];
             },
 
-            getInstance: function () {
-                console.log(this);
-                console.log("getInstance()");
-                return this.instances['defaultInstance'];
-            },
-            
             getInstance: function (id) {
+                if(id === null || id === undefined) {
+                    return this.instances[this.getDefaultInstance()];
+                }
                 return this.instances[id];
             },
 
@@ -51,7 +48,6 @@
 
             enteredView: function () {
                 this.ownerForm = this.parentNode;
-                console.log("### FORE-MODEL :: enteredView : ownerform :", this.ownerForm);
                 this.modelConstruct();
             },
 
@@ -73,10 +69,7 @@
 
             modelConstruct: function () {
                 this.fire('model-construct',{});
-                console.log("### FORE-MODEL :: shadowRoot", this.shadowRoot);
-                console.log("### FORE-MODEL :: mode", this.ownerForm.mode);
-
-
+                console.log("### FORE-MODEL :: ########### model-construct ########## " , this);
 
                 var instId = (this.ownerForm.instance == null) ? 'defaultInstance' : this.ownerForm.instance;
                 var rootElemName =this.ownerForm.getAttribute('name');
@@ -128,9 +121,7 @@
             },
             
             modelConstructDone: function (e, details, sender) {
-                console.log("Model: ", this.getAttribute('id'), " model-construct-done");
-
-                sender.ownerForm.fire('init-ui',{model:sender});
+                console.log("### FORE-MODEL :: ########### ", this.getAttribute('id'), " : model-construct-done ##########");
             },
 
 

@@ -87,6 +87,7 @@
 
 
 
+
         <!-- build:js scripts/polymer/polymer.js -->
         <script src="bower_components/platform/platform.js"  log="bind,ready,data"></script>
         <!-- endbuild -->
@@ -107,6 +108,15 @@
 //                document.getElementById('defaultModel').fire('model-construct',{name:'foo'});
 
             });
+            window.addEventListener("value-changed",function(e){
+                console.log("******************************************** value changed", e);
+                console.log("**** oldVal:", e.detail.oldVal, ' newVal: ', e.detail.newVal);
+
+            });
+            window.addEventListener("fore-ready",function(e){
+                console.log("******************************************** fore ready", e);
+            });
+
         </script>
     </body>
 </html>

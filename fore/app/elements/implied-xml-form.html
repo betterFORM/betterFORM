@@ -2,13 +2,14 @@
     
     <template>
         <!--<content></content>-->
-        <form dataformat="xml" id="first2" is="fore-form" name="contact">
+        <form dataformat="xml" id="first2" is="fore-form" name="contact" onsubmit="return false;">
             <label for="firstname">Firstname</label>
-            <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"/>
+            <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"> </input>
 
             <label for="lastname">Lastname</label>
-            <input id="lastname" name="lastname" type="number" value="Pitt" required="true"/>
+            <input id="lastname" name="lastname" type="number" value="Pitt" required="true"> </input>
 
+            <button id="myButton" value="Click">Click</button>
             <!-- ################################################################################
 
             Implied model resulting after model construction:
@@ -27,7 +28,12 @@
         </form>
     </template>
     <script>
+
+
         Polymer('implied-xml-form', {
+
+
+
 
 
 
@@ -38,7 +44,15 @@
             },
 
             enteredView: function () {
-            },
+                var self=this;
+                this.$.myButton.addEventListener("click",function(e){
+                   //alert("boohooo");
+                   //console.log(self.$.first2.xfmodel.getInstance().setValue('contact.lastname', 'fuzzy'));
+                   console.log(self.$.first2.xfmodel.getInstance());
+
+                   //self.$.first2.setItemValue('contact.lastname', 'fuzzier');
+                });
+            }
 
         });
     </script>

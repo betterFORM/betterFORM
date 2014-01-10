@@ -5,7 +5,7 @@
 <script src="../bower_components/jquery/jquery.js"></script>
 <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
-<polymer-element name="fore-form" attributes="name dataformat mode instanceId" on-init-ui="initUI">
+<polymer-element name="fore-form" attributes="name dataformat mode instanceId">
     <template>
         <content></content>
     </template>
@@ -28,7 +28,7 @@
             },
 
             created: function () {
-                console.log("## FORE-FORM :: created : enhancing form : id=",this.id);
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FORE-FORM :: created : enhancing form : id=",this.id , " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             },
 
             ready:function(){
@@ -55,7 +55,6 @@
 
             enteredView: function () {
                 //var myModel = this.querySelector("fore-model");
-                console.log("############# ");
                 //this.createUI();
             },
 
@@ -66,26 +65,14 @@
                 for (var i = 0; i < controls.length; i++) {
                     controls[i].setAttribute('is', 'fore-input');
                     controls[i].ownerForm = this;
-                    //Platform.performMicrotaskCheckpoint();
                 }
+                //Platform.performMicrotaskCheckpoint();
+                this.asyncFire("fore-ready");
             },
-
-            initUI: function() {
-                console.log("## FORE-FORM initUI");
-
-                var controls = this.querySelectorAll('input');
-                for (var i = 0; i < controls.length; i++) {
-                    console.log("Control: ", controls[i]);
-                    console.log("Control: ", controls[i].name);
-//                    controls[i].xfmodel = details.model;
-//                    console.log("Control: ", controls[i].xfModel);
-                    //controls[i].fire('fore-bind', {form: this});
-                }
-            },
-
 
             leftView: function () {
             },
+
             attributeChanged: function (attrName, oldVal, newVal) {
             }
 
