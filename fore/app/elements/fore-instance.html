@@ -26,6 +26,7 @@
         Polymer('fore-instance', {
             id: '',
             states:[],
+            model:null,
 
 
             /*
@@ -35,11 +36,15 @@
              */
             createInitialInstance:function(){
                 //todo: implement initial loading of instances (handling of 'src' versus inline instance
+                console.log("#### FORE-INSTANCE ::createInitialInstance : ");
+
+
             },
 
             getInstanceId: function () {
                 return this.id;
             },
+
 
             delete:function(path){
                 //todo: implement deletion of an item
@@ -90,12 +95,20 @@
              * COMPONENT LIFECYCLE
              * ###########################
              */
+
+            created:function(){
+            },
+
             ready: function () {
                 this.data=null;
                 this.itemStates = [];
             },
             
             enteredView: function () {
+
+                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                console.log("#### FORE-INSTANCE :: my model: ", this.model);
+
                 this.id = this.getAttribute('id');
                 console.log("#### FORE-INSTANCE :: enteredView() ID:" , this.id);
             }

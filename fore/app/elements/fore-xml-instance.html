@@ -26,6 +26,76 @@
         Polymer('fore-xml-instance', {
             dataformat:'xml',
 
+            createInitialInstance:function(){
+                var rootElemName =this.model.ownerForm.getAttribute('name');
+                var item = this.model.ownerForm;
+                var parent = document.createElement(rootElemName);
+                this.setAttribute('dataformat', 'xml');
+                this.appendChild(parent);
+
+                this._buildXMLInstance(item, parent);
+            },
+
+            _buildXMLInstance: function (item, parent) {
+                //console.log("hazName: ", node.hasAttribute('name'));
+                if (item.hasAttribute('name')) {
+                    var name = item.getAttribute('name');
+                    var value = item.getAttribute('value');
+                    var instanceElement = document.createElement(name);
+
+
+                    //console.log("Name: ", node.getAttribute('name'));
+                    //console.log("Value: ", node.getAttribute('value'));
+
+                    var childNodes = item.children;
+                    //console.log("L: ", childNodes.length);
+
+                    if(item.hasAttribute('type')) {
+                        if( item.getAttribute('type') === 'text') {
+                            instanceElement.setAttribute('type', 'string');
+                        } else {
+                            instanceElement.setAttribute('type', item.getAttribute('type'));
+                        }
+                    }
+                    if(item.hasAttribute('calculate')) {
+                        instanceElement.setAttribute('calculate', item.getAttribute('calculate'));
+                    }
+                    if(item.hasAttribute('readonly')) {
+                        instanceElement.setAttribute('readonly', item.getAttribute('readonly'));
+                    }
+                    if(item.hasAttribute('required')) {
+                        instanceElement.setAttribute('required', item.getAttribute('required'));
+                    }
+                    if(item.hasAttribute('relevant')) {
+                        instanceElement.setAttribute('relevant', item.getAttribute('relevant'));
+                    }
+
+                    if (childNodes.length === 0) {
+                        if (value === null) {
+                            value = '';
+                        }
+                        instanceElement.appendChild(document.createTextNode(value));
+                    } else {
+                        //console.log("loop");
+                        for (var n = 0; n < childNodes.length; n++) {
+                            this._buildXMLInstance(childNodes[n], instanceElement);
+                        }
+
+                    }
+                    parent.appendChild(instanceElement);
+
+                } else {
+                    var childNodes = item.children;
+
+                    for (var n = 0; n < childNodes.length; n++) {
+                        this._buildXMLInstance(childNodes[n], parent);
+                    }
+                }
+
+            },
+            created:function(){
+            },
+
             ready: function () {
                 console.log("#### FORE-XML-INSTANCE :: ready()");        
                 this.super();

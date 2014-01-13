@@ -82,17 +82,21 @@
                     if(this.ownerForm.dataformat === 'xml') {
                         inst = document.createElement('fore-instance', 'fore-xml-instance');
                         //var data = document.createElement('data');
-                        var data = document.createElement(rootElemName);
-                        inst.appendChild(data);
-                        inst.setAttribute('dataformat', 'xml');
-                        this.buildXMLInstance(this.ownerForm, data, this);
+                        //var data = document.createElement(rootElemName);
+                        //inst.appendChild(data);
+                        //inst.setAttribute('dataformat', 'xml');
+                        inst.model= this;
+                        inst.createInitialInstance();
+                        //this.buildXMLInstance(this.ownerForm, data, this);
                     } else if(this.ownerForm.dataformat === 'json') {
                         inst = document.createElement('fore-instance', 'fore-json-instance');
-                        inst.setAttribute('dataformat', 'json');
-                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm, this) + '}');
+                        //inst.setAttribute('dataformat', 'json');
+                        inst.model= this;
+//                        inst.data = JSON.parse('{' + this.buildJSONInstance(this.ownerForm, this) + '}');
+                        inst.createInitialInstance();
                     }
                     inst.setAttribute('id', instId);
-
+                    this._buildForeBinds(this.ownerForm, this);
                     this.shadowRoot.appendChild(inst);
 
                     this.instances['defaultInstance'] = inst;
@@ -133,7 +137,7 @@
                     var value = node.getAttribute('value');
                     var instanceElement = document.createElement(name);
 
-                    var bind = this.buildForeBind(node);
+                    var bind = this._buildForeBind(node);
                     //console.log("Name: ", node.getAttribute('name'));
                     //console.log("Value: ", node.getAttribute('value'));
 
@@ -232,45 +236,45 @@
 
             },
             
-            buildForeBinds: function (node, model) {
-                if (node.hasAttribute('name')) {
-                    var bind = this.buildForeBind(node);
-                    var childNodes = node.children;
+            _buildForeBinds: function (item, parent) {
+                if (item.hasAttribute('name')) {
+                    var bind = this._buildForeBind(item);
+                    var childNodes = item.children;
                     for (var n = 0; n < childNodes.length; n++) {
-                        this.buildForeBinds(childNodes[n], bind);
+                        this._buildForeBinds(childNodes[n], bind);
                     }
-                    model.shadowRoot.appendChild(bind);
+                    parent.shadowRoot.appendChild(bind);
                 } else {
-                    var childNodes = node.children;
+                    var childNodes = item.children;
                     for (var n = 0; n < childNodes.length; n++) {
-                        this.buildForeBinds(childNodes[n], model);
+                        this._buildForeBinds(childNodes[n], parent);
                     }
                 }
             },
 
-            buildForeBind: function (node) {
+            _buildForeBind: function (item) {
                 var bind = new ForeBind();
-                bind.ref = node.getAttribute('name');
+                bind.ref = item.getAttribute('name');
                 bind.debug = false;
 
-                if(node.hasAttribute('type')) {
-                    if( node.getAttribute('type') === 'text') {
+                if(item.hasAttribute('type')) {
+                    if( item.getAttribute('type') === 'text') {
                         bind.datatype = 'string'; 
                     } else {
-                        bind.datatype = node.getAttribute('type'); 
+                        bind.datatype = item.getAttribute('type');
                     }
                 }        
-                if(node.hasAttribute('calculate')) {
-                   bind.calculate = node.getAttribute('calculate'); 
+                if(item.hasAttribute('calculate')) {
+                   bind.calculate = item.getAttribute('calculate');
                 }
-                if(node.hasAttribute('readonly')) {
-                    bind.readonly = node.getAttribute('readonly');
+                if(item.hasAttribute('readonly')) {
+                    bind.readonly = item.getAttribute('readonly');
                 }
-                if(node.hasAttribute('required')) {
-                    bind.required = node.getAttribute('required');
+                if(item.hasAttribute('required')) {
+                    bind.required = item.getAttribute('required');
                 }
-                if(node.hasAttribute('relevant')) {
-                   bind.relevant = node.getAttribute('relevant'); 
+                if(item.hasAttribute('relevant')) {
+                   bind.relevant = item.getAttribute('relevant');
                 }
                 return bind;
             },
