@@ -25,20 +25,7 @@
 
         Polymer('fore-instance', {
             id: '',
-
-            ready: function () {
-                this.data=null;
-                this.itemStates = [];
-            },
-            
-            enteredView: function () {
-                this.id = this.getAttribute('id');
-                console.log("#### FORE-INSTANCE :: enteredView() ID:" , this.id);
-            },
-
-            getInstanceId: function () {
-                return this.id;
-            },
+            states:[],
 
 
             /*
@@ -46,6 +33,31 @@
              * API API API API API API API
              * ###########################
              */
+            createInitialInstance:function(){
+                //todo: implement initial loading of instances (handling of 'src' versus inline instance
+            },
+
+            getInstanceId: function () {
+                return this.id;
+            },
+
+            delete:function(path){
+                //todo: implement deletion of an item
+            },
+
+            insert:function(path){
+                //todo: implement insertion of items
+            },
+
+            iterate:function(){
+                //todo: implement iteration over whole instance (will it be the 'State' objects or the items?
+            },
+
+            setInstance:function(data){
+
+            },
+
+            //todo: add also 'move' 'duplicate' .... (decomposing almighty xforms insert)
             setValue: function(path, value) {
             },
 
@@ -71,7 +83,23 @@
                 }
                 console.log("#### FORE-INSTANCE :: ItemStates:" , this.itemStates);
                 return this.itemStates[path];
+            },
+
+            /*
+             * ###########################
+             * COMPONENT LIFECYCLE
+             * ###########################
+             */
+            ready: function () {
+                this.data=null;
+                this.itemStates = [];
+            },
+            
+            enteredView: function () {
+                this.id = this.getAttribute('id');
+                console.log("#### FORE-INSTANCE :: enteredView() ID:" , this.id);
             }
+
 
         });
     </script>

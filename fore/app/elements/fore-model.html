@@ -125,7 +125,7 @@
             },
 
 
-
+            //todo: push down into fore-xml-instance
             buildXMLInstance: function (node, instance, model) {
                 //console.log("hazName: ", node.hasAttribute('name'));
                 if (node.hasAttribute('name')) {
@@ -184,6 +184,7 @@
 
             },
 
+            //todo:push down into fore-json-instance
             buildJSONInstance: function (node, model) {
                 //console.log("Name: ", node.getAttribute('name'));
                 //console.log("Name: ", node.tagName);
@@ -272,7 +273,17 @@
                    bind.relevant = node.getAttribute('relevant'); 
                 }
                 return bind;
+            },
+
+            recalculate:function(){
+                //todo: implement recalculation
+            },
+
+            revalidate:function(){
+                //todo: implement revalidation
             }
+
+
 
         });
     </script>
