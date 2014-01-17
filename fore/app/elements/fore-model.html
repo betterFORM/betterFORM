@@ -22,6 +22,12 @@
             ready: function () {
                 this.states = []
                 this.instances = [];
+                this.binds = [];
+                var that = this;
+                window.addEventListener("WebComponentsReady", function(e){
+                    that.recalculate();
+                });
+
             },
 
             getInstance: function (id) {
@@ -120,7 +126,6 @@
                 }
 
                 this.ownerForm.xfmodel=this;
-                //todo: detach model-construct listener
                 this.fire('model-construct-done',{model: this});
             },
             
@@ -129,116 +134,9 @@
             },
 
 
-            //todo: push down into fore-xml-instance
-            buildXMLInstance: function (node, instance, model) {
-                //console.log("hazName: ", node.hasAttribute('name'));
-                if (node.hasAttribute('name')) {
-                    var name = node.getAttribute('name');
-                    var value = node.getAttribute('value');
-                    var instanceElement = document.createElement(name);
-
-                    var bind = this._buildForeBind(node);
-                    //console.log("Name: ", node.getAttribute('name'));
-                    //console.log("Value: ", node.getAttribute('value'));
-
-                    var childNodes = node.children;
-                    //console.log("L: ", childNodes.length);
-
-                    if(node.hasAttribute('type')) {
-                        if( node.getAttribute('type') === 'text') {
-                            instanceElement.setAttribute('type', 'string');
-                        } else {
-                            instanceElement.setAttribute('type', node.getAttribute('type'));
-                        }
-                    }
-                    if(node.hasAttribute('calculate')) {
-                        instanceElement.setAttribute('calculate', node.getAttribute('calculate'));
-                    }
-                    if(node.hasAttribute('readonly')) {
-                        instanceElement.setAttribute('readonly', node.getAttribute('readonly'));
-                    }
-                    if(node.hasAttribute('required')) {
-                        instanceElement.setAttribute('required', node.getAttribute('required'));
-                    }
-                    if(node.hasAttribute('relevant')) {
-                        instanceElement.setAttribute('relevant', node.getAttribute('relevant'));
-                    }
-
-                    if (childNodes.length === 0) {
-                        if (value === null) {
-                            value = '';
-                        }
-                        instanceElement.appendChild(document.createTextNode(value));
-                    } else {
-                        //console.log("loop");
-                        for (var n = 0; n < childNodes.length; n++) {
-                            this.buildXMLInstance(childNodes[n], instanceElement, bind);
-                        }
-
-                    }
-                    instance.appendChild(instanceElement);
-                    model.shadowRoot.appendChild(bind);
-                } else {
-                    var childNodes = node.children;
-
-                    for (var n = 0; n < childNodes.length; n++) {
-                        this.buildXMLInstance(childNodes[n], instance, model);
-                    }
-                }
-
-            },
-
-            //todo:push down into fore-json-instance
-            buildJSONInstance: function (node, model) {
-                //console.log("Name: ", node.getAttribute('name'));
-                //console.log("Name: ", node.tagName);
-                if (node.hasAttribute('name')) {
-                    var nameName = node.getAttribute('name');
-                    var value = node.getAttribute('value');
-
-                    //console.log("Name: ", node.getAttribute('name'));
-                    //console.log("Value: ", node.getAttribute('value'));
-
-                    var childNodes = node.children;
-                    //console.log("L: ", childNodes.length);
-
-                    var bind = this.buildForeBind(node);
-                    if (childNodes.length === 0) {
-                        if (value === null) {
-                            value = '';
-                        }
-                        
-                        model.shadowRoot.appendChild(bind);
-                        return '"' + nameName + '":"' + value + '"';
-                    } else {
-//                        console.log("loop");
-                        var result = '"' + nameName+ '":{';
-                        for (var n = 0; n < childNodes.length; n++) {
-                            if(childNodes[n].hasAttribute('name')) {
-                                result += this.buildJSONInstance(childNodes[n], bind);
-                                if (n < childNodes.length -1) {
-                                    result += ',';
-                                }
-                            }
-                        }
-                        
-                        model.shadowRoot.appendChild(bind);                        
-                        return result += '}';
-                    }
-                } else {
-                    var childNodes = node.children;          F
-                    var result = '';
-                    for (var n = 0; n < childNodes.length; n++) {
-                         result += this.buildJSONInstance(childNodes[n], model);
-                    }
-                    return result;
-                }
-
-            },
-            
             _buildForeBinds: function (item, parent) {
                 if (item.hasAttribute('name')) {
-                    var bind = this._buildForeBind(item);
+                    var bind = this._buildForeBind(item, parent);
                     var childNodes = item.children;
                     for (var n = 0; n < childNodes.length; n++) {
                         this._buildForeBinds(childNodes[n], bind);
@@ -252,9 +150,10 @@
                 }
             },
 
-            _buildForeBind: function (item) {
+            _buildForeBind: function (item, parent) {
                 var bind = new ForeBind();
                 bind.ref = item.getAttribute('name');
+                bind.path = (parent.path)?(parent.path + '.' + item.getAttribute('name')):item.getAttribute('name');
                 bind.debug = false;
 
                 if(item.hasAttribute('type')) {
@@ -276,6 +175,8 @@
                 if(item.hasAttribute('relevant')) {
                    bind.relevant = item.getAttribute('relevant');
                 }
+
+                this.binds[bind.path] = bind;
                 return bind;
             },
 

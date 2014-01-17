@@ -6,6 +6,7 @@
         Polymer('fore-bind', {
 
             // static expressions
+            path:'',
             ref: '',
             calculate: '',
             readonly: '',
@@ -15,44 +16,19 @@
             datatype: 'string',
 
 
-
-            /**
-             * this object holds the current, evaluated state
-             */
-            state:{
-                readonly:false,
-                required:false,
-                relevant:true,
-                valid:true,
-                dataType:'string'
-            },
-
-
-
             created: function () {
-                console.log("fore-bind created ...");
-//                this.debug='false';
+
             },
 
             ready: function () {
-                 //this.bind('calculate', this, 'calculateExpr');
-//                console.log('XXX: ', Object.keys(this));
-
+                console.log("### FORE-BIND :: ready : path : ", this.path);
             },
 
             enteredView: function () {
-//                console.log("AbsoluteRef: ", this.getRef());
-            },
-
-            getRef: function () {
-//                var absoluteRef = this.ref;
-//                var node = this;
-//                while (node.parentNode.host !== undefined && node.parentNode.host.tagName === 'FORE-BIND') {
-//                    absoluteRef = node.parentNode.host.ref + '.' + absoluteRef;
-//                    node = node.parentNode.host;
-//                }
-//                return absoluteRef;
             }
+
+
+
         });
     </script>
 </polymer-element>
