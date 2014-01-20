@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <title>fore form</title>
+  <script src="../../../app/bower_components/platform/platform.js"></script>
+  <script src="../tools/htmltest.js"></script>
+  <script src="../../../node_modules/chai/chai.js"></script>
+  <link rel="import" href="../../../app/elements/fore-form.html">
+  <style>
+  </style>
+</head>
+<body>  
+  <script>
+    var assert = chai.assert;
+    var async = requestAnimationFrame;
+    
+    document.addEventListener('WebComponentsReady', function() {
+      console.log('fore-form');
+      var form = document.querySelector('#first');
+      assert.notEqual(form, undefined);
+    });
+  </script>
+  
+        <form dataformat="xml" id="first" is="fore-form" name="contact" onsubmit="return false;">
+            <label for="firstname">Firstname</label>
+            <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"> </input>
+
+            <label for="lastname">Lastname</label>
+            <input id="lastname" name="lastname" type="number" value="Pitt" required="true"> </input>
+
+            <button id="myButton" value="Click">Click</button>
+        </form>
+    </body>
+</html>
