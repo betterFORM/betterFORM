@@ -25,7 +25,6 @@
 
         Polymer('fore-instance', {
             id: '',
-            states:[],
             model:null,
 
 
@@ -64,6 +63,7 @@
 
             //todo: add also 'move' 'duplicate' .... (decomposing almighty xforms insert)
             setValue: function(path, value) {
+                console.log("called setvalue");
             },
 
             getValue: function(path) {
@@ -83,6 +83,13 @@
                 if(this.itemStates[path] === undefined) {
                     state = new State();
                     state.value = this.getValue(path);
+
+                    //initialize from bind
+                    //todo: handle all state properties
+                    if(this.model.binds[path] !== undefined) {
+
+                    }
+
                     this.itemStates[path] = state;
                     console.log("#### FORE-INSTANCE :: created State for :", path , state);
                 }

@@ -4,7 +4,7 @@
         <!--<content></content>-->
         <form dataformat="xml" id="first2" is="fore-form" name="contact" onsubmit="return false;">
             <label for="firstname">Firstname</label>
-            <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"> </input>
+            <input id="firstname" name="firstname" type="text" value="Brat" readonly="{this}.length < 3" calculate="{this} + ' ' + {lastname}"> </input>
 
             <label for="lastname">Lastname</label>
             <input id="lastname" name="lastname" type="number" value="Pitt" required="true"> </input>
@@ -51,7 +51,9 @@
                    //console.log(self.$.first2.xfmodel.getInstance().setValue('contact.lastname', 'fuzzy'));
                    console.log(self.$.first2.xfmodel.getInstance());
 
-                   //self.$.first2.setItemValue('contact.lastname', 'fuzzier');
+                   var myInst = self.$.first2.xfmodel.getInstance()
+                   myInst.setValue('contact.lastname', 'fuzzier');
+                    console.log("state: ", myInst.getItem('contact.lastname'));
                 });
             }
 
