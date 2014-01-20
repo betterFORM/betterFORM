@@ -9,26 +9,34 @@
   <style>
   </style>
 </head>
-<body>  
+<body>
+  <form dataformat="xml" id="first" is="fore-form" name="contact" onsubmit="return false;">
+      <input id="firstname" name="firstname" type="text" value="Brat"> </input>
+  </form>
+        
   <script>
     var assert = chai.assert;
     var async = requestAnimationFrame;
     
-    document.addEventListener('WebComponentsReady', function() {
-      console.log('fore-form');
+    window.addEventListener('fore-ready', function() {
+      console.log('fore-form: fore-ready');
       var form = document.querySelector('#first');
-      assert.notEqual(form, undefined);
+      console.log('first ' ,form);
+      assert.isDefined(form, 'form is defined');
+      assert.equal(form.id, 'first');
+      assert.isDefined(form.xfmodel, 'xfmodel is defined');
+      assert.equal(form.xfmodel.id, 'defaultModel');
+      assert.isDefined(form.xfmodel.instances, 'instances is defined');
+      assert.isDefined(form.xfmodel.getDefaultInstance(), 'defaultInstance is defined');
+      var defInstID = form.xfmodel.getDefaultInstance();
+      assert.equal(defInstID, 'defaultInstance')
+      assert.isDefined(form.xfmodel.getInstance(defInstID), 'defaultInstance is present');
+      //assert.equal(form.xfmodel.getInstance(defInstID).getValue('contact.firstname', 'Brat'))
+      
+      console.log("All done ... fore-form");
     });
   </script>
   
-        <form dataformat="xml" id="first" is="fore-form" name="contact" onsubmit="return false;">
-            <label for="firstname">Firstname</label>
-            <input id="firstname" name="firstname" type="text" value="Brat" readonly="true"> </input>
-
-            <label for="lastname">Lastname</label>
-            <input id="lastname" name="lastname" type="number" value="Pitt" required="true"> </input>
-
-            <button id="myButton" value="Click">Click</button>
-        </form>
+       
     </body>
 </html>
