@@ -42,7 +42,10 @@
                             if(childNodes[n].hasAttribute('name')) {
                                 result += this._buildJSONInstance(childNodes[n]);
                                 if (n < childNodes.length -1) {
-                                    result += ',';
+				  //This is a little hacky -> need to control polymer-element-initalization in a better way
+				  if(childNodes[n+1].localName !== 'fore-model') {
+                                        result += ',';
+				  }
                                 }
                             }
                         }
