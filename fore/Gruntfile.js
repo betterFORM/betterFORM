@@ -285,19 +285,22 @@ module.exports = function(grunt) {
             pivotal: {
                 src: 'app/scripts/*.js',
                 options: {
-                    specs: 'test/jasmine/spec/*Spec.js'
+                    specs: 'test/jasmine/*Spec.js'
                 }
             }
         },
-        mochaTest: {
-            test: {
-                options: {
-                    reporter: 'spec',
-                    require: ['app/scripts/Betterform.js']
-                },
-                src: ['test/mocha/SimpleTest.js']
+
+        karma: {
+            options: {
+                configFile: 'karma.conf.js',
+                keepalive: true
+            },
+            buildbot: {
+                reporters: ['crbot'],
+                logLevel: 'OFF'
             }
         }
+
     });
 
 
@@ -349,6 +352,24 @@ module.exports = function(grunt) {
     grunt.registerTask('server',  [
         'connect:livereload',
         'watch'
+    ]);
+    grunt.registerTask('override-chrome-launcher', 'Enable Harmony for Chrome Canary', function() {
+        var os = require('os').type();
+        if (os === 'Darwin') {
+            var exec = require('child_process').exec;
+            var cb = this.async();
+            exec('npm install --tmp ../.tmp git://github.com/morethanreal/karma-chrome-launcher',
+                null, function(err, stdout, stderr) {
+                    console.log(stdout);
+                    console.log(stderr);
+                    cb();
+                });
+        }
+    });
+
+    grunt.registerTask('test-karma', [
+        'override-chrome-launcher',
+        'karma'
     ]);
 };
 

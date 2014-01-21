@@ -17,7 +17,7 @@
   <script>
     var assert = chai.assert;
     var async = requestAnimationFrame;
-    
+
     window.addEventListener('fore-ready', function() {
       console.log('fore-form: fore-ready');
       var form = document.querySelector('#first');
@@ -29,10 +29,10 @@
       assert.isDefined(form.xfmodel.instances, 'instances is defined');
       assert.isDefined(form.xfmodel.getDefaultInstance(), 'defaultInstance is defined');
       var defInstID = form.xfmodel.getDefaultInstance();
-      assert.equal(defInstID, 'defaultInstance')
+      assert.equal(defInstID, 'defaultInstance');
       assert.isDefined(form.xfmodel.getInstance(defInstID), 'defaultInstance is present');
       //assert.equal(form.xfmodel.getInstance(defInstID).getValue('contact.firstname', 'Brat'))
-      
+      done();
       console.log("All done ... fore-form");
     });
   </script>

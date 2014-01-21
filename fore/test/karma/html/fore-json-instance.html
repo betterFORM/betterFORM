@@ -31,7 +31,7 @@
 	assert.equal(defInstID, 'defaultInstance')
 	assert.isDefined(form.xfmodel.getInstance(defInstID), 'defaultInstance is present');
 	assert.equal(form.xfmodel.getInstance(defInstID).data.second.contact.contacttype, 'Phone');
-	
+    done();
 	console.log("All done ... fore-json-instance");
       });
     </script>
