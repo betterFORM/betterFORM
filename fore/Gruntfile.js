@@ -298,11 +298,16 @@ module.exports = function(grunt) {
             buildbot: {
                 reporters: ['crbot'],
                 logLevel: 'OFF'
+            },
+            polymer: {
             }
+
         }
 
     });
 
+
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('createDevTarget', function( ) {
         if (!grunt.file.exists(foreConfig.webModule + foreConfig.devTarget)) {
@@ -335,6 +340,8 @@ module.exports = function(grunt) {
         // ,'rsync:dist'
 
     ]);
+
+
 
     grunt.registerTask('test-dev', [
         'connect:dev',
@@ -369,7 +376,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test-karma', [
         'override-chrome-launcher',
-        'karma'
+        'karma:polymer'
     ]);
 };
 
