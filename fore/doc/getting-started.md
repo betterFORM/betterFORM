@@ -16,7 +16,6 @@ your project.
 
 ## Update build infrastructure
 
-
 ### Add node dependencies to project
  to update package.js run `npm install --save-dev [grunt-task-name]`
 
@@ -38,31 +37,41 @@ This will optimize all JavaScript, CSS and Image files and create an optimized a
 
 ## Testing
 
-## Execute Test Suite
+Fore curently provides two different test setups. 'Polymer' Tests utilizing Karma and Chai and Webtests via DalekJS.
 
-All Fore tests are written as Webdriver tests and executed by DalekJS (http://dalekjs.com/) via Grunt.
-The Fore Tests are placed at $FORE/test/dalekjs
+### HTML Tests
+The Polymer Webcomponents are tested with Chai and Karma. All tests are placed beneath the folder fore/test/karma.
+All test html forms are placed in $KARMA/html. Be aware that the execution of the html test is triggered via the
+JavaScript function htmlTest in $KARMA/fore-test.js (e.q. htmlTest('html/fore-form.html');
 
-To execute all tests on the app directory (exploded resources, development) execute
-1. `grunt test-dev`
+The Karma config file can be found at fore/test/karma/conf/karma.conf.js
 
-analogue all test on the dist directory (optimized resources, deployment) can be run by calling
-1. `grunt test-dist`
+#### Execute HTML tests
+
+* `grunt test-karma`
 
 
-##  Karma and Polymer
-The Karma Config file is place at fore/karma.conf.js
+#### Web Resources:
 
-### Web Resources:
 * http://japhr.blogspot.de/2013/11/getting-started-with-karma-for-polymer.html
 
 
-### Install
-1. npm install -g karma
+### Webtests
+All Webtests are written in and executed by the DalekJS Framework The Fore DalekJS Tests are placed at $FORE/test/dalekjs
 
-### Run Karma
-1. karma start
+To execute all tests on the app directory (exploded resources, development) execute
+
+* `grunt test-dev`
+
+analogue all test on the dist directory (optimized resources, deployment) can be run by calling
+
+* `grunt test-dist`
 
 
+## Trouble Shooting
+If you experience any trouble with node (npm) or bower try the following command to clean up your caches:
+
+* `npm cache clean` and
+* `bower cache clean`
 
 
