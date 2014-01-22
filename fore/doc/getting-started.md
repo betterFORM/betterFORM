@@ -6,6 +6,7 @@ Fore is a front-end toolkit based upon Polymer (Web Components) and uses Nodejs,
 This document describes the basics of setting up a development environment and the procedures to run, test and deploy
 your project.
 
+
 ## Requirements + Preparations
 
 1. nodejs must be installed. Please refer to their homepage for a native installer for your platform and follow the instructions.
@@ -74,4 +75,56 @@ If you experience any trouble with node (npm) or bower try the following command
 * `npm cache clean` and
 * `bower cache clean`
 
+
+## Utilized Build Tools
+Tools to build and run 'fore'
+
+### Node.js
+Platform for building fast, scalable network applications
+
+* Website: http://nodejs.org/
+
+### Bower
+Package Manager for the Web (like Maven for Java and EXPath for XQuery)
+
+* Website: http://bower.io/
+
+
+## Utilized JS Frameworks
+JavaScript Frameworks used to implement 'fore' and which are available to form authors
+
+### Polymer
+WebComponents for any browser
+
+* Website: http://www.polymer-project.org/
+
+### JQuery
+JavaScript library to make developers life easier
+
+* Website: http://jquery.com/
+
+
+## Utilized Test Tools
+
+### Karma
+Karma is a testing environment (which is testing testing framework agnostic). It can execute test written in [Jasmine](http://pivotal.github.io/jasmine/), [Mocha](http://visionmedia.github.io/mocha/), [QUnit](http://qunitjs.com/) or use your own framework (via a simple adapter).
+
+* Website: http://karma-runner.github.io/
+
+
+### Mocha
+JavaScript Test Framework
+
+* Website: http://visionmedia.github.io/mocha/
+
+### Chai
+Chai is a BDD ((Behaviour Driven Design) / TDD (Test Driven Developtment) assertion library for node and the browser
+
+* Website: http://chaijs.com/
+
+### DalekJs
+UI Testing Tool / Automated Cross Browser Testing
+
+* Website: http://dalekjs.com/
+* Sample project including automated screenshots of every test: https://github.com/kmturley/dalekjs-crossbrowser
 
