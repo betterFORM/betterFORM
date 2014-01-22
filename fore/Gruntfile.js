@@ -299,6 +299,14 @@ module.exports = function(grunt) {
                 reporters: ['crbot'],
                 logLevel: 'OFF'
             },
+            jenkins: {
+                singleRun: true,
+                reporters: ['dots', 'junit'],
+      
+                junitReporter: {
+                    outputFile: 'test-results.xml'
+                }
+            },
             polymer: {
             }
 
@@ -377,6 +385,11 @@ module.exports = function(grunt) {
     grunt.registerTask('test-karma', [
         'override-chrome-launcher',
         'karma:polymer'
+    ]);
+    
+    grunt.registerTask('test-jenkins', [
+        'override-chrome-launcher',
+        'karma:jenkins'
     ]);
 };
 

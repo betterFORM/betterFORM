@@ -38,7 +38,14 @@
     "dalek-driver-sauce": "0.0.1",
     "grunt-contrib-jasmine": "~0.5.2",
     "grunt-mocha-test": "~0.8.1",
-    "chai": "~1.8.1"
+    "chai": "~1.8.1",
+    "karma-mocha": "~0.1.1",
+    "karma-ie-launcher": "~0.1.1",
+    "karma-crbot-reporter": "0.0.4",
+    "karma-safari-launcher": "~0.1.1",
+    "karma-junit-reporter": "~0.2.1",
+    "karma-browserstack-launcher": "0.0.8",
+    "karma-ios-launcher": "0.0.3"
   },
   "engines": {
     "node": ">=0.8.0"

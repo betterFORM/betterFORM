@@ -110,7 +110,8 @@ module.exports = function(config) {
         'karma-ios-launcher',
         'karma-safari-launcher',
         'karma-script-launcher',
-        'karma-crbot-reporter'
+        'karma-crbot-reporter',
+        'karma-junit-reporter'
     ]
   });
 };
