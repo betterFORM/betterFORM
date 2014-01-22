@@ -45,7 +45,8 @@
     "karma-safari-launcher": "~0.1.1",
     "karma-junit-reporter": "~0.2.1",
     "karma-browserstack-launcher": "0.0.8",
-    "karma-ios-launcher": "0.0.3"
+    "karma-ios-launcher": "0.0.3",
+    "grunt-karma": "~0.6.2"
   },
   "engines": {
     "node": ">=0.8.0"
