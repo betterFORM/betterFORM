@@ -1,3 +1,13 @@
+<!--
+Copyright (c) 2012. betterFORM Project
+http://www.betterform.de
+Licensed under the terms of BSD License
+
+@version: 0.1
+@date: 2014-01-23
+
+-->
+
 # Getting started developing Fore
 
 ## Introduction
@@ -6,31 +16,20 @@ Fore is a front-end toolkit based upon Polymer (Web Components) and uses Nodejs,
 This document describes the basics of setting up a development environment and the procedures to run, test and deploy
 your project.
 
-
 ## Requirements
-The betterFORM fore module depends on NodeJS, the Bower package manager and Grunt
+The betterFORM fore module depends on NodeJS
 
-1. install NodeJS
- * Please refer to their [homepage](http://nodejs.org/) for a native installer for your platform and follow the instructions.
-  * Mac OS X + Homebrew: `brew install node`
-1. install dependency manager Bower
-  * `npm install bower -g`.
-1. install Grunt
-  * `npm install grunt-cli -g`.
-
+1. NodeJS (Server Side JS Platform)
+    * Please refer to their [homepage](http://nodejs.org/) for a native installer for your platform and follow the instructions.
+    * Mac OS X + Homebrew: `brew install node`
 
 ## Installation
-1. To install the Fore dependencies call `npm install`. This will download the dependent libs into a **local** node_modules directory.
-1. Execute 'bower install' to setup all JS libraries utilized by the fore module
 
+All fore dependencies are installed via npm and bower. NodeJS downloads the dependent frameworks into a **local** node_modules directory while bower setups all JS libraries utilized by the fore module
 
-## Update build infrastructure
-
-### Add node dependencies to project
- to update package.js run `npm install --save-dev [grunt-task-name]`
-
-### Update bower controller js components
-1. to update bower run `bower update`
+1. `npm install bower grunt -g` // install bower and grunt in a global context
+1. `npm install` // install all node modules utilized to build fore in a local context (will be placed in fore/node_modules)
+1. `bower install` // install all fore js dependencies (will be placed in fore/app/bower_components)
 
 ## Running Fore
 
@@ -38,12 +37,10 @@ The betterFORM fore module depends on NodeJS, the Bower package manager and Grun
 
 This target will support live reloading meaning that changes will become visible in your browser right after you hit 'save' in your editor without the need to explicitly reload the page.
 
-
 ## Deployment
 To create an optimized version of the App run
 1. grunt dist
 This will optimize all JavaScript, CSS and Image files and create an optimized app in the created dist directory
-
 
 ## Testing
 
@@ -60,11 +57,9 @@ The Karma config file can be found at fore/test/karma/conf/karma.conf.js
 
 * `grunt test-karma`
 
-
 #### Web Resources:
 
 * http://japhr.blogspot.de/2013/11/getting-started-with-karma-for-polymer.html
-
 
 ### Webtests
 All Webtests are written in and executed by the DalekJS Framework The Fore DalekJS Tests are placed at $FORE/test/dalekjs
@@ -83,6 +78,14 @@ If you experience any trouble with node (npm) or bower try the following command
 
 * `npm cache clean` and
 * `bower cache clean`
+
+## Update build infrastructure
+
+### Add node dependencies to project
+ to update package.js run `npm install --save-dev [grunt-task-name]`
+
+### Update bower controller js components
+1. to update bower run `bower update`
 
 
 ## Utilized Build Tools
