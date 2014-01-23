@@ -7,12 +7,21 @@ This document describes the basics of setting up a development environment and t
 your project.
 
 
-## Requirements + Preparations
+## Requirements
+The betterFORM fore module depends on NodeJS, the Bower package manager and Grunt
 
-1. nodejs must be installed. Please refer to their homepage for a native installer for your platform and follow the instructions.
-2. To install the Fore dependencies call `npm install`. This will download the dependent libs into a **local** node_modules directory.
-3. Install Bower dependency manager with `bower install`. 
-4. Install Polymer - please refer to their homepage for latest installation instructions at http://www.polymer-project.org/getting-the-code.html
+1. install NodeJS
+ * Please refer to their [homepage](http://nodejs.org/) for a native installer for your platform and follow the instructions.
+  * Mac OS X + Homebrew: `brew install node`
+1. install dependency manager Bower
+  * `npm install bower -g`.
+1. install Grunt
+  * `npm install grunt-cli -g`.
+
+
+## Installation
+1. To install the Fore dependencies call `npm install`. This will download the dependent libs into a **local** node_modules directory.
+1. Execute 'bower install' to setup all JS libraries utilized by the fore module
 
 
 ## Update build infrastructure

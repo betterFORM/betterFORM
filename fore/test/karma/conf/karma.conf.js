@@ -1,6 +1,6 @@
+'use strict';
 // Karma configuration
 // Generated on Fri Jan 17 2014 10:52:25 GMT+0100 (CET)
-'use strict';
 
 module.exports = function(config) {
     var selectedBrowsers;
@@ -70,12 +70,6 @@ module.exports = function(config) {
               base: 'ChromeCanary',
               name: 'ChromeCanaryExperimental',
               flags: ['--enable-experimental-web-platform-features']
-          },
-          bs_iphone5: {
-              base: 'BrowserStack',
-              device: 'iPhone 5',
-              os: 'ios',
-              os_version: '6.0'
           }
       },
     // Start these browsers, currently available:
@@ -107,7 +101,6 @@ module.exports = function(config) {
         'karma-chrome-launcher',
         'karma-firefox-launcher',
         'karma-ie-launcher',
-        'karma-ios-launcher',
         'karma-safari-launcher',
         'karma-script-launcher',
         'karma-crbot-reporter',
