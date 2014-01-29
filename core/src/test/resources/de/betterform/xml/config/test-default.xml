@@ -20,6 +20,8 @@
         <!-- WARNING: not ready for production use -->
         <property name="betterform.event-optimization-enabled" value="false" description="TBD: if event optimization is enabled, only events present within the current form will be processed"/>
 
+		<!-- We only care that the substition of ${java.home} works in this case -->
+		<property name="test.substitution.property" value="${java.home}/nonexistingfile.txt"/>
     </properties>
 
     <useragents>
