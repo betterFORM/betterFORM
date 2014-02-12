@@ -21,23 +21,23 @@ public class RepeatIndexTest extends TestCase {
 //        org.apache.log4j.BasicConfigurator.configure();
 //    }
 
-    private XFormsProcessorImpl xformsProcesssorImpl;
-    private Repeat enclosingRepeat;
-    private Repeat nestedRepeat1;
-    private Repeat nestedRepeat2;
-    private Repeat nestedRepeat3;
-    private Text input11;
-    private Text input12;
-    private Text input21;
-    private Text input22;
-    private Text input31;
-    private Text input32;
-    private XFormsAction action11;
-    private XFormsAction action12;
-    private XFormsAction action21;
-    private XFormsAction action22;
-    private XFormsAction action31;
-    private XFormsAction action32;
+    protected XFormsProcessorImpl xformsProcesssorImpl;
+    protected Repeat enclosingRepeat;
+    protected Repeat nestedRepeat1;
+    protected Repeat nestedRepeat2;
+    protected Repeat nestedRepeat3;
+    protected Text input11;
+    protected Text input12;
+    protected Text input21;
+    protected Text input22;
+    protected Text input31;
+    protected Text input32;
+    protected XFormsAction action11;
+    protected XFormsAction action12;
+    protected XFormsAction action21;
+    protected XFormsAction action22;
+    protected XFormsAction action31;
+    protected XFormsAction action32;
 
     /**
      * Tests setting the enclosing repeat index.

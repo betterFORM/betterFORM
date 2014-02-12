@@ -1,9 +1,25 @@
 # betterForm springBud Quickstart Guide
 
+
 ## Minimal Requirements to run betterFORM  
 
    * [Java JDK 1.6 or newer](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
+
+## betterFORM Modules
+
+### Core
+TBD
+### Web
+TBD
+### Fore
+TBD
+### Tools
+TBD
+### XRX
+TBD
+### Zaphod
+TBD
 
 ## Build from the Source  
 
