@@ -64,8 +64,21 @@ public class XPathReferenceFinderTest extends TestCase {
                 this.referenceFinder.getReferences("a * b", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{"../child::item", ".."},
                 this.referenceFinder.getReferences("IF(index('repeat') > 0, ../item[index('repeat')], '')", Collections.EMPTY_MAP, fDummyContainer));
-
+        
     }
+    
+    // Saxon returns an 'internal' saxon:item-at($seq, $index) for the $seq[$index].
+    // We rewrite this to subsequence($seq, $index, 1) as suggested
+    public void testGetReferencesItemAt() throws Exception {
+        assertReferences(new String[]{"/child::item",
+        		"/subsequence(child::item, number(count(current()/parent::element()/reverse(preceding-sibling::element())) + 1),1)/child::amount",
+        		"current()/parent::element()",
+        		"current()/parent::element()/preceding-sibling::element()"},
+                this.referenceFinder.getReferences("/item[count(current()/parent::*/preceding-sibling::*) + 1]/amount", Collections.EMPTY_MAP, fDummyContainer));
+        
+    }
+    
+    
 
     public void testGetReferencesWithNamespaces() throws Exception {
     	Map prefixes = new HashMap();
