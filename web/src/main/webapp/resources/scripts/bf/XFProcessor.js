@@ -528,7 +528,8 @@ define(["dojo/_base/declare",
                                 case "betterform-item-deleted"       : fluxProcessor._handleBetterFormItemDeleted(xmlEvent); break;
                                 case "betterform-load-uri"           : fluxProcessor._handleBetterFormLoadURI(xmlEvent); break;
                                 case "betterform-render-message"     : fluxProcessor._handleBetterFormRenderMessage(xmlEvent); break;
-                                case "betterform-replace-all"        : fluxProcessor._handleBetterFormReplaceAll(); break;
+                                case "betterform-replace-all"        :
+                                case "betterform-replace-all-xforms"        : fluxProcessor._handleBetterFormReplaceAll(xmlEvent); break;
                                 case "betterform-state-changed"      : fluxProcessor._handleBetterFormStateChanged(xmlEvent); break;
                                 case "betterform-item-changed"      : fluxProcessor._handleBetterFormItemChanged(xmlEvent); break;
                                 case "betterform-dialog-open"        : fluxProcessor._handleBetterFormDialogOpen(xmlEvent); break;
@@ -611,7 +612,9 @@ define(["dojo/_base/declare",
                     var formWrapper = dom.byId("formWrapper");
                     if(formWrapper){
                         // console.debug("formWrapper:",formWrapper);
-                        domStyle.set(formWrapper,"display","block");
+                        domStyle.set(formWrapper,"visibility","visible");
+                        // betterform-styles.less sets this to hidden initially
+                        domStyle.set(document.body,"overflow","auto");
                     }else {
                         console.debug("form wrapper not present. continue processing");
                     }
@@ -1066,13 +1069,15 @@ define(["dojo/_base/declare",
                 this.removeSubscribers(itemId);
                 childDijit.destroy();
             } else {
-                var dijitId = domAttr.get(item, widgetID);
+                var dijitId = domAttr.get(dom.byId(itemId), widgetID);
+                if (dijitId != undefined) {
                 // console.debug("XFProcessor._unloadDOM: ChildDijit is null; dijitId:",dijitId);
                 self.removeSubscribers(dijitId);
                 childDijit = registry.byId(dijitId);
                 if (childDijit != undefined) {
                     childDijit.destroy();
                 }
+            }
             }
         },
 
@@ -1235,7 +1240,7 @@ define(["dojo/_base/declare",
         },
 
         //todo: probably to be merged with '_handleSubmitDone'?
-        _handleBetterFormReplaceAll:function() {
+        _handleBetterFormReplaceAll:function( xmlEvent) {
             console.debug("XFProcessor._handleBetterFormReplaceAll");
             fluxProcessor.skipshutdown = true;
 
@@ -1249,11 +1254,17 @@ define(["dojo/_base/declare",
             if (queryIndex == -1) {
                 path += "?";
             }
-            path += "&submissionResponse=true&sessionKey=" + fluxProcessor.sessionKey;
+
+
+            if (xmlEvent.type  === "betterform-replace-all-xforms" ) {
+                path =  xmlEvent.contextInfo.redirectXForms;
+                fluxProcessor.closeSession();
+            }  else {
+                path += "&submissionResponse=true&sessionKey=" + fluxProcessor.sessionKey;
+            }
             if (anchorIndex != -1) {
                 path += window.location.href.substring(anchorIndex);
             }
-
             window.open(path, "_self");
         },
 

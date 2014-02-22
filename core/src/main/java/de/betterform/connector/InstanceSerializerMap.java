@@ -42,14 +42,17 @@ public class InstanceSerializerMap {
         registerSerializer("http", "post", "*", new XMLSerializer());
         registerSerializer("https", "post", "*", new XMLSerializer());
         registerSerializer("mailto", "post", "*", new XMLSerializer());
+        registerSerializer("exist", "post", "*", new XMLSerializer());
 
         registerSerializer("file", "get", "*", new UrlEncodedSerializer());
         registerSerializer("http", "get", "*", new UrlEncodedSerializer());
         registerSerializer("https", "get", "*", new UrlEncodedSerializer());
+        registerSerializer("exist", "get", "*", new UrlEncodedSerializer());
 
         registerSerializer("file", "put", "*", new XMLSerializer());
         registerSerializer("http", "put", "*", new XMLSerializer());
         registerSerializer("https", "put", "*", new XMLSerializer());
+        registerSerializer("exist", "put", "*", new XMLSerializer());
 
         registerSerializer("http", "multipart-post", "*", new MultipartRelatedSerializer());
         registerSerializer("https", "multipart-post", "*", new MultipartRelatedSerializer());
@@ -62,10 +65,13 @@ public class InstanceSerializerMap {
         registerSerializer("http", "urlencoded-post", "*", new UrlEncodedSerializer());
         registerSerializer("https", "urlencoded-post", "*", new UrlEncodedSerializer());
         registerSerializer("mailto", "urlencoded-post", "*", new UrlEncodedSerializer());
-        
+
         registerSerializer("file", "delete", "*", new UrlEncodedSerializer());
         registerSerializer("http", "delete", "*", new UrlEncodedSerializer());
         registerSerializer("https", "delete", "*", new UrlEncodedSerializer());
+        registerSerializer("exist", "delete", "*", new UrlEncodedSerializer());
+
+        registerSerializer("exist", "execute", "*", new XMLSerializer());
 
         registerSerializer("echo", "*", "*", new XMLSerializer());
     }

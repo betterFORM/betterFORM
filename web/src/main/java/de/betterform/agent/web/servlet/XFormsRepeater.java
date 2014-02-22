@@ -6,6 +6,7 @@
 /* Licensed under the terms of BSD and Apache 2 Licenses */
 package de.betterform.agent.web.servlet;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
@@ -133,7 +134,7 @@ public class XFormsRepeater extends HttpServlet {
         request.setAttribute(WebFactory.USER_AGENT, useragent);
         System.out.println("request: " + request.getRequestURL().toString());
 
-        if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter("submissionResponse") != null) {
+        if ("GET".equalsIgnoreCase(request.getMethod()) && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE) != null) {
             doSubmissionReplaceAll(request, response);
         } else {
             processForm(request, response, session);

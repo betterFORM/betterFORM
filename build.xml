@@ -65,7 +65,7 @@
             __== create optimized betterform.war file in ${target.dir}==__
         </echo>
         <!-- Create optimized JavaScript package-->
-        <ant antfile="${basedir}/resource/build-dojo.xml" inheritall="false" target="build-dojo"/>
+        <ant antfile="${basedir}/web/build-dojo.xml" inheritall="false" target="build-dojo"/>
         <!-- Create WAR for Installer -->
         <ant antfile="${basedir}/tools/installer/build-files/build-WAR.xml" target="create-war" usenativebasedir="true" inheritall="true">
             <property name="installer.target" value="${target.dir}"/>
@@ -147,6 +147,16 @@
     </target>
 
 -->
+    <target name="install-bf-into-eXist-db" description="installs current betterFORM version in eXist" depends="check-ant-version, clean-all" if="antversion">
+        <ant antfile="${basedir}/XRX/build-XRX.xml"  target="update-betterFORM" dir="${basedir}/XRX"  inheritall="false"/>
+    </target>
+
+    <target name="install-bf-exploded-into-eXist-db" description="installs current betterFORM exploded version in eXist" depends="check-ant-version, clean-all" if="antversion">
+        <ant antfile="${basedir}/XRX/build-XRX.xml"  target="update-betterFORM-exploded" dir="${basedir}/XRX"  inheritall="false"/>
+    </target>
+    <target name="build-bf-dojo-release" description="create betterFORM / dojo release (needed if changes in js were made)" depends="check-ant-version, clean-all" if="antversion">
+        <ant antfile="${basedir}/web/build-dojo.xml"  target="build-dojo" dir="${basedir}/web"  inheritall="false"/>
+    </target>
 
 
 </project>

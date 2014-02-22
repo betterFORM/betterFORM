@@ -151,7 +151,7 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
                 XMLEvent xmlEvent = (XMLEvent) event;
                 String type = xmlEvent.getType();
 
-                if (BetterFormEventNames.REPLACE_ALL.equals(type)) {
+                if (BetterFormEventNames.REPLACE_ALL.equals(type) || BetterFormEventNames.REPLACE_ALL_XFORMS.equals(type) ) {
                     // get event context and store it in session
                     Map submissionResponse = new HashMap();
                     submissionResponse.put("header", xmlEvent.getContextInfo("header"));

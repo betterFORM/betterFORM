@@ -8,7 +8,7 @@
         <name>betterFORM</name>
         <version>
             <name>springBud</name>
-            <number>5.0rc3</number>
+            <number>5.0rc6</number>
         </version>
     </app>
     <properties>
@@ -19,7 +19,7 @@
             <version>1.6</version>
         </javac>
 
-        <dojo>dojo-release-1.8.3-src</dojo>
+        <dojo>dojo-release-1.7.2-src-patched</dojo>
         <timeline>timeline_libraries_v2.3.0</timeline>
         <ckeditor>ckeditor_3.6.3</ckeditor>
         <syntaxhighlighter>syntaxhighlighter_3.0.83</syntaxhighlighter>
@@ -75,7 +75,7 @@
         </app>
         <transform>
             <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="saxon"/>
+                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="Saxon-HE"/>
             </classpath>
         </transform>
         <compile>
@@ -85,9 +85,9 @@
                 <pathelement location="${core.dir}/src/main/lib/commons-codec-1.6.jar" groupid="commons-codec" version="1.6" artifactId="commons-codec"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-fileupload-1.2.1.jar" groupid="commons-fileupload" version="1.2.1" artifactId="commons-fileupload"/>
                 <!-- <pathelement location="${core.dir}/src/main/lib/commons-httpclient-3.1.jar" groupid="commons-httpclient" version="3.1" artifactId="commons-httpclient"/> -->
-                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="org.apache.httpcomponents" version="4.1" artifactId="httpcomponents-core"/>
-                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-client"/>
-                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpcomponents-mime"/>
+                <pathelement location="${core.dir}/src/main/lib/httpcore-4.1.jar" groupid="org.apache.httpcomponents" version="4.1" artifactId="httpcore"/>
+                <pathelement location="${core.dir}/src/main/lib/httpclient-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpclient"/>
+                <pathelement location="${core.dir}/src/main/lib/httpmime-4.1.1.jar" groupid="org.apache.httpcomponents" version="4.1.1" artifactId="httpmime"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-net-3.1.jar" groupid="commons-net" version="3.1" artifactId="commons-net"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-io-2.1.jar" groupid="commons-io" version="2.1" artifactId="commons-io"/>
                 <pathelement location="${core.dir}/src/main/lib/commons-lang3-3.1.jar" groupid="org.apache.commons" version="3.1" artifactId="commons-lang3"/>
@@ -124,7 +124,7 @@
         </app>
         <transform>
             <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
-                    <path refid="compile.class.path"/>
+                <path refid="compile.class.path"/>
             </classpath>
         </transform>
         <compile>
@@ -147,17 +147,17 @@
             <!-- Selenium Properties -->
 
             <selenium>
-              <!-- which browser to use for tests -->
-              <browser>*firefox</browser>
-              <url-to-test-forms>/betterform/forms</url-to-test-forms>
-              <!--server properties -->
-              <server>
-                <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
-                <host>localhost</host>
-                <port>4444</port>
-                <url>/selenium-server/core/index.html</url>
-                <errorsBeginAt>404</errorsBeginAt>
-              </server>
+                <!-- which browser to use for tests -->
+                <browser>*firefox</browser>
+                <url-to-test-forms>/betterform/forms</url-to-test-forms>
+                <!--server properties -->
+                <server>
+                    <jar>${basedir}/src/main/lib/selenium/selenium-server-standalone-2.0a5.jar</jar>
+                    <host>localhost</host>
+                    <port>4444</port>
+                    <url>/selenium-server/core/index.html</url>
+                    <errorsBeginAt>404</errorsBeginAt>
+                </server>
             </selenium>
             <!-- home of the tomcat-server which serves testpages -->
             <tomcat>
@@ -269,8 +269,8 @@
     <installer>
         <!-- ### installerType must be either 'standard' or 'web'. Default value is 'web' ### -->
         <installerType>standard</installerType>
-        <izPack>/opt/izPack-4.3.4</izPack>
-        <launch4j>/opt/launch4j-3.0.2</launch4j>
+        <izPack>/Users/windauer/dev/tools/IzPack-4.3.5</izPack>
+        <launch4j>/Users/windauer/dev/tools/launch4j-3.0.2</launch4j>
     </installer>
     <eXist>
         <!-- point this to the place where you installed exist -->

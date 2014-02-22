@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
@@ -39,6 +40,10 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import javax.servlet.http.Cookie;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -102,7 +107,16 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     public void configure() throws XFormsException {
         initConfig();
-        WebUtil.storeCookies(request, this);
+        Cookie[] cookies = request.getCookies();
+        List<Cookie> cookiesList;
+
+        if(cookies != null) {
+            cookiesList = Arrays.asList(request.getCookies());
+        } else {
+            cookiesList = Collections.EMPTY_LIST;
+        }
+        
+        WebUtil.storeCookies(cookiesList, this);
         WebUtil.setContextParams(request, httpSession, this, getKey());
         WebUtil.copyHttpHeaders(request, this);
         setLocale();
@@ -339,7 +353,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         todo: extract behavior that checks for exit events and move to init().
         */
         try {
-            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null) {
+            //EXIST-WORKAROUND: TODO triple check ...
+            if (request.getMethod().equalsIgnoreCase("POST") && request.getAttribute(XFormsPostServlet.INIT_BY_POST) == null && request.getAttribute("org.exist.forward" ) == null ) {
                 updating = true;
                 // updating ... - this is only called when PlainHtmlProcessor is in use or an upload happens
                 UIEvent uiEvent = new DefaultUIEventImpl();
@@ -376,9 +391,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     createUIGenerator();
                     //store queryString as 'referer' in XFormsSession
                     setContextParam(REFERER, request.getContextPath() + request.getServletPath() + "?" + referer);
-
-                    //todo:check if it's still necessary to set an attribute to the session - at least it seems odd that this line is here and not at start or end of this method
-                    httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
+                    //todo:check if it's still necessary to set an attribute to the session
+                    //EXIST-WORKAROUND: TODO triple check ...
+                    if(request.isRequestedSessionIdValid()) {
+                        httpSession.setAttribute("TimeStamp", System.currentTimeMillis());
+                    }
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -386,7 +403,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
                     response.setContentLength(outputStream.toByteArray().length);
                     response.getOutputStream().write(outputStream.toByteArray());
-
                 }
             }
         } catch (IOException e) {
@@ -412,7 +428,10 @@ public class WebProcessor extends AbstractProcessorDecorator {
      */
     public void handleExit(XMLEvent exitEvent) throws IOException {
         if (BetterFormEventNames.REPLACE_ALL.equals(exitEvent.getType())) {
-            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/SubmissionResponse?sessionKey=" + getKey()));
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/" + BetterFORMConstants.SUBMISSION_RESPONSE  + "?sessionKey=" + getKey()));
+        } else if (BetterFormEventNames.REPLACE_ALL_XFORMS.equals(exitEvent.getType()) ) {
+            WebUtil.removeSession(getKey());
+            response.sendRedirect(response.encodeRedirectURL((String) exitEvent.getContextInfo(BetterFORMConstants.SUBMISSION_REDIRECT_XFORMS)));
         } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
             //todo: this check seems insufficient - should be a load show="replace"
             if (exitEvent.getContextInfo("show") != null) {
@@ -558,11 +577,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String selectorPrefix = Config.getInstance().getProperty(HttpRequestHandler.SELECTOR_PREFIX_PROPERTY,
                 HttpRequestHandler.SELECTOR_PREFIX_DEFAULT);
         generator.setParameter("selector-prefix", selectorPrefix);
-
         String removeUploadPrefix = Config.getInstance().getProperty(HttpRequestHandler.REMOVE_UPLOAD_PREFIX_PROPERTY,
                 HttpRequestHandler.REMOVE_UPLOAD_PREFIX_DEFAULT);
         generator.setParameter("remove-upload-prefix", removeUploadPrefix);
-
         String dataPrefix = Config.getInstance().getProperty("betterform.web.dataPrefix");
         generator.setParameter("data-prefix", dataPrefix);
 
@@ -651,6 +668,4 @@ public class WebProcessor extends AbstractProcessorDecorator {
             return true;
         }
     }
-
-
 }

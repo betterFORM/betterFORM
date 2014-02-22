@@ -4,13 +4,15 @@
  */
 package de.betterform.xml.xpath;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import junit.framework.TestCase;
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.SaxonReferenceFinderImpl;
-import junit.framework.TestCase;
-
-import java.util.Collections;
-import java.util.Set;
 
 /**
  * Tests reference detection.
@@ -62,9 +64,29 @@ public class XPathReferenceFinderTest extends TestCase {
                 this.referenceFinder.getReferences("a * b", Collections.EMPTY_MAP, fDummyContainer));
         assertReferences(new String[]{"../child::item", ".."},
                 this.referenceFinder.getReferences("IF(index('repeat') > 0, ../item[index('repeat')], '')", Collections.EMPTY_MAP, fDummyContainer));
-
+        
     }
+    
+    // Saxon returns an 'internal' saxon:item-at($seq, $index) for the $seq[$index].
+    // We rewrite this to subsequence($seq, $index, 1) as suggested
+    public void testGetReferencesItemAt() throws Exception {
+        assertReferences(new String[]{"/child::item",
+        		"/subsequence(child::item, number(count(current()/parent::element()/reverse(preceding-sibling::element())) + 1),1)/child::amount",
+        		"current()/parent::element()",
+        		"current()/parent::element()/preceding-sibling::element()"},
+                this.referenceFinder.getReferences("/item[count(current()/parent::*/preceding-sibling::*) + 1]/amount", Collections.EMPTY_MAP, fDummyContainer));
+        
+    }
+    
+    
 
+    public void testGetReferencesWithNamespaces() throws Exception {
+    	Map prefixes = new HashMap();
+    	prefixes.put("ns", "http://example.com");
+       
+    	assertReferences(new String[]{"child::ns:data"},
+                this.referenceFinder.getReferences("ns:data", prefixes, fDummyContainer));
+    }
     /**
      * Tests reference detection for expressions with instance() function.
      *

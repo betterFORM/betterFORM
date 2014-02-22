@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>eXist DB URI and Submission Handler Test Form</title>
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model id="model-1">
+                <xf:instance id="i-exist-uri-resolver" src="exist:/db/apps/betterform/connector/testdata.xml">
+                    <data xmlns="">
+                        <item/>
+                    </data>
+                </xf:instance>
+                <xf:instance id="i-exist-xquery" src="exist:/db/apps/betterform/connector/testdata.xql">
+                    <data xmlns="">
+                        <item/>
+                    </data>
+                </xf:instance>
+                <xf:instance id="i-exist-xquerymodule" src="exist:/db/apps/betterform/connector/testdata.xqm?function=test">
+                    <data xmlns="">
+                        <item/>
+                    </data>
+                </xf:instance>
+                <xf:instance xmlns="" id="i-submission">
+                    <data>
+                        <item>(none)</item>
+                    </data>
+                </xf:instance>
+                <xf:instance xmlns="" id="i-submission-update">
+                    <data>
+                        <item>new data</item>
+                    </data>
+                </xf:instance>
+                <xf:instance id="i-data2">
+                    <data xmlns="">
+                        <item>hi there</item>
+                    </data>
+                </xf:instance>
+                <xf:submission method="get" id="s-load" replace="instance" instance="i-submission" resource="exist:/db/apps/betterform/connector/data.xml">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">get submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">get submission successful</xf:message>
+                </xf:submission>
+                <xf:submission method="put" id="s-update" replace="instance" instance="i-submission" ref="instance('i-submission-update')" resource="exist:/db/apps/betterform/connector/data.xml">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">put submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">put submission successful</xf:message>
+                </xf:submission>
+                
+                <!-- creating an unnamed ressource -->
+                <xf:submission method="post" id="s-create" replace="none" resource="exist:/db/apps/betterform/connector">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">post submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">post submission successful</xf:message>
+                </xf:submission>
+                
+                <!-- creating an named ressource -->
+                <xf:submission method="put" id="s-create2" replace="instance" instance="i-data2" resource="exist:/db/apps/betterform/connector/data2.xml">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">put submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">put submission successful</xf:message>
+                </xf:submission>
+                <xf:submission method="delete" id="s-delete" replace="instance" instance="i-data2" resource="exist:/db/apps/betterform/connector/data2.xml">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">delete submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">delete submission successful</xf:message>
+                </xf:submission>
+                <xf:submission method="execute" id="s-exec" replace="instance" instance="i-data2" resource="exist:/db/apps/betterform/connector/teststore.xql">
+                    <xf:message level="ephemeral" ev:event="xforms-submit-error">execute submission failed</xf:message>
+                    <xf:message level="ephemeral" ev:event="xforms-submit-done">execute submission successful</xf:message>
+                </xf:submission>
+            </xf:model>
+        </div>
+        <xf:group appearance="full">
+            <xf:label>URI Resolvers</xf:label>
+            <xf:input ref="instance('i-exist-uri-resolver')/item">
+                <xf:label>exist-uri-resolver</xf:label>
+            </xf:input>
+            <xf:input ref="instance('i-exist-xquery')/item">
+                <xf:label>exist-xquery</xf:label>
+            </xf:input>
+            <xf:input ref="instance('i-exist-xquerymodule')/item">
+                <xf:label>exist-xquery (module)</xf:label>
+            </xf:input>
+        </xf:group>
+        <br/>
+        <xf:group appearance="full">
+            <xf:label>Submission Handlers</xf:label>
+            <xf:input ref="instance('i-submission')/item">
+                <xf:label>Submissions:</xf:label>
+            </xf:input>
+            <xf:trigger>
+                <xf:label>GET</xf:label>
+                <xf:send submission="s-load"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>PUT (update)</xf:label>
+                <xf:send submission="s-update"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>POST</xf:label>
+                <xf:send submission="s-create"/>
+            </xf:trigger>
+            <xf:input ref="instance('i-data2')/item">
+                <xf:label>Submissions:</xf:label>
+            </xf:input>
+            <xf:trigger>
+                <xf:label>PUT (create)</xf:label>
+                <xf:send submission="s-create2"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>DELETE</xf:label>
+                <xf:send submission="s-delete"/>
+            </xf:trigger>
+            <xf:trigger>
+                <xf:label>EXECUTE</xf:label>
+                <xf:send submission="s-exec"/>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

@@ -92,15 +92,15 @@
             <items xmlns="">
                 <color id="red">
                     <name>RED</name>
-                    <value>00FF00</value>
+                    <value>FF0000</value>
                 </color>
                 <color id="green">
                     <name>GREEN</name>
-                    <value>0000FF</value>
+                    <value>00FF00</value>
                 </color>
                 <color id="blue">
                     <name>BLUE</name>
-                    <value>FF0000</value>
+                    <value>0000FF</value>
                 </color>
             </items>
         </xf:instance>
@@ -185,7 +185,10 @@
                 <span>insert / delete item from itemset</span>
                 <xf:trigger>
                     <xf:label>Insert Black Item</xf:label>
-                    <xf:insert nodeset="instance('colors')/color" at="1" position="before" origin="instance('origin')/color[1]"/>
+                    <xf:insert nodeset="instance('colors')/color"
+                               at="1"
+                               position="before"
+                               origin="instance('origin')/color[1]"/>
                 </xf:trigger>
                 <xf:trigger>
                     <xf:label>Insert White Item</xf:label>

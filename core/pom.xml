@@ -5,14 +5,14 @@
     <parent>
         <groupId>de.betterform</groupId>
         <artifactId>betterform-project</artifactId>
-        <version>5.0rc3</version>
+        <version>5.0rc6</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.betterform</groupId>
     <artifactId>betterform-core</artifactId>
-    <version>5.0rc3</version>
+    <version>5.0rc6</version>
 
     <packaging>jar</packaging>
 
@@ -93,7 +93,7 @@
     <dependencies>
 <dependency>
 <groupId>net.sf.saxon</groupId>
-<artifactId>saxon</artifactId>
+<artifactId>Saxon-HE</artifactId>
 <version>9.4.0.7</version>
 </dependency>
 <dependency>
@@ -108,17 +108,17 @@
 </dependency>
 <dependency>
 <groupId>org.apache.httpcomponents</groupId>
-<artifactId>httpcomponents-core</artifactId>
+<artifactId>httpcore</artifactId>
 <version>4.1</version>
 </dependency>
 <dependency>
 <groupId>org.apache.httpcomponents</groupId>
-<artifactId>httpcomponents-client</artifactId>
+<artifactId>httpclient</artifactId>
 <version>4.1.1</version>
 </dependency>
 <dependency>
 <groupId>org.apache.httpcomponents</groupId>
-<artifactId>httpcomponents-mime</artifactId>
+<artifactId>httpmime</artifactId>
 <version>4.1.1</version>
 </dependency>
 <dependency>

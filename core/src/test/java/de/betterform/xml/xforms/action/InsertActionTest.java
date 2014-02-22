@@ -141,6 +141,27 @@ public class InsertActionTest extends BetterFormTestCase {
     }
 
     /**
+     * Tests inserting before 2.
+     *
+     * @throws Exception if any error occurred during the test.
+     */
+    public void testInsertBeforeSecondWithRef() throws Exception {
+        this.processor.dispatch("insert-before-second-with-ref", DOMEventNames.ACTIVATE);
+
+        assertEquals(4, (int)evaluateInDefaultContextAsDouble("count(/data/item)"));
+        assertEquals("My data 1",  evaluateInDefaultContextAsString("string(/data/item[1])"));
+        assertEquals("My data 3",  evaluateInDefaultContextAsString("string(/data/item[2])"));
+        assertEquals("My data 2",  evaluateInDefaultContextAsString("string(/data/item[3])"));
+        assertEquals("My data 3",  evaluateInDefaultContextAsString("string(/data/item[4])"));
+
+        assertEquals("instance-1", this.insertListener.getId());
+        assertEquals("model-1", this.rebuildListener.getId());
+        assertEquals("model-1", this.recalulateListener.getId());
+        assertEquals("model-1", this.revalidateListener.getId());
+        assertEquals("model-1", this.refreshListener.getId());
+    }
+
+    /**
      * Tests inserting before 4.
      *
      * @throws Exception if any error occurred during the test.

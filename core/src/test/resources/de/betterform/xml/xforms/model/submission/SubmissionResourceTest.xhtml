@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:xf="http://www.w3.org/2002/xforms" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/xml; charset=UTF-8" />
+
+        <title>Default Alert Handler - inline alerts</title>
+    </head>
+
+    <body class="soria" style="margin:30px">
+        <div style="display:none">
+            <xf:model>
+                <xf:instance xmlns="">
+                    <data>
+                        <a></a>
+                    </data>
+                </xf:instance>
+                <xf:submission id="s-test" resource="echo:foo" method="GET" replace="none" validate="true">
+                    <xf:load show="new">
+                        <xf:resource value="'bar'"/>
+                    </xf:load>
+                </xf:submission>
+
+            </xf:model>
+        </div>
+    </body>
+</html>
