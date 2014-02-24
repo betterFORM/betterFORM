@@ -1,1 +1,1 @@
-betterFORM 5.0rc6 - buildNumber:11860 - Timestamp:2014-02-12 17:09:22
+@app.name@ 5.0rc6 - buildNumber:${build.number} - Timestamp:${current.time}
