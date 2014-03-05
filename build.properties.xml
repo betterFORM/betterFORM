@@ -54,15 +54,15 @@
         <!--+ log4j.xml Configuration
             +   appender: log4j appender, decides where the log output goes to
             +           possible values are: 'SHELL' or 'ROLLING_FILE'
-            +   loglevel define log levels for root,betterform,ehcache and drw
+            +   loglevel define log levels for root,betterform and drw
             +           common log levels are: 'DEBUG', 'INFO', 'WARN','DEBUG','TRACE'
         -->
         <log4j>
             <appender>SHELL</appender>
             <loglevel>
-                <root>ERROR</root>
-                <betterform>DEBUG</betterform>
-                <ehcache>ERROR</ehcache>
+                <root>WARN</root>
+                <betterform>WARN</betterform>
+                <cache>DEBUG</cache>
                 <dwr>ERROR</dwr>
             </loglevel>
         </log4j>

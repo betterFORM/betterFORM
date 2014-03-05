@@ -63,15 +63,15 @@
 -->
 
     <category name="de.betterform">
+        <priority value="WARN"/>
+    </category>
+
+    <category name="org.infinispan">
         <priority value="DEBUG"/>
     </category>
 
-    <logger name="net.sf.ehcache">
-        <level value="ERROR"/>
-    </logger>
-
     <root>
-        <priority value="ERROR"/>
+        <priority value="WARN"/>
         <appender-ref ref="SHELL"/>
     </root>
 

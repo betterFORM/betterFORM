@@ -1,46 +1,36 @@
-<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="urn:infinispan:config:5.2 http://www.infinispan.org/schemas/infinispan-config-5.2.xsd"
-            xmlns="urn:infinispan:config:5.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:infinispan:config:6.0 http://www.infinispan.org/schemas/infinispan-config-6.0.xsd"
+        xmlns="urn:infinispan:config:6.0">
 
-<!--
-    <namedCache name="xfFileCache" >
-        <eviction strategy="LIRS" maxEntries="100"/>
-        <expiration lifespan="3000000" maxIdle="3000000" wakeUpInterval="10000"/>
-        <loaders passivation="true" preload ="false"  shared="false">
-                <fileStore location="/tmp/xfFileCache" streamBufferSize="8192"/>
-        </loaders>
-    </namedCache>
--->
-
-   <namedCache name="xfTestConfigOneElementInMemory">
+    <namedCache name="xfTestConfigOneElementInMemory">
         <eviction maxEntries="3"/>
-        <loaders passivation="true" shared="false" preload="false">
-            <loader class="org.infinispan.loaders.file.FileCacheStore" fetchPersistentState="false" ignoreModifications="false" purgeOnStartup="true" purgeSynchronously="true">
+    </namedCache>
+
+    <namedCache name="xfSessionCache">
+        <deadlockDetection enabled="true" spinDuration="1221"/>
+        <eviction maxEntries="2" strategy="LIRS"/>
+        <persistence passivation="true">
+            <store class="org.infinispan.persistence.file.SingleFileStore" shared="false" preload="true" fetchPersistentState="true" ignoreModifications="true" purgeOnStartup="true">
+                <async enabled="true" threadPoolSize="1" flushLockTimeout="10"/>
+                <singleton enabled="true" pushStateWhenCoordinator="true" pushStateTimeout="20"/>
                 <properties>
                     <property name="location" value="/tmp/bfCache"/>
                 </properties>
-            </loader>
-        </loaders>
+            </store>
+        </persistence>
+        <locking supportsConcurrentUpdates="true"/>
     </namedCache>
 
-    <namedCache name="xfSessionCache" >
-        <!-- ##### maximum elements in memory cache are '100' ##### -->
-        <eviction strategy="LIRS" maxEntries="100"/>
-        <expiration lifespan="-1" maxIdle="-1"/>
-        <loaders passivation="true" preload ="false"  shared="false">
-            <fileStore location="/tmp/bfCache" streamBufferSize="8192"/>
-        </loaders>
-
-    </namedCache>
-
-<!--
-    <namedCache name="xfTestConfigOneElementInMemory" >
-        <eviction strategy="LIRS" maxEntries="1"/>
-        <expiration lifespan="300000" maxIdle="300000" wakeUpInterval="5000"/>
-        <loaders passivation="true" preload ="false"  shared="false">
-            <fileStore location="/tmp/xfTestConfigOneElementInMemory" streamBufferSize="8192"/>
-        </loaders>
-    </namedCache>
--->
+    <!--
+        <namedCache name="xfTestConfigOneElementInMemory" >
+            <eviction strategy="LIRS" maxEntries="1"/>
+            <expiration lifespan="300000" maxIdle="300000" wakeUpInterval="5000"/>
+            <loaders passivation="true" preload ="false"  shared="false">
+                <fileStore location="/tmp/xfTestConfigOneElementInMemory" streamBufferSize="8192"/>
+            </loaders>
+        </namedCache>
+    -->
 
 </infinispan>

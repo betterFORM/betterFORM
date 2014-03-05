@@ -139,7 +139,7 @@
               filtering="true"
               overwrite="true"/>
 
-        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/ehcache.xml"/>
+        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/infinispan.xml"/>
 
         <echo>
             ************************************************************************************

@@ -91,6 +91,23 @@
               overwrite="true"/>
 
 
+
+        <!-- Filters for log4j.xml see build.properties.xml for a description-->
+        <filter token="APPENDER" value="${config.log4j.appender}"/>
+        <filter token="ROOT_LOG_LEVEL" value="${config.log4j.loglevel.root}"/>
+        <filter token="BETTERFORM_LOG_LEVEL" value="${config.log4j.loglevel.betterform}"/>
+        <filter token="CACHE_LOG_LEVEL" value="${config.log4j.loglevel.cache}"/>
+        <filter token="DWR_LOG_LEVEL" value="${config.log4j.loglevel.dwr}"/>
+
+        <copy description="filter log4j.xml"
+              tofile="${basedir}/src/main/resources/log4j.xml"
+              overwrite="true"
+              filtering="true"
+              file="${basedir}/src/main/resources/log4j.template.xml">
+
+        </copy>
+
+
         <echo level="info">
         ************************************************************************************
         compiling Core classes

@@ -66,9 +66,9 @@
         <priority value="@BETTERFORM_LOG_LEVEL@"/>
     </category>
 
-    <logger name="net.sf.ehcache">
-        <level value="@EHCACHE_LOG_LEVEL@"/>
-    </logger>
+    <category name="org.infinispan">
+        <priority value="@CACHE_LOG_LEVEL@"/>
+    </category>
 
     <root>
         <priority value="@ROOT_LOG_LEVEL@"/>

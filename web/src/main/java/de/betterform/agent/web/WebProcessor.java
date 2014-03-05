@@ -31,6 +31,7 @@ import org.w3c.dom.events.Event;
 import org.xml.sax.InputSource;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,7 +44,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.Cookie;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -84,7 +84,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
     public static final String ALTERNATIVE_ROOT = "ResourcePath";
 
-    //todo:review - can be deleted when ehcache is in place
+    //todo:review - can be deleted when infinispan is in place
     String KEEPALIVE_PULSE = "keepalive";
     protected transient HttpRequestHandler httpRequestHandler;
     protected transient XMLEvent exitEvent = null;

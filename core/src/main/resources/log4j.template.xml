@@ -55,7 +55,7 @@
     <!-- custom log level -->
 
     <category name="de.betterform">
-        <priority value="WARN"/>
+        <priority value="@BETTERFORM_LOG_LEVEL@"/>
     </category>
 
     <!--
@@ -81,8 +81,8 @@
 
 
     <root>
-        <priority value="WARN"/>
-        <appender-ref ref="SHELL"/>
+        <priority value="@ROOT_LOG_LEVEL@"/>
+        <appender-ref ref="@APPENDER@"/>
     </root>
 
 </log4j:configuration>

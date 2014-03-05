@@ -21,8 +21,6 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
@@ -69,7 +67,7 @@ public class XFormsFilter implements Filter {
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
             webFactory.initTransformerService(this.filterConfig.getServletContext().getRealPath("."));
-            webFactory.initXFormsSessionCache(); // todo: still needed????
+            // webFactory.initXFormsSessionCache(); // todo: still needed????
 
         } catch (XFormsConfigException e) {
             throw new ServletException(e);

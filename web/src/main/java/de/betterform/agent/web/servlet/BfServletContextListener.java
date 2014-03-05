@@ -13,7 +13,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * ServletListener to shutdown ehCache
+ * ServletListener to shutdown infinispan
  *
  */
 
