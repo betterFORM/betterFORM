@@ -60,6 +60,19 @@ public class ConfigTest extends TestCase {
                 value.equals("de.betterform.connector.smtp.SMTPSubmissionHandler"));
     }
 
+	/**
+	 * Quick test to determine whether the system variable replacement (e.g. ${java.home}) works.
+	 *
+	 * @throws XFormsConfigException
+	 */
+	public void testSystemVariableReplacement() throws XFormsConfigException {
+		Config config = Config.getInstance(getClass().getResource("test-default.xml").getPath());
+
+		String value = config.getProperty("test.substitution.property", null);
+		assertNotNull("test.substitution.property is unknown", value);
+		assertTrue("test.substitution.property is wrong: " + value, value.endsWith("/nonexistingfile.txt") && !value.startsWith("${java.home}"));
+	}
+	
     /**
      * Tests the external configuration.
      *
