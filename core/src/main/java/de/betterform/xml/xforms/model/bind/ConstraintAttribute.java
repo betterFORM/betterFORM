@@ -1,11 +1,6 @@
 package de.betterform.xml.xforms.model.bind;
 
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.ns.NamespaceConstants;
-import de.betterform.xml.xforms.Initializer;
 import de.betterform.xml.xforms.XFormsElement;
-import de.betterform.xml.xforms.exception.XFormsException;
-import de.betterform.xml.xforms.model.Model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;

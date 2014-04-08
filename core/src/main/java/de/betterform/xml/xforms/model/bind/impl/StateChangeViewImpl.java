@@ -5,10 +5,10 @@
 
 package de.betterform.xml.xforms.model.bind.impl;
 
-import java.util.Map;
-
 import de.betterform.xml.xforms.model.ModelItem;
 import de.betterform.xml.xforms.model.bind.StateChangeView;
+
+import java.util.Map;
 
 /**
  * State Change viewport implementation.

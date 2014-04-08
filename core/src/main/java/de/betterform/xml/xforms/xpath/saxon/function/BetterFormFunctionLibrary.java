@@ -8,13 +8,8 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.extensions.BFSort;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.*;
-import net.sf.saxon.expr.Container;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.StaticContext;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.StandardFunction.Entry;
-import net.sf.saxon.om.StructuredQName;
-import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.Type;
 

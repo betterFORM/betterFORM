@@ -5,10 +5,10 @@
 
 package de.betterform.xml.xpath.impl.saxon.sxpath;
 
-import net.sf.saxon.expr.parser.TypeChecker;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.expr.instruct.SlotManager;
+import net.sf.saxon.expr.parser.TypeChecker;
 import net.sf.saxon.om.*;
 import net.sf.saxon.sxpath.XPathVariable;
 import net.sf.saxon.trans.SaxonErrorCode;

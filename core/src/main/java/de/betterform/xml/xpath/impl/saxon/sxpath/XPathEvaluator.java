@@ -5,8 +5,6 @@
 
 package de.betterform.xml.xpath.impl.saxon.sxpath;
 
-import net.sf.saxon.expr.Container;
-import net.sf.saxon.lib.AugmentedSource;
 import net.sf.saxon.Configuration;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.instruct.Executable;
@@ -23,10 +21,6 @@ import net.sf.saxon.sxpath.XPathVariable;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.ItemType;
 import net.sf.saxon.type.Type;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-import java.io.File;
 
 /**
  * This class provides a native Saxon API for free-standing evaluation of XPath expressions. Unlike the

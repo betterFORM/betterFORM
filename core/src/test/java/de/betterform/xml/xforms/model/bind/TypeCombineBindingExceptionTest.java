@@ -4,11 +4,9 @@
  */
 package de.betterform.xml.xforms.model.bind;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
 import de.betterform.xml.xforms.exception.XFormsBindingException;
-import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;

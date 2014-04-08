@@ -6,8 +6,8 @@
 package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DoubleValue;

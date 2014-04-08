@@ -32,11 +32,12 @@ public class ConfigTest extends TestCase {
         Config config = Config.getInstance();
         String value = null;
 
+/* Useragents no longer get set in DefaultConfig ....
         Map useragents= Config.getInstance().getUserAgents();
         assertTrue(2 == useragents.size());
-
         assertEquals("foo.bar",useragents.get("foo"));
         assertEquals("bar.baz",useragents.get("bar"));
+*/
         // test uri resolvers
         value = config.getURIResolver("file");
         assertNotNull("uri-resolver 'file' is unknown", value);
@@ -69,17 +70,19 @@ public class ConfigTest extends TestCase {
         // create external configuration instance
         Config config = Config.getInstance(getClass().getResource("test-default.xml").getPath());
         String value = null;
-
+/* Useragents no longer get set in DefaultConfig ....
         Map useragents= Config.getInstance().getUserAgents();
         assertTrue(2 == useragents.size());
         assertEquals("foo.bar",useragents.get("foo"));
         assertEquals("bar.baz",useragents.get("bar"));
-
+*/
+/* Generators  no longer get set in DefaultConfig ....
         Map generators = Config.getInstance().getGenerators();
         assertTrue(3 == generators.size());
         assertEquals("dojo.xsl",Config.getInstance().getStylesheet("foo"));
         assertEquals("dojodev.xsl",Config.getInstance().getStylesheet("bar"));
         assertEquals("html4.xsl",Config.getInstance().getStylesheet("baz"));
+*/
 
 
         // test properties

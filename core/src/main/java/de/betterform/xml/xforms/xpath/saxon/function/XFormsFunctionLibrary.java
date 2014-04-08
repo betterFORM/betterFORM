@@ -9,7 +9,6 @@ import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Aggregate2;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Id2;
 import de.betterform.xml.xforms.xpath.saxon.function.xpath.Minimax2;
-import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.*;
 import net.sf.saxon.functions.Compare;

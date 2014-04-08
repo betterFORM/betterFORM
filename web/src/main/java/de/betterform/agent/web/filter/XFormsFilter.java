@@ -11,17 +11,25 @@ import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
+import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
+import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
+<<<<<<< HEAD
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
+=======
 import net.sf.ehcache.CacheManager;
+>>>>>>> origin/development
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.infinispan.Cache;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +73,8 @@ public class XFormsFilter implements Filter {
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
             webFactory.initTransformerService(this.filterConfig.getServletContext().getRealPath("."));
-            webFactory.initXFormsSessionCache();
+            webFactory.initXFormsSessionCache(); // todo: still needed????
+
         } catch (XFormsConfigException e) {
             throw new ServletException(e);
         }
@@ -129,7 +138,6 @@ public class XFormsFilter implements Filter {
 //                throw new ServletException("Contenttype of " + requestURI + " unknown. Please configure your webcontainer appropriately.");
             }
 
-
             filterChain.doFilter(srvRequest, srvResponse);
             return;
         }
@@ -152,25 +160,94 @@ public class XFormsFilter implements Filter {
         //TODO: XFORMS  PROCESSING: do we need to exit?
         }else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE) != null) {
             doSubmissionReplaceAll(request, response);
+<<<<<<< HEAD
+        }else {
+            /* ########## call filter chain ########## */
+            /* ########## call filter chain ########## */
+            /* ########## call filter chain ########## */
+            LOG.info("Passing to Chain");
+            BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
+            filterChain.doFilter(srvRequest, bufResponse);
+            LOG.info("Returned from Chain");
+=======
         }  else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE_XFORMS) != null) {
              doSubmissionReplaceAllXForms(request, response,session);
         } else {
+>>>>>>> origin/development
 
-            /* before servlet request */
-            if (isXFormUpdateRequest(request)) {
-                LOG.info("Start Update XForm");
+            handleResponse(srvResponse, request, response, session, bufResponse, webFactory);
+        }
+    }
 
-                try {
-                    WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
-                    webProcessor.setRequest(request);
-                    webProcessor.setResponse(response);
-                    webProcessor.handleRequest();
-                } catch (XFormsException e) {
-                    throw new ServletException(e);
+    private void handleResponse(ServletResponse srvResponse,
+                                HttpServletRequest request,
+                                HttpServletResponse response,
+                                HttpSession session,
+                                BufferedHttpServletResponseWrapper bufResponse,
+                                WebFactory webFactory) throws IOException, ServletException {
+        // response is already committed to the client, so nothing is to
+        // be done
+        if (bufResponse.isCommitted())
+            return;
+
+
+        //pass to request object
+        request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
+
+        /* dealing with response from chain */
+        if (handleResponseBody(request, bufResponse)) {
+            byte[] data = prepareData(bufResponse);
+            if (data.length > 0) {
+                request.setAttribute(WebFactory.XFORMS_INPUTSTREAM, new ByteArrayInputStream(data));
+            }
+        }
+
+        if (handleRequestAttributes(request)) {
+            bufResponse.getOutputStream().close();
+            LOG.info("Start Filter XForm");
+
+            FluxProcessor webProcessor = null;
+            try {
+//                webProcessor = WebFactory.createWebProcessor(request);
+                webProcessor = new FluxProcessor();
+                webProcessor.setXformsProcessor(new XFormsProcessorImpl());
+                webProcessor.setRequest(request);
+                webProcessor.setResponse(response);
+                webProcessor.setHttpSession(session);
+                webProcessor.setBaseURI(request.getRequestURL().toString());
+                webProcessor.setContext(webFactory.getServletContext());
+                webProcessor.configure();
+                webProcessor.setXForms();
+                webProcessor.init();
+                webProcessor.handleRequest();
+
+                //add new xforms session to cache
+                Cache cache = XFSessionCache.getCache();
+                String key = webProcessor.getKey();
+                if(cache.containsKey(key)){
+                     //reload session
+                    LOG.warn("Session already exists - key: " + key);
+//                     cache.remove(key);
                 }
-                LOG.info("End Update XForm");
-            } else {
+                if(LOG.isDebugEnabled()){
+                    LOG.debug("adding new session to cache. Key:" + key );
+                }
+                cache.put(key,webProcessor);
+            }
+            catch (Exception e) {
+                LOG.error(e.getMessage(), e);
+                if (webProcessor != null) {
+                    //reset xforms to state before init and serialize it to StreamResult
+                    //reparse with PositionalXMLReader for error summary
 
+<<<<<<< HEAD
+                    if(e instanceof XFormsErrorIndication){
+                        try {
+                            session.setAttribute("betterform.hostDoc",webProcessor.getXForms());
+                        } catch (XFormsException e1) {
+                            e1.printStackTrace();
+                        }
+=======
                 /* do servlet request */
                 LOG.info("Passing to Chain");
                 BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
@@ -196,9 +273,26 @@ public class XFormsFilter implements Filter {
                     byte[] data = prepareData(bufResponse);
                     if (data.length > 0) {
                         request.setAttribute(WebFactory.XFORMS_INPUTSTREAM, new ByteArrayInputStream(data));
+>>>>>>> origin/development
                     }
-                }
 
+<<<<<<< HEAD
+                    // attempt to shutdown processor
+                    try {
+                        webProcessor.shutdown();
+                    } catch (XFormsException xfe) {
+                        LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
+                    }
+                    // store exception
+                    session.setAttribute("betterform.exception", e);
+                    session.setAttribute("betterform.exception.message", e.getMessage());
+                    session.setAttribute("betterform.referer", request.getRequestURL());
+                    //remove session from XFormsSessionManager
+                    WebUtil.removeSession(webProcessor.getKey());
+
+                    String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
+                    webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
+=======
                 if (handleRequestAttributes(request)) {
                     bufResponse.getOutputStream().close();
                     LOG.info("Start Filter XForm");
@@ -207,6 +301,7 @@ public class XFormsFilter implements Filter {
                 } else {
                     srvResponse.getOutputStream().write(bufResponse.getData());
                     srvResponse.getOutputStream().close();
+>>>>>>> origin/development
                 }
             }
         }
@@ -259,6 +354,11 @@ public class XFormsFilter implements Filter {
                 String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
                 webFactory.getServletContext().getRequestDispatcher(path).forward(request, response);
             }
+
+            LOG.info("End Render XForm");
+        } else {
+            srvResponse.getOutputStream().write(bufResponse.getData());
+            srvResponse.getOutputStream().close();
         }
     }
 
@@ -269,7 +369,7 @@ public class XFormsFilter implements Filter {
             LOG.debug("*** FluxHelper ***");
         }
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         try {
             if (webProcessor == null) {
                 throw new ServletException(Config.getInstance().getErrorMessage("session-invalid"));
@@ -402,6 +502,7 @@ public class XFormsFilter implements Filter {
      * @param srvRequest The request
      * @return true if the request is to update an XForm, false otherwise
      */
+    /*
     public boolean isXFormUpdateRequest(HttpServletRequest request) {
 
         //must be a POST request
@@ -439,6 +540,8 @@ public class XFormsFilter implements Filter {
         //if the action-url in the adapters context param is the same as that of the action url then we know we are updating
         return actionURL.equals(webProcessor.getContextParam("action-url"));
     }
+
+    */
 
     /**
      * Removes the DOCTYPE Processing Instruction from the content if it exists
@@ -525,7 +628,7 @@ public class XFormsFilter implements Filter {
         Map submissionResponse = null;
 
         HttpSession session = request.getSession(false);
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         if (session != null && webProcessor != null) {
             if (LOG.isDebugEnabled()) {
                 Enumeration keys = session.getAttributeNames();

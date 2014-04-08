@@ -407,6 +407,28 @@
         <echo>Apache Ant ${properties.antversion} or higher is required for this target. Please upgrade your Apache Ant version (${ant.version}) to minimum version 1.7 You can retreive the latest Ant here: http://ant.apache.org/bindownload.cgi</echo>
     </target>
 
+    <target name="prepare-test" depends="clean,compile">
+        <!-- create test directories -->
+        <mkdir dir="${basedir}/target/test-classes"/>
+        <mkdir dir="${basedir}/target/doc/test/classes"/>
+
+
+        <copy description="copy all test resources"
+                todir="target/test-classes"
+                filtering="true"
+                includeemptydirs="false">
+            <fileset dir="src/test/resources"/>
+        </copy>
+
+        <javac description="compile test files"
+                srcdir="src/test/java"
+                destdir="target/test-classes"
+                classpathref="test.class.path"
+                debug="true"
+                deprecation="true"
+                optimize="off"/>
+    </target>
+
     <target name="deploy-test-resources" description="copy all official XForms test suite files to webapp dir">
         <echo/>
         <echo message="************************************************************************************"/>

@@ -68,9 +68,6 @@
     <xsl:param name="unloadingMessage" select="'You are about to leave this XForms application'"/>
     <xsl:variable name="isDebugEnabled" select="$debug-enabled eq 'true'" as="xsd:boolean"/>
 
-    <!-- ### specifies the parameter prefix for repeat selectors ### -->
-    <xsl:param name="selector-prefix" select="'s_'"/>
-
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     contains the full user-agent string as received from the servlet

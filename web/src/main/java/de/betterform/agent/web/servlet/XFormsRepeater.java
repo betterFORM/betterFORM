@@ -10,6 +10,7 @@ import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
+import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
@@ -143,7 +144,7 @@ public class XFormsRepeater extends HttpServlet {
     protected void doSubmissionReplaceAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
         final Log LOG = LogFactory.getLog(XFormsRepeater.class);
         HttpSession session = request.getSession(false);
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         if (session != null && webProcessor != null) {
             if (LOG.isDebugEnabled()) {
                 Enumeration keys = session.getAttributeNames();
@@ -229,7 +230,7 @@ public class XFormsRepeater extends HttpServlet {
 //        XFormsSession xFormsSession = null;
         WebProcessor webProcessor = null;
         try {
-            webProcessor = WebFactory.createWebProcessor(request);
+            webProcessor = new FluxProcessor();
             webProcessor.setRequest(request);
             webProcessor.setResponse(response);
             webProcessor.setHttpSession(session);

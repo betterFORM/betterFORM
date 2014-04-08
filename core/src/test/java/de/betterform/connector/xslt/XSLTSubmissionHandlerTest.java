@@ -5,7 +5,6 @@
 
 package de.betterform.connector.xslt;
 
-import de.betterform.xml.dom.DOMComparator;
 import de.betterform.xml.events.DOMEventNames;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
