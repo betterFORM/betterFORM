@@ -49,3 +49,6 @@ Get in touch with betterFORM [directly](http://www.betterform.de/en/whoweare.htm
    * JDK 1.6
    * Apache Ant 1.8.2 or newer
    * [Optional: Apache Maven 2.0.5 or newer]
+    
+   
+[![Build Status](https://travis-ci.org/betterFORM/betterFORM.png?branch=master,development)](https://travis-ci.org/betterFORM/betterFORM)

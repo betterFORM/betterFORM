@@ -129,4 +129,19 @@ table {
 }
 body .container {
   background: #bcd884;
+  margin: 50px auto;
+  display: block;
+  border: thin solid ;
+  width: 50%;
+}
+body form > div {
+  margin: 15px auto 30px;
+  width: 60%;
+}
+body form > div label,
+body form > div input {
+  width: 100%;
+}
+body form > div label {
+  margin-top: 10px;
 }

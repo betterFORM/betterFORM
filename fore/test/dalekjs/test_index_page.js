@@ -1,7 +1,7 @@
 module.exports = {
     'Page title is correct': function (test) {
         test
-            .open('http://localhost:9001/index.html')
+            .open('http://localhost:9001/test.html')
             .waitForElement('#container')
             .assert.title().is('betterFORM', 'It has title')
             .assert.numberOfElements('fore-processor', 1, 'found one instance of the betterFORM fore processor')

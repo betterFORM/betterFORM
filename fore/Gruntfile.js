@@ -1,8 +1,17 @@
 'use strict';
+var LIVERELOAD_PORT = 35729;
+var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
+var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+};
+
 module.exports = function(grunt) {
     // load all grunt tasks
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
     require('time-grunt')(grunt);
+
+    var httpServerPort = 9001;
+
 
     var foreConfig = {
         srcDir: 'app',
@@ -23,7 +32,8 @@ module.exports = function(grunt) {
         //WATCH tasks
         watch: {
             options: {
-                nospawn: true
+                nospawn: true,
+                livereload: true
             },
             elementsScripts: {
                 files: ['<%= fore.srcDir %>/elements/**/*.js'],
@@ -44,6 +54,9 @@ module.exports = function(grunt) {
             pages: {
                 files: ['<%= fore.srcDir %>/pages/**/*'],
                 tasks: ['rsync:developmentPages']
+            },
+            html: {
+                files: ['<%= fore.srcDir %>/*.html']
             },
             target: {
                 options: {
@@ -207,7 +220,7 @@ module.exports = function(grunt) {
             },
 
             tests: {
-                src: ['test/dalekjs/test_index_page.js']
+                src: ['test/dalekjs/test_launcher.js']
             }
         },
         htmlmin: {
@@ -234,31 +247,75 @@ module.exports = function(grunt) {
         },
 
         connect: {
-            livedev: {
+            //Run "app" in grunt server
+            livereload: {
                 options: {
-                    port: 9001,
-                    base:  '<%= fore.srcDir %>',
-                    keepalive:true
+                    port: httpServerPort,
+                    base:  'app',
+                    keepalive:false,
+                    open: true,
+                    livereload: true
+                }
+            },
+            //Testing targets
+            root: {
+                options: {
+                    port: httpServerPort,
+                    base:  '',
+                    keepalive:false
                 }
             },
             dev: {
                 options: {
-                    port: 9001,
+                    port: httpServerPort,
                     base:  '<%= fore.srcDir %>',
                     keepalive:false
                 }
             },
-
             dist: {
                 options: {
-                    port: 9001,
+                    port: httpServerPort,
                     base:  '<%= fore.dist %>',
                     keepalive:false
                 }
             }
+        },
+
+        jasmine: {
+            pivotal: {
+                src: 'app/scripts/*.js',
+                options: {
+                    specs: 'test/jasmine/*Spec.js'
+                }
+            }
+        },
+
+        karma: {
+            options: {
+                configFile: 'test/karma/conf/karma.conf.js',
+                keepalive: true
+            },
+            buildbot: {
+                reporters: ['crbot'],
+                logLevel: 'OFF'
+            },
+            jenkins: {
+                singleRun: true,
+                reporters: ['dots', 'junit'],
+      
+                junitReporter: {
+                    outputFile: 'test-results.xml'
+                }
+            },
+            polymer: {
+            }
+
         }
+
     });
 
+
+    grunt.loadNpmTasks('grunt-karma');
 
     grunt.registerTask('createDevTarget', function( ) {
         if (!grunt.file.exists(foreConfig.webModule + foreConfig.devTarget)) {
@@ -292,8 +349,9 @@ module.exports = function(grunt) {
 
     ]);
 
+
+
     grunt.registerTask('test-dev', [
-        'dist',
         'connect:dev',
         'dalek'
     ]);
@@ -301,6 +359,37 @@ module.exports = function(grunt) {
         'dist',
         'connect:dist',
         'dalek'
+    ]);
+    grunt.registerTask('test-js', [
+        'connect:root',
+        'jasmine'
+    ]);
+    grunt.registerTask('server',  [
+        'connect:livereload',
+        'watch'
+    ]);
+    grunt.registerTask('override-chrome-launcher', 'Enable Harmony for Chrome Canary', function() {
+        var os = require('os').type();
+        if (os === 'Darwin') {
+            var exec = require('child_process').exec;
+            var cb = this.async();
+            exec('npm install --tmp ../.tmp git://github.com/morethanreal/karma-chrome-launcher',
+                null, function(err, stdout, stderr) {
+                    console.log(stdout);
+                    console.log(stderr);
+                    cb();
+                });
+        }
+    });
+
+    grunt.registerTask('test-karma', [
+        'override-chrome-launcher',
+        'karma:polymer'
+    ]);
+    
+    grunt.registerTask('test-jenkins', [
+        'override-chrome-launcher',
+        'karma:jenkins'
     ]);
 };
 
