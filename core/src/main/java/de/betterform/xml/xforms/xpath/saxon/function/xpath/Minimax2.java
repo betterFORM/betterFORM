@@ -5,18 +5,20 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
-import net.sf.saxon.expr.*;
+import net.sf.saxon.expr.Expression;
+import net.sf.saxon.expr.StaticProperty;
+import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionTool;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.parser.Optimizer;
-import net.sf.saxon.functions.CollatingFunction;
-import net.sf.saxon.om.Item;
-import net.sf.saxon.om.SequenceIterator;
-import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.expr.sort.AtomicComparer;
 import net.sf.saxon.expr.sort.DescendingComparer;
 import net.sf.saxon.expr.sort.GenericAtomicComparer;
+import net.sf.saxon.functions.CollatingFunction;
 import net.sf.saxon.lib.StringCollator;
+import net.sf.saxon.om.Item;
+import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.ItemType;

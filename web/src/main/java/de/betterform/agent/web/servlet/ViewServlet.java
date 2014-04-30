@@ -73,7 +73,7 @@ public class ViewServlet extends HttpServlet /* extends AbstractXFormsServlet */
 
         String referer = request.getParameter("referer");
 
-        WebProcessor webProcessor = WebUtil.getWebProcessor(request, session);
+        WebProcessor webProcessor = WebUtil.getWebProcessor(request, response, session);
         try {
             if (webProcessor == null || webProcessor.getContextParam("update") == null) {
                 LOGGER.info("session does not exist: creating new one");

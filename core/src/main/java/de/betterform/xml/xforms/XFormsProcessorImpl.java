@@ -15,6 +15,7 @@ import de.betterform.xml.events.XMLEventService;
 import de.betterform.xml.events.impl.DefaultXMLEventInitializer;
 import de.betterform.xml.events.impl.DefaultXMLEventService;
 import de.betterform.xml.events.impl.XercesXMLEventFactory;
+import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.ui.AbstractFormControl;
@@ -55,7 +56,7 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     private static final Log LOGGER = LogFactory.getLog(XFormsProcessorImpl.class);
     private static String APP_INFO = null;
 
-    private static final long serialVersionUID = 140;
+    private static final long serialVersionUID = 1L;
 
     /**
      * The document container object model.
@@ -750,7 +751,13 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
 
     private void ensureContainerNotInitialized() throws XFormsException {
         if (this.container != null && this.container.isModelConstructDone()) {
-            throw new XFormsException("document container already initialized");
+            //check if we've been serialized
+            if(this.getXForms().getDocumentElement().hasAttributeNS(NamespaceConstants.BETTERFORM_NS,"serialized")){
+                LOGGER.debug("FORM WAS SERIALIZED");
+
+            }
+            //if so, remove model event listeners and return else exception
+//            throw new XFormsException("document container already initialized");
         }
     }
 
@@ -773,22 +780,42 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
     }
 
     public void writeExternal(ObjectOutput objectOutput) throws IOException {
-        DefaultSerializer serializer = new DefaultSerializer(this);
-        Document serializedForm = serializer.serialize();
-
-        StringWriter stringWriter = new StringWriter();
-        Transformer transformer = null;
-        StreamResult result = new StreamResult(stringWriter);
-        try {
-            transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.transform(new DOMSource(serializedForm), result);
-        } catch (TransformerConfigurationException e) {
-            throw new IOException("TransformerConfiguration invalid: " + e.getMessage());
-        } catch (TransformerException e) {
-            throw new IOException("Error during serialization transform: " + e.getMessage());
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("serializing XFormsFormsProcessorImpl");
         }
-        objectOutput.writeUTF(stringWriter.getBuffer().toString());
+        try {
+            if (getXForms().getDocumentElement().hasAttribute("bf:serialized")) {
+                objectOutput.writeUTF(DOMUtil.serializeToString( getXForms()));
+            }  else {
+                getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:baseURI",getBaseURI());
+                getXForms().getDocumentElement().setAttributeNS(NamespaceConstants.BETTERFORM_NS,"bf:serialized","true");
+
+                if(LOGGER.isDebugEnabled()){
+                    LOGGER.debug("....::: XForms before writing ::::....");
+                    DOMUtil.prettyPrintDOM(getXForms());
+                }
+
+                DefaultSerializer serializer = new DefaultSerializer(this);
+                Document serializedForm = serializer.serialize();
+
+                StringWriter stringWriter = new StringWriter();
+                Transformer transformer = null;
+                StreamResult result = new StreamResult(stringWriter);
+                try {
+                    transformer = TransformerFactory.newInstance().newTransformer();
+                    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+                    transformer.transform(new DOMSource(serializedForm), result);
+                } catch (TransformerConfigurationException e) {
+                    throw new IOException("TransformerConfiguration invalid: " + e.getMessage());
+                } catch (TransformerException e) {
+                    throw new IOException("Error during serialization transform: " + e.getMessage());
+                }
+                objectOutput.writeUTF(stringWriter.getBuffer().toString());
+            }
+        } catch (XFormsException e) {
+            throw new IOException("baseURI couldn't be set");
+        }
+
         objectOutput.flush();
         objectOutput.close();
 
@@ -813,6 +840,9 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         Document host=null;
         try {
             host = DOMUtil.parseString(read,true,false);
+            String baseURI = host.getDocumentElement().getAttribute("bf:baseURI");
+            setContextParam("betterform.baseURI",baseURI);
+            setBaseURI(baseURI);
             setXForms(host.getDocumentElement());
         } catch (ParserConfigurationException e) {
             throw new IOException("Parser misconfigured: " + e.getMessage());
@@ -821,9 +851,9 @@ public class XFormsProcessorImpl implements XFormsProcessor, Externalizable{
         } catch (XFormsException e) {
             throw new IOException("An XForms error occurred when passing the host document: " + e.getMessage());
         }
-        
     }
 
 }
 
 // end of class
+

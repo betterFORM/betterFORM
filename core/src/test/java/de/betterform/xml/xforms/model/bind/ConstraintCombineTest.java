@@ -13,9 +13,6 @@ import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
 import javax.xml.parsers.DocumentBuilder;

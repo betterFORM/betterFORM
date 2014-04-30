@@ -14,6 +14,8 @@ import org.apache.commons.logging.LogFactory;
 import org.directwebremoting.WebContextFactory;
 import org.w3c.dom.Element;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.transform.TransformerException;
 import java.io.ByteArrayOutputStream;
@@ -30,6 +32,8 @@ import java.io.ByteArrayOutputStream;
 public class FluxModel {
     private static final Log LOGGER = LogFactory.getLog(FluxModel.class);
     private HttpSession session;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
 
 
     /**
@@ -37,7 +41,8 @@ public class FluxModel {
      */
     public FluxModel() {
         session = WebContextFactory.get().getSession(true);
-
+        request = WebContextFactory.get().getHttpServletRequest();
+        response = WebContextFactory.get().getHttpServletResponse();
     }
 
 
@@ -58,7 +63,10 @@ public class FluxModel {
     public static org.w3c.dom.Element getInstanceDocument(String modelId, String instanceId, String sessionKey){
 
         try {
-            return FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).getInstanceDocument(instanceId).getDocumentElement();
+            return FluxUtil.getProcessor(sessionKey,
+                        WebContextFactory.get().getHttpServletRequest(),
+                        WebContextFactory.get().getHttpServletResponse(),
+                        WebContextFactory.get().getSession(true)).getXFormsModel(modelId).getInstanceDocument(instanceId).getDocumentElement();
         } catch (XFormsException e) {
             return DOMUtil.newDocument(false,false).getDocumentElement();
         } catch (FluxException e) {
@@ -69,7 +77,7 @@ public class FluxModel {
     public String getInstanceAsString(String modelId, String instanceId, String sessionKey){
         Element element = null;
         try {
-            element = FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).getInstanceDocument(instanceId).getDocumentElement();
+            element = FluxUtil.getProcessor(sessionKey, request, response, session).getXFormsModel(modelId).getInstanceDocument(instanceId).getDocumentElement();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             DOMUtil.prettyPrintDOM(element,out);
             LOGGER.debug("xml: " + StringEscapeUtils.escapeXml(out.toString()));
@@ -97,7 +105,7 @@ public class FluxModel {
      */
     public void rebuild(String modelId,String sessionKey) throws FluxException {
         try {
-            FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).rebuild();
+            FluxUtil.getProcessor(sessionKey, request, response, session).getXFormsModel(modelId).rebuild();
         } catch (XFormsException e) {
             throw new FluxException(e);
         }
@@ -115,7 +123,7 @@ public class FluxModel {
      */
     public void recalculate(String modelId,String sessionKey) throws FluxException {
         try {
-            FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).recalculate();
+            FluxUtil.getProcessor(sessionKey, request, response, session).getXFormsModel(modelId).recalculate();
         } catch (XFormsException e) {
             throw new FluxException(e);
         }
@@ -133,7 +141,7 @@ public class FluxModel {
      */
     public void revalidate(String modelId,String sessionKey) throws FluxException {
         try {
-            FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).revalidate();
+            FluxUtil.getProcessor(sessionKey, request, response, session).getXFormsModel(modelId).revalidate();
         } catch (XFormsException e) {
             throw new FluxException(e);
         }
@@ -151,7 +159,7 @@ public class FluxModel {
      */
     public void refresh(String modelId,String sessionKey) throws FluxException {
         try {
-            FluxUtil.getProcessor(sessionKey).getXFormsModel(modelId).refresh();
+            FluxUtil.getProcessor(sessionKey, request, response, session).getXFormsModel(modelId).refresh();
         } catch (XFormsException e) {
             throw new FluxException(e);
         }

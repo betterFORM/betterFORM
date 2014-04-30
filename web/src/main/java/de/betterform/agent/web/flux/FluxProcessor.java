@@ -27,7 +27,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -41,11 +41,11 @@ import java.util.Map;
  * @author Joern Turner
  * @version $Id: FluxAdapter.java 2970 2007-10-30 11:25:03Z lars $
  */
-public class FluxProcessor extends WebProcessor {
+public class FluxProcessor extends WebProcessor implements Externalizable {
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private transient EventQueue eventQueue;
-
+    private static final long serialVersionUID = 2L;
 
     public FluxProcessor() {
         super();
@@ -85,6 +85,12 @@ public class FluxProcessor extends WebProcessor {
         this.root.addEventListener(BetterFormEventNames.SWITCH_TOGGLED, this, true);
         this.root.addEventListener(BetterFormEventNames.AVT_CHANGED, this, true);
 		//TODO, see where BetterFormEventNames.SHOW/HIDE should be added? Lars: moved to WebProcessor
+
+        if ("true".equals( getXForms().getDocumentElement().getAttribute("bf:serialized"))) {
+                //String key = getXForms().getDocumentElement().getAttribute("bf:serialized");
+                getXForms().getDocumentElement().removeAttribute("bf:serialized");
+                //setKey(key);
+        }
     }
 
 
@@ -213,8 +219,10 @@ public class FluxProcessor extends WebProcessor {
                             }
                             
                             Element bfData = DOMUtil.getChildElement(control.getElement(), NamespaceConstants.BETTERFORM_PREFIX+":data");
-                            String internalType = bfData.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "type");
-                            xmlEvent.addProperty("type", internalType);
+                            if(bfData != null){
+                                String internalType = bfData.getAttributeNS(NamespaceConstants.BETTERFORM_NS, "type");
+                                xmlEvent.addProperty("type", internalType);
+                            }
                         }
                     }
                     this.eventQueue.add(xmlEvent);
@@ -317,5 +325,36 @@ public class FluxProcessor extends WebProcessor {
     }
 */
 
+    public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("writeExternal this = " + this.xformsProcessor.getBaseURI());
+        }
+        this.xformsProcessor.writeExternal(objectOutput);
+    }
+
+    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
+        this.xformsProcessor.readExternal(objectInput);
+        if(LOGGER.isDebugEnabled()){
+            LOGGER.debug("readExternal this = " + this.xformsProcessor.getBaseURI());
+        }
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        LOGGER.debug("equals");
+        if (that instanceof FluxProcessor) {
+            return this.getKey().equals(((FluxProcessor)that).getKey());
+        }
+
+        return false;
+    }
+
+    /*  TODO: do we need to implement??
+    @Override
+    public int hashCode() {
+        LOGGER.debug("FluxProcessor.hashCode()");
+        return new Long(this.getKey()).intValue();
+    }
+    */
 }
 // end of class

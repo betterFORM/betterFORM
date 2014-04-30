@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
@@ -32,10 +31,10 @@ import java.util.Map;
  * @author joern turner
  */
 public abstract class AbstractProcessorDecorator implements XFormsProcessor, EventListener {
-    protected transient XFormsProcessor xformsProcessor;
+    protected transient XFormsProcessorImpl xformsProcessor;
     protected transient EventTarget root;
-    protected Config configuration;
-    protected String locale = "en";
+    protected transient Config configuration;
+    protected transient String locale = "en";
 
     public AbstractProcessorDecorator() {
         this.xformsProcessor = new XFormsProcessorImpl();
@@ -54,6 +53,13 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
     }
 */
 
+    public XFormsProcessorImpl getXformsProcessor() {
+        return xformsProcessor;
+    }
+
+    public void setXformsProcessor(XFormsProcessor processor){
+        this.xformsProcessor = (XFormsProcessorImpl) processor;
+    }
 
     /**
      * check wether an Event is used in the form being processed. Will return true if any action registers
@@ -169,7 +175,7 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
 
         this.root.addEventListener(BetterFormEventNames.CUSTOM_MIP_CHANGED, this, true);
 
-        if(isDebugOn()){
+        if(configuration.getProperty("betterform.debug-allowed").equals("true")){
             this.root.addEventListener(BetterFormEventNames.INSTANCE_CREATED, this, true);
             this.root.addEventListener(BetterFormEventNames.MODEL_REMOVED, this, true);
         }
@@ -334,15 +340,6 @@ public abstract class AbstractProcessorDecorator implements XFormsProcessor, Eve
 
 
     }
-
-    protected boolean isDebugOn() {
-        return configuration.getProperty("betterform.debug-allowed").equals("true");
-    }
-
-    protected String getUnloadingMessage() {
-        return configuration.getProperty("betterform.unloading-message");
-    }
-
 
     protected boolean eventOptimizationIsDisabled() {
         return configuration.getProperty("betterform.event-optimization-enabled").equals("false");

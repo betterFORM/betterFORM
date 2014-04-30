@@ -49,8 +49,8 @@ public class DefaultConfig extends Config {
 			NodeInfo context = getDocumentElementContext(document);
 			
 			this.properties = load(context, "properties/property", "name", "value");
-			this.useragents = load(context, "useragents/useragent", "name", "processor");
-            this.generators = load (context, "ui-generators/ui-generator","useragent","stylesheet");
+//			this.useragents = load(context, "useragents/useragent", "name", "processor");
+//            this.generators = load (context, "ui-generators/ui-generator","useragent","stylesheet");
 			this.uriResolvers = load(context, "connectors/uri-resolver", "scheme", "class");
 			this.submissionHandlers = load(context, "connectors/submission-handler", "scheme", "class");
 			this.errorMessages = load(context, "error-messages/message", "id", "value");

@@ -4,7 +4,6 @@
  */
 package de.betterform.xml.xforms.ui;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.XFormsElement;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.XMLTestBase;

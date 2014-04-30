@@ -21,7 +21,6 @@ import de.betterform.xml.xforms.model.bind.RefreshView;
 import de.betterform.xml.xforms.ui.BindingElement;
 import de.betterform.xml.xforms.ui.Item;
 import de.betterform.xml.xforms.ui.UIElementState;
-
 import org.apache.commons.lang3.text.WordUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

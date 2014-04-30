@@ -9,13 +9,13 @@ import net.sf.saxon.Configuration;
 import net.sf.saxon.Platform;
 import net.sf.saxon.event.LocationProvider;
 import net.sf.saxon.expr.*;
-import net.sf.saxon.functions.*;
 import net.sf.saxon.expr.instruct.Executable;
 import net.sf.saxon.expr.instruct.LocationMap;
+import net.sf.saxon.functions.*;
 import net.sf.saxon.java.JavaPlatform;
-import net.sf.saxon.om.NamePool;
 import net.sf.saxon.lib.NamespaceConstant;
 import net.sf.saxon.lib.StringCollator;
+import net.sf.saxon.om.NamePool;
 import net.sf.saxon.type.BuiltInAtomicType;
 
 import javax.xml.transform.SourceLocator;

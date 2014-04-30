@@ -5,7 +5,6 @@
 
 package de.betterform.generator;
 
-import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xslt.TransformerService;
 import org.apache.commons.logging.Log;
@@ -65,10 +64,10 @@ public class XSLTGenerator implements UIGenerator {
      */
     public void setInput(Object input) {
         this.source = createInputSource(input);
-        if(LOGGER.isDebugEnabled() && input instanceof Node){
-            LOGGER.debug("XForms DOM received >>>");
-            DOMUtil.prettyPrintDOM((Node) input);
-        }
+//        if(LOGGER.isDebugEnabled() && input instanceof Node){
+//            LOGGER.debug("XForms DOM received >>>");
+//            DOMUtil.prettyPrintDOM((Node) input);
+//        }
     }
 
     /**

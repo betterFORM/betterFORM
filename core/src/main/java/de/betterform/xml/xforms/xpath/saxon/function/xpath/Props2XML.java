@@ -10,11 +10,11 @@ import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.tree.iter.ListIterator;
+import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.tree.iter.ListIterator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

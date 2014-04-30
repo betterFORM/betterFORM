@@ -6,8 +6,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.betterform</groupId>
-    <artifactId>betterform-project</artifactId>
-    <version>5.0rc6</version>
+    <artifactId >betterform-project</artifactId>
+    <version >5.0rc6</version>
     <packaging>pom</packaging>
 
     <name>betterForm Project</name>

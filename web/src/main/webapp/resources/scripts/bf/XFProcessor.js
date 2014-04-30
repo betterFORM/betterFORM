@@ -77,8 +77,17 @@ define(["dojo/_base/declare",
 
             // Browser Detection
             this.userAgent = navigator.userAgent;
+            //this.createCookie();
         },
 
+        createCookie: function() {
+            var date = new Date();
+            date.setTime(date.getTime()+(7*24*60*60*1000));
+            var expires = "; expires="+date.toGMTString();
+            
+            document.cookie = bfSessionKey+"="+this.sessionKey+expires+";";
+        },
+        
         handleUnload:function(evt) {
             // console.debug("XFProcessor.handleUnload Event: ", evt);
             if (this.isDirty && !this.skipshutdown) {

@@ -6,13 +6,14 @@
 
 package de.betterform.agent.web;
 
+import de.betterform.agent.web.cache.XFSessionCache;
+import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.cookie.ClientCookie;
@@ -66,13 +67,12 @@ public class WebUtil {
 
     public static void printSessionKeys(HttpSession session) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("--------------- session dump ---------------");
+            LOGGER.debug("--------------- http session dump ---------------");
             Enumeration keys = session.getAttributeNames();
             if (keys.hasMoreElements()) {
-                LOGGER.debug("--- existing keys in session --- ");
                 while (keys.hasMoreElements()) {
                     String s = (String) keys.nextElement();
-                    LOGGER.debug("existing sessionkey: " + s + ":" + session.getAttribute(s));
+                    LOGGER.debug("sessionkey: " + s + ":" + session.getAttribute(s));
                 }
             } else {
                 LOGGER.debug("--- no keys present in session ---");
@@ -104,7 +104,7 @@ public class WebUtil {
      * @param request the HTTP Request
      * @return the xformsSession for the request
      */
-    public static WebProcessor getWebProcessor(HttpServletRequest request) {
+    public static WebProcessor getWebProcessor(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
 //        String key = request.getParameter("sessionKey");
 //        XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
@@ -114,58 +114,85 @@ public class WebUtil {
             LOGGER.warn("Request " + request + " has no parameter session key");
             return null;
         } else {
-            return getWebProcessor(key);
+            return getWebProcessor(key, request, response, session);
         }
     }
 
-    /**
-     * fetches the XFormsSession from the HTTP Session
-     *
-     * @param request the HTTP Request
-     * @param session the HTTP Session
-     * @return the xformsSession for the request
-     */
-    public static WebProcessor getWebProcessor(HttpServletRequest request, HttpSession session) {
-//        String key = request.getParameter("sessionKey");
-//        XFormsSessionManager manager = (XFormsSessionManager) session.getAttribute(XFormsSessionManager.XFORMS_SESSION_MANAGER);
-//        XFormsSession xFormsSession = manager.getWebProcessor(key);
-        return getWebProcessor(request);
-    }
-
-    public static WebProcessor getWebProcessor(String key) {
+    public static WebProcessor getWebProcessor(String key,
+                                               HttpServletRequest request,
+                                               HttpServletResponse response,
+                                               HttpSession session) {
         if (key == null || key.equals("")) {
             LOGGER.warn("SessionKey is null");
             return null;
         }
 
-        Cache cache = CacheManager.getInstance().getCache("xfSessionCache");
-        if(cache == null || cache.get(key) == null) {
+        org.infinispan.Cache<String, FluxProcessor> sessionCache;
+        try {
+            sessionCache = XFSessionCache.getCache();
+        } catch (XFormsException xfe) {
+              sessionCache = null;
+        }
+
+        if(sessionCache == null || !(sessionCache.containsKey(key)) ) {
             LOGGER.warn("No xformsSession for key " + key + " in Cache");
             return null;
         }
+        WebProcessor processor  = sessionCache.get(key);
 
-        net.sf.ehcache.Element elem = cache.get(key);
-        WebProcessor webProcessor = (WebProcessor) elem.getObjectValue();
-        if (webProcessor == null) {
-            LOGGER.warn("Cached WebProcessor for key '" + key + "' is null");
-            return null;
+        if(processor.getContext()  != null){
+            return  processor;
+        } else{
+            if(LOGGER.isDebugEnabled()){
+                LOGGER.debug("Element is read from disk " +  processor.toString());
+            }
+            //re-initialize transient state
+            processor.setRequest(request);
+            processor.setResponse(response);
+            processor.setHttpSession(session);
+            processor.setKey(key);
+            processor.getHttpRequestHandler();
+            processor.setContext(session.getServletContext());
+
+            try {
+                processor.configure();
+                processor.createUIGenerator();
+                processor.init();
+                return processor;
+            } catch (Exception e) {
+                LOGGER.error("Could not reload xformSession from disk.", e);
+            }
         }
-//        XStream xStream = new XStream();
-//        String xml = xStream.toXML(webProcessor);
-//        LOGGER.debug(xml);
 
-        return webProcessor;
+        return null;
+
     }
 
+    /**
+     * remove session with given key from infinispan cache
+     *
+     * @param key the entry identifier
+     * @return true if session existed and could be removed
+     */
     public static boolean removeSession(String key) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("removing key: '" + key + "' from cache");
         }
-        Cache xfSessionCache = CacheManager.getInstance().getCache("xfSessionCache");
         boolean removedSession = false;
-        if (xfSessionCache != null) {
-            removedSession = xfSessionCache.remove(key);
+
+        try {
+            org.infinispan.Cache<String, FluxProcessor> sessionCache = XFSessionCache.getCache();
+            if (sessionCache != null) {
+                //TODO: rethink ...
+                removedSession = (sessionCache.remove(key)   != null);
+            }
+        } catch (XFormsException xfe) {  }
+
+        if (LOGGER.isDebugEnabled()) {
+            String result = removedSession ? "successful":"unsuccessful";
+            LOGGER.debug("Removal of session '" + key + "' was " + result);
         }
+
         return removedSession;
     }
 
