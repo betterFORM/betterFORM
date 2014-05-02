@@ -403,7 +403,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
                     response.setContentLength(outputStream.toByteArray().length);
                     response.getOutputStream().write(outputStream.toByteArray());
-
                 }
             }
         } catch (IOException e) {
@@ -433,7 +432,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         } else if (BetterFormEventNames.REPLACE_ALL_XFORMS.equals(exitEvent.getType()) ) {
             WebUtil.removeSession(getKey());
             response.sendRedirect(response.encodeRedirectURL((String) exitEvent.getContextInfo(BetterFORMConstants.SUBMISSION_REDIRECT_XFORMS)));
-    } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
+        } else if (BetterFormEventNames.LOAD_URI.equals(exitEvent.getType())) {
+            //todo: this check seems insufficient - should be a load show="replace"
             if (exitEvent.getContextInfo("show") != null) {
                 String loadURI = (String) exitEvent.getContextInfo("uri");
 
@@ -577,11 +577,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
         String selectorPrefix = Config.getInstance().getProperty(HttpRequestHandler.SELECTOR_PREFIX_PROPERTY,
                 HttpRequestHandler.SELECTOR_PREFIX_DEFAULT);
         generator.setParameter("selector-prefix", selectorPrefix);
-
         String removeUploadPrefix = Config.getInstance().getProperty(HttpRequestHandler.REMOVE_UPLOAD_PREFIX_PROPERTY,
                 HttpRequestHandler.REMOVE_UPLOAD_PREFIX_DEFAULT);
         generator.setParameter("remove-upload-prefix", removeUploadPrefix);
-
         String dataPrefix = Config.getInstance().getProperty("betterform.web.dataPrefix");
         generator.setParameter("data-prefix", dataPrefix);
 

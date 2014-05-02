@@ -168,21 +168,6 @@ public class WebUtil {
 
     }
 
-    /*
-    public static void printCache(Cache cache) {
-        if(LOGGER.isDebugEnabled()){
-            LOGGER.debug("---------- ehcache sessions -------------");
-            List keys = cache.getKeys();
-            for (int i = 0; i < keys.size(); i++) {
-                Object o =  keys.get(i);
-                LOGGER.debug("Cache entry found with key: " + o.toString());
-                Object obj= cache.get(o);
-                LOGGER.debug("Cache entry is of type: " + obj.toString());
-            }
-        }
-    }
-    */
-
     /**
      * remove session with given key from infinispan cache
      *

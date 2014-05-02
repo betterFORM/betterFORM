@@ -14,6 +14,7 @@ import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.sxpath.IndependentContext;
+import org.apache.commons.lang3.text.StrSubstitutor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -104,8 +105,9 @@ public class DefaultConfig extends Config {
 		for(int i = 0; i < nodeset.size(); ++i) {
 			Element element = (Element) XPathUtil.getAsNode(nodeset, i + 1);
 
-			map.put(element.getAttribute(nameAttribute), element
-					.getAttribute(valueAttribute));
+			String attributeValue = StrSubstitutor.replaceSystemProperties(element.getAttribute(valueAttribute));
+
+			map.put(element.getAttribute(nameAttribute), attributeValue);
 		}
 
 		return map;

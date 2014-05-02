@@ -425,7 +425,6 @@ Error: eXist is not installed in ${eXist.home}.
         </ant>
 
         <move file="${betterFORM.extension.target.web-inf}/lib/betterform.jar" tofile="${betterFORM.libs}/betterform.jar" overwrite="true"/>
-        <move file="${betterFORM.extension.target.web-inf}/classes/ehcache.xml" todir="${eXist.web.inf}/classes/" overwrite="true"/>
 
 
         <echo>

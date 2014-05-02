@@ -151,7 +151,7 @@
         compressing classes plus resources into a single jar
         ************************************************************************************
         </echo>
-        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/ehcache.xml"/>
+        <jar basedir="${target}/classes" compress="true" jarfile="${target}/betterform.jar" update="true" excludes="**/infinispan.xml"/>
 
         <echo>
             ************************************************************************************
@@ -216,7 +216,7 @@
         <filter token="APPENDER" value="${config.log4j.appender}"/>
         <filter token="ROOT_LOG_LEVEL" value="${config.log4j.loglevel.root}"/>
         <filter token="BETTERFORM_LOG_LEVEL" value="${config.log4j.loglevel.betterform}"/>
-        <filter token="EHCACHE_LOG_LEVEL" value="${config.log4j.loglevel.ehcache}"/>
+        <filter token="CACHE_LOG_LEVEL" value="${config.log4j.loglevel.cache}"/>
         <filter token="DWR_LOG_LEVEL" value="${config.log4j.loglevel.dwr}"/>
 
         <copy description="filter log4j.xml"
@@ -267,25 +267,28 @@
             <fileset dir="${src.webapp.dir}">
                 <exclude name="WEB-INF/*.template.xml"/>
                 <exclude name="META-INF/context.xml"/>
+                <exclude name="**/resources/**"/>
+                <exclude name="**/images/**"/>
                 <exclude name="**/images/**"/>
                 <exclude name="**/forms/**"/>
             </fileset>
         </copy>
-        <copy description="copy WEB-INF dir"
+
+        <!-- copy description="copy WEB-INF dir"
               todir="${webapp.dir}"
               overwrite="true"
               filtering="false">
             <fileset dir="${src.webapp.dir}">
                 <include name="**/images/**"/>
-		<exclude name="**/forms/**"/>
+		        <exclude name="**/forms/**"/>
             </fileset>
-        </copy>
+        </copy-->
 
 
-        <mkdir dir="${webapp.dir}/resources"/>
+        <!-- mkdir dir="${webapp.dir}/resources"/>
         <copy description="copy resources dir"
               todir="${webapp.dir}/resources"
-              file="${resource.src.dir}/main/webapp/resources/images/blank.gif"/>
+              file="${resource.src.dir}/main/webapp/resources/images/blank.gif"/-->
     </target>
 
     <target name="copy-libs" unless="should.not.copy.libs">
@@ -294,6 +297,7 @@
         copying libs betterFORM is dependent on (core + web) ...
         ************************************************************************************
         </echo>
+
         <mkdir dir="${webapp.dir}/WEB-INF/lib"/>
         <copy todir="${webapp.dir}/WEB-INF/lib" description="copy dependent libraries from Core">
             <fileset dir="${core.dir}/src/main/lib" excludes="**/betterform-core"/>
@@ -305,6 +309,8 @@
 			-->
             <fileset dir="${basedir}/src/main/lib" excludes="**/${core.app.name}-${app.version}.jar">
                 <include name="dwr*.jar"/>
+                <include name="infinispan-*.jar"/>
+                <include name="jboss-*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -313,14 +319,19 @@
             depends="exploded-webapp-base"
             description="deploys classes and resources tree to WEB-INF/classes">
 
-        <delete dir="${webapp.dir}/WEB-INF/lib/betterform.jar"/>
         <antcall target="compile"/>
 
         <move file="${target}/classes"
               todir="${webapp.dir}/WEB-INF"
               description="moving betterFORM classes to WEB-INF/classes"/>
 
+        <move file="${webapp.dir}/META-INF/infinispan.xml"
+              todir="${webapp.dir}/WEB-INF/classes"
+              description="moving infinispan.xml to WEB-INF/classes"
+              failonerror="true"/>
+
         <antcall target="copy-libs"/>
+
 
         <echo>
         ************************************************************************************
@@ -336,6 +347,12 @@
         <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
+
+        <!-- remove unwanted resources -->
+        <delete file="${webapp.dir}/WEB-INF/lib/${core.app.name}-${app.version.number}.jar"  failonerror="false"/>
+        <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
+        <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
+
     </target>
 
     <target name="deploy-exploded-resources" description="only deployes resources in src/main/webapp/resources">
@@ -367,7 +384,7 @@
         ************************************************************************************
         </echo>
         <copy todir="${webapp.dir}/WEB-INF/lib" file="${target}/betterform.jar"/>
-        <copy todir="${webapp.dir}/WEB-INF/classes" file="${target}/classes/ehcache.xml"/>
+        <copy todir="${webapp.dir}/WEB-INF/classes" file="${target}/classes/infinispan.xml"/>
     </target>
 
     <target name="deploy-forms" description="deploy the forms to target">

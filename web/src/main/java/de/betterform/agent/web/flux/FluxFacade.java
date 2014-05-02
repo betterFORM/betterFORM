@@ -37,7 +37,6 @@ import java.util.*;
  * @version $Id: FluxFacade.java 2875 2007-09-28 09:43:30Z lars $
  */
 public class FluxFacade {
-
     //this is a custom event to activate a trigger in XForms.
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private static final Log LOGGER = LogFactory.getLog(FluxFacade.class);
@@ -151,7 +150,7 @@ public class FluxFacade {
         }
         UIEvent event = new DefaultUIEventImpl();
         event.initEvent("SETVALUE", id, value);
-        List results;
+        List results = null;
         try {
             results = handleUIEvent(event, sessionKey);
         } catch (FluxException e) {
@@ -237,6 +236,7 @@ public class FluxFacade {
      * param is the upload control id and second will be the current progress of
      * the upload.
      */
+
     public List<XMLEvent> fetchProgress(String id, String filename, String sessionKey) {
         String progress;
         UploadInfo uploadInfo;
@@ -247,6 +247,7 @@ public class FluxFacade {
             if (uploadInfo.isInProgress()) {
                 double p = uploadInfo.getBytesRead() / uploadInfo.getTotalSize();
 
+                progress = p + "";
                 float total = uploadInfo.getTotalSize();
                 float read = uploadInfo.getBytesRead();
                 int iProgress = (int) Math.ceil((read / total) * 100);
