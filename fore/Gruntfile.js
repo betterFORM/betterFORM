@@ -27,6 +27,7 @@ module.exports = function(grunt) {
         webDevTarget: foreConfig.webModule + foreConfig.devTarget,
         webPagesTarget: foreConfig.webModule + foreConfig.pagesTarget,
         elementsTarget: foreConfig.webModule + foreConfig.devTarget + foreConfig.elements,
+        webforms:foreConfig.webModule + '/src/main/webapp/forms',
 
 
         //WATCH tasks
@@ -34,6 +35,10 @@ module.exports = function(grunt) {
             options: {
                 nospawn: true,
                 livereload: true
+            },
+            globalScripts:{
+                files: ['<%= fore.srcDir %>/bower_components/jquery/dist/*','<%= fore.srcDir %>/bower_components/platform/*','<%= fore.srcDir %>/bower_components/polymer/*'],
+                tasks: ['rsync:developmentScripts']
             },
             elementsScripts: {
                 files: ['<%= fore.srcDir %>/elements/**/*.js'],
@@ -55,6 +60,10 @@ module.exports = function(grunt) {
                 files: ['<%= fore.srcDir %>/pages/**/*'],
                 tasks: ['rsync:developmentPages']
             },
+            forms:{
+                files:['<%=webforms%>/**'],
+                tasks:['rsync:forms']
+            },
             html: {
                 files: ['<%= fore.srcDir %>/*.html']
             },
@@ -75,7 +84,7 @@ module.exports = function(grunt) {
             developmentScripts: {
                 options: {
                     // !!! The last "/" is IMPORTANT here!!!!
-                    src: '<%= fore.srcDir %>/bower_components',
+                    src: ['<%= fore.srcDir %>/bower_components'],
                     dest: '<%= webDevTarget %>'
                 }
             },
@@ -100,6 +109,12 @@ module.exports = function(grunt) {
             developmentPages: {
                 options: {
                     src: '<%= fore.srcDir %>/pages',
+                    dest: '<%= webPagesTarget %>'
+                }
+            },
+            forms:{
+                options: {
+                    src: '<%= webforms %>',
                     dest: '<%= webPagesTarget %>'
                 }
             },

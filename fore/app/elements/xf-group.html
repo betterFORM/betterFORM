@@ -1,13 +1,13 @@
-<polymer-element name="xf-input">
-    <template>
+<polymer-element name="xf-group">
+<template>
         <!-- not much here yet - used it for alerts, hints, helps ??? -->
-        <input type="text" name="foo" class="polymer">
+        <div><content></content></div>
     </template>
     <script>
         Polymer('xf-input', {
 
             ready:function(){
-                console.log("xf -input created",this.getAttribute("id"));
+                console.log("xf-input created",this.getAttribute("id"));
             }
 
         });
