@@ -134,7 +134,7 @@
             <xsl:value-of select="$CR"/>
 
 
-            <link rel="import" href="{$contextroot}/bfResources/elements/fore-processor.html"><xsl:text> </xsl:text></link>
+            <link rel="import" href="{$contextroot}/bfResources/elements/xf-processor.html"><xsl:text> </xsl:text></link>
             <link rel="import" href="{$contextroot}/bfResources/elements/xf-state.html"><xsl:text> </xsl:text></link>
 
 
@@ -149,15 +149,18 @@
         <xsl:element name="body">
             <xsl:copy-of select="@*" copy-namespaces="no"/>
 
-            <fore-processor id="fore">
+
+            <xf-processor id="fore">
                 <xsl:for-each select="//bf:data">
-                    <xf-state>
+                    <xsl:element name="xf-state">
                         <xsl:attribute name="for"><xsl:value-of select="../@id"/></xsl:attribute>
-                        <xsl:copy-of select="@*" copy-namespaces="no"/>
+                        <xsl:for-each select="@*">
+                            <xsl:attribute name="{local-name(.)}" select="."/>
+                        </xsl:for-each>
                         <xsl:copy-of select="text()" copy-namespaces="no"/>
-                    </xf-state>
+                    </xsl:element>
                 </xsl:for-each>
-            </fore-processor>
+            </xf-processor>
             <xsl:apply-templates/>
         </xsl:element>
 
@@ -230,6 +233,7 @@
             <xsl:copy-of select="@*[name() != 'appearance']" copy-namespaces="no"/>
 -->
             <xsl:copy-of select="@*" copy-namespaces="no"/>
+
             <xsl:apply-templates/>
         </xsl:element>
     </xsl:template>

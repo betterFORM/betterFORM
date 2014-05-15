@@ -1,25 +1,17 @@
 <polymer-element name="xf-state">
-    <template>
-        <div>
-            <span id="idref"></span>
-             <span id="enabled"></span>
-             <span id="readonly"></span>
-             <span id="required"></span>
-             <span id="valid"></span>
-             <span id="type"></span>
-        </div>
-    </template>
     <script>
         Polymer('xf-state', {
 
             ready:function(){
                 console.log("xf-state created",this.getAttribute("id"));
+/*
                 this.$.idref.innerHTML = "id: " + this.getAttribute("for");
                 this.$.enabled.innerHTML = "enabled: " + this.getAttribute("enabled");
                 this.$.readonly.innerHTML = "readonly: " +this.getAttribute("readonly");
                 this.$.required.innerHTML = "required: " + this.getAttribute("required");
                 this.$.valid.innerHTML = "valid: " + this.getAttribute("valid");
                 this.$.type.innerHTML = "type: " + this.getAttribute("type");
+*/
 
             }
 
