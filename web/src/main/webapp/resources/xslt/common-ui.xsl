@@ -258,11 +258,11 @@
 
     <xsl:template name="getType">
         <xsl:choose>
-            <xsl:when test="contains(bf:data/@bf:type,':')">
-                <xsl:value-of select="substring-after(bf:data/@bf:type,':')"/>
+            <xsl:when test="contains(bf:data/@type,':')">
+                <xsl:value-of select="substring-after(bf:data/@type,':')"/>
             </xsl:when>
-            <xsl:when test="bf:data/@bf:type">
-                <xsl:value-of select="bf:data/@bf:type"/>
+            <xsl:when test="bf:data/@type">
+                <xsl:value-of select="bf:data/@type"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -339,7 +339,7 @@
             <xsl:choose>
                 <xsl:when test="boolean($limited)">
                     <xsl:choose>
-                        <xsl:when test="bf:data/@bf:enabled='false'">
+                        <xsl:when test="bf:data/@enabled='false'">
                             <xsl:text>xfDisabled</xsl:text>
                         </xsl:when>
                         <xsl:otherwise>
@@ -350,7 +350,7 @@
                 <xsl:otherwise>
                     <xsl:variable name="enabled">
                         <xsl:choose>
-                            <xsl:when test="bf:data/@bf:enabled='false'">
+                            <xsl:when test="bf:data/@enabled='false'">
                                 <xsl:text>xfDisabled</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
@@ -361,7 +361,7 @@
 
                     <xsl:variable name="readonly">
                         <xsl:choose>
-                            <xsl:when test="bf:data/@bf:readonly='true'">
+                            <xsl:when test="bf:data/@readonly='true'">
                                 <xsl:text>xfReadOnly</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
@@ -372,7 +372,7 @@
 
                     <xsl:variable name="required">
                         <xsl:choose>
-                            <xsl:when test="bf:data/@bf:required='true'">
+                            <xsl:when test="bf:data/@required='true'">
                                 <xsl:text>xfRequired</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>
@@ -383,7 +383,7 @@
 
                     <xsl:variable name="valid">
                         <xsl:choose>
-                            <xsl:when test="bf:data/@bf:valid='false'">
+                            <xsl:when test="bf:data/@valid='false'">
                                 <xsl:text>xfInvalid</xsl:text>
                             </xsl:when>
                             <xsl:otherwise>

@@ -586,12 +586,12 @@
         <div id="{@id}" class="{$control-classes}">
 
             <xsl:call-template name="copy-style-attribute"/>
-            <xsl:if test="@bf:incremental-delay">
-                <xsl:attribute name="bf:incremental-delay" select="@bf:incremental-delay"/>
+            <xsl:if test="@incremental-delay">
+                <xsl:attribute name="bf:incremental-delay" select="@incremental-delay"/>
             </xsl:if>
 
-            <xsl:if test="exists(@bf:name)">
-                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            <xsl:if test="exists(@name)">
+                <xsl:attribute name="data-bf-name" select="@name"/>
             </xsl:if>
 
             <label for="{@id}-value" id="{@id}-label" class="{$label-classes}">
@@ -628,8 +628,8 @@
         -->
         <div id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
-            <xsl:if test="exists(@bf:name)">
-                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            <xsl:if test="exists(@name)">
+                <xsl:attribute name="data-bf-name" select="@name"/>
             </xsl:if>
 
 
@@ -661,8 +661,8 @@
 
         <div id="{$id}" class="{$control-classes}">
             <xsl:call-template name="copy-style-attribute"/>
-            <xsl:if test="exists(@bf:name)">
-                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            <xsl:if test="exists(@name)">
+                <xsl:attribute name="data-bf-name" select="@name"/>
             </xsl:if>
 
 
@@ -691,8 +691,8 @@
         </xsl:variable>
 
         <div id="{@id}" class="{$control-classes}">
-            <xsl:if test="exists(@bf:name)">
-                <xsl:attribute name="data-bf-name" select="@bf:name"/>
+            <xsl:if test="exists(@name)">
+                <xsl:attribute name="data-bf-name" select="@name"/>
             </xsl:if>
 
             <xsl:call-template name="trigger"/>

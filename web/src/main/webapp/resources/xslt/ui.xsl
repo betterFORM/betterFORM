@@ -447,7 +447,7 @@
     </xsl:template>
 
     <!-- ### SELECTED CASE ### -->
-    <xsl:template match="xf:case[bf:data/@bf:selected='true']" name="selected-case">
+    <xsl:template match="xf:case[bf:data/@selected='true']" name="selected-case">
         <xsl:variable name="case-id" select="@id"/>
         <xsl:variable name="case-classes" select="'xfCase xfSelectedCase'"/>
 

@@ -35,7 +35,7 @@
     -->
     <xsl:template match="xf:repeat" name="repeat">
         <xsl:variable name="repeat-id" select="@id"/>
-        <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
+        <xsl:variable name="repeat-index" select="bf:data/@index"/>
 
         <xsl:variable name="repeat-classes">
             <xsl:call-template name="assemble-compound-classes">
@@ -256,7 +256,7 @@
     </xsl:template>
 
 
-    <xsl:template match="xf:case[bf:data/@bf:selected='true']"
+    <xsl:template match="xf:case[bf:data/@selected='true']"
                   mode="repeated-full-prototype"
                   priority="10">
         <xsl:variable name="case-id" select="@id"/>
@@ -412,7 +412,7 @@
 
     <xsl:template match="xf:repeat[@appearance='compact']" name="compact-repeat">
         <xsl:variable name="repeat-id" select="@id"/>
-        <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
+        <xsl:variable name="repeat-index" select="bf:data/@index"/>
         <xsl:variable name="repeat-classes">
             <xsl:call-template name="assemble-compound-classes">
                 <xsl:with-param name="appearance" select="'compact'"/>
@@ -530,7 +530,7 @@
                 <xsl:for-each select="xf:*">
                     <xsl:variable name="col-classes">
                         <xsl:choose>
-                            <xsl:when test="./bf:data/@bf:enabled='false'">
+                            <xsl:when test="./bf:data/@enabled='false'">
                                 <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position(),' ','xfDisabled')"/>
                             </xsl:when>
                             <xsl:otherwise>
@@ -557,7 +557,7 @@
         </xsl:variable>
 
         <xsl:variable name="incrementaldelay">
-            <xsl:value-of select="if (exists(@bf:incremental-delay)) then @bf:incremental-delay else 'undef'"/>
+            <xsl:value-of select="if (exists(@incremental-delay)) then @incremental-delay else 'undef'"/>
         </xsl:variable>
 
         <xsl:element name="span">
@@ -878,7 +878,7 @@
         </div>
     </xsl:template>
 
-    <xsl:template match="xf:case[bf:data/@bf:selected='true']" mode="repeated-compact-prototype" priority="10">
+    <xsl:template match="xf:case[bf:data/@selected='true']" mode="repeated-compact-prototype" priority="10">
         <xsl:variable name="case-id" select="@id"/>
         <xsl:variable name="case-classes" select="'xfCase xfSelectedCase'"/>
 
@@ -926,7 +926,7 @@
 <!--
             <xsl:variable name="col-classes">
                 <xsl:choose>
-                    <xsl:when test="./bf:data/@bf:enabled='false'">
+                    <xsl:when test="./bf:data/@enabled='false'">
                         <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position(),' ','xfDisabled')"/>
                     </xsl:when>
                     <xsl:otherwise>
@@ -1009,7 +1009,7 @@
 
     <xsl:template match="xhtml:table[exists(xhtml:tbody[@xf:repeat-nodeset]/xf:group[count(xhtml:tr) &gt;= 1])]" priority="10" name="repeat-attribute">
         <xsl:variable name="repeat-id" select="xhtml:tbody/@id"/>
-        <xsl:variable name="repeat-index" select="xhtml:tbody/bf:data/@bf:index"/>
+        <xsl:variable name="repeat-index" select="xhtml:tbody/bf:data/@index"/>
         <xsl:variable name="repeat-classes">
             <xsl:call-template name="assemble-compound-classes"/>
         </xsl:variable>
@@ -1070,7 +1070,7 @@
 
     <xsl:template match="*[@xf:repeat-bind|@xf:repeat-ref|@xf:repeat-nodeset]">
         <xsl:variable name="repeat-id" select="@id"/>
-        <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
+        <xsl:variable name="repeat-index" select="bf:data/@index"/>
         <xsl:variable name="repeat-classes">
             <xsl:call-template name="assemble-compound-classes"/>
         </xsl:variable>
@@ -1127,7 +1127,7 @@
         <xsl:param name="id"/>
         <xsl:variable name="col-classes">
             <xsl:choose>
-                <xsl:when test="./bf:data/@bf:enabled='false'">
+                <xsl:when test="./bf:data/@enabled='false'">
                     <xsl:value-of select="concat('appBfTableCol-', position(), ' bfTableCol-',position(),' ','xfDisabled')"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -1148,7 +1148,7 @@
     <!--
         <xsl:template match="xf:repeat[@appearance='caRepeatedTab']">
             <xsl:variable name="repeat-id" select="@id"/>
-            <xsl:variable name="repeat-index" select="bf:data/@bf:index"/>
+            <xsl:variable name="repeat-index" select="bf:data/@index"/>
             <xsl:variable name="repeat-classes">
                 <xsl:call-template name="assemble-compound-classes">
                     <xsl:with-param name="appearance" select="'caObjectContainer'"/>

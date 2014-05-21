@@ -283,7 +283,7 @@
         <xsl:apply-templates/>
 
         <!-- check for requiredness -->
-        <xsl:if test="../bf:data/@bf:required='true'"><span class="required-symbol">*</span></xsl:if>
+        <xsl:if test="../bf:data/@required='true'"><span class="required-symbol">*</span></xsl:if>
     </xsl:template>
 
     <!-- ### handle hint ### -->
@@ -314,7 +314,7 @@
     </xsl:template>
 
     <!-- ### handle explicitely enabled alert ### -->
-    <!--    <xsl:template match="xf:alert[../bf:data/@bf:valid='false']">-->
+    <!--    <xsl:template match="xf:alert[../bf:data/@valid='false']">-->
     <xsl:template match="xf:alert">
         <xsl:choose>
             <xsl:when test="$CSS-managed-alerts='true'">
@@ -323,7 +323,7 @@
                 </span>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:if test="../bf:data/@bf:valid='false'">
+                <xsl:if test="../bf:data/@valid='false'">
                     <span id="{../@id}-alert" class="alert">
                         <xsl:value-of select="."/>
                     </span>

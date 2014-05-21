@@ -56,7 +56,7 @@
                         class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
+                    <xsl:if test="bf:data/@readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <xsl:if test="bf:data/text()='true'">
@@ -97,7 +97,7 @@
                         tabindex="{$navindex}"
                         placeholder="{xf:hint}"
                         value="{bf:data/text()}">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
+                    <xsl:if test="bf:data/@readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <xsl:apply-templates select="@*" mode="copy-foreign-attributes"/>
@@ -126,7 +126,7 @@
                 tabindex="{$navindex}"
                 placeholder="{xf:hint}"
                 value="{bf:data/text()}">
-            <xsl:if test="bf:data/@bf:readonly='true'">
+            <xsl:if test="bf:data/@readonly='true'">
                 <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
             <xsl:for-each select="@*[not(local-name(.) = 'ref' or local-name(.) = 'style' or local-name(.) = 'id' or local-name(.) = 'class' or local-name(.) = 'placeholder')]">
@@ -145,9 +145,9 @@
         <xsl:variable name="dataBfParams">
             <xsl:choose>
                 <xsl:when test="exists(@data-bf-params) and string-length(@data-bf-params) &gt; 0">
-                    <xsl:value-of select="@data-bf-params"/>,value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'
+                    <xsl:value-of select="@data-bf-params"/>,value:'<xsl:value-of select="bf:data/@schema-value"/>'
                 </xsl:when>
-                <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'
+                <xsl:otherwise>value:'<xsl:value-of select="bf:data/@schema-value"/>'
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -159,7 +159,7 @@
                 data-bf-params="{$dataBfParams}"
                 placeholder="{xf:hint/text()}"
                 value="{bf:data/text()}">
-            <xsl:if test="bf:data/@bf:readonly='true'">
+            <xsl:if test="bf:data/@readonly='true'">
                 <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
             <xsl:apply-templates select="@*" mode="copy-foreign-attributes"/>
@@ -275,7 +275,7 @@
                 data-bf-params="{$dataBfParam}"
                 tabindex="{$navindex}"
                 title="{xf:hint/text()}">
-            <xsl:if test="bf:data/@bf:readonly='true'">
+            <xsl:if test="bf:data/@readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
             </xsl:if>
         </input>
@@ -313,7 +313,7 @@
             <xsl:if test="$maxlength">
                 <xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
             </xsl:if>
-            <xsl:if test="bf:data/@bf:readonly='true'">
+            <xsl:if test="bf:data/@readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
             </xsl:if>
         </input>
@@ -357,8 +357,8 @@
             <xsl:when test="@appearance='compact'">
                 <xsl:variable name="dataBfParam">
                     <xsl:choose>
-                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
-                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@schema-value"/>',selection:'open',autocomplete:true</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@schema-value"/>'</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
                 <select id="{$id}-value"
@@ -393,7 +393,7 @@
             <xsl:when test="@appearance='full'">
                 <span id="{$id}-value"
                       class="{$widgetClasses}"
-                      data-bf-params="value:'{bf:data/@bf:schema-value}'">
+                      data-bf-params="value:'{bf:data/@schema-value}'">
                     <xsl:call-template name="build-radiobuttons">
                         <xsl:with-param name="id" select="$id"/>
                         <xsl:with-param name="name" select="$name"/>
@@ -428,8 +428,8 @@
 <!--            <span class="select1wrapper">-->
                 <xsl:variable name="dataBfParam">
                     <xsl:choose>
-                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open',autocomplete:true</xsl:when>
-                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@schema-value"/>',selection:'open',autocomplete:true</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@schema-value"/>'</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
 
@@ -473,7 +473,7 @@
                       name="{$name}"
                       class="{$widgetClasses} bfCheckBoxGroup"
                       title="{xf:hint/text()}"
-                      data-bf-params="value:'{bf:data/@bf:schema-value}'"
+                      data-bf-params="value:'{bf:data/@schema-value}'"
                       tabindex="{$navindex}">
                     <xsl:for-each select="$parent/xf:item|$parent/xf:choices|$parent/xf:itemset">
                         <xsl:call-template name="build-checkboxes-list">
@@ -505,8 +505,8 @@
             <xsl:otherwise>
                 <xsl:variable name="dataBfParam">
                     <xsl:choose>
-                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@bf:schema-value"/>',selection:'open'</xsl:when>
-                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@bf:schema-value"/>'</xsl:otherwise>
+                        <xsl:when test="$isOpenSelection">value:'<xsl:value-of select="bf:data/@schema-value"/>',selection:'open'</xsl:when>
+                        <xsl:otherwise>value:'<xsl:value-of select="bf:data/@schema-value"/>'</xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
 
@@ -548,7 +548,7 @@
                     placeholder="{normalize-space(xf:hint)}"
                     rows="{$rows}"
                     cols="{$cols}">
-            <xsl:if test="bf:data/@bf:readonly='true'">
+            <xsl:if test="bf:data/@readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
             </xsl:if>
             <xsl:value-of select="bf:data/text()"/>
@@ -593,7 +593,7 @@
                     title="{xf:hint/text()}"
                     type="submit"
                     value="{$label}">
-                <xsl:if test="bf:data/@bf:readonly='true'">
+                <xsl:if test="bf:data/@readonly='true'">
                     <xsl:attribute name="readonly">readonly</xsl:attribute>
                 </xsl:if>
             </input>
@@ -630,7 +630,7 @@
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
                         type="button">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
+                    <xsl:if test="bf:data/@readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <img src="{@src}" alt="image"/>
@@ -643,7 +643,7 @@
                         class="{$widgetClasses}"
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}">
-                    <xsl:if test="bf:data/@bf:readonly='true'">
+                    <xsl:if test="bf:data/@readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <xsl:call-template name="create-label">
@@ -658,7 +658,7 @@
                         tabindex="{$navindex}"
                         title="{xf:hint/text()}"
                         >
-                    <xsl:if test="bf:data/@bf:readonly='true'">
+                    <xsl:if test="bf:data/@readonly='true'">
                         <xsl:attribute name="disabled">disabled</xsl:attribute>
                     </xsl:if>
                     <!-- todo: does this still apply? -->
@@ -707,7 +707,7 @@
                 title="{xf:hint/text()}"
                 type="file"
                 value="">
-            <xsl:if test="bf:data/@bf:readonly='true'">
+            <xsl:if test="bf:data/@readonly='true'">
                 <xsl:attribute name="readonly">readonly</xsl:attribute>
             </xsl:if>
         </input>
@@ -761,7 +761,7 @@
         </xsl:if>
 		<!-- add an empty item, because otherwise deselection is not possible -->
 <!--
-        <xsl:if test="$parent/bf:data/@bf:required='false'">
+        <xsl:if test="$parent/bf:data/@required='false'">
 		<option value="">
 			<xsl:if test="string-length($parent/bf:data/text()) = 0">
 				<xsl:attribute name="selected">selected</xsl:attribute>
@@ -987,7 +987,7 @@
             </input>
 
             <label id="{@id}-label" for="{@id}-value" class="xfCheckBoxLabel">
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                <xsl:if test="$parent/bf:data/@readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:call-template name="create-label">
@@ -1014,7 +1014,7 @@
             		</xsl:otherwise>
            	    </xsl:choose>
                 <xsl:attribute name="title"/>
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                <xsl:if test="$parent/bf:data/@readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:if test="@selected='true'">
@@ -1023,7 +1023,7 @@
                 <xsl:text> </xsl:text>
             </input>
             <span id="{@item-id}-label" class="xfLabel">
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                <xsl:if test="$parent/bf:data/@readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:call-template name="create-label">
@@ -1162,7 +1162,7 @@
                 </xsl:attribute>
             </input>
             <label id="{@id}-label" for="{@id}-value" class="xfRadioLabel">
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                <xsl:if test="$parent/bf:data/@readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:value-of select="$label"/>
@@ -1193,7 +1193,7 @@
                 <xsl:attribute name="title"/>
 
 
-              <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+              <xsl:if test="$parent/bf:data/@readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:if test="@selected='true'">
@@ -1203,7 +1203,7 @@
                 <xsl:attribute name="onkeydown">DWRUtil.onReturn(event, submitFunction);</xsl:attribute>
             </input>
             <span id="{$item-id}-label" class="xfLabel">
-                <xsl:if test="$parent/bf:data/@bf:readonly='true'">
+                <xsl:if test="$parent/bf:data/@readonly='true'">
                     <xsl:attribute name="disabled">disabled</xsl:attribute>
                 </xsl:if>
                 <xsl:message>Fix this for internationalization</xsl:message>
