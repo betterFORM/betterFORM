@@ -384,7 +384,7 @@
         ************************************************************************************
         </echo>
         <copy todir="${webapp.dir}/WEB-INF/lib" file="${target}/betterform.jar"/>
-        <copy todir="${webapp.dir}/WEB-INF/classes" file="${target}/classes/infinispan.xml"/>
+        <move todir="${webapp.dir}/WEB-INF/classes" file="${webapp.dir}/META-INF/infinispan.xml"/>
     </target>
 
     <target name="deploy-forms" description="deploy the forms to target">
