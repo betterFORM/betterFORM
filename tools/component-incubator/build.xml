@@ -15,9 +15,14 @@
     <xmlproperty file="../../build.properties.xml"
             semanticAttributes="true" keepRoot="false"/>
 
-
-    <target name="transform2WebComponents" description="transforms xhtml/xforms to html5 web components">
+    <target name="prepare">
         <delete dir="${basedir}/target"/>
+        <copy todir="${basedir}/target/components">
+            <fileset file="${web.dir}/src/main/webapp/components/**" />
+        </copy>
+    </target>
+
+    <target name="transform2WebComponents" depends="prepare" description="transforms xhtml/xforms to html5 web components">
         <xslt basedir="${basedir}"
 
                 destdir="${basedir}/target"

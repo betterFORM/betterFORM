@@ -15,6 +15,7 @@ import de.betterform.generator.UIGenerator;
 import de.betterform.generator.XSLTGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.ns.NamespaceConstants;
@@ -399,6 +400,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
+                    DOMUtil.prettyPrintDOM(this.xformsProcessor.getXForms());
                     generateUI(this.xformsProcessor.getXForms(), outputStream);
 
                     response.setContentLength(outputStream.toByteArray().length);
@@ -556,6 +558,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         XSLTGenerator generator = WebFactory.setupTransformer(uri,getContext());
         generator.setParameter("sessionKey", getKey());
         generator.setParameter("baseURI", getBaseURI());
+        generator.setParameter("realPath", context.getRealPath("/"));
         generator.setParameter("locale", locale);
         generator.setParameter("user-agent", request.getHeader("User-Agent"));
         generator.setParameter("action-url", getActionURL()); //todo: check this
@@ -591,6 +594,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         this.uiGenerator = generator;
         //store UIGenerator in context map of processor for use with load embed
         setContextParam(UIGENERATOR, this.uiGenerator);
+
     }
 
     private void doIncludes() {

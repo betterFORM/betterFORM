@@ -1,0 +1,8 @@
+.error{
+    background: red;
+    width: 200px;
+    text-align: center;
+}
+.error:after{
+    content:'unknown component';
+}

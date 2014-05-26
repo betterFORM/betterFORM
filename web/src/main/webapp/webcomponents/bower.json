@@ -1,0 +1,9 @@
+{
+  "name": "fore",
+  "version": "0.0.0",
+  "dependencies": {
+    "x-tag-core": "~0.9.7"
+  },
+  "devDependencies": {
+  }
+}

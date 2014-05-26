@@ -79,9 +79,9 @@ public class UIElementStateUtil {
      */
     public static void setStateAttribute(Element element, String name, String value) {
         if (value != null) {
-            element.setAttributeNS(NamespaceConstants.BETTERFORM_NS, name, value);
+            element.setAttribute( name, value);
         } else {
-            element.removeAttributeNS(NamespaceConstants.BETTERFORM_NS, name);
+            element.removeAttribute( name);
         }
     }
 
