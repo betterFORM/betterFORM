@@ -27,20 +27,20 @@ public class CrossModelSubmissionTest extends BetterFormTestCase {
 
     public void testCrossModelSubmission() throws Exception{
         assertEquals("", "false", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[1]/bf:data"));
-        assertEquals("", "2009-09-09", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[2]/bf:data/@bf:schema-value"));
+        assertEquals("", "2009-09-09", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[2]/bf:data/@schema-value"));
         assertEquals("", "item instance 2", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[3]/bf:data"));
 
         this.processor.dispatch("trigger-cross-model-submission-1", DOMEventNames.ACTIVATE);
         // DOMUtil.prettyPrintDOM(this.processor.getXForms());
         // dump(((XFormsProcessorImpl)processor).getContainer().getModel("model-2").getDefaultInstance().getInstanceDocument());
         assertEquals("", "true", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[1]/bf:data"));
-        assertEquals("", "2001-01-01", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[2]/bf:data/@bf:schema-value"));
+        assertEquals("", "2001-01-01", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[2]/bf:data/@schema-value"));
         assertEquals("", "item instance 1", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[3]/bf:data"));
     }
 
     public void testCrossModelSubmissionWithTarget() throws Exception{        
         assertEquals("", "false", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[1]/bf:data"));
-        assertEquals("", "2009-09-09", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[2]/bf:data/@bf:schema-value"));
+        assertEquals("", "2009-09-09", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[2]/bf:data/@schema-value"));
         assertEquals("", "item instance 2", XPathUtil.evaluateAsString((Document) this.processor.getXForms(), "//xf:input[3]/bf:data"));
 
         this.processor.dispatch("trigger-cross-model-submission-2", DOMEventNames.ACTIVATE);

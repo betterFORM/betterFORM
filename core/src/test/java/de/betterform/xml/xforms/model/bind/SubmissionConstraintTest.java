@@ -44,7 +44,7 @@ public class SubmissionConstraintTest extends XMLTestBase {
 
             assertEquals("string-length(.) > 3", bind.getConstraint());
             assertEquals("hallo" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data") );
-            assertEquals("true" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data/@bf:valid") );
+            assertEquals("true" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data/@valid") );
 
 
 
@@ -53,7 +53,7 @@ public class SubmissionConstraintTest extends XMLTestBase {
             DOMUtil.prettyPrintDOM(xformsProcesssorImpl.getInstanceDocument("i-default"));
 
             assertEquals("h", XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data"));
-            assertEquals("false" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data/@bf:valid") );
+            assertEquals("false" ,XPathUtil.evaluateAsString(doc, "//*[@id='input1']/bf:data/@valid") );
 
         }catch (XFormsBindingException e){
             assertNotNull(e);

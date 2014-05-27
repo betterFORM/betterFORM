@@ -483,8 +483,8 @@ public class UIElementStateUtil {
      * @return the value of a state attribute
      */
     public static Object getStateAttribute(Element state, String attributeName) {
-        if (state.hasAttributeNS(NamespaceConstants.BETTERFORM_NS, attributeName)) {
-            return state.getAttributeNS(NamespaceConstants.BETTERFORM_NS, attributeName);
+        if (state.hasAttribute(attributeName)) {
+            return state.getAttribute(attributeName);
         }
         return null;
     }

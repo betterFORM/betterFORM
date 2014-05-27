@@ -145,18 +145,18 @@ public class RepeatedModelItemsTest extends XMLTestBase {
     }
 
     private void assertItemData(int position, boolean enabled, boolean readonly, boolean required, boolean valid) throws XFormsException {
-        assertEquals(String.valueOf(enabled), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@bf:enabled"));
-        assertEquals(String.valueOf(readonly), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@bf:readonly"));
-        assertEquals(String.valueOf(required), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@bf:required"));
-        assertEquals(String.valueOf(valid), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@bf:valid"));
+        assertEquals(String.valueOf(enabled), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@enabled"));
+        assertEquals(String.valueOf(readonly), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@readonly"));
+        assertEquals(String.valueOf(required), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@required"));
+        assertEquals(String.valueOf(valid), XPathUtil.evaluateAsString(this.element,"xf:group[" + position + "]/bf:data/@valid"));
     }
 
     private void assertItemInputData(int item, int position, boolean enabled, boolean readonly, boolean required, boolean valid, String type, String value) throws XFormsException {
-        assertEquals(String.valueOf(enabled), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@bf:enabled"));
-        assertEquals(String.valueOf(readonly), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@bf:readonly"));
-        assertEquals(String.valueOf(required), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@bf:required"));
-        assertEquals(String.valueOf(valid), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@bf:valid"));
-        assertEquals(type, XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@bf:type"));
+        assertEquals(String.valueOf(enabled), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@enabled"));
+        assertEquals(String.valueOf(readonly), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@readonly"));
+        assertEquals(String.valueOf(required), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@required"));
+        assertEquals(String.valueOf(valid), XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@valid"));
+        assertEquals(type, XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data/@type"));
         assertEquals(value, XPathUtil.evaluateAsString(this.element,"xf:group[" + item + "]/xf:input[" + position + "]/bf:data"));
     }
 }

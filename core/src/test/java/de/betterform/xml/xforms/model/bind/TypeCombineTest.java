@@ -37,7 +37,7 @@ public class TypeCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertNull(bind.getDatatype());
         DOMUtil.prettyPrintDOM(doc);
-        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:type"));
+        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@type"));
 
     }
 
@@ -52,7 +52,7 @@ public class TypeCombineTest extends XMLTestBase {
         assertNull(bind.getDatatype());
 
         //nothing was specified via a valid bind/@type so type is defaulting to 'string'
-        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@bf:type"));
+        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@type"));
     }
     public void testTypeMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
@@ -63,14 +63,14 @@ public class TypeCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertNull(bind.getDatatype());
 
-        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@bf:type"));
+        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@type"));
     }
 
     public void testTypeMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
         assertEquals("date",bind.getDatatype());
-        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@bf:type"));
+        assertEquals("date", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@type"));
     }
 
     protected void setUp() throws Exception {

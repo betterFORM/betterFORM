@@ -24,7 +24,7 @@ public class NestedCaseTest extends TestCase {
         this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("NestedCaseTest.xhtml"));
         this.xformsProcesssorImpl.init();
         this.xformsProcesssorImpl.dispatch("activate-case-1-2", DOMEventNames.ACTIVATE);
-        assertEquals("true", XPathUtil.evaluateAsString(this.xformsProcesssorImpl.getXForms(), "//xf:switch[@id='nested-switch']/xf:case[2]/bf:data/@bf:selected"));
+        assertEquals("true", XPathUtil.evaluateAsString(this.xformsProcesssorImpl.getXForms(), "//xf:switch[@id='nested-switch']/xf:case[2]/bf:data/@selected"));
 
 
     }

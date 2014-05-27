@@ -57,7 +57,7 @@ public class XPathReferenceFinderBindsTest extends XMLTestBase {
 
   private void assertInvalid(String input) throws XFormsException {
     Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
-    String valid = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@bf:valid");
+    String valid = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@valid");
     String msg = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/xf:alert");
     assertNotNull("Cannot find '//xf:input[@id='" + input + "']", valid);
     assertFalse(msg, Boolean.parseBoolean(valid));
@@ -65,7 +65,7 @@ public class XPathReferenceFinderBindsTest extends XMLTestBase {
 
    private void assertRelevant(String input) throws XFormsException {
         Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
-        String relevant = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@bf:enabled");
+        String relevant = XPathUtil.evaluateAsString(doc, "//xf:input[@id='" + input + "']/bf:data/@enabled");
         assertEquals("true",  relevant);
    }
 

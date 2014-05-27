@@ -144,7 +144,7 @@ public class BetterFormExtensionFunctionsTest extends BetterFormTestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testFilesize() throws Exception {
-        assertEquals(getClass().getResource("BetterFormExtensionFunctionsTest.xhtml").openConnection().getContentLength(), Long.parseLong(evaluateInDocumentContextAsString("string(//xf:output[@id='i-filesize']/bf:data/@bf:schema-value)")));
+        assertEquals(getClass().getResource("BetterFormExtensionFunctionsTest.xhtml").openConnection().getContentLength(), Long.parseLong(evaluateInDocumentContextAsString("string(//xf:output[@id='i-filesize']/bf:data/@schema-value)")));
     }
 
     /**

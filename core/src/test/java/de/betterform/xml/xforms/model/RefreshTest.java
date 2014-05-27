@@ -70,7 +70,7 @@ public class RefreshTest extends TestCase {
         //DOMUtil.prettyPrintDOM(processor.getContainer().getDocument());
         assertEquals("4", XPathUtil.evaluateAsString(host, "//xf:output[@id='output1']/bf:data"));
         assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id='output3']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:output[@id='output4']/bf:data/@bf:enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:output[@id='output4']/bf:data/@enabled"));
     }
 
     public void testMultipleSetValue() throws XFormsException {

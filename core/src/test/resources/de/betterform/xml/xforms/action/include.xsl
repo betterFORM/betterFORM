@@ -98,23 +98,23 @@
                     <xsl:apply-templates select="doc($resource)//*[@id=$fragmentId]"/>
                 </xsl:variable>
                 <xsl:choose>
-                    <xsl:when test="./*[exists(@bf:action)]">
-                        <xsl:for-each select="./*[exists(@bf:action)]">
-                            <!--<xsl:message>Found betterFORM Action: <xsl:value-of select="./@bf:action"/></xsl:message>-->
+                    <xsl:when test="./*[exists(@action)]">
+                        <xsl:for-each select="./*[exists(@action)]">
+                            <!--<xsl:message>Found betterFORM Action: <xsl:value-of select="./@action"/></xsl:message>-->
                             <xsl:choose>
-                                <xsl:when test="@bf:action ='append'">
+                                <xsl:when test="@action ='append'">
                                     <!--<xsl:message terminate="no">betterFORM Action: Append original markup to template markup</xsl:message>-->
                                     <xsl:apply-templates mode="append" select="$markupToInsert">
                                         <xsl:with-param name="markupToPreserve" select="."/>
                                     </xsl:apply-templates>
                                 </xsl:when>
-                                <xsl:when test="@bf:action ='overwrite'">
+                                <xsl:when test="@action ='overwrite'">
                                     <!--<xsl:message terminate="no">betterFORM Action: Overwrite markup</xsl:message>-->
                                     <xsl:apply-templates mode="replace" select="$markupToInsert">
                                         <xsl:with-param name="markupToPreserve" select="."/>
                                     </xsl:apply-templates>
                                 </xsl:when>
-                                <xsl:otherwise><xsl:message terminate="yes">Unknown betterFORM Action: <xsl:value-of select="@bf:action"/> </xsl:message></xsl:otherwise>
+                                <xsl:otherwise><xsl:message terminate="yes">Unknown betterFORM Action: <xsl:value-of select="@action"/> </xsl:message></xsl:otherwise>
                             </xsl:choose>
                         </xsl:for-each>
                     </xsl:when>
@@ -130,7 +130,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="*[exists(@bf:action='append')]" mode="append">
+    <xsl:template match="*[exists(@action='append')]" mode="append">
         <xsl:param name="markupToPreserve"/>
         <xsl:copy>
             <xsl:apply-templates select="@*" />
@@ -139,7 +139,7 @@
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="*[exists(@bf:action='replace')]" mode="replace">
+    <xsl:template match="*[exists(@action='replace')]" mode="replace">
         <xsl:param name="markupToPreserve"/>
         <xsl:copy>
             <xsl:apply-templates select="@*" />
