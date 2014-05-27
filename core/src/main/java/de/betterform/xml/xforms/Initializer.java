@@ -17,6 +17,7 @@ import de.betterform.xml.xforms.model.submission.Submission;
 import de.betterform.xml.xforms.ui.AVTElement;
 import de.betterform.xml.xforms.ui.AbstractUIElement;
 import de.betterform.xml.xpath.XPathReferenceFinder;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -48,6 +49,7 @@ public class Initializer {
     public static void initializeModelConstructActionElements(Model model, Element element) throws XFormsException {
 
         XFormsElementFactory elementFactory = model.getContainer().getElementFactory();
+        CustomElementFactory customFactory = model.getContainer().getCustomElementFactory();
         NodeList childNodes = element.getChildNodes();
 
         for (int index = 0; index < childNodes.getLength(); index++) {
@@ -56,13 +58,19 @@ public class Initializer {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementImpl = (Element) node;
                 String eventType = ((Element) node).getAttributeNS(NamespaceConstants.XMLEVENTS_NS, "event");
-                if (XFormsEventNames.MODEL_CONSTRUCT.equals(eventType) && XFormsElementFactory.isActionElement(elementImpl)){
-                    //pass context model
-                    initializeActionElement(model, null, elementFactory, elementImpl);
+                
+                if (XFormsEventNames.MODEL_CONSTRUCT.equals(eventType)) {
+                	
+                	if (XFormsElementFactory.isActionElement(elementImpl)) {
+	                    //pass context model
+	                    initializeActionElement(model, null, elementFactory, elementImpl);
+	                    
+                	} else if (customFactory.isCustomElement(elementImpl)) {
+                		initializeCustomActionElement(model, null, customFactory, elementImpl);
+                	}
                 }
             }
         }
-
     }
 
     /**
@@ -85,7 +93,9 @@ public class Initializer {
      * @throws XFormsException if any error occurred during init.
      */
     public static void initializeActionElements(Model model, Element element, String repeatItemId) throws XFormsException {
+    	
         XFormsElementFactory elementFactory = model.getContainer().getElementFactory();
+        CustomElementFactory customFactory = model.getContainer().getCustomElementFactory();
         NodeList childNodes = element.getChildNodes();
 
         for (int index = 0; index < childNodes.getLength(); index++) {
@@ -94,27 +104,37 @@ public class Initializer {
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 Element elementImpl = (Element) node;
                 String eventType = ((Element) node).getAttributeNS(NamespaceConstants.XMLEVENTS_NS, "event");
-                if (!(XFormsEventNames.MODEL_CONSTRUCT.equals(eventType)) && XFormsElementFactory.isActionElement(elementImpl)){
-                    //pass context model
-                    initializeActionElement(model, repeatItemId, elementFactory, elementImpl);
+                
+                if (!(XFormsEventNames.MODEL_CONSTRUCT.equals(eventType))) {
+                	
+                	if (XFormsElementFactory.isActionElement(elementImpl)) {
+	                    //pass context model
+	                    initializeActionElement(model, repeatItemId, elementFactory, elementImpl);
+	                    
+                	} else if (customFactory.isCustomElement(elementImpl)) {
+                		initializeCustomActionElement(model, repeatItemId, customFactory, elementImpl);
+                	}
                 }
             }
         }
     }
 
-    private static void initializeActionElement(Model model, String repeatItemId, XFormsElementFactory elementFactory, Element elementImpl) throws XFormsException {
+	private static void initializeCustomActionElement(Model model, String repeatItemId, CustomElementFactory customFactory, Element elementImpl) throws XFormsException {
+		
+        Model contextModel = Initializer.getContextModel(model, elementImpl);
+        Object customElement = customFactory.createCustomXFormsElement(elementImpl, contextModel);
+
+        // null check because the factory might return null, also making sure that the custom element is indeed an action element
+        if (customElement != null && customElement instanceof AbstractAction) {
+        	initXFormsObject(model, repeatItemId, (AbstractAction) customElement);
+        }
+    }
+
+	private static void initializeActionElement(Model model, String repeatItemId, XFormsElementFactory elementFactory, Element elementImpl) throws XFormsException {
         Model contextModel = Initializer.getContextModel(model, elementImpl);
         AbstractAction actionElement = (AbstractAction) elementFactory.createXFormsElement(elementImpl, contextModel);
 
-        if (repeatItemId != null) {
-            actionElement.setRepeatItemId(repeatItemId);
-            actionElement.setGeneratedId(model.getContainer().generateId());
-            actionElement.registerId();
-        }
-        // 31-07-2010	Ronald van Kuijk
-        // Removed since duplicate with setting in the if above. And it is not done for the repeat either.
-        //actionElement.setRepeatItemId(repeatItemId);
-        actionElement.init();
+        initXFormsObject(model, repeatItemId, actionElement);
     }
 
     /**
@@ -237,12 +257,7 @@ public class Initializer {
                     }
 
                     if (customElement != null && customElement instanceof AbstractAction) {
-                    	if (repeatItemId != null) {
-                        	((AbstractAction)customElement).setRepeatItemId(repeatItemId);
-                        	((AbstractAction)customElement).setGeneratedId(model.getContainer().generateId());
-                        	((AbstractAction)customElement).registerId();
-                        }
-                        ((AbstractAction)customElement).init();
+                    	initXFormsObject(model, repeatItemId, (AbstractAction) customElement);
                     }
 
                 } else if(evalAVT != null && hasAVT(elementImpl,evalAVT)){
@@ -261,13 +276,26 @@ public class Initializer {
         }
     }
 
+    private static void initXFormsObject(Model model, String repeatItemId, AbstractAction actionElement) throws XFormsException {
+        if (repeatItemId != null)
+            actionElement.setRepeatItemId(repeatItemId);
+            
+        initXFormsObject(model, repeatItemId, (XFormsElement) actionElement);
+    }
+
     private static void initXFormsObject(Model model, String repeatItemId, AbstractUIElement uiElement) throws XFormsException {
+        if (repeatItemId != null)
+        	uiElement.setRepeatItemId(repeatItemId);
+            
+        initXFormsObject(model, repeatItemId, (XFormsElement) uiElement);
+    }
+
+    private static void initXFormsObject(Model model, String repeatItemId, XFormsElement xfElement) throws XFormsException {
         if (repeatItemId != null) {
-            uiElement.setRepeatItemId(repeatItemId);
-            uiElement.setGeneratedId(model.getContainer().generateId());
-            uiElement.registerId();
+            xfElement.setGeneratedId(model.getContainer().generateId());
+            xfElement.registerId();
         }
-        uiElement.init();
+        xfElement.init();
     }
 
     /**
