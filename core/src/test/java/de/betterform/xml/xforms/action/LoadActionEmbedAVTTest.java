@@ -41,11 +41,11 @@ public class LoadActionEmbedAVTTest extends BetterFormTestCase {
         assertEquals("", "4", XPathUtil.evaluateAsString(xformDoc, "//xf:input[1]/bf:data"));
         assertEquals("", "5", XPathUtil.evaluateAsString(xformDoc, "//xf:input[2]/bf:data"));
         assertEquals("", "true", XPathUtil.evaluateAsString(xformDoc, "//xf:input[3]/bf:data"));
-        assertEquals("", "boolean", XPathUtil.evaluateAsString(xformDoc, "//xf:input[3]/bf:data/@bf:type"));
-        assertEquals("", "2003-10-01", XPathUtil.evaluateAsString(xformDoc, "//xf:input[4]/bf:data/@bf:schema-value"));
-        assertEquals("", "date", XPathUtil.evaluateAsString(xformDoc, "//xf:input[4]/bf:data/@bf:type"));
-        assertEquals("", "2009-10-01", XPathUtil.evaluateAsString(xformDoc, "//xf:input[5]/bf:data/@bf:schema-value"));
-        assertEquals("", "date", XPathUtil.evaluateAsString(xformDoc, "//xf:input[5]/bf:data/@bf:type"));
+        assertEquals("", "boolean", XPathUtil.evaluateAsString(xformDoc, "//xf:input[3]/bf:data/@type"));
+        assertEquals("", "2003-10-01", XPathUtil.evaluateAsString(xformDoc, "//xf:input[4]/bf:data/@schema-value"));
+        assertEquals("", "date", XPathUtil.evaluateAsString(xformDoc, "//xf:input[4]/bf:data/@type"));
+        assertEquals("", "2009-10-01", XPathUtil.evaluateAsString(xformDoc, "//xf:input[5]/bf:data/@schema-value"));
+        assertEquals("", "date", XPathUtil.evaluateAsString(xformDoc, "//xf:input[5]/bf:data/@type"));
 
     }
 

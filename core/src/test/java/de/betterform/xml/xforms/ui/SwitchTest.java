@@ -49,10 +49,10 @@ public class SwitchTest extends TestCase {
         assertEquals("xf:case", XPathUtil.evaluateAsString(host, "name(//xf:switch[@id='switch-model-binding']/*[3])"));
 
         assertEquals("bf:data", XPathUtil.evaluateAsString(host, "name(//xf:switch[@id='switch-model-binding']/*[4])"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@bf:enabled"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@bf:readonly"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@bf:required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@bf:valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-model-binding']/bf:data/@valid"));
     }
 
     /**
@@ -68,10 +68,10 @@ public class SwitchTest extends TestCase {
         assertEquals("xf:case", XPathUtil.evaluateAsString(host, "name(//xf:switch[@id='switch-ui-binding']/*[3])"));
 
         assertEquals("bf:data", XPathUtil.evaluateAsString(host, "name(//xf:switch[@id='switch-ui-binding']/*[4])"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@bf:enabled"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@bf:readonly"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@bf:required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@bf:valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-ui-binding']/bf:data/@valid"));
     }
 
     /**

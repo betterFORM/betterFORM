@@ -77,6 +77,7 @@ public class XFormsProcessorImplTest extends TestCase {
         //test the side effect of dispatching the DOMActivate to a setvalue trigger -> the instance has a new value
         Document instance = processor.getContainer().getDefaultModel().getDefaultInstance().getInstanceDocument();
         assertEquals("Hello new World", XPathUtil.evaluateAsString(instance, "//helloworld"));
+
     }
 
     /**

@@ -229,7 +229,7 @@ public class RepeatTest extends TestCase {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("selection");
         assertEquals("first", output.getValue());
 
-        assertEquals("1", XPathUtil.evaluateAsString(repeat.getElement(), "bf:data/@bf:index"));
+        assertEquals("1", XPathUtil.evaluateAsString(repeat.getElement(), "bf:data/@index"));
 
         this.xformsProcesssorImpl.dispatch("trigger-setindex", DOMEventNames.ACTIVATE);
         deregister(repeat.getTarget());
@@ -237,7 +237,7 @@ public class RepeatTest extends TestCase {
         assertEquals(3, repeat.getIndex());
         assertEquals(3, repeat.getContextSize());
         assertEquals("last", output.getValue());
-        assertEquals("3", XPathUtil.evaluateAsString(repeat.getElement(), "bf:data/@bf:index"));
+        assertEquals("3", XPathUtil.evaluateAsString(repeat.getElement(), "bf:data/@index"));
 
         assertItemInserted(null, null, null);
         assertItemDeleted(null, null, null);

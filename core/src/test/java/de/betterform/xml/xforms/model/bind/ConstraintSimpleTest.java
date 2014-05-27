@@ -42,7 +42,7 @@ public class ConstraintSimpleTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertEquals(". = 'false'", bind.getConstraint());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@bf:valid"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@valid"));
 
         EventTarget eventTarget = this.xformsProcesssorImpl.getContainer().lookup("a").getTarget();
 

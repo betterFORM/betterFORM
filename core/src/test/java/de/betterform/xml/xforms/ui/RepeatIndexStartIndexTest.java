@@ -20,7 +20,7 @@ public class RepeatIndexStartIndexTest extends BetterFormTestCase {
     public void testStartIndexAttribute() throws Exception{
         Document hostDoc = (Document) this.processor.getXForms();
         // DOMUtil.prettyPrintDOM(hostDoc);
-        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='myrepeat']/bf:data/@bf:index");
+        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='myrepeat']/bf:data/@index");
         assertEquals("Repeat Index must be '3'", "3", value);
 
         value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='showRepeatIndex']/bf:data");

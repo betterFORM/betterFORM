@@ -33,9 +33,9 @@ public class CaseTest extends TestCase {
         assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[2]/@selected"));
         assertEquals("0", XPathUtil.evaluateAsString(host, "count(//xf:switch[@id='switch-default']/xf:case[3]/@selected)"));
 
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[1]/bf:data/@bf:selected"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[2]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[3]/bf:data/@bf:selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[1]/bf:data/@selected"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[2]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-default']/xf:case[3]/bf:data/@selected"));
     }
 
     /**
@@ -48,9 +48,9 @@ public class CaseTest extends TestCase {
         assertEquals("0", XPathUtil.evaluateAsString(host, "count(//xf:switch[@id='switch-none']/xf:case[2]/@selected)"));
         assertEquals("0", XPathUtil.evaluateAsString(host, "count(//xf:switch[@id='switch-none']/xf:case[3]/@selected)"));
 
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-none']/xf:case[1]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-none']/xf:case[2]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-none']/xf:case[3]/bf:data/@bf:selected"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-none']/xf:case[1]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-none']/xf:case[2]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-none']/xf:case[3]/bf:data/@selected"));
     }
 
     /**
@@ -63,9 +63,9 @@ public class CaseTest extends TestCase {
         assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[2]/@selected"));
         assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[3]/@selected"));
 
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[1]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[2]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[3]/bf:data/@bf:selected"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[1]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[2]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-multiple']/xf:case[3]/bf:data/@selected"));
     }
 
     /**
@@ -78,9 +78,9 @@ public class CaseTest extends TestCase {
         assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[2]/@selected"));
         assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[3]/@selected"));
 
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[1]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[2]/bf:data/@bf:selected"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[3]/bf:data/@bf:selected"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[1]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[2]/bf:data/@selected"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:switch[@id='switch-all']/xf:case[3]/bf:data/@selected"));
     }
 
     /**
