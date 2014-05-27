@@ -304,6 +304,37 @@
             <report todir="target/doc/test"/>
         </junitreport>
     </target>
+    
+    <target name="test-travis" depends="prepare-test" description="run all unit tests">
+        <echo />
+        <echo message="************************************************************************************"/>
+        <echo message="running Core test suite"/>
+        <echo message="************************************************************************************"/>
+        <echo />
+
+        <!-- run junit tests -->
+        <junit description="run junit tests"
+            maxmemory="256m"
+            fork="no"
+            showoutput="no"
+            printsummary="on"
+            haltonfailure="true">
+            <classpath refid="test.class.path"/>
+            <formatter type="xml"/>
+            <batchtest fork="yes" todir="${basedir}/target/doc/test/classes">
+                <fileset dir="${basedir}/target/test-classes" includes="**/*Test.class" excludes="BetterFormXFormsTest.class"/>
+            </batchtest>
+        </junit>
+
+        <!-- generate junit reports -->
+        <junitreport description="generate junit reports"
+            todir="target/doc/test">
+            <fileset dir="target/doc/test/classes">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report todir="target/doc/test"/>
+        </junitreport>
+    </target>
 
 
     <!-- **************************************** DOC TARGETS **************************************** -->
