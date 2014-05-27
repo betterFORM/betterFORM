@@ -5,9 +5,13 @@
 
 package de.betterform.xml.xforms.model.constraints;
 
-import de.betterform.xml.xforms.model.ModelItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import de.betterform.xml.xforms.model.ModelItem;
 
 /**
  * Submission validator mode for instance validation during
@@ -82,8 +86,17 @@ public class SubmissionValidatorMode implements ValidatorMode {
             return true;
         }
 
-        if (!modelItem.isValid() || (modelItem.isRequired() && modelItem.getValue().length() == 0)) {
+        boolean valid = modelItem.isValid();
+        
+        
+        if (valid && modelItem.isRequired()) {
+        	if (modelItem.getValue().length() == 0 &&
+        		(! containsSubElement(modelItem.getNode())) ) {
+            		valid = false;
+        	}
+        }
 
+        if (!valid) {
         	this.statusText = modelItem.getNode() + " is invalid or required but empty: validation stopped";
 
         	if (LOGGER.isDebugEnabled()) {
@@ -99,7 +112,22 @@ public class SubmissionValidatorMode implements ValidatorMode {
         return true;
     }
 
-    // standard methods
+    private boolean containsSubElement(Object object) {
+		if (object instanceof Element) {
+			Element e = (Element)object;
+			NodeList nl = e.getChildNodes();
+			for (int i=0; i<nl.getLength(); i++) {
+				Node n = nl.item(i);
+				if (n.getNodeType() == Node.ELEMENT_NODE) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	// standard methods
 
     /**
      * Returns a string representation of this object.
