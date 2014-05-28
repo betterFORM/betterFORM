@@ -8,7 +8,7 @@ install:
 before-script: 
     - ant -f core/build.xml prepare-test
 script: 
-    - ant -f core/build.xml test
+    - ant -f core/build.xml test-travis
 branches:
     only:
         - master
