@@ -77,7 +77,7 @@
 
             <!-- copy all meta tags except 'contenttype' -->
             <xsl:call-template name="getMeta"/>
-
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             CSS needed by Dojo is added here
@@ -160,9 +160,22 @@
                 </xsl:for-each>
             </fore-model>
 -->
+            <better-atmosphere></better-atmosphere>
             <xsl:apply-templates/>
 
+<!--
+            <script type="text/javascript">
 
+                var data = {
+                    <xsl:for-each select="//bf:data">
+                        <xsl:value-of select="../@id"/>:{
+                            value:<xsl:value-of select="."/>,
+                            readonly:<xsl:value-of select="@readonly"/>
+                        }
+                    </xsl:for-each>
+                };
+            </script>
+-->
 
             <xsl:value-of select="$CR"/>
 
@@ -171,19 +184,27 @@
 
             <script src="{$scriptPath}/x-tag-core/dist/x-tag-core.js" type="text/javascript"/>
 
+            <script src="/betterform/webcomponents/bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+            <xsl:value-of select="$CR"/>
+            <script src="/betterform/webcomponents/bower_components/jquery-atmosphere/jquery.atmosphere.js" type="text/javascript"></script>
+            <xsl:value-of select="$CR"/>
 
-            <xsl:variable name="model" select="unparsed-text(concat($realPath,$componentPath,'fore-model.html'))"/>
+            <script src="/betterform/webcomponents/better-atmosphere.js" type="text/javascript"></script>
+
+            <!--<xsl:variable name="model" select="unparsed-text(concat($realPath,$componentPath,'fore-model.html'))"/>-->
             <!--<xsl:variable name="raw" select="encode-for-uri($model/text())"/>-->
 
 
 
 
+<!--
             <script type="text/javascript">
                 <xsl:value-of select="substring-before(substring-after($model, substring-before($model, 'xtag')), '&#60;/script')" disable-output-escaping="yes"/>
-                <!-- xsl:value-of select="unparsed-text(string($model/text()),'utf8')" disable-output-escaping="yes"/ -->
             </script>
-
+-->
+            <xsl:value-of select="$CR"/>
             <script type="text/javascript">
+/*
                 xtag.register('xf-state', {
                     lifecycle:{
                     created: function(){
@@ -213,7 +234,9 @@
                     methods: {
                     }
                 });
+*/
 
+                <xsl:apply-templates select="//*[contains(name(.),'-')]" mode="scripts"/>
                 <xsl:apply-templates select="//xf:*" mode="scripts"/>
             </script>
             <xsl:value-of select="$CR"/>
@@ -289,7 +312,6 @@
         <xsl:variable name="componentURI"><xsl:value-of select="concat($realPath,$componentPath,$controlType,'.html')"/></xsl:variable>
         <xsl:message>Mapped path:'<xsl:value-of select="$componentURI"/>'</xsl:message>
 
-
         <xsl:choose>
             <xsl:when test="doc-available($componentURI)">
 
@@ -304,14 +326,14 @@
                     <!--<xf-value><xsl:value-of select="bf:data/text()"/></xf-value>-->
                     <xsl:choose>
                     <xsl:when test="exists($component)">
+                        <!--<xsl:apply-templates select="xf:label"/>-->
 
 
-                            <xsl:for-each select="$component">
-                                <xsl:apply-templates select="." mode="copyTemplate"/>
+                        <xsl:for-each select="$component">
+                                <xsl:apply-templates select="." mode="copyTemplate">
+                                    <xsl:with-param name="parent" select="$this"/>
+                                </xsl:apply-templates>
                             </xsl:for-each>
-                            <!--<xsl:copy-of select="$component" />-->
-
-                            <xsl:apply-templates/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:apply-templates/>
@@ -324,10 +346,15 @@
         </xsl:choose>
 
 
-
     </xsl:template>
 
-    <xsl:template match="xf:*" mode="scripts">
+<!--
+    <xsl:template match="xf:label | xf:hint | xf:alert | xf:help" priority="10">
+        <label class="{local-name()}" for="{../@id}"><xsl:value-of select="text()"/></label>
+    </xsl:template>
+-->
+
+    <xsl:template match="*" mode="scripts">
         <xsl:variable name="controlType">
             <xsl:value-of select="local-name()"/>
             <xsl:if test="string-length(bf:data/@type) != 0">-<xsl:value-of select="bf:data/@type"/>
@@ -360,39 +387,69 @@
     </xsl:template>
 
     <xsl:template match="*" mode="copyTemplate">
+        <xsl:param name="parent"/>
+        <xsl:message>#################### copying template node:
+            <xsl:value-of select="name()"/>
+        </xsl:message>
         <xsl:element name="{name(.)}" namespace="http://www.w3.org/1999/xhtml">
-            <xsl:copy-of select="@*"/>
-            <xsl:apply-templates mode="copyTemplate"/>
+            <xsl:apply-templates select="@*" mode="copyTemplate">
+                <xsl:with-param name="parent" select="$parent"/>
+            </xsl:apply-templates>
+
+            <xsl:choose>
+                <xsl:when test="starts-with(.,'{')">
+                    <xsl:variable name="value">
+                        <xsl:call-template name="resolveValue">
+                            <xsl:with-param name="parent" select="$parent"/>
+                        </xsl:call-template>
+                    </xsl:variable>
+
+                    <xsl:value-of select="$value"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates mode="copyTemplate">
+                        <xsl:with-param name="parent" select="$parent"/>
+                    </xsl:apply-templates>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:element>
     </xsl:template>
 
-    <!--
-        <xsl:template match="input">
-            <xsl:copy copy-namespaces="no">
-                <xsl:copy-of select="@*" copy-namespaces="no"/>
-                <xsl:attribute name="is">xf-input</xsl:attribute>
-            </xsl:copy>
-        </xsl:template>
-    -->
 
-    <!--
-        <xsl:template match="xf:label">
-            <label for="{../@id}"><xsl:value-of select="."/></label>
-        </xsl:template>
+    <xsl:template match="@*" mode="copyTemplate" priority="10">
+        <xsl:param name="parent"/>
+<!--
+        <xsl:message>#################### copying  template attribute: <xsl:value-of select="name()"/></xsl:message>
+        <xsl:message>#################### copying template attribute value: <xsl:value-of select="."/></xsl:message>
+        <xsl:message>#################### copying template  parent: <xsl:value-of select="name($parent)"/></xsl:message>
 
-        <xsl:template match="xf:alert">
-            <label for="{../@id}" class="alert"><xsl:value-of select="."/></label>
-        </xsl:template>
+-->
 
-        <xsl:template match="xf:hint">
-            <label for="{../@id}" class="hint"><xsl:value-of select="."/></label>
-        </xsl:template>
+        <xsl:variable name="templ"><xsl:value-of select="substring(.,2, string-length(.) - 2 )"/></xsl:variable>
 
-        <xsl:template match="xf:help">
-            <span id="{../@id}-help" class="help"><xsl:value-of select="."/></span>
-        </xsl:template>
+        <xsl:variable name="value">
+            <xsl:call-template name="resolveValue">
+                <xsl:with-param name="parent" select="$parent"/>
+            </xsl:call-template>
+        </xsl:variable>
 
-    -->
+        <xsl:attribute name="{local-name()}"><xsl:value-of select="$value"/></xsl:attribute>
+    </xsl:template>
+
+    <xsl:template name="resolveValue">
+        <xsl:param name="parent"/>
+        <xsl:choose>
+            <xsl:when test="starts-with(.,'{@')">
+                <xsl:variable name="path" select="substring(.,3, string-length(.) - 3 )"/>
+                <xsl:value-of select="$parent/@*[name(.)=$path]"/>
+            </xsl:when>
+            <xsl:when test="starts-with(.,'{')">
+                <xsl:variable name="path" select="substring(.,2, string-length(.) - 2 )"/>
+                <xsl:value-of select="$parent/*[name(.)=$path]"/>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 
     <xsl:template match="*[@startsize]">
         <xsl:copy copy-namespaces="no">
@@ -400,90 +457,6 @@
             <xsl:attribute name="is">xf-repeat</xsl:attribute>
             <xsl:apply-templates/>
         </xsl:copy>
-    </xsl:template>
-    <!--
-    ##############################################################################################################
-    imports web components for existing xforms controls.
-    ##############################################################################################################
-    -->
-    <xsl:template name="importWebComponents">
-        <!-- this does handle only vanilla XForms syntax.
-        todo: refine for HTML syntax
-        -->
-        <xsl:comment>##### xforms web components #####</xsl:comment>
-        <xsl:if test="exists(//xf:repeat) or exists(//*[@startsize])">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-repeat.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:group)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-group.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:switch)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-switch.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:input)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-input.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:output)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-output.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:range)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-range.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:secret)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-secret.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:select1)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-select1.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:select)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-select.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:textarea)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-textarea.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:submit)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-submit.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:trigger)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-trigger.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-        <xsl:if test="exists(//xf:upload)">
-            <link rel="import" href="{$contextroot}/bfResources/elements/xf-upload.html">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:if>
-
-
-        <xsl:comment>##### User web components #####</xsl:comment>
-        <xsl:for-each select="link[@rel eq 'import']">
-            <link rel="{@rel}" href="{@href}">
-                <xsl:text> </xsl:text>
-            </link>
-        </xsl:for-each>
     </xsl:template>
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

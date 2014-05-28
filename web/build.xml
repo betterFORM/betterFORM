@@ -291,6 +291,7 @@
               file="${resource.src.dir}/main/webapp/resources/images/blank.gif"/-->
     </target>
 
+    <!-- todo: copy libs from betterform-config completely (except servletapi)-->
     <target name="copy-libs" unless="should.not.copy.libs">
         <echo>
         ************************************************************************************
@@ -311,6 +312,8 @@
                 <include name="dwr*.jar"/>
                 <include name="infinispan-*.jar"/>
                 <include name="jboss-*.jar"/>
+                <include name="atmosphere-*.jar"/>
+                <include name="slf4j-*.jar"/>
             </fileset>
         </copy>
     </target>

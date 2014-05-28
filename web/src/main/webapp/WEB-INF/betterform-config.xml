@@ -143,7 +143,7 @@
         -->
         <property name="httpclient.ssl.keystore.passwd" value="KEYSTORE-PASSWD" description="Password to unlock keystore."/>
 
-        <property name="ui-transform" value="xhtml.xsl" description="xslt stylesheet used for generating the client-side UI"/>
+        <property name="ui-transform" value="webcomponents.xsl" description="xslt stylesheet used for generating the client-side UI"/>
     </properties>
 
     <error-messages>

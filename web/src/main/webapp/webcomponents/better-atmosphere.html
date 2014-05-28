@@ -1,0 +1,61 @@
+<element name="better-atmosphere">
+    <script>
+        xtag.register('better-atmosphere', {
+            socket: $.atmosphere,
+            subSocket: null,
+            lifecycle: {
+
+
+                created: function () {
+                    console.log("better-atmosphere created", this);
+                    this.request = {
+                        url: '/betterform/msg',
+                        contentType: "application/json",
+                        logLevel: 'debug',
+                        transport: 'sse',
+                        fallbackTransport: 'long-polling',
+
+                        onOpen: function (response) {
+                            console.log('Atmosphere connected using ' + response.transport);
+                        },
+
+                        onMessage: function (response) {
+                            var message = response.responseBody;
+                            try {
+                                var json = jQuery.parseJSON(message);
+                            } catch (e) {
+                                console.log('This doesn\'t look like a valid JSON: ', message);
+                                return;
+                            }
+                            console.log("json: ", json);
+                        },
+                        onClose: function (response) {
+                            console.log("onClose called");
+                        }
+
+                    };
+                    this.subsocket = socket.subscribe(request);
+                },
+                inserted: function () {
+                    console.log("better-atmosphere inserted");
+                },
+                removed: function () {
+                    console.log("better-atmosphere removed");
+                },
+                attributeChanged: function () {
+                    console.log("better-atmosphere attributeChanged  ");
+                }
+            },
+            events: {
+            },
+            accessors: {
+            },
+            methods: {
+                push: function (msg) {
+                    console.log("pushing: ",msg);
+                    this.subSocket.push(jQuery.stringifyJSON(msg));
+                }
+            }
+        });
+    </script>
+</element>

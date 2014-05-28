@@ -1,6 +1,9 @@
 <element name="xf-input">
     <template>
-        <input type="text" value="hi" placeholder=""/>
+        <!-- the context for pathes is the original xforms element -->
+        <label for="{@id}">{xf:label}</label>
+        <input type="text" placeholder="{xf:hint}" value="{bf:data}"/>
+
     </template>
     <script>
         xtag.register('xf-input', {
@@ -55,6 +58,7 @@
                         console.log("this.value  ",this.value);
                         console.log("this.parent  ",this.parentNode);
                         this.parentNode.setAttribute("value",this.value);
+                        document.querySelector("better-atmosphere").pushMsg(this.value);
 
                     }
                 },

@@ -67,7 +67,7 @@ module.exports = function(grunt) {
             },
             forms:{
                 options: {
-                    src: '<%= webforms %>',
+                    src: '<%= webforms %>/**',
                     dest: '<%= webDevTarget %>/forms'
                 }
             }

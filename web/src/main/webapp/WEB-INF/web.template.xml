@@ -104,6 +104,25 @@
         <url-pattern>/error/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <description>AtmosphereServlet</description>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>
+        <!-- If you want to use Servlet 3.0 -->
+        <init-param>
+            <param-name>org.atmosphere.useNative</param-name>
+            <param-value>false</param-value>
+        </init-param>
+
+        <async-supported>true</async-supported>
+        <!-- List of init-param -->
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AtmosphereServlet</servlet-name>
+        <!-- Any mapping -->
+        <url-pattern>/msg/*</url-pattern>
+    </servlet-mapping>
 <!--
     <servlet>
         <servlet-name>XFormsServlet</servlet-name>

@@ -12,7 +12,7 @@
             <xf:model id="model-1">
                 <xf:instance id="i-default">
                     <data xmlns="">
-                        <input1>foo</input1>
+                        <input1>instValue1</input1>
                         <input2></input2>
                         <input3></input3>
                         <input4></input4>
@@ -31,8 +31,8 @@
             </xf:model>
         </div>
         <xf:group id="C8" appearance="minimal">
-                        <xf:input id="C9" ref="input1">
-                            <xf:label id="C10"> input1</xf:label>
+                        <xf:input id="C9" ref="input1" incremental="true">
+                            <xf:label id="C10">label for input1</xf:label>
                             <xf:hint>This is a hint</xf:hint>
                             <!--<xf:alert>This is an alert</xf:alert>-->
                             <!--<xf:help>And here's help</xf:help>-->
