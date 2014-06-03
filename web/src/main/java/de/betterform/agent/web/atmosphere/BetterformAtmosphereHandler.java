@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 /**
  * AtmosphereHandler that provides the adapter between network layer and betterFORM XForms processor.
@@ -54,16 +57,25 @@ public class BetterformAtmosphereHandler extends MyHandler<String> {
 
     @Override
     public void onMessage(AtmosphereResponse response, String message) throws IOException {
-        // Message looks like { "author" : "foo", "message" : "bar" }
+        // Message looks like { "targetId" : "foo", "eventType" : "updateValue" }
 
-        String author = message.substring(message.indexOf(":") + 2, message.indexOf(",") - 1);
-        String chat = message.substring(message.lastIndexOf(":") + 2, message.length() - 2);
         logger.debug("atmosphere: " + message);
+
+        // cut leading and trailing curly braces and tokenize the string
+        Map <String,String> props = new HashMap <String,String>();
+        StringTokenizer st = new StringTokenizer(message.substring(1,message.length()-1), ":,");
+        while(st.hasMoreTokens()) {
+            String key = st.nextToken();
+            String val = st.nextToken();
+            logger.debug(key + "\t" + val);
+            props.put(key.substring(1,key.length()-1),val.substring(1,val.length()-1));
+        }
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(response.getOutputStream(), "UTF-8"));
         response.setCharacterEncoding("UTF-8");
-        //response.getWriter().write(new Data(author, chat).toString());
-        bw.write(new Data(author, chat).toString());
+        String out = new Data(props.get("targetId"), props.get("eventType"), props.get("value")).toString();
+        logger.debug("out message:"+out);
+        bw.write(out);
         bw.flush();
     }
 
@@ -79,16 +91,19 @@ public class BetterformAtmosphereHandler extends MyHandler<String> {
 
     private final static class Data {
 
-        private final String text;
-        private final String author;
+        private final String targetId;
+        private final String eventType;
+        private final String val;
 
-        public Data(String author, String text) {
-            this.author = author;
-            this.text = text;
+
+        public Data(String targetId, String eventType, String val) {
+            this.targetId = targetId;
+            this.eventType = eventType;
+            this.val = val;
         }
 
         public String toString() {
-            return "{ \"text\" : \"" + text + "\", \"author\" : \"" + author + "\" , \"time\" : " + new Date().getTime() + "}";
+            return "{ \"targetId\" : \"" + targetId + "\", \"eventType\" : \"" + eventType + "\" , \"value\" : \"" + val + "\" , \"time\" : " + new Date().getTime() + "}";
         }
     }
 }

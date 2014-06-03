@@ -30,7 +30,7 @@
 
                     },
                     inserted: function(){
-                        console.log("input in serted");
+                        console.log("input inserted");
                         // fired each time a component
                         // is inserted into the DOM
                     },
@@ -58,7 +58,12 @@
                         console.log("this.value  ",this.value);
                         console.log("this.parent  ",this.parentNode);
                         this.parentNode.setAttribute("value",this.value);
-                        document.querySelector("better-atmosphere").pushMsg(this.value);
+                        var msg = jQuery.stringifyJSON({
+                            targetId:this.parentNode.id,
+                            eventType:'changed',
+                            value:this.value
+                        });
+                        document.querySelector("better-atmosphere").pushMsg(msg);
 
                     }
                 },

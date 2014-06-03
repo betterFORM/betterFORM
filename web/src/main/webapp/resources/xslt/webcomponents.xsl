@@ -160,7 +160,6 @@
                 </xsl:for-each>
             </fore-model>
 -->
-            <better-atmosphere></better-atmosphere>
             <xsl:apply-templates/>
 
 <!--
@@ -177,6 +176,7 @@
             </script>
 -->
 
+            <better-atmosphere></better-atmosphere>
             <xsl:value-of select="$CR"/>
 
 
@@ -189,7 +189,7 @@
             <script src="/betterform/webcomponents/bower_components/jquery-atmosphere/jquery.atmosphere.js" type="text/javascript"></script>
             <xsl:value-of select="$CR"/>
 
-            <script src="/betterform/webcomponents/better-atmosphere.js" type="text/javascript"></script>
+            <script src="/betterform/webcomponents/js/better-atmosphere.js" type="text/javascript"></script>
 
             <!--<xsl:variable name="model" select="unparsed-text(concat($realPath,$componentPath,'fore-model.html'))"/>-->
             <!--<xsl:variable name="raw" select="encode-for-uri($model/text())"/>-->
@@ -291,26 +291,9 @@
 
 
     <xsl:template match="xf:*">
-        <!--<xsl:message>element <xsl:value-of select="local-name()"/></xsl:message>-->
-
         <xsl:variable name="this" select="."/>
-        <xsl:variable name="controlType">
-            <xsl:value-of select="local-name()"/>
-            <xsl:if test="string-length($this/bf:data/@type) != 0">-<xsl:value-of select="$this/bf:data/@type"/>
-            </xsl:if>
-            <xsl:if test="string-length(@appearance) != 0">-<xsl:value-of select="@appearance"/>
-            </xsl:if>
-            <xsl:if test="string-length(@mediatype) != 0">-<xsl:value-of select="@mediatype"/>
-            </xsl:if>
-            <xsl:if test="string-length(@selection) != 0">-<xsl:value-of select="@selection"/>
-            </xsl:if>
-        </xsl:variable>
-
-        <!--<xsl:message>Mapped control:'<xsl:value-of select="$controlType"/>'</xsl:message>-->
-
         <!-- ##### $contextroot + $componantPath + $controlType + .html ##### -->
-        <xsl:variable name="componentURI"><xsl:value-of select="concat($realPath,$componentPath,$controlType,'.html')"/></xsl:variable>
-        <xsl:message>Mapped path:'<xsl:value-of select="$componentURI"/>'</xsl:message>
+        <xsl:variable name="componentURI"><xsl:call-template name="getComponentURI"/></xsl:variable>
 
         <xsl:choose>
             <xsl:when test="doc-available($componentURI)">
@@ -348,16 +331,11 @@
 
     </xsl:template>
 
-<!--
-    <xsl:template match="xf:label | xf:hint | xf:alert | xf:help" priority="10">
-        <label class="{local-name()}" for="{../@id}"><xsl:value-of select="text()"/></label>
-    </xsl:template>
--->
-
-    <xsl:template match="*" mode="scripts">
+    <xsl:template name="getComponentURI">
+        <xsl:variable name="this" select="."/>
         <xsl:variable name="controlType">
             <xsl:value-of select="local-name()"/>
-            <xsl:if test="string-length(bf:data/@type) != 0">-<xsl:value-of select="bf:data/@type"/>
+            <xsl:if test="string-length($this/bf:data/@type) != 0">-<xsl:value-of select="$this/bf:data/@type"/>
             </xsl:if>
             <xsl:if test="string-length(@appearance) != 0">-<xsl:value-of select="@appearance"/>
             </xsl:if>
@@ -366,10 +344,18 @@
             <xsl:if test="string-length(@selection) != 0">-<xsl:value-of select="@selection"/>
             </xsl:if>
         </xsl:variable>
-        <!-- ##### $contextroot + $componantPath + $controlType + .html ##### -->
-        <xsl:variable name="componentURI"><xsl:value-of select="concat($realPath,$componentPath,$controlType,'.html')"/></xsl:variable>
-        <xsl:message>Mapped script path:'<xsl:value-of select="$componentURI"/>'</xsl:message>
+        <xsl:value-of select="concat($realPath,$componentPath,$controlType,'.html')"/>
+        <xsl:message>Mapped path:'<xsl:value-of select="concat($realPath,$componentPath,$controlType,'.html')"/>'</xsl:message>
+    </xsl:template>
 
+<!--
+    <xsl:template match="xf:label | xf:hint | xf:alert | xf:help" priority="10">
+        <label class="{local-name()}" for="{../@id}"><xsl:value-of select="text()"/></label>
+    </xsl:template>
+-->
+
+    <xsl:template match="*" mode="scripts">
+        <xsl:variable name="componentURI"><xsl:call-template name="getComponentURI"/></xsl:variable>
         <xsl:choose>
             <xsl:when test="doc-available($componentURI)">
 

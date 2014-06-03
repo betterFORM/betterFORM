@@ -7,12 +7,13 @@ xtag.register('better-atmosphere', {
         created: function () {
             console.debug("better-atmosphere created", this);
             this.socket = $.atmosphere;
+            that = this;
 
             this.request = {
                 url: '/betterform/msg',
                 contentType: "application/json; charset=UTF-8",
                 logLevel: 'debug',
-                transport: 'websocket',
+                transport: 'sse',
                 fallbackTransport: 'long-polling',
 
                 onOpen: function (response) {
@@ -28,7 +29,10 @@ xtag.register('better-atmosphere', {
                         console.log('This doesn\'t look like a valid JSON: ', message);
                         return;
                     }
-                    console.log("json: ", json);
+                    console.log("targetId: ", json.targetId);
+                    console.log("eventType: ", json.eventType);
+                    console.log("value: ", json.value);
+                    that.appendChild(document.createTextNode(json.targetId));
                 },
                 onClose: function (response) {
                     console.log("onClose called");
@@ -56,7 +60,7 @@ xtag.register('better-atmosphere', {
     methods: {
         pushMsg: function (msg) {
             console.log("pushing: ",msg);
-            this.subSocket.push("{'author':'me','message':'" + msg + "'}");
+            this.subSocket.push(msg);
         }
     }
 });
