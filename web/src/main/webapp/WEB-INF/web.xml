@@ -113,6 +113,12 @@
             <param-name>org.atmosphere.useNative</param-name>
             <param-value>false</param-value>
         </init-param>
+<!--
+        <init-param>
+            <param-name>org.atmosphere.cpr.AtmosphereInterceptor</param-name>
+            <param-value>de.betterform.agent.web.atmosphere.UTF8Interceptor</param-value>
+        </init-param>
+-->
 
         <async-supported>true</async-supported>
         <!-- List of init-param -->

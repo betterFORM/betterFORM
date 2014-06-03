@@ -5,14 +5,14 @@ xtag.register('better-atmosphere', {
 
 
         created: function () {
-            console.log("better-atmosphere created", this);
+            console.debug("better-atmosphere created", this);
             this.socket = $.atmosphere;
 
             this.request = {
                 url: '/betterform/msg',
                 contentType: "application/json; charset=UTF-8",
                 logLevel: 'debug',
-                transport: 'sse',
+                transport: 'websocket',
                 fallbackTransport: 'long-polling',
 
                 onOpen: function (response) {
@@ -31,7 +31,7 @@ xtag.register('better-atmosphere', {
                     console.log("json: ", json);
                 },
                 onClose: function (response) {
-                    console.log("onCl ose called");
+                    console.log("onClose called");
                 }
 
             };

@@ -139,7 +139,7 @@
                 <pathelement location="${web.dir}/src/main/lib/jboss-marshalling-1.3.18.GA.jar" groupid="org.jboss" version="1.3.18.GA" artifactId="jboss-marshalling"/>
                 <pathelement location="${web.dir}/src/main/lib/jboss-marshalling-river-1.3.18.GA.jar" groupid="org.jboss" version="1.3.18.GA" artifactId="jboss-marshalling-river"/>
                 <pathelement location="${web.dir}/src/main/lib/jboss-logging-3.1.2.GA.jar" groupid="org.jboss" version="3.1.2.GA" artifactId="jboss-logging"/>
-                <pathelement location="${web.dir}/src/main/lib/atmosphere-runtime-2.1.4.jar" groupid="org.atmosphere" version="2.1.4" artifactId="atmosphere-runtime"/>
+                <pathelement location="${web.dir}/src/main/lib/atmosphere-runtime-2.1.6-SNAPSHOT.jar" groupid="org.atmosphere" version="2.1.6-SNAPSHOT" artifactId="atmosphere-runtime"/>
                 <!-- <pathelement location="${web.dir}/src/main/lib/staxmapper-1.1.0.Final.jar" groupid="org.jboss" version="1.1.0" artifactId="staxmapper"/> -->
                 <pathelement location="${web.dir}/src/main/lib/slf4j-api-1.7.5.jar" groupid="org.slf4j" version="1.7.5" artifactId="slf4j-api"/>
                 <pathelement location="${web.dir}/src/main/lib/slf4j-log4j12-1.7.5.jar" groupid="org.slf4j" version="1.7.5" artifactId="slf4j-log4j12"/>

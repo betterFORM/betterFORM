@@ -63,7 +63,7 @@
 -->
 
     <category name="de.betterform">
-        <priority value="WARN"/>
+        <priority value="DEBUG"/>
     </category>
 
     <category name="org.infinispan">

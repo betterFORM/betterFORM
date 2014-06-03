@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                 nospawn: true
             },
             webcomponents:{
-                files: ['*.html','*.css'],
+                files: ['*.html','*.css','*.js'],
                 tasks: ['rsync:webcomponents']
             },
             forms:{
@@ -40,6 +40,10 @@ module.exports = function(grunt) {
                 tasks: ['rsync:forms']
             },
             xslt:{
+                files: ['../resources/xslt/webcomponents.xsl'],
+                tasks: ['rsync:xslt']
+            },
+            bower_components:{
                 files: ['../resources/xslt/webcomponents.xsl'],
                 tasks: ['rsync:xslt']
             }
@@ -54,8 +58,8 @@ module.exports = function(grunt) {
             webcomponents: {
                 options: {
                     // !!! The last "/" is IMPORTANT here!!!!
-                    src: ['.'],
-                    dest: '<%= webDevTarget %>' + 'webcomponents'
+                    src: ['./**'],
+                    dest: '<%= webDevTarget %>' + 'webcomponents/'
                 }
             },
             xslt: {
@@ -70,7 +74,7 @@ module.exports = function(grunt) {
                     src: '<%= webforms %>/**',
                     dest: '<%= webDevTarget %>/forms'
                 }
-            }
+            },
         },
 
 

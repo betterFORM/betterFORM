@@ -20,7 +20,6 @@ import org.atmosphere.config.service.Get;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.AtmosphereResourceEvent;
 import org.atmosphere.cpr.AtmosphereResponse;
-import org.atmosphere.handler.OnMessage;
 import org.atmosphere.interceptor.AtmosphereResourceLifecycleInterceptor;
 import org.atmosphere.interceptor.BroadcastOnPostAtmosphereInterceptor;
 import org.slf4j.Logger;
@@ -33,15 +32,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
- * Simple AtmosphereHandler that implement the logic to build a Server Side Events Chat application.
+ * AtmosphereHandler that provides the adapter between network layer and betterFORM XForms processor.
  *
- * @author Jeanfrancois Arcand
+ * @author Joern Turner
  */
 @AtmosphereHandlerService(path = "/msg",
         interceptors= {AtmosphereResourceLifecycleInterceptor.class,
                        BroadcastOnPostAtmosphereInterceptor.class})
-public class SSEAtmosphereHandler extends MyHandler<String> {
-    private final Logger logger = LoggerFactory.getLogger(SSEAtmosphereHandler.class);
+public class BetterformAtmosphereHandler extends MyHandler<String> {
+    private final Logger logger = LoggerFactory.getLogger(BetterformAtmosphereHandler.class);
 
     @Get
     public void init(AtmosphereResource r) {
@@ -55,8 +54,8 @@ public class SSEAtmosphereHandler extends MyHandler<String> {
 
     @Override
     public void onMessage(AtmosphereResponse response, String message) throws IOException {
-        // Simple JSON -- Use Jackson for more complex structure
         // Message looks like { "author" : "foo", "message" : "bar" }
+
         String author = message.substring(message.indexOf(":") + 2, message.indexOf(",") - 1);
         String chat = message.substring(message.lastIndexOf(":") + 2, message.length() - 2);
         logger.debug("atmosphere: " + message);
