@@ -14,6 +14,7 @@ xtag.register('better-atmosphere', {
                 contentType: "application/json; charset=UTF-8",
                 logLevel: 'debug',
                 transport: 'sse',
+                trackMessageLength : true,
                 fallbackTransport: 'long-polling',
 
                 onOpen: function (response) {

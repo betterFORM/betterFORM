@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by joern on 02.06.14.
+ * Unused class but serves as a sample for writing an interceptor
  */
 public class UTF8Interceptor  extends AtmosphereInterceptorAdapter {
     private static final Logger logger = LoggerFactory.getLogger(UTF8Interceptor.class);

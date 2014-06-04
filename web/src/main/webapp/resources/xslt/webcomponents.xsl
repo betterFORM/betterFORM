@@ -176,7 +176,8 @@
             </script>
 -->
 
-            <better-atmosphere></better-atmosphere>
+            <!-- jt: @transport is not wired yet in script - just a hint how to do it later -->
+            <better-atmosphere transport="sse"></better-atmosphere>
             <xsl:value-of select="$CR"/>
 
 
