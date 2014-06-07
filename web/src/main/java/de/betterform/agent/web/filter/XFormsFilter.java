@@ -14,7 +14,8 @@ import de.betterform.agent.web.WebUtil;
 import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
-import de.betterform.agent.web.flux.FluxProcessor;
+//import de.betterform.agent.web.flux.FluxProcessor;
+import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.ns.NamespaceConstants;
@@ -200,9 +201,9 @@ public class XFormsFilter implements Filter {
     }
 
     private void processXForms( HttpServletRequest  request,  HttpServletResponse response, HttpSession  session) throws IOException, ServletException {
-        FluxProcessor webProcessor = null;
+        SocketProcessor webProcessor = null;
         try {
-            webProcessor = new FluxProcessor();
+            webProcessor = new SocketProcessor();
             webProcessor.setXformsProcessor(new XFormsProcessorImpl());
             webProcessor.setRequest(request);
             webProcessor.setResponse(response);
@@ -225,6 +226,7 @@ public class XFormsFilter implements Filter {
             if(LOG.isDebugEnabled()){
                 LOG.debug("adding new session to cache. Key:" + key );
             }
+            session.setAttribute("xfSessionKey",webProcessor.getKey());
             cache.put(key,webProcessor);
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);

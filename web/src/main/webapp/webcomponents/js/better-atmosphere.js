@@ -16,6 +16,7 @@ xtag.register('better-atmosphere', {
                 transport: 'sse',
                 trackMessageLength : true,
                 fallbackTransport: 'long-polling',
+                callback:that.myCall,
 
                 onOpen: function (response) {
                     console.log('Atmosphere connected using ' + response.transport);
@@ -30,18 +31,23 @@ xtag.register('better-atmosphere', {
                         console.log('This doesn\'t look like a valid JSON: ', message);
                         return;
                     }
-                    console.log("targetId: ", json.targetId);
-                    console.log("eventType: ", json.eventType);
-                    console.log("value: ", json.value);
-                    that.appendChild(document.createTextNode(json.targetId));
+                    console.log("targetId: ", json.contextInfo.targetId);
+                    console.log("eventType: ", json.type);
+//                    console.log("value: ", json.value);
+                    $('<div/>',{
+                        text:json.type
+                    }).appendTo("better-atmosphere");
                 },
                 onClose: function (response) {
                     console.log("onClose called");
+                },
+
+                myCall:function(reponse){
+                    console.log("response:",response);
                 }
-
             };
-
-            this.subSocket = this.socket.subscribe(this.request);
+            console.log("this.socket: ", this.socket);
+            this.subSocket = that.socket.subscribe(this.request);
         },
         inserted: function () {
             console.log("better-atmosphere inserted");

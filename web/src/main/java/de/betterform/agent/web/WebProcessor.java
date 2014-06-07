@@ -9,6 +9,7 @@ import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
+import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.agent.web.servlet.HttpRequestHandler;
 import de.betterform.agent.web.servlet.XFormsPostServlet;
 import de.betterform.generator.UIGenerator;
@@ -96,7 +97,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     protected transient HttpSession httpSession;
     protected transient ServletContext context;
 //    protected boolean isXFormsPresent = false;
-    private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
+    private static final Log LOGGER = LogFactory.getLog(SocketProcessor.class);
     protected String uploadDestination;
     protected String useragent;
     protected String uploadDir;

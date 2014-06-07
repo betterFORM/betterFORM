@@ -15,11 +15,9 @@
  */
 package de.betterform.agent.web.atmosphere;
 
-import org.atmosphere.cpr.AtmosphereHandler;
-import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResourceEvent;
-import org.atmosphere.cpr.AtmosphereResourceImpl;
-import org.atmosphere.cpr.AtmosphereResponse;
+import de.betterform.agent.web.WebUtil;
+import de.betterform.xml.xforms.XFormsProcessor;
+import org.atmosphere.cpr.*;
 import org.atmosphere.handler.AbstractReflectorAtmosphereHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,26 +35,31 @@ import java.util.List;
  * method
  *
  * @author Jeanfrancois Arcand
+ * @deprecated
  */
-public abstract class MyHandler<T> extends AbstractReflectorAtmosphereHandler {
+public abstract class BetterformHandlerBase<T> extends AbstractReflectorAtmosphereHandler {
 
     public final static String MESSAGE_DELIMITER = "|";
-    private final Logger logger = LoggerFactory.getLogger(MyHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(BetterformHandlerBase.class);
 
 
     public final void onRequest(AtmosphereResource resource) throws IOException {
-        String enc = resource.getRequest().getCharacterEncoding();
-        try {
-            resource.getRequest().setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        resource.getResponse().setCharacterEncoding("UTF-8");
+        AtmosphereRequest req = resource.getRequest();
 
-        if (resource.getRequest().getMethod().equalsIgnoreCase("GET")) {
+        String xformsKey = (String) req.getSession().getAttribute("xfSessionKey");
+        XFormsProcessor xp = WebUtil.getWebProcessor(xformsKey, resource.getRequest(), req.resource().getResponse(), req.getSession());
+
+        if(logger.isDebugEnabled()){
+            logger.debug("xformsKey in infinispan is: " + xformsKey);
+            logger.debug("XFormsProcessor: " + xp);
+        }
+
+        if (req.getMethod().equalsIgnoreCase("GET")) {
             onOpen(resource);
         }
-
+        else if (req.getMethod().equalsIgnoreCase("POST")) {
+//            resource.getBroadcaster().broadcast("{ \"foo\" :\"test\"}");
+        }
 
     }
 

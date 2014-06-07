@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
  * not recommended by DWR.
  *
  * @author Joern Turner
+ * @deprecated replaced by SocketProcessor
  */
 public class FluxUtil {
     private static final Log LOGGER = LogFactory.getLog(FluxUtil.class);

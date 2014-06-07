@@ -19,10 +19,8 @@ import org.atmosphere.cache.UUIDBroadcasterCache;
 import org.atmosphere.client.TrackMessageSizeInterceptor;
 import org.atmosphere.config.service.AtmosphereHandlerService;
 import org.atmosphere.config.service.Get;
-import org.atmosphere.cpr.AtmosphereResource;
-import org.atmosphere.cpr.AtmosphereResourceEvent;
-import org.atmosphere.cpr.AtmosphereResponse;
-import org.atmosphere.cpr.Broadcaster;
+import org.atmosphere.cpr.*;
+import org.atmosphere.handler.OnMessage;
 import org.atmosphere.interceptor.AtmosphereResourceLifecycleInterceptor;
 import org.atmosphere.interceptor.BroadcastOnPostAtmosphereInterceptor;
 import org.atmosphere.interceptor.HeartbeatInterceptor;
@@ -44,6 +42,7 @@ import java.util.StringTokenizer;
  * AtmosphereHandler that provides the adapter between network layer and betterFORM XForms processor.
  *
  * @author Joern Turner
+ * @deprecated
  */
 @AtmosphereHandlerService(path = "/msg",
         broadcasterCache = UUIDBroadcasterCache.class,
@@ -51,23 +50,13 @@ import java.util.StringTokenizer;
                         BroadcastOnPostAtmosphereInterceptor.class,
                         TrackMessageSizeInterceptor.class,
                         HeartbeatInterceptor.class})
-public class BetterformAtmosphereHandler extends MyHandler<String> {
+public class BetterformAtmosphereHandler extends BetterformHandlerBase<String> {
     private final Logger logger = LoggerFactory.getLogger(BetterformAtmosphereHandler.class);
-    private AtmosphereResource resource;
 
-    @Get
-    public void init(AtmosphereResource r) {
-        try {
-            r.getRequest().setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        r.getResponse().setCharacterEncoding("UTF-8");
-    }
+
 
     @Override
     public void onOpen(AtmosphereResource resource) throws IOException {
-        this.resource = resource;
         ServletRequest request = resource.getRequest().getRequest();
         ServletResponse response = resource.getResponse().getResponse();
 
@@ -76,19 +65,17 @@ public class BetterformAtmosphereHandler extends MyHandler<String> {
             logger.debug("ServletRequest object: " + request);
             logger.debug("ServletResponse object: " + response);
         }
-
-        super.onOpen(resource);
-
     }
 
+    /**
+     * This method will be called by broadcasted messages (on resumed AtmosphereResources)
+     * @param response
+     * @param message
+     * @throws IOException
+     */
     @Override
     public void onMessage(AtmosphereResponse response, String message) throws IOException {
-        // Message looks like { "targetId" : "foo", "eventType" : "updateValue" }
-
         logger.debug("atmosphere: " + message);
-        Broadcaster broadcaster = resource.getBroadcaster();
-        broadcaster.broadcast("hello");
-
 
         // cut leading and trailing curly braces and tokenize the string
         Map <String,String> props = new HashMap <String,String>();

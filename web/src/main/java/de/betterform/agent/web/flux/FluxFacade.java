@@ -35,6 +35,7 @@ import java.util.*;
  *
  * @author Joern Turner
  * @version $Id: FluxFacade.java 2875 2007-09-28 09:43:30Z lars $
+ * @deprecated replaced by new Atmosphere-based network layer
  */
 public class FluxFacade {
     //this is a custom event to activate a trigger in XForms.

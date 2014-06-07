@@ -5,7 +5,8 @@
 
 package de.betterform.agent.web.cache;
 
-import de.betterform.agent.web.flux.FluxProcessor;
+//import de.betterform.agent.web.flux.FluxProcessor;
+import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
@@ -22,7 +23,7 @@ import java.io.IOException;
  */
 public class XFSessionCache {
     private static final Log LOGGER = LogFactory.getLog(XFSessionCache.class);
-    private static Cache<String, FluxProcessor> XFSESSIONCACHE;
+    private static Cache<String, SocketProcessor> XFSESSIONCACHE;
     private static DefaultCacheManager cacheManager;
     private static String DEFAULT_CACHE = "xfSessionCache";
 
@@ -35,7 +36,7 @@ public class XFSessionCache {
     }
 
 
-    public static Cache<String, FluxProcessor> getCache() throws XFormsConfigException {
+    public static Cache<String, SocketProcessor> getCache() throws XFormsConfigException {
         if (XFSessionCache.XFSESSIONCACHE == null) {
             try {
                 initCache(XFSessionCache.DEFAULT_CACHE);
@@ -47,7 +48,7 @@ public class XFSessionCache {
         return XFSessionCache.XFSESSIONCACHE;
     }
 
-    public static Cache<String, FluxProcessor> getCache(String cacheName) throws XFormsConfigException {
+    public static Cache<String, SocketProcessor> getCache(String cacheName) throws XFormsConfigException {
         try {
             initCache(cacheName);
         } catch (IOException e) {
@@ -69,7 +70,7 @@ public class XFSessionCache {
 
     public static void main(String argv[]) {
         try {
-            Cache<String, FluxProcessor> sessionCache = XFSessionCache.getCache();
+            Cache<String, SocketProcessor> sessionCache = XFSessionCache.getCache();
         } catch (XFormsException xfce) {
             System.err.println("Booooooooooooooooooooooooooooo!");
         }

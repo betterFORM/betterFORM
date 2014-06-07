@@ -6,9 +6,12 @@
 
 package de.betterform.agent.web.flux;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.*;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebProcessor;
 import de.betterform.agent.web.WebUtil;
+import de.betterform.agent.web.atmosphere.BetterSocket;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.EventQueue;
 import de.betterform.agent.web.event.UIEvent;
@@ -23,6 +26,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.ui.BindingElement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.atmosphere.cpr.AtmosphereResource;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
@@ -33,30 +37,28 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Processor for DWR calls. This
- * class is not exposed through DWR. Instead a Facadeclass 'FluxFacade' will be
- * exposed that only allows to use the dispatch method. All other methods will
- * be hidden for security.
+ * Processor that bridges between Atmosphere Network (websocket) layer and the XFormsProcessorImpl
  *
  * @author Joern Turner
- * @version $Id: FluxAdapter.java 2970 2007-10-30 11:25:03Z lars $
- * @deprecated replaced by SocketProcessor
+ *
  */
-public class FluxProcessor extends WebProcessor implements Externalizable {
-    private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
+public class SocketProcessor extends WebProcessor implements Externalizable {
+    private static final Log LOGGER = LogFactory.getLog(SocketProcessor.class);
     public static final String FLUX_ACTIVATE_EVENT = "flux-action-event";
     private transient EventQueue eventQueue;
     private static final long serialVersionUID = 2L;
+    private AtmosphereResource resource;
 
-    public FluxProcessor() {
+    public SocketProcessor() {
         super();
         this.eventQueue = new EventQueue();
     }
 
+
     public EventQueue getEventQueue() {
         return this.eventQueue;
     }
-    
+
 
     /**
      * initialize the Adapter. This is necessary cause often the using
@@ -147,6 +149,9 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
      */
     public void handleEvent(Event event) {
         super.handleEvent(event);
+
+
+        //convert XMLEvent to JSON encoded
         try {
             if (event instanceof XMLEvent) {
                 XMLEvent xmlEvent = (XMLEvent) event;
@@ -343,11 +348,15 @@ public class FluxProcessor extends WebProcessor implements Externalizable {
     @Override
     public boolean equals(Object that) {
         LOGGER.debug("equals");
-        if (that instanceof FluxProcessor) {
-            return this.getKey().equals(((FluxProcessor)that).getKey());
+        if (that instanceof SocketProcessor) {
+            return this.getKey().equals(((SocketProcessor)that).getKey());
         }
 
         return false;
+    }
+
+    public void setAtmosphereResource(AtmosphereResource resource) {
+        this.resource = resource;
     }
 
     /*  TODO: do we need to implement??

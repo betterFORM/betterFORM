@@ -314,6 +314,7 @@
                 <include name="jboss-*.jar"/>
                 <include name="atmosphere-*.jar"/>
                 <include name="slf4j-*.jar"/>
+                <include name="jackson-*.jar"/>
             </fileset>
         </copy>
     </target>
@@ -356,6 +357,12 @@
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.xml"/>
         <delete file="${webapp.dir}/WEB-INF/classes/log4j.dtd"/>
 
+        <echo>
+            ************************************************************************************
+            for syncing and watching of webapp/* please use grunt rsync or grunt watch respectively
+            ************************************************************************************
+        </echo>
+
     </target>
 
     <target name="deploy-exploded-resources" description="only deployes resources in src/main/webapp/resources">
@@ -366,9 +373,11 @@
         ************************************************************************************
         </echo>
         <antcall target="copy-src-resources"/>
+<!--
         <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts"/>
         </ant>
+-->
     </target>
 
 
@@ -418,9 +427,11 @@
             </fileset>
         </copy>
 
+<!--
         <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
             <property name="scripts.target" value="${resources.dir}/scripts/dojo"/>
         </ant>
+-->
     </target>
 
     <target name="check-ant-version" unless="antversion">

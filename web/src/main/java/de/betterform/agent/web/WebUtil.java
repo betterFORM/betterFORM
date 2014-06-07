@@ -7,7 +7,8 @@
 package de.betterform.agent.web;
 
 import de.betterform.agent.web.cache.XFSessionCache;
-import de.betterform.agent.web.flux.FluxProcessor;
+//import de.betterform.agent.web.flux.FluxProcessor;
+import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.connector.http.AbstractHTTPConnector;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -127,7 +128,7 @@ public class WebUtil {
             return null;
         }
 
-        org.infinispan.Cache<String, FluxProcessor> sessionCache;
+        org.infinispan.Cache<String, SocketProcessor> sessionCache;
         try {
             sessionCache = XFSessionCache.getCache();
         } catch (XFormsException xfe) {
@@ -181,7 +182,7 @@ public class WebUtil {
         boolean removedSession = false;
 
         try {
-            org.infinispan.Cache<String, FluxProcessor> sessionCache = XFSessionCache.getCache();
+            org.infinispan.Cache<String, SocketProcessor> sessionCache = XFSessionCache.getCache();
             if (sessionCache != null) {
                 //TODO: rethink ...
                 removedSession = (sessionCache.remove(key)   != null);

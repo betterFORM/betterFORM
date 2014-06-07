@@ -5,8 +5,12 @@
 
 package de.betterform.xml.events.impl;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 import de.betterform.xml.events.XMLEvent;
 import org.apache.xerces.dom.events.EventImpl;
+import org.w3c.dom.Element;
+import org.w3c.dom.events.EventTarget;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -85,6 +89,7 @@ public class XercesXMLEvent extends EventImpl implements XMLEvent {
      *
      * @return the set of property names used for contextual information.
      */
+    @JsonIgnore
     public Collection getPropertyNames() {
         if (this.contextInfo != null) {
             return this.contextInfo.keySet();
@@ -149,4 +154,56 @@ public class XercesXMLEvent extends EventImpl implements XMLEvent {
 
 
     }
+
+    @Override
+    @JsonIgnore
+    public EventTarget getTarget() {
+        return super.getTarget();
+    }
+
+    @Override
+    @JsonIgnore
+    public EventTarget getCurrentTarget() {
+        return super.getCurrentTarget();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean getBubbles() {
+        return super.getBubbles();
+    }
+
+    @Override
+    @JsonIgnore
+    public boolean getCancelable() {
+        return super.getCancelable();
+    }
+
+    @Override
+    @JsonIgnore
+    public short getEventPhase() {
+        return super.getEventPhase();
+    }
+
+    @Override
+    @JsonIgnore
+    public void stopPropagation() {
+        super.stopPropagation();
+    }
+
+    @Override
+    @JsonIgnore
+    public void preventDefault() {
+        super.preventDefault();
+    }
+
+/*
+    public Object getTargetName(){
+        return (String) this.contextInfo.get("targetName");
+    }
+
+    public String getTargetId(){
+       return (String) this.contextInfo.get("targetId");
+    }
+*/
 }

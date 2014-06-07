@@ -102,6 +102,10 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
 
+                <pathelement location="${core.dir}/src/main/lib/jackson-core-2.3.1.jar" groupid="com.fasterxml.jackson.core" version="2.3.1" artifactId="jackson-core"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-annotations-2.3.0.jar" groupid="com.fasterxml.jackson.core" version="2.3.0" artifactId="jackson-annotations"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-databind-2.3.3.jar" groupid="com.fasterxml.jackson.core" version="2.3.3" artifactId="jackson-databind"/>
+
                 <!-- eXist -->
                 <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>
                 <pathelement location="${core.dir}/src/main/lib/exist-2.1-trunk.jar" groupid="org.exist" version="2.1-trunk" artifactId="exist"/>
@@ -143,6 +147,7 @@
                 <!-- <pathelement location="${web.dir}/src/main/lib/staxmapper-1.1.0.Final.jar" groupid="org.jboss" version="1.1.0" artifactId="staxmapper"/> -->
                 <pathelement location="${web.dir}/src/main/lib/slf4j-api-1.7.5.jar" groupid="org.slf4j" version="1.7.5" artifactId="slf4j-api"/>
                 <pathelement location="${web.dir}/src/main/lib/slf4j-log4j12-1.7.5.jar" groupid="org.slf4j" version="1.7.5" artifactId="slf4j-log4j12"/>
+
             </classpath>
         </compile>
         <test>
