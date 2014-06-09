@@ -28,6 +28,7 @@ import java.io.ByteArrayOutputStream;
  * not recommended by DWR.
  *
  * @author Joern Turner
+ * @deprecated
  */
 public class FluxModel {
     private static final Log LOGGER = LogFactory.getLog(FluxModel.class);

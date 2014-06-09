@@ -136,6 +136,7 @@ public class WebFactory {
      *
      * @param userAgentIdent a valid user agent identifier (either 'dojo' or 'html' at the moment)
      * @throws javax.servlet.ServletException if something goes terribly wrong with accessing the servlet context.
+     * todo: check correctness of comment and the general requirement for configuration of useragent
      */
     public void initConfiguration(String userAgentIdent) throws XFormsConfigException {
         LOGGER.info("--------------- initing betterForm... ---------------");

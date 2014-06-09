@@ -11,6 +11,7 @@ package de.betterform.agent.web.flux;
  *
  * @author Joern Turner
  * @version $Id: FluxException.java 2528 2007-03-28 10:59:18Z joernt $
+ * @deprecated
  */
 public class FluxException extends Exception {
 

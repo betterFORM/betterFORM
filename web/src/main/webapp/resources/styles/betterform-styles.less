@@ -758,69 +758,13 @@ table .xfContainer{
 
 
 
-/* ################### some theme-specific (Dojo tundra) styles ################### */
 
-
-.dijitBorderContainer {
-  position: absolute;
-}
-
-
-/* matches Rating control (range) */
-.dojoxRating ul {
-  padding: 0;
-  margin: 0;
-}
-
-/* matches Rating control (range) */
-.dojoxRatingStar {
-  display: inline-block;
-  background: url("@{image-url}/rating_empty.gif") left center;
-  position: relative;
-  height: @ratingStarsHeight;
-  width: @ratingStarsWidth;
-  float: left;
-}
-
-/* matches Rating control (range) */
-.dojoxRatingStarChecked,.dojoxRatingStarHover  {
-  background-image: url("@{image-url}/rating_full.gif");
-}
-/* matches Rating control (range) */
-.dojoxRatingStarHover {
-  opacity: .5;
-}
-
-
-.xsdDateTime .dijitError {
-  background: @controlBackground url("@{image-url}/validationInputBg.png") repeat-x scroll left top;
-}
-.xfTimeControl{
-  display:inline-block;
-
-  .dijitComboBox {
-    width: @comboBoxWidth;
-  }
-
-  .dijitButtonNode {
-    display:none;
-  }
-}
 .xfDateTimeControl {
   display: inline;
 }
 
 .xfDateTimeControl > xfLabel {
   float: left;
-}
-.xfDateTimeControl {
-  .dijitDateTextBox{
-    width:@dateTimeWidth;
-  }
-
-  .dijitTimeTextBox {
-    width:@dateTimeWidth;
-  }
 }
 .bfTabContainer {
   height: @bfTabContainerHeight;
@@ -831,167 +775,11 @@ table .xfContainer{
   // style your xfCase here
 }
 
-.dijitError .dijitValidationIcon,
-.dijitError .dijitValidationIconText {
-  visibility: hidden;
-}
-
-/* SORIA THEME BUGFIX */
-.dijitTextBoxFocused {
-  outline:none;
-}
-
-.widgetContainer .dijitTextBox {
-  width: auto;
-  /* width:13.8em;*/
-  -moz-user-modify: read-write !important;
-}
-.widgetContainer .dijitInputInner {
-  border: 2px inset threedface;
-}
-
-.tundra .dijitInputContainer input {
-  margin:0;
-}
-
-.bf .xfSelect1  .widgetContainer .dijitButtonNode {
-  height:100%;
-  padding: 0.18em;
-}
-
-/* ################################################ */
-/*  DOJOX TOASTER CSS
-/* ################################################ */
-/* main classes for dojox.widget.Toaster */
-
-.dijitToasterContainer {
-  padding: 2px;
-  border: thin dotted @gray;
-  display: block;
-  position: absolute;
-  width: @dijitToasterWidth;
-  margin: 0px;
-  font:@dijitToasterFontSize;
-}
-
-.dijitToasterContent {
-  background:@dijitTosterContent;
-  font-size: @fontSizeMin;
-  color: @dark;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
 
 
-.dijitToasterMessage{
-  color:@light;
-}
 
-.dijitToasterWarning{ }
-.dijitToasterError,
-.dijitToasterFatal{
-  font-weight:bold;
-  color:@light;
-}
-
-.dijitToasterWarning .dijitToasterContent{
-  background:@toasterWarning;
-}
-
-.dijitToasterError .dijitToasterContent{
-  background:@toasterError;
-}
-
-/* imported from dijit.css */
-
-.dijitToasterClip {
-  position: absolute;
-  z-index: 5000;
-  overflow: hidden;
-}
-
-xfSelect1 {
-  .dijitArrowButton  {
-    width:@select1ArrowBtnWidth;
-    height:@select1ArrowBtnHeight;
-  }
-
-  .dijitArrowButton .dijitInputField {
-    padding-top:5px;
-  }
-
-  .dijitInputContainer .xfValue {
-    border:0;
-    padding-top:3px;
-  }
-}
-.bfCheckBoxGroup .dijitDisabled,
-.xfReadOnly .dijitCheckBoxReadOnly {
-  background-color: @controlDisabled !important;
-}
-
-.xfReadWrite {
-  .dijitRadio, .dijitRadioIcon, .dijitRadioChecked {
-    margin: 0;
-    padding: 0;
-    height:@dijitRadioWidthHeight;
-    width: @dijitRadioWidthHeight;
-  }
-  .dijitRadio, .dijitRadioIcon{
-    background: url("@{image-url}/checkmark.png") no-repeat -112px 50%;
-  }
-  .dijitRadioChecked {
-    background: url("@{image-url}/checkmark.png") no-repeat -96px 50%;
-
-  }
-  .dijitCheckBox, .dijitCheckBoxIcon, .dijitCheckBoxChecked {
-    height: @dijitCheckboxWidthHeight;
-    width: @dijitCheckboxWidthHeight;
-    margin: 0;
-    padding: 0;
-  }
-  .dijitCheckBox, .dijitCheckBoxIcon {
-    background: url("@{image-url}/checkmarkNoBorder.png") no-repeat -16px 50%;
-  }
-  .dijitCheckBoxChecked {
-    background: url("@{image-url}/checkmarkNoBorder.png") no-repeat 0 50%;
-  }
-
-}
-
-.xfReadOnly {
-  .dijitRadio, .dijitRadioIcon {
-    background: url("@{image-url}/checkmark.png") no-repeat -144px 50%;
-    margin: 0;
-    padding: 0;
-    height:@dijitRadioWidthHeight;
-    width: @dijitRadioWidthHeight;
-  }
-
-  .dijitRadioChecked {
-    background-position: -129px 50%;
-  }
-
-  .dijitCheckBox,
-  .dijitCheckBoxIcon {
-    background: url("@{image-url}/checkmarkNoBorder.png") no-repeat -48px 50%;
-    height: @dijitCheckboxWidthHeight;
-    width: @dijitCheckboxWidthHeight;
-  }
-
-  .dijitCheckBoxChecked {
-    background-position: -32px 50%;
-  }
-
-}
 
 .xfControl  {
-  .dijitCheckBoxFocused {
-    border:1px solid @dark;
-  }
-  .dijitFocusedLabel {
-    border:1px solid @gray;
-  }
   select {
     background-color: @controlBackground;
   }

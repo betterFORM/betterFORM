@@ -41,10 +41,12 @@
 
         <ant antfile="${project.dir}/build.xml" inheritall="false" target="update-maven-poms"/>
 
+<!--
         <echo>
             __== Create Custom Dojo Build ==__
         </echo>
         <ant antfile="${project.dir}/web/build-dojo.xml" inheritall="false" target="build-dojo"/>
+-->
 
         <echo>
             __== Create WAR file ==__

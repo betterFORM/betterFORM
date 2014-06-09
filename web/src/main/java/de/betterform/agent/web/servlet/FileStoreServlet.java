@@ -21,7 +21,7 @@ import java.util.List;
  * Time: 14:22
  */
 public class FileStoreServlet extends FormsServlet {
-    protected boolean showFiles = false;
+    protected boolean showFiles = true;
     protected boolean recursive = false;
     protected boolean filterReadOnly = false;
 
@@ -54,7 +54,7 @@ public class FileStoreServlet extends FormsServlet {
         }
 
         String listing = handleFileListing(path);
-        String tmp = "{\n'total':"+ total + ",\n'items':[" + listing + "\n]\n}";
+        String tmp = "{\n\"total\":"+ total + ",\n\"items\":[" + listing + "\n]\n}";
         response.getOutputStream().write(tmp.getBytes());
 
         response.flushBuffer();
@@ -114,9 +114,9 @@ public class FileStoreServlet extends FormsServlet {
         if (directory.canWrite() || !filterReadOnly) {
             total++;
             if (recursive) {
-                return "{'name': '" + directory.getName()+ "', 'parentDir': '"+ directory.getParent() + "', 'size': 0000, 'modified':" + directory.lastModified() + ", 'directory': true, 'path': '" +directory.getPath() + "', 'children': [" + listChildren(directory) + "]},";
+                return "{\"name\": \"" + directory.getName()+ "\", \"parentDir\": \""+ directory.getParent() + "\", \"directory\": true, \"path\": \"" +directory.getPath() + "\", \"children\": [" + listChildren(directory) + "]},";
             } else {
-                return "{'name': '" + directory.getName()+ "', 'parentDir': '"+ directory.getParent() + "', 'size': 0000, 'modified':" + directory.lastModified() + ", 'directory': true, 'path': '" +directory.getPath() + "'},";
+                return "{\"name\": \"" + directory.getName()+ "\", \"parentDir\": \""+ directory.getParent() + "\", \"directory\": true, \"path\": \"" +directory.getPath() + "\"},";
             }
         }
         return "";
@@ -125,7 +125,7 @@ public class FileStoreServlet extends FormsServlet {
     protected String listFile(File file) {
         if (file.canWrite() || !filterReadOnly) {
             total++;
-            return "{'name': '" + file.getName()+ "', 'parentDir': '"+ file.getParent() + "', 'size': " + file.length() +  ", 'modified':" + file.lastModified() + ", 'directory': false, 'path': '" + file.getPath() + "'},";
+            return "{\"name\": \"" + file.getName()+ "\", \"parentDir\": \""+ file.getParent() + "\", \"directory\": false, \"path\": \"" + file.getPath() + "\"},";
         }
         return "";
     }
@@ -144,7 +144,7 @@ public class FileStoreServlet extends FormsServlet {
                         }
                     }
                 }
-                if (showFiles) {
+//                if (showFiles) {
                     for (File file : files) {
                         if (!ignores.contains(file.getName())) {
                             // file is directory and does not start with '.'
@@ -153,7 +153,7 @@ public class FileStoreServlet extends FormsServlet {
                             }
                         }
                     }
-                }
+//                }
         }
 
         return listing.toString();

@@ -31,8 +31,8 @@ xtag.register('better-atmosphere', {
                         console.log('This doesn\'t look like a valid JSON: ', message);
                         return;
                     }
-                    console.log("targetId: ", json.contextInfo.targetId);
-                    console.log("eventType: ", json.type);
+//                    console.log("targetId: ", json.contextInfo.targetId);
+//                    console.log("eventType: ", json.type);
 //                    console.log("value: ", json.value);
                     $('<div/>',{
                         text:json.type

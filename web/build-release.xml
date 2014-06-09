@@ -167,10 +167,6 @@
 
       <ant antfile="${root.dir}/build.xml" inheritall="false" target="update-maven-poms"/>
 
-      <echo>
-	__== Create Custom Dojo Build ==__
-      </echo>
-      <ant antfile="build-dojo.xml" inheritall="false" target="build-dojo"/>
     </target>
     
     <target name="release" depends="prepare-release, create-single-jar" description="Build betterFORM single jar release"/>

@@ -159,37 +159,6 @@
     </xf:model>
 
     <link href="ChibaTestSuite11.css" rel="stylesheet"/>
-    <!--<script type="text/javascript">
-        dojo.require("dojox.charting.Chart2D");
-        dojo.require("dojox.charting.themes.PlotKit.blue");
-//        dojo.require("betterform.ui.output.PieChart");
-
-
-        dojo.addOnLoad(function(){
-              chart1 = new dojox.charting.Chart2D("simplechart");
-              chart1.addPlot("default", {
-                type: "Pie",
-                fontColor: "white",
-                labelOffset: 15,
-                radius: 50
-              });
-              chart1.addSeries("Series 1", seriesData);
-              chart1.setTheme(dojox.charting.themes.PlotKit["blue"]);
-              chart1.render();
-            
-              chart2 = new dojox.charting.Chart2D("simplechart");
-              chart2.addPlot("default", {
-                type: "Pie",
-                fontColor: "white",
-                labelOffset: 15,
-                radius: 50
-              });
-              chart2.addSeries("Series 1", seriesData);
-              chart2.setTheme(dojox.charting.themes.PlotKit["blue"]);
-              chart2.render();
-          });
-
-    </script>-->
 </head>
 <body class="tundra" style="overflow:hidden;">
 
@@ -434,21 +403,6 @@
             <td class="total">
                 <xf:output id="normUnknown" model="chapterModel" ref="instance()/ts:specChapter/ts:statusSummary/ts:numNormTotal"/>
             </td>
-            <!--<td>
-                <script type="text/javascript">
-                    var pass = dojo.byId("normPass-value").innerHTML;
-                    var fail = dojo.byId("normFail-value").innerHTML;
-                    var unknown = dojo.byId("normUnknown-value").innerHTML;
-                    alert(pass + ":" + fail  + ":" + unknown);
-                    var seriesData = [
-                        {y: 4,  color: "red"},
-                        {y: 3,  color: "green"},
-                        {y: 1,  color: "blue"},
-                    ];
-                </script>
-                <div id="simplechart" style="width: 150px; height: 150px;"></div>
-                --><!--<div id="fooChart" dojotype="betterform.ui.output.PieChart"></div>--><!--
-            </td>-->
         </tr>
         <tr>
             <td class="testCaseSummaryTitle">Basic</td>

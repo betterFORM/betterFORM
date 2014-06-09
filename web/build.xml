@@ -344,13 +344,6 @@
         </echo>
 
         <antcall target="copy-src-resources"/>
-        <ant antfile="${basedir}/build-dojo.xml" target="prepare-dojo" usenativebasedir="true">
-            <property name="scripts.target" value="${resources.dir}/scripts"/>
-        </ant>
-
-        <ant antfile="${basedir}/build-dojo.xml" target="copy-src-resources-scripts" usenativebasedir="true">
-            <property name="scripts.target" value="${resources.dir}/scripts"/>
-        </ant>
 
         <!-- remove unwanted resources -->
         <delete file="${webapp.dir}/WEB-INF/lib/${core.app.name}-${app.version.number}.jar"  failonerror="false"/>

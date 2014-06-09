@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>betterFORM Home</title>
+        <link href="webcomponents/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+            body{
+                font-family: sans-serif;
+                font-size: 18px;
+            }
+            ul{
+                list-style-type: none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container">
+            <ol class="breadcrumb"></ol>
+            <ul class="filelisting">
+
+            </ul>
+            <!--
+                        <div class="row">
+                            <div class="col-md-12">
+                            </div>
+                        </div>
+            -->
+        </div>
+        <script type="text/javascript" src="webcomponents/bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                console.log("ready");
+                var pathname = window.location.pathname;
+                var contextroot = pathname.substring(0,pathname.lastIndexOf("/"));
+                console.log("contextname", contextroot);
+
+                //fetch the dir/file list as json and add to DOM
+                getDirsAndFiles("");
+
+
+                //add handler for directory links - file links are just standard links and do not need special treatment.
+                $("ul.filelisting").on("click","li.directory",function(){
+                    console.log("directory link clicked",$(this).attr("data-path"));
+
+                    getDirsAndFiles($(this).attr("data-path"));
+                });
+
+                $("ol.breadcrumb").on("click","li",function(){
+                    console.log("foo");
+                    $.fn.reverse = [].reverse;
+                    var path=$.map(
+                            $(this).prevAll().reverse(),function(element){
+                                return $(element).text();
+                            }).join("/") + "/" + $(this).text();
+                    console.log("rejoined",path);
+                    getDirsAndFiles(path);
+                });
+            });
+
+            function getDirsAndFiles(path){
+                $.getJSON( "/betterform/Filelister?path="+path, function( data ) {
+                    console.log(data.parentDir);
+                    $(".filelisting").empty();
+
+                    //build the breadcrumb
+                    var fullPath = data.parentPath;
+                    var strippedPath = fullPath.substring(1,fullPath.length);
+                    $(".breadcrumb").empty();
+                    var pathes = strippedPath.split("/");
+                    console.log("strippedPath",pathes);
+
+                    $.each(pathes,function(i,value){
+                        console.log(i,value);
+                        $("<li></li>")
+                                .text(value)
+                                .appendTo(".breadcrumb");
+                    });
+
+
+                    $.each(data.items, function(i, record) {
+                        console.log(record);
+                        var directory,link;
+                        if (record.directory==true) {
+                            directory= "directory";
+                            link="/betterform/Filelister?path="+record.path;
+                            $("<li></li>")
+                                    .attr("class",directory)
+                                    .attr("data-path",record.path)
+                                    .html(record.name)
+                                    .appendTo(".filelisting");
+                        }else{
+                            directory = "file";
+                            link="/betterform"+record.path;
+                            $("<li><a></a></li>")
+                                    .attr("class",directory)
+                                    .find("a")
+                                    .attr("href",link)
+                                    .html(record.name)
+                                    .end()
+                                    .appendTo(".filelisting");
+                        }
+                    });
+                });
+            }
+        </script>
+
+    </body>
+</html>

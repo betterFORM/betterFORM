@@ -6,7 +6,8 @@
     "x-tag-template": "*",
     "x-tag-view": "~0.1.0",
     "atmosphere": "~2.1.5",
-    "jquery-atmosphere": "~2.1.5"
+    "jquery-atmosphere": "~2.1.5",
+    "bootstrap": "~3.1.1"
   },
   "devDependencies": {}
 }

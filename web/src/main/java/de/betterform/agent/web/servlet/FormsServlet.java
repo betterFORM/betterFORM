@@ -20,6 +20,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:tobias.krebs@betterform.de">tobi</a>
  * @version $Id: FormsServlet 23.11.10 tobi $
+ * @deprecated
  */
 public class FormsServlet extends HttpServlet {
     protected List ignores;

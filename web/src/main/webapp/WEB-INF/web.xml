@@ -365,13 +365,13 @@
     </servlet-mapping>
 
       <servlet>
-        <servlet-name>FileStoreServlet</servlet-name>
-        <servlet-class>de.betterform.agent.web.servlet.FileStoreServlet</servlet-class>
+        <servlet-name>FileLister</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.FileLister</servlet-class>
     </servlet>
 
      <servlet-mapping>
-        <servlet-name>FileStoreServlet</servlet-name>
-        <url-pattern>/FileStore</url-pattern>
+        <servlet-name>FileLister</servlet-name>
+        <url-pattern>/Filelister</url-pattern>
     </servlet-mapping>
 <!--
     <security-constraint>
