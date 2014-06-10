@@ -2,31 +2,75 @@
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>betterFORM Home</title>
+        <title>betterFORM FileBrowser</title>
         <link href="webcomponents/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <style type="text/css">
             body{
                 font-family: sans-serif;
                 font-size: 18px;
             }
+            .breadcrumb{
+                background: transparent;
+                border: thin solid #666666;
+
+            }
+            .breadcrumb li{
+                cursor: pointer;
+            }
+            .container{
+                margin-top: 30px;
+            }
             ul{
                 list-style-type: none;
+                padding:0;
+            }
+            ul li{
+                padding: 3px;
+            }
+            ul.filelisting li.directory{
+                margin:2px 0;
+                background:#e3e3e3;
+                cursor:pointer;
+                color:#00008b;
+            }
+            li.directory:hover{
+                text-decoration: underline;
+            }
+            ul.filelisting li.file{
+                margin:2px 0;
+                background:#efefef;
+            }
+            footer{
+                float: right;
+                font-size:10px;
+            }
+            footer img{
+                margin-top:-23px;
             }
         </style>
     </head>
     <body>
 
         <div class="container">
-            <ol class="breadcrumb"></ol>
-            <ul class="filelisting">
 
-            </ul>
+
+            <ol class="breadcrumb"></ol>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="filelisting">
+
+                    </ul>
+                </div>
+            </div>
             <!--
                         <div class="row">
                             <div class="col-md-12">
                             </div>
                         </div>
             -->
+            <footer>
+                <div>powered by</div><img src="bfResources/images/bf_logo_145x59.png"/>
+            </footer>
         </div>
         <script type="text/javascript" src="webcomponents/bower_components/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript">

@@ -348,21 +348,9 @@
     </servlet-mapping>
 -->
     <welcome-file-list>
-        <welcome-file>dashboard.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
-    <servlet>
-        <servlet-name>FormsServlet</servlet-name>
-        <servlet-class>de.betterform.agent.web.servlet.FormsServlet</servlet-class>
-        <init-param>
-            <param-name>ignores</param-name>
-            <param-value>css</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FormsServlet</servlet-name>
-        <url-pattern>/FormBrowser</url-pattern>
-    </servlet-mapping>
 
       <servlet>
         <servlet-name>FileLister</servlet-name>
