@@ -138,14 +138,6 @@
         <!-- recreate script folder -->
         <!--<mkdir dir="${basedir}/target/classes/META-INF/resources/scripts/release"/>-->
 
-
-        <echo>
-        ************************************************************************************
-        unpacking optimized javascript library
-        ************************************************************************************
-        </echo>
-        <unzip src="${resource.src.dir}/main/lib/${app.name}-js-optimized.zip"
-               dest="${target}/classes/META-INF/resources/scripts"/>
         <echo>
         ************************************************************************************
         compressing classes plus resources into a single jar

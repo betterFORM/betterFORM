@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>setvalue test form</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+          -->
+    </head>
+    <body>
+        <div style="display:none">
+            <xf:model>
+                <xf:instance id="i-default">
+                    <data xmlns="">
+                        <input1>instValue1</input1>
+                    </data>
+                </xf:instance>
+            </xf:model>
+        </div>
+        <xf:group appearance="minimal">
+            <xf:input ref="input1" incremental="true">
+                <xf:label>label for input1</xf:label>
+                <xf:hint>This is a hint</xf:hint>
+            </xf:input>
+            <xf:trigger>
+                <xf:label>Hit me</xf:label>
+                <xf:setvalue ref="input1" value="'new value'"/>
+            </xf:trigger>
+        </xf:group>
+    </body>
+</html>

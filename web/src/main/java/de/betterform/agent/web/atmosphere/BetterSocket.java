@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.betterform.agent.web.WebUtil;
 import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.xml.events.XMLEvent;
-import de.betterform.xml.events.impl.XercesXMLEvent;
 import de.betterform.xml.xforms.XFormsProcessor;
+import de.betterform.xml.xforms.exception.XFormsException;
 import org.atmosphere.config.service.Disconnect;
 import org.atmosphere.config.service.ManagedService;
 import org.atmosphere.config.service.Ready;
@@ -38,6 +38,15 @@ public class BetterSocket {
 
         SocketProcessor socketProcessor = (SocketProcessor) WebUtil.getWebProcessor(xformsKey, r.getRequest(), r.getResponse(), r.getRequest().getSession());
         //return events that already executed during xforms model init
+        eventListToJSON(r, socketProcessor);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("XForms Session key: " + this.xformsKey);
+        }
+//        r.getBroadcaster().broadcast("just a string would do?");
+    }
+
+    private void eventListToJSON(AtmosphereResource r, SocketProcessor socketProcessor) {
         List<XMLEvent> xmlEvents = socketProcessor.getEventQueue().getEventList();
         for (int i = 0; i < xmlEvents.size(); i++) {
             Event ev = xmlEvents.get(i);
@@ -55,11 +64,6 @@ public class BetterSocket {
                 logger.error("mapping xml event to JSON failed"+ e.getMessage());
             }
         }
-
-        if (logger.isDebugEnabled()) {
-            logger.debug("XForms Session key: " + this.xformsKey);
-        }
-//        r.getBroadcaster().broadcast("just a string would do?");
     }
 
     @Disconnect
@@ -76,12 +80,23 @@ public class BetterSocket {
         logger.debug("message: " + message);
 
         AtmosphereResource resource = resourceFactory.find(this.uuid);
-        XFormsProcessor xp = WebUtil.getWebProcessor(xformsKey, resource.getRequest(), resource.getResponse(), resource.getRequest().getSession());
+        SocketProcessor xp = (SocketProcessor)WebUtil.getWebProcessor(xformsKey, resource.getRequest(), resource.getResponse(), resource.getRequest().getSession());
         if (logger.isDebugEnabled()) {
             logger.debug("XFormsProcessor: " + xp);
         }
+        if(message.getEventType().equalsIgnoreCase("DOMActivate")){
+            try {
+                xp.dispatchEvent(message.getTargetId());
+                eventListToJSON(resource, xp);
 
+            }  catch (XFormsException e) {
+                e.printStackTrace();
+            }
+            message.setValue("hat getan");
+
+        }
         return message;
+
     }
 
 

@@ -97,7 +97,7 @@ public class SocketProcessor extends WebProcessor implements Externalizable {
     }
 
 
-    public void dispatchEvent(String id) throws XFormsException, FluxException {
+    public void dispatchEvent(String id) throws XFormsException {
         UIEvent uiActivateEvent = new DefaultUIEventImpl();
         uiActivateEvent.initEvent(FLUX_ACTIVATE_EVENT, id, null);
         handleUIEvent(uiActivateEvent);

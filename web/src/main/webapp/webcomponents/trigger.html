@@ -1,0 +1,51 @@
+<element name="xf-trigger">
+    <template>
+        <!-- the context for pathes is the original xforms element -->
+        <input type="button" value="{xf:label}" />
+
+    </template>
+    <script>
+        xtag.register('xf-trigger', {
+                xfElement:this,
+                lifecycle:{
+
+
+                    created: function(){
+                        console.log("trigger created this: ",this, " id: ", this.id);
+
+                        this.xfElement=this;
+                    },
+
+                    inserted: function(){
+                        console.log("trigger inserted");
+                    },
+
+                    removed: function(){
+                        console.log("trigger removed");
+                    },
+
+                    attributeChanged: function(){
+                        console.log("trigger attributeChanged  ");
+                        // fired when attributes are set
+                    }
+
+                },
+                events: {
+                    'init:delegate(xf-trigger)':function(e){
+                        console.log("trigger init:delegate(xf-trigger) - e: ", e);
+                    },
+                    'click:delegate(xf-trigger)': function(e){
+                        console.log("trigger click:delegate(xf-trigger) e: ", e);
+                        var msg = jQuery.stringifyJSON({
+                            targetId:this.id,
+                            eventType:'DOMActivate'
+                        });
+                        document.querySelector("better-atmosphere").pushMsg(msg);
+
+                    }
+                },
+                accessors: {    },
+                methods: { }
+            });
+    </script>
+</element>

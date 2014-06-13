@@ -2,38 +2,24 @@
     <template>
         <!-- the context for pathes is the original xforms element -->
         <label for="{@id}">{xf:label}</label>
-        <input type="text" placeholder="{xf:hint}" value="{bf:data}"/>
+        <input type="text" placeholder="{xf:hint}" />
 
     </template>
     <script>
         xtag.register('xf-input', {
-                xfElement:this,
                 lifecycle:{
-
 
                     created: function(){
                         console.log("input created",this);
-                        this.xfElement=this;
-                        var input = this.xtag.input = this.querySelector("input");
-                        var val = this.xtag.value = this.getAttribute("value");
-                        input.className = 'xf-input-control';
-                        input.value = val.innerHTML;
-                        console.log("value: ",input.value);
-/*
-                        var xfValue=$(this).find('xf-value');
-                        var control = $(this).find("input");
-                        control.value=xfValue;
-*/
-
-                        //oder besser observer
-//                        xtag.fireEvent(xfValue,'init')
-
+                        this.xtag.input = this.querySelector("input");
                     },
+
                     inserted: function(){
                         console.log("input inserted");
                         // fired each time a component
                         // is inserted into the DOM
                     },
+
                     removed: function(){
                         console.log("removed");
                         // fired each time an element
@@ -71,14 +57,20 @@
                     value: {
                         attribute: {},
                         get: function(){
+                            console.log("input-string: get value: ", this.xtag.input.value);
                             return this.xtag.input.value;
                         },
                         set: function(value){
+                            console.log("input-string: set value: ", value);
                             this.xtag.input.value = value;
                         }
                     }
                 },
                 methods: {
+                    /* Update input-string webcomponent to value from remote server */
+                    updateToRemoteState:function(mips){
+                        this.xtag.input.value = mips.contextInfo.value;
+                    }
                 }
             });
     </script>

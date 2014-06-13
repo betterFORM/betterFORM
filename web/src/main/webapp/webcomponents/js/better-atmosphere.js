@@ -24,13 +24,27 @@ xtag.register('better-atmosphere', {
 
                 onMessage: function (response) {
                     var message = response.responseBody;
-                    console.log("response: ",response);
+
+                    console.log("response: ",JSON.stringify(message));
+                    var json = null;
                     try {
-                        var json = jQuery.parseJSON(message);
+                        json = jQuery.parseJSON(message);
                     } catch (e) {
                         console.log('This doesn\'t look like a valid JSON: ', message);
                         return;
                     }
+
+                    if("betterform-state-changed" == json.type){
+                        var targetId = json.contextInfo.targetId;
+                        console.log("executing betterform-state-changed targetId:", targetId);
+                        try {
+                            document.querySelector("#" + targetId).updateToRemoteState(json);
+                        }
+                        catch(e){
+                            console.log('Could not execute method: ', targetId);
+                        }
+                    }
+
 //                    console.log("targetId: ", json.contextInfo.targetId);
 //                    console.log("eventType: ", json.type);
 //                    console.log("value: ", json.value);
@@ -43,7 +57,7 @@ xtag.register('better-atmosphere', {
                 },
 
                 myCall:function(reponse){
-                    console.log("response:",response);
+                    console.log("callback response:",response);
                 }
             };
             console.log("this.socket: ", this.socket);
