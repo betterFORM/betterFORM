@@ -238,7 +238,10 @@
 */
 
                 <xsl:apply-templates select="//*[contains(name(.),'-')]" mode="scripts"/>
-                <xsl:apply-templates select="//xf:*" mode="scripts"/>
+                <xsl:for-each-group select="//xf:*" group-by="local-name()">
+                    <xsl:apply-templates select="." mode="scripts"/>
+                </xsl:for-each-group>
+
             </script>
             <xsl:value-of select="$CR"/>
 
@@ -356,6 +359,7 @@
 -->
 
     <xsl:template match="*" mode="scripts">
+
         <xsl:variable name="componentURI"><xsl:call-template name="getComponentURI"/></xsl:variable>
         <xsl:choose>
             <xsl:when test="doc-available($componentURI)">

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>Input Control Tests</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+
+        -->
+
+        <style type="text/css">
+            *[enabled='false'] {
+                display:none;
+            }
+            *[valid='false'] input {
+                outline:1px solid darkred;
+            }
+            *[readonly='true'] input {
+                color:darkgray;
+            }
+            *[required='true'] label:after {
+                content:'*';
+                color: darkred;
+            }
+
+        </style>
+        <xf:model>
+            <xf:instance xmlns="">
+                <data required="true" relevant="true" valid="true" readonly="false">
+                    <input>
+                        <value>Input Value</value>
+                        <label>Input Label</label>
+                        <alert>Alert for Input[1]</alert>
+                        <hint>Hint for Input[1]</hint>
+                    </input>
+                </data>
+            </xf:instance>
+
+            <xf:bind nodeset="instance()">
+                <xf:bind nodeset="input[1]/value" required="boolean-from-string(instance()/@required)"
+                         relevant="boolean-from-string(instance()/@relevant)"
+                         constraint="boolean-from-string(instance()/@valid)"
+                         readonly="boolean-from-string(instance()/@readonly)"/>
+            </xf:bind>
+        </xf:model>
+    </head>
+
+    <body>
+        <xf:group appearance="minimal">
+            <xf:group appearance="minimal" style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger>
+                    <xf:label>Required</xf:label>
+                    <xf:setvalue ref="instance()/@required" value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Relevant</xf:label>
+                    <xf:setvalue ref="instance()/@relevant" value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Valid</xf:label>
+                    <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger>
+                    <xf:label>Readonly</xf:label>
+                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </xf:group>
+
+            <hr/>
+
+            <xf:group appearance="minimal">
+                <xf:input ref="input[1]/value" incremental="true">
+                    <xf:label ref="../label"/>
+                    <xf:hint ref="../hint"/>
+                    <xf:alert ref="../alert"/>
+                </xf:input>
+                <!-- xf:output ref="input[1]/value">
+                    <xf:label/>
+                </xf:output-->
+            </xf:group>
+        </xf:group>
+    </body>
+</html>

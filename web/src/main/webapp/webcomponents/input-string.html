@@ -12,6 +12,9 @@
                     created: function(){
                         console.log("input created",this);
                         this.xtag.input = this.querySelector("input");
+
+
+
                     },
 
                     inserted: function(){
@@ -54,6 +57,47 @@
                     }
                 },
                 accessors: {
+                    valid: {
+                        attribute: {}
+                    },
+                    enabled: {
+                        attribute: {}
+                    },
+                    required: {
+                        attribute: {},
+                        get: function(){
+                            console.warn("TBD: input-string: get required: ", this.xtag.input);
+
+                        },
+                        set: function(value){
+                            console.log("input-string: set required: ", value);
+                            if("true" === value){
+                                var att=document.createAttribute("required");
+                                att.value = "required";
+                                this.xtag.input.setAttributeNode(att);
+                            }else  {
+                                this.xtag.input.removeAttribute("required");
+                            }
+                        }
+                    },
+                    readonly: {
+                        attribute: {},
+                        get: function(){
+                            console.warn("TBD: input-string: get readonly: ", this.xtag.input);
+
+                        },
+                        set: function(value){
+                            console.log("input-string: set readonly: ", value);
+                            if("true" === value){
+                                var att=document.createAttribute("readonly");
+                                att.value = "readonly";
+                                this.xtag.input.setAttributeNode(att);
+                            }else  {
+                                this.xtag.input.removeAttribute("readonly");
+                            }
+                        }
+                    },
+
                     value: {
                         attribute: {},
                         get: function(){
@@ -69,7 +113,31 @@
                 methods: {
                     /* Update input-string webcomponent to value from remote server */
                     updateToRemoteState:function(mips){
-                        this.xtag.input.value = mips.contextInfo.value;
+                        console.debug("input-string: updateToRemoteState mips:",mips, " this: ",this);
+                        if(mips.contextInfo.value){
+                            // this.xtag.input.value = mips.contextInfo.value;
+                            this.value = mips.contextInfo.value;
+                        }
+                        if(mips.contextInfo.required){
+                            // this.xtag.input.value = mips.contextInfo.value;
+                            this.required = mips.contextInfo.required;
+                        }
+                        if(mips.contextInfo.readonly){
+                            // this.xtag.input.value = mips.contextInfo.value;
+                            this.readonly = mips.contextInfo.readonly;
+                        }
+
+                        if(mips.contextInfo.valid){
+                            // this.xtag.input.value = mips.contextInfo.value;
+                            this.valid = mips.contextInfo.valid;
+                        }
+
+                        if(mips.contextInfo.enabled){
+                            this.enabled = mips.contextInfo.enabled;
+                        }
+
+                        console.debug("input-string: finished updateToRemoteState mips:",mips, " this: ",this);
+
                     }
                 }
             });
