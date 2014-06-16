@@ -1,0 +1,11 @@
+<templates>
+
+    <template id="select1-string.html">
+        <!-- the context for pathes is the original xforms element -->
+        <label for="{@id}">{xf:label}</label>
+        <select id="{@id}">
+            {xf:value}
+        </select>
+    </template>
+
+</templates>

@@ -1,66 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
       xmlns:bf="http://betterform.sourceforge.net/xforms"
       xmlns:xf="http://www.w3.org/2002/xforms">
-    <head>
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-        <title>[PUT YOUR TITLE HERE]</title>
-        <!--
-            ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
-            ~ Licensed under the terms of BSD License
-            --></head>
-    <body>
-        <div style="display:none">
-            <xf:model id="model-1">
-                <xf:instance id="i-default">
-                    <data xmlns="">
-                        <input1>foo</input1>
-                        <input2/>
-                        <input3/>
-                        <input4/>
-                        <input5/>
-                        <input6/>
-                        <input7/>
-                    </data>
-                </xf:instance>
-                <xf:bind id="C1" ref="input1"/>
-                <xf:bind id="C2" ref="input2" type="integer"/>
-                <xf:bind id="C3" ref="input3" type="decimal"/>
-                <xf:bind id="C4" ref="input4" type="float"/>
-                <xf:bind id="C5" ref="input5" type="date"/>
-                <xf:bind id="C6" ref="input6" type="dateTime"/>
-                <xf:bind id="C7" ref="input7" type="time"/>
-            </xf:model>
-        </div>
-        <xf:group appearance="minimal" id="C8">
-            <xf:input id="C9" ref="input1">
-                <xf:label id="C10">input1</xf:label>
-                <bf:data enabled="true"
-                         readonly="false"
-                         required="false"
-                         schema-value=""
-                         type="string"
-                         valid="true"></bf:data>
-            </xf:input>
-            <!--
-                           <xf:input id="C11" ref="input2">
-                               <xf:label id="C12">input2</xf:label>
-                           </xf:input>
-                           <xf:input id="C13" ref="input3">
-                               <xf:label id="C14">input3</xf:label>
-                           </xf:input>
-                           <xf:input id="C15" ref="input4">
-                               <xf:label id="C16">input4</xf:label>
-                           </xf:input>
-                           <xf:input id="C17" ref="input5">
-                               <xf:label id="C18">input5</xf:label>
-                           </xf:input>
-                           <xf:input id="C19" ref="input6">
-                               <xf:label id="C20">input6</xf:label>
-                           </xf:input>
-                           <xf:input id="C21" ref="input7">
-                               <xf:label id="C22">input7</xf:label>
-                           </xf:input>
-               --></xf:group>
-    </body>
+<head>
+    <title>Select1 Control Tests</title>
+    <!--
+      ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+      ~ Licensed under the terms of BSD License
+
+      -->
+    <style type="text/css">
+        *[enabled='false'] {
+            display: none;
+        }
+
+        *[valid='false'] select {
+            outline: 1px solid darkred;
+        }
+
+        *[readonly='true'] select {
+            color: darkgray;
+        }
+
+        *[required='true'] label:after {
+            content: '*';
+            color: darkred;
+        }
+
+    </style>
+    <xf:model id="C1">
+        <xf:instance id="i-default">
+            <data xmlns=""
+                  readonly="false"
+                  relevant="true"
+                  required="true"
+                  valid="true">
+                <select1>
+                    <value>Select1 Value</value>
+                    <label>Select1 Label</label>
+                    <alert>Alert for Select1[1]</alert>
+                    <hint>Hint for Select1[1]</hint>
+                </select1>
+            </data>
+        </xf:instance>
+        <xf:instance id="i-colors">
+            <items xmlns="">
+                <color>
+                    <name>red</name>
+                    <value>00FF00</value>
+                </color>
+                <color>
+                    <name>green</name>
+                    <value>0000FF</value>
+                </color>
+                <color>
+                    <name>blue</name>
+                    <value>FF0000</value>
+                </color>
+            </items>
+        </xf:instance>
+        <xf:bind id="C2" nodeset="instance()">
+            <xf:bind constraint="boolean-from-string(instance()/@valid)"
+                     id="C3"
+                     nodeset="select1[1]/value"
+                     readonly="boolean-from-string(instance()/@readonly)"
+                     relevant="boolean-from-string(instance()/@relevant)"
+                     required="boolean-from-string(instance()/@required)"/>
+        </xf:bind>
+    </xf:model>
+</head>
+<body>
+<xf:select1 id="C4" ref="select1[1]/value">
+    <xf:label id="C5" ref="../label">Select1 Label</xf:label>
+    <xf:item id="C8" selected="false">
+        <xf:label id="C9">Vanilla</xf:label>
+        <xf:value id="C10">v</xf:value>
+    </xf:item>
+    <xf:item id="C11" selected="false">
+        <xf:label id="C12">Strawberry</xf:label>
+        <xf:value id="C13">s</xf:value>
+    </xf:item>
+    <xf:item id="C14" selected="false">
+        <xf:label id="C15">Chocolate</xf:label>
+        <xf:value id="C16">c</xf:value>
+    </xf:item>
+    <xf:choices id="C17">
+        <xf:item id="C18" selected="false">
+            <xf:label id="C19">One</xf:label>
+            <xf:value id="C20">1</xf:value>
+        </xf:item>
+        <xf:item id="C21" selected="false">
+            <xf:label id="C22">Two</xf:label>
+            <xf:value id="C23">2</xf:value>
+        </xf:item>
+        <xf:item id="C24" selected="false">
+            <xf:label id="C25">Three</xf:label>
+            <xf:value id="C26">3</xf:value>
+        </xf:item>
+    </xf:choices>
+    <xf:itemset id="C27" nodeset="instance('i-colors')/color">
+        <xf:item id="C29" selected="false">
+            <xf:label id="C31">
+                <xf:output id="C33" ref="name">
+                    <bf:data enabled="true"
+                             readonly="false"
+                             required="false"
+                             schema-value="red"
+                             type="string"
+                             valid="true">red
+                    </bf:data>
+                </xf:output>
+            </xf:label>
+            <xf:value id="C35" ref="value">00FF00</xf:value>
+        </xf:item>
+        <xf:item id="C36" selected="false">
+            <xf:label id="C38">
+                <xf:output id="C40" ref="name">
+                    <bf:data enabled="true"
+                             readonly="false"
+                             required="false"
+                             schema-value="green"
+                             type="string"
+                             valid="true">green
+                    </bf:data>
+                </xf:output>
+            </xf:label>
+            <xf:value id="C42" ref="value">0000FF</xf:value>
+        </xf:item>
+        <xf:item id="C43" selected="false">
+            <xf:label id="C45">
+                <xf:output id="C47" ref="name">
+                    <bf:data enabled="true"
+                             readonly="false"
+                             required="false"
+                             schema-value="blue"
+                             type="string"
+                             valid="true">blue
+                    </bf:data>
+                </xf:output>
+            </xf:label>
+            <xf:value id="C49" ref="value">FF0000</xf:value>
+        </xf:item>
+        <bf:data>
+            <xf:item id="C28">
+                <xf:label>
+                    <xf:output ref="name"/>
+                </xf:label>
+                <xf:value ref="value"/>
+            </xf:item>
+        </bf:data>
+    </xf:itemset>
+    <bf:data enabled="true"
+             readonly="false"
+             required="true"
+             schema-value="Select1 Value"
+             type="string"
+             valid="true">Select1 Value
+    </bf:data>
+</xf:select1>
+</body>
 </html>

@@ -1,0 +1,34 @@
+<element name="xf-item" >
+    <template>
+        <!-- the context for pathes is the original xforms element -->
+        <option value="{xf:value}">{xf:label}</option>
+    </template>
+    <script>
+        xtag.register('xf-item', {
+            lifecycle:{
+
+
+                created: function(){
+                    console.log("xf-item created this: ",this, " id: ", this.id);
+                },
+
+                inserted: function(){
+                    console.log("xf-item inserted");
+                },
+
+                removed: function(){
+                    console.log("xf-item removed");
+                },
+
+                attributeChanged: function(){
+                    console.log("xf-item attributeChanged  ");
+                    // fired when attributes are set
+                }
+
+            },
+            events: { },
+            accessors: { },
+            methods: { }
+        });
+    </script>
+</element>

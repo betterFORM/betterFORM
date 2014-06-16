@@ -1,0 +1,53 @@
+<element name="xf-select1" >
+    <template>
+        <select>
+            <template repeat="xf:item">
+                <option value=""/>
+            </template>
+        </select>
+    </template>
+    <script>
+        xtag.register('xf-select1', {
+            xfElement:this,
+            lifecycle:{
+
+
+                created: function(){
+                    console.log("select1 created this: ",this, " id: ", this.id);
+
+                    this.xfElement=this;
+                },
+
+                inserted: function(){
+                    console.log("select1 inserted");
+                },
+
+                removed: function(){
+                    console.log("select1 removed");
+                },
+
+                attributeChanged: function(){
+                    console.log("select1 attributeChanged  ");
+                    // fired when attributes are set
+                }
+
+            },
+            events: {
+                'init:delegate(xf-select1)':function(e){
+                    console.log("select1 init:delegate(xf-select1) - e: ", e);
+                },
+                'click:delegate(xf-select1)': function(e){
+                    console.log("select1 click:delegate(xf-select1) e: ", e);
+                    var msg = jQuery.stringifyJSON({
+                        targetId:this.id,
+                        eventType:'DOMActivate'
+                    });
+                    document.querySelector("better-atmosphere").pushMsg(msg);
+
+                }
+            },
+            accessors: {    },
+            methods: { }
+        });
+    </script>
+</element>

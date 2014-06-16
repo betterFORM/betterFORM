@@ -17,8 +17,8 @@
 
     <target name="prepare">
         <delete dir="${basedir}/target"/>
-        <copy todir="${basedir}/target/components">
-            <fileset file="${web.dir}/src/main/webapp/components/**" />
+        <copy todir="${basedir}/target/webcomponents">
+            <fileset file="${web.dir}/src/main/webapp/webcomponents/**" />
         </copy>
     </target>
 

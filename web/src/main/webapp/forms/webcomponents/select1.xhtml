@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xf="http://www.w3.org/2002/xforms"
+      xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:bf="http://betterform.sourceforge.net/xforms">
+    <head>
+        <title>Select1 Control Tests</title>
+        <!--
+        ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+        ~ Licensed under the terms of BSD License
+
+        -->
+
+        <style type="text/css">
+            *[enabled='false'] {
+                display:none;
+            }
+            *[valid='false'] select {
+                outline:1px solid darkred;
+            }
+            *[readonly='true'] select {
+                color:darkgray;
+            }
+            *[required='true'] label:after {
+                content:'*';
+                color: darkred;
+            }
+
+        </style>
+        <xf:model>
+            <xf:instance id="i-default" xmlns="">
+                <data required="true" relevant="true" valid="true" readonly="false">
+                    <select1>
+                        <value>Select1 Value</value>
+                        <label>Select1 Label</label>
+                        <alert>Alert for Select1[1]</alert>
+                        <hint>Hint for Select1[1]</hint>
+                    </select1>
+                </data>
+            </xf:instance>
+
+            <xf:instance id="i-colors">
+                <items xmlns="">
+                    <color>
+                        <name>red</name>
+                        <value>00FF00</value>
+                    </color>
+                    <color>
+                        <name>green</name>
+                        <value>0000FF</value>
+                    </color>
+                    <color>
+                        <name>blue</name>
+                        <value>FF0000</value>
+                    </color>
+                </items>
+            </xf:instance>
+
+
+            <xf:bind nodeset="instance()">
+                <xf:bind nodeset="select1[1]/value" required="boolean-from-string(instance()/@required)"
+                         relevant="boolean-from-string(instance()/@relevant)"
+                         constraint="boolean-from-string(instance()/@valid)"
+                         readonly="boolean-from-string(instance()/@readonly)"/>
+            </xf:bind>
+        </xf:model>
+    </head>
+
+    <body>
+        <xf:select1 ref="select1[1]/value">
+            <xf:label ref="../label"/>
+            <xf:hint ref="../hint"/>
+            <xf:alert ref="../alert"/>
+            <!-- TODO: support all xforms version of choices as well as html option -->
+            <xf:item>
+                <xf:label>Vanilla</xf:label>
+                <xf:value>v</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>Strawberry</xf:label>
+                <xf:value>s</xf:value>
+            </xf:item>
+            <xf:item>
+                <xf:label>Chocolate</xf:label>
+                <xf:value>c</xf:value>
+            </xf:item>
+            <xf:choices>
+                <xf:item>
+                    <xf:label>One</xf:label>
+                    <xf:value>1</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>Two</xf:label>
+                    <xf:value>2</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>Three</xf:label>
+                    <xf:value>3</xf:value>
+                </xf:item>
+            </xf:choices>
+            <xf:itemset  nodeset="instance('i-colors')/color">
+                <xf:label><xf:output ref="name"/></xf:label>
+                <xf:value ref="value"/>
+            </xf:itemset>
+
+        </xf:select1>
+    </body>
+</html>
