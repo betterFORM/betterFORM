@@ -125,6 +125,25 @@ module.exports = function(grunt) {
                     base:  '<%= fore.dist %>',
                     keepalive:false
                 }
+            },
+
+            less: {
+                development: {
+                    options:{
+                        strictImports:true
+                    },
+                    files: {
+                        "resources/css/styles.css": "resources/css/styles.less"
+                    }
+                },
+                production: {
+                    options:{
+                        strictImports:true
+                    },
+                    files: {
+                        "resources/css/styles.css": "resources/css/styles.less"
+                    }
+                }
             }
         }
     });
