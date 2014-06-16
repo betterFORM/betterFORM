@@ -62,16 +62,26 @@
                     <xf:label>Valid</xf:label>
                     <xf:setvalue ref="instance()/@valid" value="not(boolean-from-string(instance()/@valid))"/>
                 </xf:trigger>
-                <xf:trigger>
-                    <xf:label>Readonly</xf:label>
-                    <xf:setvalue ref="instance()/@readonly" value="not(boolean-from-string(instance()/@readonly))"/>
-                </xf:trigger>
+                <input type="button" onclick="
+                            var input = document.querySelector('#input1');
+                            console.log('input.incremental1: ',input.incremental);
+                            var value ;
+                            if(input.incremental=='false'){
+                                value =  'true';
+                            }else {
+                                value = 'false';
+                            };
+                            console.log('value1: ',value);
+                            input.incremental = value;
+                            console.log('input.incremental2: ',input.incremental);"
+
+                       value="incremental" />
             </xf:group>
 
             <hr/>
 
             <xf:group appearance="minimal">
-                <xf:input ref="input[1]/value" incremental="true">
+                <xf:input id="input1" ref="input[1]/value" incremental="true">
                     <xf:label ref="../label"/>
                     <xf:hint ref="../hint"/>
                     <xf:alert ref="../alert"/>

@@ -7,18 +7,17 @@
     </template>
     <script>
         xtag.register('xf-input', {
-                lifecycle:{
 
+
+                lifecycle:{
                     created: function(){
                         console.log("input created",this);
                         this.xtag.input = this.querySelector("input");
-
-
-
                     },
 
                     inserted: function(){
                         console.log("input inserted");
+
                         // fired each time a component
                         // is inserted into the DOM
                     },
@@ -34,27 +33,18 @@
                     }
                 },
                 events: {
-                    'init:delegate(input)':function(e){
-/*
-                        console.log("value chaanaaannnnnnngeeeedddd",e);
-                        var control = this.xfElement.querySelector('input');
-                        control.value=this.innerHTML;
-*/
+/*                    'change:delegate(input)': function(e){
+                        console.log("change:delegate(input): this.value  ",this.value);
 
-                    } ,
-                    'change:delegate(.xf-input-control)': function(e){
-                        console.log("this  ",this);
-                        console.log("this.value  ",this.value);
-                        console.log("this.parent  ",this.parentNode);
-                        this.parentNode.setAttribute("value",this.value);
-                        var msg = jQuery.stringifyJSON({
-                            targetId:this.parentNode.id,
-                            eventType:'changed',
-                            value:this.value
-                        });
-                        document.querySelector("better-atmosphere").pushMsg(msg);
+                        console.log("this: ",this);
+                        console.log("this.xtag: ",this.xtag);
 
+                        this.parentNode.sendValueToServer(this.value);
+                    },
+                    'keyup:delegate(input)': function(e){
+                        // this.xtag.sendValueToServer(this.value);
                     }
+*/
                 },
                 accessors: {
                     valid: {
@@ -108,9 +98,53 @@
                             console.log("input-string: set value: ", value);
                             this.xtag.input.value = value;
                         }
+                    },
+                    incremental: {
+                        attribute: {},
+
+                        set: function(value){
+                            console.log("input-string: set incremental: ", value, " inc2:", true == value);
+                            var self = this;
+
+                            if("true" == value){
+                                if(this.evt != undefined){
+                                    xtag.removeEvent(this,"change",this.evt);
+                                }
+
+                                // TBD: remove event listener
+                                this.evt = xtag.addEvent(this, 'keyup:delegate(input)', function(e){
+                                    console.log("eventlistener: change:keyup(input): this.value  ",this.value);
+                                    self.sendValueToServer(this.value);
+                                });
+
+
+                            }else {
+                                if(this.evt != undefined){
+                                    xtag.removeEvent(this,"keyup",this.evt);
+                                    this.evt = undefined;
+                                }
+                                this.evt = xtag.addEvent(this, 'change:delegate(input)', function(e){
+                                    console.log("eventlistener :change:delegate(input): this.value  ",this.value);
+                                    self.sendValueToServer(this.value);
+                                });
+
+                            }
+                        }
                     }
                 },
                 methods: {
+
+                    sendValueToServer:function(value){
+                        var msg = jQuery.stringifyJSON({
+                            targetId:this.parentNode.id,
+                            eventType:'changed',
+                            value:this.value
+                        });
+                        document.querySelector("better-atmosphere").pushMsg(msg);
+
+                    },
+
+
                     /* Update input-string webcomponent to value from remote server */
                     updateToRemoteState:function(mips){
                         console.debug("input-string: updateToRemoteState mips:",mips, " this: ",this);
