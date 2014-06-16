@@ -1,0 +1,30 @@
+<!--
+    Implementation of an XForms control providing the following abilities:
+
+    - state management for required, readonly, relevant, valid and calculate Mips
+    - propagating changes of a control value to the server
+    - dispatching events to the server
+-->
+<element name="xf-control">
+    <template>
+    </template>
+    <script>
+        xtag.register('xf-control', {
+                // extend existing elements
+                lifecycle:{
+                    created: function(){
+                        console.log("xf-control created");
+                    },
+                    inserted: function(){
+                        console.log("xf-control inserted");
+                    },
+                    removed: function(){
+                        console.log("xf-control removed");
+                    },
+                    attributeChanged: function(){
+                        console.log("xf-control attributeChanged");
+                    }
+                }
+            });
+    </script>
+</element>
