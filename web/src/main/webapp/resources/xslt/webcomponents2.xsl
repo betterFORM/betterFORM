@@ -19,7 +19,7 @@
     contextroot - the name of the webapp context (default: 'betterform'
     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     -->
-    <xsl:param name="contextroot" select="'/Users/joern/dev/betterFORM/tools/component-incubator/target/'"/>
+    <xsl:param name="contextroot" select="''"/>
 
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -43,8 +43,9 @@
     -->
     <xsl:param name="CSSPath" select="concat($resourcesPath,'styles/')"/>
 
+    <xsl:param name="locale" select="'en'"/>
 
-    <xsl:param name="realPath" select="''"/>
+    <xsl:param name="realPath" select="'/Users/joern/dev/betterFORM/tools/component-incubator/target/'"/>
     <xsl:param name="componentPath" select="'webcomponents/'"/>
 
     <xsl:param name="form-name" select="//title"/>
@@ -62,6 +63,11 @@
 
     <xsl:template match="/html">
         <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
+
+        <xsl:message>contextroot: <xsl:value-of select="$contextroot"/></xsl:message>
+        <xsl:message>resourcesPath: <xsl:value-of select="$resourcesPath"/></xsl:message>
+        <xsl:message>scriptPath: <xsl:value-of select="$scriptPath"/></xsl:message>
+        <xsl:message>CSSPath: <xsl:value-of select="$CSSPath"/></xsl:message>
 
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates/>
@@ -97,46 +103,26 @@
             <xsl:call-template name="getLinkAndStyle"/>
             <xsl:call-template name="copyStyles"/>
 
+
+            <!--<link rel="import" href="/betterform/webcomponents/bower_components/polymer/polymer.html"></link>-->
+
             <!--
             >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             include needed javascript files
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
             <xsl:call-template name="copyInlineScript"/>
-            <!--
-            *******************************************************************************
-            Experimental:
-            model id is used as variable name for js model. Names are split at '-' to
-            avoid JS name convention problems - you must be aware of that when authoring
-            pages.
-            *******************************************************************************
-            -->
-            <!--
-                        <script type="text/javascript">
-
-
-                            var <xsl:value-of select="substring-after(//xf:model[1]/@id,'-')"/> = {
-                            <xsl:for-each select="//bf:data">
-                                <xsl:message>data:<xsl:value-of select="."/>
-                                </xsl:message>
-                                    <xsl:value-of select="../@id"/>:{
-                                        id:"<xsl:value-of select="../@id"/>",
-                                        readonly:<xsl:value-of select="@readonly"/>,
-                                        required:<xsl:value-of select="@required"/>,
-                                        relevant:<xsl:value-of select="@enabled"/>,
-                                        valid:<xsl:value-of select="@valid"/>,
-                                        type:"<xsl:value-of select="@type"/>",
-                                        value:"<xsl:value-of select="./text()"/>"
-                                    }<xsl:if test="position() != last()">,
-                            </xsl:if>
-                            </xsl:for-each>
-
-                            };
-                        </script>
-            -->
 
             <xsl:comment>##### global web components #####</xsl:comment>
+
+
+            <!--<link rel="import" href="/betterform/webcomponents/bower_components/polymer/polymer.html"></link>-->
+
             <xsl:value-of select="$CR"/>
+            <link rel="import" href="/betterform/webcomponents/polymer-elements/better-atmosphere.html"></link>
+            <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-input.html"></link>
+            <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-trigger.html"></link>
+            <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-hint.html"></link>
 
         </xsl:copy>
 
@@ -147,122 +133,44 @@
         <xsl:element name="body">
             <xsl:copy-of select="@*" copy-namespaces="no"/>
 
-<!--
-            <fore-model>
-                <xsl:for-each select="//bf:data">
-                    <xsl:element name="xf-state">
-                        <xsl:attribute name="for">
-                            <xsl:value-of select="../@id"/>
-                        </xsl:attribute>
-                        <xsl:copy-of select="text()" copy-namespaces="no"/>
-                    </xsl:element>
-                </xsl:for-each>
-            </fore-model>
--->
             <xsl:apply-templates/>
-
-<!--
-            <script type="text/javascript">
-
-                var data = {
-                    <xsl:for-each select="//bf:data">
-                        <xsl:value-of select="../@id"/>:{
-                            value:<xsl:value-of select="."/>,
-                            readonly:<xsl:value-of select="@readonly"/>
-                        }
-                    </xsl:for-each>
-                };
-            </script>
--->
 
             <!-- jt: @transport is not wired yet in script - just a hint how to do it later -->
             <better-atmosphere transport="sse"></better-atmosphere>
+
             <xsl:value-of select="$CR"/>
-
-
-
-
-            <script src="{$scriptPath}/x-tag-core/dist/x-tag-core.js" type="text/javascript"/>
-
+            <!--
+            >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            Polymer import - the only js file imported directly
+            <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            -->
+            <script src="/betterform/webcomponents/bower_components/platform/platform.js"></script>
+            <xsl:value-of select="$CR"/>
             <script src="/betterform/webcomponents/bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
             <xsl:value-of select="$CR"/>
             <script src="/betterform/webcomponents/bower_components/jquery-atmosphere/jquery.atmosphere.js" type="text/javascript"></script>
             <xsl:value-of select="$CR"/>
-
-            <script src="/betterform/webcomponents/js/better-atmosphere.js" type="text/javascript"></script>
-
-            <!--<xsl:variable name="model" select="unparsed-text(concat($realPath,$componentPath,'fore-model.html'))"/>-->
-            <!--<xsl:variable name="raw" select="encode-for-uri($model/text())"/>-->
-
-
-
-
-<!--
-            <script type="text/javascript">
-                <xsl:value-of select="substring-before(substring-after($model, substring-before($model, 'xtag')), '&#60;/script')" disable-output-escaping="yes"/>
-            </script>
--->
+            <!--<script src="/betterform/webcomponents/js/better-atmosphere.js" type="text/javascript"></script>-->
             <xsl:value-of select="$CR"/>
-            <script type="text/javascript">
-/*
-                xtag.register('xf-state', {
-                    lifecycle:{
-                    created: function(){
-                    console.log("state created");
-                    // fired once at the time a component
-                    // is initially created or parsed
-                    },
-                    inserted: function(){
-                    console.log("state inserted");
-                    // fired each time a component
-                    // is inserted into the DOM
-                    },
-                    removed: function(){
-                    console.log("removed");
-                    // fired each time an element
-                    // is removed from DOM
-                    },
-                    attributeChanged: function(){
-                    console.log("attributeChanged");
-                    // fired when attributes are set
-                    }
-                    },
-                    events: {
-                    },
-                    accessors: {
-                    },
-                    methods: {
-                    }
-                });
-*/
+    <!--
+                <script type="text/javascript">
 
-                <xsl:apply-templates select="//*[contains(name(.),'-')]" mode="scripts"/>
-                <xsl:for-each-group select="//xf:*" group-by="local-name()">
-                    <xsl:apply-templates select="." mode="scripts"/>
-                </xsl:for-each-group>
 
-            </script>
+                    <xsl:apply-templates select="//*[contains(name(.),'-')]" mode="scripts"/>
+                    <xsl:for-each-group select="//xf:*" group-by="local-name()">
+                        <xsl:apply-templates select="." mode="scripts"/>
+                    </xsl:for-each-group>
+
+                </script>
             <xsl:value-of select="$CR"/>
+    -->
 
         </xsl:element>
-
-        <!--
-        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        Polymer import - the only js file imported directly
-        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        <xsl:value-of select="$CR"/>
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'platform/platform.js')}"/>
-        <xsl:value-of select="$CR"/>
-        <xsl:value-of select="$CR"/>
-        <script type="text/javascript" src="{concat($contextroot,$scriptPath,'polymer/polymer.js')}"/>
-        <xsl:value-of select="$CR"/>
-         -->
 
     </xsl:template>
 
     <!-- ##### always hide model on client for security reasons ###### -->
     <xsl:template match="xf:model" priority="20"/>
-    <xsl:template match="xf:model | xf:instance | xf:bind" priority="20" mode="scripts"/>
 
     <xsl:template match="bf:data">
         <!--
@@ -298,38 +206,31 @@
         <!-- ##### $contextroot + $componantPath + $controlType + .html ##### -->
         <xsl:variable name="componentURI"><xsl:call-template name="getComponentURI"/></xsl:variable>
 
+<!--
         <xsl:choose>
             <xsl:when test="doc-available($componentURI)">
-
-                <xsl:variable name="component" select="document($componentURI)//template/*" xpath-default-namespace=""/>
+                <xsl:variable name="main-template" select="document($componentURI)//element/template/*" xpath-default-namespace=""/>
                 <xsl:element name="xf-{local-name()}" namespace="http://www.w3.org/1999/xhtml">
                     <xsl:copy-of select="@*" copy-namespaces="no"/>
-                    <!-- ### handling state attributes #### -->
+                    &lt;!&ndash; ### handling state attributes #### &ndash;&gt;
                     <xsl:attribute name="value"><xsl:value-of select="bf:data/text()"/></xsl:attribute>
                     <xsl:copy-of select="bf:data/@*"/>
-
-                    <!-- ***** most likely this will be needed again later on with textarea or output ***** -->
-                    <!--<xf-value><xsl:value-of select="bf:data/text()"/></xf-value>-->
-                    <xsl:choose>
-                    <xsl:when test="exists($component)">
-                        <!--<xsl:apply-templates select="xf:label"/>-->
-
-
-                        <xsl:for-each select="$component">
-                                <xsl:apply-templates select="." mode="copyTemplate">
-                                    <xsl:with-param name="parent" select="$this"/>
-                                </xsl:apply-templates>
-                            </xsl:for-each>
-                    </xsl:when>
-                    <xsl:otherwise>
                         <xsl:apply-templates/>
-                    </xsl:otherwise>
-                </xsl:choose>
                 </xsl:element>
 
             </xsl:when>
-            <xsl:otherwise><div class="error" title="File not found: {$componentURI}"></div></xsl:otherwise>
+            <xsl:otherwise>
+                &lt;!&ndash;<div class="error" title="File not found: {$componentURI}"></div>&ndash;&gt;
+                <xsl:apply-templates/>
+            </xsl:otherwise>
         </xsl:choose>
+-->
+        <xsl:element name="xf-{local-name()}" namespace="http://www.w3.org/1999/xhtml">
+            <xsl:copy-of select="@*" copy-namespaces="no"/>
+            <xsl:attribute name="value"><xsl:value-of select="bf:data/text()"/></xsl:attribute>
+            <xsl:copy-of select="bf:data/@*"/>
+            <xsl:apply-templates/>
+        </xsl:element>
 
 
     </xsl:template>
@@ -356,90 +257,6 @@
         <label class="{local-name()}" for="{../@id}"><xsl:value-of select="text()"/></label>
     </xsl:template>
 -->
-
-    <xsl:template match="*" mode="scripts">
-
-        <xsl:variable name="componentURI"><xsl:call-template name="getComponentURI"/></xsl:variable>
-        <xsl:choose>
-            <xsl:when test="doc-available($componentURI)">
-
-                <xsl:variable name="script" select="document($componentURI)//script/text()" xpath-default-namespace=""/>
-                <xsl:if test="exists($script)">
-                    <xsl:for-each select="$script">
-                        <xsl:value-of select="."/>
-                    </xsl:for-each>
-                </xsl:if>
-
-            </xsl:when>
-            <xsl:otherwise>console.log('script for <xsl:value-of select="$componentURI"/> not found');</xsl:otherwise>
-        </xsl:choose>
-
-    </xsl:template>
-
-    <xsl:template match="*" mode="copyTemplate">
-        <xsl:param name="parent"/>
-        <xsl:message>#################### copying template node:
-            <xsl:value-of select="name()"/>
-        </xsl:message>
-        <xsl:element name="{name(.)}" namespace="http://www.w3.org/1999/xhtml">
-            <xsl:apply-templates select="@*" mode="copyTemplate">
-                <xsl:with-param name="parent" select="$parent"/>
-            </xsl:apply-templates>
-
-            <xsl:choose>
-                <xsl:when test="starts-with(.,'{')">
-                    <xsl:variable name="value">
-                        <xsl:call-template name="resolveValue">
-                            <xsl:with-param name="parent" select="$parent"/>
-                        </xsl:call-template>
-                    </xsl:variable>
-
-                    <xsl:value-of select="$value"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates mode="copyTemplate">
-                        <xsl:with-param name="parent" select="$parent"/>
-                    </xsl:apply-templates>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:element>
-    </xsl:template>
-
-
-    <xsl:template match="@*" mode="copyTemplate" priority="10">
-        <xsl:param name="parent"/>
-<!--
-        <xsl:message>#################### copying  template attribute: <xsl:value-of select="name()"/></xsl:message>
-        <xsl:message>#################### copying template attribute value: <xsl:value-of select="."/></xsl:message>
-        <xsl:message>#################### copying template  parent: <xsl:value-of select="name($parent)"/></xsl:message>
-
--->
-
-        <xsl:variable name="templ"><xsl:value-of select="substring(.,2, string-length(.) - 2 )"/></xsl:variable>
-
-        <xsl:variable name="value">
-            <xsl:call-template name="resolveValue">
-                <xsl:with-param name="parent" select="$parent"/>
-            </xsl:call-template>
-        </xsl:variable>
-
-        <xsl:attribute name="{local-name()}"><xsl:value-of select="$value"/></xsl:attribute>
-    </xsl:template>
-
-    <xsl:template name="resolveValue">
-        <xsl:param name="parent"/>
-        <xsl:choose>
-            <xsl:when test="starts-with(.,'{@')">
-                <xsl:variable name="path" select="substring(.,3, string-length(.) - 3 )"/>
-                <xsl:value-of select="$parent/@*[name(.)=$path]"/>
-            </xsl:when>
-            <xsl:when test="starts-with(.,'{')">
-                <xsl:variable name="path" select="substring(.,2, string-length(.) - 2 )"/>
-                <xsl:value-of select="$parent/*[name(.)=$path]"/>
-            </xsl:when>
-            <xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
 
     <xsl:template match="*[@startsize]">
         <xsl:copy copy-namespaces="no">

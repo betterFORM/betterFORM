@@ -26,7 +26,7 @@
         <xslt basedir="${basedir}"
 
                 destdir="${basedir}/target"
-                style="${web.dir}/src/main/webapp/resources/xslt/webcomponents.xsl"
+                style="${web.dir}/src/main/webapp/resources/xslt/webcomponents2.xsl"
                 force="true"
                 includes="*.xhtml"
                 extension=".html">

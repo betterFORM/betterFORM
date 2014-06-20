@@ -1,0 +1,35 @@
+<polymer-element name="xf-hint" attributes="standalone">
+    <template>
+        <template bind if="{{standalone}}">
+            <content></content>
+        </template>
+    </template>
+
+    <script>
+        Polymer('xf-hint', {
+            standalone: false,
+
+            ready: function() {
+               console.log("Hint:" ,this.parentNode);
+
+           },
+            domReady:function(){
+                if(this.standalone) {
+                    this.parentNode.$.widget.setAttribute("placeholder", 'oh no!');
+                } else{
+                    this.parentNode.$.widget.setAttribute("placeholder", 'HelloWorld!');
+                }
+
+
+            },
+            standaloneChanged: function() {
+                if(this.standalone) {
+                    this.parentNode.$.widget.setAttribute("placeholder", 'oh no!');
+                } else{
+                    this.parentNode.$.widget.setAttribute("placeholder", 'HelloWorld!');
+                }
+            }
+
+        });
+    </script>
+</polymer-element>

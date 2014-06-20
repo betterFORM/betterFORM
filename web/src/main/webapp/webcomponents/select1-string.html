@@ -1,9 +1,27 @@
-<element name="xf-select1" >
+<element name="xf-select1" xmlns="http://www.w3.org/1999/xhtml">
     <template>
-        <select>
-            <template repeat="xf:item">
-                <option value=""/>
+        <label>{xf:label}</label>
+        <select size="1" class="xf-control">
+
+            <template select="item">
+                <option value="{xf:value}">{xf:label}</option>
             </template>
+            <!--<option label="foo">bar</option>-->
+
+            <template select="choices">
+                <optgroup>
+                    <template select="item">
+                        <option value="{xf:value}">{xf:label}</option>
+                    </template>
+                </optgroup>
+            </template>
+
+            <template select="itemset">
+                <template select="item">
+                    <option value="{xf:value}"></option>
+                </template>
+            </template>
+            <!--<option value="{{items.value}}"><xf-output>{{items.label}}</xf-output></option>-->
         </select>
     </template>
     <script>
@@ -16,6 +34,8 @@
                     console.log("select1 created this: ",this, " id: ", this.id);
 
                     this.xfElement=this;
+
+
                 },
 
                 inserted: function(){

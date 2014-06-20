@@ -1,0 +1,98 @@
+<link rel="import" href="/betterform/webcomponents/bower_components/polymer/polymer.html">
+
+<polymer-element name="xf-input" attributes="value disabled readonly">
+    <template>
+        <!--
+        #### defaults to standard HTML input element (input type="text") #####
+        -->
+        <xf-control id="{{id}}"></xf-control>
+        <!-- the context for pathes is the original xforms element -->
+        <label for="widget">{{label}}</label>
+        <input id="widget"
+               type="text"
+               value="{{value}}"
+               disabled?="{{disabled}}"
+              on-change="{{changeAction}}"/>
+              <content></content>
+
+    </template>
+    <script>
+        Polymer('xf-input', {
+            label:'input label',
+            readonly:'true',
+
+            ready: function() {
+                console.log("xf-input ready");
+            },
+            domReady:function(){
+                this.querySelector("xf-hint").setAttribute("standalone","false");
+            },
+            valueChanged: function() {
+                console.log("xf-input changed", this.value);
+                this.inputValue = this.value;
+
+            },
+            changeAction:function(){
+                console.log("changeAction");
+                this.sendValueToServer();
+            },
+
+            sendValueToServer:function(){
+                var msg = jQuery.stringifyJSON({
+                    targetId:this.parentNode.id,
+                    eventType:'changed',
+                    value:this.value
+                });
+                document.querySelector("better-atmosphere").pushMsg(msg);
+
+            },
+
+
+            /* Update input-string webcomponent to value from remote server */
+            updateToRemoteState:function(mips){
+                console.debug("input-string: updateToRemoteState mips:",mips, " this: ",this);
+                if(mips.contextInfo.value){
+                    this.value = mips.contextInfo.value;
+                }
+                if(mips.contextInfo.required){
+                    this.required = mips.contextInfo.required;
+                    this.setAttribute("required", mips.contextInfo.readonly);
+                    if(this.required == 'true'){
+                        this.$.widget.setAttribute("required","required");
+                    }else{
+                        this.$.widget.removeAttribute("required");
+                    }
+                }
+                if(mips.contextInfo.readonly){
+                    this.setAttribute("readonly", mips.contextInfo.readonly);
+                    if(this.readonly == 'true'){
+                        this.$.widget.setAttribute("readonly","readonly");
+                    }else{
+                        this.$.widget.removeAttribute("readonly");
+                    }
+                }
+
+                if(mips.contextInfo.valid){
+                    this.setAttribute("valid",mips.contextInfo.valid);
+                }
+
+                if(mips.contextInfo.enabled){
+                    this.setAttribute("enabled", mips.contextInfo.enabled);
+                    if(this.enabled == 'true'){
+                        this.$.widget.removeAttribute("disabled");
+                    }else{
+                        this.$.widget.setAttribute("disabled","disabled");
+                    }
+                }
+
+                console.debug("input-string: finished updateToRemoteState mips:",mips, " this: ",this);
+
+            },
+
+            setHint: function(text) {
+                this.$.widget.setAttribute("placeholder",text);
+            }
+
+        });
+    </script>
+</polymer-element>

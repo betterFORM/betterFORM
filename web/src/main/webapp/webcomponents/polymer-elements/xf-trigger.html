@@ -1,0 +1,22 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="xf-trigger">
+    <template>
+        <button type="button" on-click="{{activate}}"><content></content></button>
+    </template>
+
+    <script>
+        Polymer('xf-trigger', {
+            ready: function () {
+                console.log("button ready",this.id);
+            },
+            activate:function(){
+                var msg = jQuery.stringifyJSON({
+                    targetId:this.id,
+                    eventType:'DOMActivate'
+                });
+                document.querySelector("better-atmosphere").pushMsg(msg);
+            }
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Input Control Tests</title>
+        <!--
+          ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+          ~ Licensed under the terms of BSD License
+
+          --><style type="text/css">
+        *[enabled='false'] {
+            display:none;
+        }
+        *[valid='false'] input {
+            outline:1px solid darkred;
+        }
+        *[readonly='true'] input {
+            color:darkgray;
+        }
+        *[required='true'] label:after {
+            content:'*';
+            color: darkred;
+        }
+
+    </style>
+        <xf:model id="C1">
+            <xf:instance id="C2">
+                <data xmlns=""
+                      readonly="false"
+                      relevant="true"
+                      required="true"
+                      valid="true">
+                    <input>
+                        <value>Input Value</value>
+                        <label>Input Label</label>
+                        <alert>Alert for Input[1]</alert>
+                        <hint>Hint for Input[1]</hint>
+                    </input>
+                </data>
+            </xf:instance>
+            <xf:bind id="C3" nodeset="instance()">
+                <xf:bind constraint="boolean-from-string(instance()/@valid)"
+                         id="C4"
+                         nodeset="input[1]/value"
+                         readonly="boolean-from-string(instance()/@readonly)"
+                         relevant="boolean-from-string(instance()/@relevant)"
+                         required="boolean-from-string(instance()/@required)"/>
+                Mapped path:'/Users/joern/dev/betterFORM/web/target/betterform/webcomponents/group-minimal.html'
+            </xf:bind>
+        </xf:model>
+    </head>
+    <body>
+        <xf:group appearance="minimal" id="C5">
+            <xf:group appearance="minimal"
+                      id="C6"
+                      style="margin:4px;padding:4px;border:thin dotted #808080">
+                <span>MIPS:</span>
+                <xf:trigger id="C7">
+                    <xf:label id="C8">Required</xf:label>
+                    <xf:setvalue id="C9"
+                                 ref="instance()/@required"
+                                 value="not(boolean-from-string(instance()/@required))"/>
+                </xf:trigger>
+                <xf:trigger id="C10">
+                    <xf:label id="C11">Relevant</xf:label>
+                    <xf:setvalue id="C12"
+                                 ref="instance()/@relevant"
+                                 value="not(boolean-from-string(instance()/@relevant))"/>
+                </xf:trigger>
+                <xf:trigger id="C13">
+                    <xf:label id="C14">Valid</xf:label>
+                    <xf:setvalue id="C15"
+                                 ref="instance()/@valid"
+                                 value="not(boolean-from-string(instance()/@valid))"/>
+                </xf:trigger>
+                <xf:trigger id="C16">
+                    <xf:label id="C17">Readonly</xf:label>
+                    <xf:setvalue id="C18"
+                                 ref="instance()/@readonly"
+                                 value="not(boolean-from-string(instance()/@readonly))"/>
+                </xf:trigger>
+            </xf:group>
+            <hr/>
+            <xf:group appearance="minimal" id="C19">
+                <xf:input id="input1" incremental="true" ref="input[1]/value">
+                    <xf:label id="C20" ref="../label">Input Label</xf:label>
+                    <xf:hint id="C21">Hint</xf:hint>
+                    <xf:alert id="C22" ref="../alert">Alert for Input[1]</xf:alert>
+                    <bf:data enabled="true"
+                             readonly="false"
+                             required="true"
+                             schema-value="Input Value"
+                             type="string"
+                             valid="true">Input Value</bf:data>
+                </xf:input>
+                <!-- xf:output ref="input[1]/value">
+                        <xf:label/>
+                    </xf:output--></xf:group>
+        </xf:group>
+    </body>
+</html>

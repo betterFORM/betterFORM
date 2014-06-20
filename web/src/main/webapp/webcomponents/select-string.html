@@ -1,49 +1,43 @@
 <element name="xf-select">
     <template>
-        <select>
-            <option selected="{{this.get-selected}}">{{this.value}}</option>
+        <label for="">hello</label>
+        <select id="foo">
         </select>
     </template>
+
     <script>
-        xtag.register('xf-select', {
-                xfElement:this,
-                lifecycle:{
+        {
+            xtag.register('xf-select', {
+                xfElement: this,
+                lifecycle: {
 
 
-                    created: function(){
+                    created: function () {
                         console.log("xf-select created");
-
-/*
-                        var xfValue=$(this).find('xf-value');
-                        var control = $(this).find("select");
-                        control.value=xfValue;
-*/
+//                        console.log("xf-select items",items);
 
                         //oder besser observer
                         var xfValue = this.querySelector("xf-value");
-                        xtag.fireEvent(xfValue,'init')
+                        xtag.fireEvent(xfValue, 'init')
 
                     },
-                    inserted: function(){
+                    inserted: function () {
                         console.log("select inserted");
                         // fired each time a component
                         // is inserted into the DOM
                     },
-                    removed: function(){
+                    removed: function () {
                         console.log("removed");
                         // fired each time an element
                         // is removed from DOM
                     },
-                    attributeChanged: function(){
+                    attributeChanged: function () {
                         console.log("attributeChanged");
                         // fired when attributes are set
                     }
                 },
                 events: {
-                    'init:delegate(xf-value)':function(e){
-                        console.log("value chaanaaannnnnnngeeeedddd",e);
-                        var control = this.xfElement.querySelector('select');
-                        control.value=this.innerHTML;
+                    'init:delegate(xf-value)': function (e) {
                     }
                 },
                 accessors: {
@@ -51,5 +45,6 @@
                 methods: {
                 }
             });
+        }
     </script>
 </element>
