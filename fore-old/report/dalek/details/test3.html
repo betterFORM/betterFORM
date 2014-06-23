@@ -1,0 +1,338 @@
+<!doctype>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page title is correct</title>
+    <style type="text/css">/**
+ * More or less stolen from QUnit
+ * Jörn, please forgive me :D
+ *
+ * http://dalekjs.com
+ *
+ * Copyright 2012 jQuery Foundation and other contributors
+ * Released under the MIT license.
+ * http://jquery.org/license
+ */
+/** Font Family and Sizes */
+#dalekjs-tests,
+#dalekjs-header,
+#dalekjs-banner,
+#dalekjs-testrunner-toolbar,
+#dalekjs-userAgent,
+#dalekjs-testresult {
+  font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+}
+#dalekjs-testrunner-toolbar,
+#dalekjs-userAgent,
+#dalekjs-testresult,
+#dalekjs-tests li {
+  font-size: small;
+}
+#dalekjs-tests {
+  font-size: smaller;
+}
+/** Resets */
+#dalekjs-tests,
+#dalekjs-tests ol,
+#dalekjs-header,
+#dalekjs-banner,
+#dalekjs-userAgent,
+#dalekjs-testresult,
+#dalekjs-modulefilter {
+  margin: 0;
+  padding: 0;
+}
+/** Header */
+#dalekjs-header {
+  padding: 0.5em 0 0.5em 1em;
+  color: #8699a4;
+  background-color: #008efd;
+  font-size: 1.5em;
+  line-height: 1em;
+  font-weight: normal;
+  border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+}
+#dalekjs-header a {
+  text-decoration: none;
+  color: #c2ccd1;
+}
+#dalekjs-header a:hover,
+#dalekjs-header a:focus {
+  color: #fff;
+}
+#dalekjs-testrunner-toolbar label {
+  display: inline-block;
+  padding: 0 0.5em 0 0.1em;
+}
+#dalekjs-banner {
+  height: 5px;
+}
+#dalekjs-testrunner-toolbar {
+  padding: 0.5em 0 0.5em 2em;
+  color: #5e740b;
+  background-color: #eee;
+  overflow: hidden;
+}
+#dalekjs-userAgent {
+  padding: 0.5em 0 0.5em 2.5em;
+  background-color: #2b81af;
+  color: #fff;
+  text-shadow: rgba(0,0,0,0.5) 2px 2px 1px;
+}
+#dalekjs-modulefilter-container {
+  float: right;
+}
+/** Tests: Pass/Fail */
+#dalekjs-tests {
+  list-style-position: inside;
+}
+#dalekjs-tests li {
+  padding: 0.4em 0.5em 0.4em 2.5em;
+  border-bottom: 1px solid #fff;
+  list-style-position: inside;
+}
+#dalekjs-tests.hidepass li.pass,
+#dalekjs-tests.hidepass li.running {
+  display: none;
+}
+#dalekjs-tests li strong {
+  cursor: pointer;
+}
+#dalekjs-tests li a {
+  padding: 0.5em;
+  color: #c2ccd1;
+  text-decoration: none;
+}
+#dalekjs-tests li a:hover,
+#dalekjs-tests li a:focus {
+  color: #000;
+}
+#dalekjs-tests ol {
+  margin-top: 0.5em;
+  padding: 0.5em;
+  background-color: #fff;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+#dalekjs-tests table {
+  border-collapse: collapse;
+  margin-top: 0.2em;
+}
+#dalekjs-tests th {
+  text-align: right;
+  vertical-align: top;
+  padding: 0 0.5em 0 0;
+}
+#dalekjs-tests td {
+  vertical-align: top;
+}
+#dalekjs-tests pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+#dalekjs-tests del {
+  background-color: #e0f2be;
+  color: #374e0c;
+  text-decoration: none;
+}
+#dalekjs-tests ins {
+  background-color: #ffcaca;
+  color: #500;
+  text-decoration: none;
+}
+/*** Test Counts */
+#dalekjs-tests b.counts {
+  color: #000;
+}
+#dalekjs-tests b.passed {
+  color: #5e740b;
+}
+#dalekjs-tests b.failed {
+  color: #710909;
+}
+#dalekjs-tests li li {
+  padding: 5px;
+  background-color: #fff;
+  border-bottom: none;
+  list-style-position: inside;
+}
+/*** Passing Styles */
+#dalekjs-tests li li.pass {
+  color: #3c510c;
+  background-color: #fff;
+  border-left: 10px solid #c6e746;
+}
+#dalekjs-tests .pass {
+  color: #528ce0;
+  background-color: #c6e746;
+}
+#dalekjs-tests .pass .test-name {
+  color: #366097;
+}
+#dalekjs-tests .pass .test-actual,
+#dalekjs-tests .pass .test-expected {
+  color: #999;
+}
+#dalekjs-banner.dalekjs-pass {
+  background-color: #c6e746;
+}
+/*** Failing Styles */
+#dalekjs-tests li li.fail {
+  color: #710909;
+  background-color: #fff;
+  border-left: 10px solid #ee5757;
+}
+#dalekjs-tests > li:last-child {
+  border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+}
+#dalekjs-tests .fail {
+  color: #000;
+  background-color: #ee5757;
+}
+#dalekjs-tests .fail .test-name,
+#dalekjs-tests .fail .module-name {
+  color: #000;
+}
+#dalekjs-tests .fail .test-actual {
+  color: #ee5757;
+}
+#dalekjs-tests .fail .test-expected {
+  color: #008000;
+}
+#dalekjs-banner.dalekjs-fail {
+  background-color: #ee5757;
+}
+/** Result */
+#dalekjs-testresult {
+  padding: 0.5em 0.5em 0.5em 2.5em;
+  color: #2b81af;
+  background-color: #f7e7aa;
+  border-bottom: 1px solid #fff;
+}
+#dalekjs-testresult .module-name {
+  font-weight: bold;
+}
+/** Test detail **/
+#detail #dalekjs-header {
+  color: #fff;
+}
+table {
+  width: 100%;
+}
+table td {
+  font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial, sans-serif;
+  background-color: #e0f2be;
+}
+#detail table tr.action td {
+  background-color: #fae605;
+}
+#detail table tr.fail td {
+  background-color: #fadace;
+}
+</style>
+</head>
+<body id="detail">
+    <div id="dalekjs">
+        <h1 id="dalekjs-header" style="background: green">Page title is correct [Google Chrome]</h1>
+        <table>
+        
+            <tr class="action">
+                
+                <td>ACTION</td>
+                <td>open</td>
+                <td>http://localhost:9001/test.html</td>
+                
+
+                
+            </tr>
+        
+            <tr class="action">
+                
+                <td>ACTION</td>
+                <td>waitForElement</td>
+                <td></td>
+                
+
+                
+            </tr>
+        
+            <tr class="assertion ">
+                
+
+                
+                <td>ASSERTION</td>
+                <td>title</td>
+                <td>Expected: betterFORM / Actual: betterFORM (It has title)</td>
+                
+            </tr>
+        
+            <tr class="assertion ">
+                
+
+                
+                <td>ASSERTION</td>
+                <td>numberOfElements</td>
+                <td>Expected: 1 / Actual: 1 (found one instance of the betterFORM fore processor)</td>
+                
+            </tr>
+        
+            <tr class="assertion ">
+                
+
+                
+                <td>ASSERTION</td>
+                <td>exists</td>
+                <td>Expected:  / Actual: true (polymer was initialized)</td>
+                
+            </tr>
+        
+    </table>
+    </div>
+    <script>(function () {
+    // add klick hander for every <li> test element to hide/show details
+    var parent = document.getElementById('dalekjs-tests');
+    var childNodes = parent.childNodes;
+    for (var i = 0; i < childNodes.length; i++) {
+        childNodes[i].addEventListener('click', function (event) {
+            var parentLi = event.currentTarget;
+            var children = parentLi.childNodes;
+            for (var j = 0; j < children.length; j++) {
+                if (children[j].tagName && children[j].tagName.toLowerCase() === 'ol') {
+                    children[j].style.display = children[j].style.display === '' ? 'none' : '';
+                }
+            }
+
+            if (event.target.tagName.toLowerCase() !== 'a') {
+                event.preventDefault();
+            }
+        });
+    }
+
+    // add change handler for 'hide passed tests checkbox'
+    var testVisibilityStatus = false;
+    var checkbox = document.getElementById('dalekjs-filter-pass');
+    var elements = [];
+    for (var k = 0; k < childNodes.length; k++) {
+        if (childNodes[k].tagName && childNodes[k].tagName.toLowerCase() === 'li' && childNodes[k].className === 'pass') {
+            elements.push(childNodes[k]);
+        }
+    }
+    checkbox.addEventListener('change', function (event) {
+        for (var x = 0; x < elements.length; x++) {
+            elements[x].style.display = (testVisibilityStatus ? '' : 'none');
+        }
+        testVisibilityStatus = !testVisibilityStatus;
+        event.preventDefault();
+    });
+}).call(this);
+</script>
+</body>
+</html>
