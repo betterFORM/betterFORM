@@ -1,0 +1,24 @@
+<link href="../polymer/polymer.html" rel="import">
+<link href="../exist-icon/exist-icon.html" rel="import">
+
+<polymer-element name="exist-icon-list" extends="div">
+
+    <template>
+        <ul repeat="{{items}}">
+            <exist-icon></exist-icon>
+        </ul>
+    </template>
+    <script>
+        Polymer('exist-icon-list', {
+            item:[],
+
+            created: function () {
+                console.log("exist-icon-list created ...");
+            },
+            ready:function(){
+            }
+
+
+        });
+    </script>
+</polymer-element>

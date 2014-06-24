@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <title>Polymer Designer</title>
+  <!-- normalize url to be same as preview -->
+  <base href="../../components/element/">
+  <script src="../platform/platform.js"></script>
+  <script>
+    window.parent.postMessage('designer-loading', location.href);
+  </script>
+
+  <link rel="import" href="../../elements/design-frame/design-frame.html">
+
+  <style>
+
+    body {
+      font-size: 12px;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    design-frame {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+
+  </style>
+
+</head>
+<body unresolved>
+
+  <design-frame></design-frame>
+
+</body>
+</html>
