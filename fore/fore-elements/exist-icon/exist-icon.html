@@ -1,13 +1,27 @@
 <link href="../polymer/polymer.html" rel="import">
 
-<polymer-element name="exist-icon" extends="li">
+<polymer-element name="exist-icon" attributes="src size title appURL requireLogin">
 
     <template>
-        <li><img src=""/></li>
+        <li><img src="{{src}}"/></li>
+        <style>
+            li{
+                background: transparent;
+                margin:10px;
+                width:150px;
+                height:150px;
+                float:left;
+                border:thin solid;
+            }
+        </style>
     </template>
     <script>
         Polymer('exist-icon', {
-            item:[],
+            src: '',
+            size: 24,
+            title:'',
+            appURL:'',
+            requireLogin:'',
 
             created: function () {
                 console.log("exist-icon created ...");

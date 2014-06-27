@@ -8,6 +8,7 @@
     "x-meta": "PolymerLabs/x-meta#master",
     "inspector-elements": "PolymerLabs/inspector-elements#master",
     "core-elements": "Polymer/core-elements#master",
-    "more-elements": "Polymer/more-elements#master"
+    "more-elements": "Polymer/more-elements#master",
+    "paper-elements": "Polymer/paper-elements#~0.3.3"
   }
 }

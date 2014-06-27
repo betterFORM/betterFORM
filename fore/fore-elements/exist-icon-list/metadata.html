@@ -1,8 +1,18 @@
-﻿<x-meta id="metadata.html" label="eXist icon list" group="fore" isContainer>
+﻿<x-meta id="exist-icon-list" label="eXist icon list" group="fore" isContainer>
   <template>
-    <ul></ul>
+    <exist-icon-list>
+        <exist-icon src="" title="" appURL="" requireLogin="true"></exist-icon>
+        <exist-icon src="" title="" appURL="" requireLogin=""></exist-icon>
+        <exist-icon src="" title="" appURL="" requireLogin=""></exist-icon>
+        <exist-icon src="" title="" appURL="" requireLogin=""></exist-icon>
+        <exist-icon src="" title="" appURL="" requireLogin=""></exist-icon>
+        <exist-icon src="" title="" appURL="" requireLogin=""></exist-icon>
+        <exist-icon src="" title="" appURL="" requireLogin=""></exist-icon>
+    </exist-icon-list>
   </template>
+
   <template id="imports">
     <link rel="import" href="exist-icon-list.html">
+    <link href="../exist-icon/exist-icon.html" rel="import">
   </template>
 </x-meta>
