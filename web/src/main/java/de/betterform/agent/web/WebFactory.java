@@ -254,6 +254,9 @@ public class WebFactory {
             if (tmpPath == null) {
                 tmpPath =  servletContext.getRealPath(".") + "/" + path;
             }
+            if(tmpPath == null){
+                tmpPath = servletContext.getRealPath("/") + path;
+            }
 
             path = tmpPath;
         }
