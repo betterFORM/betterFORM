@@ -6,6 +6,7 @@
 package de.betterform.connector.exist;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -121,7 +122,7 @@ public class ExistUtil {
     return result;
   }
 
-  public static XQueryContext getXQueryContext(XQuery xquery, DocumentImpl xmlResource, ByteArrayOutputStream data) throws XPathException {
+  public static XQueryContext getXQueryContext(XQuery xquery, DocumentImpl xmlResource, ByteArrayOutputStream data, String encoding) throws XPathException, UnsupportedEncodingException {
     XQueryContext xqcontext = xquery.newContext(AccessContext.REST);
     
     xqcontext.setModuleLoadPath(xmlResource.getCollection().getURI().toString());
@@ -129,17 +130,14 @@ public class ExistUtil {
     
     if (null != data) {
       QName qn = new QName(XQUERY_CONTEXT_VARIABLE_NAME, "");
-      String value = "";
-      for (byte b : data.toByteArray()) {
-        value += (char)b;
-      }
+      String value = new String(data.toByteArray(), encoding);
       xqcontext.declareVariable(qn, value);
     }
     
     return xqcontext;
   }
 
-  public static String executeXQuery(String uri, Map<String, Object> context, String mediatype, String encoding, final ByteArrayOutputStream stream) throws Exception {
+  public static String executeXQuery(String uri, Map<String, Object> context, String mediatype, final String encoding, final ByteArrayOutputStream stream) throws Exception {
     ExistClient existClient = new ExistClient();
     final Map<String, String> queryParameter = URIUtil.getQueryParameters(new URI(uri));
     return existClient.execute(uri, Lock.READ_LOCK, context, new ExistResourceTypeCallback<String>()  {
@@ -148,7 +146,7 @@ public class ExistUtil {
       public String onXQuery(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
         Source source = new DBSource(broker, ((BinaryDocument) xmlResource), true);
         XQuery xquery = broker.getXQueryService();
-        XQueryContext xqcontext = ExistUtil.getXQueryContext(xquery, xmlResource, stream);
+        XQueryContext xqcontext = ExistUtil.getXQueryContext(xquery, xmlResource, stream, encoding);
         CompiledXQuery compiledXQuery = xquery.compile(xqcontext, source);
         Sequence resultSequence = xquery.execute(compiledXQuery, Sequence.EMPTY_SEQUENCE);
         return serialize(resultSequence);
@@ -157,7 +155,7 @@ public class ExistUtil {
       @Override
       public String onXQueryModule(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
         XQuery xquery = broker.getXQueryService();
-        XQueryContext xqContext = ExistUtil.getXQueryContext(xquery, xmlResource, stream);
+        XQueryContext xqContext = ExistUtil.getXQueryContext(xquery, xmlResource, stream, encoding);
         
         Module module = xqContext.importModule(null, null, ExistUtil.EXIST_PROTOCOLL + getUri().getRawPath());
         String function = queryParameter.get(ExistUtil.URL_PARAM_FUNCTION);
