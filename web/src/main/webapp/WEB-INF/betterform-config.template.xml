@@ -21,7 +21,7 @@
 
         <property name="uploadDir" value="upload" description="the name of the upload directory relative to context"/>
 
-        <property name="xslt.cache.enabled" value="false" description="flag for XSLT caching"/>
+        <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 
         <property name="error.page" value="error/error.page" description="location of error-page relative to context"/>
 
@@ -154,25 +154,8 @@
 
         <message id="session-invalid"
                  value="Sorry your session expired. Press Reload to start over."/>
+                 value="Sorry your session expired. Press Reload to start over."/>
     </error-messages>
-
-    <!--
-        Maps internal names to external file-names.
-        The internal name is used by the framework to identify
-        entities and resolve these to the associated filenames.
-    -->
-    <!-- todo: deprecated - remove after adapting config class -->
-    <useragents>
-        <useragent name="html"
-                   processor="de.betterform.agent.web.servlet.PlainHtmlProcessor"
-                   description="request/response-oriented XForms processor without any JavaScript">
-        </useragent>
-        <useragent name="dojo"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
-                   description="AJAX-enabled useragent with packed resources for production environments">
-        </useragent>
-
-    </useragents>
 
     <ui-generators>
         <!-- todo: deprecate unscripted processing?-->

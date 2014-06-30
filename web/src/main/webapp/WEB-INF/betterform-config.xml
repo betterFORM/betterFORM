@@ -21,7 +21,7 @@
 
         <property name="uploadDir" value="upload" description="the name of the upload directory relative to context"/>
 
-        <property name="xslt.cache.enabled" value="false" description="flag for XSLT caching"/>
+        <property name="xslt.cache.enabled" value="true" description="flag for XSLT caching"/>
 
         <property name="error.page" value="error/error.page" description="location of error-page relative to context"/>
 
@@ -153,6 +153,7 @@
                  description="Default message. Shouldn't be deleted"/>
 
         <message id="session-invalid"
+                 value="Sorry your session expired. Press Reload to start over."/>
                  value="Sorry your session expired. Press Reload to start over."/>
     </error-messages>
 
