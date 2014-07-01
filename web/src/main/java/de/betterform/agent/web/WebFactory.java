@@ -21,8 +21,10 @@ import org.apache.log4j.xml.DOMConfigurator;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 
 /**
@@ -216,7 +218,9 @@ public class WebFactory {
     }
 
     public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException {
-        return new File(resolvePath(xsltPath, servletContext)).toURI().resolve(new URI(xsltDefault));
+        String resolvePath = resolvePath(xsltPath + xsltDefault, servletContext);
+        String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf("/"));
+        return new File(pathToXSLDirectory).toURI().resolve(new URI(xsltDefault));
     }
 
 
@@ -244,26 +248,24 @@ public class WebFactory {
     /**
      * allow absolute paths otherwise resolve relative to the servlet context
      *
-     * @param path XPath locationpath
+     * @param resolvePath XPath locationpath
      * @return the absolute path or path relative to the servlet context
      */
-    public static final String resolvePath(String path, ServletContext servletContext) {
-        String tmpPath;
-        if (!new File(path).isAbsolute()) {
-            tmpPath = servletContext.getRealPath(path);
-            if (tmpPath == null) {
-                tmpPath =  servletContext.getRealPath(".") + "/" + path;
+    public static final String resolvePath(String resolvePath, ServletContext servletContext) {
+        String path = resolvePath;
+        try {
+            if(path != null && !(path.startsWith("/"))){
+                path = "/" + path;
             }
-            if(tmpPath == null){
-                tmpPath = servletContext.getRealPath("/") + path;
+            URL pathURL= servletContext.getResource(path);
+            if(pathURL != null){
+                path = pathURL.getPath();
             }
-
-            path = tmpPath;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
-
         return path;
     }
-
 
     public void initXFormsSessionCache() throws XFormsConfigException {
         XFSessionCache.getCache();
