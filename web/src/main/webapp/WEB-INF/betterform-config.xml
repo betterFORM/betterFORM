@@ -154,7 +154,6 @@
 
         <message id="session-invalid"
                  value="Sorry your session expired. Press Reload to start over."/>
-                 value="Sorry your session expired. Press Reload to start over."/>
     </error-messages>
 
     <ui-generators>
