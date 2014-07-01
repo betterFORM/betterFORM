@@ -32,6 +32,7 @@ import org.w3c.dom.events.Event;
 import org.xml.sax.InputSource;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,7 +45,6 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.Cookie;
 
 /**
  * Superclass for Adapters used in web applications. Does minimal event listening on the processor and provides
@@ -399,8 +399,13 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     }
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("WebProcessor: Begin Form: \n");
+                        DOMUtil.prettyPrintDOM(this.xformsProcessor.getXForms());
+                        LOGGER.debug("\nWebProcessor: End Form");
+                    }
 
-                    DOMUtil.prettyPrintDOM(this.xformsProcessor.getXForms());
+
                     generateUI(this.xformsProcessor.getXForms(), outputStream);
 
                     response.setContentLength(outputStream.toByteArray().length);
