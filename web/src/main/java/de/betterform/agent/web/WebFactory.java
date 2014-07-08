@@ -15,16 +15,19 @@ import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.ClasspathResourceResolver;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import de.betterform.xml.xslt.impl.HttpResourceResolver;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.xml.DOMConfigurator;
-
-import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.xml.DOMConfigurator;
 
 
 /**
@@ -259,10 +262,12 @@ public class WebFactory {
             }
             URL pathURL= servletContext.getResource(path);
             if(pathURL != null){
-                path = pathURL.getPath();
+                path = java.net.URLDecoder.decode(pathURL.getPath(), StandardCharsets.UTF_8.name());
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
+        } catch (UnsupportedEncodingException ex) {
+            ex.printStackTrace();
         }
         return path;
     }
