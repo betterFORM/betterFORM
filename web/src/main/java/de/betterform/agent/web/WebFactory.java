@@ -155,7 +155,7 @@ public class WebFactory {
 
     /**
      * initializes a XSLT Transformer service. Currently an implementation of CachingTransformerService is
-     * instanciated. Future versions may make this configurable. This is the place to preload transoformations
+     * instanciated. Future versions may make this configurable. This is the place to preload transformations
      * that are used throughout the application.
      *
      * @throws XFormsConfigException a Config exception will occur in case there's no valid setting for XSLT_CACHE_PROPERTY,XSLT_DEFAULT_PROPERTY or
