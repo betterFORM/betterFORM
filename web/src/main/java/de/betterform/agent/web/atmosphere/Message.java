@@ -55,9 +55,21 @@ public class Message {
     private String targetId;
     private String eventType;
     private String value;
+    private String uuid;
+
+    public String getUuid(){
+        return this.uuid;
+    }
+    public void setUuid(String uuid){
+        this.uuid=uuid;
+    }
 
     public Message() {
         this("", "", "");
+    }
+
+    public Message(String uuid){
+        this.uuid=uuid;
     }
 
     public Message(String targetId, String eventType,String value) {

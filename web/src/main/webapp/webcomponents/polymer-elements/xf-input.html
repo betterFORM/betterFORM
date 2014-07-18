@@ -5,7 +5,7 @@
         <!--
         #### defaults to standard HTML input element (input type="text") #####
         -->
-        <xf-control id="{{id}}"></xf-control>
+        <!--<xf-control id="{{id}}"></xf-control>-->
         <!-- the context for pathes is the original xforms element -->
         <label for="widget">{{label}}</label>
         <input id="widget"
@@ -38,12 +38,19 @@
             },
 
             sendValueToServer:function(){
+/*
                 var msg = jQuery.stringifyJSON({
                     targetId:this.parentNode.id,
                     eventType:'changed',
                     value:this.value
                 });
-                document.querySelector("better-atmosphere").pushMsg(msg);
+*/
+                var msg = {
+                    targetId:this.parentNode.id,
+                    eventType:'changed',
+                    value:this.value
+                };
+                document.querySelector("better-jquery-atmosphere").sendMessage(msg);
 
             },
 

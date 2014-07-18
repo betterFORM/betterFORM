@@ -24,9 +24,9 @@ import java.util.List;
     public class FluxProcessorSerializerTest  extends TestCase {
     private static final Log LOGGER = LogFactory.getLog(FluxProcessorSerializerTest.class);
     private List fluxProcessors;
-    private Cache<String, FluxProcessor>  cache = null;
+    private Cache<String, SocketProcessor>  cache = null;
     private DefaultCacheManager cacheManager;
-    private Cache<String, FluxProcessor> oneElementInMemory;
+    private Cache<String, SocketProcessor> oneElementInMemory;
     private String baseURI;
     private int cnt=10;
 
@@ -35,9 +35,9 @@ import java.util.List;
         LOGGER.debug(".....::::setting up tests::::::.....");
         String path = getClass().getResource("localization.xhtml").getPath();
         baseURI = "file://" + path.substring(0, path.lastIndexOf("localization.xhtml"));
-        this.fluxProcessors  = new ArrayList<FluxProcessor>(100);
+        this.fluxProcessors  = new ArrayList<SocketProcessor>(100);
         for (int i = 0; i < cnt; i++) {
-            FluxProcessor processor = new FluxProcessor();
+            SocketProcessor processor = new SocketProcessor();
             processor.setBaseURI(baseURI);
             processor.setXForms(getClass().getResourceAsStream("localization.xhtml"));
             processor.setContext(new HashMap());
@@ -118,7 +118,7 @@ import java.util.List;
 
        while(keys.hasNext()) {
            String key = keys.next();
-           FluxProcessor processor  = this.fluxProcessors.get(key);
+           SocketProcessor processor  = this.fluxProcessors.get(key);
            assertEquals(key, processor.getKey());
            oneElementInMemory.put(key, processor);
        }
@@ -132,7 +132,7 @@ import java.util.List;
 
         while(keys.hasNext()) {
             String key = keys.next();
-            FluxProcessor processor  = this.fluxProcessors.get(key);
+            SocketProcessor processor  = this.fluxProcessors.get(key);
             assertEquals(key, processor.getKey());
             oneElementInMemory.put(key, processor);
         }
@@ -140,7 +140,7 @@ import java.util.List;
         keys  =this.fluxProcessors.keySet().iterator();
         while(keys.hasNext()) {
             String key = keys.next();
-            FluxProcessor processor  = (FluxProcessor) oneElementInMemory.get(key);
+            SocketProcessor processor  = (SocketProcessor) oneElementInMemory.get(key);
             assertNotNull(processor);
         }
 
@@ -155,7 +155,7 @@ import java.util.List;
 
         for (int i=0;i<cnt;i++){
             String key = i + "";
-            FluxProcessor processor  = (FluxProcessor) this.fluxProcessors.get(i);
+            SocketProcessor processor  = (SocketProcessor) this.fluxProcessors.get(i);
             //Element e =new Element(key, processor);
             processor.setContextParam("key",key);
             LOGGER.debug("putting ... " + processor.getContextParam("key"));
@@ -176,7 +176,7 @@ import java.util.List;
             LOGGER.debug("GETTING ... " + key);
             LOGGER.debug("inCache ... " + oneElementInMemory.containsKey(key));
             LOGGER.debug("inCache ... " + oneElementInMemory.containsKey(key));
-            FluxProcessor processor = (FluxProcessor) oneElementInMemory.get(key);
+            SocketProcessor processor = (SocketProcessor) oneElementInMemory.get(key);
             assertNotNull(processor);
             processor.init();
             assertEquals(this.baseURI,processor.getBaseURI());

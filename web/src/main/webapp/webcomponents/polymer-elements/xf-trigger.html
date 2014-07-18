@@ -11,11 +11,11 @@
                 console.log("button ready",this.id);
             },
             activate:function(){
-                var msg = jQuery.stringifyJSON({
+                var msg = {
                     targetId:this.id,
                     eventType:'DOMActivate'
-                });
-                document.querySelector("better-atmosphere").pushMsg(msg);
+                };
+                document.querySelector("better-jquery-atmosphere").sendMessage(msg);
             }
         });
     </script>

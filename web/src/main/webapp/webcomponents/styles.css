@@ -1,11 +1,11 @@
-better-atmosphere{
+better-jquery-atmosphere{
     display: block;
     width:100%;
     background: orange;
     border-top:thin solid;
     margin-top:10px;
 }
-better-atmosphere div{
+better-jquery-atmosphere div{
     margin:10px 0;
 }
 .error{

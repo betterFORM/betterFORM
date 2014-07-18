@@ -21,6 +21,8 @@
     -->
     <xsl:param name="contextroot" select="''"/>
 
+
+    <xsl:param name="sessionKey" select="''"/>
     <!--
     >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     resources are served by ResourceServlet. This param passes the mapping path
@@ -119,7 +121,7 @@
             <!--<link rel="import" href="/betterform/webcomponents/bower_components/polymer/polymer.html"></link>-->
 
             <xsl:value-of select="$CR"/>
-            <link rel="import" href="/betterform/webcomponents/polymer-elements/better-atmosphere.html"></link>
+            <link rel="import" href="/betterform/webcomponents/polymer-elements/better-jquery-atmosphere/better-jquery-atmosphere.html"></link>
             <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-input.html"></link>
             <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-trigger.html"></link>
             <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-hint.html"></link>
@@ -136,7 +138,7 @@
             <xsl:apply-templates/>
 
             <!-- jt: @transport is not wired yet in script - just a hint how to do it later -->
-            <better-atmosphere transport="sse"></better-atmosphere>
+            <better-jquery-atmosphere transport="sse" xfSession="{$sessionKey}"></better-jquery-atmosphere>
 
             <xsl:value-of select="$CR"/>
             <!--

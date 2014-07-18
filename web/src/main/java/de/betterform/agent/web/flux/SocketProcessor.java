@@ -120,7 +120,7 @@ public class SocketProcessor extends WebProcessor implements Externalizable {
 
         String targetId = uiEvent.getId();
 
-        if (uiEvent.getEventName().equalsIgnoreCase(FluxFacade.FLUX_ACTIVATE_EVENT)) {
+        if (uiEvent.getEventName().equalsIgnoreCase(FLUX_ACTIVATE_EVENT)) {
             dispatch(targetId, DOMEventNames.ACTIVATE);
         } else if (uiEvent.getEventName().equalsIgnoreCase("SETINDEX")) {
             int index = Integer.parseInt((String) uiEvent.getContextInfo());

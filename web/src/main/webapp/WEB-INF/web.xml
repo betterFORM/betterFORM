@@ -15,18 +15,23 @@
 		<param-name>betterform.configfile</param-name>
 		<param-value>WEB-INF/betterform-config.xml</param-value>
 	</context-param>
+    <context-param>
+        <param-name>org.atmosphere.cpr.sessionSupport</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
-<!--
-	This is an example mapping for XFormsServlet that can be used in applications that like to
-	use a Servlet to process XForms. This was the standard approach up to version 2.1 which introduced
-	the XFormsFilter.
-    <servlet>
-        <servlet-name>XFormsServlet</servlet-name>
-        <servlet-class>de.betterform.agent.web.servlet.XFormsServlet</servlet-class>
 
-		<load-on-startup>1</load-on-startup>
-	</servlet>
--->
+    <!--
+        This is an example mapping for XFormsServlet that can be used in applications that like to
+        use a Servlet to process XForms. This was the standard approach up to version 2.1 which introduced
+        the XFormsFilter.
+        <servlet>
+            <servlet-name>XFormsServlet</servlet-name>
+            <servlet-class>de.betterform.agent.web.servlet.XFormsServlet</servlet-class>
+
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+    -->
 
 	<!--  XForms Filter -->
 	<filter>
