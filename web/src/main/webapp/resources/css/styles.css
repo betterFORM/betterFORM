@@ -1,0 +1,48 @@
+/* styling globals */
+body {
+  margin: 0;
+  padding: 0;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+footer.bf-copyright div {
+  float: right;
+  padding: 5px;
+  font-size: 0.8em;
+}
+better-jquery-atmosphere {
+  display: block;
+  width: 100%;
+  background: orange;
+  border-top: thin solid;
+  margin-top: 10px;
+}
+better-jquery-atmosphere div {
+  margin: 10px 0;
+}
+.error {
+  background: red;
+  width: 200px;
+  text-align: center;
+}
+.error:after {
+  content: 'unknown component';
+}
+/* debugging tool styles */
+.bf-debug-bar {
+  background-color: #73c74a;
+  font-family: san-serif;
+}
+.bf-debug-bar a {
+  border: thin solid white;
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  display: inline-block;
+}
+.bf-debug-bar a:hover {
+  background-color: #bcd884;
+}

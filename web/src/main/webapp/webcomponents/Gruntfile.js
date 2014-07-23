@@ -40,11 +40,11 @@ module.exports = function(grunt) {
                 tasks: ['rsync:forms']
             },
             xslt:{
-                files: ['../resources/xslt/webcomponents2.xsl'],
-                tasks: ['rsync:xslt']
+                files: ['../resources/**'],
+                tasks: ['rsync:resources']
             },
             bower_components:{
-                files: ['../resources/xslt/webcomponents2.xsl'],
+                files: ['../resources/xslt/webcomponents-polymer.xsl'],
                 tasks: ['rsync:xslt']
             }
         },
@@ -62,11 +62,11 @@ module.exports = function(grunt) {
                     dest: '<%= webDevTarget %>' + 'webcomponents/'
                 }
             },
-            xslt: {
+            resources: {
                 options: {
                     // !!! The last "/" is IMPORTANT here!!!!
-                    src: ['../resources/xslt/webcomponents2.xsl'],
-                    dest: '<%= webDevTarget %>' + 'WEB-INF/classes/META-INF/resources/xslt'
+                    src: ['../resources/'],
+                    dest: '<%= webDevTarget %>' + 'WEB-INF/classes/META-INF/resources/'
                 }
             },
             forms:{

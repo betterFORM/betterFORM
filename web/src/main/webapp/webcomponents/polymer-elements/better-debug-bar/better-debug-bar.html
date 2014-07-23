@@ -1,0 +1,17 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="better-debug-bar">
+    <template>
+        <div class="bf-debug-bar">
+            <a href="{}" target="_blank">Host Document</a>
+        </div>
+    </template>
+
+    <script>
+        Polymer('better-debug-bar', {
+            ready: function () {
+                console.log("better-debug-bar ready",this.id);
+            }
+        });
+    </script>
+</polymer-element>

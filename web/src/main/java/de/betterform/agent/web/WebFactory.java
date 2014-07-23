@@ -158,21 +158,19 @@ public class WebFactory {
      *                               XSLT_PATH_PROPERTY
      */
     public void initTransformerService(String realPath) throws XFormsConfigException {
+        boolean xsltCacheEnabled = Config.getInstance().getProperty(WebFactory.XSLT_CACHE_PROPERTY).equalsIgnoreCase("true");
         CachingTransformerService transformerService = new CachingTransformerService();
-
+        if(!xsltCacheEnabled){
+            transformerService.setNoCache(true);
+        }
         transformerService.addResourceResolver(new FileResourceResolver());
         transformerService.addResourceResolver(new ClasspathResourceResolver(realPath));
         transformerService.addResourceResolver(new HttpResourceResolver());
 
-        
-        boolean xsltCacheEnabled = Config.getInstance().getProperty(WebFactory.XSLT_CACHE_PROPERTY).equalsIgnoreCase("true");
-
         String xsltPath = WebProcessor.RESOURCE_DIR + "xslt/";
-//        String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
-//        String xsltDefault = Config.getInstance().getStylesheet(this.userAgentId);
         String xsltDefault = Config.getInstance().getProperty("ui-transform");
 
-        if (xsltCacheEnabled) {
+//        if (xsltCacheEnabled) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("initializing xslt cache");
             }
@@ -200,7 +198,7 @@ public class WebFactory {
             catch (Exception e) {
                 throw new XFormsConfigException(e);
             }
-        }
+//        }
 
         // store service in servlet context
         // todo: contemplate about transformer service thread-safety

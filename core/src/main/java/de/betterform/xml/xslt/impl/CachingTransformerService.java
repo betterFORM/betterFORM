@@ -118,7 +118,7 @@ public class CachingTransformerService implements TransformerService, URIResolve
         try {
             // lookup cache entry
             CacheEntry entry = (CacheEntry) this.resources.get(uri);
-            if (nocache==true || entry == null || entry.isDirty()) {
+            if (nocache || entry == null || entry.isDirty()) {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("get transformer: cache " + (entry == null ? "miss" : "dirty") + " for " + uri);
                 }
