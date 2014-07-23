@@ -133,6 +133,9 @@
             <!--<link rel="import" href="/betterform/webcomponents/bower_components/polymer/polymer.html"></link>-->
 
             <xsl:value-of select="$CR"/>
+            <script src="/betterform/webcomponents/bower_components/platform/platform.js"></script>
+            <xsl:value-of select="$CR"/>
+
             <link rel="import" href="/betterform/webcomponents/polymer-elements/better-jquery-atmosphere/better-jquery-atmosphere.html"></link>
             <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-input.html"></link>
             <link rel="import" href="/betterform/webcomponents/polymer-elements/xf-trigger.html"></link>
@@ -158,8 +161,6 @@
             Polymer import - the only js file imported directly
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             -->
-            <script src="/betterform/webcomponents/bower_components/platform/platform.js"></script>
-            <xsl:value-of select="$CR"/>
             <script src="/betterform/webcomponents/bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
             <xsl:value-of select="$CR"/>
             <script src="/betterform/webcomponents/bower_components/jquery-atmosphere/jquery.atmosphere.js" type="text/javascript"></script>
