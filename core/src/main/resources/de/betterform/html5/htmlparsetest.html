@@ -1,0 +1,49 @@
+<!doctype html>
+<div>
+    <div id="container">
+        <a href="#" id="todayLink">Today</a>
+        <form id="trackit">
+            <input type="hidden" id="record" name="record"/>
+            <div id="trackDate" value="2013-01-01"/>
+            <input type="hidden" id="trackedDate" name="trackedDate"/>
+            <input type="hidden" id="created" name="created"/>
+            <div class="timeWrapper">
+                <input id="timeControl" pattern="^([01]?[0-9]|2[0-3]):[0-5][0-9]$" name="duration" type="text" placeholder="00:00" required="required" title="Time used"/>
+            </div>
+            <div class="col">
+                <label for="project">Project</label>
+                <select id="project" name="project" required="required" size="8">
+                    <option value="project1">Project1</option>
+                    <option value="project2">Project2</option>
+                    <option value="project2">Project3</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="action">Action</label>
+                <select id="action" name="action" size="8">
+                    <option value="dothis">do this</option>
+                    <option value="dothis">do that</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="who">User</label>
+                <select id="user" name="user" size="8">
+                    <option value="usr1">User1</option>
+                    <option value="usr2">User2</option>
+                    <option value="usr3">User3</option>
+                </select>
+            </div>
+            <textarea rows="2" cols="10" id="description" name="description" placeholder="Description">
+
+            <label id="billableLabel" for="billable">Billable</label>
+            <input type="checkbox" id="billable" name="billable" checked="checked">
+            <button id="save" type="submit">save</button>
+        </form>
+    </div>
+    <script>
+        if(1<2 && 2<3){
+            alert("hello");
+        }
+
+    </script>
+</div>

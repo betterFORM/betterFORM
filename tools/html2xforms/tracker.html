@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html>
+    <head/>
+    <body>
+        <div>
+            <div id="container">
+                <a href="#" id="todayLink">Today</a>
+                <form id="trackit">
+                    <input id="record" name="record" type="hidden"/>
+                    <div id="trackDate" value="2013-01-01"/>
+                    <input id="trackedDate" name="trackedDate" type="hidden"/>
+                    <input id="created" name="created" type="hidden"/>
+                    <div class="timeWrapper">
+                        <input id="timeControl"
+                               name="duration"
+                               pattern="^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+                               placeholder="00:00"
+                               required="required"
+                               title="Time used"
+                               type="text"/>
+                    </div>
+                    <div class="col">
+                        <label for="project">Project</label>
+                        <select id="project" name="project" required="required" size="8">
+                            <option value="project1">Project1</option>
+                            <option value="project2">Project2</option>
+                            <option value="project2">Project3</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="action">Action</label>
+                        <select id="action" name="action" size="8">
+                            <option value="dothis">do this</option>
+                            <option value="dothis">do that</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="who">User</label>
+                        <select id="user" name="user" size="8">
+                            <option value="usr1">User1</option>
+                            <option value="usr2">User2</option>
+                            <option value="usr3">User3</option>
+                        </select>
+                    </div>
+                    <textarea cols="10"
+                              id="description"
+                              name="description"
+                              placeholder="Description"
+                              rows="2"> </textarea>
+                    <label for="billable" id="billableLabel">Billable</label>
+                    <input checked="checked" id="billable" name="billable" type="checkbox"/>
+                    <button id="save" type="submit">save</button>
+                </form>
+            </div>
+            <script/>
+        </div>
+    </body>
+</html>

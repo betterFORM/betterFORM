@@ -110,6 +110,7 @@
                 <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>
                 <pathelement location="${core.dir}/src/main/lib/exist-2.1-trunk.jar" groupid="org.exist" version="2.1-trunk" artifactId="exist"/>
                 <pathelement location="${core.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="1.0" artifactId="xmldb"/>
+                <pathelement location="${core.dir}/src/main/lib/jsoup-1.7.3.jar" groupid="org.jsoup" version="1.7.3" artifactId="jsoup"/>
             </classpath>
         </compile>
         <test>

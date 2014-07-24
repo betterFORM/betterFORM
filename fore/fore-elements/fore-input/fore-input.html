@@ -1,12 +1,26 @@
 <link href="../polymer/polymer.html" rel="import">
+<link href="../paper-input/paper-input.html" rel="import">
 
-<polymer-element name="fore-input" extends="input" attributes="name type"  on-keyup="{{updateValue}}" on-blur="{{updateValue}}">
+<polymer-element name="fore-input" attributes="name type label value"  on-keyup="{{updateValue}}" on-blur="{{updateValue}}">
+    <template>
+        <!--
+        #### defaults to standard HTML input element (input type="text") #####
+        -->
+        <!--<xf-control id="{{id}}"></xf-control>-->
+        <!-- the context for pathes is the original xforms element -->
 <!--
-
-    <template bind if="{{ isElement }}">
-        <input type="text" name="{{ name }}" id="{{ name }}" value="{{ value }}" isElement="{{ isElement }}">
-    </template>
+        <label for="widget">{{label}}</label>
+        <input id="widget"
+               type="text"
+               value="{{value}}"
+               disabled?="{{disabled}}"
+        on-change="{{changeAction}}"/>
+        <content></content>
 -->
+
+        <paper-input floatingLabel type="{{type}}" value="{{value}}" label="{{label}}" error="{{error}}"></paper-input>
+    </template>
+
     <script>
         Polymer('fore-input', {
             ownerForm:null,
@@ -15,7 +29,6 @@
             instance:'',
             xfmodel: '',
             state:{},
-            isElement:false,
 
             observe:{
                 xfmodel:'modelChanged'
@@ -37,13 +50,17 @@
                 console.log("ownerform: ", this.ownerForm);
             },
             ready:function(){
-//                this.isElement = (this.name.toLowerCase() == 'fore-input' ? true : false);
+                console.log("fore-input ready");
+
             },
 
             updateValue:function(e){
                 console.log("updatevalue: ", e.originalTarget.value);
-                this.getInstance().setValue(this.ref, e.originalTarget.value);
-                this.super();
+
+
+
+
+
             },
 
 /*
@@ -64,7 +81,9 @@
                 console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log("model : ", this.xfmodel, ' form', this.ownerForm);
 
-                this.xfmodel = this.ownerForm.xfmodel;
+                if(this.ownerForm != null) {
+                    this.xfmodel = this.ownerForm.xfmodel;
+                }
                 Platform.performMicrotaskCheckpoint();
 
                 //this.value="bar";

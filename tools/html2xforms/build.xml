@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013. betterFORM Project - http://www.betterform.de
+  ~ Licensed under the terms of BSD License
+  -->
+
+<!-- author: Joern Turner -->
+<project id="html2xforms"  default="html2xforms" basedir="." >
+
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <!-- **************************************** PROPERTIES **************************************** -->
+    <property name="core.dir" value="${basedir}/../../core"/>
+    <property name="web.dir" value="${basedir}/../../web"/>
+    <xmlproperty file="../../build.properties.xml"
+            semanticAttributes="true" keepRoot="false"/>
+
+    <target name="prepare">
+        <delete dir="${basedir}/target"/>
+    </target>
+
+    <target name="html2xforms" depends="prepare" description="transforms xhtml/xforms to html5 web components">
+        <xslt basedir="${basedir}"
+                destdir="${basedir}/target"
+                style="${basedir}/html2xforms.xsl"
+                force="true"
+                includes="*.html">
+            <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+            <classpath refid="transform.class.path"/>
+        </xslt>
+    </target>
+
+
+</project>
