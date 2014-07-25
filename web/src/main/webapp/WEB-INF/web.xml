@@ -63,7 +63,8 @@
 	-->
 	<filter-mapping>
 		<filter-name>XFormsFilter</filter-name>
-		<url-pattern>*.xhtml</url-pattern>
+		<!--<url-pattern>*.xhtml</url-pattern>-->
+		<url-pattern>*.html</url-pattern>
 	</filter-mapping>
 <!--
 	<filter-mapping>

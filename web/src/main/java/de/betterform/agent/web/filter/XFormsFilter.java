@@ -16,15 +16,23 @@ import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 //import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.flux.SocketProcessor;
+import de.betterform.html5.Preprocessor;
+import de.betterform.thirdparty.DOMBuilder;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xslt.TransformerService;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -180,18 +188,29 @@ public class XFormsFilter implements Filter {
             //pass to request object
             request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
 
+            boolean handleRequest = false;
                  /* dealing with response from chain */
             if (handleResponseBody(request, bufResponse)) {
-                byte[] data = prepareData(bufResponse);
-                if (data.length > 0) {
-                    request.setAttribute(WebFactory.XFORMS_INPUTSTREAM, new ByteArrayInputStream(data));
+                if(request.getRequestURI().endsWith(".html")){
+                    //html input processing
+                    Node node = Preprocessor.html2Xforms(bufResponse.getDataAsString(), (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
+                    request.setAttribute(WebFactory.XFORMS_NODE, node);
+                    handleRequest = false;
+
+                    response.getOutputStream().write(bufResponse.getData());
+                    response.getOutputStream().close();
+                }else {
+                    byte[] data = prepareData(bufResponse, request);
+                    if (data.length > 0) {
+                        request.setAttribute(WebFactory.XFORMS_INPUTSTREAM, new ByteArrayInputStream(data));
+                    }
                 }
             }
 
             if (handleRequestAttributes(request)) {
                 bufResponse.getOutputStream().close();
                 LOG.info("Start Filter XForm");
-                processXForms(request, response, session);
+                processXForms(request, response, session, handleRequest);
                 LOG.info("End Render XForm");
             } else {
                 srvResponse.getOutputStream().write(bufResponse.getData());
@@ -200,7 +219,7 @@ public class XFormsFilter implements Filter {
         }
     }
 
-    private void processXForms( HttpServletRequest  request,  HttpServletResponse response, HttpSession  session) throws IOException, ServletException {
+    private void processXForms( HttpServletRequest  request,  HttpServletResponse response, HttpSession  session, boolean handleRequest) throws IOException, ServletException {
         SocketProcessor webProcessor = null;
         try {
             webProcessor = new SocketProcessor();
@@ -213,7 +232,9 @@ public class XFormsFilter implements Filter {
             webProcessor.configure();
             webProcessor.setXForms();
             webProcessor.init();
-            webProcessor.handleRequest();
+            if(handleRequest) {
+                webProcessor.handleRequest();
+            }
 
             //add new xforms session to cache
             Cache cache = XFSessionCache.getCache();
@@ -284,7 +305,7 @@ public class XFormsFilter implements Filter {
         }
     }
 
-    protected byte[] prepareData(BufferedHttpServletResponseWrapper bufResponse) throws UnsupportedEncodingException {
+    protected byte[] prepareData(BufferedHttpServletResponseWrapper bufResponse, HttpServletRequest request) throws UnsupportedEncodingException {
         //remove DOCTYPE PI if it exists, Xerces in betterForm otherwise may try to download the system DTD (can cause latency problems)
         //byte[] data = removeDocumentTypePI(bufResponse.getData());
         //correct the <xforms:instance> xmlns="" problem (workaround for namespace problems in eXist)
@@ -349,6 +370,9 @@ public class XFormsFilter implements Filter {
 
         //EXIST WORKAROUND: Test if String starts with "<" like <html or <DOCTYPE
         if (! strResponse.trim().startsWith("<")) return false;
+
+        if (strResponse.trim().contains("fore-form")) return true;
+
 
         //[5]find the xforms namespace local name
         int xfNSDeclEnd = strResponse.indexOf("=\"" + NamespaceConstants.XFORMS_NS + "\"");
@@ -516,7 +540,7 @@ public class XFormsFilter implements Filter {
                 //Set USERAGENT
                 request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
                 request.setAttribute(WebFactory.XFORMS_INPUTSTREAM,  submissionResponse.get("body"));
-                processXForms(request, response, session);
+                processXForms(request, response, session, false);
                 return;
         }
         response.sendError(HttpServletResponse.SC_FORBIDDEN, "no submission response available");
