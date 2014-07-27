@@ -2,10 +2,9 @@
 <html>
     <head/>
     <body>
-        <div>
             <div id="container">
                 <a href="#" id="todayLink">Today</a>
-                <form id="trackit">
+                <form id="trackit" action="modules/store-somehow.xql">
                     <input id="record" name="record" type="hidden"/>
                     <div id="trackDate" value="2013-01-01"/>
                     <input id="trackedDate" name="trackedDate" type="hidden"/>
@@ -35,7 +34,7 @@
                         </select>
                     </div>
                     <div class="col">
-                        <label for="who">User</label>
+                        <label for="user">User</label>
                         <select id="user" name="user" size="8">
                             <option value="usr1">User1</option>
                             <option value="usr2">User2</option>
@@ -48,11 +47,10 @@
                               placeholder="Description"
                               rows="2"> </textarea>
                     <label for="billable" id="billableLabel">Billable</label>
-                    <input checked="checked" id="billable" name="billable" type="checkbox"/>
+                    <input readonly="readonly" checked="checked" id="billable" name="billable" type="checkbox"/>
                     <button id="save" type="submit">save</button>
                 </form>
             </div>
             <script/>
-        </div>
     </body>
 </html>

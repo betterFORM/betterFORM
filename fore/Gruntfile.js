@@ -13,15 +13,29 @@ module.exports = function(grunt) {
     var httpServerPort = 9001;
 
     grunt.initConfig({
+        vars: grunt.file.readJSON('package.json'),
+
+        mkdir: {
+            foreForms: {
+                options: {
+                    mode: '0700',
+                    create: ['<%= vars.webTarget %>/forms/fore/']
+                }
+            }
+        },
         //WATCH tasks
         watch: {
             options: {
                 nospawn: true,
                 livereload: true
             },
-            elementsScripts: {
-                files: ['fore-elements/**'],
-                tasks: ['rsync:developmentElements']
+            elements:{
+                files: ['elements/**','fore-elements/**'],
+                tasks: ['rsync:elements','rsync:distributeElements']
+            },
+            forms:{
+                files: ['forms/**'],
+                tasks: ['mkdir:foreForms','rsync:forms']
             },
             target: {
                 options: {
@@ -49,15 +63,38 @@ module.exports = function(grunt) {
                 args: ["-vpc"],
                 recursive: true
             },
-            developmentElements: {
+            elements:{
                 options: {
-                    src: 'fore-elements/**',
+                    src: ['elements/**','fore-elements/**'],
                     dest: 'components/'
+                }
+            },
+            forms:{
+                options: {
+                    src: ['forms/**'],
+                    dest: '<%= vars.webTarget %>/forms/fore/'
+                }
+            },
+            distributeElements: {
+                options: {
+                    src: 'components/**',
+                    dest: '<%= vars.webTarget %>/components/'
                 }
             }
         }
     });
 
+    /*
+    This task must be used when deploying dev version of fore into ../web/target
+    */
+    grunt.registerTask('deploy', [
+       'mkdir:foreForms',
+       'rsync'
+    ]);
+
+    /*
+    run a local server without connection to betterFORM webapp.
+    */
     grunt.registerTask('server',  [
         'connect:livereload',
         'watch'

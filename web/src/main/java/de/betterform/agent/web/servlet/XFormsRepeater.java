@@ -240,7 +240,7 @@ public class XFormsRepeater extends HttpServlet {
             webProcessor.configure();
             webProcessor.setXForms();
             webProcessor.init();
-            webProcessor.handleRequest();
+            webProcessor.handleRequest(true);
         } catch (Exception e) {
             if (webProcessor != null) {
                 // attempt to shutdown processor

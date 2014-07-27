@@ -1,0 +1,37 @@
+<!doctype html>
+
+<script src="/betterform/components/platform/platform.js"></script>
+<link href="/betterform/components/fore-form/fore-form.html" rel="import">
+<link href="/betterform/components/core-input/core-input.html" rel="import">
+<link href="/betterform/components/fore-input/fore-input.html" rel="import">
+<style>
+    fore-input{display:block;margin: 5px;}
+</style>
+<div>
+    <div id="container">
+
+        <fore-form action="somewhere/somehow.xql" method="POST">
+<!--
+            <fore-input id="foo" label="hello" name="foo"></fore-input>
+            <fore-input id="bar" label="world" name="bar"></fore-input>
+-->
+
+            <input id="input" name="inputvalue" type="text"
+                   placeholder="type something" required="required" title="input" is="core-input"/>
+
+            <button id="save" type="submit">save</button>
+        </fore-form>
+
+
+        <!-- #### 'is' attribute does not work for form elements :( #####-->
+<!--
+        <form id="trackit" is="fore-form">
+            <label for="input">input:</label>
+            <input id="input" name="inputvalue" type="text"
+                   placeholder="type something" required="required" title="input"/>
+            <button id="save" type="submit">save</button>
+        </form>
+-->
+    </div>
+
+</div>

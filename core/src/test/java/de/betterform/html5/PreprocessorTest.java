@@ -6,15 +6,19 @@ package de.betterform.html5;
 
 import de.betterform.thirdparty.DOMBuilder;
 import de.betterform.xml.dom.DOMUtil;
+import de.betterform.xml.xslt.impl.CachingTransformerService;
+import de.betterform.xml.xslt.impl.FileResourceResolver;
 import junit.framework.TestCase;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.net.URI;
 
 /**
  * @author joern turner
@@ -39,10 +43,14 @@ public class PreprocessorTest extends TestCase {
 
         assert(inputString.length()!=0);
 
-
-        Document doc = Jsoup.parse(inputString);
-        org.w3c.dom.Document domDoc = DOMBuilder.jsoup2DOM(doc);
-        DOMUtil.prettyPrintDOM(domDoc);
+        CachingTransformerService transformerService = new CachingTransformerService();
+        transformerService.setNoCache(true);
+        transformerService.addResourceResolver(new FileResourceResolver());
+        URI uri = new URI("file://" + getClass().getResource("html2xforms.xsl").getPath());
+        transformerService.getTransformer(uri);
+        Node result = Preprocessor.html2Xforms(inputString,transformerService);
+        assertNotNull(result);
+        DOMUtil.prettyPrintDOM(result);
     }
 
 

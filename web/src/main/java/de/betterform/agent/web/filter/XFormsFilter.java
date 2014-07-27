@@ -188,17 +188,38 @@ public class XFormsFilter implements Filter {
             //pass to request object
             request.setAttribute(WebFactory.USER_AGENT, XFormsFilter.USERAGENT);
 
-            boolean handleRequest = false;
-                 /* dealing with response from chain */
+
+            /*
+            ############################################################
+            Decide whether to process html, xhtml or other content
+
+            - if incoming file has extension '.html' it will be send to JSoup for sanitizing the HTML. The resulting
+            jsoup document is turned into a W3C document and fed into a transformer (html2xforms) that turns the HTML
+            into XForms markup. The xforms document is then passed to the xforms processor but WITHOUT transforming it
+            into HTML again. The original version of the HTML document is returned.
+
+            - if incoming has extension '.xhtml' it will be parsed and fed into the processor. The processor will
+            generate the UI using the configured default XSLT.
+
+            - all other content will be copied through unmodified
+            ############################################################
+            */
+
+            /* dealing with response from chain */
+            boolean generateUI=true;
             if (handleResponseBody(request, bufResponse)) {
                 if(request.getRequestURI().endsWith(".html")){
-                    //html input processing
-                    Node node = Preprocessor.html2Xforms(bufResponse.getDataAsString(), (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
-                    request.setAttribute(WebFactory.XFORMS_NODE, node);
-                    handleRequest = false;
-
-                    response.getOutputStream().write(bufResponse.getData());
-                    response.getOutputStream().close();
+                    if(request.getRequestURI().contains("components/")){
+                        response(response, bufResponse);
+                    }else{
+                        //html input processing
+                        Node node = Preprocessor.html2Xforms(bufResponse.getDataAsString(), (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
+                        generateUI=false;
+                        //store into request attribute that will be picked up during xforms processor init (setXForms)
+                        request.setAttribute(WebFactory.XFORMS_NODE, node);
+                        processXForms(request, response, session, false);
+                        response(response, bufResponse);
+                    }
                 }else {
                     byte[] data = prepareData(bufResponse, request);
                     if (data.length > 0) {
@@ -210,13 +231,18 @@ public class XFormsFilter implements Filter {
             if (handleRequestAttributes(request)) {
                 bufResponse.getOutputStream().close();
                 LOG.info("Start Filter XForm");
-                processXForms(request, response, session, handleRequest);
+                processXForms(request, response, session, generateUI);
+
                 LOG.info("End Render XForm");
             } else {
-                srvResponse.getOutputStream().write(bufResponse.getData());
-                srvResponse.getOutputStream().close();
+                response(response, bufResponse);
             }
         }
+    }
+
+    private void response(HttpServletResponse response, BufferedHttpServletResponseWrapper bufResponse) throws IOException {
+        response.getOutputStream().write(bufResponse.getData());
+        response.getOutputStream().close();
     }
 
     private void processXForms( HttpServletRequest  request,  HttpServletResponse response, HttpSession  session, boolean handleRequest) throws IOException, ServletException {
@@ -232,9 +258,7 @@ public class XFormsFilter implements Filter {
             webProcessor.configure();
             webProcessor.setXForms();
             webProcessor.init();
-            if(handleRequest) {
-                webProcessor.handleRequest();
-            }
+            webProcessor.handleRequest(handleRequest);
 
             //add new xforms session to cache
             Cache cache = XFSessionCache.getCache();

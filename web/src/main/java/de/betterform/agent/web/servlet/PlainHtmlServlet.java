@@ -68,7 +68,7 @@ public class PlainHtmlServlet extends HttpServlet {
 
             webProcessor.setRequest(request);
             webProcessor.setResponse(response);
-            webProcessor.handleRequest();
+            webProcessor.handleRequest(true);
         } catch (Exception e) {
             webProcessor.close(e);
         }

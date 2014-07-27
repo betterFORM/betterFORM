@@ -62,7 +62,7 @@
     </category>
 -->
 
-    <category name="de.betterform.agent.web.atmosphere">
+    <category name="de.betterform">
         <priority value="DEBUG"/>
     </category>
 

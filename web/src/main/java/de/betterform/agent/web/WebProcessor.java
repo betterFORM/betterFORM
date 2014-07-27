@@ -347,7 +347,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      *
      * @throws java.net.URISyntaxException
      */
-    public synchronized void handleRequest() throws XFormsException {
+    public synchronized void handleRequest(boolean generateUI) throws XFormsException {
         boolean updating = false; //this will become true in case PlainHtmlProcessor is in use
         WebUtil.nonCachingResponse(response);
 
@@ -369,6 +369,10 @@ public class WebProcessor extends AbstractProcessorDecorator {
                 handleExit(exitEvent);
             } else {
                 String referer = null;
+
+                // ##### when UI generation is NOT wanted (HTML input form) exit here
+                if(!generateUI) return;
+
 
                 if (updating) {
                     //todo: check if this code is still needed (used by XFormsPostServlet?)

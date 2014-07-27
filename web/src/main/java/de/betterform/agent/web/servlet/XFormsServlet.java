@@ -136,7 +136,8 @@ public class XFormsServlet extends HttpServlet {
             webProcessor.configure();
             webProcessor.setXForms();
             webProcessor.init();
-            webProcessor.handleRequest();
+            //todo: revisit with regard to html5 processing
+            webProcessor.handleRequest(true);
 
         } catch (Exception e) {
             e.printStackTrace();
