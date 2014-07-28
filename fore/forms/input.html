@@ -1,8 +1,10 @@
 <!doctype html>
 
 <script src="/betterform/components/platform/platform.js"></script>
-<link href="/betterform/components/fore-form/fore-form.html" rel="import">
-<link href="/betterform/components/core-input/core-input.html" rel="import">
+<script src="/betterform/components/jquery/dist/jquery.min.js"></script>
+<script src="/betterform/components/jquery-atmosphere/jquery.atmosphere.js" type="text/javascript"></script>
+
+<link href="/betterform/components/fore-engine/fore-engine.html" rel="import">
 <link href="/betterform/components/fore-input/fore-input.html" rel="import">
 <style>
     fore-input{display:block;margin: 5px;}
@@ -10,17 +12,18 @@
 <div>
     <div id="container">
 
-        <fore-form action="somewhere/somehow.xql" method="POST">
+        <fore-engine></fore-engine>
+        <form id="hello" action="somewhere/somehow.xql" method="POST">
             <fore-input id="foo" label="hello" name="foo"></fore-input>
             <fore-input id="bar" label="world" name="bar"></fore-input>
 
 <!--
             <input id="input" name="inputvalue" type="text"
-                   placeholder="type something" required="required" title="input" is="core-input"/>
+                   placeholder="type something" required="required" title="input" is="fore-input"/>
 -->
 
             <button id="save" type="submit">save</button>
-        </fore-form>
+        </form>
 
 
         <!-- #### 'is' attribute does not work for form elements :( #####-->
@@ -35,3 +38,5 @@
     </div>
 
 </div>
+
+

@@ -1,6 +1,9 @@
-<link rel="import" href="/betterform/webcomponents/bower_components/polymer/polymer.html">
+<link rel="import" href="/betterform/components/polymer/polymer.html">
 
 <polymer-element name="fore-jquery-atmosphere" attributes="xfSession">
+    <template>
+        <div id="log"></div>
+    </template>
     <script>
         Polymer('fore-jquery-atmosphere', {
             ready: function() {
@@ -23,7 +26,7 @@
 
                         $('<div/>',{
                             text:response.request.uuid
-                        }).appendTo("fore-jquery-atmosphere");
+                        }).appendTo(that.$.log);
                     },
 
                     onMessage: function (response) {
@@ -53,12 +56,12 @@
 
                         }
 
-                    console.log("targetId: ", json.targetId);
+//                    console.log("targetId: ", json.targetId);
                     console.log("eventType: ", json.type);
-                    console.log("value: ", json.value);
+//                    console.log("value: ", json.value);
                         $('<div/>',{
                             text:json.type
-                        }).appendTo("fore-jquery-atmosphere");
+                        }).appendTo(that.$.log);
                     },
                     onClose: function (response) {
                         console.log("onClose called");
