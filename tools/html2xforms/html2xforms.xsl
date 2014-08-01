@@ -14,6 +14,9 @@
         xmlns:bf="http://betterform.sourceforge.net/xforms"
         exclude-result-prefixes="bf xsl">
 
+    <!-- 'data' will be passed in case we deal with a html form submit and second layer validation -->
+    <xsl:param name="data" select="'record:foo;trackedDate:bar;created:heute;project:mine;duration:3;'"/>
+    <!--<xsl:param name="data" select="''"/>-->
 
     <!--
     Transforms sanitized HTML5 documents into into xforms elements.
@@ -33,18 +36,26 @@
     <xsl:template match="body">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
-            <xf:model>
-                <xf:instance>
+            <xsl:element name="xf:model" namespace="http://www.w3.org/2002/xforms">
+                <xsl:element name="xf:instance" namespace="http://www.w3.org/2002/xforms">
                     <xsl:element name="data" namespace="">
-                        <xsl:apply-templates select="*" mode="model"/>
+
+                                <xsl:apply-templates select="*" mode="model"/>
+
                     </xsl:element>
-                </xf:instance>
+
+
+                </xsl:element>
                 <xsl:apply-templates select="//*[@type='submit']" mode="submission"/>
                 <xsl:apply-templates select="*" mode="bind"/>
-            </xf:model>
-            <xsl:apply-templates select="*" mode="ui"/>
+            </xsl:element>
+            <xsl:if test="string-length($data) = 0">
+                <xsl:apply-templates select="*" mode="ui"/>
+            </xsl:if>
         </xsl:copy>
     </xsl:template>
+
+
 
     <!--
     ###############################################################################################
@@ -53,6 +64,24 @@
     -->
     <xsl:template match="*[@name]" mode="model">
         <xsl:element name="{@name}" namespace="">
+
+            <xsl:if test="string-length($data) != 0">
+                <xsl:variable name="name" select="@name" />
+                <xsl:variable name="formData" select="tokenize($data, ';')" />
+                <xsl:variable name="theValue">
+                    <xsl:for-each select="$formData">
+                        <xsl:if test="starts-with(.,$name)">
+                            <xsl:variable name="varname" select="substring-before(.,':')"/>
+                            <xsl:if test="$varname = $name">
+                                <xsl:variable name="varValue" select="substring-after(.,':')"/>
+                                <xsl:value-of select="$varValue"/>
+                            </xsl:if>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:if test="string-length($theValue) != 0"><xsl:value-of select="$theValue"/></xsl:if>
+            </xsl:if>
+
             <xsl:apply-templates select="*" mode="model"/>
         </xsl:element>
     </xsl:template>
@@ -68,20 +97,25 @@
     ###############################################################################################
     -->
     <xsl:template match="*[@type='submit']" mode="submission" priority="10">
-        <xsl:element name="xf:submision" namespace="http://www.w3.org/2002/xforms">
-            <!-- ### just uses the first forms' action as submission uri -->
-            <!-- todo: support multiple forms -->
-            <xsl:attribute name="id">
-                <xsl:value-of select="concat(@id,'-submit')"/>
-            </xsl:attribute>
-            <xsl:attribute name="resource">
-                <xsl:value-of select="//form/@action"/>
-            </xsl:attribute>
-            <xsl:attribute name="method">
-                <xsl:variable name="method" select="if(exists(//form/@method)) then //form/@method else 'GET'"/>
-                <xsl:value-of select="$method"/>
-            </xsl:attribute>
-        </xsl:element>
+        <xsl:choose>
+            <xsl:when test="string-length($data) != 0"/>
+            <xsl:otherwise>
+                <xsl:element name="xf:submision" namespace="http://www.w3.org/2002/xforms">
+                    <!-- ### just uses the first forms' action as submission uri -->
+                    <!-- todo: support multiple forms -->
+                    <xsl:attribute name="id">
+                        <xsl:value-of select="concat(@id,'-submit')"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="resource">
+                        <xsl:value-of select="//form/@action"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="method">
+                        <xsl:variable name="method" select="if(exists(//form/@method)) then //form/@method else 'GET'"/>
+                        <xsl:value-of select="$method"/>
+                    </xsl:attribute>
+                </xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <!--
     ###############################################################################################
@@ -103,8 +137,8 @@
             <xsl:call-template name="evalReadonly"/>
             <xsl:call-template name="evalRequired"/>
             <xsl:call-template name="evalRelevant"/>
-            <xsl:call-template name="evalType"/>
             <xsl:call-template name="evalConstraint"/>
+            <xsl:call-template name="evalType"/>
 
             <xsl:apply-templates select="*" mode="bind"/>
         </xsl:element>

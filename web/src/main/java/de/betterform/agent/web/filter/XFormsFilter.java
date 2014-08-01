@@ -21,6 +21,7 @@ import de.betterform.thirdparty.DOMBuilder;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -39,7 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.TransformerException;
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -165,6 +168,58 @@ public class XFormsFilter implements Filter {
             doSubmissionReplaceAll(request, response);
         } else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE_XFORMS) != null) {
             doSubmissionReplaceAllXForms(request, response,session);
+        } else if ("POST".equalsIgnoreCase(request.getMethod())) {
+            //html form submit ? should be -> requires that forms get submitted by post
+            String contentType = request.getContentType();
+
+            if(contentType.contains("form")){
+                // get referer document
+                /*
+                This might be a weak point: the referer header is not reliable in all cases or might get filtered by proxies. For this to work
+                the referer must return the URL of the host document of the form.
+                */
+                String referer = request.getHeader("Referer");
+
+                // parse and sanitize it -> xhtml
+                // generate xforms from referer document, put into defined folder 'by the side' for caching/refining generated xforms
+                // mix incoming form data into generated document or pass it as XML instance
+                Enumeration<String> params = request.getParameterNames();
+                StringBuffer formData = new StringBuffer();
+                while(params.hasMoreElements()){
+                    String name = params.nextElement();
+                    String value = request.getParameter(name);
+                    formData.append(name);
+                    formData.append(":");
+                    if(value != null){
+                        formData.append(value);
+                    }else{
+                        formData.append("");
+                    }
+                    formData.append(";");
+                }
+
+                Node node=null;
+                try {
+                    node = Preprocessor.submit2Xforms(referer, (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE), formData.toString());
+                } catch (URISyntaxException e) {
+                    returnErrorPage(request,response,session,e);
+                } catch (TransformerException e) {
+                    returnErrorPage(request, response, session, e);
+                } catch (XFormsConfigException e) {
+                    returnErrorPage(request, response, session, e);
+                }
+
+                // instanciate processor (might even be a plain (non-web) processor)
+
+
+
+                // processor will attach xforms-submit-error and xforms-submit-done listeners
+                // feed generated xforms
+                // call processor revalidate
+                // if submit-done pass request on unchanged
+                // if submit-error return input document with embedded error information (e.g. as a div as first or last child of body); option - redirect to error page
+                LOG.info("HTML form input");
+            }
         } else {
             /* do servlet request */
             LOG.info("Passing to Chain");
@@ -293,17 +348,21 @@ public class XFormsFilter implements Filter {
                 } catch (XFormsException xfe) {
                     LOG.error("Could not shutdown Processor: Error: " + xfe.getMessage() + " Cause: " + xfe.getCause());
                 }
-                // store exception
-                session.setAttribute("betterform.exception", e);
-                session.setAttribute("betterform.exception.message", e.getMessage());
-                session.setAttribute("betterform.referer", request.getRequestURL());
                 //remove session from XFormsSessionManager
                 WebUtil.removeSession(webProcessor.getKey());
+                // store exception
 
-                String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
-                webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
+                returnErrorPage(request, response, session,e);
             }
         }
+    }
+
+    private void returnErrorPage(HttpServletRequest request, HttpServletResponse response,HttpSession session, Exception e) throws ServletException, IOException {
+        session.setAttribute("betterform.exception", e);
+        session.setAttribute("betterform.exception.message", e.getMessage());
+        session.setAttribute("betterform.referer", request.getRequestURL());
+        String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
+        webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
     }
 
     private void handleUpload(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws ServletException {

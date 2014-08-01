@@ -1,0 +1,28 @@
+<polymer-element name="fore-native-input" extends="input" attributes="name type label value placeholder">
+    <template>
+        <style>
+            :host {
+                width: 200px;
+                height: 20px;
+            }
+        </style>
+
+    </template>
+
+    <script>
+        Polymer('fore-native-input', {
+
+            created: function () {
+                console.log("fore-native-input created ...");
+                console.log("this: ", this);
+                console.log("this: ", this.getAttribute('name'));
+            },
+            ready:function() {
+                console.log("fore-native-input ready");
+                console.log("tagName: ", this.tagName);
+            }
+
+
+        });
+    </script>
+</polymer-element>

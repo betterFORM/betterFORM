@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <script src="../platform/platform.js"></script>
         <link href="../polymer/polymer.html" rel="import">
-        <link href="fore-input.html" rel="import">
+        <link href="fore-native-input.html" rel="import">
         <style>
             body {
                 font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
@@ -19,14 +19,12 @@
                 left: 0;
             }
         </style>
-
     </head>
 
     <body unresolved>
 
         <div class="container">
-            <fore-input name="foo" type="text" floatingLabel value="world" label="hello"></fore-input>
-            <fore-input name="bar" type="text"  value="bar" label="foo"></fore-input>
+            <input name="foo" type="text" value="world"  placeholder="hello" is="fore-native-input">
         </div>
     </body>
 </html>

@@ -1,7 +1,6 @@
-<link href="/betterform/components/polymer/polymer.html" rel="import">
-<link href="/betterform/components/paper-input/paper-input.html" rel="import">
+<link href="../paper-input/paper-input.html" rel="import">
 
-<polymer-element name="fore-input" attributes="name type label value"  on-keyup="{{updateValue}}" on-blur="{{updateValue}}">
+<polymer-element name="fore-input" attributes="name type label value floatingLabel"  on-keyup="{{updateValue}}" on-blur="{{updateValue}}">
     <template>
         <!--
         #### defaults to standard HTML input element (input type="text") #####
@@ -18,7 +17,11 @@
                 <content></content>
         -->
 
-        <paper-input floatingLabel type="{{type}}" value="{{value}}" label="{{label}}" error="{{error}}"></paper-input>
+        <paper-input id="wrapped" floatingLabel type="{{type}}" value="{{value}}" label="{{label}}" error="{{error}}"></paper-input>
+        <style>
+            :host {
+            }
+        </style>
     </template>
 
     <script>
@@ -35,6 +38,7 @@
             },
             ready:function() {
                 console.log("fore-input ready");
+                console.log("tagName: ", this.tagName);
             }
 
 
