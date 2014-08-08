@@ -20,7 +20,9 @@ import de.betterform.html5.Preprocessor;
 import de.betterform.thirdparty.DOMBuilder;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
+import de.betterform.xml.xforms.ModelProcessor;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
@@ -168,7 +170,7 @@ public class XFormsFilter implements Filter {
             doSubmissionReplaceAll(request, response);
         } else if ("GET".equalsIgnoreCase(request.getMethod())  && request.getParameter(BetterFORMConstants.SUBMISSION_RESPONSE_XFORMS) != null) {
             doSubmissionReplaceAllXForms(request, response,session);
-        } else if ("POST".equalsIgnoreCase(request.getMethod())) {
+        } else if (request.getContentType() != null && request.getContentType().contains("form") && "POST".equalsIgnoreCase(request.getMethod())) {
             //html form submit ? should be -> requires that forms get submitted by post
             String contentType = request.getContentType();
 
@@ -201,6 +203,7 @@ public class XFormsFilter implements Filter {
                 Node node=null;
                 try {
                     node = Preprocessor.submit2Xforms(referer, (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE), formData.toString());
+                    DOMUtil.prettyPrintDOM(node);
                 } catch (URISyntaxException e) {
                     returnErrorPage(request,response,session,e);
                 } catch (TransformerException e) {
@@ -209,20 +212,30 @@ public class XFormsFilter implements Filter {
                     returnErrorPage(request, response, session, e);
                 }
 
-                // instanciate processor (might even be a plain (non-web) processor)
 
+                try {
+                    boolean success = processXFormsModel(node);
 
+                    // instanciate processor (might even be a plain (non-web) processor)
 
-                // processor will attach xforms-submit-error and xforms-submit-done listeners
-                // feed generated xforms
-                // call processor revalidate
-                // if submit-done pass request on unchanged
-                // if submit-error return input document with embedded error information (e.g. as a div as first or last child of body); option - redirect to error page
-                LOG.info("HTML form input");
-                BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
-                filterChain.doFilter(srvRequest, bufResponse);
-                LOG.info("Returned from Chain");
-                response(response,bufResponse);
+                    if(success){
+
+                        // processor will attach xforms-submit-error and xforms-submit-done listeners
+                        // feed generated xforms
+                        // call processor revalidate
+                        // if submit-done pass request on unchanged
+                        // if submit-error return input document with embedded error information (e.g. as a div as first or last child of body); option - redirect to error page
+                        LOG.info("HTML form data is valid");
+                        BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
+                        filterChain.doFilter(srvRequest, bufResponse);
+                        LOG.info("Returned from Chain");
+                        response(response,bufResponse);
+                    }else {
+                        sendModelProcessorError(request, response, session);
+                    }
+                } catch (XFormsException e) {
+                    sendModelProcessorError(request, response, session);
+                }
             }
         } else {
             /* do servlet request */
@@ -299,6 +312,21 @@ public class XFormsFilter implements Filter {
         }
     }
 
+    private void sendModelProcessorError(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+        session.setAttribute("betterform.referer", request.getRequestURL());
+        String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
+        webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
+    }
+
+    private boolean processXFormsModel(Node xforms) throws ServletException, IOException, XFormsException {
+        ModelProcessor modelProcessor = null;
+        modelProcessor = new ModelProcessor();
+        modelProcessor.setXformsProcessor(new XFormsProcessorImpl());
+        modelProcessor.setXForms(xforms);
+        modelProcessor.init();
+        return modelProcessor.isSuccess();
+    }
+
     private void response(HttpServletResponse response, BufferedHttpServletResponseWrapper bufResponse) throws IOException {
         response.getOutputStream().write(bufResponse.getData());
         response.getOutputStream().close();
@@ -364,9 +392,7 @@ public class XFormsFilter implements Filter {
     private void returnErrorPage(HttpServletRequest request, HttpServletResponse response,HttpSession session, Exception e) throws ServletException, IOException {
         session.setAttribute("betterform.exception", e);
         session.setAttribute("betterform.exception.message", e.getMessage());
-        session.setAttribute("betterform.referer", request.getRequestURL());
-        String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
-        webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
+        sendModelProcessorError(request, response, session);
     }
 
     private void handleUpload(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws ServletException {

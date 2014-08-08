@@ -18,6 +18,7 @@
     <xsl:param name="data" select="'record:foo;trackedDate:bar;created:heute;project:mine;duration:3;'"/>
     <!--<xsl:param name="data" select="''"/>-->
 
+    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     <!--
     Transforms sanitized HTML5 documents into into xforms elements.
     -->

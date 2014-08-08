@@ -33,6 +33,10 @@ import java.util.Map;
 public class ErrorServlet extends HttpServlet {
     private static final Log LOGGER = LogFactory.getLog(ErrorServlet.class);
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doGet(req, resp);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -59,7 +63,9 @@ public class ErrorServlet extends HttpServlet {
         //create XML structure for exception details
         Element rootNode = DOMUtil.createRootElement("error");
         DOMUtil.appendElement(rootNode, "context", request.getContextPath());
-        DOMUtil.appendElement(rootNode, "url", request.getSession().getAttribute("betterform.referer").toString());
+        if(request.getSession().getAttribute("betterform.referer")!= null){
+            DOMUtil.appendElement(rootNode, "url", request.getSession().getAttribute("betterform.referer").toString());
+        }
         DOMUtil.appendElement(rootNode, "xpath", xpath);
         DOMUtil.appendElement(rootNode, "message", msg);
         DOMUtil.appendElement(rootNode, "cause", cause);

@@ -1,0 +1,30 @@
+<html xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
+    <head></head>
+    <body>
+        <xf:model>
+            <xf:instance>
+                <data>
+                    <record>foo</record>
+                    <trackedDate>bar</trackedDate>
+                    <created>heute</created>
+                    <duration>4</duration>
+                    <project>mine</project>
+                    <action></action>
+                    <user></user>
+                    <description></description>
+                    <billable></billable>
+                </data>
+            </xf:instance>
+            <xf:bind ref="record" type="string"></xf:bind>
+            <xf:bind ref="trackedDate" type="string"></xf:bind>
+            <xf:bind ref="created" type="string"></xf:bind>
+            <xf:bind ref="duration" required="true()"  type="decimal"></xf:bind>
+            <xf:bind ref="project" required="true()" type="string"></xf:bind>
+            <xf:bind ref="action" type="string"></xf:bind>
+            <xf:bind ref="user" type="string"></xf:bind>
+            <xf:bind ref="description" type="string"></xf:bind>
+            <xf:bind ref="billable" readonly="true()" type="boolean"></xf:bind>
+
+        </xf:model>
+    </body>
+</html>

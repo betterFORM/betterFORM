@@ -6,16 +6,10 @@
 package de.betterform.xml.xforms;
 
 import de.betterform.xml.config.Config;
-import de.betterform.xml.dom.DOMUtil;
-import de.betterform.xml.events.DOMEventNames;
-import de.betterform.xml.events.XFormsEventNames;
-import de.betterform.xml.xforms.BetterFormTestCase;
-import de.betterform.xml.xforms.TestEventListener;
 import de.betterform.xml.xforms.action.EventCountListener;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import org.w3c.dom.Document;
-import org.w3c.dom.events.EventTarget;
 
 import java.io.File;
 
@@ -28,12 +22,12 @@ import java.io.File;
  *
 
  */
-public class ModelProcessorTest extends BetterFormTestCase {
+public class ModelProcessorTestSuccess extends BetterFormTestCase {
     private TestEventListener messageListener;
     private EventCountListener invalidCountListener;
 
     protected String getTestCaseURI() {
-        return "ModelProcessorNoSuccess.html";
+        return "ModelProcessorSuccess.html";
     }
 
     protected XPathFunctionContext getDefaultFunctionContext() {
@@ -68,7 +62,7 @@ public class ModelProcessorTest extends BetterFormTestCase {
 
         this.defaultContext = getDefaultContext();
         this.defaultFunctionContext = getDefaultFunctionContext();
-        this.documentContext = de.betterform.xml.xpath.impl.saxon.XPathUtil.getRootContext((Document) this.processor.getXForms(), this.processor.getBaseURI());
+        this.documentContext = XPathUtil.getRootContext((Document) this.processor.getXForms(), this.processor.getBaseURI());
     }
     /**
      * Tears down the test.
@@ -85,7 +79,8 @@ public class ModelProcessorTest extends BetterFormTestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testInvalidListener() throws Exception {
-        assertFalse(((ModelProcessor)this.processor).isSuccess());
+
+        assertTrue(((ModelProcessor) this.processor).isSuccess());
     }
 
 
