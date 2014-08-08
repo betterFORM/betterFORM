@@ -2,55 +2,68 @@
 <html>
     <head/>
     <body>
-            <div id="container">
-                <a href="#" id="todayLink">Today</a>
-                <form id="trackit" action="modules/store-somehow.xql">
-                    <input id="record" name="record" type="hidden"/>
-                    <div id="trackDate" value="2013-01-01"/>
-                    <input id="trackedDate" name="trackedDate" type="hidden"/>
-                    <input id="created" name="created" type="hidden"/>
-                    <div class="timeWrapper">
-                        <input id="timeControl"
-                               name="duration"
-                               pattern="^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
-                               placeholder="00:00"
-                               required="required"
-                               title="Time used"
-                               type="number"/>
-                    </div>
-                    <div class="col">
-                        <label for="project">Project</label>
-                        <select id="project" name="project" required="required" size="8">
-                            <option value="project1">Project1</option>
-                            <option value="project2">Project2</option>
-                            <option value="project2">Project3</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="action">Action</label>
-                        <select id="action" name="action" size="8">
-                            <option value="dothis">do this</option>
-                            <option value="dothis">do that</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="user">User</label>
-                        <select id="user" name="user" size="8">
-                            <option value="usr1">User1</option>
-                            <option value="usr2">User2</option>
-                            <option value="usr3">User3</option>
-                        </select>
-                    </div>
-                    <textarea cols="10"
-                              id="description"
-                              name="description"
-                              placeholder="Description"
-                              rows="2"> </textarea>
-                    <label for="billable" id="billableLabel">Billable</label>
-                    <input readonly="readonly" checked="checked" id="billable" name="billable" type="checkbox"/>
-                    <button id="save" type="submit">save</button>
-                </form>
-            </div>
-            <script/>
+        <div id="container">
+            <a href="#" id="todayLink">Today</a>
+            <form id="trackit" action="modules/store-somehow.xql">
+                <input id="record" name="record" type="hidden"/>
+                <div id="trackDate" value="2013-01-01"/>
+                <input id="trackedDate" name="trackedDate" type="hidden"/>
+                <input id="created" name="created" type="hidden"/>
+                <div class="timeWrapper">
+                    <input id="timeControl"
+                           name="duration"
+                           pattern="^([01]?[0-9]|2[0-3]):[0-5][0-9]$"
+                           placeholder="00:00"
+                           required="required"
+                           title="Time used"
+                           type="number"/>
+                </div>
+                <div class="col">
+                    <label for="project">Project</label>
+                    <select id="project" name="project" required="required" size="8">
+                        <option value="project1">Project1</option>
+                        <option value="project2">Project2</option>
+                        <option value="project2">Project3</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="action">Action</label>
+                    <select id="action" name="action" size="8">
+                        <option value="dothis">do this</option>
+                        <option value="dothis">do that</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="user">User</label>
+                    <select id="user" name="user" size="8">
+                        <option value="usr1">User1</option>
+                        <option value="usr2">User2</option>
+                        <option value="usr3">User3</option>
+                    </select>
+                </div>
+                <textarea cols="10"
+                          id="description"
+                          name="description"
+                          placeholder="Description"
+                          rows="2"> </textarea>
+                <label for="billable" id="billableLabel">Billable</label>
+                <input readonly="readonly" checked="checked" id="billable" name="billable" type="CHECKBOX"/>
+                <button id="save" type="submit">save</button>
+
+                <input disabled="true()" name="maxLength" maxLength="12"/>
+                
+                <input name="browsers" list="browsers"/>
+                <datalist id="browsers">
+                    <option value="Internet Explorer"></option>
+                    <option value="Firefox"></option>
+                    <option value="Chrome"></option>
+                    <option value="Opera"></option>
+                    <option value="Safari"></option>
+                </datalist> 
+                
+                <input type="number" name="points" step="3" min="0" max="30"/>
+            </form>
+        </div>
+        <script/>
     </body>
 </html>
