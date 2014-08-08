@@ -112,6 +112,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ResponseServlet</servlet-name>
+        <servlet-class>de.betterform.agent.web.servlet.FormResponseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ResponseServlet</servlet-name>
+        <url-pattern>/ResponseServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <description>AtmosphereServlet</description>
         <servlet-name>AtmosphereServlet</servlet-name>
         <servlet-class>org.atmosphere.cpr.AtmosphereServlet</servlet-class>

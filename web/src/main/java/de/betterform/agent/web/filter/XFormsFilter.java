@@ -219,6 +219,10 @@ public class XFormsFilter implements Filter {
                 // if submit-done pass request on unchanged
                 // if submit-error return input document with embedded error information (e.g. as a div as first or last child of body); option - redirect to error page
                 LOG.info("HTML form input");
+                BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
+                filterChain.doFilter(srvRequest, bufResponse);
+                LOG.info("Returned from Chain");
+                response(response,bufResponse);
             }
         } else {
             /* do servlet request */
