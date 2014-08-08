@@ -1,0 +1,9 @@
+<xsd:schema targetNamespace="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xforms="http://www.w3.org/2002/xforms" elementFormDefault="qualified">
+    <xsd:include schemaLocation="XFormsDatatypes11.xsd"/>
+    
+    <xsd:simpleType name="color">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

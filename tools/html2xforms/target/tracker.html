@@ -1,0 +1,67 @@
+<html xmlns:xf="http://www.w3.org/2002/xforms">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   </head>
+   <body>
+      <xf:model id="m-trackit">
+         <xf:instance id="i-default">
+            <data>
+               <record>foo</record>
+               <trackedDate>bar</trackedDate>
+               <created>heute</created>
+               <duration>3</duration>
+               <project>mine</project>
+               <action></action>
+               <user></user>
+               <description></description>
+               <billable></billable>
+               <maxLength></maxLength>
+               <browsers></browsers>
+               <points></points>
+            </data>
+         </xf:instance>
+         <xf:instance id="i-browsers">
+            <data>
+               <option>Internet Explorer</option>
+               <option>Firefox</option>
+               <option>Chrome</option>
+               <option>Opera</option>
+               <option>Safari</option>
+            </data>
+         </xf:instance>
+         <xf:instance id="i-project">
+            <data>
+               <option>project1</option>
+               <option>project2</option>
+               <option>project2</option>
+            </data>
+         </xf:instance>
+         <xf:instance id="i-action">
+            <data>
+               <option>dothis</option>
+               <option>dothis</option>
+            </data>
+         </xf:instance>
+         <xf:instance id="i-user">
+            <data>
+               <option>usr1</option>
+               <option>usr2</option>
+               <option>usr3</option>
+            </data>
+         </xf:instance>
+         <xf:bind ref="record" type="string"></xf:bind>
+         <xf:bind ref="trackedDate" type="string"></xf:bind>
+         <xf:bind ref="created" type="string"></xf:bind>
+         <xf:bind ref="duration" required="true()" constraint="matches(., '^([01]?[0-9]|2[0-3]):[0-5][0-9]$')" type="decimal"></xf:bind>
+         <xf:bind ref="project" required="true()" constraint="index-of(instance('i-project')//option, .) &gt; 0)" type="string"></xf:bind>
+         <xf:bind ref="action" constraint="index-of(instance('i-action')//option, .) &gt; 0)" type="string"></xf:bind>
+         <xf:bind ref="user" constraint="index-of(instance('i-user')//option, .) &gt; 0)" type="string"></xf:bind>
+         <xf:bind ref="description" type="string"></xf:bind>
+         <xf:bind ref="billable" readonly="true()" type="boolean"></xf:bind>
+         <xf:bind ref="maxLength" relevant="false()" constraint="string-lenght(.) <= 12" type="string"></xf:bind>
+         <xf:bind ref="browsers" constraint="index-of(instance('i-browsers')//option, .) &gt; 0)" type="string"></xf:bind>
+         <xf:bind ref="points" constraint=". &gt;= 0 and . <= 30" type="decimal"></xf:bind>
+         <xf:submision id="s-trackit-default" resource="modules/store-somehow.xql" method="GET" validate="true()"></xf:submision>
+      </xf:model>
+   </body>
+</html>
