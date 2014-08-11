@@ -5,7 +5,7 @@
 -->
 
 <xsl:stylesheet version="2.0"
-                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns=""
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:ev="http://www.w3.org/2001/xml-events"
                 xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -22,16 +22,36 @@
     Transforms sanitized HTML5 documents into into xforms elements.
     -->
     <xsl:strip-space elements="*"/>
-    <xsl:template match="/*">
-        <xsl:copy>
-            <xsl:namespace name="xf" select="'http://www.w3.org/2002/xforms'"/>
+    <xsl:template match="/">
+        <xsl:apply-templates/>
+    </xsl:template>
+        
+    <xsl:template match="@*|node()|text()">
+        <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
             <xsl:copy-of select="@*"/>
 
             <xsl:apply-templates/>
-        </xsl:copy>
+        </xsl:element>
+        
+<!--
+        <xsl:copy>
+                <xsl:namespace name="xf" select="'http://www.w3.org/2002/xforms'"/>
+                <xsl:copy-of select="@*"/>
+
+                <xsl:apply-templates/>
+            </xsl:copy>
+            -->
     </xsl:template>
 
     <xsl:template match="body">
+        <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates select="*" mode="model"/>
+            <xsl:if test="string-length($data) = 0">
+                <xsl:apply-templates select="*" mode="ui"/>
+            </xsl:if>
+        </xsl:element>
+        <!--
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates select="*" mode="model"/>
@@ -39,6 +59,7 @@
                 <xsl:apply-templates select="*" mode="ui"/>
             </xsl:if>
         </xsl:copy>
+        -->
     </xsl:template>
     <!--
         ###############################################################################################
@@ -54,7 +75,7 @@
             
             <xsl:element name="xf:instance" namespace="http://www.w3.org/2002/xforms">
                 <xsl:attribute name="id">i-default</xsl:attribute>
-                <xsl:element name="data" namespace="">
+                <xsl:element name="data" namespace="{namespace-uri()}">
                     <xsl:apply-templates select="*" mode="model"/>
                 </xsl:element>
             </xsl:element>
@@ -366,13 +387,15 @@
         </xsl:if>
     </xsl:template>
     -->
+    
+    <!--
     <xsl:template match="@*|node()|text()">
         <xsl:copy>
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
     </xsl:template>
-
+-->
     <!--
     ###############################################################################################
     mode UI
