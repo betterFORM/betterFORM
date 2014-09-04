@@ -28,9 +28,11 @@ import java.io.File;
  *
 
  */
-public class ModelProcessorTest extends BetterFormTestCase {
+public class ModelProcessorNoSuccessTest extends BetterFormTestCase {
     private TestEventListener messageListener;
     private EventCountListener invalidCountListener;
+    private TestEventListener invalidListener;
+
 
     protected String getTestCaseURI() {
         return "ModelProcessorNoSuccess.html";
@@ -84,8 +86,22 @@ public class ModelProcessorTest extends BetterFormTestCase {
      *
      * @throws Exception if any error occurred during the test.
      */
-    public void testInvalidListener() throws Exception {
-        assertFalse(((ModelProcessor)this.processor).isSuccess());
+    public void testValidity() throws Exception {
+        ModelProcessor mp = (ModelProcessor) this.processor;
+        assertFalse(mp.isSuccess());
+        assertTrue(mp.getErrors().size() != 0);
+
+
+        assertTrue(mp.getErrors().get(0).getPath().equals("/data[1]/trackedDate[1]"));
+        assertTrue(mp.getErrors().get(0).getErrorType() == ModelProcessor.ErrorInfo.DATATYPE_INVALID);
+
+        assertTrue(mp.getErrors().get(1).getPath().equals("/data[1]/duration[1]"));
+        assertTrue(mp.getErrors().get(1).getErrorType() == ModelProcessor.ErrorInfo.REQUIRED_INVALID);
+
+        assertTrue(mp.getErrors().get(2).getPath().equals("/data[1]/project[1]"));
+        assertTrue(mp.getErrors().get(2).getErrorType() == ModelProcessor.ErrorInfo.CONSTRAINT_INVALID);
+
+
     }
 
 

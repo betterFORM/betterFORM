@@ -7,7 +7,7 @@
                     <record>foo</record>
                     <trackedDate>bar</trackedDate>
                     <created>heute</created>
-                    <duration>sdfds</duration>
+                    <duration></duration>
                     <project>mine</project>
                     <action></action>
                     <user></user>
@@ -16,14 +16,14 @@
                 </data>
             </xf:instance>
             <xf:bind ref="record" type="string"></xf:bind>
-            <xf:bind ref="trackedDate" type="string"></xf:bind>
+            <xf:bind ref="trackedDate" type="date"></xf:bind>
             <xf:bind ref="created" type="string"></xf:bind>
-            <xf:bind ref="duration" required="true()"  type="decimal"></xf:bind>
-            <xf:bind ref="project" required="true()" type="string"></xf:bind>
+            <xf:bind ref="duration" required="true()"  type="xf:decimal"></xf:bind>
+            <xf:bind ref="project" required="true()" constraint="false()" type="string"></xf:bind>
             <xf:bind ref="action" type="string"></xf:bind>
             <xf:bind ref="user" type="string"></xf:bind>
             <xf:bind ref="description" type="string"></xf:bind>
-            <xf:bind ref="billable" readonly="true()" type="boolean"></xf:bind>
+            <xf:bind ref="billable" readonly="true()" type="xf:boolean"></xf:bind>
 
         </xf:model>
     </body>

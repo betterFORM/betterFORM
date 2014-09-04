@@ -234,6 +234,7 @@ public class XFormsFilter implements Filter {
                         LOG.info("Returned from Chain");
                         response(response,bufResponse);
                     }else {
+                        //todo: return error information
                         sendModelProcessorError(request, response, session);
                     }
                 } catch (XFormsException e) {

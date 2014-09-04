@@ -8,7 +8,9 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
 import org.w3c.dom.events.Event;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * processes standalong XForms models.
@@ -16,9 +18,15 @@ import java.util.Iterator;
 public class ModelProcessor extends AbstractProcessorDecorator {
 
     private boolean isSuccess=true;
+    private List errors;
 
     public ModelProcessor() {
         super();
+        this.errors = new ArrayList();
+    }
+
+    public List<ErrorInfo> getErrors(){
+        return this.errors;
     }
 
     @Override
@@ -45,10 +53,17 @@ public class ModelProcessor extends AbstractProcessorDecorator {
                     Iterator iterator = this.xformsProcessor.getContainer().getDefaultModel().getDefaultInstance().iterateModelItems();
                     while(iterator.hasNext()){
                         ModelItem modelItem = (ModelItem) iterator.next();
-                        if(modelItem.getRefreshView().isInvalidMarked()){
-                            this.isSuccess=false;
-                            break;
+                        if(!modelItem.getLocalUpdateView().isDatatypeValid()){
+                            this.errors.add(new ErrorInfo(ErrorInfo.DATATYPE_INVALID,modelItem.toString()));
                         }
+                        if(modelItem.getRefreshView().isInvalidMarked()){
+                            this.errors.add(new ErrorInfo(ErrorInfo.CONSTRAINT_INVALID,modelItem.toString()));
+                            this.isSuccess=false;
+                        }
+                        if(modelItem.getRefreshView().isRequiredMarked()){
+                            this.errors.add(new ErrorInfo(ErrorInfo.REQUIRED_INVALID,modelItem.toString()));
+                        }
+
                     }
                 }
             }
@@ -67,5 +82,28 @@ public class ModelProcessor extends AbstractProcessorDecorator {
      */
     public boolean isSuccess() throws XFormsException {
         return this.isSuccess;
+    }
+
+    class ErrorInfo{
+        public static final short DATATYPE_INVALID=0;
+        public static final short CONSTRAINT_INVALID=1;
+        public static final short REQUIRED_INVALID=2;
+
+        private short errorType;
+        private String path;
+
+
+        ErrorInfo(short type, String path){
+            this.errorType = type;
+            this.path = path;
+        }
+
+        public String getPath(){
+            return this.path;
+        }
+        public short getErrorType(){
+            return this.errorType;
+        }
+
     }
 }
