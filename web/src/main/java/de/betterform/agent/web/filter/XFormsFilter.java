@@ -199,6 +199,9 @@ public class XFormsFilter implements Filter {
                     }
                     formData.append(";");
                 }
+                if(LOG.isDebugEnabled()){
+                    LOG.debug("data send by form: " + formData.toString());
+                }
 
                 Node node=null;
                 try {

@@ -3,11 +3,11 @@
     <body>
         <xf:model>
             <xf:instance>
-                <data>
+                <data xmlns="">
                     <record>foo</record>
                     <trackedDate>bar</trackedDate>
                     <created>heute</created>
-                    <duration/>
+                    <duration>sdfds</duration>
                     <project>mine</project>
                     <action></action>
                     <user></user>
@@ -18,7 +18,7 @@
             <xf:bind ref="record" type="string"></xf:bind>
             <xf:bind ref="trackedDate" type="string"></xf:bind>
             <xf:bind ref="created" type="string"></xf:bind>
-            <xf:bind ref="duration" required="true()" constraint="false()" type="decimal"></xf:bind>
+            <xf:bind ref="duration" required="true()"  type="decimal"></xf:bind>
             <xf:bind ref="project" required="true()" type="string"></xf:bind>
             <xf:bind ref="action" type="string"></xf:bind>
             <xf:bind ref="user" type="string"></xf:bind>
