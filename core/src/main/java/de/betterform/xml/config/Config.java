@@ -53,7 +53,7 @@ public abstract class Config {
 	//protected Map useragents;
 
     protected Map generators;
-    
+
 	/**
 	 * The submission handlers lookup map.
 	 */
@@ -106,27 +106,24 @@ public abstract class Config {
 
 	/**
 	 * Instantiates and defines the singleton instance.
-	 * 
+	 *
 	 * @param stream
 	 *            InputStream from where the configuration will be read.
 	 * @throws XFormsConfigException
 	 *             If the configuration could not be loaded.
 	 */
-	private static void initSingleton(InputStream stream)
-			throws XFormsConfigException {
+	private static void initSingleton(InputStream stream) throws XFormsConfigException {
 
 		//gets the concrete config class name from a system property
 		//using DefaultConfig if the property is not set
-		String configClassName = System.getProperty(Config.class.getName(),
-				DefaultConfig.class.getName());
+		String configClassName = System.getProperty(Config.class.getName(),DefaultConfig.class.getName());
 
 		try {
 			//uses reflection to get the constructor
 			//(the constructor must have public visibility)
-			Class classRef = Class.forName(configClassName,true, Config.class.getClassLoader()); 
+			Class classRef = Class.forName(configClassName,true, Config.class.getClassLoader());
 
-			Constructor construct = classRef
-					.getConstructor(new Class[]{InputStream.class});
+			Constructor construct = classRef.getConstructor(new Class[]{InputStream.class});
 
 			//initializes the singleton invoking the constructor
 			SINGLETON = (Config) construct.newInstance(new Object[]{stream});
@@ -139,7 +136,7 @@ public abstract class Config {
 	/**
 	 * Returns the singleton configuration instance. If it is not yet
 	 * initialized, it will be created from the default configuration file.
-	 * 
+	 *
 	 * @return The configuration singleton.
 	 */
 	public static synchronized Config getInstance()
@@ -163,8 +160,7 @@ public abstract class Config {
 	public static synchronized Config getInstance(String file)
 			throws XFormsConfigException {
 
-		LOGGER.info((SINGLETON == null ? "loading" : "reloading")
-				+ " config from " + file);
+		LOGGER.info((SINGLETON == null ? "loading" : "reloading") + " config from " + file);
 
 		try {
 			initSingleton(new FileInputStream(file));
@@ -187,8 +183,7 @@ public abstract class Config {
     public static synchronized Config getInstance(InputStream inputStream)
 			throws XFormsConfigException {
 
-		LOGGER.info((SINGLETON == null ? "loading" : "reloading")
-				+ " config from an InputStream");
+		LOGGER.info((SINGLETON == null ? "loading" : "reloading")+ " config from an InputStream");
 
 		initSingleton(inputStream);
 
@@ -203,7 +198,7 @@ public abstract class Config {
 
     /**
 	 * Returns the specifed property value.
-	 * 
+	 *
 	 * @param key
 	 *            the name of the property.
 	 * @return the specifed property value.
@@ -214,7 +209,7 @@ public abstract class Config {
 
 	/**
 	 * Returns the specifed property value.
-	 * 
+	 *
 	 * @param key
 	 *            the name of the property.
 	 * @param value
@@ -236,7 +231,7 @@ public abstract class Config {
 
 	/**
 	 * Returns the specifed stylesheet value.
-	 * 
+	 *
 	 * @param key
 	 *            the name of the stylesheet.
 	 * @return the specifed stylesheet value.
@@ -247,7 +242,7 @@ public abstract class Config {
 
 	/**
 	 * Returns the specifed submission handler class.
-	 * 
+	 *
 	 * @param key
 	 *            the scheme of the submission handler.
 	 * @return the specifed submission handler class.
@@ -258,7 +253,7 @@ public abstract class Config {
 
 	/**
 	 * Returns the specifed URI resolver class.
-	 * 
+	 *
 	 * @param key
 	 *            the scheme of the URI resolver.
 	 * @return the specifed URI resolver class.
@@ -269,7 +264,7 @@ public abstract class Config {
 
 	/**
 	 * Gets error messages.
-	 * 
+	 *
 	 * @param key
 	 *            Message key.
 	 * @return Message string.
@@ -283,7 +278,7 @@ public abstract class Config {
 
 	/**
 	 * Gets the map of all defined custom elements.
-	 * 
+	 *
 	 * @return Map where each key is in the format namespace-uri:element-name
 	 *         and the value is the associated class name.
 	 */
@@ -294,7 +289,7 @@ public abstract class Config {
 	/**
 	 * Returns the InstanceSerializer map. This method should be called only in
 	 * AbstractConnector.
-	 * 
+	 *
 	 * @return instance serializer map.
 	 */
 	public InstanceSerializerMap getInstanceSerializerMap() {
@@ -303,7 +298,7 @@ public abstract class Config {
 
 	/**
 	 * Gets the connector factory from the configuration file.
-	 * 
+	 *
 	 * @return The connector factory class name.
 	 */
 	public String getConnectorFactory() {

@@ -6,6 +6,7 @@
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.agent.web.WebFactory;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -91,13 +92,8 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
     }
 
     private void createColection(HttpServletRequest request, String collectionName, String collectionPath) {
-        String realPath = request.getSession().getServletContext().getRealPath("");
-        if (realPath == null) {
-            realPath = request.getSession().getServletContext().getRealPath(".");
-        }
+        String realPath = WebFactory.getBfRealPath(".", request.getSession().getServletContext());
         File path2Collection = new File(realPath, collectionPath);
-
-
         File localFile = new File(path2Collection.getAbsolutePath(), collectionName);
 
         if (localFile.getParentFile().exists()) {
@@ -136,10 +132,7 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
     }
 
     private void uploadFile(HttpServletRequest request, FileItem uploadItem, String relativeUploadPath) throws Exception {
-        String realPath = request.getSession().getServletContext().getRealPath("");
-        if (realPath == null) {
-            realPath = request.getSession().getServletContext().getRealPath(".");
-        }
+        String realPath = WebFactory.getBfRealPath(".", request.getSession().getServletContext());
         File uploadDirectory = new File(realPath, relativeUploadPath);
         String fileName = uploadItem.getName();
         if (LOGGER.isDebugEnabled()) {

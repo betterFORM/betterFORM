@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.utils.SortingWalker;
 
 import javax.servlet.ServletException;
@@ -263,10 +264,7 @@ public class FormsServlet extends HttpServlet {
         String root = null;
         String rootDir = null;
 
-        root = getServletConfig().getServletContext().getRealPath("");
-        if (root == null) {
-            root = getServletConfig().getServletContext().getRealPath(".");
-        }
+        root = WebFactory.getBfRealPath(".", getServletConfig().getServletContext());
         rootDir = root + "/";
         readDir = rootDir + uri;
 

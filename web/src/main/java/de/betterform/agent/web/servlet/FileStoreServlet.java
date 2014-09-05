@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.utils.SortingWalker;
 
 import javax.servlet.ServletException;
@@ -67,11 +68,12 @@ public class FileStoreServlet extends FormsServlet {
         String rootDir = null;
         StringBuffer listing = new StringBuffer();
 
-        root = getServletConfig().getServletContext().getRealPath("");
-        if (root == null) {
-            root = getServletConfig().getServletContext().getRealPath(".");
+        root = WebFactory.getBfRealPath(".",getServletConfig().getServletContext());
+        if(root != null && root.endsWith("/")){
+            rootDir = root + "/";
+        }else {
+            rootDir = "/";
         }
-        rootDir = root + "/";
         readDir = rootDir + path;
 
         File filesroot = new File(readDir);
