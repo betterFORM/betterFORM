@@ -71,7 +71,7 @@ public class ResourceServlet extends HttpServlet {
             }
         }
         this.lastModified = getLastModifiedValue();
-        String path = WebFactory.getBfRealPath("WEB-INF/classes/META-INF/resources", config.getServletContext());
+        String path = WebFactory.getRealPath("WEB-INF/classes/META-INF/resources", config.getServletContext());
         if (path != null && new File(path).exists()) {
             exploded = true;
         }
@@ -242,7 +242,7 @@ public class ResourceServlet extends HttpServlet {
         if(this.lastModified == 0){
             long bfTimestamp;
             try {
-                String path = WebFactory.getBfRealPath("/WEB-INF/betterform-version.info", this.getServletContext());
+                String path = WebFactory.getRealPath("/WEB-INF/betterform-version.info", this.getServletContext());
                 StringBuilder versionInfo = new StringBuilder();
                 String NL = System.getProperty("line.separator");
                 Scanner scanner = new Scanner(new FileInputStream(path), "UTF-8");

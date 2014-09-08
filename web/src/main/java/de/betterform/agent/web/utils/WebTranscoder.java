@@ -126,7 +126,7 @@ public class WebTranscoder {
         String xslFile = request.getParameter(XSL_PARAM_NAME);
         String xsltPath = RESOURCE_DIR + "/xslt";
         if(xslFile != null){
-            return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
+            return new File(WebFactory.getRealPath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
         }
 
         //if we find a 'bf:transform' attribute on the root element of a form this takes priority over the global configuration in betterform-config.xml
@@ -139,7 +139,7 @@ public class WebTranscoder {
         //finally use the configuration
         String configuredTransform = configuration.getStylesheet(this.useragent);
         if(configuredTransform != null){
-            return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
+            return new File(WebFactory.getRealPath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
         }
 
         throw new XFormsConfigException("There was no xslt stylesheet found on the request URI, the root element of the form or in the configfile");

@@ -83,7 +83,7 @@ public class XFormsRepeater extends HttpServlet {
         try {
             webFactory.initConfiguration(useragent);
             webFactory.initLogging(getClass());
-            String realPath = webFactory.getBfRealPath(".", getServletContext());
+            String realPath = webFactory.getRealPath(".", getServletContext());
             webFactory.initTransformerService(realPath);
             webFactory.initXFormsSessionCache();
 

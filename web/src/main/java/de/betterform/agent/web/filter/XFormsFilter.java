@@ -66,7 +66,7 @@ public class XFormsFilter implements Filter {
             webFactory.initConfiguration(XFormsFilter.USERAGENT);
             defaultRequestEncoding = webFactory.getConfig().getProperty("defaultRequestEncoding", defaultRequestEncoding);
             webFactory.initLogging(this.getClass());
-            String realPath = WebFactory.getBfRealPath(".", this.filterConfig.getServletContext());
+            String realPath = WebFactory.getRealPath(".", this.filterConfig.getServletContext());
             webFactory.initTransformerService(realPath);
             // webFactory.initXFormsSessionCache(); // todo: still needed????
 

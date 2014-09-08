@@ -43,14 +43,14 @@ public class XSLTFilter implements Filter {
         ServletContext servletContext = filterConfig.getServletContext();
 
         /* TODO: clean up, styleFile is  never used */
-        String stylePath = WebFactory.getBfRealPath(xsltPath,servletContext);
+        String stylePath = WebFactory.getRealPath(xsltPath, servletContext);
         File styleFile = new File(stylePath,xslFile);
 
 
         PrintWriter out = response.getWriter();
         CharResponseWrapper wrapper = new CharResponseWrapper((HttpServletResponse) response);
         try {
-            URI uri = new File(WebFactory.resolvePath(xsltPath, servletContext)).toURI().resolve(new URI(xslFile));
+            URI uri = new File(WebFactory.getRealPath(xsltPath, servletContext)).toURI().resolve(new URI(xslFile));
             XSLTGenerator generator = WebFactory.setupTransformer(uri,servletContext);
 
             wrapper.setContentType("text/html");

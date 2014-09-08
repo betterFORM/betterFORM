@@ -92,7 +92,7 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
     }
 
     private void createColection(HttpServletRequest request, String collectionName, String collectionPath) {
-        String realPath = WebFactory.getBfRealPath(".", request.getSession().getServletContext());
+        String realPath = WebFactory.getRealPath(".", request.getSession().getServletContext());
         File path2Collection = new File(realPath, collectionPath);
         File localFile = new File(path2Collection.getAbsolutePath(), collectionName);
 
@@ -132,7 +132,7 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
     }
 
     private void uploadFile(HttpServletRequest request, FileItem uploadItem, String relativeUploadPath) throws Exception {
-        String realPath = WebFactory.getBfRealPath(".", request.getSession().getServletContext());
+        String realPath = WebFactory.getRealPath(".", request.getSession().getServletContext());
         File uploadDirectory = new File(realPath, relativeUploadPath);
         String fileName = uploadItem.getName();
         if (LOGGER.isDebugEnabled()) {
