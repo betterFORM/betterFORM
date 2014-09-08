@@ -4,18 +4,13 @@
  */
 package de.betterform.html5;
 
-import de.betterform.thirdparty.DOMBuilder;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import junit.framework.TestCase;
 import org.apache.commons.io.IOUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.w3c.dom.Node;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URI;
@@ -34,7 +29,7 @@ public class PreprocessorTest extends TestCase {
      *
      * @throws Exception __UNDOCUMENTED__
      */
-    public void testParseHtml5() throws Exception {
+    public void testhtml2XForms() throws Exception {
         //reading file as string
         InputStream input = getClass().getResourceAsStream("htmlparsetest.html");
         StringWriter writer = new StringWriter();
@@ -48,7 +43,7 @@ public class PreprocessorTest extends TestCase {
         transformerService.addResourceResolver(new FileResourceResolver());
         URI uri = new URI("file://" + getClass().getResource("html2xforms.xsl").getPath());
         transformerService.getTransformer(uri);
-        Node result = Preprocessor.html2Xforms(inputString,transformerService);
+        Node result = Preprocessor.html2Xforms(inputString, transformerService);
         assertNotNull(result);
         DOMUtil.prettyPrintDOM(result);
     }
