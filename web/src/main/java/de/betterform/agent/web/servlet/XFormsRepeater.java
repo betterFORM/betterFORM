@@ -23,10 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
@@ -86,7 +83,8 @@ public class XFormsRepeater extends HttpServlet {
         try {
             webFactory.initConfiguration(useragent);
             webFactory.initLogging(getClass());
-            webFactory.initTransformerService(getServletContext().getRealPath("."));
+            String realPath = webFactory.getBfRealPath(".", getServletContext());
+            webFactory.initTransformerService(realPath);
             webFactory.initXFormsSessionCache();
 
         } catch (XFormsConfigException e) {

@@ -384,13 +384,10 @@ public class WebUtil {
         processor.setContextParam(WebProcessor.QUERY_STRING, (request.getQueryString() != null ? request.getQueryString() : ""));
 
         //storing the realpath for webapp
-        String realPath = httpSession.getServletContext().getRealPath("");
-        if (realPath == null) {
-            realPath = httpSession.getServletContext().getRealPath(".");
-        }
+
+        String realPath = WebFactory.getBfRealPath(".", httpSession.getServletContext());
         File f = new File(realPath);
-        URI fileURI = null;
-        fileURI = f.toURI();
+        URI fileURI = f.toURI();
 
         processor.setContextParam(WebProcessor.REALPATH, fileURI.toString());
         if (LOGGER.isDebugEnabled()) {

@@ -5,6 +5,7 @@
 
 package de.betterform.agent.web.resources;
 
+import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.resources.stream.DefaultResourceStreamer;
 import de.betterform.agent.web.resources.stream.ResourceStreamer;
 import org.apache.commons.logging.Log;
@@ -70,7 +71,7 @@ public class ResourceServlet extends HttpServlet {
             }
         }
         this.lastModified = getLastModifiedValue();
-        final String path = config.getServletContext().getRealPath("WEB-INF/classes/META-INF/resources");
+        String path = WebFactory.getBfRealPath("WEB-INF/classes/META-INF/resources", config.getServletContext());
         if (path != null && new File(path).exists()) {
             exploded = true;
         }
@@ -241,7 +242,7 @@ public class ResourceServlet extends HttpServlet {
         if(this.lastModified == 0){
             long bfTimestamp;
             try {
-                String path = this.getServletContext().getRealPath("/WEB-INF/betterform-version.info");
+                String path = WebFactory.getBfRealPath("/WEB-INF/betterform-version.info", this.getServletContext());
                 StringBuilder versionInfo = new StringBuilder();
                 String NL = System.getProperty("line.separator");
                 Scanner scanner = new Scanner(new FileInputStream(path), "UTF-8");

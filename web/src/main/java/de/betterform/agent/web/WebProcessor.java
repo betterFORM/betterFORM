@@ -95,7 +95,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
     protected transient HttpServletResponse response;
     protected transient HttpSession httpSession;
     protected transient ServletContext context;
-//    protected boolean isXFormsPresent = false;
+    //    protected boolean isXFormsPresent = false;
     private static final Log LOGGER = LogFactory.getLog(FluxProcessor.class);
     protected String uploadDestination;
     protected String useragent;
@@ -492,7 +492,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      */
     protected void initConfig() throws XFormsException {
         final String initParameter = getContext().getInitParameter(WebFactory.BETTERFORM_CONFIG_PATH);
-        String configPath = WebFactory.resolvePath(initParameter, getContext());
+        String configPath = WebFactory.getBfRealPath(initParameter, getContext());
         if ((configPath != null) && !(configPath.equals(""))) {
             this.xformsProcessor.setConfigPath(configPath);
             this.configuration = Config.getInstance();
@@ -563,7 +563,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         XSLTGenerator generator = WebFactory.setupTransformer(uri,getContext());
         generator.setParameter("sessionKey", getKey());
         generator.setParameter("baseURI", getBaseURI());
-        generator.setParameter("realPath", context.getRealPath("/"));
+        String realPath = WebFactory.getBfRealPath("/",context);
+        generator.setParameter("realPath", realPath);
         generator.setParameter("locale", locale);
         generator.setParameter("user-agent", request.getHeader("User-Agent"));
         generator.setParameter("action-url", getActionURL()); //todo: check this

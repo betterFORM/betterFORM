@@ -83,7 +83,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
             throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
 
-        String stylePath = servletContext.getRealPath(editorHome);
+        String stylePath = WebFactory.getBfRealPath(editorHome,servletContext);
         File styleFile = new File(stylePath,xslFile);
         if(styleFile == null){
             throw new ServletException("XSL stylesheet cannot be found: " + styleFile);
@@ -161,7 +161,7 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
     private StringBuffer generateError(String error) throws IOException
 	{
 
-		String path = getServletContext().getRealPath("/forms/incubator/editor/");
+		String path = WebFactory.getBfRealPath("forms/incubator/editor",getServletContext());
 		File f = new File(path, "callerror.html");
 		FileInputStream fs = new FileInputStream(f);
 		BufferedInputStream bis = new BufferedInputStream(fs);

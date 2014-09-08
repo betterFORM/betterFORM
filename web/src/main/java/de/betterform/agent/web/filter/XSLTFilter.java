@@ -42,7 +42,8 @@ public class XSLTFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         ServletContext servletContext = filterConfig.getServletContext();
 
-        String stylePath = servletContext.getRealPath(xsltPath);
+        /* TODO: clean up, styleFile is  never used */
+        String stylePath = WebFactory.getBfRealPath(xsltPath,servletContext);
         File styleFile = new File(stylePath,xslFile);
 
 
