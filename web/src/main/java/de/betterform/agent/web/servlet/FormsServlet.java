@@ -264,7 +264,7 @@ public class FormsServlet extends HttpServlet {
         String root = null;
         String rootDir = null;
 
-        root = WebFactory.getBfRealPath(".", getServletConfig().getServletContext());
+        root = WebFactory.getRealPath(".", getServletConfig().getServletContext());
         rootDir = root + "/";
         readDir = rootDir + uri;
 

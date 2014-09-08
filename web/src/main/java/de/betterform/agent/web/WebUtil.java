@@ -385,7 +385,7 @@ public class WebUtil {
 
         //storing the realpath for webapp
 
-        String realPath = WebFactory.getBfRealPath(".", httpSession.getServletContext());
+        String realPath = WebFactory.getRealPath(".", httpSession.getServletContext());
         File f = new File(realPath);
         URI fileURI = f.toURI();
 

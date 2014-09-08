@@ -66,7 +66,7 @@ public class XFormsRequestServlet extends HttpServlet {
                 throw new ServletException(e);
             }
         } else {
-            String realPath = WebFactory.getBfRealPath(formURI, getServletContext());
+            String realPath = WebFactory.getRealPath(formURI, getServletContext());
             File xfDoc = new File(realPath);
             try {
                 doc = DOMUtil.parseXmlFile(xfDoc, true, false);

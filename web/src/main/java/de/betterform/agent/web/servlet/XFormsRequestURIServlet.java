@@ -51,7 +51,7 @@ public class XFormsRequestURIServlet extends HttpServlet {
 
             //locate it
             String formRequestURI = request.getRequestURI().substring(request.getContextPath().length()+1);
-            String realPath = WebFactory.getBfRealPath(formRequestURI,getServletContext());
+            String realPath = WebFactory.getRealPath(formRequestURI, getServletContext());
             File xfDoc = new File(realPath);
 
         if (request.getHeader("betterform-internal") != null) {

@@ -148,7 +148,7 @@ public class WebFactory {
         if (configPath == null) {
             throw new XFormsConfigException("Parameter 'betterform.configfile' not specified in web.xml");
         }
-        String realPath = this.getBfRealPath(configPath, this.servletContext);
+        String realPath = this.getRealPath(configPath, this.servletContext);
         this.config = Config.getInstance(realPath);
     }
 
@@ -220,7 +220,7 @@ public class WebFactory {
     }
 
     public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException {
-        String resolvePath = resolvePath(xsltPath + xsltDefault, servletContext);
+        String resolvePath = getRealPath(xsltPath + xsltDefault, servletContext);
         String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf("/"));
         return new File(pathToXSLDirectory).toURI().resolve(new URI(xsltDefault));
     }
@@ -230,7 +230,7 @@ public class WebFactory {
         String initLogging = this.config.getProperty(WebFactory.DO_INIT_LOGGING);
 
         if(initLogging.equals("true")){
-            String pathToLog4jConfig = resolvePath(this.config.getProperty(WebFactory.LOG_CONFIG), servletContext);
+            String pathToLog4jConfig = getRealPath(this.config.getProperty(WebFactory.LOG_CONFIG), servletContext);
             File log4jFile = new File(pathToLog4jConfig);
             if(log4jFile.exists()){
                 DOMConfigurator.configure(pathToLog4jConfig);
@@ -252,6 +252,7 @@ public class WebFactory {
      *
      * @param resolvePath XPath locationpath
      * @return the absolute path or path relative to the servlet context
+     * @deprecated
      */
     public static final String resolvePath(String resolvePath, ServletContext servletContext) {
         String path = resolvePath;
@@ -275,30 +276,22 @@ public class WebFactory {
         XFSessionCache.getCache();
     }
 
-    public static String getBfRealPath(String path, ServletContext context) {
+    /**
+     * get the absolute file path for a given relative path in the webapp. Handles some differences in server behavior
+     * with the execution of context.getRealPath on various servers/operating systems
+     * @param path  a path relative to the context root of the webapp
+     * @param context the servletcontext
+     * @return the absolute file path for given relative webapp path
+     */
+    public static String getRealPath(String path, ServletContext context) {
         if (path == null) {
             path = "/";
         }
-        String realPath = context.getRealPath(path);
-        if (realPath == null) {
-            String dir = context.getRealPath("/");
-            if (dir == null) {
-                return null;
-            }
-            if(".".equals(path)){
-                path = "WEB-INF";
-            }
-            if(path.startsWith("/")){
-                path = path.substring(1,path.length());
-            }
-            File file =new File(dir, path);
-            if(file.exists()){
-                realPath = file.getAbsolutePath();
-            }else {
-                return null;
-            }
-        }
-        return
-                realPath;
+        String resourcePath = null;
+        resourcePath = WebFactory.class.getResource("/").getPath();
+        String rootPath = new File(resourcePath).getParentFile().getParent();
+        String computedRealPath = new File(rootPath,path).getAbsolutePath();
+        return computedRealPath;
+
     }
 }

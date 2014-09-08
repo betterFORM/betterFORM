@@ -68,7 +68,7 @@ public class FileStoreServlet extends FormsServlet {
         String rootDir = null;
         StringBuffer listing = new StringBuffer();
 
-        root = WebFactory.getBfRealPath(".",getServletConfig().getServletContext());
+        root = WebFactory.getRealPath(".", getServletConfig().getServletContext());
         if(root != null && root.endsWith("/")){
             rootDir = root + "/";
         }else {
