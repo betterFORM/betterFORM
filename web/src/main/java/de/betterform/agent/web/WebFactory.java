@@ -287,11 +287,21 @@ public class WebFactory {
         if (path == null) {
             path = "/";
         }
-        String resourcePath = null;
-        resourcePath = WebFactory.class.getResource("/").getPath();
-        String rootPath = new File(resourcePath).getParentFile().getParent();
-        String computedRealPath = new File(rootPath,path).getAbsolutePath();
-        return computedRealPath;
-
+        URL rootURL = WebFactory.class.getResource("/");
+        String computedRealPath = null;
+        if(rootURL != null) {
+            String resourcePath= rootURL.getPath();
+            String rootPath = new File(resourcePath).getParentFile().getParent();
+            computedRealPath = new File(rootPath,path).getAbsolutePath();
+        } else {
+            String resourcePath = context.getRealPath("/");
+            computedRealPath = new File(resourcePath, path).getAbsolutePath();
+        }
+        try {
+            return java.net.URLDecoder.decode(computedRealPath, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
