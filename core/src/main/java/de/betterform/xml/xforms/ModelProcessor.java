@@ -1,11 +1,14 @@
 package de.betterform.xml.xforms;
 
 import de.betterform.xml.config.Config;
+import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ import java.util.List;
 public class ModelProcessor extends AbstractProcessorDecorator {
 
     private boolean isSuccess=true;
-    private List errors;
+    private List<ErrorInfo> errors;
 
     public ModelProcessor() {
         super();
@@ -52,18 +55,28 @@ public class ModelProcessor extends AbstractProcessorDecorator {
 
                     Iterator iterator = this.xformsProcessor.getContainer().getDefaultModel().getDefaultInstance().iterateModelItems();
                     while(iterator.hasNext()){
+                        boolean invalid=false;
                         ModelItem modelItem = (ModelItem) iterator.next();
+                        String datatype = modelItem.getDeclarationView().getDatatype();
+
+                        ErrorInfo errorInfo = new ErrorInfo();
                         if(!modelItem.getLocalUpdateView().isDatatypeValid()){
-                            this.errors.add(new ErrorInfo(ErrorInfo.DATATYPE_INVALID,modelItem.toString()));
+                            errorInfo.setDataType(datatype);
+                            errorInfo.setErrorType(ErrorInfo.DATATYPE_INVALID);
+                            invalid=true;
                         }
                         if(modelItem.getRefreshView().isInvalidMarked()){
-                            this.errors.add(new ErrorInfo(ErrorInfo.CONSTRAINT_INVALID,modelItem.toString()));
-                            this.isSuccess=false;
+                            errorInfo.setErrorType(ErrorInfo.CONSTRAINT_INVALID);
+                            invalid=true;
                         }
                         if(modelItem.getRefreshView().isRequiredMarked()){
-                            this.errors.add(new ErrorInfo(ErrorInfo.REQUIRED_INVALID,modelItem.toString()));
+                            errorInfo.setErrorType(ErrorInfo.REQUIRED_INVALID);
+                            invalid=true;
                         }
-
+                        if(invalid){
+                            errorInfo.setRef(modelItem.toString());
+                            this.errors.add(errorInfo);
+                        }
                     }
                 }
             }
@@ -72,7 +85,27 @@ public class ModelProcessor extends AbstractProcessorDecorator {
         }
     }
 
+    /*
+    <errors>
+        <error-info ref="street" facet="required|type|constraint">
+            <alert></alert>
+        </error-info>
+    </errors>
+    */
+    public Document serialize(){
 
+        //create document + root
+        Document serialized = DOMUtil.newDocument(false,false);
+        Element root = serialized.createElement("errors");
+        serialized.appendChild(root);
+
+        for (ErrorInfo error : this.errors) {
+//            Element
+            //tbd.
+        }
+
+        return null;
+    }
 
     /**
      * triggers standard submission.
@@ -81,7 +114,7 @@ public class ModelProcessor extends AbstractProcessorDecorator {
      * @throws XFormsException
      */
     public boolean isSuccess() throws XFormsException {
-        return this.isSuccess;
+        return this.errors.size()==0;
     }
 
     class ErrorInfo{
@@ -89,21 +122,58 @@ public class ModelProcessor extends AbstractProcessorDecorator {
         public static final short CONSTRAINT_INVALID=1;
         public static final short REQUIRED_INVALID=2;
 
+        private String ref="";
+        private String dataType="";
         private short errorType;
         private String path;
+        private String alert;
 
 
-        ErrorInfo(short type, String path){
-            this.errorType = type;
+        private final String TYPE_INVALID_MSG = "The value is no valid " + this.dataType;
+        private final String REQUIRED_INVALID_MSG = "This value is required. ";
+        private final String CONSTRAINT_INVALID_MSG = "The value is not valid ";
+
+        ErrorInfo(){
+        }
+
+        public String getRef() {
+            return ref;
+        }
+
+        public void setRef(String ref) {
+            this.ref = ref;
+        }
+
+        public String getDatatype() {
+            return dataType;
+        }
+
+        public void setDataType(String dataType) {
+            this.dataType = dataType;
+        }
+
+        public short getErrorType() {
+            return errorType;
+        }
+
+        public void setErrorType(short errorType) {
+            this.errorType = errorType;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
             this.path = path;
         }
 
-        public String getPath(){
-            return this.path;
-        }
-        public short getErrorType(){
-            return this.errorType;
+        public String getAlert() {
+            return alert;
         }
 
+        public void setAlert(String alert) {
+            this.alert = alert;
+        }
     }
 }
