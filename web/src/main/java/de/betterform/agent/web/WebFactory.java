@@ -287,21 +287,54 @@ public class WebFactory {
         if (path == null) {
             path = "/";
         }
+        String resourcePath = path;
         URL rootURL = WebFactory.class.getResource("/");
         String computedRealPath = null;
-        if(rootURL != null) {
-            String resourcePath= rootURL.getPath();
+        if (rootURL != null) {
+            resourcePath = rootURL.getPath();
             String rootPath = new File(resourcePath).getParentFile().getParent();
-            computedRealPath = new File(rootPath,path).getAbsolutePath();
-        } else {
-            String resourcePath = context.getRealPath("/");
+            computedRealPath = new File(rootPath, path).getAbsolutePath();
+        }
+        if (computedRealPath == null) {
+            resourcePath = context.getRealPath("/");
             computedRealPath = new File(resourcePath, path).getAbsolutePath();
         }
+        if (computedRealPath == null) {
+            if (!(resourcePath.startsWith("/"))) {
+                resourcePath = "/" + resourcePath;
+            }
+            URL pathURL = WebFactory.class.getResource(resourcePath);
+            if (pathURL != null) {
+                computedRealPath = pathURL.getPath();
+            } else try {
+                if (context.getResource(resourcePath) != null && !"jndi".equals(context.getResource(resourcePath).getProtocol())) {
+                    pathURL = context.getResource(resourcePath);
+                    computedRealPath = pathURL.getPath();
+                } else if (context.getRealPath(path) != null) {
+                    computedRealPath = context.getRealPath(path);
+                } else {
+                    resourcePath = path;
+                    String dir = WebFactory.class.getResource("/").getPath();
+                    if (dir == null) {
+                        return null;
+                    }
+                    if (resourcePath.startsWith("/")) {
+                        resourcePath = resourcePath.substring(1, resourcePath.length());
+                    }
+                    File file = new File(dir, resourcePath);
+                    computedRealPath = file.getAbsolutePath();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        String resultPath = null;
         try {
-            return java.net.URLDecoder.decode(computedRealPath, StandardCharsets.UTF_8.name());
+            resultPath  = java.net.URLDecoder.decode(computedRealPath, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            return null;
         }
+        return
+            resultPath;
     }
 }
