@@ -7,6 +7,7 @@ package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.utils.SortingWalker;
+import de.betterform.xml.config.XFormsConfigException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +55,12 @@ public class FileStoreServlet extends FormsServlet {
             }
         }
 
-        String listing = handleFileListing(path);
+        String listing = null;
+        try {
+            listing = handleFileListing(path);
+        } catch (XFormsConfigException e) {
+            throw new ServletException(e);
+        }
         String tmp = "{\n'total':"+ total + ",\n'items':[" + listing + "\n]\n}";
         response.getOutputStream().write(tmp.getBytes());
 
@@ -62,7 +68,7 @@ public class FileStoreServlet extends FormsServlet {
         total = 0;
     }
 
-    private String handleFileListing(String path) throws IOException {
+    private String handleFileListing(String path) throws IOException, XFormsConfigException {
         String readDir = null;
         String root = null;
         String rootDir = null;

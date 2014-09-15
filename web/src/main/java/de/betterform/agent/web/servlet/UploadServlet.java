@@ -7,6 +7,7 @@
 package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebFactory;
+import de.betterform.xml.config.XFormsConfigException;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -91,7 +92,7 @@ public class UploadServlet extends HttpServlet /* extends AbstractXFormsServlet 
         response.getOutputStream().println("<html><body><textarea>"+payload+"</textarea></body></html>");
     }
 
-    private void createColection(HttpServletRequest request, String collectionName, String collectionPath) {
+    private void createColection(HttpServletRequest request, String collectionName, String collectionPath) throws XFormsConfigException {
         String realPath = WebFactory.getRealPath(".", request.getSession().getServletContext());
         File path2Collection = new File(realPath, collectionPath);
         File localFile = new File(path2Collection.getAbsolutePath(), collectionName);

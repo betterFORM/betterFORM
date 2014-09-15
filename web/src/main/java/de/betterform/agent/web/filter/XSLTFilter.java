@@ -7,6 +7,7 @@ package de.betterform.agent.web.filter;
 
 import de.betterform.agent.web.WebFactory;
 import de.betterform.generator.XSLTGenerator;
+import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,7 +44,12 @@ public class XSLTFilter implements Filter {
         ServletContext servletContext = filterConfig.getServletContext();
 
         /* TODO: clean up, styleFile is  never used */
-        String stylePath = WebFactory.getRealPath(xsltPath, servletContext);
+        String stylePath = null;
+        try {
+            stylePath = WebFactory.getRealPath(xsltPath, servletContext);
+        } catch (XFormsConfigException e) {
+            throw new ServletException(e);
+        }
         File styleFile = new File(stylePath,xslFile);
 
 

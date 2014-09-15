@@ -9,6 +9,7 @@ package de.betterform.agent.web;
 import de.betterform.agent.web.cache.XFSessionCache;
 import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.connector.http.AbstractHTTPConnector;
+import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
@@ -315,7 +316,7 @@ public class WebUtil {
     public static void setContextParams(HttpServletRequest request,
             HttpSession httpSession,
             XFormsProcessor processor,
-            String sessionkey) {
+            String sessionkey) throws XFormsConfigException {
         Map servletMap = new HashMap();
         servletMap.put(WebProcessor.SESSION_ID, sessionkey);
         processor.setContextParam(XFormsProcessor.SUBMISSION_RESPONSE, servletMap);
