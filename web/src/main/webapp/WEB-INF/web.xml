@@ -13,7 +13,7 @@
     <display-name>betterForm</display-name>
     <context-param>
 		<param-name>betterform.configfile</param-name>
-		<param-value>/WEB-/betterform-config.xml</param-value>
+		<param-value>/WEB-INF/betterform-config.xml</param-value>
 	</context-param>
 
 <!--

@@ -150,6 +150,7 @@ public class WebFactory {
         }
         String realPath = this.getRealPath(configPath, this.servletContext);
         this.config = Config.getInstance(realPath);
+//        this.config = Config.getInstance(this.servletContext.getResourceAsStream(configPath));
     }
 
     /**
@@ -288,22 +289,35 @@ public class WebFactory {
         if (path == null) {
             path = "/";
         }
+        if(!path.startsWith("/")){
+            path="/"+path;
+        }
         URL rootURL = null;
         try {
             rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
+            URI resourceURI = rootURL.toURI();
+            String resourcePath2 = context.getRealPath("/");
+
+            URL resourceURL = context.getResource(path);
 
             String computedRealPath = null;
-            if (rootURL != null) {
+            if (rootURL != null && resourceURI.getScheme().equalsIgnoreCase("file")) {
                 String resourcePath = rootURL.getPath();
                 String rootPath = new File(resourcePath).getParentFile().getParent();
                 computedRealPath = new File(rootPath, path).getAbsolutePath();
+            } else if(resourceURL != null){
+                computedRealPath = new File(resourceURL.toExternalForm(),path).getAbsolutePath();
             } else {
                 String resourcePath = context.getRealPath("/");
                 computedRealPath = new File(resourcePath, path).getAbsolutePath();
             }
             return java.net.URLDecoder.decode(computedRealPath, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
-            throw new XFormsConfigException("path could not be resolved: " + path);
+            throw new XFormsConfigException("path could not be resolved: " + path,e);
+        } catch (URISyntaxException e) {
+            throw new XFormsConfigException( "path could not be resolved: " + path,e);
+        } catch (MalformedURLException e) {
+            throw new XFormsConfigException( "path could not be resolved: " + path,e);
         }
     }
 }
