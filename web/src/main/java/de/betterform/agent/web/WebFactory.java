@@ -221,7 +221,7 @@ public class WebFactory {
 
     public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException {
         String resolvePath = getRealPath(xsltPath + xsltDefault, servletContext);
-        String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf("/"));
+        String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf(File.separator));
         return new File(pathToXSLDirectory).toURI().resolve(new URI(xsltDefault));
     }
 
