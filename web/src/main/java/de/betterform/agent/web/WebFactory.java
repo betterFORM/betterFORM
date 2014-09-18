@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @author Joern Turner
+ * 
  */
 public class WebFactory {
     private static final Log LOGGER = LogFactory.getLog(WebFactory.class);
@@ -292,16 +293,21 @@ public class WebFactory {
         if(!path.startsWith("/")){
             path="/"+path;
         }
-        URL rootURL = null;
         try {
-            rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
-            URI resourceURI = rootURL.toURI();
-            String resourcePath2 = context.getRealPath("/");
-
-            URL resourceURL = context.getResource(path);
-
+            URL rootURL = null;
+            URI resourceURI = null;
             String computedRealPath = null;
-            if (rootURL != null && resourceURI.getScheme().equalsIgnoreCase("file")) {
+            
+            rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
+            
+            if(rootURL != null) {
+                resourceURI = rootURL.toURI();
+            }
+                        
+            String resourcePath2 = context.getRealPath("/");
+            URL resourceURL = context.getResource(path);
+            
+            if (resourceURI != null && resourceURI.getScheme().equalsIgnoreCase("file")) {
                 String resourcePath = rootURL.getPath();
                 String rootPath = new File(resourcePath).getParentFile().getParent();
                 computedRealPath = new File(rootPath, path).getAbsolutePath();
