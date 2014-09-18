@@ -10,7 +10,7 @@
     <version>5.0rc6</version>
     <packaging>pom</packaging>
 
-    <name>betterForm Project vanilla</name>
+    <name>betterForm Project</name>
     <description>betterForm Project</description>
     <inceptionYear>2012</inceptionYear>
     <url>http://betterform.de</url>
