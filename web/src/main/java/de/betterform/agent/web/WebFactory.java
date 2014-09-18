@@ -294,19 +294,15 @@ public class WebFactory {
             path="/"+path;
         }
         try {
-            URL rootURL = null;
             URI resourceURI = null;
             String computedRealPath = null;
-            
-            rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
+            URL rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
+            URL resourceURL = context.getResource(path);
             
             if(rootURL != null) {
                 resourceURI = rootURL.toURI();
             }
                         
-            String resourcePath2 = context.getRealPath("/");
-            URL resourceURL = context.getResource(path);
-            
             if (resourceURI != null && resourceURI.getScheme().equalsIgnoreCase("file")) {
                 String resourcePath = rootURL.getPath();
                 String rootPath = new File(resourcePath).getParentFile().getParent();
