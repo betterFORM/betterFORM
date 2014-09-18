@@ -31,6 +31,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * @author Joern Turner
+ * 
  */
 public class WebFactory {
     private static final Log LOGGER = LogFactory.getLog(WebFactory.class);
@@ -150,6 +151,7 @@ public class WebFactory {
         }
         String realPath = this.getRealPath(configPath, this.servletContext);
         this.config = Config.getInstance(realPath);
+//        this.config = Config.getInstance(this.servletContext.getResourceAsStream(configPath));
     }
 
     /**
@@ -219,9 +221,9 @@ public class WebFactory {
         return generator;
     }
 
-    public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException {
+    public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException, XFormsConfigException {
         String resolvePath = getRealPath(xsltPath + xsltDefault, servletContext);
-        String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf("/"));
+        String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf(File.separator));
         return new File(pathToXSLDirectory).toURI().resolve(new URI(xsltDefault));
     }
 
@@ -279,29 +281,45 @@ public class WebFactory {
     /**
      * get the absolute file path for a given relative path in the webapp. Handles some differences in server behavior
      * with the execution of context.getRealPath on various servers/operating systems
-     * @param path  a path relative to the context root of the webapp
+     *
+     * @param path    a path relative to the context root of the webapp
      * @param context the servletcontext
      * @return the absolute file path for given relative webapp path
      */
-    public static String getRealPath(String path, ServletContext context) {
+    public static String getRealPath(String path, ServletContext context) throws XFormsConfigException {
         if (path == null) {
             path = "/";
         }
-        URL rootURL = WebFactory.class.getResource("/");
-        String computedRealPath = null;
-        if(rootURL != null) {
-            String resourcePath= rootURL.getPath();
-            String rootPath = new File(resourcePath).getParentFile().getParent();
-            computedRealPath = new File(rootPath,path).getAbsolutePath();
-        } else {
-            String resourcePath = context.getRealPath("/");
-            computedRealPath = new File(resourcePath, path).getAbsolutePath();
+        if(!path.startsWith("/")){
+            path="/"+path;
         }
         try {
+            URI resourceURI = null;
+            String computedRealPath = null;
+            URL rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
+            URL resourceURL = context.getResource(path);
+            
+            if(rootURL != null) {
+                resourceURI = rootURL.toURI();
+            }
+                        
+            if (resourceURI != null && resourceURI.getScheme().equalsIgnoreCase("file")) {
+                String resourcePath = rootURL.getPath();
+                String rootPath = new File(resourcePath).getParentFile().getParent();
+                computedRealPath = new File(rootPath, path).getAbsolutePath();
+            } else if(resourceURL != null){
+                computedRealPath = new File(resourceURL.toExternalForm(),path).getAbsolutePath();
+            } else {
+                String resourcePath = context.getRealPath("/");
+                computedRealPath = new File(resourcePath, path).getAbsolutePath();
+            }
             return java.net.URLDecoder.decode(computedRealPath, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
+            throw new XFormsConfigException("path could not be resolved: " + path,e);
+        } catch (URISyntaxException e) {
+            throw new XFormsConfigException( "path could not be resolved: " + path,e);
+        } catch (MalformedURLException e) {
+            throw new XFormsConfigException( "path could not be resolved: " + path,e);
         }
     }
 }

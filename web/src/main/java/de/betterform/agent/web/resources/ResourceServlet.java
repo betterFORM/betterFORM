@@ -8,6 +8,7 @@ package de.betterform.agent.web.resources;
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.resources.stream.DefaultResourceStreamer;
 import de.betterform.agent.web.resources.stream.ResourceStreamer;
+import de.betterform.xml.config.XFormsConfigException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -71,7 +72,12 @@ public class ResourceServlet extends HttpServlet {
             }
         }
         this.lastModified = getLastModifiedValue();
-        String path = WebFactory.getRealPath("WEB-INF/classes/META-INF/resources", config.getServletContext());
+        String path = null;
+        try {
+            path = WebFactory.getRealPath("WEB-INF/classes/META-INF/resources", config.getServletContext());
+        } catch (XFormsConfigException e) {
+            throw new ServletException(e);
+        }
         if (path != null && new File(path).exists()) {
             exploded = true;
         }

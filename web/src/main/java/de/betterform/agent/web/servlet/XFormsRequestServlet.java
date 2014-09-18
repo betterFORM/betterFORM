@@ -7,6 +7,7 @@ package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.WebUtil;
+import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -66,7 +67,12 @@ public class XFormsRequestServlet extends HttpServlet {
                 throw new ServletException(e);
             }
         } else {
-            String realPath = WebFactory.getRealPath(formURI, getServletContext());
+            String realPath = null;
+            try {
+                realPath = WebFactory.getRealPath(formURI, getServletContext());
+            } catch (XFormsConfigException e) {
+                throw new ServletException(e);
+            }
             File xfDoc = new File(realPath);
             try {
                 doc = DOMUtil.parseXmlFile(xfDoc, true, false);
