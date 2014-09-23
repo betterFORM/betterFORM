@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<html
+ xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xf="http://www.w3.org/2002/xforms"
+      lang="de"
+      xmlns:bf="http://betterform.sourceforge.net/xforms"
+      bf:evalAVTs="class style">
+<head>
+    <title>Attribute Value Template</title>
+    <xf:model id="model-1">
+        <xf:instance id="instance-1" xmlns="">
+            <avt>
+				<theme>tundra</theme>
+                <select1>tundra</select1>
+                <border>thin solid</border>
+                <nested>
+                    <input>foobar</input>
+                </nested>
+            </avt>
+        </xf:instance>
+
+		<xf:instance id="themes">
+			<data xmlns="">
+				<theme class="one">claro</theme>
+				<theme class="two">soria</theme>
+				<theme class="three">tundra</theme>
+			</data>
+		</xf:instance>
+		<xf:setfocus control="select"/>
+        </xf:model>
+    <style type="text/css">
+		@import "../../bfResources/scripts/release/dojo/dijit/themes/tundra/tundra.css";
+		@import "../../bfResources/scripts/release/dojo/dijit/themes/soria/soria.css";
+		@import "../../bfResources/scripts/release/dojo/dijit/themes/claro/claro.css";
+
+		body{
+
+		}
+		.tundra h1, .soria h1, .claro h1{
+			font-size:20pt;
+		}
+        .foo {
+			display:block;
+            background:#b0c4de;
+			color:#006400;
+        }
+        .bar {
+			display:block;
+            background:#4682b4;
+			color:#006400;
+        }
+		.baz{
+			display:block;
+			/*background:#00008b;*/
+			/*color:white;*/
+			padding:10px;
+		}
+		.foobar {
+			padding:50px;
+		}
+		.bfVerticalTable .xfControl{
+			margin:10px;
+		}
+		.bfVerticalTable .xfSelect1{
+			margin-top:0;
+		}
+
+		.one,.two,.three{
+			width:300px;
+			height:100px;
+			display:block;
+		}
+		.one{
+			background:#b0c4de;
+		}
+		.two{
+			background:#4682b4;
+		}
+		.three{
+			background:#00008b;
+		}
+
+    </style>
+</head>
+<body class="{theme} ToolTipAlert" style="margin:30px;">
+	<h1>AttributeValueTemplate (AVT) Demo - Dojo Theme Switcher</h1>
+	<div class="{nested/input}">
+    <xf:group id="outer" appearance="bf:verticalTable">
+        <xf:select1 id="select" ref="theme" appearance="full" incremental="true">
+            <xf:label>Switch Theme</xf:label>
+                <xf:item>
+                    <xf:label>claro</xf:label>
+                    <xf:value>claro</xf:value>
+                </xf:item>
+                <xf:item>
+                    <xf:label>soria</xf:label>
+                    <xf:value>soria</xf:value>
+                </xf:item>
+			<xf:item>
+				<xf:label>tundra</xf:label>
+				<xf:value>tundra</xf:value>
+			</xf:item>
+        </xf:select1>
+
+		<xf:trigger>
+				<xf:label>small padding</xf:label>
+				<xf:hint>click this button to set a small padding for the body of this document</xf:hint>
+			<xf:setvalue ref="nested/input" value="'baz'"/>
+		</xf:trigger>
+		<xf:trigger>
+			<xf:label>big padding</xf:label>
+			<xf:hint>click this button to set a bigger padding for the body of this document</xf:hint>
+
+			<xf:setvalue ref="nested/input" value="'foobar'"/>
+		</xf:trigger>
+
+        <!--<div id="compClass" class="hallo {select1} welt {nested/input}">Controlled by AVT Class</div>-->
+
+        <!--<div id="compStyle" style="border:{border};">computed Style</div>-->
+
+		<br/>
+        <!--<xf:output id="output1" class="hello {select1} world" value="concat('hello ', instance()/select1, ' world')" style="display:block;font-size:16pt;"/>-->
+
+
+		<br/>		       
+        <xf:input id="input1" class="hello {instance()/select1} world" ref="theme">
+            <xf:label>Theme:</xf:label>
+        </xf:input>
+
+		<xf:repeat id="r-theme" nodeset="instance('themes')/theme">
+			<div class="{@class}">
+				<xf:group>
+					<xf:label>Dijit Theme</xf:label>
+					<xf:output value="concat('This is the Dijit ',.,' Theme')"/>
+				</xf:group>
+			</div>
+		</xf:repeat>
+        <xf:group ref="nested" appearance="full">
+			<div class="hallo {instance('themes')/theme[index('r-theme')]/@class} welt">
+            <xf:input id="input2" ref="input">
+                <xf:label>style 'foobar'</xf:label> 
+            </xf:input>
+			</div>
+        </xf:group>
+    </xf:group>
+	</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Examples in this directory only work within existdb

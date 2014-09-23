@@ -460,7 +460,7 @@ public class FormsServlet extends HttpServlet {
                         "                   <img src=\"" + request.getContextPath() + RESOURCE_PATH + "/images/"+iconFile+"\" border=\"0\">\n" +
                         "                </a>\n" +
                         "                <a class=\"textLink\" title=\""+ fileName+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
-                        "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
+                        "                <a class=\"sourceLink\" title=\""+ "view source" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
 /*
                         "            <div>\n" +
                         "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true\" target=\"_blank\">source</a>\n" +

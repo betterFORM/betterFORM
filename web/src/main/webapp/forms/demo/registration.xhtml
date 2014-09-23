@@ -21,7 +21,9 @@
     <div id="registration" class="InlineRoundBordersAlert">
     <div style="display:none" id="xf1">
         <xf:model id="m-registration">
-            <xf:instance src="registration.xml" xmlns=""/>
+            <xf:instance xmlns="">
+                <data/>
+            </xf:instance>
 
             <xf:bind nodeset="alias" constraint="string-length(.) &gt; 3" required="true()"/>
             <xf:bind nodeset="email" type="email" constraint="string-length(.) &gt; 3" required="true()"/>
@@ -41,10 +43,17 @@
                 </xf:action>
             </xf:submission>
 
+            <xf:submission id="pre-send" method="get" replace="instance" validate="false" resource="http://localhost:8080/betterform/forms/demo/registration.xml">
+                <xf:action ev:event="xforms-submit">
+                    <xf:message level="ephemeral">
+                        loading your data...
+                    </xf:message>
+                </xf:action>
+            </xf:submission>
 
-            <!--<xf:setfocus control="first" ev:event="xforms-ready"/>-->
-
-
+            <xf:action ev:event="xforms-ready">
+                <xf:send submission="pre-send"/>
+            </xf:action>
         </xf:model>
     </div>
 
@@ -53,7 +62,7 @@
     </div>
     <xf:group id="registration-ui" appearance="bf:verticalTable">
 			<xf:label>Join the group<span id="subtitle">Enjoy being a part of it!</span></xf:label>
-			<xf:input id="first" ref="firstname">
+			<xf:input id="first" ref="firstname/name">
 				<xf:label>Firstname:</xf:label>
 				<xf:hint>enter your firstname</xf:hint>
 			</xf:input>
