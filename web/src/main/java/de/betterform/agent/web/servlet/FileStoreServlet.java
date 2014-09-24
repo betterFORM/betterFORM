@@ -55,7 +55,13 @@ public class FileStoreServlet extends FormsServlet {
             }
         }
 
-        String listing = handleFileListing(path);
+        String listing = null;
+        try {
+            listing = handleFileListing(path);
+        } catch (XFormsConfigException e) {
+            e.printStackTrace();
+            throw new ServletException(e);
+        }
         String tmp = "{\n\"total\":"+ total + ",\n\"items\":[" + listing + "\n]\n}";
         response.getOutputStream().write(tmp.getBytes());
 
