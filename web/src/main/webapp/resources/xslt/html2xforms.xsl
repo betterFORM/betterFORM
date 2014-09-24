@@ -5,7 +5,7 @@
 -->
 
 <xsl:stylesheet version="2.0"
-        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns=""
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:ev="http://www.w3.org/2001/xml-events"
         xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -18,21 +18,41 @@
     <xsl:param name="data" select="'record:foo;trackedDate:bar;created:heute;project:mine;duration:3;'"/>
     <!--<xsl:param name="data" select="''"/>-->
 
-    <!-- xsl:output method="xhtml" omit-xml-declaration="yes"/ -->
+    <xsl:output method="xhtml" omit-xml-declaration="yes"/>
     <!--
     Transforms sanitized HTML5 documents into into xforms elements.
     -->
     <xsl:strip-space elements="*"/>
-    <xsl:template match="/*">
-        <xsl:copy>
-            <xsl:namespace name="xf" select="'http://www.w3.org/2002/xforms'"/>
+    <xsl:template match="/">
+        <xsl:apply-templates/>
+    </xsl:template>
+
+    <xsl:template match="@*|node()|text()">
+        <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
             <xsl:copy-of select="@*"/>
 
             <xsl:apply-templates/>
-        </xsl:copy>
+        </xsl:element>
+
+        <!--
+                <xsl:copy>
+                        <xsl:namespace name="xf" select="'http://www.w3.org/2002/xforms'"/>
+                        <xsl:copy-of select="@*"/>
+
+                        <xsl:apply-templates/>
+                    </xsl:copy>
+                    -->
     </xsl:template>
 
     <xsl:template match="body">
+        <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
+            <xsl:copy-of select="@*"/>
+            <xsl:apply-templates select="*" mode="model"/>
+            <xsl:if test="string-length($data) = 0">
+                <xsl:apply-templates select="*" mode="ui"/>
+            </xsl:if>
+        </xsl:element>
+        <!--
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates select="*" mode="model"/>
@@ -40,6 +60,7 @@
                 <xsl:apply-templates select="*" mode="ui"/>
             </xsl:if>
         </xsl:copy>
+        -->
     </xsl:template>
     <!--
         ###############################################################################################
@@ -51,11 +72,12 @@
         <xsl:variable name="form-id" select="@id"/>
 
         <xsl:element name="xf:model" namespace="http://www.w3.org/2002/xforms">
-            <xsl:attribute name="id">m-<xsl:value-of select="$form-id"/></xsl:attribute>
+            <xsl:attribute name="id">m-<xsl:value-of select="$form-id"/>
+            </xsl:attribute>
 
             <xsl:element name="xf:instance" namespace="http://www.w3.org/2002/xforms">
                 <xsl:attribute name="id">i-default</xsl:attribute>
-                <xsl:element name="data" namespace="">
+                <xsl:element name="data" namespace="{namespace-uri()}">
                     <xsl:apply-templates select="*" mode="model"/>
                 </xsl:element>
             </xsl:element>
@@ -66,8 +88,9 @@
                 <xsl:variable name="options" select="$this//datalist[@id eq $instance-id]"/>
 
                 <xsl:element name="xf:instance" namespace="http://www.w3.org/2002/xforms">
-                    <xsl:attribute name="id">i-<xsl:value-of select="$instance-id"/></xsl:attribute>
-                    <xsl:element name="data">
+                    <xsl:attribute name="id">i-<xsl:value-of select="$instance-id"/>
+                    </xsl:attribute>
+                    <xsl:element name="data" namespace="">
                         <xsl:for-each select="$options/option">
                             <xsl:element name="option" namespace="">
                                 <xsl:value-of select="@value"/>
@@ -81,7 +104,8 @@
                 <xsl:variable name="instance-id" select="@name"/>
 
                 <xsl:element name="xf:instance" namespace="http://www.w3.org/2002/xforms">
-                    <xsl:attribute name="id">i-<xsl:value-of select="$instance-id"/></xsl:attribute>
+                    <xsl:attribute name="id">i-<xsl:value-of select="$instance-id"/>
+                    </xsl:attribute>
                     <xsl:element name="data" namespace="">
                         <xsl:for-each select="option">
                             <xsl:element name="option" namespace="">
@@ -112,8 +136,8 @@
         <xsl:element name="{@name}" namespace="">
 
             <xsl:if test="string-length($data) != 0">
-                <xsl:variable name="name" select="@name" />
-                <xsl:variable name="formData" select="tokenize($data, ';')" />
+                <xsl:variable name="name" select="@name"/>
+                <xsl:variable name="formData" select="tokenize($data, ';')"/>
                 <xsl:variable name="theValue">
                     <xsl:for-each select="$formData">
                         <xsl:if test="starts-with(.,$name)">
@@ -149,17 +173,13 @@
         <xsl:choose>
             <xsl:when test="string-length($data) != 0"/>
             <xsl:otherwise>
-                <xsl:element name="xf:submision" namespace="http://www.w3.org/2002/xforms">
+                <xsl:element name="xf:submission" namespace="http://www.w3.org/2002/xforms">
                     <!-- ### just uses the first forms' action as submission uri -->
                     <!-- todo: support multiple forms -->
-                    <xsl:attribute name="id">
-                        <xsl:value-of select="concat(@id,'-submit')"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="resource">
-                        <xsl:value-of select="//form/@action"/>
-                    </xsl:attribute>
+                    <xsl:attribute name="id"><xsl:value-of select="concat(@id,'-submit')"/></xsl:attribute>
+                    <xsl:attribute name="resource"><xsl:value-of select="//form/@action"/></xsl:attribute>
                     <xsl:attribute name="method">
-                        <xsl:variable name="method" select="if(exists(//form/@method)) then //form/@method else 'GET'"/>
+                        <xsl:variable name="method" select="if(exists(//form/@method)) then //form/@method else 'POST'"/>
                         <xsl:value-of select="$method"/>
                     </xsl:attribute>
                 </xsl:element>
@@ -217,54 +237,49 @@
     </xsl:template>
 
     <xsl:template name="evalType">
+        <xsl:variable name="lc-type" select="lower-case(@type)"/>
+
         <xsl:variable name="type">
             <xsl:choose>
-                <xsl:when test="@type">
-                    <xsl:variable name="lc-type" select="lower-case(@type)"/>
+                <xsl:when test="$lc-type eq 'checkbox'">boolean</xsl:when>
+                <xsl:when test="$lc-type eq 'color'">color</xsl:when>
+                <xsl:when test="$lc-type eq 'date'">date</xsl:when>
+                <!-- <xsl:when test="$lc-type eq 'datetime'">datetime</xsl:when> -->
+                <!--todo: datetime-local -->
+                <xsl:when test="$lc-type eq 'datetime-local'">datetime</xsl:when>
+                <xsl:when test="$lc-type eq 'email'">
                     <xsl:choose>
-                        <xsl:when test="$lc-type eq 'checkbox'">boolean</xsl:when>
-                        <xsl:when test="$lc-type eq 'color'">color</xsl:when>
-                        <xsl:when test="$lc-type eq 'date'">date</xsl:when>
-                        <!-- <xsl:when test="$lc-type eq 'datetime'">datetime</xsl:when> -->
-                        <!--todo: datetime-local -->
-                        <xsl:when test="$lc-type eq 'datetime-local'">datetime</xsl:when>
-                        <xsl:when test="$lc-type eq 'email'">
-                            <xsl:choose>
-                                <!--todo: multiple -->
-                                <xsl:when test="@multiple">email</xsl:when>
-                                <xsl:otherwise>email</xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>
-                        <xsl:when test="$lc-type eq 'file'">
-                            <xsl:choose>
-                                <!--todo: multiple -->
-                                <xsl:when test="@multiple">anyURI</xsl:when>
-                                <xsl:otherwise>anyURI</xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:when>
-                        <!--todo: image -->
-                        <xsl:when test="$lc-type eq 'image'">string</xsl:when>
-                        <xsl:when test="$lc-type eq 'month'">gMonth</xsl:when>
-                        <xsl:when test="$lc-type eq 'number'">decimal</xsl:when>
-                        <xsl:when test="$lc-type eq 'range'">integer</xsl:when>
-                        <!--todo: radio -->
-                        <xsl:when test="$lc-type eq 'radio'">string</xsl:when>
-                        <xsl:when test="$lc-type eq 'search'">string</xsl:when>
-                        <!--todo: tel -->
-                        <xsl:when test="$lc-type eq 'tel'">string</xsl:when>
-                        <xsl:when test="$lc-type eq 'time'">time</xsl:when>
-                        <xsl:when test="$lc-type eq 'url'">anyURI</xsl:when>
-                        <!--todo: week -->
-                        <xsl:when test="$lc-type eq 'week'">week</xsl:when>
-                        <xsl:when test="index-of(('hidden', 'password', 'text'), $lc-type) &gt; 0">string</xsl:when>
+                        <!--todo: multiple -->
+                        <xsl:when test="@multiple">email</xsl:when>
+                        <xsl:otherwise>email</xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
+                <xsl:when test="$lc-type eq 'file'">
+                    <xsl:choose>
+                        <!--todo: multiple -->
+                        <xsl:when test="@multiple">anyURI</xsl:when>
+                        <xsl:otherwise>anyURI</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <!--todo: image -->
+                <xsl:when test="$lc-type eq 'image'">string</xsl:when>
+                <xsl:when test="$lc-type eq 'month'">gMonth</xsl:when>
+                <xsl:when test="$lc-type eq 'number'">decimal</xsl:when>
+                <xsl:when test="$lc-type eq 'range'">integer</xsl:when>
+                <!--todo: radio -->
+                <xsl:when test="$lc-type eq 'radio'">string</xsl:when>
+                <xsl:when test="$lc-type eq 'search'">string</xsl:when>
+                <!--todo: tel -->
+                <xsl:when test="$lc-type eq 'tel'">string</xsl:when>
+                <xsl:when test="$lc-type eq 'time'">time</xsl:when>
+                <xsl:when test="$lc-type eq 'url'">anyURI</xsl:when>
+                <!--todo: week -->
+                <xsl:when test="$lc-type eq 'week'">week</xsl:when>
+                <xsl:when test="index-of(('hidden', 'password', 'text'), $lc-type) &gt; 0">string</xsl:when>
                 <xsl:otherwise>string</xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:attribute name="type">
-            <xsl:value-of select="$type"/>
-        </xsl:attribute>
+        <xsl:attribute name="type"><xsl:value-of select="$type"/></xsl:attribute>
     </xsl:template>
 
     <xsl:template name="evalConstraint">
@@ -289,36 +304,49 @@
 
             Duplicates are not allowed (case insensitive).
         -->
-        <xsl:variable name="type"><xsl:value-of select="@type"/></xsl:variable>
+        <xsl:variable name="type">
+            <xsl:value-of select="@type"/>
+        </xsl:variable>
         <xsl:if test="@accept|@list|@max|@maxLength|@min|@pattern|@step">
             <xsl:variable name="constraints" as="node()*">
                 <xsl:for-each select="@accept|@list|@max|@maxLength|@min|@pattern|@step">
                     <xsl:choose>
                         <xsl:when test="name(.) eq 'accept'"></xsl:when>
                         <xsl:when test="name(.) eq 'list'">
-                            <xsl:element name="constraint">index-of(instance('i-<xsl:value-of select="."/>')//option, .) &gt; 0)</xsl:element>
+                            <xsl:element name="constraint">index-of(instance('i-<xsl:value-of select="."/>')//option, .) &gt; 0)
+                            </xsl:element>
                         </xsl:when>
                         <xsl:when test="name(.) eq 'maxLength' and index-of(('', 'text', 'search', 'url', 'email', 'telephone', 'password'), $type) &gt; 0 ">
-                            <xsl:element name="constraint">string-lenght(.) &lt;= <xsl:value-of select="."/></xsl:element>
+                            <xsl:element name="constraint">string-lenght(.) &lt;=
+                                <xsl:value-of select="."/>
+                            </xsl:element>
                         </xsl:when>
                         <!-- TODO: check if xpath regex matches js regex: see https://people.mozilla.org/~jorendorff/es5.1-final.html#sec-15.10.1 -->
                         <xsl:when test="name(.) eq 'pattern'">
-                            <xsl:element name="constraint">matches(., '<xsl:value-of select="."/>')</xsl:element>
+                            <xsl:element name="constraint">matches(., '<xsl:value-of select="."/>')
+                            </xsl:element>
                         </xsl:when>
                         <xsl:when test="name(.) eq 'min'">
-                            <xsl:element name="constraint">. &gt;= <xsl:value-of select="."/></xsl:element>
+                            <xsl:element name="constraint">. &gt;=
+                                <xsl:value-of select="."/>
+                            </xsl:element>
                         </xsl:when>
                         <xsl:when test="name(.) eq 'max'">
-                            <xsl:element name="constraint">. &lt;= <xsl:value-of select="."/></xsl:element>
+                            <xsl:element name="constraint">. &lt;=
+                                <xsl:value-of select="."/>
+                            </xsl:element>
                         </xsl:when>
                         <xsl:when test="name(.) eq 'step'"></xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
             </xsl:variable>
-            <xsl:attribute name="constraint"><xsl:value-of select="string-join($constraints, ' and ')"/></xsl:attribute>
+            <xsl:attribute name="constraint">
+                <xsl:value-of select="string-join($constraints, ' and ')"/>
+            </xsl:attribute>
         </xsl:if>
         <xsl:if test="local-name(.) eq 'select' and count(option) &gt; 0">
-            <xsl:attribute name="constraint">index-of(instance('i-<xsl:value-of select="@name"/>')//option, .) &gt; 0)</xsl:attribute>
+            <xsl:attribute name="constraint">index-of(instance('i-<xsl:value-of select="@name"/>')//option, .) &gt; 0)
+            </xsl:attribute>
         </xsl:if>
     </xsl:template>
 
@@ -367,13 +395,15 @@
         </xsl:if>
     </xsl:template>
     -->
+
+    <!--
     <xsl:template match="@*|node()|text()">
         <xsl:copy>
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
     </xsl:template>
-
+-->
     <!--
     ###############################################################################################
     mode UI
@@ -389,7 +419,6 @@
             <xsl:apply-templates mode="ui"/>
         </xsl:copy>
     </xsl:template>
-
 
     <xsl:template match="*[@name]" mode="ui">
         <xsl:element name="{concat('xf:',name())}" namespace="http://www.w3.org/2002/xforms">
@@ -417,9 +446,7 @@
             <xsl:if test="@type='submit'">
                 <xsl:element name="xf:action" namespace="http://www.w3.org/2002/xforms">
                     <xsl:element name="xf:send" namespace="http://www.w3.org/2002/xforms">
-                        <xsl:attribute name="submission">
-                            <xsl:value-of select="concat(@id,'-submit')"/>
-                        </xsl:attribute>
+                        <xsl:attribute name="submission"><xsl:value-of select="concat(@id,'-submit')"/></xsl:attribute>
                     </xsl:element>
                 </xsl:element>
             </xsl:if>

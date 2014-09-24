@@ -52,15 +52,15 @@
          <xf:bind ref="record" type="string"></xf:bind>
          <xf:bind ref="trackedDate" type="string"></xf:bind>
          <xf:bind ref="created" type="string"></xf:bind>
-         <xf:bind ref="duration" required="true()" constraint="matches(., '^([01]?[0-9]|2[0-3]):[0-5][0-9]$')" type="decimal"></xf:bind>
-         <xf:bind ref="project" required="true()" constraint="index-of(instance('i-project')//option, .) &gt; 0)" type="string"></xf:bind>
-         <xf:bind ref="action" constraint="index-of(instance('i-action')//option, .) &gt; 0)" type="string"></xf:bind>
-         <xf:bind ref="user" constraint="index-of(instance('i-user')//option, .) &gt; 0)" type="string"></xf:bind>
+         <xf:bind ref="duration" required="true()" type="decimal"></xf:bind>
+         <xf:bind ref="project" required="true()" type="string"></xf:bind>
+         <xf:bind ref="action" type="string"></xf:bind>
+         <xf:bind ref="user" type="string"></xf:bind>
          <xf:bind ref="description" type="string"></xf:bind>
          <xf:bind ref="billable" readonly="true()" type="boolean"></xf:bind>
-         <xf:bind ref="maxLength" relevant="false()" constraint="string-lenght(.) &lt;= 12" type="string"></xf:bind>
-         <xf:bind ref="browsers" constraint="index-of(instance('i-browsers')//option, .) &gt; 0)" type="string"></xf:bind>
-         <xf:bind ref="points" constraint=". &gt;= 0 and . &lt;= 30" type="decimal"></xf:bind>
+         <xf:bind ref="maxLength" relevant="false()" type="string"></xf:bind>
+         <xf:bind ref="browsers" type="string"></xf:bind>
+         <xf:bind ref="points" type="decimal"></xf:bind>
          <xf:submision id="s-trackit-default" resource="modules/store-somehow.xql" method="GET" validate="true()"></xf:submision>
       </xf:model>
    </body>

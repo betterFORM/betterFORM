@@ -17,13 +17,11 @@ import de.betterform.agent.web.event.UIEvent;
 //import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.html5.Preprocessor;
-import de.betterform.thirdparty.DOMBuilder;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.ns.NamespaceConstants;
 import de.betterform.xml.xforms.ModelProcessor;
-import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
@@ -32,10 +30,7 @@ import de.betterform.xml.xslt.impl.CachingTransformerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +42,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 
@@ -218,7 +214,8 @@ public class XFormsFilter implements Filter {
 
 
                 try {
-                    boolean success = processXFormsModel(node);
+                    ModelProcessor mp = createXFormsModelProcessor(node);
+                    boolean success = mp.isSuccess();
 
                     // instanciate processor (might even be a plain (non-web) processor)
 
@@ -236,14 +233,18 @@ public class XFormsFilter implements Filter {
                         response(response,bufResponse);
                     }else {
                         //todo: return error information
-                        sendModelProcessorError(request, response, session);
+                        List errors = mp.getErrors();
+
+                        sendError(request, response, session);
                     }
                 } catch (XFormsException e) {
-                    sendModelProcessorError(request, response, session);
+                    sendError(request, response, session);
                 }
             }
         } else {
-            /* do servlet request */
+            /* ########################### call filter chain / end point #################################### */
+            /* ########################### call filter chain / end point #################################### */
+            /* ########################### call filter chain / end point #################################### */
             LOG.info("Passing to Chain");
             BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
             filterChain.doFilter(srvRequest, bufResponse);
@@ -317,19 +318,19 @@ public class XFormsFilter implements Filter {
         }
     }
 
-    private void sendModelProcessorError(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+    private void sendError(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         session.setAttribute("betterform.referer", request.getRequestURL());
         String path = "/" + webFactory.getConfig().getProperty(WebFactory.ERROPAGE_PROPERTY);
         webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
     }
 
-    private boolean processXFormsModel(Node xforms) throws ServletException, IOException, XFormsException {
+    private ModelProcessor createXFormsModelProcessor(Node xforms) throws ServletException, IOException, XFormsException {
         ModelProcessor modelProcessor = null;
         modelProcessor = new ModelProcessor();
         modelProcessor.setXformsProcessor(new XFormsProcessorImpl());
         modelProcessor.setXForms(xforms);
         modelProcessor.init();
-        return modelProcessor.isSuccess();
+        return modelProcessor;
     }
 
     private void response(HttpServletResponse response, BufferedHttpServletResponseWrapper bufResponse) throws IOException {
@@ -397,7 +398,7 @@ public class XFormsFilter implements Filter {
     private void returnErrorPage(HttpServletRequest request, HttpServletResponse response,HttpSession session, Exception e) throws ServletException, IOException {
         session.setAttribute("betterform.exception", e);
         session.setAttribute("betterform.exception.message", e.getMessage());
-        sendModelProcessorError(request, response, session);
+        sendError(request, response, session);
     }
 
     private void handleUpload(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws ServletException {
