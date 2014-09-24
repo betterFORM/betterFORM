@@ -170,7 +170,7 @@
     <target name="create-war" description="create a betterFORM web application archive">
         <echo>
         ************************************************************************************
-        creating war-file...
+        creating war-file from target directory (!webapp must be deployed manually before executing this target!)
         ************************************************************************************
         </echo>
 

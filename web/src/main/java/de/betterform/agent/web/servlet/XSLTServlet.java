@@ -7,6 +7,7 @@
 package de.betterform.agent.web.servlet;
 
 import de.betterform.agent.web.WebFactory;
+import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -83,7 +84,12 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
             throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
 
-        String stylePath = servletContext.getRealPath(editorHome);
+        String stylePath = null;
+        try {
+            stylePath = WebFactory.getRealPath(editorHome, servletContext);
+        } catch (XFormsConfigException e) {
+            throw new ServletException(e);
+        }
         File styleFile = new File(stylePath,xslFile);
         if(styleFile == null){
             throw new ServletException("XSL stylesheet cannot be found: " + styleFile);
@@ -158,10 +164,9 @@ public class XSLTServlet extends HttpServlet /* extends AbstractXFormsServlet */
         }
     }
 
-    private StringBuffer generateError(String error) throws IOException
-	{
+    private StringBuffer generateError(String error) throws IOException, XFormsConfigException {
 
-		String path = getServletContext().getRealPath("/forms/incubator/editor/");
+		String path = WebFactory.getRealPath("forms/incubator/editor", getServletContext());
 		File f = new File(path, "callerror.html");
 		FileInputStream fs = new FileInputStream(f);
 		BufferedInputStream bis = new BufferedInputStream(fs);

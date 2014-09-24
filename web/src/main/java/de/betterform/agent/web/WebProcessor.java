@@ -9,7 +9,6 @@ import de.betterform.BetterFORMConstants;
 import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 import de.betterform.agent.web.flux.FluxProcessor;
-import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.agent.web.servlet.HttpRequestHandler;
 import de.betterform.agent.web.servlet.XFormsPostServlet;
 import de.betterform.generator.UIGenerator;
@@ -347,7 +346,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      *
      * @throws java.net.URISyntaxException
      */
-    public synchronized void handleRequest(boolean generateUI) throws XFormsException {
+    public synchronized void handleRequest() throws XFormsException {
         boolean updating = false; //this will become true in case PlainHtmlProcessor is in use
         WebUtil.nonCachingResponse(response);
 
@@ -369,10 +368,6 @@ public class WebProcessor extends AbstractProcessorDecorator {
                 handleExit(exitEvent);
             } else {
                 String referer = null;
-
-                // ##### when UI generation is NOT wanted (HTML input form) exit here
-                if(!generateUI) return;
-
 
                 if (updating) {
                     //todo: check if this code is still needed (used by XFormsPostServlet?)
@@ -404,8 +399,11 @@ public class WebProcessor extends AbstractProcessorDecorator {
                     }
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-                    DOMUtil.prettyPrintDOM(this.xformsProcessor.getXForms());
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("WebProcessor: Begin Form: \n");
+                        DOMUtil.prettyPrintDOM(this.xformsProcessor.getXForms());
+                        LOGGER.debug("\nWebProcessor: End Form");
+                    }
                     generateUI(this.xformsProcessor.getXForms(), outputStream);
 
                     response.setContentLength(outputStream.toByteArray().length);
@@ -492,7 +490,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
      */
     protected void initConfig() throws XFormsException {
         final String initParameter = getContext().getInitParameter(WebFactory.BETTERFORM_CONFIG_PATH);
-        String configPath = WebFactory.resolvePath(initParameter, getContext());
+        String configPath = WebFactory.getRealPath(initParameter, getContext());
         if ((configPath != null) && !(configPath.equals(""))) {
             this.xformsProcessor.setConfigPath(configPath);
             this.configuration = Config.getInstance();
@@ -521,9 +519,9 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         //if we find a xsl param on the request URI this takes precedence over all
         String xslFile = request.getParameter(XSL_PARAM_NAME);
-        String xsltPath = RESOURCE_DIR + "/xslt";
+        String xsltPath = RESOURCE_DIR + "xslt";
         if(xslFile != null){
-            return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
+            return new File(WebFactory.getRealPath(xsltPath, getContext())).toURI().resolve(new URI(xslFile));
         }
 
         //if we find a 'bf:transform' attribute on the root element of a form this takes priority over the global configuration in betterform-config.xml
@@ -539,7 +537,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
 
         //todo: this forces to load the transform from filesystem - should be changed
         if(configuredTransform != null){
-            return new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
+            return new File(WebFactory.getRealPath(xsltPath, getContext())).toURI().resolve(new URI(configuredTransform));
         }
 
         throw new XFormsConfigException("There was no xslt stylesheet found on the request URI, the root element of the form or in the configfile");
@@ -563,7 +561,8 @@ public class WebProcessor extends AbstractProcessorDecorator {
         XSLTGenerator generator = WebFactory.setupTransformer(uri,getContext());
         generator.setParameter("sessionKey", getKey());
         generator.setParameter("baseURI", getBaseURI());
-        generator.setParameter("realPath", context.getRealPath("/"));
+        String realPath = WebFactory.getRealPath("/", context);
+        generator.setParameter("realPath", realPath);
         generator.setParameter("locale", locale);
         generator.setParameter("user-agent", request.getHeader("User-Agent"));
         generator.setParameter("action-url", getActionURL()); //todo: check this
@@ -606,7 +605,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
         try {
             Node input = getXForms();
             String xsltPath = RESOURCE_DIR + "xslt/";
-            URI styleURI = new File(WebFactory.resolvePath(xsltPath, getContext())).toURI().resolve(new URI("include.xsl"));
+            URI styleURI = new File(WebFactory.getRealPath(xsltPath, getContext())).toURI().resolve(new URI("include.xsl"));
             XSLTGenerator xsltGenerator = WebFactory.setupTransformer(styleURI,getContext());
             String baseURI = getBaseURI();
             String uri = baseURI.substring(0, baseURI.lastIndexOf("/") + 1);
@@ -664,7 +663,7 @@ public class WebProcessor extends AbstractProcessorDecorator {
             throw new XFormsConfigException("upload dir is not set in betterform-config.xml");
         }
         if (!new File(uploadDir).isAbsolute()) {
-            uploadDir = WebFactory.resolvePath(uploadDir, getContext());
+            uploadDir = WebFactory.getRealPath(uploadDir, getContext());
         }
 
         setUploadDestination(new File(uploadDir).getAbsolutePath());

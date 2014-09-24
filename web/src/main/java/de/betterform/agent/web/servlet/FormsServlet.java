@@ -5,7 +5,9 @@
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.utils.SortingWalker;
+import de.betterform.xml.config.XFormsConfigException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -64,7 +66,11 @@ public class FormsServlet extends HttpServlet {
         if (!fragment) {
             response.getOutputStream().write(getHTMLHead(request).getBytes());
         }
-        response.getOutputStream().write(getHTMLFilesListing(request, uri,ajaxFunction).getBytes());
+        try {
+            response.getOutputStream().write(getHTMLFilesListing(request, uri,ajaxFunction).getBytes());
+        } catch (XFormsConfigException e) {
+            throw new ServletException(e);
+        }
 
         if (!fragment) {
             response.getOutputStream().write(getHTMLFooter(request).getBytes());
@@ -162,7 +168,7 @@ public class FormsServlet extends HttpServlet {
     }
 
 
-    private String getHTMLFilesListing(HttpServletRequest request, String uri,String ajaxFunction) throws IOException {
+    private String getHTMLFilesListing(HttpServletRequest request, String uri,String ajaxFunction) throws IOException, XFormsConfigException {
         StringBuffer html = new StringBuffer();
         //Todo: Allow something like forms/demo/.. ??
         if (uri == null || uri.contains("..") || !uri.contains(ROOTCOLLECTION)) {
@@ -259,15 +265,12 @@ public class FormsServlet extends HttpServlet {
     }
 
 
-    private void handleFileListing(StringBuffer html, HttpServletRequest request, String uri,String ajaxFunction) throws IOException {
+    private void handleFileListing(StringBuffer html, HttpServletRequest request, String uri,String ajaxFunction) throws IOException, XFormsConfigException {
         String readDir = null;
         String root = null;
         String rootDir = null;
 
-        root = getServletConfig().getServletContext().getRealPath("");
-        if (root == null) {
-            root = getServletConfig().getServletContext().getRealPath(".");
-        }
+        root = WebFactory.getRealPath(".", getServletConfig().getServletContext());
         rootDir = root + "/";
         readDir = rootDir + uri;
 
@@ -459,7 +462,6 @@ public class FormsServlet extends HttpServlet {
                         "                </a>\n" +
                         "                <a class=\"textLink\" title=\""+ fileName+"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "\" target=\"_blank\">" + getFileName(aFile,shortenNames) + "</a>\n" +
                         "                <a class=\"sourceLink\" title=\""+ "view" +"\" href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true \" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
-                        "                <a class=\"editorLink\" title=\""+ "editor" +"\" href=\"" + request.getContextPath() + "/bfEditor/" + uri + "/" + fileName + "\" target=\"_blank\">" + "<&nbsp;/&nbsp;>" + "</a>\n" +
 /*
                         "            <div>\n" +
                         "                <a href=\"" + request.getContextPath() + "/" + uri + "/" + fileName + "?source=true\" target=\"_blank\">source</a>\n" +

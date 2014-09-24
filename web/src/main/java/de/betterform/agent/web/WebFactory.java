@@ -21,8 +21,12 @@ import org.apache.log4j.xml.DOMConfigurator;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -141,17 +145,17 @@ public class WebFactory {
     public void initConfiguration(String userAgentIdent) throws XFormsConfigException {
         LOGGER.info("--------------- initing betterForm... ---------------");
         this.userAgentId = userAgentIdent;
-        String configPath = servletContext.getInitParameter("betterform.configfile");
+        String configPath = this.servletContext.getInitParameter("betterform.configfile");
         if (configPath == null) {
             throw new XFormsConfigException("Parameter 'betterform.configfile' not specified in web.xml");
         }
-
-        this.config = Config.getInstance(resolvePath(configPath, servletContext));
+        String realPath = this.getRealPath(configPath, this.servletContext);
+        this.config = Config.getInstance(realPath);
     }
 
     /**
      * initializes a XSLT Transformer service. Currently an implementation of CachingTransformerService is
-     * instanciated. Future versions may make this configurable. This is the place to preload transoformations
+     * instanciated. Future versions may make this configurable. This is the place to preload transformations
      * that are used throughout the application.
      *
      * @throws XFormsConfigException a Config exception will occur in case there's no valid setting for XSLT_CACHE_PROPERTY,XSLT_DEFAULT_PROPERTY or
@@ -219,8 +223,10 @@ public class WebFactory {
         return generator;
     }
 
-    public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException {
-        return new File(resolvePath(xsltPath, servletContext)).toURI().resolve(new URI(xsltDefault));
+    public URI getXsltURI(String xsltPath, String xsltDefault) throws URISyntaxException, XFormsConfigException {
+        String resolvePath = getRealPath(xsltPath + xsltDefault, servletContext);
+        String pathToXSLDirectory = resolvePath.substring(0, resolvePath.lastIndexOf(File.separator));
+        return new File(pathToXSLDirectory).toURI().resolve(new URI(xsltDefault));
     }
 
 
@@ -228,7 +234,7 @@ public class WebFactory {
         String initLogging = this.config.getProperty(WebFactory.DO_INIT_LOGGING);
 
         if(initLogging.equals("true")){
-            String pathToLog4jConfig = resolvePath(this.config.getProperty(WebFactory.LOG_CONFIG), servletContext);
+            String pathToLog4jConfig = getRealPath(this.config.getProperty(WebFactory.LOG_CONFIG), servletContext);
             File log4jFile = new File(pathToLog4jConfig);
             if(log4jFile.exists()){
                 DOMConfigurator.configure(pathToLog4jConfig);
@@ -248,25 +254,60 @@ public class WebFactory {
     /**
      * allow absolute paths otherwise resolve relative to the servlet context
      *
-     * @param path XPath locationpath
+     * @param resolvePath XPath locationpath
      * @return the absolute path or path relative to the servlet context
+     * @deprecated
      */
-    public static final String resolvePath(String path, ServletContext servletContext) {
-        String tmpPath;
-        if (!new File(path).isAbsolute()) {
-            tmpPath = servletContext.getRealPath(path);
-            if (tmpPath == null) {
-                tmpPath =  servletContext.getRealPath(".") + "/" + path;
+    public static final String resolvePath(String resolvePath, ServletContext servletContext) {
+        String path = resolvePath;
+        try {
+            if(path != null && !(path.startsWith("/"))){
+                path = "/" + path;
             }
-
-            path = tmpPath;
+            URL pathURL= servletContext.getResource(path);
+            if(pathURL != null){
+                path = java.net.URLDecoder.decode(pathURL.getPath(), StandardCharsets.UTF_8.name());
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException ex) {
+            ex.printStackTrace();
         }
-
         return path;
     }
 
-
     public void initXFormsSessionCache() throws XFormsConfigException {
         XFSessionCache.getCache();
+    }
+
+    /**
+     * get the absolute file path for a given relative path in the webapp. Handles some differences in server behavior
+     * with the execution of context.getRealPath on various servers/operating systems
+     *
+     * @param path    a path relative to the context root of the webapp
+     * @param context the servletcontext
+     * @return the absolute file path for given relative webapp path
+     */
+    public static String getRealPath(String path, ServletContext context) throws XFormsConfigException {
+        if (path == null) {
+            path = "/";
+        }
+        URL rootURL = null;
+        try {
+            rootURL = Thread.currentThread().getContextClassLoader().getResource("/");
+
+            String computedRealPath = null;
+            if (rootURL != null) {
+                String resourcePath = rootURL.getPath();
+                String rootPath = new File(resourcePath).getParentFile().getParent();
+                computedRealPath = new File(rootPath, path).getAbsolutePath();
+            } else {
+                String resourcePath = context.getRealPath("/");
+                computedRealPath = new File(resourcePath, path).getAbsolutePath();
+            }
+            return java.net.URLDecoder.decode(computedRealPath, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            throw new XFormsConfigException("path could not be resolved: " + path);
+        }
     }
 }

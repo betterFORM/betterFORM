@@ -157,24 +157,6 @@
                  value="Sorry your session expired. Press Reload to start over."/>
     </error-messages>
 
-    <!--
-        Maps internal names to external file-names.
-        The internal name is used by the framework to identify
-        entities and resolve these to the associated filenames.
-    -->
-    <!-- todo: deprecated - remove after adapting config class -->
-    <useragents>
-        <useragent name="html"
-                   processor="de.betterform.agent.web.servlet.PlainHtmlProcessor"
-                   description="request/response-oriented XForms processor without any JavaScript">
-        </useragent>
-        <useragent name="dojo"
-                   processor="de.betterform.agent.web.flux.FluxProcessor"
-                   description="AJAX-enabled useragent with packed resources for production environments">
-        </useragent>
-
-    </useragents>
-
     <ui-generators>
         <!-- todo: deprecate unscripted processing?-->
         <!-- todo: we probably shouldn't use the term 'useragent' here to avoid confusion with other meanings throughout betterform -->

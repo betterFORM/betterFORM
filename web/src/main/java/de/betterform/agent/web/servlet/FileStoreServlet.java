@@ -5,7 +5,9 @@
 
 package de.betterform.agent.web.servlet;
 
+import de.betterform.agent.web.WebFactory;
 import de.betterform.agent.web.utils.SortingWalker;
+import de.betterform.xml.config.XFormsConfigException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -61,17 +63,18 @@ public class FileStoreServlet extends FormsServlet {
         total = 0;
     }
 
-    private String handleFileListing(String path) throws IOException {
+    private String handleFileListing(String path) throws IOException, XFormsConfigException {
         String readDir = null;
         String root = null;
         String rootDir = null;
         StringBuffer listing = new StringBuffer();
 
-        root = getServletConfig().getServletContext().getRealPath("");
-        if (root == null) {
-            root = getServletConfig().getServletContext().getRealPath(".");
+        root = WebFactory.getRealPath(".", getServletConfig().getServletContext());
+        if(root != null && root.endsWith("/")){
+            rootDir = root + "/";
+        }else {
+            rootDir = "/";
         }
-        rootDir = root + "/";
         readDir = rootDir + path;
 
         File filesroot = new File(readDir);

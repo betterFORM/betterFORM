@@ -10,6 +10,7 @@ import de.betterform.agent.web.cache.XFSessionCache;
 //import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.flux.SocketProcessor;
 import de.betterform.connector.http.AbstractHTTPConnector;
+import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.xforms.XFormsProcessor;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
@@ -316,7 +317,7 @@ public class WebUtil {
     public static void setContextParams(HttpServletRequest request,
             HttpSession httpSession,
             XFormsProcessor processor,
-            String sessionkey) {
+            String sessionkey) throws XFormsConfigException {
         Map servletMap = new HashMap();
         servletMap.put(WebProcessor.SESSION_ID, sessionkey);
         processor.setContextParam(XFormsProcessor.SUBMISSION_RESPONSE, servletMap);
@@ -385,13 +386,10 @@ public class WebUtil {
         processor.setContextParam(WebProcessor.QUERY_STRING, (request.getQueryString() != null ? request.getQueryString() : ""));
 
         //storing the realpath for webapp
-        String realPath = httpSession.getServletContext().getRealPath("");
-        if (realPath == null) {
-            realPath = httpSession.getServletContext().getRealPath(".");
-        }
+
+        String realPath = WebFactory.getRealPath(".", httpSession.getServletContext());
         File f = new File(realPath);
-        URI fileURI = null;
-        fileURI = f.toURI();
+        URI fileURI = f.toURI();
 
         processor.setContextParam(WebProcessor.REALPATH, fileURI.toString());
         if (LOGGER.isDebugEnabled()) {
