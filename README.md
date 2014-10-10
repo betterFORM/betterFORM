@@ -1,27 +1,25 @@
-# betterForm springBud Quickstart Guide
+# betterForm 5 Quickstart Guide
+
+betterFORM 5 is an implementation of XForms 1.1 in Java. It's about 97% conformant to the W3C recommendation and allows to build advanced form applications that require complex validations, calculations and dependency management. 
+
+For further information on XForms  see:
+
+* http://www.w3.org/MarkUp/Forms
+* http://en.wikibooks.org/wiki/XForms
 
 
-## Minimal Requirements to run betterFORM  
-
+## Requirements for betterFORM 5
+   Runtime requirements:
+   
    * [Java JDK 1.6 or newer](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+   
+   For building:
+   
+   * Apache Ant 1.8.2 or newer for building the sources
+   * [Optional: Apache Maven 2.0.5 or newer]
 
 
-## betterFORM Modules
-
-### Core
-TBD
-### Web
-TBD
-### Fore
-TBD
-### Tools
-TBD
-### XRX
-TBD
-### Zaphod
-TBD
-
-## Build from the Source  
+## Building  
 
 Apache Ant 1.8.2 or is needed to build betterFORM from the sources. 
 
@@ -50,5 +48,4 @@ Get in touch with betterFORM [directly](http://www.betterform.de/en/whoweare.htm
    * Apache Ant 1.8.2 or newer
    * [Optional: Apache Maven 2.0.5 or newer]
     
-   
-[![Build Status](https://travis-ci.org/betterFORM/betterFORM.png?branch=master,development)](https://travis-ci.org/betterFORM/betterFORM)
+
