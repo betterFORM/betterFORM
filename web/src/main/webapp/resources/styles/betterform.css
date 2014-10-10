@@ -1,1 +1,925 @@
-.xfDisabled iframe,.xfDisabled label,.xfDisabled label,.xfDisabled .xfValue,.xfDisabled span,.xfDisabled .xfGroupLabel{display:none}.xfReadWrite .xfValue a:hover,.xfReadWrite .xfValue a:focus,.xfReadWrite .xfValue a:link,.xfReadWrite .xfValue a:visited,.xfReadWrite .xfValue a:active{color:#444}.xfReadOnly .xfValue a:focus,.xfReadOnly .xfValue a:hover,.xfReadOnly .xfValue a:link,.xfReadOnly .xfValue a:visited,.xfReadOnly .xfValue a:active{color:#e6e6e6;border:0}.xfReadOnly>.widgetContainer>.xfValue a,.xfReadOnly>.widgetContainer>.xfValue .dijitButtonNode,.xfReadOnly>.widgetContainer>.xfValue{background:#e6e6e6 url(../images/buttonDisabled.png) repeat-x scroll center top;border-color:#d5d5d5 #d5d5d5 #bdbdbd;cursor:not-allowed!important}.xfRequired>.xfLabel:after,.xfRequired>.bfTableLabel:after{content:'*';color:#8b0000}.xfOutput.xfRequired>.xfLabel:after,.xfOutput.xfRequired>.bfTableLabel:after{content:''}.xfRequired .xfValue .xfLabel{padding-left:0;font-weight:normal}.xfRequiredEmpty .xfValue{border:thin solid #8b0000}.xfSelectOpen .xfValue{width:100%}.xfControl{display:inline-block}.xfRepeatPrototype,.xfSelectorPrototype,.xfCompactRepeat td .xfDisabled{display:none}.xfMinimalRepeat{display:block}.xfMinimalRepeat .xfRepeatItem,.xfMinimalRepeat .xfRepeatIndex{float:left;clear:none}.xfSwitch .xfSelectedCase{display:inherit}.xfSwitch .xfDeselectedCase{display:none}.xfFullSwitch .caFillerTab{overflow:hidden}.xfTextarea .dijitEditor{background:white}body{background:url("../images/bgOne.gif") repeat-x scroll;margin:30px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;padding:0;font-size:1em}.xfControl .xfValue{font-size:1em}#bfCopyright{position:absolute;right:0;font-size:.8em;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;padding-right:20px}#bfLoading{top:4px;right:40px;padding:3px;position:absolute;z-index:1000}#bfDebug{opacity:.7;position:fixed;bottom:0;left:0;display:block;background:#777;width:100%;padding:5px;text-align:left;color:#dedede}#bfDebug a{padding:2px 10px 2px 10px;font-weight:bold;display:inline-block;border-radius:5px;color:#dedede}#bfDebug #bfDebugLinks{padding-left:30px;font-size:.7em}#bfDebugOpenClose{position:fixed;width:30px;height:30px;z-index:200;bottom:-6px;left:5px;float:left}#bfDebugOpenClose img{width:50%;height:50%}a:link,a:visited,a:active{color:#444}.xfControl{position:relative;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}.xfInput .xfSecret .xfValue{height:1.2em}.xsdDateTime .xfDateTextBox{width:90px}.xfTextarea .xfValue,.xfRange .xfValue{display:inline-block}.xfRange.aDefault .xfAlert{left:250px}.widgetContainer{margin:0;padding:0;position:relative;display:inline-block}.xfInvalid .xfAlert{display:inline-block!important;vertical-align:top;margin:2px 3px}.xfInvalid .xfLabel{color:#8b0000!important}.xfAlert,.xfHint{font-size:.8em;position:relative;margin-left:4px;display:block;min-width:150px;max-width:500px;vertical-align:middle}.xfAlert{outline:1px solid #e5a3a3;color:#444;background:#ffcfcf url("../images/error.png") 5px 50% no-repeat;padding:0 20px 0 26px;z-index:100}.xfAlert .bfToolTipAlert{z-index:200}.xfAlert .closeAlertIcon{background:none repeat scroll 0 0 transparent;border:0;font-size:1.2em;position:absolute;right:-4px;top:0}.xfAlert .bfAlertMsg{margin:1px;padding:3px!important;display:block}.xfHint{outline:1px solid #dedede;background:#e6e6e6 url("../images/hint.png") 5px 50% no-repeat;z-index:100;color:#777;padding:6px 23px 6px 23px!important;display:block}.xfRequiredEmpty:after{content:'Please fill in a value'}.bfHelpWrapper{display:inline-block}.xfHelp{height:24px;margin:0;display:inline-block;position:absolute;right:0;top:0;z-index:200;padding:0}.bfHelpText{background:#f5f5f5;padding:10px;border:thin solid #dedede;position:absolute;top:22px;right:1px;-moz-border-radius-topleft:10px;-moz-border-radius-bottomright:10px;-webkit-border-bottom-right-radius:10px;-webkit-border-top-left-radius:10px;z-index:800}.xfSelectOpen .xfLabel{display:block;height:30px}.bf .xfSelectOpen .xfValue{border-color:#dedede;border-style:none solid solid;border-width:1px;display:block}.xfSelectOpen .dijitTextBox{border-left:1px solid #dedede;border-top:1px solid #dedede;border-right:2px solid #dedede;border-bottom:0;margin:0;padding:0}.xfSelectOpen .xfSelectFreeText{display:inline-block;overflow-x:hidden;position:relative;border:0}.bfRefreshButton{display:block;float:right;background-color:#bcd884;border:thin solid #aaa;padding:2px;margin-left:10px}.bfProgressbar{display:none}.bfProgressbar .background{background:url("../images/progress-bar.gif") repeat-x;height:18px;width:0}.xfDisabled .bfProgressbar{display:none}.xfDropDownDateControl{display:inline}.xfDropDownDateControl>xfLabel{float:left}.xfDropDownDate .xfDropDownDateDays{width:45px}.xfDropDownDate .xfDropDownDateMonths{width:60px}.xfDropDownDate .xfDropDownDateYears{width:100px}.xfContainer{display:block}.xfGroup{margin:0;padding:0}.xfMinimalGroup .xfGroupLabel{display:block}.xfCompactGroup .xfContainer{display:inline-block}.xfCompactGroup>.xfGroupLabel{display:block;width:100%;clear:left}.xfCompactGroup .xfControl{clear:both;display:block;margin:1px}.xfCompactGroup .xfControl .xfLabel{clear:both;display:block;float:none;margin-left:.2em;margin-top:.3em}.xfCompactGroup .xfDisabled{display:none}.xfFullGroup>.xfGroupLabel{display:block}.xfFullGroup .xfControl{clear:both;display:block;margin-top:10px;margin-bottom:10px}.xfFullGroup .xfLabel{width:10em;display:inline-block}.xfFullGroup .xfAlert{vertical-align:top}.xfFullGroup .xfDisabled{display:none}.bfCheckBoxGroup .xfSelectorItem{margin-right:6px}.xfFullSelect .xfSelectorItem .xfLabel{display:inline;float:none}.select1Comp .xfOptGroup .xfSelectorItem,.selectMin .xfOptGroup .xfSelectorItem{padding-left:5px}.xfSelect .xfOptGroupLabelFull,.xfSelect1 .xfOptGroupLabelFull{font-weight:bold;font-style:italic;text-align:left;padding-right:10px}.xfSelect1 .xfOptGroupLabelFull{padding-left:5px}.select1Min .xfLabel{position:relative;top:5px}.xfFullGroup .xfControl .xfValue{left:200px;text-align:left}.bf .bfVerticalTable{position:relative}.bf .bfVerticalTable .bfGroupLabelLeft .xfLabel{display:none}.bf .bfVerticalTable .bfVerticalTableLabel .xfLabel{padding-top:7px}.bf .bfVerticalTable .bfVerticalTableInfo{position:relative;display:inline-block}.bf .bfVerticalTable .bfVerticalTableValue>.xfControl>.xfLabel{display:none}.bf .bfHorizontalTable{overflow:auto}.bf .bfHorizontalTable td{vertical-align:top}.bf .bfHorizontalTable .xfContainer .xfGroupLabel{display:none}.bf .bfHorizontalTable .bfHorizontalTableLabel .bfTableLabel{padding-left:2px}.bf .bfHorizontalTable .bfHorizontalTableValue .bfHorizontalTableHeader{display:none}.bf .bfHorizontalTable .bfHorizontalTableValue>.xfControl>.xfLabel{display:none}.bf .bfHorizontalTable .bfHorizontalTableValue .xfControl{padding:0;margin:0}.xfRepeatIndex{background-color:#73c74a}.xfRepeatIndex .xfRepeatIndex{background-color:#4682b4}.xsdBoolean .xfValue,.bfCheckBoxGroup .xfValue{background-color:#fff}.xfMinimalRepeat{display:block}.xfFullRepeat{display:block}.xfFullRepeat .xfLabel{display:block;float:left;width:100px}.xfRepeatItem{clear:both;padding:5px}.xfRepeatItem .xfControl{clear:both;display:block}.xfRepeatItem .xfMinimalGroup .xfControl{clear:none;display:inline-block}table .xfContainer{display:table-row-group}.xfSwitch{clear:both}.bfHelpIcon{vertical-align:top}.helpAttributeTableHeader{font-size:.8em;font-weight:bold;background-color:#dedede}.xfTextareaHTML .xfValue{height:240px;width:500px}.xfTextarea .RichTextEditable iframe{background-color:#fff;height:195px}.bf .xfDisabled .xfValue,.bf .xfDisabled .xfLabel,.bf .xfDisabled .xfGroupLabel,.bf .xfDisabled{display:none!important}.xfOutOfRange{background:transparent}.xfInRange{background:transparent}#evtLogContainer{position:fixed;z-index:300;right:0;top:0;background:#f5f5f5;border:thin solid #aaa;width:240px;box-shadow:10px 10px 5px #aaa;font-size:.7em}#logControls{background:#73c74a;text-align:right;width:100%;margin:0;border-bottom:thin solid #aaa;position:absolute;height:26px;cursor:move}#logControls a{text-decoration:none;width:26px;height:26px;cursor:pointer}#switchLog{background:url("../images/openclose.png") no-repeat center;float:right;color:transparent}#trashLog{background:url("../images/trash.png") no-repeat center;color:transparent;float:left}#eventLog{list-style:none;padding:0;color:#333;height:460px;overflow:auto;margin-top:26px}#eventLog li{margin:10px 10px 0 10px}#eventLog li>a{text-decoration:none}#eventLog li>a>span{color:#777;border-bottom:thin solid #aaa;margin-top:10px;display:block;width:100%;font-weight:bold}#eventLog td{padding:0 5px;font-size:.8em}#eventLog .logDevider{display:block;width:100%;height:3px;background:#b0c4de}.eventLogTable .propName{background:#dedede;vertical-align:top}.dijitBorderContainer{position:absolute}.dojoxRating ul{padding:0;margin:0}.dojoxRatingStar{display:inline-block;background:url("../images/rating_empty.gif") left center;position:relative;height:15px;width:15px;float:left}.dojoxRatingStarChecked,.dojoxRatingStarHover{background-image:url("../images/rating_full.gif")}.dojoxRatingStarHover{opacity:.5}.xsdDateTime .dijitError{background:#fff url("../images/validationInputBg.png") repeat-x scroll left top}.xfTimeControl{display:inline-block}.xfTimeControl .dijitComboBox{width:18px}.xfTimeControl .dijitButtonNode{display:none}.xfDateTimeControl{display:inline}.xfDateTimeControl>xfLabel{float:left}.xfDateTimeControl .dijitDateTextBox{width:9em}.xfDateTimeControl .dijitTimeTextBox{width:9em}.bfTabContainer{height:600px;width:98%;overflow:auto}.dijitError .dijitValidationIcon,.dijitError .dijitValidationIconText{visibility:hidden}.dijitTextBoxFocused{outline:0}.widgetContainer .dijitTextBox{width:auto;-moz-user-modify:read-write!important}.widgetContainer .dijitInputInner{border:2px inset threedface}.tundra .dijitInputContainer input{margin:0}.bf .xfSelect1 .widgetContainer .dijitButtonNode{height:100%;padding:.18em}.dijitToasterContainer{padding:2px;border:thin dotted #aaa;display:block;position:absolute;width:17.5em;margin:0;font:.75em}.dijitToasterContent{background:#73c74a;font-size:.8em;color:#333;padding-top:2px;padding-bottom:2px}.dijitToasterMessage{color:#f5f5f5}.dijitToasterError,.dijitToasterFatal{font-weight:bold;color:#f5f5f5}.dijitToasterWarning .dijitToasterContent{background:#d4d943}.dijitToasterError .dijitToasterContent{background:#8b0000}.dijitToasterClip{position:absolute;z-index:5000;overflow:hidden}xfSelect1 .dijitArrowButton{width:13px;height:22px}xfSelect1 .dijitArrowButton .dijitInputField{padding-top:5px}xfSelect1 .dijitInputContainer .xfValue{border:0;padding-top:3px}.bfCheckBoxGroup .dijitDisabled,.xfReadOnly .dijitCheckBoxReadOnly{background-color:#e6e6e6!important}.xfReadWrite .dijitRadio,.xfReadWrite .dijitRadioIcon,.xfReadWrite .dijitRadioChecked{margin:0;padding:0;height:16px;width:16px}.xfReadWrite .dijitRadio,.xfReadWrite .dijitRadioIcon{background:url("../images/checkmark.png") no-repeat -112px 50%}.xfReadWrite .dijitRadioChecked{background:url("../images/checkmark.png") no-repeat -96px 50%}.xfReadWrite .dijitCheckBox,.xfReadWrite .dijitCheckBoxIcon,.xfReadWrite .dijitCheckBoxChecked{height:14px;width:14px;margin:0;padding:0}.xfReadWrite .dijitCheckBox,.xfReadWrite .dijitCheckBoxIcon{background:url("../images/checkmarkNoBorder.png") no-repeat -16px 50%}.xfReadWrite .dijitCheckBoxChecked{background:url("../images/checkmarkNoBorder.png") no-repeat 0 50%}.xfReadOnly .dijitRadio,.xfReadOnly .dijitRadioIcon{background:url("../images/checkmark.png") no-repeat -144px 50%;margin:0;padding:0;height:16px;width:16px}.xfReadOnly .dijitRadioChecked{background-position:-129px 50%}.xfReadOnly .dijitCheckBox,.xfReadOnly .dijitCheckBoxIcon{background:url("../images/checkmarkNoBorder.png") no-repeat -48px 50%;height:14px;width:14px}.xfReadOnly .dijitCheckBoxChecked{background-position:-32px 50%}.xfControl .dijitCheckBoxFocused{border:1px solid #333}.xfControl .dijitFocusedLabel{border:1px solid #aaa}.xfControl select{background-color:#fff}
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+/* ***************************************************************************** */
+/* ****** CSS STYLESHEET FOR STYLING betterFORM / XFORMS INSIDE OF HTML    ***** */
+/* ****** this stylesheet should be used to overwrite styles in xforms.css ***** */
+/* ***************************************************************************** */
+/* contains all colors, sizes for xforms.less and betterform-styles.less*/
+/* optional CSS reset stylesheet */
+/* @import "reset.less"; */
+/* elementary xforms css styles, must be present */
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+/* ***************************************************************************** */
+/* ************** XFORMS CSS STYLESHEET  *************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ****************** GENERAL XFORMS MIP AND COMMON-CHILD STYLES *************** */
+/* ***************************************************************************** */
+/*
+    The rules contained in this stylesheet have importance for the execution
+    of XForms logic such as hiding/showing non-relevant/relevant elements.
+
+    You may change the rendering of such styles but should do so by overwriting
+    these rules in your own stylesheet which you import in the document or by
+    inline style rules defined in the document.
+*/
+.xfDisabled iframe,
+.xfDisabled label,
+.xfDisabled label,
+.xfDisabled .xfValue,
+.xfDisabled span,
+.xfDisabled .xfGroupLabel {
+  display: none;
+}
+.xfReadWrite .xfValue a:hover,
+.xfReadWrite .xfValue a:focus,
+.xfReadWrite .xfValue a:link,
+.xfReadWrite .xfValue a:visited,
+.xfReadWrite .xfValue a:active {
+  color: #444444;
+}
+.xfReadOnly .xfValue a:focus,
+.xfReadOnly .xfValue a:hover,
+.xfReadOnly .xfValue a:link,
+.xfReadOnly .xfValue a:visited,
+.xfReadOnly .xfValue a:active {
+  color: #e6e6e6;
+  border: 0;
+}
+.xfReadOnly > .widgetContainer > .xfValue a,
+.xfReadOnly > .widgetContainer > .xfValue .dijitButtonNode,
+.xfReadOnly > .widgetContainer > .xfValue {
+  background: #e6e6e6 url(../images/buttonDisabled.png) repeat-x scroll center top;
+  border-color: #D5D5D5 #D5D5D5 #BDBDBD;
+  cursor: not-allowed !important;
+}
+/*********** styles character used for signaling 'required' (normally '*') ***********/
+.xfRequired > .xfLabel:after,
+.xfRequired > .bfTableLabel:after {
+  content: '*';
+  color: #8b0000;
+}
+.xfOutput.xfRequired > .xfLabel:after,
+.xfOutput.xfRequired > .bfTableLabel:after {
+  content: '';
+}
+.xfRequired .xfValue .xfLabel {
+  /*background:url(../images/required.gif) no-repeat left top;*/
+
+  padding-left: 0px;
+  font-weight: normal;
+}
+.xfRequiredEmpty .xfValue {
+  border: thin solid #8b0000;
+}
+.xfSelectOpen .xfValue {
+  width: 100%;
+}
+.xfControl {
+  display: inline-block;
+}
+/* ***************************************************************************** */
+/* **************************** REPEAT STYLES  ********************************* */
+/* ***************************************************************************** */
+.xfRepeatPrototype,
+.xfSelectorPrototype,
+.xfCompactRepeat td .xfDisabled {
+  display: none;
+}
+.xfRepeatSelector {
+  /*float: left;*/
+
+}
+.xfMinimalRepeat {
+  display: block;
+}
+.xfMinimalRepeat .xfRepeatItem,
+.xfMinimalRepeat .xfRepeatIndex {
+  float: left;
+  clear: none;
+}
+/* ***************************************************************************** */
+/* **************************** SWITCH STYLES ********************************** */
+/* ***************************************************************************** */
+.xfSwitch .xfSelectedCase {
+  display: inherit;
+}
+.xfSwitch .xfDeselectedCase {
+  display: none;
+}
+.xfFullSwitch .caFillerTab {
+  overflow: hidden;
+}
+.xfTextarea .dijitEditor {
+  background: white;
+}
+/* betterform specific css rules to style certain controls */
+/*
+ * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+ * Licensed under the terms of BSD License
+ */
+/* ***************************************************************************** */
+/* ************** CSS STYLESHEET FOR STYLING XFORMS INSIDE OF HTML ************* */
+/* this stylesheet should be used to overwrite styles in xforms.css **************/
+/* ***************************************************************************** */
+/*
+
+/* ***************************************************************************** */
+/* ********************* GLOBAL PAGE STYLE RULES       ****************************** */
+/* ***************************************************************************** */
+/*
+    These rules define the global page rules and may be changed freely to reflect
+    the individual styling of the using site. Rules shouldn't be patched as this
+    makes maintainance hard but be overwritten in your custom stylesheets or inline
+    style rules.
+*/
+/*
+    ################################## global betterFORM styles ##############################
+*/
+body {
+  background: url("../images/bgOne.gif") repeat-x scroll;
+  margin: 30px;
+  padding: 0;
+  /*overflow: hidden;*/
+
+  font-size: 1em;
+  overflow: hidden;
+  /* just while initializing the form, will be set to 'auto' when loaded
+}
+
+.xfControl .xfValue {
+  font-size: @fontSize;
+}
+
+#bfCopyright {
+  position: absolute; /*bottom:0;*/
+
+  right: 0;
+  font-size: 0.8em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-right: 20px;
+}
+#bfLoading {
+  top: 4px;
+  right: 40px;
+  padding: 3px;
+  position: absolute;
+  z-index: 1000;
+}
+/*
+debug bar at bottom of screen if debug is enabled by betterform config
+*/
+#bfDebug {
+  opacity: 0.7;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: block;
+  background: #777777;
+  width: 100%;
+  padding: 5px;
+  text-align: left;
+  color: #dedede;
+}
+#bfDebug a {
+  padding: 2px 10px 2px 10px;
+  font-weight: bold;
+  display: inline-block;
+  border-radius: 5px;
+  color: #dedede;
+}
+#bfDebug #bfDebugLinks {
+  padding-left: 30px;
+  font-size: 0.7em;
+}
+#bfDebugOpenClose {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  z-index: 200;
+  bottom: -6px;
+  left: 5px;
+  float: left;
+}
+#bfDebugOpenClose img {
+  width: 50%;
+  height: 50%;
+}
+a:link,
+a:visited,
+a:active {
+  color: #444444;
+}
+/*
+  .bf is always created on body element by dojo.xsl
+*/
+.xfControl {
+  position: relative;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+/* #################### SPECIAL CONTROL APPEARANCE STYLES #################### */
+/* matches all input widgets in the output*/
+.xfInput .xfSecret .xfValue {
+  height: 1.2em;
+}
+/* matches all popup calendars */
+.xsdDateTime .xfDateTextBox {
+  width: 90px;
+}
+.xfTextarea .xfValue,
+.xfRange .xfValue {
+  display: inline-block;
+}
+.xfRange.aDefault .xfAlert {
+  left: 250px;
+}
+/* needed to work with flowting layouts in Safari */
+/*
+.xsdString .xfValue{
+    display:inline;
+}
+*/
+/* ***************************************************************************** */
+/* ********************* GENERAL betterFORM STYLES ************ */
+/* ***************************************************************************** */
+.widgetContainer {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+}
+/* ***************************************************************************** */
+/* ********************* GENERAL XFORMS MIP AND COMMON-CHILD STYLES ************ */
+/* ***************************************************************************** */
+.xfInvalid {
+  /*
+  .widgetContainer {
+    outline: 1px solid @invalid-color !important;
+  }
+  */
+
+}
+.xfInvalid .xfAlert {
+  display: inline-block;
+  vertical-align: top;
+  margin: 2px 3px;
+}
+.xfInvalid .xfLabel {
+  color: #8b0000 !important;
+}
+.xfAlert,
+.xfHint {
+  font-size: 0.8em;
+  position: relative;
+  margin-left: 4px;
+  display: block;
+  min-width: 150px;
+  max-width: 500px;
+  vertical-align: middle;
+}
+.xfAlert {
+  outline: 1px solid #e5a3a3;
+  color: #444444;
+  background: #ffcfcf url("../images/error.png") 5px 50% no-repeat;
+  padding: 0px 20px 0px 26px;
+  z-index: 100;
+}
+.xfAlert .bfToolTipAlert {
+  z-index: 200;
+}
+.xfAlert .closeAlertIcon {
+  background: none repeat scroll 0 0 transparent;
+  border: none;
+  font-size: 1.2em;
+  position: absolute;
+  right: -4px;
+  top: 0;
+}
+.xfAlert .bfAlertMsg {
+  margin: 1px;
+  padding: 3px !important;
+  display: block;
+}
+.xfHint {
+  outline: 1px solid #dedede;
+  background: #e6e6e6 url("../images/hint.png") 5px 50% no-repeat;
+  z-index: 100;
+  color: #777777;
+  padding: 6px 23px 6px 23px !important;
+  display: block;
+}
+.xfRequiredEmpty:after {
+  content: 'Please fill in a value';
+}
+/*
+special handling for alerts and hints in compact groups as the label is above control and changes the situation.
+alert + hints should always be aligned with the control.
+*/
+.bfHelpWrapper {
+  display: inline-block;
+}
+.xfHelp {
+  height: 24px;
+  margin: 0;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 200;
+  padding: 0;
+}
+.bfHelpText {
+  background: #f5f5f5;
+  padding: 10px;
+  border: thin solid #dedede;
+  position: absolute;
+  top: 22px;
+  right: 1px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  z-index: 800;
+}
+/* matches selection open controls in tundra */
+.xfSelectOpen .xfLabel {
+  display: block;
+  height: 30px;
+}
+.bf .xfSelectOpen .xfValue {
+  border-color: #dedede;
+  border-style: none solid solid;
+  border-width: 1px;
+  display: block;
+}
+.xfSelectOpen .dijitTextBox {
+  border-left: 1px solid #dedede;
+  border-top: 1px solid #dedede;
+  border-right: 2px solid #dedede;
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+}
+.xfSelectOpen .xfSelectFreeText {
+  display: inline-block;
+  overflow-x: hidden;
+  /*overflow-y: scroll;*/
+
+  position: relative;
+  border: none;
+}
+/*********** styles character used for signaling 'required' (normally '*') ***********/
+.bfRefreshButton {
+  display: block;
+  float: right;
+  background-color: #bcd884;
+  border: thin solid #aaaaaa;
+  padding: 2px;
+  margin-left: 10px;
+}
+/*********** Upload specific styles ***********/
+/*********** Upload specific styles ***********/
+/*********** Upload specific styles ***********/
+.bfProgressbar {
+  display: none;
+}
+.bfProgressbar .background {
+  background: url("../images/progress-bar.gif") repeat-x;
+  height: 18px;
+  width: 0;
+}
+.xfDisabled .bfProgressbar {
+  display: none;
+}
+.xfDropDownDateControl {
+  display: inline;
+}
+.xfDropDownDateControl > xfLabel {
+  float: left;
+}
+.xfDropDownDate .xfDropDownDateDays {
+  width: 45px;
+}
+.xfDropDownDate .xfDropDownDateMonths {
+  width: 60px;
+}
+.xfDropDownDate .xfDropDownDateYears {
+  width: 100px;
+}
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ********************* XFORMS GROUP STYLES      ****************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+.xfContainer {
+  display: block;
+}
+.xfGroup {
+  margin: 0;
+  padding: 0;
+}
+/* ############################## Minimal GROUP STYLES ############################## */
+/* ############################## Minimal GROUP STYLES ############################## */
+/* ############################## Minimal GROUP STYLES ############################## */
+.xfMinimalGroup .xfGroupLabel {
+  display: block;
+}
+/* ############################## COMPACT GROUP STYLES ############################## */
+/* ############################## COMPACT GROUP STYLES ############################## */
+/* ############################## COMPACT GROUP STYLES ############################## */
+.xfCompactGroup .xfContainer {
+  display: inline-block;
+}
+.xfCompactGroup > .xfGroupLabel {
+  display: block;
+  width: 100%;
+  clear: left;
+}
+.xfCompactGroup .xfControl {
+  clear: both;
+  display: block;
+  margin: 1px;
+}
+.xfCompactGroup .xfControl .xfLabel {
+  clear: both;
+  display: block;
+  float: none;
+  margin-left: 0.2em;
+  margin-top: 0.3em;
+}
+.xfCompactGroup .xfDisabled {
+  display: none;
+}
+/* ############################## FULL GROUP STYLES ############################## */
+/* ############################## FULL GROUP STYLES ############################## */
+/* ############################## FULL GROUP STYLES ############################## */
+.xfFullGroup > .xfGroupLabel {
+  display: block;
+}
+.xfFullGroup .xfControl {
+  clear: both;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.xfFullGroup .xfLabel {
+  width: 10em;
+  display: inline-block;
+}
+.xfFullGroup .xfAlert {
+  vertical-align: top;
+}
+.xfFullGroup .xfDisabled {
+  display: none;
+}
+.bfCheckBoxGroup .xfSelectorItem {
+  margin-right: 6px;
+}
+/* TODO: Review Select CSS Classes, there is no xfFullSelect but only xfSelect on the Control Dijit */
+.xfFullSelect .xfSelectorItem .xfLabel {
+  display: inline;
+  float: none;
+}
+.select1Comp .xfOptGroup .xfSelectorItem,
+.selectMin .xfOptGroup .xfSelectorItem {
+  padding-left: 5px;
+}
+.xfSelect .xfOptGroupLabelFull,
+.xfSelect1 .xfOptGroupLabelFull {
+  font-weight: bold;
+  font-style: italic;
+  text-align: left;
+  padding-right: 10px;
+}
+.xfSelect1 .xfOptGroupLabelFull {
+  padding-left: 5px;
+}
+/* remove styles from select element to apply custom style */
+.select1Min .xfLabel {
+  position: relative;
+  top: 5px;
+}
+.xfFullGroup .xfControl .xfValue {
+  /*  conflicts with repeat
+    position:absolute;
+*/
+
+  left: 200px;
+  text-align: left;
+}
+/* ############################## CUSTOM GROUP STYLES ############################## */
+/* ############################## CUSTOM GROUP STYLES ############################## */
+/* ############################## CUSTOM GROUP STYLES ############################## */
+.bf .bfVerticalTable {
+  position: relative;
+}
+.bf .bfVerticalTable .bfGroupLabelLeft .xfLabel {
+  display: none;
+}
+.bf .bfVerticalTable .bfVerticalTableLabel .xfLabel {
+  padding-top: 7px;
+}
+.bf .bfVerticalTable .bfVerticalTableInfo {
+  position: relative;
+  display: inline-block;
+}
+.bf .bfVerticalTable .bfVerticalTableValue > .xfControl > .xfLabel {
+  display: none;
+}
+.bf .bfHorizontalTable {
+  overflow: auto;
+  /* hide duplicate group-labels for horizontal groups */
+
+}
+.bf .bfHorizontalTable td {
+  vertical-align: top;
+}
+.bf .bfHorizontalTable .xfContainer .xfGroupLabel {
+  display: none;
+}
+.bf .bfHorizontalTable .bfHorizontalTableLabel .bfTableLabel {
+  padding-left: 2px;
+}
+.bf .bfHorizontalTable .bfHorizontalTableValue .bfHorizontalTableHeader {
+  display: none;
+}
+.bf .bfHorizontalTable .bfHorizontalTableValue > .xfControl > .xfLabel {
+  display: none;
+}
+.bf .bfHorizontalTable .bfHorizontalTableValue .xfControl {
+  padding: 0;
+  margin: 0;
+}
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ********************* REPEAT STYLES ***************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+.xfRepeatIndex {
+  background-color: #73c74a;
+}
+.xfRepeatIndex .xfRepeatIndex {
+  background-color: #4682b4;
+}
+.xsdBoolean .xfValue,
+.bfCheckBoxGroup .xfValue {
+  background-color: #ffffff;
+}
+.xfMinimalRepeat {
+  display: block;
+}
+.xfFullRepeat {
+  display: block;
+}
+.xfFullRepeat .xfLabel {
+  display: block;
+  float: left;
+  width: 100px;
+}
+.xfRepeatItem {
+  clear: both;
+  /*display: block;*/
+
+  padding: 5px;
+}
+.xfRepeatItem .xfControl {
+  clear: both;
+  display: block;
+}
+.xfRepeatItem .xfMinimalGroup .xfControl {
+  clear: none;
+  display: inline-block;
+}
+/* this rule is for tables using repeat Attributes - a display:block will otherwise break the table layout */
+table .xfContainer {
+  display: table-row-group;
+}
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+/* ********************* SWITCH STYLES ***************************************** */
+/* ***************************************************************************** */
+/* ***************************************************************************** */
+.xfSwitch {
+  clear: both;
+}
+/*
+ ########################################################################################
+                Styles from Allcomponent:
+ ########################################################################################
+*/
+.bfHelpIcon {
+  vertical-align: top;
+}
+.helpAttributeTableHeader {
+  font-size: 0.8em;
+  font-weight: bold;
+  background-color: #dedede;
+}
+.xfTextareaHTML .xfValue {
+  height: 240px;
+  width: 500px;
+}
+.xfTextarea .RichTextEditable iframe {
+  background-color: #ffffff;
+  height: 195px;
+}
+/*##################################################################
+                   START IMPORTANT STYLES (DO NOT OVERWRITE)
+##################################################################*/
+.bf .xfDisabled .xfValue,
+.bf .xfDisabled .xfLabel,
+.bf .xfDisabled .xfGroupLabel,
+.bf .xfDisabled {
+  display: none !important;
+}
+/*##################################################################
+                   END IMPORTANT STYLES
+##################################################################*/
+/*##################################################################
+                   START Imported (overwritten) STYLES
+##################################################################*/
+.xfOutOfRange {
+  background: transparent;
+}
+.xfInRange {
+  background: transparent;
+}
+/*##################################################################
+                            EVENTLOG
+##################################################################*/
+#evtLogContainer {
+  position: fixed;
+  z-index: 300;
+  right: 0;
+  top: 0;
+  background: #f5f5f5;
+  border: thin solid #aaaaaa;
+  width: 240px;
+  box-shadow: 10px 10px 5px #aaaaaa;
+  font-size: 0.7em;
+}
+#logControls {
+  background: #73c74a;
+  text-align: right;
+  width: 100%;
+  margin: 0;
+  border-bottom: thin solid #aaaaaa;
+  position: absolute;
+  height: 26px;
+  cursor: move;
+}
+#logControls a {
+  text-decoration: none;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+}
+#switchLog {
+  background: url("../images/openclose.png") no-repeat center;
+  float: right;
+  color: transparent;
+}
+#trashLog {
+  background: url("../images/trash.png") no-repeat center;
+  color: transparent;
+  float: left;
+}
+#eventLog {
+  list-style: none;
+  padding: 0;
+  color: #333333;
+  height: 460px;
+  overflow: auto;
+  margin-top: 26px;
+}
+#eventLog li {
+  margin: 10px 10px 0 10px;
+}
+#eventLog li > a {
+  text-decoration: none;
+}
+#eventLog li > a > span {
+  color: #777777;
+  border-bottom: thin solid #aaaaaa;
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  font-weight: bold;
+}
+#eventLog td {
+  padding: 0 5px;
+  font-size: 0.8em;
+}
+#eventLog .logDevider {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: #b0c4de;
+}
+.eventLogTable .propName {
+  background: #dedede;
+  vertical-align: top;
+}
+/* ################### some theme-specific (Dojo tundra) styles ################### */
+.dijitBorderContainer {
+  position: absolute;
+}
+/* matches Rating control (range) */
+.dojoxRating ul {
+  padding: 0;
+  margin: 0;
+}
+/* matches Rating control (range) */
+.dojoxRatingStar {
+  display: inline-block;
+  background: url("../images/rating_empty.gif") left center;
+  position: relative;
+  height: 15px;
+  width: 15px;
+  float: left;
+}
+/* matches Rating control (range) */
+.dojoxRatingStarChecked,
+.dojoxRatingStarHover {
+  background-image: url("../images/rating_full.gif");
+}
+/* matches Rating control (range) */
+.dojoxRatingStarHover {
+  opacity: .5;
+}
+.xsdDateTime .dijitError {
+  background: #ffffff url("../images/validationInputBg.png") repeat-x scroll left top;
+}
+.xfTimeControl {
+  display: inline-block;
+}
+.xfTimeControl .dijitComboBox {
+  width: 18px;
+}
+.xfTimeControl .dijitButtonNode {
+  display: none;
+}
+.xfDateTimeControl {
+  display: inline;
+}
+.xfDateTimeControl > xfLabel {
+  float: left;
+}
+.xfDateTimeControl .dijitDateTextBox {
+  width: 9em;
+}
+.xfDateTimeControl .dijitTimeTextBox {
+  width: 9em;
+}
+.bfTabContainer {
+  height: 600px;
+  width: 98%;
+  overflow: auto;
+}
+.dijitError .dijitValidationIcon,
+.dijitError .dijitValidationIconText {
+  visibility: hidden;
+}
+/* SORIA THEME BUGFIX */
+.dijitTextBoxFocused {
+  outline: none;
+}
+.widgetContainer .dijitTextBox {
+  width: auto;
+  /* width:13.8em;*/
+
+  -moz-user-modify: read-write !important;
+}
+.widgetContainer .dijitInputInner {
+  border: 2px inset threedface;
+}
+.tundra .dijitInputContainer input {
+  margin: 0;
+}
+.bf .xfSelect1 .widgetContainer .dijitButtonNode {
+  height: 100%;
+  padding: 0.18em;
+}
+/* ################################################ */
+/*  DOJOX TOASTER CSS
+/* ################################################ */
+/* main classes for dojox.widget.Toaster */
+.dijitToasterContainer {
+  padding: 2px;
+  border: thin dotted #aaaaaa;
+  display: block;
+  position: absolute;
+  width: 17.5em;
+  margin: 0px;
+  font: 0.75em;
+}
+.dijitToasterContent {
+  background: #73c74a;
+  font-size: 0.8em;
+  color: #333333;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.dijitToasterMessage {
+  color: #f5f5f5;
+}
+.dijitToasterError,
+.dijitToasterFatal {
+  font-weight: bold;
+  color: #f5f5f5;
+}
+.dijitToasterWarning .dijitToasterContent {
+  background: #d4d943;
+}
+.dijitToasterError .dijitToasterContent {
+  background: #8b0000;
+}
+/* imported from dijit.css */
+.dijitToasterClip {
+  position: absolute;
+  z-index: 5000;
+  overflow: hidden;
+}
+xfSelect1 .dijitArrowButton {
+  width: 13px;
+  height: 22px;
+}
+xfSelect1 .dijitArrowButton .dijitInputField {
+  padding-top: 5px;
+}
+xfSelect1 .dijitInputContainer .xfValue {
+  border: 0;
+  padding-top: 3px;
+}
+.bfCheckBoxGroup .dijitDisabled,
+.xfReadOnly .dijitCheckBoxReadOnly {
+  background-color: #e6e6e6 !important;
+}
+.xfReadWrite .dijitRadio,
+.xfReadWrite .dijitRadioIcon,
+.xfReadWrite .dijitRadioChecked {
+  margin: 0;
+  padding: 0;
+  height: 16px;
+  width: 16px;
+}
+.xfReadWrite .dijitRadio,
+.xfReadWrite .dijitRadioIcon {
+  background: url("../images/checkmark.png") no-repeat -112px 50%;
+}
+.xfReadWrite .dijitRadioChecked {
+  background: url("../images/checkmark.png") no-repeat -96px 50%;
+}
+.xfReadWrite .dijitCheckBox,
+.xfReadWrite .dijitCheckBoxIcon,
+.xfReadWrite .dijitCheckBoxChecked {
+  height: 14px;
+  width: 14px;
+  margin: 0;
+  padding: 0;
+}
+.xfReadWrite .dijitCheckBox,
+.xfReadWrite .dijitCheckBoxIcon {
+  background: url("../images/checkmarkNoBorder.png") no-repeat -16px 50%;
+}
+.xfReadWrite .dijitCheckBoxChecked {
+  background: url("../images/checkmarkNoBorder.png") no-repeat 0 50%;
+}
+.xfReadOnly .dijitRadio,
+.xfReadOnly .dijitRadioIcon {
+  background: url("../images/checkmark.png") no-repeat -144px 50%;
+  margin: 0;
+  padding: 0;
+  height: 16px;
+  width: 16px;
+}
+.xfReadOnly .dijitRadioChecked {
+  background-position: -129px 50%;
+}
+.xfReadOnly .dijitCheckBox,
+.xfReadOnly .dijitCheckBoxIcon {
+  background: url("../images/checkmarkNoBorder.png") no-repeat -48px 50%;
+  height: 14px;
+  width: 14px;
+}
+.xfReadOnly .dijitCheckBoxChecked {
+  background-position: -32px 50%;
+}
+.xfControl .dijitCheckBoxFocused {
+  border: 1px solid #333333;
+}
+.xfControl .dijitFocusedLabel {
+  border: 1px solid #aaaaaa;
+}
+.xfControl select {
+  background-color: #ffffff;
+}
