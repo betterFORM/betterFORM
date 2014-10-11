@@ -95,6 +95,27 @@ public class ExtensionFunctionsHelperTest extends TestCase {
                 ExtensionFunctionsHelper.parseISODate("2001-02-10T07:17:07.017+01:00"));
         assertEquals(create("UTC", 2001, Calendar.FEBRUARY, 10, 8, 17, 7, 17),
                 ExtensionFunctionsHelper.parseISODate("2001-02-10T07:17:07.017-01:00"));
+
+        // xs:dateTime may not add trailing zeroes for the millisecond part,
+        // so the parsing must accept unpadded milliseconds
+        assertEquals(create("UTC", 2001, Calendar.OCTOBER, 11, 12, 13, 14, 0),
+                ExtensionFunctionsHelper.parseISODate("2001-10-11T12:13:14Z"));
+
+        assertEquals(create("UTC", 2001, Calendar.OCTOBER, 11, 12, 13, 14, 500),
+                ExtensionFunctionsHelper.parseISODate("2001-10-11T12:13:14.5Z"));
+
+        assertEquals(create("UTC", 2001, Calendar.OCTOBER, 11, 12, 13, 14, 220),
+                ExtensionFunctionsHelper.parseISODate("2001-10-11T12:13:14.22Z"));
+
+        // the same tests without timezone
+        assertEquals(create("UTC", 2001, Calendar.OCTOBER, 11, 12, 13, 14, 0),
+                ExtensionFunctionsHelper.parseISODate("2001-10-11T12:13:14"));
+
+        assertEquals(create("UTC", 2001, Calendar.OCTOBER, 11, 12, 13, 14, 500),
+                ExtensionFunctionsHelper.parseISODate("2001-10-11T12:13:14.5"));
+
+        assertEquals(create("UTC", 2001, Calendar.OCTOBER, 11, 12, 13, 14, 220),
+                ExtensionFunctionsHelper.parseISODate("2001-10-11T12:13:14.22"));
     }
 
     /**

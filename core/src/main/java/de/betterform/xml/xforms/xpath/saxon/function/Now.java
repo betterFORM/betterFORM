@@ -29,8 +29,11 @@ public class Now extends XFormsFunction {
      * Evaluate in a general context
      */
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	GregorianCalendar now = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+        GregorianCalendar now = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+        return evaluateItem(xpathContext, now);
+    }
 
-	return new StringValue(new DateTimeValue(now, true).getStringValue());
+    final Item evaluateItem(XPathContext xpathContext, GregorianCalendar now) throws XPathException {
+        return new StringValue(new DateTimeValue(now, true).getStringValue());
     }
 }
