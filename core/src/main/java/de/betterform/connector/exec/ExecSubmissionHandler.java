@@ -92,9 +92,7 @@ public class ExecSubmissionHandler extends AbstractConnector implements Submissi
 
 //            // create response stream
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if(LOGGER.isDebugEnabled()){
-                DOMUtil.prettyPrintDOM(document, stream);    
-            }
+            DOMUtil.prettyPrintDOM(document, stream);
 
             Map response = new HashMap();
             response.put(XFormsProcessor.SUBMISSION_RESPONSE_STREAM, new ByteArrayInputStream(stream.toByteArray()));
