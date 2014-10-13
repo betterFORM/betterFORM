@@ -52,7 +52,7 @@ public class ExtensionFunctionsHelper {
      */
     public static Date parseISODate(String date) throws ParseException {
         String pattern;
-        StringBuffer buffer = new StringBuffer(date);
+        StringBuilder buffer = new StringBuilder(date);
 
         switch (buffer.length()) {
             case 4:
@@ -89,6 +89,14 @@ public class ExtensionFunctionsHelper {
                     // insert milliseconds
                     buffer.insert(19, ".000");
                 }
+                for (int i=20; i<23; i++) {
+                    // pad fractional seconds with zeroes
+                    if (buffer.length() > i && !Character.isDigit(buffer.charAt(i))) {
+                        buffer.insert(i, '0');
+                    } else if (buffer.length() == i) {
+                        buffer.append('0');
+                    }
+                }
                 if (buffer.length() == 23) {
                     if (buffer.charAt(22) == 'Z')
                     {
@@ -120,7 +128,7 @@ public class ExtensionFunctionsHelper {
         }
         if (!format.format(format.parse(dateFromBuffer)).equals(dateFromBuffer))
         {
-        	throw new ParseException("Not a valid ISO date", 0);
+        	throw new ParseException("Not a valid ISO date: "+ dateFromBuffer, 0);
         }
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
 

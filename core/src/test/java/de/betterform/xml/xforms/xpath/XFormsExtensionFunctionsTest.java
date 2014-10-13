@@ -167,9 +167,16 @@ public class XFormsExtensionFunctionsTest extends BetterFormTestCase {
      */
     public void testNow() throws Exception {
         Date before = new Date();
-        Thread.sleep(5000);
-        Date now = ExtensionFunctionsHelper.parseISODate(evaluateInDefaultContextAsString("now()"));
-        Thread.sleep(5000);
+
+        Thread.sleep(500);
+        String now_str = evaluateInDefaultContextAsString("now()");
+        Date now = null;
+        try {
+            now = ExtensionFunctionsHelper.parseISODate(now_str);
+        } catch (java.text.ParseException e) {
+            fail("now() returned unparseable date: '" + now_str + "', message was: " + e.getMessage());
+        }
+        Thread.sleep(500);
         Date after = new Date();
 
         assertTrue(before.before(now));
