@@ -82,24 +82,21 @@ public class ContainerTest extends TestCase {
         //initialize/bootstrap processor
         this.processor.init();
         assertNull(this.versionEventListener.getType());
+
+        // unregister listener
+        ((EventTarget)this.processor.getXForms().getDocumentElement()).removeEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
     }
 
     public void testVersionInvalid()throws Exception{
+
         String path = getClass().getResource("buglet7.xml").getPath();
         this.processor.setXForms(getClass().getResourceAsStream("buglet7.xml"));
         this.processor.setBaseURI("file://" + path);
 
-        /*  Check for event -> doesn´t occur right now because processor shutdown before event reaches client.
-            this.versionEventListener = new TestEventListener();
-            ((EventTarget)this.processor.getXForms().getDocumentElement()).addEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
+        this.versionEventListener = new TestEventListener();
+        ((EventTarget)this.processor.getXForms().getDocumentElement()).addEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
 
-
-        //initialize/bootstrap processor
-        this.processor.init();
-
-        //Check for event -> doesn´t occur right now because processor shutdown before event reaches client.
-            assertNotNull(this.versionEventListener.getType());
-         */
+        assertNull(this.versionEventListener.getType());
 
         Exception exception = null;
 
@@ -109,8 +106,13 @@ public class ContainerTest extends TestCase {
             exception = e;
         }
 
+        assertEquals("xforms-version-exception", this.versionEventListener.getType());
+
         assertNotNull(exception);
         assertEquals("xforms-version-exception: version exception: version setting of default model not supported: '2011.12'::/envelope[1]/xforms:model[1]", exception.getMessage());
+
+        // unregister listener
+        ((EventTarget)this.processor.getXForms().getDocumentElement()).removeEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
     }
 
     public void testDefaulModelHasLowerVersion()throws Exception{
@@ -118,17 +120,10 @@ public class ContainerTest extends TestCase {
         this.processor.setXForms(getClass().getResourceAsStream("buglet8.xml"));
         this.processor.setBaseURI("file://" + path);
 
-        /*  Check for event -> doesn´t occur right now because processor shutdown before event reaches client.
-            this.versionEventListener = new TestEventListener();
-            ((EventTarget)this.processor.getXForms().getDocumentElement()).addEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
+        this.versionEventListener = new TestEventListener();
+        ((EventTarget)this.processor.getXForms().getDocumentElement()).addEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
 
-
-        //initialize/bootstrap processor
-        this.processor.init();
-
-        //Check for event -> doesn´t occur right now because processor shutdown before event reaches client.
-            assertNotNull(this.versionEventListener.getType());
-         */
+        assertNull(this.versionEventListener.getType());
 
         Exception exception = null;
 
@@ -138,8 +133,13 @@ public class ContainerTest extends TestCase {
             exception = e;
         }
 
+        assertEquals("xforms-version-exception", this.versionEventListener.getType());
+
         assertNotNull(exception);
         assertEquals("xforms-version-exception: version exception: Incompatible version setting: 1.1 on model: /envelope[1]/xforms:model[2]::/envelope[1]/xforms:model[1]", exception.getMessage());
+
+        // unregister listener
+        ((EventTarget)this.processor.getXForms().getDocumentElement()).removeEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
     }
 
     public void testGetVersion10_11()throws Exception{
@@ -172,6 +172,9 @@ public class ContainerTest extends TestCase {
 
         assertNotNull(exception);
         assertEquals("xforms-version-exception: version exception: version setting of default model not supported: '1.2'::/envelope[1]/xforms:model[1]", exception.getMessage());
+
+        // unregister listener
+        ((EventTarget)this.processor.getXForms().getDocumentElement()).removeEventListener(XFormsEventNames.VERSION_EXCEPTION, this.versionEventListener, true);
     }
 
     public void testInitNoModel() throws Exception{
@@ -230,6 +233,9 @@ public class ContainerTest extends TestCase {
             assertTrue("wrong error event target", ("text-input").equals(errorListener.getId()));
             Map errorMap= (Map) errorListener.getContext();
             assertTrue("wrong error context info", ("wrong").equals(errorMap.get("defaultinfo")));
+
+            // unregister listener
+            eventTarget.removeEventListener("xforms-binding-exception", errorListener, true);
         }
     }
 
@@ -253,6 +259,7 @@ public class ContainerTest extends TestCase {
     /**
      *
      */
+    @Override
     protected void setUp() throws Exception {
         processor = new XFormsProcessorImpl();
     }
@@ -260,6 +267,7 @@ public class ContainerTest extends TestCase {
     /**
      * __UNDOCUMENTED__
      */
+    @Override
     protected void tearDown() {
         this.processor = null;
     }
