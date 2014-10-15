@@ -2,7 +2,7 @@
  * Copyright (c) 2012. betterFORM Project - http://www.betterform.de
  * Licensed under the terms of BSD License
  */
-package de.betterform.html5;
+package de.betterform.agent.web;
 
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
@@ -19,7 +19,7 @@ import java.net.URI;
  * @author joern turner
  * @version $Id: XMLBaseResolverTest.java 3251 2008-07-08 09:26:03Z lasse $
  */
-public class PreprocessorTest extends TestCase {
+public class ModelGeneratorTest extends TestCase {
 //    static {
 //        BasicConfigurator.configure();
 //    }
@@ -43,7 +43,7 @@ public class PreprocessorTest extends TestCase {
         transformerService.addResourceResolver(new FileResourceResolver());
         URI uri = new URI("file://" + getClass().getResource("html2xforms.xsl").getPath());
         transformerService.getTransformer(uri);
-        Node result = Preprocessor.html2Xforms(inputString, transformerService);
+        Node result = ModelGenerator.html2Xforms(inputString, transformerService);
         assertNotNull(result);
         DOMUtil.prettyPrintDOM(result);
     }

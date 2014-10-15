@@ -22,10 +22,12 @@ public class ModelProcessor extends AbstractProcessorDecorator {
 
     private boolean isSuccess=true;
     private List<ErrorInfo> errors;
+    private List<XMLEvent> events;
 
     public ModelProcessor() {
         super();
         this.errors = new ArrayList();
+        this.events = new ArrayList();
     }
 
     public List<ErrorInfo> getErrors(){
@@ -70,8 +72,10 @@ public class ModelProcessor extends AbstractProcessorDecorator {
                             invalid=true;
                         }
                         if(modelItem.getRefreshView().isRequiredMarked()){
-                            errorInfo.setErrorType(ErrorInfo.REQUIRED_INVALID);
-                            invalid=true;
+                            if(modelItem.getValue().length()==0){
+                                errorInfo.setErrorType(ErrorInfo.REQUIRED_INVALID);
+                                invalid=true;
+                            }
                         }
                         if(invalid){
                             errorInfo.setRef(modelItem.toString());
@@ -79,6 +83,8 @@ public class ModelProcessor extends AbstractProcessorDecorator {
                         }
                     }
                 }
+
+                this.events.add(xmlEvent);
             }
         } catch (Exception e) {
             handleEventException(e);
@@ -118,13 +124,13 @@ public class ModelProcessor extends AbstractProcessorDecorator {
     }
 
     class ErrorInfo{
-        public static final short DATATYPE_INVALID=0;
-        public static final short CONSTRAINT_INVALID=1;
-        public static final short REQUIRED_INVALID=2;
+        public static final String DATATYPE_INVALID="datatype invalid";
+        public static final String CONSTRAINT_INVALID="constraint invalid";
+        public static final String REQUIRED_INVALID="required but empty";
 
         private String ref="";
         private String dataType="";
-        private short errorType;
+        private String errorType;
         private String path;
         private String alert;
 
@@ -152,11 +158,11 @@ public class ModelProcessor extends AbstractProcessorDecorator {
             this.dataType = dataType;
         }
 
-        public short getErrorType() {
+        public String getErrorType() {
             return errorType;
         }
 
-        public void setErrorType(short errorType) {
+        public void setErrorType(String errorType) {
             this.errorType = errorType;
         }
 

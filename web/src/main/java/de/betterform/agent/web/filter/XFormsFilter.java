@@ -16,7 +16,7 @@ import de.betterform.agent.web.event.DefaultUIEventImpl;
 import de.betterform.agent.web.event.UIEvent;
 //import de.betterform.agent.web.flux.FluxProcessor;
 import de.betterform.agent.web.flux.SocketProcessor;
-import de.betterform.html5.Preprocessor;
+import de.betterform.agent.web.ModelGenerator;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.config.XFormsConfigException;
 import de.betterform.xml.dom.DOMUtil;
@@ -172,37 +172,10 @@ public class XFormsFilter implements Filter {
             String contentType = request.getContentType();
 
             if(contentType.contains("form")){
-                // get referer document
-                /*
-                This might be a weak point: the referer header is not reliable in all cases or might get filtered by proxies. For this to work
-                the referer must return the URL of the host document of the form.
-                */
-                String referer = request.getHeader("Referer");
-
-                // parse and sanitize it -> xhtml
-                // generate xforms from referer document, put into defined folder 'by the side' for caching/refining generated xforms
-                // mix incoming form data into generated document or pass it as XML instance
-                Enumeration<String> params = request.getParameterNames();
-                StringBuffer formData = new StringBuffer();
-                while(params.hasMoreElements()){
-                    String name = params.nextElement();
-                    String value = request.getParameter(name);
-                    formData.append(name);
-                    formData.append(":");
-                    if(value != null){
-                        formData.append(value);
-                    }else{
-                        formData.append("");
-                    }
-                    formData.append(";");
-                }
-                if(LOG.isDebugEnabled()){
-                    LOG.debug("data send by form: " + formData.toString());
-                }
 
                 Node node=null;
                 try {
-                    node = Preprocessor.submit2Xforms(referer, (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE), formData.toString());
+                    node = ModelGenerator.generateXFormsModel(request, (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE), webFactory);
                     DOMUtil.prettyPrintDOM(node);
                 } catch (URISyntaxException e) {
                     returnErrorPage(request,response,session,e);
@@ -226,10 +199,9 @@ public class XFormsFilter implements Filter {
                         // call processor revalidate
                         // if submit-done pass request on unchanged
                         // if submit-error return input document with embedded error information (e.g. as a div as first or last child of body); option - redirect to error page
-                        LOG.info("HTML form data is valid");
+                        LOG.info("HTML form data are valid");
                         BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
                         filterChain.doFilter(srvRequest, bufResponse);
-                        LOG.info("Returned from Chain");
                         response(response,bufResponse);
                     }else {
                         //todo: return error information
@@ -291,7 +263,7 @@ public class XFormsFilter implements Filter {
                         response(response, bufResponse);
                     }else{
                         //html input processing
-                        Node node = Preprocessor.html2Xforms(bufResponse.getDataAsString(), (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
+                        Node node = ModelGenerator.html2Xforms(bufResponse.getDataAsString(), (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE));
                         generateUI=false;
                         //store into request attribute that will be picked up during xforms processor init (setXForms)
                         request.setAttribute(WebFactory.XFORMS_NODE, node);

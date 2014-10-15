@@ -4,7 +4,8 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class FormResponseServlet extends HttpServlet {
+public class
+        FormResponseServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out;
@@ -20,7 +21,7 @@ public class FormResponseServlet extends HttpServlet {
 
         out.println("<html><head><title>");
         out.println(title);
-        out.println("</title></head><body bgcolor=yellow>");
+        out.println("</title></head><body class='bgcolor:green;'>");
         out.println("<center><H1>Result Window</H1>");
         out.println("<p>This is your response window.<p>");
         out.println("Called from " + HttpUtils.getRequestURL(request).toString());

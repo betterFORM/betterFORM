@@ -11,6 +11,8 @@
     "paper-elements": "Polymer/paper-elements#~0.3.3",
     "paper-menu-button": "Polymer/paper-menu-button#~0.3.4",
     "jquery": "~2.1.1",
-    "jquery-atmosphere": "~2.2.2"
+    "jquery-atmosphere": "~2.2.2",
+    "bootstrap": "~3.2.0"
+
   }
 }
