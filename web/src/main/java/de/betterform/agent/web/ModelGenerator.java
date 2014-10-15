@@ -58,7 +58,6 @@ public class ModelGenerator {
         org.w3c.dom.Document domDoc = DOMBuilder.jsoup2DOM(doc);
         DOMResult domResult = generateModel(cachingTransformerService, reqUri, data, domDoc);
 
-
         // persist created model to preconfigured folder
         String contextname = request.getContextPath();
         int pos = referer.indexOf(contextname);
@@ -80,7 +79,7 @@ public class ModelGenerator {
         File xformModelFile = new File(parentFile,xfmFileName);
         if(!xformModelFile.exists()){
             //create it
-            String xm = DOMUtil.serializeToString((org.w3c.dom.Document) domResult);
+            String xm = DOMUtil.serializeToString((org.w3c.dom.Document) domResult.getNode());
             FileUtils.writeStringToFile(xformModelFile, xm);
         }
         return domResult.getNode();

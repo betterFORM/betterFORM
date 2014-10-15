@@ -118,8 +118,8 @@
 
             <xsl:apply-templates select="*" mode="bind"/>
 
-            <xsl:element name="xf:submision" namespace="http://www.w3.org/2002/xforms">
-                <xsl:attribute name="id">s-<xsl:value-of select="@id"/>-default</xsl:attribute>
+            <xsl:element name="xf:submission" namespace="http://www.w3.org/2002/xforms">
+                <xsl:attribute name="id">s-default</xsl:attribute>
                 <xsl:attribute name="resource">
                     <xsl:value-of select="@action"/>
                 </xsl:attribute>
@@ -127,7 +127,7 @@
                     <xsl:variable name="method" select="if(exists(//form/@method)) then @method else 'GET'"/>
                     <xsl:value-of select="$method"/>
                 </xsl:attribute>
-                <xsl:attribute name="validate">true()</xsl:attribute>
+                <!--<xsl:attribute name="validate">true()</xsl:attribute>-->
             </xsl:element>
         </xsl:element>
     </xsl:template>

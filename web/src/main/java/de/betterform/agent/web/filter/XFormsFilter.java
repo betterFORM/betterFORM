@@ -187,7 +187,8 @@ public class XFormsFilter implements Filter {
 
 
                 try {
-                    ModelProcessor mp = createXFormsModelProcessor(node);
+                    ModelProcessor mp = createXFormsModelProcessor(request,node);
+                    mp.submit();
                     boolean success = mp.isSuccess();
 
                     // instanciate processor (might even be a plain (non-web) processor)
@@ -296,10 +297,11 @@ public class XFormsFilter implements Filter {
         webFactory.getServletContext().getRequestDispatcher(path).forward(request,response);
     }
 
-    private ModelProcessor createXFormsModelProcessor(Node xforms) throws ServletException, IOException, XFormsException {
+    private ModelProcessor createXFormsModelProcessor(HttpServletRequest  request, Node xforms) throws ServletException, IOException, XFormsException {
         ModelProcessor modelProcessor = null;
         modelProcessor = new ModelProcessor();
         modelProcessor.setXformsProcessor(new XFormsProcessorImpl());
+        modelProcessor.setBaseURI(request.getRequestURL().toString());
         modelProcessor.setXForms(xforms);
         modelProcessor.init();
         return modelProcessor;

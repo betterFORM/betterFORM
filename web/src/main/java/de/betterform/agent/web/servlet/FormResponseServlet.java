@@ -16,6 +16,7 @@ public class
         // set content type and other response header fields first
         response.setContentType("text/html");
 
+
         // then write the data of the response
         out = response.getWriter();
 

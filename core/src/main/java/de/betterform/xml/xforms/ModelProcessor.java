@@ -5,8 +5,12 @@ import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
 import de.betterform.xml.events.XFormsEventNames;
 import de.betterform.xml.events.XMLEvent;
+import de.betterform.xml.xforms.exception.XFormsBindingException;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.model.ModelItem;
+import de.betterform.xml.xforms.model.submission.Submission;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
@@ -19,6 +23,7 @@ import java.util.List;
  * processes standalong XForms models.
  */
 public class ModelProcessor extends AbstractProcessorDecorator {
+    private static final Log LOG = LogFactory.getLog(ModelProcessor.class);
 
     private boolean isSuccess=true;
     private List<ErrorInfo> errors;
@@ -52,8 +57,6 @@ public class ModelProcessor extends AbstractProcessorDecorator {
                 String type = xmlEvent.getType();
 
                 if(XFormsEventNames.MODEL_CONSTRUCT_DONE.equalsIgnoreCase(type)){
-                    String s=type;
-                    System.out.println(s);
 
                     Iterator iterator = this.xformsProcessor.getContainer().getDefaultModel().getDefaultInstance().iterateModelItems();
                     while(iterator.hasNext()){
@@ -82,8 +85,9 @@ public class ModelProcessor extends AbstractProcessorDecorator {
                             this.errors.add(errorInfo);
                         }
                     }
+                }else if(XFormsEventNames.SUBMIT_ERROR.equalsIgnoreCase(type)){
+                    LOG.debug("XForms submit error");
                 }
-
                 this.events.add(xmlEvent);
             }
         } catch (Exception e) {
@@ -111,6 +115,28 @@ public class ModelProcessor extends AbstractProcessorDecorator {
         }
 
         return null;
+    }
+
+    /**
+     * submits the HTML form via XForms
+     * @param resource - the string of the respective action attribute of original HTML form
+     * @throws XFormsException
+     */
+    public void submit() throws XFormsException{
+        // todo:  hard-coded id for now
+        String id = "s-default";
+
+        // find submission matching the resource string
+        Container container = getXformsProcessor().getContainer();
+
+        Object submissionObject = getXformsProcessor().getContainer().lookup(id);
+
+        if (submissionObject == null || !(submissionObject instanceof Submission)) {
+            throw new XFormsBindingException("invalid submission id " + id,((Submission) submissionObject).getTarget(),null);
+        }
+
+        // dispatch xforms-submit to submission
+        container.dispatch(((Submission) submissionObject).getTarget(), XFormsEventNames.SUBMIT, null);
     }
 
     /**
