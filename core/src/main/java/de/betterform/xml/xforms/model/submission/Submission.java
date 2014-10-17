@@ -5,6 +5,8 @@
 
 package de.betterform.xml.xforms.model.submission;
 
+import com.sun.javaws.jnl.*;
+import com.sun.tools.internal.ws.util.xml.XmlUtil;
 import de.betterform.BetterFORMConstants;
 import de.betterform.connector.SubmissionHandler;
 import de.betterform.connector.http.AbstractHTTPConnector;
@@ -36,6 +38,7 @@ import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.om.Item;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.exist.dom.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -583,7 +586,6 @@ public class Submission extends BindingElement implements DefaultAction {
                 getLogger().warn(this + " submit: the 'includenamespaceprefixes' attribute is not supported yet");
             }
 */
-
             processSubmissionOptions();
 
 
@@ -1278,6 +1280,9 @@ public class Submission extends BindingElement implements DefaultAction {
 				
 				headerItems.add(wrapper.wrap(headerEl));
 			}
+            if(XFormsProcessor.SUBMISSION_RESPONSE_STREAM.equals(entry.getKey())){
+                result.put(XFormsProcessor.SUBMISSION_RESPONSE_STREAM,entry.getValue());
+            }
 		}
 		result.put(RESOURCE_URI, getResourceURI());
         result.put(RESPONSE_STATUS_CODE, (response.containsKey(RESPONSE_STATUS_CODE) ? Double.parseDouble((String)response.get(RESPONSE_STATUS_CODE)) : Double.valueOf(200d))); //TODO get real response code

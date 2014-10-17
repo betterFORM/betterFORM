@@ -120,13 +120,13 @@
 
             <xsl:element name="xf:submission" namespace="http://www.w3.org/2002/xforms">
                 <xsl:attribute name="id">s-default</xsl:attribute>
-                <xsl:attribute name="resource">
-                    <xsl:value-of select="@action"/>
-                </xsl:attribute>
+                <xsl:attribute name="resource"><xsl:value-of select="@action"/></xsl:attribute>
+                <!--<xsl:attribute name="resource">echo:foo</xsl:attribute>-->
                 <xsl:attribute name="method">
                     <xsl:variable name="method" select="if(exists(//form/@method)) then @method else 'GET'"/>
                     <xsl:value-of select="$method"/>
                 </xsl:attribute>
+                <xsl:attribute name="includenamespaceprefixes">false()</xsl:attribute>
                 <!--<xsl:attribute name="validate">true()</xsl:attribute>-->
             </xsl:element>
         </xsl:element>

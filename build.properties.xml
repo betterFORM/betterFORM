@@ -102,9 +102,15 @@
                 <pathelement location="${core.dir}/src/main/lib/xmlrpc-server-3.1.2.jar" groupid="org.apache.xmlrpc" version="3.1.2" artifactId="xmlrpc-server"/>
                 <pathelement location="${core.dir}/src/main/lib/ant-1.8.2.jar" groupid="org.apache.ant" version="1.8.2" artifactId="ant"/>
 
-                <pathelement location="${core.dir}/src/main/lib/jackson-core-2.3.1.jar" groupid="com.fasterxml.jackson.core" version="2.3.1" artifactId="jackson-core"/>
-                <pathelement location="${core.dir}/src/main/lib/jackson-annotations-2.3.0.jar" groupid="com.fasterxml.jackson.core" version="2.3.0" artifactId="jackson-annotations"/>
-                <pathelement location="${core.dir}/src/main/lib/jackson-databind-2.3.3.jar" groupid="com.fasterxml.jackson.core" version="2.3.3" artifactId="jackson-databind"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-core-2.4.3.jar" groupid="com.fasterxml.jackson.core" version="2.3.1" artifactId="jackson-core"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-annotations-2.4.3.jar" groupid="com.fasterxml.jackson.core" version="2.4.3" artifactId="jackson-annotations"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-module-jaxb-annotations-2.4.3.jar" groupid="com.fasterxml.jackson.core" version="2.4.3" artifactId="jackson-module-jaxb-annotations"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-databind-2.4.3.jar" groupid="com.fasterxml.jackson.core" version="2.4.3" artifactId="jackson-databind"/>
+                <pathelement location="${core.dir}/src/main/lib/jackson-dataformat-xml-2.4.3.jar" groupid="com.fasterxml.jackson.dataformat" version="2.4.3" artifactId="jackson-dataformat-xml"/>
+                <pathelement location="${core.dir}/src/main/lib/woodstox-core-lgpl-4.2.0.jar" groupid="org.codehaus.woodstox" version="4.2.0" artifactId="woodstox-core-lgpl"/>
+                <pathelement location="${core.dir}/src/main/lib/stax2-api-3.1.1.jar" groupid="org.codehaus.woodstox" version="3.1.1" artifactId="stax2-api"/>
+                <pathelement location="${core.dir}/src/main/lib/jsr311-api-1.1.1.jar" groupid="javax.ws.rs" version="1.1.1" artifactId="jsr311-api"/>
+                <pathelement location="${core.dir}/src/main/lib/jaxb-api-2.2.jar" groupid="javax.xml.bind" version="2.2" artifactId="jaxb-api"/>
 
                 <!-- eXist -->
                 <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>

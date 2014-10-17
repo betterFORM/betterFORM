@@ -1,0 +1,16 @@
+<errors>
+    <errorInfo>
+        <ref>myname</ref>
+        <errorType>constraint-failed</errorType>
+        <path>/data[1]/myname[1]</path>
+        <alert/>
+        <datatype></datatype>
+    </errorInfo>
+    <errorInfo>
+        <ref>myname</ref>
+        <errorType>required-failed</errorType>
+        <path>/data[1]/myname[1]</path>
+        <alert/>
+        <datatype></datatype>
+    </errorInfo>
+</errors>

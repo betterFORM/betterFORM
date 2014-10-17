@@ -25,18 +25,21 @@ import de.betterform.xml.xforms.ModelProcessor;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
 import de.betterform.xml.xforms.exception.XFormsErrorIndication;
 import de.betterform.xml.xforms.exception.XFormsException;
+import de.betterform.xml.xforms.model.submission.Submission;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.infinispan.Cache;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -174,8 +177,9 @@ public class XFormsFilter implements Filter {
             if(contentType.contains("form")){
 
                 Node node=null;
+                ModelGenerator generator=new ModelGenerator();
                 try {
-                    node = ModelGenerator.generateXFormsModel(request, (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE), webFactory);
+                    node = generator.generateModel(request, (CachingTransformerService) this.filterConfig.getServletContext().getAttribute(TransformerService.TRANSFORMER_SERVICE), webFactory);
                     DOMUtil.prettyPrintDOM(node);
                 } catch (URISyntaxException e) {
                     returnErrorPage(request,response,session,e);
@@ -183,35 +187,82 @@ public class XFormsFilter implements Filter {
                     returnErrorPage(request, response, session, e);
                 } catch (XFormsConfigException e) {
                     returnErrorPage(request, response, session, e);
+                } catch (ParserConfigurationException e) {
+                    returnErrorPage(request, response, session, e);
+                } catch (SAXException e) {
+                    returnErrorPage(request, response, session, e);
                 }
 
 
                 try {
                     ModelProcessor mp = createXFormsModelProcessor(request,node);
-                    mp.submit();
+                    InputStream resultStream = mp.submit();
                     boolean success = mp.isSuccess();
 
                     // instanciate processor (might even be a plain (non-web) processor)
 
                     if(success){
 
-                        // processor will attach xforms-submit-error and xforms-submit-done listeners
-                        // feed generated xforms
-                        // call processor revalidate
-                        // if submit-done pass request on unchanged
-                        // if submit-error return input document with embedded error information (e.g. as a div as first or last child of body); option - redirect to error page
+                        Submission submission = mp.getDefaultSubmission();
+                        if(LOG.isDebugEnabled()){
+                            LOG.debug("Submission contenttype: " + submission.getSerialization());
+                            LOG.debug("Submission replace: " + submission.getReplace());
+                            LOG.debug("Submission mediatype: " + submission.getMediatype());
+                            LOG.debug("Submission resource: " + submission.getResource());
+                            LOG.debug("Submission method: " + submission.getMethod());
+                            LOG.debug("Submission encoding: " + submission.getEncoding());
+                        }
+
                         LOG.info("HTML form data are valid");
-                        BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
-                        filterChain.doFilter(srvRequest, bufResponse);
-                        response(response,bufResponse);
+                        /*
+                        One of 3 modes would be possible:
+                        - just validate and pass original urlencoded post along the filterchain
+                        - use ModelProcessor to submit data to the URL defined by form as XML  (this one is running right now)
+                        - use ModelProcessor to submit data to the URL defined by form as JSON
+
+                         Further it is the question if a submission should be used at all or just convert the data
+                         and send them along.
+
+                         What we're loosing:
+                         - submission events and possible actions attached to these events
+                         - relevance selection (once we support relevance in the client)
+
+                         What we're gaining
+                         - bit of efficiency as we do not need an additional request
+                         */
+
+                        // feed resultStream data (XML) into request for endpoint to process
+                        // call filterchain to send data along to URI specified by form action (submission resource respectively)
+
+//                        BufferedHttpServletResponseWrapper bufResponse = new BufferedHttpServletResponseWrapper((HttpServletResponse) srvResponse);
+//                        filterChain.doFilter(srvRequest, bufResponse);
+
+                        OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
+                        for (int b = resultStream.read(); b > -1; b = resultStream.read()) {
+                            outputStream.write(b);
+                        }
+
+                        // close streams
+                        resultStream.close();
+                        outputStream.close();
+                        // exit Filter without calling filterchain as response has already been handled by ModelProcessor
+                        return;
                     }else {
                         //todo: return error information
                         List errors = mp.getErrors();
+                        String errs = mp.serialize();
+                        // mix errors back into original html document
+                        ByteArrayOutputStream out = generator.mixinErrors(errs);
 
-                        sendError(request, response, session);
+                        response.setContentLength(out.toByteArray().length);
+                        response.getOutputStream().write(out.toByteArray());
+
+//                        sendError(request, response, session);
                     }
                 } catch (XFormsException e) {
                     sendError(request, response, session);
+                } catch (TransformerException e) {
+                    e.printStackTrace();
                 }
             }
         } else {

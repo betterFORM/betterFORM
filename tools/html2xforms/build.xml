@@ -30,5 +30,16 @@
         </xslt>
     </target>
 
+    <target name="mixinErrors" depends="prepare" description="transforms xhtml/xforms to html5 web components">
+        <xslt basedir="${basedir}"
+                destdir="${basedir}/target"
+                style="${basedir}/mixinErrors.xsl"
+                force="true"
+                includes="error-test.html">
+            <factory name="net.sf.saxon.TransformerFactoryImpl"/>
+            <classpath refid="transform.class.path"/>
+        </xslt>
+    </target>
+
 
 </project>

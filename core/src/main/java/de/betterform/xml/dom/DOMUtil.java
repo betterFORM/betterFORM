@@ -1014,7 +1014,7 @@ public class DOMUtil {
      */
     public static Document parseString(String input, boolean namespaces, boolean validating)
             throws ParserConfigurationException, IOException, SAXException {
-        return createDocumentBuilder(true,false).parse(new InputSource(new StringReader(input)));
+        return createDocumentBuilder(namespaces,validating).parse(new InputSource(new StringReader(input)));
     }
 
 
@@ -1148,6 +1148,7 @@ public class DOMUtil {
             StreamResult result = new StreamResult(writer);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
+
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.transform(domSource, result);

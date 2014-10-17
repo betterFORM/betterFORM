@@ -1,5 +1,10 @@
 package de.betterform.xml.xforms;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import de.betterform.xml.config.Config;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.events.BetterFormEventNames;
@@ -13,8 +18,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.events.Event;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,19 +31,25 @@ import java.util.List;
  */
 public class ModelProcessor extends AbstractProcessorDecorator {
     private static final Log LOG = LogFactory.getLog(ModelProcessor.class);
+    private final Errors errors;
 
     private boolean isSuccess=true;
-    private List<ErrorInfo> errors;
     private List<XMLEvent> events;
+    private Object responseStream=null;
+    private Submission defaultSubmission;
 
     public ModelProcessor() {
         super();
-        this.errors = new ArrayList();
+        this.errors = new Errors() ;
         this.events = new ArrayList();
     }
 
     public List<ErrorInfo> getErrors(){
-        return this.errors;
+        return this.errors.getErrorInfo();
+    }
+
+    public Submission getDefaultSubmission() {
+        return defaultSubmission;
     }
 
     @Override
@@ -51,6 +64,7 @@ public class ModelProcessor extends AbstractProcessorDecorator {
 
     @Override
     public void handleEvent(Event event) {
+        Object result;
         try {
             if (event instanceof XMLEvent) {
                 XMLEvent xmlEvent = (XMLEvent) event;
@@ -62,31 +76,38 @@ public class ModelProcessor extends AbstractProcessorDecorator {
                     while(iterator.hasNext()){
                         boolean invalid=false;
                         ModelItem modelItem = (ModelItem) iterator.next();
-                        String datatype = modelItem.getDeclarationView().getDatatype();
 
-                        ErrorInfo errorInfo = new ErrorInfo();
                         if(!modelItem.getLocalUpdateView().isDatatypeValid()){
-                            errorInfo.setDataType(datatype);
+                            ErrorInfo errorInfo = new ErrorInfo();
                             errorInfo.setErrorType(ErrorInfo.DATATYPE_INVALID);
-                            invalid=true;
+                            String datatype = modelItem.getDeclarationView().getDatatype();
+                            errorInfo.setDataType(datatype);
+                            errorInfo.setRef(((Node)modelItem.getNode()).getLocalName());
+                            errorInfo.setPath(modelItem.toString());
+                            this.errors.add(errorInfo);
                         }
                         if(modelItem.getRefreshView().isInvalidMarked()){
+                            ErrorInfo errorInfo = new ErrorInfo();
                             errorInfo.setErrorType(ErrorInfo.CONSTRAINT_INVALID);
-                            invalid=true;
+                            errorInfo.setRef(((Node)modelItem.getNode()).getLocalName());
+                            errorInfo.setPath(modelItem.toString());
+                            this.errors.add(errorInfo);
                         }
                         if(modelItem.getRefreshView().isRequiredMarked()){
                             if(modelItem.getValue().length()==0){
+                                ErrorInfo errorInfo = new ErrorInfo();
                                 errorInfo.setErrorType(ErrorInfo.REQUIRED_INVALID);
-                                invalid=true;
+                                errorInfo.setRef(((Node)modelItem.getNode()).getLocalName());
+                                errorInfo.setPath(modelItem.toString());
+                                this.errors.add(errorInfo);
                             }
-                        }
-                        if(invalid){
-                            errorInfo.setRef(modelItem.toString());
-                            this.errors.add(errorInfo);
                         }
                     }
                 }else if(XFormsEventNames.SUBMIT_ERROR.equalsIgnoreCase(type)){
                     LOG.debug("XForms submit error");
+                }else if(XFormsEventNames.SUBMIT_DONE.equalsIgnoreCase(type)){
+                    LOG.debug("XForms submit done");
+                    this.responseStream = xmlEvent.getContextInfo(XFormsProcessor.SUBMISSION_RESPONSE_STREAM);
                 }
                 this.events.add(xmlEvent);
             }
@@ -102,27 +123,32 @@ public class ModelProcessor extends AbstractProcessorDecorator {
         </error-info>
     </errors>
     */
-    public Document serialize(){
+    public String serialize() throws JsonProcessingException {
 
+        XmlMapper xmlMapper = new XmlMapper();
+        String xml = xmlMapper.writeValueAsString(this.errors);
+
+        if(LOG.isDebugEnabled()){
+            LOG.debug("errors as xml string: " + xml);
+        }
         //create document + root
+/*
         Document serialized = DOMUtil.newDocument(false,false);
         Element root = serialized.createElement("errors");
         serialized.appendChild(root);
 
         for (ErrorInfo error : this.errors) {
-//            Element
-            //tbd.
         }
+*/
+        return xml;
 
-        return null;
     }
 
     /**
      * submits the HTML form via XForms
-     * @param resource - the string of the respective action attribute of original HTML form
      * @throws XFormsException
      */
-    public void submit() throws XFormsException{
+    public InputStream submit() {
         // todo:  hard-coded id for now
         String id = "s-default";
 
@@ -130,13 +156,22 @@ public class ModelProcessor extends AbstractProcessorDecorator {
         Container container = getXformsProcessor().getContainer();
 
         Object submissionObject = getXformsProcessor().getContainer().lookup(id);
-
         if (submissionObject == null || !(submissionObject instanceof Submission)) {
-            throw new XFormsBindingException("invalid submission id " + id,((Submission) submissionObject).getTarget(),null);
+            try {
+                throw new XFormsBindingException("invalid submission id " + id,((Submission) submissionObject).getTarget(),null);
+            } catch (XFormsBindingException e) {
+                LOG.error("a binding exception occurred which shouldn't have happend: " + e.getMessage());
+            }
         }
+        this.defaultSubmission = (Submission) submissionObject;
 
         // dispatch xforms-submit to submission
-        container.dispatch(((Submission) submissionObject).getTarget(), XFormsEventNames.SUBMIT, null);
+        try {
+            container.dispatch(((Submission) submissionObject).getTarget(), XFormsEventNames.SUBMIT, null);
+        } catch (XFormsException e) {
+            e.printStackTrace();
+        }
+        return (InputStream) this.responseStream;
     }
 
     /**
@@ -146,24 +181,32 @@ public class ModelProcessor extends AbstractProcessorDecorator {
      * @throws XFormsException
      */
     public boolean isSuccess() throws XFormsException {
-        return this.errors.size()==0;
+        return this.errors.getErrorInfo().size()==0;
+    }
+
+    @JacksonXmlRootElement(localName = "errors")
+    public class Errors{
+        private List<ErrorInfo> errorInfo=new ArrayList();
+
+        void add(ErrorInfo info){
+            this.errorInfo.add(info);
+        }
+        @JacksonXmlElementWrapper(useWrapping = false)
+        public List getErrorInfo(){
+            return errorInfo;
+        }
     }
 
     class ErrorInfo{
-        public static final String DATATYPE_INVALID="datatype invalid";
-        public static final String CONSTRAINT_INVALID="constraint invalid";
-        public static final String REQUIRED_INVALID="required but empty";
+        public static final String DATATYPE_INVALID="datatype-failed";
+        public static final String CONSTRAINT_INVALID="constraint-failed";
+        public static final String REQUIRED_INVALID="required-failed";
 
         private String ref="";
         private String dataType="";
         private String errorType;
         private String path;
         private String alert;
-
-
-        private final String TYPE_INVALID_MSG = "The value is no valid " + this.dataType;
-        private final String REQUIRED_INVALID_MSG = "This value is required. ";
-        private final String CONSTRAINT_INVALID_MSG = "The value is not valid ";
 
         ErrorInfo(){
         }

@@ -145,6 +145,7 @@
 
         <property name="ui-transform" value="webcomponents-polymer.xsl" description="xslt stylesheet used for generating the client-side UI"/>
         <property name="preprocessor-transform" value="html2xforms.xsl" description="xslt stylesheet used for preprocessing html to xforms"/>
+        <property name="error-transform" value="mixinErrors.xsl" description="mixes validation errors back into original html file"/>
     </properties>
 
     <error-messages>

@@ -156,7 +156,11 @@ public class NamespaceResolver {
             if (NamespaceConstants.XMLNS_NS.equals(attr.getNamespaceURI()) &&
                     !candidate.hasAttributeNS(NamespaceConstants.XMLNS_NS, attr.getLocalName())) {
                 // copy namespace declaration
-                candidate.setAttributeNS(NamespaceConstants.XMLNS_NS, attr.getNodeName(), attr.getNodeValue());
+
+                // ignore XForms and betterform namespace !caution: this means that XForms themselves cannot be instances any more
+                if(!attr.getNodeValue().equals(NamespaceConstants.XFORMS_NS) && !attr.getNodeValue().equals(NamespaceConstants.BETTERFORM_NS)) {
+                    candidate.setAttributeNS(NamespaceConstants.XMLNS_NS, attr.getNodeName(), attr.getNodeValue());
+                }
             }
         }
 
