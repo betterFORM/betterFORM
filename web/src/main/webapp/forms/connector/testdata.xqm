@@ -6,6 +6,6 @@ module namespace testdata="http://www.betterform.de/connector/module";
 
 declare function testdata:test() {
     <data>
-        <item>testdata.xqm - test()</item>    
+        <item>executed testdata:test() in testdata.xqm successfull</item>
     </data>
 };

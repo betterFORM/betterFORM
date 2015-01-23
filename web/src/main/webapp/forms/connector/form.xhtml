@@ -1,0 +1,39 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>Test</title>
+    <xf:model>
+        <xf:instance xmlns="" id="instance-1">
+            <data>
+                <input>Nādinu/Bēl-ahhē-iqīša//Egibi</input>
+            </data>
+        </xf:instance>
+
+        <!-- setting @encoding="ISO-8859-1" gives correct results -->
+        <xf:submission method="execute"
+                       id="echo"
+                       resource="exist:/db/apps/betterform/connector/echo.xql"
+                       ref="instance('instance-1')"
+                       replace="instance" >
+            <xf:message level="ephemeral" ev:event="xforms-submit-error">execute submission failed</xf:message>
+            <xf:message level="ephemeral" ev:event="xforms-submit-done">execute submission successful</xf:message>
+        </xf:submission>
+    </xf:model>
+</head>
+<body>
+<xf:group appearance="full">
+    <xf:input ref="input">
+        <xf:label>Instance Data: </xf:label>
+    </xf:input>
+
+    <xf:output ref="input">
+        <xf:label>Instance Data: </xf:label>
+    </xf:output>
+
+    <xf:trigger>
+        <xf:label>save</xf:label>
+        <xf:send submission="echo"/>
+    </xf:trigger>
+</xf:group>
+</body>
+</html>
