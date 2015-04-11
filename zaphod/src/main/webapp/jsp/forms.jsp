@@ -210,7 +210,7 @@
 --%>
                     </td>
                     <td width="25%">
-                            <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?source=true">source</a>
+                            <a href="<%=request.getContextPath()%>/<%=uri%>/<%=aFile.getName()%>?__bf:source=true">source</a>
                     </td>
 
                     <!-- ################## column showing unscripted link - currently disabled ######### -->

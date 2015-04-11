@@ -246,7 +246,7 @@ declare function fileListing:handleFile($uri as xs:string, $contextPath as xs:st
 			    <img src="{fn:concat($contextPath, '/bfResources/images/', $icon)}" border="0" />
 		    </a>
 		    <a class="textLink" title="{$fileName}" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink)}" target="_blank">{$shortendFileName}</a>
-		    <a class="sourceLink" title="view" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?source=true')}" target="_blank">source</a>
+		    <a class="sourceLink" title="view" href="{fn:concat($filePath, 'db/', $path, '/', $fileLink, '?__bf:source=true')}" target="_blank">source</a>
         </div>
 		) else (
 		<div class="file">
