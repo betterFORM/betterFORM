@@ -16,7 +16,7 @@
             <deprecation>off</deprecation>
             <debug>on</debug>
             <optimize>off</optimize>
-            <version>1.7</version>
+            <version>1.8</version>
         </javac>
 
         <dojo>dojo-release-1.7.2-src-patched</dojo>
