@@ -1,7 +1,7 @@
 <!--
-  ~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
-  ~ Licensed under the terms of BSD License
-  -->
+~ Copyright (c) 2012. betterFORM Project - http://www.betterform.de
+~ Licensed under the terms of BSD License
+-->
 
 <root>
     <app>
@@ -104,7 +104,7 @@
 
                 <!-- eXist -->
                 <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>
-                <pathelement location="${core.dir}/src/main/lib/exist-2.1-trunk.jar" groupid="org.exist" version="2.1-trunk" artifactId="exist"/>
+                <pathelement location="${core.dir}/src/main/lib/exist-2.3-trunk-20150519.jar" groupid="org.exist" version="2.3-trunk-20150519" artifactId="exist"/>
                 <pathelement location="${core.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="1.0" artifactId="xmldb"/>
             </classpath>
         </compile>
