@@ -21,7 +21,7 @@ import java.io.IOException;
  * @author Joern Turner
  */
 public class XFSessionCache {
-    private static final Log LOGGER = LogFactory.getLog(XFSessionCache.class);
+    //private static final Log LOGGER = LogFactory.getLog(XFSessionCache.class);
     private static Cache<String, FluxProcessor> XFSESSIONCACHE;
     private static DefaultCacheManager cacheManager;
     private static String DEFAULT_CACHE = "xfSessionCache";
