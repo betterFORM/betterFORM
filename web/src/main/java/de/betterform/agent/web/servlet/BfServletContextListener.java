@@ -18,12 +18,14 @@ import javax.servlet.ServletContextListener;
  */
 
 public class BfServletContextListener implements ServletContextListener {
-    private static final Log LOGGER = LogFactory.getLog(BfServletContextListener.class);
+    //private static final Log LOGGER = LogFactory.getLog(BfServletContextListener.class);
 
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        /*
         if(LOGGER.isDebugEnabled()){
             LOGGER.debug("shutting down infinispan");
         }
+        */
         XFSessionCache.unloadCache();
     }
 
