@@ -52,6 +52,8 @@ public class XFormsFilter implements Filter {
     protected String defaultRequestEncoding = "UTF-8";
     private FilterConfig filterConfig;
 
+    private static final String SRCPARAMETER = "__bf:source";
+
     /**
      * Filter initialisation
      *
@@ -137,17 +139,22 @@ public class XFormsFilter implements Filter {
             return;
         }
 
-        if(request.getParameter("source") != null ){
-            srvResponse.setContentType("text/plain");
-            // override setContentType to keep "text/plain" as content type.
-            HttpServletResponseWrapper resp = new HttpServletResponseWrapper((HttpServletResponse) srvResponse) {
-                public void setContentType(String s) {
-                    return;
-                }
-            };
-            filterChain.doFilter(srvRequest, resp);
-            return;  
+        try {
+            if(Config.getInstance().getProperty("betterform.debug-allowed").equals("true") && request.getParameter(XFormsFilter.SRCPARAMETER) != null ) {
+                srvResponse.setContentType("text/plain");
+                // override setContentType to keep "text/plain" as content type.
+                HttpServletResponseWrapper resp = new HttpServletResponseWrapper((HttpServletResponse) srvResponse) {
+                    public void setContentType(String s) {
+                        return;
+                    }
+                };
+                filterChain.doFilter(srvRequest, resp);
+                return;
+            }
+        } catch (XFormsConfigException xfce) {
+            //Ignore Configuration Exception
         }
+
 
         if(request.getParameter("isUpload") != null){
             //Got an upload...

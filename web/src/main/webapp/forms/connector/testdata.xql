@@ -1,5 +1,5 @@
 xquery version "3.0";
 
 <data>
-    <item>testdata.xql</item>
+    <item>processed testdata.xql successfull</item>
 </data>

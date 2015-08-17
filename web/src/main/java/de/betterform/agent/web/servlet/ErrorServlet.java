@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,11 +95,29 @@ public class ErrorServlet extends HttpServlet {
                 String linenumber = (String) n.getUserData("lineNumber");
                 DOMUtil.appendElement(rootNode, "lineNumber", linenumber);
 
-                DOMUtil.prettyPrintDOM(rootNode);
-
                 WebUtil.doTransform(getServletContext(), response, newDoc, "highlightError.xsl", rootNode);
+
             } catch (Exception e) {
-                e.printStackTrace();  
+
+                LOGGER.error(e);
+
+            } finally {
+
+                // in all cases, log whatever information about the error is available
+
+                try {
+
+                    if (LOGGER.isErrorEnabled()) {
+                        ByteArrayOutputStream messageBuf = new ByteArrayOutputStream();
+                        DOMUtil.prettyPrintDOM(rootNode, messageBuf);
+                        LOGGER.error(messageBuf.toString());
+                    }
+
+                } catch (Exception e) {
+                    // last resort
+                    LOGGER.error(msg, e);
+                }
+
             }
 
         } else{

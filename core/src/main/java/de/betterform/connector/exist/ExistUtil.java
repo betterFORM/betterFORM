@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.exist.collections.Collection;
-import org.exist.dom.BinaryDocument;
-import org.exist.dom.DocumentImpl;
+import org.exist.dom.persistent.BinaryDocument;
+import org.exist.dom.persistent.DocumentImpl;
 import org.exist.dom.QName;
 import org.exist.security.xacml.AccessContext;
 import org.exist.source.DBSource;

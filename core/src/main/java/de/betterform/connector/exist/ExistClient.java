@@ -8,7 +8,7 @@ package de.betterform.connector.exist;
 import java.net.URI;
 import java.util.Map;
 
-import org.exist.dom.DocumentImpl;
+import org.exist.dom.persistent.DocumentImpl;
 import org.exist.security.Subject;
 import org.exist.storage.BrokerPool;
 import org.exist.storage.DBBroker;
