@@ -22,7 +22,7 @@
     <!-- **************************************** HOUSEKEEPING **************************************** -->
     <target name="transformToXForms">
         <xslt basedir="${basedir}"
-              destdir="${basedir}/target"
+              dest dir="${basedir}/target"
               style="${basedir}/XFormsForHTML.xsl"
               force="true"
               includes="*.xhtml"
