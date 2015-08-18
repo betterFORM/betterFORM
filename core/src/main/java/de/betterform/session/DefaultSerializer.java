@@ -16,7 +16,7 @@ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
 import de.betterform.xml.xslt.impl.FileResourceResolver;
 import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.sxpath.IndependentContext;
 import org.apache.commons.logging.Log;

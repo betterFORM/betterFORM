@@ -9,6 +9,7 @@ import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.model.submission.RequestHeader;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.dom.DocumentWrapper;
 import net.sf.saxon.dom.NodeWrapper;
 import net.sf.saxon.expr.Expression;
@@ -108,12 +109,12 @@ public class AppContext extends XFormsFunction {
         return new ListIterator(Collections.EMPTY_LIST);
     }
 
-    private NodeWrapper wrap(XPathContext xpathContext, Object o) {
+    private DOMNodeWrapper wrap(XPathContext xpathContext, Object o) {
         if (o instanceof Node) {
             return getDocumentElementContext((Document) o);
         } 
 
-        Document ownerDocument = ((Node) ((NodeWrapper) xpathContext.getCurrentIterator().current()).getUnderlyingNode()).getOwnerDocument();
+        Document ownerDocument = ((Node) ((DOMNodeWrapper) xpathContext.getCurrentIterator().current()).getUnderlyingNode()).getOwnerDocument();
         DocumentWrapper documentWrapper = getDocumentElementContext(ownerDocument);
         return documentWrapper.wrap(ownerDocument.createTextNode(o.toString()));
     }

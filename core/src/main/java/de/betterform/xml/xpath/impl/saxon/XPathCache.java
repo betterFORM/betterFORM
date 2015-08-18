@@ -15,7 +15,7 @@ import de.betterform.xml.xpath.impl.saxon.sxpath.XPathDynamicContext;
 import de.betterform.xml.xpath.impl.saxon.sxpath.XPathEvaluator;
 import de.betterform.xml.xpath.impl.saxon.sxpath.XPathExpression;
 import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.LastPositionFinder;
 import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.ConstructorFunctionLibrary;
@@ -113,7 +113,7 @@ public class XPathCache {
 
     public Node evaluateAsSingleNode(List nodeset, int position, String xpath, Map prefixes, XPathFunctionContext functionContext) throws XFormsException {
         NodeInfo node = (NodeInfo) XPathCache.getInstance().evaluate(nodeset,1, xpath,prefixes,functionContext).get(0);
-            return (Node) ((NodeWrapper)node).getUnderlyingNode();
+            return (Node) ((DOMNodeWrapper)node).getUnderlyingNode();
         }
 
     public Node evaluateAsSingleNode(BetterFormXPathContext context,String xpath) throws XFormsException {
@@ -121,7 +121,7 @@ public class XPathCache {
         List nodeList =  XPathCache.getInstance().evaluate(context, xpath);
         if(nodeList != null && nodeList.size() >= 1){
             NodeInfo node = (NodeInfo)nodeList.get(0);
-            return (Node) ((NodeWrapper)node).getUnderlyingNode();
+            return (Node) ((DOMNodeWrapper)node).getUnderlyingNode();
          }else {
             return null;
         }

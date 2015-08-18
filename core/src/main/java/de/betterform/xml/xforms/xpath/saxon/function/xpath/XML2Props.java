@@ -7,7 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
