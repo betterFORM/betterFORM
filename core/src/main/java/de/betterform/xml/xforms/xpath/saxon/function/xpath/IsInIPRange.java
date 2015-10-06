@@ -5,6 +5,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 import org.apache.commons.logging.Log;
@@ -25,6 +26,7 @@ public class IsInIPRange extends XFormsFunction {
         return this;
     }
 
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
         if (argument.length !=  3) {
             throw new XPathException("There must be 3 arguments (subnetid, subnetmask, ipaddress) for this function");
@@ -39,45 +41,29 @@ public class IsInIPRange extends XFormsFunction {
         final Expression ipAddressExpression = argument[2];
         final String ipAddress = ipAddressExpression.evaluateAsString(xpathContext).toString();
 
+        return isInIPRange(subnetID, subnetMask, ipAddress);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String subnetID = arguments[0].head().getStringValue();
+        final String subnetMask = arguments[1].head().getStringValue();
+        final String ipAddress = arguments[2].head().getStringValue();
+        return isInIPRange(subnetID, subnetMask, ipAddress);
+    }
+
+    private BooleanValue isInIPRange(final String subnetID, final String subnetMask, final String ipAddress) {
         if ("".equals(subnetID.trim()) || "".equals(subnetMask.trim()) || "".equals(ipAddress.trim())) {
             return BooleanValue.FALSE;
         }
-        SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
+        final SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
         try {
-        if (subnetUtils.getInfo().isInRange(ipAddress)) {
-            return BooleanValue.TRUE;
-        }
+            if (subnetUtils.getInfo().isInRange(ipAddress)) {
+                return BooleanValue.TRUE;
+            }
         } catch (IllegalArgumentException iae) {
             LOGGER.debug("IsInIPRange Exception:", iae);
         }
         return BooleanValue.FALSE;
     }
 }
-
-
-/*
-IPAddress ip = new IPAddress(new byte[] { 192, 168, 0, 1 });
-int bits = 25;
-
-uint mask = ~(uint.MaxValue >> bits);
-
-// Convert the IP address to bytes.
-byte[] ipBytes = ip.GetAddressBytes();
-
-// BitConverter gives bytes in opposite order to GetAddressBytes().
-byte[] maskBytes = BitConverter.GetBytes(mask).Reverse().ToArray();
-
-byte[] startIPBytes = new byte[ipBytes.Length];
-byte[] endIPBytes = new byte[ipBytes.Length];
-
-// Calculate the bytes of the start and end IP addresses.
-for (int i = 0; i < ipBytes.Length; i++)
-{
-    startIPBytes[i] = (byte)(ipBytes[i] & maskBytes[i]);
-    endIPBytes[i] = (byte)(ipBytes[i] | ~maskBytes[i]);
-}
-
-// Convert the bytes to IP addresses.
-IPAddress startIP = new IPAddress(startIPBytes);
-IPAddress endIP = new IPAddress(endIPBytes);
-*/

@@ -19,7 +19,7 @@ import de.betterform.xml.xforms.model.Model;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import junit.framework.TestCase;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.value.BooleanValue;
@@ -170,6 +170,18 @@ public abstract class BetterFormTestCase extends TestCase {
         return ((Item) result.get(0)).getStringValue();
     }
 
+    protected String[] evaluateInDefaultContextAsStrings(final String xpathExpression) throws XFormsException {
+        List results = XPathCache.getInstance().evaluate(defaultContext, xpathExpression, kPREFIX_MAPPING, defaultFunctionContext);
+
+        final String strings[] = new String[results.size()];
+
+        for(int i = 0; i < results.size(); i++) {
+            strings[i] = ((Item)results.get(i)).getStringValue();
+        }
+
+        return strings;
+    }
+
     protected double evaluateInDefaultContextAsDouble(final String xpathExpression) throws XFormsException {
         List result = XPathCache.getInstance().evaluate(defaultContext, xpathExpression, kPREFIX_MAPPING, defaultFunctionContext);
 
@@ -183,11 +195,11 @@ public abstract class BetterFormTestCase extends TestCase {
     protected Node evaluateInDefaultContextAsNode(final String xpathExpression) throws XFormsException {
         List result = XPathCache.getInstance().evaluate(defaultContext, xpathExpression, kPREFIX_MAPPING, defaultFunctionContext);
 
-        if ((result.size() != 1) || !(result.get(0) instanceof NodeWrapper)) {
-            throw new XFormsException("Could not convert resultset to NodeWrapper");
+        if ((result.size() != 1) || !(result.get(0) instanceof DOMNodeWrapper)) {
+            throw new XFormsException("Could not convert resultset to DOMNodeWrapper");
         }
 
-        return (Node) ((NodeWrapper) result.get(0)).getUnderlyingNode();
+        return (Node) ((DOMNodeWrapper) result.get(0)).getUnderlyingNode();
     }
 
 
@@ -218,11 +230,11 @@ public abstract class BetterFormTestCase extends TestCase {
     protected Node evaluateInInstanceAsNode(final String instanceID, final String xpathExpression) throws XFormsException {
         List result = XPathCache.getInstance().evaluate(getInstanceNodeInfo(instanceID), xpathExpression, kPREFIX_MAPPING, defaultFunctionContext);
 
-        if ((result.size() != 1) || !(result.get(0) instanceof NodeWrapper)) {
-            throw new XFormsException("Could not convert resultset to NodeWrapper");
+        if ((result.size() != 1) || !(result.get(0) instanceof DOMNodeWrapper)) {
+            throw new XFormsException("Could not convert resultset to DOMNodeWrapper");
         }
 
-        return (Node) ((NodeWrapper) result.get(0)).getUnderlyingNode();
+        return (Node) ((DOMNodeWrapper) result.get(0)).getUnderlyingNode();
     }
 
     protected String evaluateInInstanceAsString(final String instanceID, final String xpathExpression) throws XFormsException {

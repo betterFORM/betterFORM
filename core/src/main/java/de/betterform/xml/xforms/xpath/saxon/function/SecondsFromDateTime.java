@@ -8,6 +8,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.DoubleValue;
@@ -33,14 +34,24 @@ public class SecondsFromDateTime extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
-	try {
-	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
-
-	    return new DoubleValue(argAsDateTime.getCalendar().getTimeInMillis() / 1000d);
-	} catch (XPathException e1) {
-	    return DoubleValue.NaN;
-	}
+	@Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final CharSequence dateTime = argument[0].evaluateAsString(xpathContext);
+		return secondsFromDateTime(dateTime.toString());
     }
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String dateTime = arguments[0].head().getStringValue();
+		return secondsFromDateTime(dateTime);
+	}
+
+	final DoubleValue secondsFromDateTime(final String dateTime) {
+		try {
+			final DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(dateTime, new ConversionRules()).asAtomic();
+			return new DoubleValue(argAsDateTime.getCalendar().getTimeInMillis() / 1000d);
+		} catch (final XPathException e1) {
+			return DoubleValue.NaN;
+		}
+	}
 }

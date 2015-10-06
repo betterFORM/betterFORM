@@ -17,6 +17,7 @@ import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,7 +43,7 @@ public class Context extends XFormsFunction {
      * bit-signficant. These properties are used for optimizations. In general, if
      * property bit is set, it is true, but if it is unset, the value is unknown.
      */
-
+    @Override
     public int computeSpecialProperties() {
         return StaticProperty.CONTEXT_DOCUMENT_NODESET |
                 StaticProperty.SINGLE_DOCUMENT_NODESET |
@@ -58,7 +59,7 @@ public class Context extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      *         a simplified expression
      */
-
+    @Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
@@ -66,7 +67,8 @@ public class Context extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
+    @Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
         XPathFunctionContext functionContext = getFunctionContext(xpathContext);
         XFormsElement xformsElement = functionContext.getXFormsElement();
 
@@ -80,7 +82,6 @@ public class Context extends XFormsFunction {
             pos = bindingElement.getPosition();
             return (Item) bindingElement.getNodeset().get(pos-1);
         }
-
 
         String id = null;
         if (xformsElement instanceof AbstractAction && ((AbstractAction)xformsElement).isRepeated()) {
@@ -110,7 +111,7 @@ public class Context extends XFormsFunction {
             List items =  xformsElement.evalInScopeContext();
             if(items.size() == 1){
                 return (Item) xformsElement.evalInScopeContext().get(0);
-            }else{
+            } else {
                 return (Item) xformsElement.evalInScopeContext().get(pos-1);
             }
         } catch (XFormsException e) {
@@ -118,10 +119,15 @@ public class Context extends XFormsFunction {
         }
     }
 
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return evaluateItem(context);
+    }
+
     /**
      * Determine the dependencies
      */
-
+    @Override
     public int getIntrinsicDependencies() {
         return StaticProperty.DEPENDS_ON_CURRENT_ITEM;
     }

@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.DurationValue;
@@ -31,15 +32,24 @@ public class Months extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
-
-	try {
-	    DurationValue argAsDurationValue = (DurationValue) DurationValue.makeDuration(argAsString).asAtomic();
-
-	    return new DoubleValue(argAsDurationValue.signum() * (argAsDurationValue.getYears() * 12 + argAsDurationValue.getMonths()));
-	} catch (XPathException e1) {
-	    return DoubleValue.NaN;
+	@Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final CharSequence argAsString = argument[0].evaluateAsString(
+			xpathContext);
+		return months(argAsString.toString());
 	}
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		return months(arguments[0].head().getStringValue());
+	}
+
+	private DoubleValue months(final String arg) {
+		try {
+			final DurationValue argAsDurationValue = (DurationValue) DurationValue.makeDuration(arg).asAtomic();
+			return new DoubleValue(argAsDurationValue.signum() * (argAsDurationValue.getYears() * 12 + argAsDurationValue.getMonths()));
+		} catch (XPathException e1) {
+			return DoubleValue.NaN;
+		}
     }
 }

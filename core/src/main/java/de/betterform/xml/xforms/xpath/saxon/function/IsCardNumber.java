@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 
@@ -29,9 +30,19 @@ public class IsCardNumber extends XFormsFunction {
 	/**
 	 * Evaluate in a general context
 	 */
-	public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-		String luhnnumber = argument[0].evaluateAsString(xpathContext)
+	@Override
+	public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final String luhnnumber = argument[0].evaluateAsString(xpathContext)
 				.toString();
+		return isCardNumber(luhnnumber);
+	}
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		return isCardNumber(arguments[0].head().getStringValue());
+	}
+
+	private BooleanValue isCardNumber(final String luhnnumber) {
 		try {
 			int result = 0;
 			boolean alternation = false;

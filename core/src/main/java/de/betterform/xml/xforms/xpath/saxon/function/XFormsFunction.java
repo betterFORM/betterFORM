@@ -7,9 +7,9 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import de.betterform.xml.xforms.Container;
 import de.betterform.xml.xforms.XFormsProcessorImpl;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.XPathContext;
-import net.sf.saxon.functions.SystemFunction;
+import net.sf.saxon.functions.SystemFunctionCall;
 import net.sf.saxon.om.Item;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
  * here means the XForms 1.0 functions.
  */
 
-public abstract class XFormsFunction extends SystemFunction {
+public abstract class XFormsFunction extends SystemFunctionCall {
    private static final Log LOGGER = LogFactory.getLog(XFormsFunction.class);
     /**
      * @param xpathContext
@@ -48,7 +48,7 @@ public abstract class XFormsFunction extends SystemFunction {
 
     protected Container getContainer(XPathContext xpathContext) {
         Item item = xpathContext.getContextItem();
-        Node n = (Node) ((NodeWrapper) item).getUnderlyingNode();
+        Node n = (Node) ((DOMNodeWrapper) item).getUnderlyingNode();
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("context node: " + n.getNodeName());
         }

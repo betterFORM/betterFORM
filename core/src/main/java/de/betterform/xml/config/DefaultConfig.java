@@ -11,7 +11,7 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.sxpath.IndependentContext;
 import org.apache.commons.lang3.text.StrSubstitutor;
@@ -76,7 +76,7 @@ public class DefaultConfig extends Config {
 	 * @param document
 	 * @return
 	 */
-	private NodeWrapper getDocumentElementContext(Document document) {
+	private DOMNodeWrapper getDocumentElementContext(Document document) {
 	    return new DocumentWrapper(document, "configuration.xml", new IndependentContext().getConfiguration()).wrap(document.getDocumentElement());
 	}
 

@@ -7,7 +7,10 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.AtomicValue;
+
 /**
  * Implementation of the 7.7.2 The if() Function
  * <p/>
@@ -24,6 +27,7 @@ public class If extends XFormsFunction
 	/**
 	 * Evaluate in a general context
 	 */
+	@Override
 	public Item evaluateItem(XPathContext xpathContext) throws XPathException
 	{
 		if(argument[0].effectiveBooleanValue(xpathContext))
@@ -31,5 +35,15 @@ public class If extends XFormsFunction
             return argument[1].evaluateItem(xpathContext);
 		}
         return argument[2].evaluateItem(xpathContext);
+	}
+
+	public Sequence call(final XPathContext context,
+											 final Sequence[] arguments) throws XPathException {
+		final AtomicValue condition = (AtomicValue)arguments[0].head();
+		if(condition != null && condition.effectiveBooleanValue()) {
+			return arguments[1].head();
+		} else {
+			return arguments[2].head();
+		}
 	}
 }

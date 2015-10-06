@@ -10,11 +10,13 @@ import de.betterform.xml.xforms.model.submission.RequestHeader;
 import de.betterform.xml.xforms.model.submission.RequestHeaders;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.sxpath.IndependentContext;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.ListIterator;
@@ -48,13 +50,15 @@ public class AppContext extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
+    @Override
     public SequenceIterator iterate(XPathContext xpathContext) throws XPathException {
         if (argument.length < 1 || argument.length > 2) {
             throw new XPathException("There must be 1 argument (key)  or 2 arguments (key, defaultObject) for this function");
         }
 
         final Expression keyExpression = argument[0];
-        final String key = keyExpression.evaluateAsString(xpathContext).toString();
+        final String key = keyExpression.evaluateAsString(
+            xpathContext).toString();
 
         final String defaultObject;
         if (argument.length == 2) {
@@ -65,6 +69,18 @@ public class AppContext extends XFormsFunction {
         }
 
         return appContext(xpathContext, key, defaultObject);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String key = arguments[0].head().getStringValue();
+        final String defaultObject;
+        if(arguments.length == 2) {
+            defaultObject = arguments[1].head().getStringValue();
+        } else {
+            defaultObject = null;
+        }
+        return SequenceTool.toLazySequence(appContext(context, key, defaultObject));
     }
 
     private SequenceIterator appContext(XPathContext xpathContext, String key, String defaultObject) {
@@ -108,12 +124,12 @@ public class AppContext extends XFormsFunction {
         return new ListIterator(Collections.EMPTY_LIST);
     }
 
-    private NodeWrapper wrap(XPathContext xpathContext, Object o) {
+    private DOMNodeWrapper wrap(XPathContext xpathContext, Object o) {
         if (o instanceof Node) {
             return getDocumentElementContext((Document) o);
         } 
 
-        Document ownerDocument = ((Node) ((NodeWrapper) xpathContext.getCurrentIterator().current()).getUnderlyingNode()).getOwnerDocument();
+        Document ownerDocument = ((Node) ((DOMNodeWrapper) xpathContext.getCurrentIterator().current()).getUnderlyingNode()).getOwnerDocument();
         DocumentWrapper documentWrapper = getDocumentElementContext(ownerDocument);
         return documentWrapper.wrap(ownerDocument.createTextNode(o.toString()));
     }

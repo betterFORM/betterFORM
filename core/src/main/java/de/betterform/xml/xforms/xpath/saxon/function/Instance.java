@@ -9,11 +9,14 @@ import de.betterform.xml.xforms.model.Model;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.ListIterator;
 
 import java.util.Collections;
+import java.util.Optional;
 
 public class Instance extends XFormsFunction
 {
@@ -26,41 +29,56 @@ public class Instance extends XFormsFunction
      * @return the result of the early evaluation, or the original expression, or potentially
      * a simplified expression
      */
-
+	@Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+		return this;
     }
 
 	/**
 	 * Evaluate in a general context
 	 */
-	public SequenceIterator iterate(XPathContext xpathContext) throws XPathException
-	{	
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		
+	@Override
+	public SequenceIterator iterate(final XPathContext xpathContext) throws XPathException {
+		final Optional<String> instanceId;
+		if (argument.length == 1) {
+			final Expression instanceIDExpression = argument[0];
+			instanceId = Optional.ofNullable(
+				instanceIDExpression.evaluateAsString(
+					xpathContext).toString());
+		} else {
+			instanceId = Optional.empty();
+		}
+		return instance(xpathContext, instanceId);
+	}
 
-		if (functionContext != null)
-		{	
-			Model model = functionContext.getXFormsElement().getModel();
-			
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final Optional<String> instanceId;
+		if(arguments.length == 1) {
+			instanceId = Optional.ofNullable(arguments[0].head().getStringValue());
+		} else {
+			instanceId = Optional.empty();
+		}
+		return SequenceTool.toLazySequence(instance(context, instanceId));
+	}
+
+	private SequenceIterator instance(final XPathContext context, final Optional<String> instanceId) {
+		final XPathFunctionContext functionContext = getFunctionContext(
+			context);
+		if (functionContext != null) {
+			final Model model = functionContext.getXFormsElement().getModel();
 			final de.betterform.xml.xforms.model.Instance instance;
-			if (argument.length == 0)
-			{
+			if(instanceId.isPresent()) {
+				instance = model.getInstance(instanceId.get());
+			} else {
 				instance = model.getDefaultInstance();
 			}
-			else
-			{
-				final Expression instanceIDExpression = argument[0];
-				final String instanceID = instanceIDExpression.evaluateAsString(xpathContext).toString();
-				
-				instance = model.getInstance(instanceID);
-			}
-			
-			if (instance != null)
-			{
+
+			if (instance != null) {
 				return new ListIterator(instance.getInstanceNodeset());
 			}
 		}
+
 		return new ListIterator(Collections.EMPTY_LIST);
 	}
 }

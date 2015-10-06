@@ -18,7 +18,7 @@ import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.BetterFormXPathContext;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.trans.XPathException;
 import org.apache.commons.logging.Log;
@@ -297,7 +297,7 @@ public class Instance extends XFormsElement {
             return;
         }
 
-        Node parentNode = (Node) ((NodeWrapper) nodeset.get(position - 1)).getUnderlyingNode();
+        Node parentNode = (Node) ((DOMNodeWrapper) nodeset.get(position - 1)).getUnderlyingNode();
         try {
         	parentNode.appendChild(createElement(qname));
         }
@@ -584,7 +584,7 @@ public class Instance extends XFormsElement {
     // XXX remove when geteModelItem is rewritten
     private Node getNode(String xpath) throws XFormsException{
         NodeInfo nodeInfo = (NodeInfo) XPathCache.getInstance().evaluate(this.xPathContext,xpath).get(0); 
-        return (Node) ((NodeWrapper)nodeInfo).getUnderlyingNode();
+        return (Node) ((DOMNodeWrapper)nodeInfo).getUnderlyingNode();
     }
 
     /**

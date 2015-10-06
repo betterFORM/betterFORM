@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.DurationValue;
@@ -33,19 +34,29 @@ public class Seconds extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
+	@Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
-
-	try {
-	    DurationValue argAsDurationValue = (DurationValue) DurationValue.makeDuration(argAsString).asAtomic();
-
-	    return new DoubleValue(argAsDurationValue.signum()*( argAsDurationValue.getDays() * 60 * 60 * 24
-		    + argAsDurationValue.getHours() * 60 * 60
-		    + argAsDurationValue.getMinutes() *60
-		    + argAsDurationValue.getSeconds() 
-		    + (argAsDurationValue.getMicroseconds() / 1000000d)));
-	} catch (XPathException e1) {
-	    return DoubleValue.NaN;
+		final CharSequence arg = argument[0].evaluateAsString(xpathContext);
+		return seconds(arg.toString());
 	}
-    }
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String arg = arguments[0].head().getStringValue();
+		return seconds(arg);
+	}
+
+	final DoubleValue seconds(final String strDuration) {
+		try {
+			final DurationValue argAsDurationValue = (DurationValue) DurationValue.makeDuration(strDuration).asAtomic();
+
+			return new DoubleValue(argAsDurationValue.signum()*( argAsDurationValue.getDays() * 60 * 60 * 24
+				+ argAsDurationValue.getHours() * 60 * 60
+				+ argAsDurationValue.getMinutes() *60
+				+ argAsDurationValue.getSeconds()
+				+ (argAsDurationValue.getMicroseconds() / 1000000d)));
+		} catch (XPathException e1) {
+			return DoubleValue.NaN;
+		}
+	}
 }

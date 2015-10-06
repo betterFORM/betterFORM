@@ -25,7 +25,7 @@ import de.betterform.xml.xforms.ui.RepeatItem;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import de.betterform.xml.xslt.TransformerService;
 import de.betterform.xml.xslt.impl.CachingTransformerService;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Document;
@@ -377,8 +377,8 @@ public class LoadAction extends AbstractBoundAction {
         }
         for (int i = 0; i < result.size(); i++) {
             Object item = result.get(i);
-            if (result.get(i) instanceof NodeWrapper) {
-                NodeWrapper wrapper = (NodeWrapper) item;
+            if (result.get(i) instanceof DOMNodeWrapper) {
+                DOMNodeWrapper wrapper = (DOMNodeWrapper) item;
                 Node n = (Node) wrapper.getUnderlyingNode();
                 cssRules += DOMUtil.getTextNodeAsString(n);
             }
@@ -399,8 +399,8 @@ public class LoadAction extends AbstractBoundAction {
 
         for (int i = 0; i < result.size(); i++) {
             Object item = result.get(i);
-            if (result.get(i) instanceof NodeWrapper) {
-                NodeWrapper wrapper = (NodeWrapper) item;
+            if (result.get(i) instanceof DOMNodeWrapper) {
+                DOMNodeWrapper wrapper = (DOMNodeWrapper) item;
                 Node n = (Node) wrapper.getUnderlyingNode();
                 cssRules += n.getAttributes().getNamedItem("href").getNodeValue() + "#";
             }
@@ -423,9 +423,9 @@ public class LoadAction extends AbstractBoundAction {
         }
         for (int i = 0; i < result.size(); i++) {
             Object item = result.get(i);
-            if (result.get(i) instanceof NodeWrapper) {
-                NodeWrapper wrapper = (NodeWrapper) item;
-                if (! "action".equals( ((NodeWrapper) item).getParent().getLocalPart()))  {
+            if (result.get(i) instanceof DOMNodeWrapper) {
+                DOMNodeWrapper wrapper = (DOMNodeWrapper) item;
+                if (! "action".equals( ((DOMNodeWrapper) item).getParent().getLocalPart()))  {
                     Node n = (Node) wrapper.getUnderlyingNode();
                     javaScriptCode += DOMUtil.getTextNodeAsString(n);
                 }
@@ -445,8 +445,8 @@ public class LoadAction extends AbstractBoundAction {
         List result = XPathUtil.evaluate((Element) embed, "//*[(@type='text/javascript') and (boolean(@src)) ]");
         for (int i = 0; i < result.size(); i++) {
             Object item = result.get(i);
-            if (result.get(i) instanceof NodeWrapper) {
-                NodeWrapper wrapper = (NodeWrapper) item;
+            if (result.get(i) instanceof DOMNodeWrapper) {
+                DOMNodeWrapper wrapper = (DOMNodeWrapper) item;
                 Node n = (Node) wrapper.getUnderlyingNode();
                 javaScriptCode += n.getAttributes().getNamedItem("src").getNodeValue() + "#";
             }

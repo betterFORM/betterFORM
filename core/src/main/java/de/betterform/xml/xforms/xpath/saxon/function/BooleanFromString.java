@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 /**
@@ -28,13 +29,23 @@ public class BooleanFromString extends XFormsFunction
 	/**
 	 * Evaluate in a general context
 	 */
-	public Item evaluateItem(XPathContext xpathContext) throws XPathException
-	{
-		String value = argument[0].evaluateAsString(xpathContext).toString();
-        if("1".equals(value) || "true".equalsIgnoreCase(value))
-        {
-            return BooleanValue.TRUE;
-        }
-        return BooleanValue.FALSE;
+	@Override
+	public Item evaluateItem(XPathContext xpathContext) throws XPathException {
+		final String value = argument[0].evaluateAsString(xpathContext).toString();
+        return toBoolean(value);
+	}
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String value = arguments[0].head().getStringValue();
+		return toBoolean(value);
+	}
+
+	private BooleanValue toBoolean(final String bool) {
+		if("1".equals(bool) || "true".equalsIgnoreCase(bool)) {
+			return BooleanValue.TRUE;
+		} else {
+			return BooleanValue.FALSE;
+		}
 	}
 }

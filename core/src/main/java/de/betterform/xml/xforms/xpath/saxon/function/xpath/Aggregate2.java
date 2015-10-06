@@ -7,15 +7,15 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 
 import net.sf.saxon.expr.*;
-import net.sf.saxon.functions.SystemFunction;
+import net.sf.saxon.functions.SystemFunctionCall;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.ItemType;
 import net.sf.saxon.type.Type;
-import net.sf.saxon.type.TypeHierarchy;
 import net.sf.saxon.value.*;
 
 import javax.xml.transform.SourceLocator;
@@ -24,7 +24,7 @@ import javax.xml.transform.SourceLocator;
 * This class implements the sum(), avg(), count() functions,
 */
 
-public class Aggregate2 extends SystemFunction {
+public class Aggregate2 extends SystemFunctionCall {
 
     public static final int SUM = 0;
     public static final int AVG = 1;
@@ -33,31 +33,30 @@ public class Aggregate2 extends SystemFunction {
 
     /**
      * Determine the item type of the value returned by the function
-     * @param th
      */
-
-    public ItemType getItemType(TypeHierarchy th) {
+    @Override
+    public ItemType getItemType() {
         switch (operation) {
             case COUNT:
-                return super.getItemType(th);
+                return super.getItemType();
             case SUM: {
                 //ItemType base = argument[0].getItemType();
-                ItemType base = Atomizer.getAtomizedItemType(argument[0], false, th);
+                ItemType base = Atomizer.getAtomizedItemType(argument[0], false, null);
                 if (base.equals(BuiltInAtomicType.UNTYPED_ATOMIC)) {
                     base = BuiltInAtomicType.DOUBLE;
                 }
                 if (Cardinality.allowsZero(argument[0].getCardinality())) {
                     if (argument.length == 1) {
-                        return Type.getCommonSuperType(base, BuiltInAtomicType.INTEGER, th);
+                        return Type.getCommonSuperType(base, BuiltInAtomicType.INTEGER);
                     } else {
-                        return Type.getCommonSuperType(base, argument[1].getItemType(th), th);
+                        return Type.getCommonSuperType(base, argument[1].getItemType());
                     }
                 } else {
                     return base;
                 }
             }
             case AVG: {
-                ItemType base = Atomizer.getAtomizedItemType(argument[0], false, th);
+                ItemType base = Atomizer.getAtomizedItemType(argument[0], false, null);
                 if (base.equals(BuiltInAtomicType.UNTYPED_ATOMIC)) {
                     return BuiltInAtomicType.DOUBLE;
                 } else if (base.getPrimitiveType() == StandardNames.XS_INTEGER) {
@@ -109,6 +108,33 @@ public class Aggregate2 extends SystemFunction {
                 } 
             case AVG:
                 return average(argument[0].iterate(context), context, this);
+            default:
+                throw new UnsupportedOperationException("Unknown aggregate function");
+        }
+    }
+
+    public Sequence call(XPathContext context,
+                         Sequence[] arguments) throws XPathException {
+        // Note: these functions do not need to sort the underlying sequence,
+        // but they do need to de-duplicate it
+        switch (operation) {
+            case COUNT:
+                final SequenceIterator iter = arguments[0].iterate();
+                return new Int64Value(count(iter));
+            case SUM:
+                AtomicValue sum = total(arguments[0].iterate(), context, this);
+                if (sum != null) {
+                    return sum;
+                } else {
+                    // the sequence was empty
+                    if (argument.length == 2) {
+                        return arguments[1].head();
+                    } else {
+                        return Int64Value.ZERO;
+                    }
+                }
+            case AVG:
+                return average(arguments[0].iterate(), context, this);
             default:
                 throw new UnsupportedOperationException("Unknown aggregate function");
         }

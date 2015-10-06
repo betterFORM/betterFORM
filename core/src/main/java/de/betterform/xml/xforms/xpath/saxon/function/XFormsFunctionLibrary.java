@@ -13,15 +13,37 @@ import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.functions.*;
 import net.sf.saxon.functions.Compare;
 import net.sf.saxon.functions.Error;
-import net.sf.saxon.functions.StandardFunction.Entry;
 import net.sf.saxon.om.StandardNames;
+import net.sf.saxon.pattern.AnyNodeTest;
 import net.sf.saxon.pattern.NodeKindTest;
+import net.sf.saxon.type.AnyItemType;
 import net.sf.saxon.type.BuiltInAtomicType;
 import net.sf.saxon.type.Type;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.Int64Value;
 import net.sf.saxon.value.StringValue;
+
+import static net.sf.saxon.functions.StandardFunction.ABS;
+import static net.sf.saxon.functions.StandardFunction.AS_ARG0;
+import static net.sf.saxon.functions.StandardFunction.AS_PRIM_ARG0;
+import static net.sf.saxon.functions.StandardFunction.BASE;
+import static net.sf.saxon.functions.StandardFunction.CORE;
+import static net.sf.saxon.functions.StandardFunction.DCOLL;
+import static net.sf.saxon.functions.StandardFunction.FOCUS;
+import static net.sf.saxon.functions.StandardFunction.INS;
+import static net.sf.saxon.functions.StandardFunction.IMP_CX_D;
+import static net.sf.saxon.functions.StandardFunction.IMP_CX_I;
+import static net.sf.saxon.functions.StandardFunction.NAV;
+import static net.sf.saxon.functions.StandardFunction.NS;
+import static net.sf.saxon.functions.StandardFunction.ONE;
+import static net.sf.saxon.functions.StandardFunction.OPT;
+import static net.sf.saxon.functions.StandardFunction.PLUS;
+import static net.sf.saxon.functions.StandardFunction.STAR;
+import static net.sf.saxon.functions.StandardFunction.TRA;
+import static net.sf.saxon.functions.StandardFunction.USE_WHEN;
+import static net.sf.saxon.functions.StandardFunction.XPATH30;
+import static net.sf.saxon.functions.StandardFunction.XSLT;
 
 /**
  * This class contains static data tables defining the properties of XForms functions. "XForms functions" here means the
@@ -36,650 +58,744 @@ public class XFormsFunctionLibrary extends XPathFunctionLibrary {
         return functionNamespace;
     }
 
+    private static String xf(final String localArity) {
+        return "{" + NamespaceConstants.XFORMS_NS + "}" + localArity;
+    }
+
     static {
-        Entry e;
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}boolean-from-string", BooleanFromString.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}is-card-number", IsCardNumber.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        register(xf("boolean-from-string"), BooleanFromString.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}count-non-empty", CountNonEmpty.class, 0, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE);
+        register(xf("is-card-number"), IsCardNumber.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("count-non-empty"), CountNonEmpty.class, 0, 1, 1, BuiltInAtomicType.INTEGER, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, Int64Value.ZERO);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}current", Current.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        register(xf("current"), Current.class, 0, 0, 0, Type.ITEM_TYPE, ONE, CORE, 0);
+
+        register(xf("IF"), If.class, 0, 3, 3, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.BOOLEAN, ONE, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}IF", If.class, 0, 3, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        register(xf("instance"), Instance.class, 0, 0, 1, Type.ITEM_TYPE, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("index"), Index.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}instance", Instance.class, 0, 0, 1, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        register(xf("power"), Power.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.NUMERIC, ONE, null)
+            .arg(1, BuiltInAtomicType.NUMERIC, ONE, null);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}index", Index.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        register(xf("random"), Random.class, 0, 0, 1, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.BOOLEAN, OPT, null);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}power", Power.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
+        register(xf("compare#2"), Compare.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, OPT, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.STRING, ONE, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, ONE, EMPTY);
+
+        register(xf("compare#3"), Compare.class, 0, 2, 3, BuiltInAtomicType.INTEGER, OPT, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, OPT, EMPTY)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("property"), Property.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("digest"), Digest.class, 0, 2, 3, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, OPT, null);
+
+        register(xf("hmac"), Hmac.class, 0, 3, 4, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null)
+            .arg(3, BuiltInAtomicType.STRING, OPT, null);
+
+        register(xf("local-date"), LocalDate.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, 0);
+
+        register(xf("local-dateTime"), LocalDateTime.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, 0);
+
+        register(xf("now"), Now.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, 0);
+
+        register(xf("days-from-date"), DaysFromDate.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("days-to-date"), DaysToDate.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
+
+        register(xf("seconds-from-dateTime"), SecondsFromDateTime.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("seconds-to-dateTime"), SecondsToDateTime.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.NUMERIC, ONE, null);
+
+        register(xf("adjust-dateTime-to-timezone"), AdjustDateTimeToTimezone.class, 0, 0, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("seconds"), Seconds.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("months"), Months.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("choose"), Choose.class, 0, 3, 3, Type.ITEM_TYPE, STAR, CORE, 0)
+            .arg(0, BuiltInAtomicType.BOOLEAN, ONE, null)
+            .arg(1, Type.ITEM_TYPE, STAR, null)
+            .arg(2, Type.ITEM_TYPE, STAR, null);
+
+        register(xf("context"), Context.class, 0, 0, 0, Type.ITEM_TYPE, ONE, CORE, 0);
+
+        register(xf("event"), Event.class, 0, 1, 1, Type.ITEM_TYPE, STAR, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+
+        register(xf("id"), Id2.class, 0, 1, 2, NodeKindTest.ELEMENT, STAR, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, STAR, EMPTY)
+            .arg(1, Type.NODE_TYPE, STAR, null);
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}random", Random.class, 0, 0, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+
+        // Adapted xpath 2.0 functions
 
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}compare", Compare.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}property", Property.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}digest", Digest.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}hmac", Hmac.class, 0, 3, 4, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}local-date", LocalDate.class, 0, 0, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}local-dateTime", LocalDateTime.class, 0, 0, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}now", Now.class, 0, 0, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}days-from-date", DaysFromDate.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}days-to-date", DaysToDate.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}seconds-from-dateTime", SecondsFromDateTime.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}seconds-to-dateTime", SecondsToDateTime.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}adjust-dateTime-to-timezone", AdjustDateTimeToTimezone.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}seconds", Seconds.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}months", Months.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}choose", Choose.class, 0, 3, 3, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 1, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 2, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}context", Context.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}event", Event.class, 0, 1, 1, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}id", Id2.class, 0, 1, 2, NodeKindTest.ELEMENT, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, Type.NODE_TYPE, StaticProperty.ALLOWS_ONE_OR_MORE, null);
-
-        //Adapted xpath 2.0 functions
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}avg", Aggregate2.class, Aggregate2.AVG, 1, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
         // can't say "same as first argument" because the avg of a set of
         // integers is decimal
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
+        register(xf("avg"), Aggregate2.class, Aggregate2.AVG, 1, 1, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}max", Minimax2.class, Minimax2.MAX, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("max#1"), Minimax2.class, Minimax2.MAX, 1, 1, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}min", Minimax2.class, Minimax2.MIN, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("max#2"), Minimax2.class, Minimax2.MAX, 2, 2, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, BASE)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("min#1"), Minimax2.class, Minimax2.MIN, 1, 1, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
+
+        register(xf("min#2"), Minimax2.class, Minimax2.MIN, 2, 2, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, BASE)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
 
         // Standard XPath functions
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}abs", Rounding.class, Rounding.ABS, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("abs"), Abs.class, 0, 1, 1, SAME_AS_FIRST_ARGUMENT, OPT, CORE, AS_PRIM_ARG0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}adjust-date-to-timezone", Adjust.class, 0, 1, 2, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+        register(xf("adjust-date-to-timezone"), Adjust.class, 0, 1, 2, BuiltInAtomicType.DATE, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.DAY_TIME_DURATION, OPT, null);
 
-//                        e = register("{" + NamespaceConstants.XFORMS_NS + "}adjust-dateTime-to-timezone", Adjust.class, 0, 1, 2, BuiltInAtomicType.DATE_TIME,
+//                        e = register(xf("adjust-dateTime-to-timezone"), Adjust.class, 0, 1, 2, BuiltInAtomicType.DATE_TIME,
 //                            StaticProperty.ALLOWS_ZERO_OR_ONE);
 //                        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 //                        arg(e, 1, BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}adjust-time-to-timezone", Adjust.class, 0, 1, 2, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+        register(xf("adjust-time-to-timezone"), Adjust.class, 0, 1, 2, BuiltInAtomicType.TIME, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.TIME, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.DAY_TIME_DURATION, OPT, null);
 
-//                        e = register("{" + NamespaceConstants.XFORMS_NS + "}avg", Aggregate.class, Aggregate.AVG, 1, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
+//                        e = register(xf("avg"), Aggregate.class, Aggregate.AVG, 1, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE, CORE, 0);
 //                        // can't say "same as first argument" because the avg of a set of
 //                        // integers is decimal
 //                        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}base-uri", BaseURI.class, 0, 0, 1, BuiltInAtomicType.ANY_URI, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}boolean", BooleanFn.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
+        register(xf("base-uri"),
+            BaseURI.class, 0, 0, 1, BuiltInAtomicType.ANY_URI, OPT, CORE, BASE | IMP_CX_I)
+            .arg(0, Type.NODE_TYPE, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}ceiling", Rounding.class, Rounding.CEILING, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("boolean"), BooleanFn.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}codepoint-equal", CodepointEqual.class, 0, 2, 2, BuiltInAtomicType.BOOLEAN, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("ceiling"), Ceiling.class, 0, 1, 1, SAME_AS_FIRST_ARGUMENT, OPT, CORE, AS_PRIM_ARG0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}codepoints-to-string", CodepointsToString.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
+        register(xf("codepoint-equal"), CodepointEqual.class, 0, 2, 2, BuiltInAtomicType.BOOLEAN, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}collection", Collection.class, 0, 0, 1, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("codepoints-to-string"), CodepointsToString.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.INTEGER, STAR, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}compare", Compare.class, 0, 2, 3, BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("collection"), Collection.class, 0, 0, 1, Type.NODE_TYPE, STAR, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}concat", Concat.class, 0, 2, Integer.MAX_VALUE, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+//        register(xf("compare#2"), Compare.class, 0, 2, 2, BuiltInAtomicType.INTEGER, OPT, CORE, DCOLL)
+//                .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY)
+//                .arg(1, BuiltInAtomicType.STRING, OPT, EMPTY);
+//
+//        register(xf("compare#3"), Compare.class, 0, 3, 3, BuiltInAtomicType.INTEGER, OPT, CORE, BASE)
+//                .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY)
+//                .arg(1, BuiltInAtomicType.STRING, OPT, EMPTY)
+//                .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("concat"), Concat.class, 0, 2, Integer.MAX_VALUE, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, OPT, null);
         // Note, this has a variable number of arguments so it is treated
         // specially
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}contains", Contains.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("contains#2"), Contains.class, 0, 2, 2, BuiltInAtomicType.BOOLEAN, ONE, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, BooleanValue.TRUE);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}count", Aggregate2.class, Aggregate2.COUNT, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, Int64Value.ZERO);
+        register(xf("contains#3"), Contains.class, 0, 3, 3, BuiltInAtomicType.BOOLEAN, ONE, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, BooleanValue.TRUE)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("count"), Aggregate2.class, Aggregate2.COUNT, 1, 1, BuiltInAtomicType.INTEGER, ONE, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | INS, Int64Value.ZERO);
 
         // XForms has special current version
-        // register("{" + NamespaceConstants.XFORMS_NS + "}current", Current.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-date", CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DATE, StaticProperty.EXACTLY_ONE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-dateTime", CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.EXACTLY_ONE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-time", CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.TIME, StaticProperty.EXACTLY_ONE);
+        // register(xf("current"), Current.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
+        register(xf("current-date"), CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DATE, ONE, CORE, 0);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-group", CurrentGroup.class, 0, 0, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}current-grouping-key", CurrentGroupingKey.class, 0, 0, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
+        register(xf("current-dateTime"), CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DATE_TIME, ONE, CORE, 0);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}data", Data.class, 0, 1, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
+        register(xf("current-time"), CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.TIME, ONE, CORE, 0);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}dateTime", DateTimeConstructor.class, 0, 2, 2, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("current-group"), CurrentGroup.class, 0, 0, 0, Type.ITEM_TYPE, STAR, XSLT, 0);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}day-from-date", Component.class, (Component.DAY << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("current-grouping-key"), CurrentGroupingKey.class, 0, 0, 0, BuiltInAtomicType.ANY_ATOMIC, OPT, XSLT, 0);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}day-from-dateTime", Component.class, (Component.DAY << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("data#0"), Data.class, 0, 0, 0, BuiltInAtomicType.ANY_ATOMIC, STAR, XPATH30, FOCUS);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}days-from-duration", Component.class, (Component.DAY << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("data#1"), Data.class, 0,
+            1, 1, BuiltInAtomicType.ANY_ATOMIC, STAR, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | ABS, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}deep-equal", DeepEqual.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
-        arg(e, 1, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("dateTime"), DateTimeConstructor.class, 0, 2, 2, BuiltInAtomicType.DATE_TIME, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.TIME, OPT, EMPTY);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}default-collation", DefaultCollation.class, 0, 0, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        register(xf("day-from-date"), AccessorFn.class, (AccessorFn.DAY << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}distinct-values", DistinctValues.class, 0, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("day-from-dateTime"), AccessorFn.class, (AccessorFn.DAY << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}doc", Doc.class, 0, 1, 1, NodeKindTest.DOCUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("days-from-duration"), AccessorFn.class, (AccessorFn.DAY << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DURATION, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}doc-available", DocAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.FALSE);
+        register(xf("deep-equal#2"), DeepEqual.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, ONE, CORE, DCOLL)
+            .arg(0, Type.ITEM_TYPE, STAR | ABS, null)
+            .arg(1, Type.ITEM_TYPE, STAR | ABS, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}document", DocumentFn.class, 0, 1, 2, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
-        arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
+        register(xf("deep-equal#3"), DeepEqual.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, ONE, CORE, BASE)
+            .arg(0, Type.ITEM_TYPE, STAR, null)
+            .arg(1, Type.ITEM_TYPE, STAR, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}document-uri", DocumentUriFn.class, 0, 1, 1, BuiltInAtomicType.ANY_URI,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
+        register(xf("default-collation"), DefaultCollation.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, DCOLL);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}empty", Empty.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.TRUE);
+        register(xf("distinct-values#1"), DistinctValues.class, 0, 1, 2, BuiltInAtomicType.ANY_ATOMIC, STAR, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}ends-with", EndsWith.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("distinct-values#2"), DistinctValues.class, 0, 1, 2, BuiltInAtomicType.ANY_ATOMIC, STAR, CORE, BASE)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}element-available", ElementAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("doc"), Doc.class, 0, 1, 1, NodeKindTest.DOCUMENT, OPT, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}encode-for-uri", EscapeURI.class, EscapeURI.ENCODE_FOR_URI, 1, 1, BuiltInAtomicType.STRING,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("doc-available"), DocAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, BooleanValue.FALSE);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}escape-html-uri", EscapeURI.class, EscapeURI.HTML_URI, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("document"), DocumentFn.class, 0, 1, 2, Type.NODE_TYPE, STAR, XSLT, BASE)
+            .arg(0, Type.ITEM_TYPE, STAR, null)
+            .arg(1, Type.NODE_TYPE, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}error", Error.class, 0, 0, 3, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE);
-        // The return type is chosen so that use of the error() function
-        // will never give a static type error.
-        arg(e, 0, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
+        register(xf("document-uri#0"), DocumentUriFn.class, 0, 0, 0, BuiltInAtomicType.ANY_URI, OPT, XPATH30, FOCUS | IMP_CX_I);
 
-        // e = register("{" + NamespaceConstants.XFORMS_NS + "}escape-uri", EscapeURI.class, EscapeURI.ESCAPE, 2,
-        // 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
+        register(xf("document-uri#1"), DocumentUriFn.class, 0, 1, 1, BuiltInAtomicType.ANY_URI, OPT, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, EMPTY);
+
+        register(xf("empty"), Empty.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | INS, BooleanValue.TRUE);
+
+        register(xf("ends-with#2"), EndsWith.class, 0, 2, 2, BuiltInAtomicType.BOOLEAN, ONE, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, BooleanValue.TRUE);
+
+        register(xf("ends-with#3"), EndsWith.class, 0, 3, 3, BuiltInAtomicType.BOOLEAN, ONE, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, BooleanValue.TRUE)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("element-available"), ElementAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, XSLT | USE_WHEN, NS)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("encode-for-uri"), EscapeURI.class, EscapeURI.ENCODE_FOR_URI, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING);
+
+        register(xf("escape-html-uri"), EscapeURI.class, EscapeURI.HTML_URI, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING);
+
+        register(xf("error"), Error.class, 0, 0, 3, Type.ITEM_TYPE, OPT, CORE, 0)
+            // The return type is chosen so that use of the error() function will never give a static type error,
+            // on the basis that item()? overlaps every other type, and it's almost impossible to make any
+            // unwarranted inferences from it, except perhaps count(error()) lt 2.
+            .arg(0, BuiltInAtomicType.QNAME, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, Type.ITEM_TYPE, STAR, null);
+
+        // e = register(xf("escape-uri"), EscapeURI.class, EscapeURI.ESCAPE, 2,
+        // 2, BuiltInAtomicType.STRING, ONE);
         // arg(e, 0, BuiltInAtomicType.STRING,
-        // StaticProperty.ALLOWS_ZERO_OR_ONE);
-        // arg(e, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        // OPT);
+        // arg(e, 1, BuiltInAtomicType.BOOLEAN, ONE);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}exactly-one", TreatFn.class, StaticProperty.EXACTLY_ONE, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.EXACTLY_ONE, null);
-        // because we don't do draconian static type checking, we can do the
-        // work in the argument type checking code
+        register(xf("exactly-one"), TreatFn.class, ONE, 1, 1, Type.ITEM_TYPE, ONE, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, ONE | TRA, null);
+        // because we don't do draconian static type checking, we can do the work in the argument type checking code
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}exists", Exists.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.FALSE);
+        register(xf("exists"), Exists.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | INS, BooleanValue.FALSE);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}false", FalseFn.class, 0, 0, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
+        register(xf("false"), False.class, 0, 0, 0, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}floor", Rounding.class, Rounding.FLOOR, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("floor"), Floor.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, OPT, CORE, AS_PRIM_ARG0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}format-date", FormatDate.class, StandardNames.XS_DATE, 2, 5, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 3, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 4, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+        register(xf("format-date"), FormatDate.class, StandardNames.XS_DATE, 2, 5, BuiltInAtomicType.STRING, OPT, XSLT | XPATH30, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, OPT, null)
+            .arg(3, BuiltInAtomicType.STRING, OPT, null)
+            .arg(4, BuiltInAtomicType.STRING, OPT, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}format-dateTime", FormatDate.class, StandardNames.XS_DATE_TIME, 2, 5, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 3, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 4, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+        register(xf("format-dateTime"), FormatDate.class, StandardNames.XS_DATE_TIME, 2, 5, BuiltInAtomicType.STRING, OPT, XSLT | XPATH30, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, OPT, null)
+            .arg(3, BuiltInAtomicType.STRING, OPT, null)
+            .arg(4, BuiltInAtomicType.STRING, OPT, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}format-number", FormatNumber.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("format-integer"), FormatInteger.class, 0, 2, 3, AnyItemType.getInstance(), ONE, XPATH30, 0)
+            .arg(0, BuiltInAtomicType.INTEGER, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, OPT, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}format-time", FormatDate.class, StandardNames.XS_TIME, 2, 5, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 3, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 4, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+        register(xf("format-number#2"), FormatNumber.class, 0, 2, 2, BuiltInAtomicType.STRING, ONE, XSLT | XPATH30, 0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}function-available", FunctionAvailable.class, 0, 1, 2, BuiltInAtomicType.BOOLEAN,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE, null);
+        register(xf("format-number#3"), FormatNumber.class, 0, 3, 3, BuiltInAtomicType.STRING, ONE, XSLT | XPATH30, NS)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, OPT, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}generate-id", GenerateId.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("format-time"), FormatDate.class, StandardNames.XS_TIME, 2, 5, BuiltInAtomicType.STRING, OPT, XSLT | XPATH30, 0)
+            .arg(0, BuiltInAtomicType.TIME, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, OPT, null)
+            .arg(3, BuiltInAtomicType.STRING, OPT, null)
+            .arg(4, BuiltInAtomicType.STRING, OPT, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}hours-from-dateTime", Component.class, (Component.HOURS << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("function-available"), FunctionAvailable.class, 0, 1, 2, BuiltInAtomicType.BOOLEAN, ONE, XSLT | USE_WHEN, NS)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, BuiltInAtomicType.INTEGER, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}hours-from-duration", Component.class, (Component.HOURS << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("generate-id#0"), GenerateId.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, XSLT | XPATH30, FOCUS | IMP_CX_I);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}hours-from-time", Component.class, (Component.HOURS << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("generate-id#1"), GenerateId.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, XSLT | XPATH30, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, StringValue.EMPTY_STRING);
 
-//            e = register("{" + NamespaceConstants.XFORMS_NS + "}id", Id.class, 0, 1, 2, NodeKindTest.ELEMENT, StaticProperty.ALLOWS_ZERO_OR_MORE);
-//            arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-//            arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
+        register(xf("hours-from-dateTime"), AccessorFn.class, (AccessorFn.HOURS << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}idref", Idref.class, 0, 1, 2, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
+        register(xf("hours-from-duration"), AccessorFn.class, (AccessorFn.HOURS << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DURATION, OPT, EMPTY);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}implicit-timezone", CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.EXACTLY_ONE);
+        register(xf("hours-from-time"), AccessorFn.class, (AccessorFn.HOURS << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.TIME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}in-scope-prefixes", InScopePrefixes.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, NodeKindTest.ELEMENT, StaticProperty.EXACTLY_ONE, null);
+//            e = register(xf("id"), Id.class, 0, 1, 2, NodeKindTest.ELEMENT, STAR, CORE, 0);
+//            arg(e, 0, BuiltInAtomicType.STRING, STAR, EMPTY);
+//            arg(e, 1, Type.NODE_TYPE, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}index-of", IndexOf.class, 0, 2, 3, BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("idref#1"), Idref.class, 0, 1, 1, Type.NODE_TYPE, STAR, CORE, FOCUS | IMP_CX_D)
+            .arg(0, BuiltInAtomicType.STRING, STAR, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}insert-before", Insert.class, 0, 3, 3, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
-        arg(e, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
+        register(xf("idref#2"), Idref.class, 0, 2, 2, Type.NODE_TYPE, STAR, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, STAR, EMPTY)
+            .arg(1, Type.NODE_TYPE, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}iri-to-uri", EscapeURI.class, EscapeURI.IRI_TO_URI, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("implicit-timezone"), CurrentDateTime.class, 0, 0, 0, BuiltInAtomicType.DAY_TIME_DURATION, ONE, CORE, 0);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}key", KeyFn.class, 0, 2, 3, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 2, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
+        register(xf("in-scope-prefixes"), InScopePrefixes.class, 0, 1, 1, BuiltInAtomicType.STRING, STAR, CORE, 0)
+            .arg(0, NodeKindTest.ELEMENT, ONE | INS, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}lang", Lang.class, 0, 1, 2, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
+        register(xf("index-of#2"), IndexOf.class, 0, 2, 2, BuiltInAtomicType.INTEGER, STAR, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY)
+            .arg(1, BuiltInAtomicType.ANY_ATOMIC, ONE, null);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}last", Last.class, 0, 0, 0, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
+        register(xf("index-of#3"), IndexOf.class, 0, 3, 3, BuiltInAtomicType.INTEGER, STAR, CORE, BASE)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY)
+            .arg(1, BuiltInAtomicType.ANY_ATOMIC, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}local-name", LocalNameFn.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("innermost"), Innermost.class, 0, 1, 1, AnyNodeTest.getInstance(), STAR, XPATH30, 0)
+            .arg(0, AnyNodeTest.getInstance(), STAR | NAV, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}local-name-from-QName", Component.class, (Component.LOCALNAME << 16) + StandardNames.XS_QNAME, 1, 1,
-                BuiltInAtomicType.NCNAME, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("insert-before"), InsertBefore.class, 0, 3, 3, Type.ITEM_TYPE, STAR, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | TRA, null)
+            .arg(1, BuiltInAtomicType.INTEGER, ONE, null)
+            .arg(2, Type.ITEM_TYPE, STAR | TRA, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}lower-case", ForceCase.class, ForceCase.LOWERCASE, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("iri-to-uri"), EscapeURI.class, EscapeURI.IRI_TO_URI, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}matches", Matches.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("key#2"), KeyFn.class, 0, 2, 2, Type.NODE_TYPE, STAR, XSLT, FOCUS | NS | IMP_CX_D)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
+
+        register(xf("key#3"), KeyFn.class, 0, 3, 3, Type.NODE_TYPE, STAR, XSLT, NS)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY)
+            .arg(2, Type.NODE_TYPE, ONE, null);
+
+        register(xf("lang#1"), Lang.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, FOCUS)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null);
+
+        register(xf("lang#2"), Lang.class, 0, 2, 2, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, Type.NODE_TYPE, ONE | INS, null);
+
+        register(xf("last"), Last.class, 0, 0,
+            0, BuiltInAtomicType.INTEGER, ONE, CORE, FOCUS);
+
+        register(xf("local-name#0"), LocalNameFn.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, FOCUS | IMP_CX_I);
+
+        register(xf("local-name#1"), LocalNameFn.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, StringValue.EMPTY_STRING);
+
+        register(xf("local-name-from-QName"), AccessorFn.class, (AccessorFn.LOCALNAME << 16) + StandardNames.XS_QNAME, 1, 1, BuiltInAtomicType.NCNAME, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.QNAME, OPT, EMPTY);
+
+        register(xf("lower-case"), LowerCase.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING);
+
+        register(xf("matches"), Matches.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
 
 
-//                        e = register("{" + NamespaceConstants.XFORMS_NS + "}max", Minimax.class, Minimax.MAX, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
-//                        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-//                        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+//                        e = register(xf("max"), Minimax.class, Minimax.MAX, 1, 2, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, 0);
+//                        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
+//                        arg(e, 1, BuiltInAtomicType.STRING, ONE, null);
 //                        
-//                        e = register("{" + NamespaceConstants.XFORMS_NS + "}min", Minimax.class, Minimax.MIN, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
-//                        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-//                        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+//                        e = register(xf("min"), Minimax.class, Minimax.MIN, 1, 2, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, 0);
+//                        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, STAR, EMPTY);
+//                        arg(e, 1, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}minutes-from-dateTime", Component.class, (Component.MINUTES << 16) + StandardNames.XS_DATE_TIME, 1, 1,
-                BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("minutes-from-dateTime"), AccessorFn.class, (AccessorFn.MINUTES << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}minutes-from-duration", Component.class, (Component.MINUTES << 16) + StandardNames.XS_DURATION, 1, 1,
-                BuiltInAtomicType.INTEGER, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("minutes-from-duration"), AccessorFn.class, (AccessorFn.MINUTES << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DURATION, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}minutes-from-time", Component.class, (Component.MINUTES << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("minutes-from-time"), AccessorFn.class, (AccessorFn.MINUTES << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.TIME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}month-from-date", Component.class, (Component.MONTH << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("month-from-date"), AccessorFn.class, (AccessorFn.MONTH << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}month-from-dateTime", Component.class, (Component.MONTH << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("month-from-dateTime"), AccessorFn.class, (AccessorFn.MONTH << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}months-from-duration", Component.class, (Component.MONTH << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("months-from-duration"), AccessorFn.class, (AccessorFn.MONTH << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DURATION, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}name",NameFn.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("name#0"), NameFn.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, FOCUS | IMP_CX_I);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}namespace-uri", NamespaceUriFn.class, 0, 0, 1, BuiltInAtomicType.ANY_URI,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("name#1"), NameFn.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, StringValue.EMPTY_STRING);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}namespace-uri-for-prefix", NamespaceForPrefix.class, 0, 2, 2, BuiltInAtomicType.ANY_URI,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, NodeKindTest.ELEMENT, StaticProperty.EXACTLY_ONE, null);
+        register(xf("namespace-uri#0"), NamespaceUriFn.class, 0, 0, 0, BuiltInAtomicType.ANY_URI, ONE, CORE, FOCUS | IMP_CX_I);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}namespace-uri-from-QName", Component.class, (Component.NAMESPACE << 16) + StandardNames.XS_QNAME, 1, 1,
-                BuiltInAtomicType.ANY_URI, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("namespace-uri#1"), NamespaceUriFn.class, 0, 1, 1, BuiltInAtomicType.ANY_URI, ONE, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, StringValue.EMPTY_STRING);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}nilled", Nilled.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("namespace-uri-for-prefix"), NamespaceForPrefix.class, 0, 2, 2, BuiltInAtomicType.ANY_URI, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, NodeKindTest.ELEMENT, ONE | INS, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}node-name", NodeNameFn.class, 0, 1, 1, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("namespace-uri-from-QName"), AccessorFn.class, (AccessorFn.NAMESPACE << 16) + StandardNames.XS_QNAME, 1, 1, BuiltInAtomicType.ANY_URI, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.QNAME, OPT, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}not", NotFn.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, BooleanValue.TRUE);
+        register(xf("nilled#0"), Nilled.class, 0, 0, 0, BuiltInAtomicType.BOOLEAN, OPT, XPATH30, FOCUS | IMP_CX_I);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}normalize-space", NormalizeSpace.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}normalize-space#0", NormalizeSpace.class, 0, 0, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}normalize-space#1", NormalizeSpace.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
+        register(xf("nilled#1"), Nilled.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, OPT, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}normalize-unicode", NormalizeUnicode.class, 0, 1, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("node-name#0"), NodeNameFn.class, 0, 0, 0, BuiltInAtomicType.QNAME, OPT, XPATH30, FOCUS | IMP_CX_I);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}number", NumberFn.class, 0, 0, 1, BuiltInAtomicType.DOUBLE, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE, DoubleValue.NaN);
+        register(xf("node-name#1"), NodeNameFn.class, 0, 1, 1, BuiltInAtomicType.QNAME, OPT, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | INS, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}one-or-more", TreatFn.class, StaticProperty.ALLOWS_ONE_OR_MORE, 1, 1, SAME_AS_FIRST_ARGUMENT,
-                StaticProperty.ALLOWS_ONE_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ONE_OR_MORE, null);
-        // because we don't do draconian static type checking, we can do the
-        // work in the argument type checking code
+        register(xf("not"), NotFn.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | INS, BooleanValue.TRUE);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}position", Position.class, 0, 0, 0, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
+        register(xf("normalize-space#0"), NormalizeSpace_0.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, FOCUS);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}prefix-from-QName", Component.class, (Component.PREFIX << 16) + StandardNames.XS_QNAME, 1, 1, BuiltInAtomicType.NCNAME,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("normalize-space#1"), NormalizeSpace_1.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}QName", QNameFn.class, 0, 2, 2, BuiltInAtomicType.QNAME, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("normalize-unicode"), NormalizeUnicode.class, 0, 1, 2, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}regex-group", RegexGroup.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE, null);
+        register(xf("number#0"), NumberFn.class, 0, 0, 0, BuiltInAtomicType.DOUBLE, ONE, CORE, FOCUS | IMP_CX_I);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}remove", Remove.class, 0, 2, 2, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE, null);
+        register(xf("number#1"), NumberFn.class, 0, 1, 1, BuiltInAtomicType.DOUBLE, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, OPT, DoubleValue.NaN);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}replace", Replace.class, 0, 3, 4, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("one-or-more"), TreatFn.class, PLUS, 1, 1, Type.ITEM_TYPE, PLUS, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, PLUS | TRA, null);
+        // because we don't do draconian static type checking, we can do the work in the argument type checking code
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}resolve-QName", ResolveQName.class, 0, 2, 2, BuiltInAtomicType.QNAME, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, NodeKindTest.ELEMENT, StaticProperty.EXACTLY_ONE, null);
+        register(xf("outermost"), Outermost.class, 0, 1, 1, AnyNodeTest.getInstance(), STAR, XPATH30, 0)
+            .arg(0, AnyNodeTest.getInstance(), STAR | TRA, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}resolve-uri", ResolveURI.class, 0, 1, 2, BuiltInAtomicType.ANY_URI, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("parse-xml"), ParseXml.class, 0, 1, 1, NodeKindTest.DOCUMENT, ONE, XPATH30, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}reverse", Reverse.class, 0, 1, 1, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
+        register(xf("parse-xml-fragment"), ParseXmlFragment.class, 0, 1, 1, NodeKindTest.DOCUMENT, ONE, XPATH30, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}root", Root.class, 0, 0, 1, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, Type.NODE_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("path"), Path.class, 0, 0, 1, BuiltInAtomicType.STRING, OPT, XPATH30, IMP_CX_I)
+            .arg(0, AnyNodeTest.getInstance(), OPT | StandardFunction.INS, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}round", Rounding.class, Rounding.ROUND, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("position"), Position.class, 0, 0, 0, BuiltInAtomicType.INTEGER, ONE, CORE, FOCUS);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}round-half-to-even", Rounding.class, Rounding.HALF_EVEN, 1, 2, SAME_AS_FIRST_ARGUMENT,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.NUMERIC, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE, null);
+        register(xf("prefix-from-QName"), AccessorFn.class, (AccessorFn.PREFIX << 16) + StandardNames.XS_QNAME, 1, 1, BuiltInAtomicType.NCNAME, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.QNAME, OPT, EMPTY);
 
-//                        e = register("{" + NamespaceConstants.XFORMS_NS + "}seconds-from-dateTime", Component.class, (Component.SECONDS << 16) + Type.DATE_TIME, 1, 1,
-//                            BuiltInAtomicType.DECIMAL, StaticProperty.ALLOWS_ZERO_OR_ONE);
-//                        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("QName"), QNameFn.class, 0, 2, 2, BuiltInAtomicType.QNAME, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}seconds-from-duration", Component.class, (Component.SECONDS << 16) + StandardNames.XS_DURATION, 1, 1,
-                BuiltInAtomicType.DECIMAL, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("regex-group"), RegexGroup.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, XSLT, 0)
+            .arg(0, BuiltInAtomicType.INTEGER, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}seconds-from-time", Component.class, (Component.SECONDS << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.DECIMAL,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
+        register(xf("remove"), Remove.class, 0, 2, 2, Type.ITEM_TYPE, STAR, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, STAR | TRA, EMPTY)
+            .arg(1, BuiltInAtomicType.INTEGER, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}starts-with", StartsWith.class, 0, 2, 3, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, BooleanValue.TRUE);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
+        register(xf("replace"), Replace.class, 0, 3, 4, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null)
+            .arg(3, BuiltInAtomicType.STRING, ONE, null);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}static-base-uri", StaticBaseURI.class, 0, 0, 0, BuiltInAtomicType.ANY_URI, StaticProperty.ALLOWS_ZERO_OR_ONE);
+        register(xf("resolve-QName"), ResolveQName.class, 0, 2, 2, BuiltInAtomicType.QNAME, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY)
+            .arg(1, NodeKindTest.ELEMENT, ONE | INS, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}string", StringFn.class, 0, 0, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
+        register(xf("resolve-uri#1"), ResolveURI.class, 0, 1, 1, BuiltInAtomicType.ANY_URI, OPT, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null);
 
-        register("{" + NamespaceConstants.XFORMS_NS + "}string-length", StringLength.class, 0, 0, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
-        register("{" + NamespaceConstants.XFORMS_NS + "}string-length#0", StringLength.class, 0, 0, 0, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
+        register(xf("resolve-uri#2"), ResolveURI.class, 0, 2, 2, BuiltInAtomicType.ANY_URI, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}string-length#1", StringLength.class, 0, 1, 1, BuiltInAtomicType.INTEGER, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-
+        register(xf("reverse"), Reverse.class, 0, 1, 1, Type.ITEM_TYPE, STAR, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, STAR | NAV, EMPTY);
 
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}string-join", StringJoin.class, 0, 2, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE, StringValue.EMPTY_STRING);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}string-to-codepoints", StringToCodepoints.class, 0, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}subsequence", Subsequence.class, 0, 2, 3, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring", Substring.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
-        arg(e, 1, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.NUMERIC, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring-after", SubstringAfter.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}substring-before", SubstringBefore.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}sum", Aggregate2.class, Aggregate2.SUM, 1, 2, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
-        arg(e, 1, BuiltInAtomicType.ANY_ATOMIC, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}system-property", SystemProperty.class, 0, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}timezone-from-date", Component.class, (Component.TIMEZONE << 16) + StandardNames.XS_DATE, 1, 1,
-                BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}timezone-from-dateTime", Component.class, (Component.TIMEZONE << 16) + StandardNames.XS_DATE_TIME, 1, 1,
-                BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}timezone-from-time", Component.class, (Component.TIMEZONE << 16) + StandardNames.XS_TIME, 1, 1,
-                BuiltInAtomicType.DAY_TIME_DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}trace", Trace.class, 0, 2, 2, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        register("{" + NamespaceConstants.XFORMS_NS + "}true", TrueFn.class, 0, 0, 0, BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}translate", Translate.class, 0, 3, 3, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}tokenize", Tokenize.class, 0, 2, 3, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 2, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}type-available", TypeAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unordered", Unordered.class, 0, 1, 1, SAME_AS_FIRST_ARGUMENT, StaticProperty.ALLOWS_ZERO_OR_MORE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_MORE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}upper-case", ForceCase.class, ForceCase.UPPERCASE, 1, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, StringValue.EMPTY_STRING);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-entity-uri", UnparsedEntity.class, UnparsedEntity.URI, 1, 1, BuiltInAtomicType.ANY_URI,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        // internal version of unparsed-entity-uri with second argument
-        // representing the current document
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-entity-uri_9999_", UnparsedEntity.class, UnparsedEntity.URI, 2, 2, BuiltInAtomicType.STRING,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
-        // it must actually be a document node, but there's a non-standard
-        // error code
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-entity-public-id", UnparsedEntity.class, UnparsedEntity.PUBLIC_ID, 1, 1, BuiltInAtomicType.STRING,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        // internal version of unparsed-entity-public-id with second
-        // argument representing the current document
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-entity-public-id_9999_", UnparsedEntity.class, UnparsedEntity.PUBLIC_ID, 2, 2, BuiltInAtomicType.STRING,
-                StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 1, Type.NODE_TYPE, StaticProperty.EXACTLY_ONE, null);
-        // it must actually be a document node, but there's a non-standard
-        // error code
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-text", UnparsedText.class, 0, 1, 2, BuiltInAtomicType.STRING,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}unparsed-text-available", UnparsedTextAvailable.class, 1, 1, 2,
-                BuiltInAtomicType.BOOLEAN, StaticProperty.EXACTLY_ONE);
-        arg(e, 0, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-        arg(e, 1, BuiltInAtomicType.STRING, StaticProperty.EXACTLY_ONE, null);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}year-from-date", Component.class, (Component.YEAR << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}year-from-dateTime", Component.class, (Component.YEAR << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DATE_TIME, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}years-from-duration", Component.class, (Component.YEAR << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, BuiltInAtomicType.DURATION, StaticProperty.ALLOWS_ZERO_OR_ONE, EMPTY);
-
-        e = register("{" + NamespaceConstants.XFORMS_NS + "}zero-or-one", TreatFn.class, StaticProperty.ALLOWS_ZERO_OR_ONE, 1, 1, SAME_AS_FIRST_ARGUMENT,
-                StaticProperty.ALLOWS_ZERO_OR_ONE);
-        arg(e, 0, Type.ITEM_TYPE, StaticProperty.ALLOWS_ZERO_OR_ONE, null);
-        // because we don't do draconian static type checking, we can do the
-        // work in the argument type checking code
+        register(xf("root#0"), Root.class, 0, 0, 0, Type.NODE_TYPE, OPT, CORE, FOCUS | IMP_CX_I);
+
+        register(xf("root#1"), Root.class, 0, 1, 1, Type.NODE_TYPE, OPT, CORE, 0)
+            .arg(0, Type.NODE_TYPE, OPT | NAV, EMPTY);
+
+        register(xf("round#1"), Round.class, 0, 1, 1, BuiltInAtomicType.NUMERIC, OPT, CORE, AS_PRIM_ARG0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, EMPTY);
+
+        register(xf("round#2"), Round.class, 0, 2, 2, BuiltInAtomicType.NUMERIC, OPT, XPATH30, AS_PRIM_ARG0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.INTEGER, ONE, null);
+
+        register(xf("round-half-to-even"), RoundHalfToEven.class, 0, 1, 2, BuiltInAtomicType.NUMERIC, OPT, CORE, AS_PRIM_ARG0)
+            .arg(0, BuiltInAtomicType.NUMERIC, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.INTEGER, ONE, null);
+
+//                        e = register(xf("seconds-from-dateTime"), AccessorFn.class, (AccessorFn.SECONDS << 16) + Type.DATE_TIME, 1, 1,
+//                            BuiltInAtomicType.DECIMAL, OPT);
+//                        arg(e, 0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
+
+        register(xf("seconds-from-duration"), AccessorFn.class, (AccessorFn.SECONDS << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.DECIMAL, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DURATION, OPT, EMPTY);
+
+        register(xf("seconds-from-time"), AccessorFn.class, (AccessorFn.SECONDS << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.DECIMAL, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.TIME, OPT, EMPTY);
+
+        register(xf("serialize"), Serialize.class, 0, 1, 2, BuiltInAtomicType.STRING, ONE, XPATH30, 0)
+            .arg(0, AnyItemType.getInstance(), STAR, null)
+            .arg(1, NodeKindTest.ELEMENT, STAR, null);
+
+        register(xf("starts-with#2"), StartsWith.class, 0, 2, 2, BuiltInAtomicType.BOOLEAN, ONE, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, BooleanValue.TRUE);
+
+        register(xf("starts-with#3"), StartsWith.class, 0, 3, 3, BuiltInAtomicType.BOOLEAN, ONE, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, BooleanValue.TRUE)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("static-base-uri"), StaticBaseURI.class, 0, 0, 0, BuiltInAtomicType.ANY_URI, OPT, CORE, BASE);
+
+        register(xf("string#0"), StringFn.class, 0, 0, 0, BuiltInAtomicType.STRING, ONE, CORE, FOCUS | IMP_CX_I);
+
+        register(xf("string#1"), StringFn.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, Type.ITEM_TYPE, OPT | ABS, StringValue.EMPTY_STRING);
+
+        register(xf("string-length#0"), StringLength.class, 0, 0, 0, BuiltInAtomicType.INTEGER, ONE, CORE, FOCUS);
+
+        register(xf("string-length#1"), StringLength.class, 0, 1, 1, BuiltInAtomicType.INTEGER, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null);
+
+        register(xf("string-join#1"), StringJoin.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, XPATH30, 0)
+            .arg(0, BuiltInAtomicType.STRING, STAR, StringValue.EMPTY_STRING);
+
+        register(xf("string-join#2"), StringJoin.class, 0, 2, 2, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, STAR, StringValue.EMPTY_STRING)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("string-to-codepoints"), StringToCodepoints.class, 0, 1, 1, BuiltInAtomicType.INTEGER, STAR, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY);
+
+        register(xf("subsequence"), Subsequence.class, 0, 2, 3, Type.ITEM_TYPE, STAR, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, STAR | TRA, EMPTY)
+            .arg(1, BuiltInAtomicType.NUMERIC, ONE, null)
+            .arg(2, BuiltInAtomicType.NUMERIC, ONE, null);
+
+        register(xf("substring"), Substring.class, 0, 2, 3, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING)
+            .arg(1, BuiltInAtomicType.NUMERIC, ONE, null)
+            .arg(2, BuiltInAtomicType.NUMERIC, ONE, null);
+
+        register(xf("substring-after#2"), SubstringAfter.class, 0, 2, 2, BuiltInAtomicType.STRING, ONE, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, null);
+
+        register(xf("substring-after#3"), SubstringAfter.class, 0, 3, 3, BuiltInAtomicType.STRING, ONE, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("substring-before#2"), SubstringBefore.class, 0, 2, 2, BuiltInAtomicType.STRING, ONE, CORE, DCOLL)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING);
+
+        register(xf("substring-before#3"), SubstringBefore.class, 0, 3, 3, BuiltInAtomicType.STRING, ONE, CORE, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("sum"), Sum.class, 0, 1, 2, BuiltInAtomicType.ANY_ATOMIC, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.ANY_ATOMIC, STAR, null)
+            .arg(1, BuiltInAtomicType.ANY_ATOMIC, OPT, null);
+
+        register(xf("system-property"), SystemProperty.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, XSLT | USE_WHEN, NS)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("tail"), TailFn.class, 0, 1, 1, AnyItemType.getInstance(), STAR, XPATH30, 0)
+            .arg(0, AnyItemType.getInstance(), STAR | TRA, null);
+
+        register(xf("timezone-from-date"), AccessorFn.class, (AccessorFn.TIMEZONE << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.DAY_TIME_DURATION, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, EMPTY);
+
+        register(xf("timezone-from-dateTime"), AccessorFn.class, (AccessorFn.TIMEZONE << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.DAY_TIME_DURATION, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
+
+        register(xf("timezone-from-time"), AccessorFn.class, (AccessorFn.TIMEZONE << 16) + StandardNames.XS_TIME, 1, 1, BuiltInAtomicType.DAY_TIME_DURATION, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.TIME, OPT, EMPTY);
+
+        register(xf("trace"), Trace.class, 0, 2, 2, Type.ITEM_TYPE, STAR, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, STAR | TRA, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
+
+//            register("true", BooleanFn.class, BooleanFn.TRUE, 0, 0, BuiltInAtomicType.BOOLEAN,
+//                    UNIT, CORE)
+
+        register(xf("translate"), Translate.class, 0, 3, 3, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("true"), True.class, 0, 0,
+            0, BuiltInAtomicType.BOOLEAN, ONE, CORE, 0);
+
+        register(xf("tokenize"), Tokenize.class, 0, 2, 3, BuiltInAtomicType.STRING, STAR, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, EMPTY)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null)
+            .arg(2, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("type-available"), TypeAvailable.class, 0, 1, 1, BuiltInAtomicType.BOOLEAN, ONE, XSLT | USE_WHEN, NS)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("unordered"), Unordered.class, 0, 1, 1, Type.ITEM_TYPE, STAR, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, STAR | TRA, EMPTY);
+
+        register(xf("upper-case"), UpperCase.class, 0, 1, 1, BuiltInAtomicType.STRING, ONE, CORE, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, StringValue.EMPTY_STRING);
+
+        register(xf("unparsed-entity-uri#1"), UnparsedEntity.class, UnparsedEntity.URI, 1, 1, BuiltInAtomicType.ANY_URI, ONE, XSLT, FOCUS | IMP_CX_D)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        // internal version of unparsed-entity-uri with second argument representing the current document
+        register(xf("unparsed-entity-uri#2"), UnparsedEntity.class, UnparsedEntity.URI, 2, 2, BuiltInAtomicType.STRING, ONE, XSLT, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, Type.NODE_TYPE, ONE, null);
+        // it must actually be a document node, but there's a non-standard error code
+
+        register(xf("unparsed-entity-public-id#1"), UnparsedEntity.class, UnparsedEntity.PUBLIC_ID, 1, 1, BuiltInAtomicType.STRING, ONE, XSLT, FOCUS | IMP_CX_D)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null);
+
+        // internal version of unparsed-entity-public-id with second argument representing the current document
+        register(xf("unparsed-entity-public-id#2"), UnparsedEntity.class, UnparsedEntity.PUBLIC_ID, 2, 2, BuiltInAtomicType.STRING, ONE, XSLT, 0)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, Type.NODE_TYPE, ONE, null);
+        // it must actually be a document node, but there's a non-standard error code
+
+        register(xf("unparsed-text"), UnparsedText.class, 0, 1, 2, BuiltInAtomicType.STRING, OPT, XSLT | XPATH30, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("unparsed-text-available"), UnparsedTextAvailable.class, 0, 1, 2, BuiltInAtomicType.BOOLEAN, ONE, XSLT | XPATH30, BASE)
+            .arg(0, BuiltInAtomicType.STRING, ONE, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("unparsed-text-lines"), UnparsedTextLines.class, 0, 1, 2, BuiltInAtomicType.STRING, STAR, XPATH30, BASE)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null)
+            .arg(1, BuiltInAtomicType.STRING, ONE, null);
+
+        register(xf("uri-collection"), UriCollection.class, 0, 0, 1, BuiltInAtomicType.ANY_URI, STAR, XPATH30, 0)
+            .arg(0, BuiltInAtomicType.STRING, OPT, null);
+
+        register(xf("year-from-date"), AccessorFn.class, (AccessorFn.YEAR << 16) + StandardNames.XS_DATE, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE, OPT, EMPTY);
+
+        register(xf("year-from-dateTime"), AccessorFn.class, (AccessorFn.YEAR << 16) + StandardNames.XS_DATE_TIME, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DATE_TIME, OPT, EMPTY);
+
+        register(xf("years-from-duration"), AccessorFn.class, (AccessorFn.YEAR << 16) + StandardNames.XS_DURATION, 1, 1, BuiltInAtomicType.INTEGER, OPT, CORE, 0)
+            .arg(0, BuiltInAtomicType.DURATION, OPT, EMPTY);
+
+        register(xf("zero-or-one"), TreatFn.class, OPT, 1, 1, Type.ITEM_TYPE, OPT, CORE, AS_ARG0)
+            .arg(0, Type.ITEM_TYPE, OPT | TRA, null);
+        // because we don't do draconian static type checking, we can do the work in the argument type checking code
 
     }
 

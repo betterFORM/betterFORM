@@ -33,7 +33,9 @@ import de.betterform.xml.xpath.XPathUtil;
 import de.betterform.xml.xpath.impl.saxon.SaxonReferenceFinderImpl;
 import de.betterform.xml.xpath.impl.saxon.XPathCache;
 import net.sf.saxon.functions.FunctionLibrary;
+import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.om.StructuredQName;
+import net.sf.saxon.trans.SymbolicName;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.xerces.dom.DOMInputImpl;
@@ -429,6 +431,7 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
         if (functions != null && !functions.equals("")) {
             //check for availability of extension functions...
             StringTokenizer tokenizer = new StringTokenizer(functions);
+
             while (tokenizer.hasMoreTokens()) {
                 String qname = tokenizer.nextToken();
                 String prefix = "";
@@ -442,8 +445,10 @@ public class Model extends XFormsElement implements XFormsModelElement, DefaultA
                 }
                 String namespaceURI = NamespaceResolver.getNamespaceURI(this.element, prefix);
                 if (namespaceURI == null) namespaceURI = "";
-                FunctionLibrary functionLibrary = XPathCache.getFgXFormsFunctionLibrary();
-                if ((functionLibrary.getFunctionSignature(new StructuredQName(prefix, namespaceURI, localName), -1)) == null) {
+                final FunctionLibrary functionLibrary = XPathCache.getFgXFormsFunctionLibrary();
+                final StructuredQName functionName = new StructuredQName(prefix, namespaceURI, localName);
+                final SymbolicName sn = new SymbolicName(StandardNames.XSL_FUNCTION, functionName, -1);
+                if(!functionLibrary.isAvailable(sn)) {
                     throw new XFormsComputeException("Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'", this.target, null);
 //                    Map<String, String> errorMsg = new HashMap<String, String>();
 //                    errorMsg.put("error-message","XFormsComputeException: Function '" + localName + "' cannot be found in Namespace: '" + namespaceURI + "'");

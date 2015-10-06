@@ -9,6 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 
@@ -32,8 +33,14 @@ import net.sf.saxon.value.BooleanValue;
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException
+    @Override
+    public BooleanValue evaluateItem(XPathContext xpathContext) throws XPathException
     {
         return BooleanValue.TRUE;
+    }
+
+    public BooleanValue call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return evaluateItem(context);
     }
 }

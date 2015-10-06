@@ -12,9 +12,12 @@ import de.betterform.xml.xpath.impl.saxon.XPathUtil;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.ListIterator;
+import net.sf.saxon.value.EmptySequence;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -36,47 +39,57 @@ public class Props2XML extends XFormsFunction {
      */
 
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+	    return this;
     }
 
 	/**
 	 * Evaluate in a general context
 	 */
-	public SequenceIterator iterate(XPathContext xpathContext) throws XPathException
-	{
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-
-		if (functionContext != null)
-		{
-			final de.betterform.xml.xforms.model.Instance instance;
-			if (argument.length == 0)
-			{
-				return new ListIterator(Collections.EMPTY_LIST);
-			}
-			else
-			{
-                String props = argument[0].evaluateAsString(xpathContext).toString().trim();
-
-                String[] propArray = props.substring(1, props.length()-1).trim().split(",");
-
-                Document document = DOMUtil.newDocument(false, false);
-                Element xfElement = document.createElement("xfElement");
-                document.appendChild(xfElement);
-
-                for(int i = 0; i < propArray.length; i++) {
-                    if(propArray[i].contains("\":\"")) {
-                        String tmp = propArray[i].trim();
-                        String aName = tmp.substring(1,tmp.indexOf("\":\"")).trim();
-                        String aValue = tmp.substring(tmp.indexOf("\":\"")+3).trim();
-                        aValue = aValue.substring(0, aValue.length()-1);
-                        xfElement.setAttribute(aName, aValue);
-                }
-                }
-
-
-                return new ListIterator(XPathUtil.getRootContext(document, ""));
-			}
-		}
-		return new ListIterator(Collections.EMPTY_LIST);
+    @Override
+	public SequenceIterator iterate(XPathContext xpathContext) throws XPathException {
+        if (argument.length == 0) {
+            return new ListIterator(Collections.EMPTY_LIST);
+        } else {
+            final String props = argument[0].evaluateAsString(xpathContext).toString().trim();
+            return propsAsXml(xpathContext, props);
+        }
 	}
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        if(arguments.length == 0) {
+            return EmptySequence.getInstance();
+        } else {
+            final String props = arguments[0].head().getStringValue().trim();
+            return SequenceTool.toLazySequence(propsAsXml(context, props));
+        }
+    }
+
+    private ListIterator propsAsXml(final XPathContext context, final String props) {
+        final XPathFunctionContext functionContext = getFunctionContext(context);
+
+        if (functionContext != null) {
+            final String[] propArray = props.substring(1, props.length() - 1).trim().split(",");
+
+            final Document document = DOMUtil.newDocument(false, false);
+            final Element xfElement = document.createElement("xfElement");
+            document.appendChild(xfElement);
+
+            for (int i = 0; i < propArray.length; i++) {
+                if (propArray[i].contains("\":\"")) {
+                    String tmp = propArray[i].trim();
+                    String aName = tmp.substring(1,
+                        tmp.indexOf("\":\"")).trim();
+                    String aValue = tmp.substring(
+                        tmp.indexOf("\":\"") + 3).trim();
+                    aValue = aValue.substring(0, aValue.length() - 1);
+                    xfElement.setAttribute(aName, aValue);
+                }
+            }
+
+            return new ListIterator(XPathUtil.getRootContext(document, ""));
+        } else {
+            return new ListIterator(Collections.EMPTY_LIST);
+        }
+    }
 }

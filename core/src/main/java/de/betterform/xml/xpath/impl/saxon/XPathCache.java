@@ -11,16 +11,16 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.BetterFormFunctionLibrary;
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunctionLibrary;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathDynamicContext;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathEvaluator;
-import de.betterform.xml.xpath.impl.saxon.sxpath.XPathExpression;
+import net.sf.saxon.sxpath.XPathDynamicContext;
+import net.sf.saxon.sxpath.XPathEvaluator;
+import net.sf.saxon.sxpath.XPathExpression;
 import net.sf.saxon.Configuration;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.LastPositionFinder;
-import net.sf.saxon.expr.XPathContextMajor;
 import net.sf.saxon.functions.ConstructorFunctionLibrary;
 import net.sf.saxon.functions.FunctionLibraryList;
 import net.sf.saxon.functions.SystemFunctionLibrary;
+import net.sf.saxon.om.FocusTrackingIterator;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.om.SequenceIterator;
@@ -113,7 +113,7 @@ public class XPathCache {
 
     public Node evaluateAsSingleNode(List nodeset, int position, String xpath, Map prefixes, XPathFunctionContext functionContext) throws XFormsException {
         NodeInfo node = (NodeInfo) XPathCache.getInstance().evaluate(nodeset,1, xpath,prefixes,functionContext).get(0);
-            return (Node) ((NodeWrapper)node).getUnderlyingNode();
+            return (Node) ((DOMNodeWrapper)node).getUnderlyingNode();
         }
 
     public Node evaluateAsSingleNode(BetterFormXPathContext context,String xpath) throws XFormsException {
@@ -121,7 +121,7 @@ public class XPathCache {
         List nodeList =  XPathCache.getInstance().evaluate(context, xpath);
         if(nodeList != null && nodeList.size() >= 1){
             NodeInfo node = (NodeInfo)nodeList.get(0);
-            return (Node) ((NodeWrapper)node).getUnderlyingNode();
+            return (Node) ((DOMNodeWrapper)node).getUnderlyingNode();
          }else {
             return null;
         }
@@ -137,11 +137,11 @@ public class XPathCache {
 
 
         try {
-            final XPathExpression exp = getXPathExpression(xpathString, prefixMapping, functionContext != null?functionContext.getXFormsElement().getContainerObject().getConfiguration():XPathCache.kCONFIG);
+            final XPathExpression exp = getXPathExpression(xpathString, prefixMapping, functionContext != null ? functionContext.getXFormsElement().getContainerObject().getConfiguration() : XPathCache.kCONFIG);
             final XPathDynamicContext context = exp.createDynamicContext((Item) nodeset.get(position - 1));
-            ListSequenceIterator nodesetIt = new ListSequenceIterator(nodeset, position);
+            FocusTrackingIterator nodesetIt = new FocusTrackingIterator(new ListSequenceIterator(nodeset, position));
             nodesetIt.next();
-			((XPathContextMajor)context.getXPathContextObject()).setCurrentIterator(nodesetIt);
+            context.getXPathContextObject().setCurrentIterator(nodesetIt);
             context.getXPathContextObject().getController().setUserData(XFormsProcessorImpl.class.toString(), XPathFunctionContext.class.toString(), functionContext);
 
             SequenceIterator it = exp.iterate(context);
@@ -197,9 +197,10 @@ public class XPathCache {
         // XXX declare variable
 
         independentContext.setFunctionLibrary(fgXFormsFunctionLibrary);
-       xpe.setStaticContext(independentContext);
+        xpe.setStaticContext(independentContext);
 
         XPathExpression exp = xpe.createExpression(xpathString);
+
         return exp;
     }
 
