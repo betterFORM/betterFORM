@@ -122,8 +122,8 @@ public class ExistUtil {
     return result;
   }
 
-  public static XQueryContext getXQueryContext(XQuery xquery, DocumentImpl xmlResource, ByteArrayOutputStream data, String encoding) throws XPathException, UnsupportedEncodingException {
-    XQueryContext xqcontext = xquery.newContext(AccessContext.REST);
+  public static XQueryContext getXQueryContext(BrokerPool pool, XQuery xquery, DocumentImpl xmlResource, ByteArrayOutputStream data, String encoding) throws XPathException, UnsupportedEncodingException {
+    XQueryContext xqcontext = new XQueryContext(pool, AccessContext.REST);
     
     xqcontext.setModuleLoadPath(xmlResource.getCollection().getURI().toString());
     xqcontext.setStaticallyKnownDocuments(new XmldbURI[] { xmlResource.getCollection().getURI() });
@@ -145,17 +145,17 @@ public class ExistUtil {
       @Override
       public String onXQuery(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
         Source source = new DBSource(broker, ((BinaryDocument) xmlResource), true);
-        XQuery xquery = broker.getXQueryService();
-        XQueryContext xqcontext = ExistUtil.getXQueryContext(xquery, xmlResource, stream, encoding);
-        CompiledXQuery compiledXQuery = xquery.compile(xqcontext, source);
-        Sequence resultSequence = xquery.execute(compiledXQuery, Sequence.EMPTY_SEQUENCE);
+        XQuery xquery = pool.getXQueryService();
+        XQueryContext xqcontext = ExistUtil.getXQueryContext(pool, xquery, xmlResource, stream, encoding);
+        CompiledXQuery compiledXQuery = xquery.compile(broker, xqcontext, source);
+        Sequence resultSequence = xquery.execute(broker, compiledXQuery, Sequence.EMPTY_SEQUENCE);
         return serialize(resultSequence);
       }
       
       @Override
       public String onXQueryModule(BrokerPool pool, DBBroker broker, DocumentImpl xmlResource, Txn tx) throws Exception {
-        XQuery xquery = broker.getXQueryService();
-        XQueryContext xqContext = ExistUtil.getXQueryContext(xquery, xmlResource, stream, encoding);
+        XQuery xquery = pool.getXQueryService();
+        XQueryContext xqContext = ExistUtil.getXQueryContext(pool, xquery, xmlResource, stream, encoding);
         
         Module module = xqContext.importModule(null, null, ExistUtil.EXIST_PROTOCOLL + getUri().getRawPath());
         String function = queryParameter.get(ExistUtil.URL_PARAM_FUNCTION);
