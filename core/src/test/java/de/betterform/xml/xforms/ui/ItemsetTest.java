@@ -112,16 +112,16 @@ public class ItemsetTest extends TestCase {
     protected void assertInitializedItemset(String selectId) throws XFormsException {
         Document host = this.xformsProcesssorImpl.getContainer().getDocument();
 
-        assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
-        assertEquals(selectId, "1", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/bf:data/xf:item)"));
+        assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id eq '" + selectId + "']/bf:data"));
+        assertEquals(selectId, "1", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/bf:data/xf:item)"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "true", "First", "123");
             assertItem(host, selectId, 2, "false", "Second", "124");
             assertItem(host, selectId, 3, "false", "Third", "125");
         }
         else {
-            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "true", "First", "123");
             assertItem(host, selectId, 2, "false", "Second", "124");
             assertItem(host, selectId, 3, "false", "Third", "125");
@@ -131,15 +131,15 @@ public class ItemsetTest extends TestCase {
     protected void assertUpdatedItemset(String selectId) throws XFormsException {
         Document host = this.xformsProcesssorImpl.getContainer().getDocument();
 
-        assertEquals(selectId, "125", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
+        assertEquals(selectId, "125", XPathUtil.evaluateAsString(host, "//*[@id eq '" + selectId + "']/bf:data"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "false", "First", "123");
             assertItem(host, selectId, 2, "false", "Second", "124");
             assertItem(host, selectId, 3, "true", "Third", "125");
         }
         else {
-            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "3", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "false", "First", "123");
             assertItem(host, selectId, 2, "false", "Second", "124");
             assertItem(host, selectId, 3, "true", "Third", "125");
@@ -149,16 +149,16 @@ public class ItemsetTest extends TestCase {
     protected void assertGrownItemset(String selectId) throws XFormsException {
         Document host = this.xformsProcesssorImpl.getContainer().getDocument();
 
-        assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
+        assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id eq '" + selectId + "']/bf:data"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "true", "First", "123");
             assertItem(host, selectId, 2, "false", "Fourth", "126");
             assertItem(host, selectId, 3, "false", "Second", "124");
             assertItem(host, selectId, 4, "false", "Third", "125");
 
         }else {
-            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "4", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "true", "First", "123");
             assertItem(host, selectId, 2, "false", "Fourth", "126");
             assertItem(host, selectId, 3, "false", "Second", "124");
@@ -170,14 +170,14 @@ public class ItemsetTest extends TestCase {
     protected void assertShrunkItemset(String selectId) throws XFormsException {
         Document host = this.xformsProcesssorImpl.getContainer().getDocument();
 
-        assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id='" + selectId + "']/bf:data"));
+        assertEquals(selectId, "123", XPathUtil.evaluateAsString(host, "//*[@id eq '" + selectId + "']/bf:data"));
         if(selectId.equals("select-1") || selectId.equals("select-3") || selectId.equals("select-5")){
-            assertEquals(selectId, "2", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "2", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "true", "First", "123");
             assertItem(host, selectId, 2, "false", "Third", "125");
 
         }else {
-            assertEquals(selectId, "2", XPathUtil.evaluateAsString(host, "count(//*[@id='" + selectId + "']/xf:itemset/xf:item)"));
+            assertEquals(selectId, "2", XPathUtil.evaluateAsString(host, "count(//*[@id eq '" + selectId + "']/xf:itemset/xf:item)"));
             assertItem(host, selectId, 1, "true", "First", "123");
             assertItem(host, selectId, 2, "false", "Third", "125");
 
@@ -185,12 +185,12 @@ public class ItemsetTest extends TestCase {
     }
 
     private void assertItem(Document host, String id, int position, String selected, String label, String value) throws XFormsException {
-        assertEquals(id, "true", XPathUtil.evaluateAsString(host, "boolean(//*[@id='" + id + "']/xf:itemset/xf:item[" + position + "]/@id)"));
-        assertEquals(id, selected, XPathUtil.evaluateAsString(host, "//*[@id='" + id + "']/xf:itemset/xf:item[" + position + "]/@selected"));
-        assertEquals(id, "true", XPathUtil.evaluateAsString(host, "boolean(//*[@id='" + id + "']/xf:itemset/xf:item[" + position + "]/xf:label/@id)"));
-        assertEquals(id, label, XPathUtil.evaluateAsString(host, "//*[@id='" + id + "']/xf:itemset/xf:item[" + position + "]/xf:label"));
-        assertEquals(id, "true", XPathUtil.evaluateAsString(host, "boolean(//*[@id='" + id + "']/xf:itemset/xf:item[" + position + "]/xf:value/@id)"));
-        assertEquals(id, value, XPathUtil.evaluateAsString(host, "//*[@id='" + id + "']/xf:itemset/xf:item[" + position + "]/xf:value"));
+        assertEquals(id, "true", XPathUtil.evaluateAsString(host, "boolean(//*[@id eq '" + id + "']/xf:itemset/xf:item[" + position + "]/@id)"));
+        assertEquals(id, selected, XPathUtil.evaluateAsString(host, "//*[@id eq '" + id + "']/xf:itemset/xf:item[" + position + "]/@selected"));
+        assertEquals(id, "true", XPathUtil.evaluateAsString(host, "boolean(//*[@id eq '" + id + "']/xf:itemset/xf:item[" + position + "]/xf:label/@id)"));
+        assertEquals(id, label, XPathUtil.evaluateAsString(host, "//*[@id eq '" + id + "']/xf:itemset/xf:item[" + position + "]/xf:label"));
+        assertEquals(id, "true", XPathUtil.evaluateAsString(host, "boolean(//*[@id eq '" + id + "']/xf:itemset/xf:item[" + position + "]/xf:value/@id)"));
+        assertEquals(id, value, XPathUtil.evaluateAsString(host, "//*[@id eq '" + id + "']/xf:itemset/xf:item[" + position + "]/xf:value"));
     }
 }
 

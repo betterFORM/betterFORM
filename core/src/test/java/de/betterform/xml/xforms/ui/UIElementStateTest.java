@@ -44,12 +44,12 @@ public class UIElementStateTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testInit() throws Exception {
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
 
 /*
@@ -74,12 +74,12 @@ public class UIElementStateTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testInitMissing() throws Exception {
-        assertEquals("", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@enabled"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "boolean(//*[@id='input-missing']/bf:data/@type)"));
+        assertEquals("", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@enabled"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "boolean(//*[@id eq 'input-missing']/bf:data/@type)"));
 
 /*
         assertEquals(null, this.valueChangedListener.getId());
@@ -108,12 +108,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.dispatch("insert-missing", DOMEventNames.ACTIVATE);
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-missing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-missing']/bf:data/@type"));
 
 /*
         assertEquals(null, this.valueChangedListener.getId());
@@ -145,12 +145,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.dispatch("delete-existing", DOMEventNames.ACTIVATE);
         register(eventTarget, false);
 
-        assertEquals("", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "boolean(//*[@id='input-existing']/bf:data/@type)"));
+        assertEquals("", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "boolean(//*[@id eq 'input-existing']/bf:data/@type)"));
 
 /*
         assertEquals(null, this.valueChangedListener.getId());
@@ -182,12 +182,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-existing", "foobar");
         deregister(eventTarget, false);
 
-        assertEquals("foobar", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("foobar", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.valueChangedListener.getId());
         assertEquals("input-existing", this.validListener.getId());
@@ -224,10 +224,10 @@ public class UIElementStateTest extends TestCase {
 
         // DOMUtil.prettyPrintDOM(this.xformsProcesssorImpl.getContainer().getDocument());
 
-        assertEquals("01.01.2001", XPathUtil.evaluateAsString(host, "//*[@id='input-date']/bf:data"));
+        assertEquals("01.01.2001", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-date']/bf:data"));
 
-        assertEquals("2001-01-01", XPathUtil.evaluateAsString(host, "//*[@id='input-date']/bf:data/@schema-value"));
-        assertEquals("date", XPathUtil.evaluateAsString(host, "//*[@id='input-date']/bf:data/@type"));
+        assertEquals("2001-01-01", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-date']/bf:data/@schema-value"));
+        assertEquals("date", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-date']/bf:data/@type"));
 
         // assertEquals("input-date", this.valueChangedListener.getId());
         // assertEquals(null, this.stateChangedListener.getId());
@@ -245,12 +245,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.dispatch("update-trigger", DOMEventNames.ACTIVATE);
         deregister(eventTarget, false);
 
-        assertEquals("foobar", XPathUtil.evaluateAsString(host, "//*[@id='input-trigger']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-trigger']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-trigger']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-trigger']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-trigger']/bf:data/@enabled"));
-        assertEquals("xs:string", XPathUtil.evaluateAsString(host, "//*[@id='input-trigger']/bf:data/@type"));
+        assertEquals("foobar", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-trigger']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-trigger']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-trigger']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-trigger']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-trigger']/bf:data/@enabled"));
+        assertEquals("xs:string", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-trigger']/bf:data/@type"));
 
         assertEquals("input-trigger", this.valueChangedListener.getId());
         assertEquals("input-trigger", this.validListener.getId());
@@ -284,12 +284,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.dispatch("update-trigger", DOMEventNames.ACTIVATE);
         deregister(eventTarget, false);
 
-        assertEquals("foobar", XPathUtil.evaluateAsString(host, "//*[@id='input-calculate']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-calculate']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-calculate']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-calculate']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-calculate']/bf:data/@enabled"));
-        assertEquals("xs:string", XPathUtil.evaluateAsString(host, "//*[@id='input-calculate']/bf:data/@type"));
+        assertEquals("foobar", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-calculate']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-calculate']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-calculate']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-calculate']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-calculate']/bf:data/@enabled"));
+        assertEquals("xs:string", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-calculate']/bf:data/@type"));
 
         assertEquals("input-calculate", this.valueChangedListener.getId());
         assertEquals("input-calculate", this.validListener.getId());
@@ -318,12 +318,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-constraint", "true");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.validListener.getId());
 
@@ -343,12 +343,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-constraint", "false");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.invalidListener.getId());
 
@@ -368,12 +368,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-readonly", "true");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.readonlyListener.getId());
 
@@ -394,12 +394,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-readonly", "false");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.readwriteListener.getId());
 
@@ -419,12 +419,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-required", "true");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.requiredListener.getId());
 
@@ -445,12 +445,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-required", "false");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.optionalListener.getId());
 
@@ -471,12 +471,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-relevant", "true");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.enabledListener.getId());
 
@@ -496,12 +496,12 @@ public class UIElementStateTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-relevant", "false");
         deregister(eventTarget, false);
 
-        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@valid"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@readonly"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@enabled"));
-        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id='input-existing']/bf:data/@type"));
+        assertEquals("item", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@readonly"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@enabled"));
+        assertEquals("xs:token", XPathUtil.evaluateAsString(host, "//*[@id eq 'input-existing']/bf:data/@type"));
 
         assertEquals("input-existing", this.disabledListener.getId());
 

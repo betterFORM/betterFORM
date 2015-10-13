@@ -176,7 +176,7 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
             	}
             	else {
             		// In some cases the xforms element isn't registered yet (e.g.: action refers to an Instance, or a forward reference)
-                    targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id = '" + eventTargetId + "']"), 1);
+                    targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id eq '" + eventTargetId + "']"), 1);
                     if(targetElement==null){
                         throw new XFormsException("targetElement with id '" + eventTargetId + "' is not present in this form");
                     }
@@ -191,7 +191,7 @@ public abstract class AbstractAction extends XFormsElement implements EventListe
             	}
             	else {
             		// In some cases the xforms element isn't registered yet (e.g.: action refers to an Instance, or a forward reference)
-                    targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id = '" + observer + "']"), 1);
+                    targetElement = (EventTarget) de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(container.getDocument(), "//*[@id eq '" + observer + "']"), 1);
                     if(targetElement==null){
                         throw new XFormsException("targetElement with id '" + observer + "' is not present in this form");
                     }

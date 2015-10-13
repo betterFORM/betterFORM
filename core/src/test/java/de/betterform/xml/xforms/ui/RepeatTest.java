@@ -373,8 +373,8 @@ public class RepeatTest extends TestCase {
 
         this.xformsProcesssorImpl.dispatch("trigger-insert-nested-master", DOMEventNames.ACTIVATE);
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("7", XPathUtil.evaluateAsString(host, "//xf:repeat[@id='nested-master-repeat']//xf:repeat//xf:input/bf:data"));
-        assertEquals("8", XPathUtil.evaluateAsString(host, "//xf:repeat[@id='nested-master-repeat']//xf:repeat//xf:output/bf:data"));
+        assertEquals("7", XPathUtil.evaluateAsString(host, "//xf:repeat[@id eq 'nested-master-repeat']//xf:repeat//xf:input/bf:data"));
+        assertEquals("8", XPathUtil.evaluateAsString(host, "//xf:repeat[@id eq 'nested-master-repeat']//xf:repeat//xf:output/bf:data"));
         assertEquals(1, repeat.getIndex());
 
     }

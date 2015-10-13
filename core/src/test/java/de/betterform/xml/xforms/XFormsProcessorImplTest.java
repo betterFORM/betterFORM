@@ -65,7 +65,7 @@ public class XFormsProcessorImplTest extends TestCase {
 
         TestEventListener listener = new TestEventListener();
 
-        Node node = XPathUtil.evaluateAsSingleNode(processor.getXForms(), "//*[@id='hello-input']");
+        Node node = XPathUtil.evaluateAsSingleNode(processor.getXForms(), "//*[@id eq 'hello-input']");
 
         EventTarget eventTarget = (EventTarget) node;
         eventTarget.addEventListener(XFormsEventNames.VALUE_CHANGED, listener, false);
@@ -90,7 +90,7 @@ public class XFormsProcessorImplTest extends TestCase {
         processor.init();
 
         TestEventListener listener = new TestEventListener();
-        Node node = XPathUtil.evaluateAsSingleNode(this.processor.getXForms(), "//*[@id='hello-input']");
+        Node node = XPathUtil.evaluateAsSingleNode(this.processor.getXForms(), "//*[@id eq 'hello-input']");
 
         EventTarget eventTarget = (EventTarget) node;
         eventTarget.addEventListener(XFormsEventNames.VALUE_CHANGED, listener, false);

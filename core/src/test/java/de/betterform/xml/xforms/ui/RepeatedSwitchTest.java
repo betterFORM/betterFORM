@@ -127,12 +127,12 @@ public class RepeatedSwitchTest extends XMLTestBase {
     }
 
     private static void assertRepeatCount(Document host, String id, int count) throws XFormsException {
-        assertEquals(count + "", XPathUtil.evaluateAsString(host,"count(//xf:repeat[@id='" + id + "']/xf:group[@appearance='repeated'])"));
+        assertEquals(count + "", XPathUtil.evaluateAsString(host,"count(//xf:repeat[@id eq '" + id + "']/xf:group[@appearance eq 'repeated'])"));
     }
 
     private static void assertCaseSelection(Document host, String id, int position, boolean case1, boolean case2) throws XFormsException {
-        assertEquals(String.valueOf(case1), XPathUtil.evaluateAsString(host,"//xf:repeat[@id='" + id + "']/xf:group[@appearance='repeated'][" + position + "]/xf:switch/xf:case[1]/bf:data/@selected"));
-        assertEquals(String.valueOf(case2), XPathUtil.evaluateAsString(host,"//xf:repeat[@id='" + id + "']/xf:group[@appearance='repeated'][" + position + "]/xf:switch/xf:case[2]/bf:data/@selected"));
+        assertEquals(String.valueOf(case1), XPathUtil.evaluateAsString(host,"//xf:repeat[@id eq '" + id + "']/xf:group[@appearance eq 'repeated'][" + position + "]/xf:switch/xf:case[1]/bf:data/@selected"));
+        assertEquals(String.valueOf(case2), XPathUtil.evaluateAsString(host,"//xf:repeat[@id eq '" + id + "']/xf:group[@appearance eq 'repeated'][" + position + "]/xf:switch/xf:case[2]/bf:data/@selected"));
     }
 
 }

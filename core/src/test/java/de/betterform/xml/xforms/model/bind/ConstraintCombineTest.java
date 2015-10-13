@@ -44,7 +44,7 @@ public class ConstraintCombineTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertEquals("true() and boolean-from-string(.)", bind.getConstraint());
-        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id eq 'a']/bf:data/@valid"));
 
         EventTarget eventTarget = this.xformsProcesssorImpl.getContainer().lookup("a").getTarget();
 
@@ -66,7 +66,7 @@ public class ConstraintCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("true() and false()", bind.getConstraint());
         DOMUtil.prettyPrintDOM(doc);
-        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id eq 'b']/bf:data/@valid"));
     }
 
     public void testConstraintMixedCombination() throws Exception{
@@ -79,14 +79,14 @@ public class ConstraintCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("true() and false()",bind.getConstraint());
 
-        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id eq 'c']/bf:data/@valid"));
     }
 
     public void testConstraintMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
         assertEquals("true() and false()",bind.getConstraint());
-        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id eq 'd']/bf:data/@valid"));
     }
 
     public void testConstraintCombineStandard() throws Exception{
@@ -99,7 +99,7 @@ public class ConstraintCombineTest extends XMLTestBase {
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("eBind2");
         assertNotNull(bind);
         assertEquals("true() and boolean-from-string(.)",bind.getConstraint());
-        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@valid"));
+        assertEquals("false", XPathUtil.evaluateAsString(doc, "//*[@id eq 'e']/bf:data/@valid"));
 
         //test modification
         EventTarget eventTarget = this.xformsProcesssorImpl.getContainer().lookup("e").getTarget();

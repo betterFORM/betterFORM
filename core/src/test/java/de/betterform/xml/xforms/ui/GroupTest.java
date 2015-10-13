@@ -29,8 +29,8 @@ public class GroupTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testGroup() throws Exception {
-        assertEquals("1", XPathUtil.evaluateAsString(host, "count(//xf:group[@id='group']/*)"));
-        assertEquals("xf:output", XPathUtil.evaluateAsString(host, "name(//xf:group[@id='group']/*[1])"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "count(//xf:group[@id eq 'group']/*)"));
+        assertEquals("xf:output", XPathUtil.evaluateAsString(host, "name(//xf:group[@id eq 'group']/*[1])"));
     }
 
     /**
@@ -39,14 +39,14 @@ public class GroupTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testGroupModelBinding() throws Exception {
-        assertEquals("2", XPathUtil.evaluateAsString(host, "count(//xf:group[@id='group-model-binding']/*)"));
-        assertEquals("xf:output", XPathUtil.evaluateAsString(host, "name(//xf:group[@id='group-model-binding']/*[1])"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "count(//xf:group[@id eq 'group-model-binding']/*)"));
+        assertEquals("xf:output", XPathUtil.evaluateAsString(host, "name(//xf:group[@id eq 'group-model-binding']/*[1])"));
 
-        assertEquals("bf:data", XPathUtil.evaluateAsString(host, "name(//xf:group[@id='group-model-binding']/*[2])"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-model-binding']/bf:data/@enabled"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-model-binding']/bf:data/@readonly"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-model-binding']/bf:data/@required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-model-binding']/bf:data/@valid"));
+        assertEquals("bf:data", XPathUtil.evaluateAsString(host, "name(//xf:group[@id eq 'group-model-binding']/*[2])"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-model-binding']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-model-binding']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-model-binding']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-model-binding']/bf:data/@valid"));
     }
 
     /**
@@ -55,14 +55,14 @@ public class GroupTest extends TestCase {
      * @throws Exception if any error occurred during the test.
      */
     public void testGroupUIBinding() throws Exception {
-        assertEquals("2", XPathUtil.evaluateAsString(host, "count(//xf:group[@id='group-ui-binding']/*)"));
-        assertEquals("xf:output", XPathUtil.evaluateAsString(host, "name(//xf:group[@id='group-ui-binding']/*[1])"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "count(//xf:group[@id eq 'group-ui-binding']/*)"));
+        assertEquals("xf:output", XPathUtil.evaluateAsString(host, "name(//xf:group[@id eq 'group-ui-binding']/*[1])"));
 
-        assertEquals("bf:data", XPathUtil.evaluateAsString(host, "name(//xf:group[@id='group-ui-binding']/*[2])"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-ui-binding']/bf:data/@enabled"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-ui-binding']/bf:data/@readonly"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-ui-binding']/bf:data/@required"));
-        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id='group-ui-binding']/bf:data/@valid"));
+        assertEquals("bf:data", XPathUtil.evaluateAsString(host, "name(//xf:group[@id eq 'group-ui-binding']/*[2])"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-ui-binding']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-ui-binding']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-ui-binding']/bf:data/@required"));
+        assertEquals("false", XPathUtil.evaluateAsString(host, "//xf:group[@id eq 'group-ui-binding']/bf:data/@valid"));
     }
 
     /**

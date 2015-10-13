@@ -42,41 +42,41 @@ public class RefreshTest extends TestCase {
     public void testUnboundRefresh() throws Exception {
         xformsProcesssorImpl.dispatch("triggerUnbound", DOMEventNames.ACTIVATE);
         //DOMUtil.prettyPrintDOM(processor.getContainer().getDocument());
-        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id='output1']/bf:data"));
-        assertEquals("11", XPathUtil.evaluateAsString(host, "//xf:output[@id='output3']/bf:data"));
+        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output1']/bf:data"));
+        assertEquals("11", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output3']/bf:data"));
 
     }
 
     public void testCommonUpdating() throws Exception {
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id='output2']/xf:label"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output2']/xf:label"));
         xformsProcesssorImpl.dispatch("triggerCommon", DOMEventNames.ACTIVATE);
-        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id='output2']/xf:label"));
+        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output2']/xf:label"));
 
     }
 
     public void testCaseUpdating() throws Exception {
         xformsProcesssorImpl.dispatch("triggerUnbound", DOMEventNames.ACTIVATE);
-        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id='output5']/bf:data"));
-        assertEquals("11", XPathUtil.evaluateAsString(host, "//xf:output[@id='output6']/bf:data"));
+        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output5']/bf:data"));
+        assertEquals("11", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output6']/bf:data"));
         xformsProcesssorImpl.dispatch("triggerSwitchCase", DOMEventNames.ACTIVATE);
         //DOMUtil.prettyPrintDOM(processor.getContainer().getDocument());
-        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id='output7']/bf:data"));
-        assertEquals("11", XPathUtil.evaluateAsString(host, "//xf:output[@id='output8']/bf:data"));
+        assertEquals("10", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output7']/bf:data"));
+        assertEquals("11", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output8']/bf:data"));
 
     }
 
     public void testReplaceInstance() throws XFormsException {
         xformsProcesssorImpl.dispatch("replace-instance", DOMEventNames.ACTIVATE);
         //DOMUtil.prettyPrintDOM(processor.getContainer().getDocument());
-        assertEquals("4", XPathUtil.evaluateAsString(host, "//xf:output[@id='output1']/bf:data"));
-        assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id='output3']/bf:data"));
-        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:output[@id='output4']/bf:data/@enabled"));
+        assertEquals("4", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output1']/bf:data"));
+        assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output3']/bf:data"));
+        assertEquals("true", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output4']/bf:data/@enabled"));
     }
 
     public void testMultipleSetValue() throws XFormsException {
         xformsProcesssorImpl.dispatch("triggerMultipleSetvalue", DOMEventNames.ACTIVATE);
         //DOMUtil.prettyPrintDOM(processor.getContainer().getDocument());
-        assertEquals("40", XPathUtil.evaluateAsString(host, "//xf:output[@id='output2']/bf:data"));
+        assertEquals("40", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output2']/bf:data"));
     }
 
 

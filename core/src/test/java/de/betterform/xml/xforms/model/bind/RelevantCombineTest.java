@@ -35,7 +35,7 @@ public class RelevantCombineTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertEquals("false() or true()", bind.getRelevant());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'a']/bf:data/@enabled"));
 
     }
 
@@ -47,7 +47,7 @@ public class RelevantCombineTest extends XMLTestBase {
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind2");
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getRelevant());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'b']/bf:data/@enabled"));
     }
     public void testrelevantMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
@@ -58,14 +58,14 @@ public class RelevantCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getRelevant());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'c']/bf:data/@enabled"));
     }
 
     public void testrelevantMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getRelevant());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@enabled"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'd']/bf:data/@enabled"));
     }
 
     protected void setUp() throws Exception {

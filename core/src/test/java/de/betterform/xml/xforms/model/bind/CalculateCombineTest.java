@@ -35,7 +35,7 @@ public class CalculateCombineTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertNull(bind.getCalculate());
-        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@type"));
+        assertEquals("string", XPathUtil.evaluateAsString(doc, "//*[@id eq 'a']/bf:data/@type"));
 
     }
 

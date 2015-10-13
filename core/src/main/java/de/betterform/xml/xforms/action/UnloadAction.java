@@ -131,7 +131,7 @@ public class UnloadAction extends AbstractBoundAction {
             String itemId = getRepeatItemId();
             RepeatItem item = (RepeatItem) container.lookup(itemId);
             int pos = item.getPosition();
-            targetElem = (Element) XPathUtil.evaluateAsSingleNode(item.getElement().getOwnerDocument(), "//*[@name='" + evaluatedTarget + "']");
+            targetElem = (Element) XPathUtil.evaluateAsSingleNode(item.getElement().getOwnerDocument(), "//*[@name eq '" + evaluatedTarget + "']");
         } else {
             // ##### try to interpret the targetAttribute value as an idref ##### -->
             targetElem = this.container.getElementById(evaluatedTarget);
