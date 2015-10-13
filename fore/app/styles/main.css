@@ -12,3 +12,8 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #333;
 }
+
+/* this is a hack to fix the default app (manu item click behavior) */
+paper-menu a span, iron-icon{
+  pointer-events:none;
+}
