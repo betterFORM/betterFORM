@@ -1,0 +1,92 @@
+<link rel="import" href="/betterform/components/polymer/polymer.html">
+
+<polymer-element name="fore-jquery-atmosphere" attributes="xfSession">
+    <template>
+        <div id="log"></div>
+    </template>
+    <script>
+        Polymer('fore-jquery-atmosphere', {
+            ready: function() {
+                this.socket = $.atmosphere;
+                console.log("fore-atmosphere ready", this.socket.uuid);
+                console.log("fore-atmosphere xfSession", this.xfSession);
+                that=this;
+
+                this.request = {
+                    url: '/betterform/msg/' + this.xfSession,
+                    contentType: "application/json; charset=UTF-8",
+                    logLevel: 'debug',
+                    transport: 'sse',
+                    trackMessageLength : true,
+                    fallbackTransport: 'long-polling',
+
+
+                    onOpen: function (response) {
+                        console.log('Atmosphere connected using ' + response.transport);
+
+                        $('<div/>',{
+                            text:response.request.uuid
+                        }).appendTo(that.$.log);
+                    },
+
+                    onMessage: function (response) {
+                        var message = response.responseBody;
+
+                        console.log("response: ",JSON.stringify(message));
+                        var json = null;
+                        try {
+                            json = jQuery.parseJSON(message);
+                        } catch (e) {
+                            console.log('This doesn\'t look like a valid JSON: ', message);
+                            return;
+                        }
+
+                        if("betterform-state-changed" == json.type){
+                            var targetId = json.contextInfo.targetId;
+                            console.log("executing betterform-state-changed targetId:", targetId);
+                            try {
+                                document.querySelector("#" + targetId).updateToRemoteState(json);
+                            }
+                            catch(e){
+                                console.log('Could not execute method: ', targetId);
+                            }
+                        }
+
+                        if("betterform-render-message" == json.type){
+
+                        }
+
+//                    console.log("targetId: ", json.targetId);
+                    console.log("eventType: ", json.type);
+//                    console.log("value: ", json.value);
+                        $('<div/>',{
+                            text:json.type
+                        }).appendTo(that.$.log);
+                    },
+                    onClose: function (response) {
+                        console.log("onClose called");
+                    },
+
+                    myCall:function(reponse){
+                        console.log("callback response:",response);
+                    }
+                };
+                console.log("this.socket: ", this.socket);
+
+
+
+                this.subSocket = this.socket.subscribe(this.request);
+            },
+            domReady:function() {
+                console.log('onOpen ' + this.socket.uuid);
+            },
+
+            sendMessage: function (msg) {
+                console.log("socket.uuid ", this.socket.uuid)
+                msg.uuid=this.socket.uuid;
+                console.log("pushing: ",msg);
+                this.subSocket.push(jQuery.stringifyJSON(msg));
+            }
+        });
+    </script>
+</polymer-element>
