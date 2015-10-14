@@ -99,7 +99,7 @@ public class XPathReferenceFinderTest extends TestCase {
     public void testGetReferencesItemAt() throws Exception {
         assertReferences(this.referenceFinder.getReferences("/item[count(current()/parent::*/preceding-sibling::*) + 1]/amount", Collections.EMPTY_MAP, fDummyContainer),
                 "/child::item",
-                "/child::item[number(count(current()/parent::element()/reverse(preceding-sibling::element())) + 1)]/child::amount",
+                "/child::item[number(count(current()/parent::element()/preceding-sibling::element()) + 1)]/child::amount",
                 "current()/parent::element()",
                 "current()/parent::element()/preceding-sibling::element()");
     }
