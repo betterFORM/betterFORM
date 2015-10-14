@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.StringValue;
@@ -30,9 +31,14 @@ public class LocalDateTime extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	GregorianCalendar now = new GregorianCalendar();
+    @Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+        final GregorianCalendar now = new GregorianCalendar();
+        return new StringValue(new DateTimeValue(now, true).getStringValue());
+    }
 
-	return new StringValue(new DateTimeValue(now, true).getStringValue());
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return evaluateItem(context);
     }
 }

@@ -8,9 +8,10 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import de.betterform.xml.dom.DOMUtil;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xpath.impl.saxon.XPathUtil;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 import org.apache.commons.logging.Log;
@@ -25,11 +26,20 @@ public class Changed extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
+    @Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+        final Item item = argument[0].evaluateItem(xpathContext);
+        return changed(xpathContext, item);
+    }
 
-        Item item = argument[0].evaluateItem(xpathContext);
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return changed(context, arguments[0].head());
+    }
+
+    private BooleanValue changed(final XPathContext context, final Item item) throws XPathException {
         if (item != null) {
-            Node node = (Node) ((NodeWrapper) item).getUnderlyingNode();
+            Node node = (Node) ((DOMNodeWrapper) item).getUnderlyingNode();
             String xpath = DOMUtil.getCanonicalPath(node);
 //            String currentValue = (String) argument[0].evaluateAsString(xpathContext);
             String currentValue = DOMUtil.getTextNodeAsString(node);
@@ -55,10 +65,8 @@ public class Changed extends XFormsFunction {
                 return BooleanValue.TRUE;
             }
         }else{
-            LOGGER.warn("Item for " + xpathContext.toString() + " couldn't be found");
+            LOGGER.warn("Item for " + context.toString() + " couldn't be found");
             return BooleanValue.FALSE; 
         }
-            
     }
-
 }

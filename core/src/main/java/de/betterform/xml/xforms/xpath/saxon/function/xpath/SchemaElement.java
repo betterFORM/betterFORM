@@ -6,7 +6,9 @@ import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.ListIterator;
 import org.apache.commons.logging.Log;
@@ -229,7 +231,9 @@ public class SchemaElement extends XFormsFunction {
     private void handleComplexType(XSComplexTypeDefinition xsComplexTypeDefinition, Document document, Element rootElement) {
         for (Object object : xsComplexTypeDefinition.getAttributeUses()) {
             XSAttributeUse xsAttributeUse = (XSAttributeUse) object;
-            rootElement.setAttributeNS(xsAttributeUse.getAttrDeclaration().getNamespace(), xsAttributeUse.getAttrDeclaration().getName(), "");
+            rootElement.setAttributeNS(
+                xsAttributeUse.getAttrDeclaration().getNamespace(),
+                xsAttributeUse.getAttrDeclaration().getName(), "");
         }
     }
 
@@ -257,50 +261,75 @@ public class SchemaElement extends XFormsFunction {
         return this;
     }
 
-    public SequenceIterator iterate(XPathContext xpathContext) throws XPathException
-    {
-        Container container = getContainer(xpathContext);
+    @Override
+    public SequenceIterator iterate(XPathContext xpathContext) throws XPathException {
+        //Get name of searched Element
+        String namespace = null;
+        if (argument[0] != null) {
+             namespace = argument[0].evaluateAsString(xpathContext).toString();
+        }
 
-        if (container != null) {
-            try {
-                //Get name of searched Element
-                String namespace = null;
-                if (argument[0] != null) {
-                     namespace = argument[0].evaluateAsString(xpathContext).toString();
-                }
-                String elementName = argument[1].evaluateAsString(xpathContext).toString();
+        final String elementName = argument[1].evaluateAsString(
+            xpathContext).toString();
 
-                String parent = null;
-                if (argument.length >= 3 && argument[2] != null) {
-                    parent = argument[2].evaluateAsString(xpathContext).toString();
-                }
+        String parent = null;
+        if (argument.length >= 3 && argument[2] != null) {
+            parent = argument[2].evaluateAsString(xpathContext).toString();
+        }
+
+
+        return schemaElement(xpathContext, namespace, elementName, parent);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        String namespace = null;
+        if(arguments[0].head() != null) {
+            namespace = arguments[0].head().getStringValue();
+        }
+
+        final String elementName = arguments[1].head().getStringValue();
+
+        String parent = null;
+        if(arguments.length >= 3 && arguments[2].head() != null) {
+            parent = arguments[2].head().getStringValue();
+        }
+
+        return SequenceTool.toLazySequence(schemaElement(context, namespace, elementName, parent));
+    }
+
+    private ListIterator schemaElement(final XPathContext context, final String namespace, final String elementName, final String parent) throws XPathException {
+        try {
+            final Container container = getContainer(context);
+            if (container != null) {
+
                 //Get all to model know schemas
-                List<XSModel> schemas = container.getDefaultModel().getSchemas();
+                final List<XSModel> schemas = container.getDefaultModel().getSchemas();
 
                 //Iterate over all schemas till we find a first match.
-                Iterator<XSModel> it = schemas.iterator();
+                final Iterator<XSModel> it = schemas.iterator();
                 while (it.hasNext()) {
-                    XSModel xsModel = it.next();
-                    Document elementDocument = getContextNode(namespace, elementName, parent, xsModel);
+                    final XSModel xsModel = it.next();
+                    final Document elementDocument = getContextNode(namespace,
+                        elementName, parent, xsModel);
 
                     if (LOGGER.isDebugEnabled() && elementDocument != null) {
-                        DOMUtil.prettyPrintDOM(elementDocument.getDocumentElement());
+                        DOMUtil.prettyPrintDOM(
+                            elementDocument.getDocumentElement());
                     }
 
                     if (elementDocument != null) {
-                        String baseURI = container.getProcessor().getBaseURI();
-                        return new ListIterator(de.betterform.xml.xpath.impl.saxon.XPathUtil.getRootContext(elementDocument,baseURI));
+                        final String baseURI = container.getProcessor().getBaseURI();
+                        return new ListIterator(
+                            de.betterform.xml.xpath.impl.saxon.XPathUtil.getRootContext(
+                                elementDocument, baseURI));
                     }
                 }
-
-
-                //XSModel xsModel = getSchema(new File(schemaFile));
-            } catch (Exception e) {
-                throw new XPathException(e);
             }
+            return new ListIterator(Collections.EMPTY_LIST);
+        } catch (final Exception e) {
+            throw new XPathException(e);
         }
-
-        return new ListIterator(Collections.EMPTY_LIST);
     }
 
 

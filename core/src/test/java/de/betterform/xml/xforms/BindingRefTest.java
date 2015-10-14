@@ -79,12 +79,12 @@ public class BindingRefTest extends XMLTestBase {
 
     public void testNestedContext() throws Exception {
         Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("1", XPathUtil.evaluateAsString(doc, "//*[@id='repeat-1']/xf:group[1]//xf:output/bf:data/text()"));
-        assertEquals("2", XPathUtil.evaluateAsString(doc, "//*[@id='repeat-1']/xf:group[2]//xf:output/bf:data/text()"));
-        assertEquals("3", XPathUtil.evaluateAsString(doc, "//*[@id='repeat-1']/xf:group[3]//xf:output/bf:data/text()"));
-        assertEquals("1", XPathUtil.evaluateAsString(doc, "//*[@id='repeat-2']/xf:group[1]//xf:output/bf:data/text()"));
-        assertEquals("2", XPathUtil.evaluateAsString(doc, "//*[@id='repeat-2']/xf:group[2]//xf:output/bf:data/text()"));
-        assertEquals("3", XPathUtil.evaluateAsString(doc, "//*[@id='repeat-2']/xf:group[3]//xf:output/bf:data/text()"));
+        assertEquals("1", XPathUtil.evaluateAsString(doc, "//*[@id eq 'repeat-1']/xf:group[1]//xf:output/bf:data/text()"));
+        assertEquals("2", XPathUtil.evaluateAsString(doc, "//*[@id eq 'repeat-1']/xf:group[2]//xf:output/bf:data/text()"));
+        assertEquals("3", XPathUtil.evaluateAsString(doc, "//*[@id eq 'repeat-1']/xf:group[3]//xf:output/bf:data/text()"));
+        assertEquals("1", XPathUtil.evaluateAsString(doc, "//*[@id eq 'repeat-2']/xf:group[1]//xf:output/bf:data/text()"));
+        assertEquals("2", XPathUtil.evaluateAsString(doc, "//*[@id eq 'repeat-2']/xf:group[2]//xf:output/bf:data/text()"));
+        assertEquals("3", XPathUtil.evaluateAsString(doc, "//*[@id eq 'repeat-2']/xf:group[3]//xf:output/bf:data/text()"));
     }
 
     public void testDependentBinding() throws Exception {
@@ -98,8 +98,8 @@ public class BindingRefTest extends XMLTestBase {
     public void testAbsoluteBindings() throws Exception {
         Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
 
-        assertEquals("1", XPathUtil.evaluateAsString(doc, "//*[@id='input-16']/bf:data/text()"));
-        assertEquals("My label", XPathUtil.evaluateAsString(doc, "//*[@id='input-16']/xf:label/text()"));
+        assertEquals("1", XPathUtil.evaluateAsString(doc, "//*[@id eq 'input-16']/bf:data/text()"));
+        assertEquals("My label", XPathUtil.evaluateAsString(doc, "//*[@id eq 'input-16']/xf:label/text()"));
     }
 
 
@@ -122,8 +122,8 @@ public class BindingRefTest extends XMLTestBase {
 
     private void assertValues(String input, String label, int number) throws XFormsException {
         Document doc = this.xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals(input, XPathUtil.evaluateAsString(doc, "//*[@id='input-" + number + "']/bf:data/text()").trim());
-        assertEquals(label, XPathUtil.evaluateAsString(doc, "//*[@id='input-" + number + "']/xf:label/text()"));
+        assertEquals(input, XPathUtil.evaluateAsString(doc, "//*[@id eq 'input-" + number + "']/bf:data/text()").trim());
+        assertEquals(label, XPathUtil.evaluateAsString(doc, "//*[@id eq 'input-" + number + "']/xf:label/text()"));
     }
 
 }

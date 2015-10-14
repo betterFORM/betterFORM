@@ -44,7 +44,7 @@ public class PositionalXMLReaderTest extends TestCase {
     public void testGetLineNumber() throws Exception {
         Document doc = readResourceWithPositionalXMLReader("5.2.4.a-Duration.xhtml");
 
-        Node n = XPathUtil.evaluateAsSingleNode(doc, "/xhtml:html//xforms:bind[@id='dayTime_bind']");
+        Node n = XPathUtil.evaluateAsSingleNode(doc, "/xhtml:html//xforms:bind[@id eq 'dayTime_bind']");
         assertEquals("19",n.getUserData("lineNumber"));
 
     }
@@ -52,16 +52,16 @@ public class PositionalXMLReaderTest extends TestCase {
     public void testNamespaces() throws Exception {
         Document doc = readResourceWithPositionalXMLReader("PositionalReaderTest.xhtml");
 
-        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='foo']");
+        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id eq 'foo']");
         assertEquals("29",n.getUserData("lineNumber"));
-        n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='t-changeValue']");
+        n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id eq 't-changeValue']");
         assertEquals("30",n.getUserData("lineNumber"));
     }
 
     public void testGetLineNumberWithMultilineComments() throws Exception {
         Document doc = readResourceWithPositionalXMLReader("brokenform.xhtml");
 
-        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id='ui']");
+        Node n = XPathUtil.evaluateAsSingleNode(doc, "//*[@id eq 'ui']");
         assertEquals("30", n.getUserData("lineNumber"));
     }
 

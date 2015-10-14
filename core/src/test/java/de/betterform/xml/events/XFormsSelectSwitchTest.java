@@ -56,7 +56,7 @@ public class XFormsSelectSwitchTest extends BetterFormTestCase {
         assertEquals("", "2", XPathUtil.evaluateAsString(defaultInstance, "/data/result/select1"));
         assertEquals("", "2", XPathUtil.evaluateAsString(defaultInstance, "/data/result/select2"));
         assertEquals("", "2", XPathUtil.evaluateAsString(defaultInstance, "/data/result/select3"));
-        assertEquals("", "2", XPathUtil.evaluateAsString((Document)this.processor.getXForms(), "//*[@id='select-4']/bf:data"));
+        assertEquals("", "2", XPathUtil.evaluateAsString((Document)this.processor.getXForms(), "//*[@id eq 'select-4']/bf:data"));
 
         assertEquals(3,this.setvalueCountListener.getCount());
         assertEquals(1,this.messageCountListener.getCount());

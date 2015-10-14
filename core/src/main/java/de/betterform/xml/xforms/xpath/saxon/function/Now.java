@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.StringValue;
@@ -25,15 +26,22 @@ import java.util.TimeZone;
  * @version $Id$
  */
 public class Now extends XFormsFunction {
+
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
+    @Override
+    public StringValue evaluateItem(XPathContext xpathContext) throws XPathException {
         GregorianCalendar now = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
         return evaluateItem(xpathContext, now);
     }
 
-    final Item evaluateItem(XPathContext xpathContext, GregorianCalendar now) throws XPathException {
+    public StringValue call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return evaluateItem(context);
+    }
+
+    final StringValue evaluateItem(XPathContext xpathContext, GregorianCalendar now) throws XPathException {
         return new StringValue(new DateTimeValue(now, true).getStringValue());
     }
 }

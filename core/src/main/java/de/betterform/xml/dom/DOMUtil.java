@@ -70,7 +70,7 @@ public class DOMUtil {
 
 
     public static Node getById(Document in, String fragmentId) throws XFormsException {
-        Node node = XPathUtil.evaluateAsSingleNode(in, "//*[@id='" + fragmentId + "']");
+        Node node = XPathUtil.evaluateAsSingleNode(in, "//*[@id eq '" + fragmentId + "']");
         return node;
     }
 

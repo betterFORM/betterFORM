@@ -55,12 +55,12 @@ public class RepeatSetIndexEventTest extends BetterFormTestCase {
     public void testSetRepeatIndexBiggerThenRepeatItems() throws Exception {
         Document hostDoc = (Document) this.processor.getXForms();
         DOMUtil.prettyPrintDOM(hostDoc);
-        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='indexOutput']/bf:data");
+        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id eq 'indexOutput']/bf:data");
         assertEquals("Repeat Index must be '1'", "1", value);
         assertEquals(1, this.repeat.getIndex());
 
         this.processor.dispatch("setIndexOneHundred", "DOMActivate");
-        value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='indexOutput']/bf:data");
+        value = XPathUtil.evaluateAsString(hostDoc, "//*[@id eq 'indexOutput']/bf:data");
         assertEquals("Repeat Index must be '3'", "3", value);
         assertEquals(3, this.repeat.getIndex());
         assertEquals("scroll first must not be fired", 0, this.scrollFirstListener.getCount());
@@ -70,12 +70,12 @@ public class RepeatSetIndexEventTest extends BetterFormTestCase {
     public void testSetRepeatIndexToNegativeNumber() throws Exception {
         Document hostDoc = (Document) this.processor.getXForms();
         DOMUtil.prettyPrintDOM(hostDoc);
-        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='indexOutput']/bf:data");
+        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id eq 'indexOutput']/bf:data");
         assertEquals("Repeat Index must be '1'", "1", value);
         assertEquals(1, this.repeat.getIndex());
 
         this.processor.dispatch("setIndexNegative", "DOMActivate");
-        value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='indexOutput']/bf:data");
+        value = XPathUtil.evaluateAsString(hostDoc, "//*[@id eq 'indexOutput']/bf:data");
         assertEquals("Repeat Index must be '1'", "1", value);
         assertEquals(1, this.repeat.getIndex());
         assertEquals("scroll last must not be fired", 0, this.scrollLastListener.getCount());
@@ -85,13 +85,13 @@ public class RepeatSetIndexEventTest extends BetterFormTestCase {
     public void testSetRepeatIndexToTwo() throws Exception {
         Document hostDoc = (Document) this.processor.getXForms();
         DOMUtil.prettyPrintDOM(hostDoc);
-        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='indexOutput']/bf:data");
+        String value = XPathUtil.evaluateAsString(hostDoc, "//*[@id eq 'indexOutput']/bf:data");
         assertEquals("Repeat Index must be '1'", "1", value);
         assertEquals(1, this.repeat.getIndex());
 
 
         this.processor.dispatch("setIndexTwo", "DOMActivate");
-        value = XPathUtil.evaluateAsString(hostDoc, "//*[@id='indexOutput']/bf:data");
+        value = XPathUtil.evaluateAsString(hostDoc, "//*[@id eq 'indexOutput']/bf:data");
         assertEquals("Repeat Index must be '2'", "2", value);
         assertEquals(2, this.repeat.getIndex());
         assertEquals("scroll-last event must not be fired", 0, this.scrollLastListener.getCount());

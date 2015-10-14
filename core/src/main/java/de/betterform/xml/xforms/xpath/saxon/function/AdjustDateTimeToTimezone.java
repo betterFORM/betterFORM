@@ -8,6 +8,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.StringValue;
@@ -37,18 +38,26 @@ public class AdjustDateTimeToTimezone extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-    if (argument.length == 0) return StringValue.EMPTY_STRING;
-
+        if (argument.length == 0) return StringValue.EMPTY_STRING;
 
         final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
+        return adjust(argAsString.toString());
+    }
 
-	try {
-	    DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String dateTime = arguments[0].head().getStringValue();
+        return adjust(dateTime);
+    }
 
-	    return new StringValue(argAsDateTime.adjustTimezone(kLOCAL_TIME_OFFSET_IN_MINUTES).getStringValue());
-	} catch (XPathException e1) {
-	    return StringValue.EMPTY_STRING;
-	}
+    final StringValue adjust(final String dateTime) {
+        try {
+            final DateTimeValue argAsDateTime = (DateTimeValue) DateTimeValue.makeDateTimeValue(dateTime, new ConversionRules()).asAtomic();
+            return new StringValue(argAsDateTime.adjustTimezone(kLOCAL_TIME_OFFSET_IN_MINUTES).getStringValue());
+        } catch (final XPathException e1) {
+            return StringValue.EMPTY_STRING;
+        }
     }
 }

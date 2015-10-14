@@ -9,6 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.BooleanValue;
 
@@ -24,11 +25,13 @@ import java.util.regex.Pattern;
 public class Match extends XFormsFunction {
     private static Map m_regexPatterns = new HashMap();
 
+    @Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
 
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
+    @Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
         if (argument.length < 2 || argument.length > 3) {
             throw new XPathException("There must be 2 arguments (input, regex) or 3 (input, regex, flags) arguments for this function");
         }
@@ -47,12 +50,26 @@ public class Match extends XFormsFunction {
             flags = null;
         }
 
-        return BooleanValue.get(match(input,regex,flags));
+        return BooleanValue.get(match(input, regex, flags));
     }
 
-     public boolean match(String input, String regex, String flags) {
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String input = arguments[0].head().getStringValue();
+        final String regex = arguments[1].head().getStringValue();
+        final String flags;
+        if (arguments.length == 3) {
+            flags = arguments[2].head().getStringValue();
+        } else {
+            flags = null;
+        }
 
-        String regexKey = ((flags == null) || (flags.indexOf('i') == -1)) ? "s " + regex : "i " + regex;
+        return BooleanValue.get(match(input, regex, flags));
+    }
+
+    public boolean match(final String input, final String regex, final String flags) {
+
+        final String regexKey = ((flags == null) || (flags.indexOf('i') == -1)) ? "s " + regex : "i " + regex;
 
         Pattern pattern = (Pattern) m_regexPatterns.get(regexKey);
 
@@ -61,7 +78,7 @@ public class Match extends XFormsFunction {
             m_regexPatterns.put(regexKey, pattern);
         }
 
-        Matcher matcher = pattern.matcher(input);
+        final Matcher matcher = pattern.matcher(input);
         return matcher.matches();
     }
 }

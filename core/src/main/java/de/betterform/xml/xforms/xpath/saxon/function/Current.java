@@ -10,6 +10,7 @@ import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 
 /**
@@ -30,7 +31,7 @@ public class Current extends XFormsFunction {
      * bit-signficant. These properties are used for optimizations. In general, if
      * property bit is set, it is true, but if it is unset, the value is unknown.
      */
-
+     @Override
      public int computeSpecialProperties() {
          return StaticProperty.CONTEXT_DOCUMENT_NODESET |
                  StaticProperty.SINGLE_DOCUMENT_NODESET |
@@ -45,25 +46,31 @@ public class Current extends XFormsFunction {
       * @return the result of the early evaluation, or the original expression, or potentially
       * a simplified expression
       */
-
+     @Override
      public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
- 	return this;
+ 	    return this;
      }
 
     /**
      * Evaluate in a general context
      */
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	XPathContext originalCallerContext = xpathContext;
-	for(;originalCallerContext.getCaller() != null; originalCallerContext = originalCallerContext.getCaller());
-	return originalCallerContext.getContextItem();
+	    XPathContext originalCallerContext = xpathContext;
+	    for(;originalCallerContext.getCaller() != null; originalCallerContext = originalCallerContext.getCaller());
+	    return originalCallerContext.getContextItem();
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return evaluateItem(context);
     }
 
     /**
      * Determine the dependencies
      */
-
+    @Override
     public int getIntrinsicDependencies() {
-	return StaticProperty.DEPENDS_ON_CURRENT_ITEM;
+	    return StaticProperty.DEPENDS_ON_CURRENT_ITEM;
     }
 }

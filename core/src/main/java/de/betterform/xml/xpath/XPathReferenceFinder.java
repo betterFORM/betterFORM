@@ -44,9 +44,9 @@ public interface XPathReferenceFinder {
      *
      * @param xpath the XPath expression.
      * @param prefixMapping the prefix to name space mapping
-     * @param functionContext the function context 
+     * @param container
      * @return the set of all references to other nodes.
      * @throws XFormsException if a reference detection error occurred.
      */
-    Set getReferences(String xpath, Map prefixMapping, Container container) throws XFormsException;
+    Set<String> getReferences(String xpath, Map prefixMapping, Container container) throws XFormsException;
 }

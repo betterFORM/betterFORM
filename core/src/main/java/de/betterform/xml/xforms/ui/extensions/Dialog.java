@@ -180,7 +180,7 @@ public class Dialog extends BindingElement implements EventListener {
         return XPathUtil.evaluateAsString(this.element, ".//*["
                 + NamespaceConstants.BETTERFORM_PREFIX + ":data/@"
                     + NamespaceConstants.BETTERFORM_PREFIX
-                + ":enabled='true'][1]/@id");
+                + ":enabled eq 'true'][1]/@id");
     }
 
     // template methods

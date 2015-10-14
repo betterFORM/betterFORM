@@ -9,6 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DoubleValue;
 import net.sf.saxon.value.NumericValue;
@@ -44,12 +45,23 @@ public class Power extends XFormsFunction
 	/**
 	 * Evaluate in a general context
 	 */
+	@Override
 	public Item evaluateItem(XPathContext xpathContext) throws XPathException
 	{
 	    //XXX what if arguments of power are no double values 
 	    final double base = ((NumericValue)argument[0].evaluateItem(xpathContext)).getDoubleValue();
 	    final double exponent = ((NumericValue)argument[1].evaluateItem(xpathContext)).getDoubleValue();
-		
-	    return new DoubleValue(Math.pow(base, exponent));
+	    return pow(base, exponent);
+	}
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final double base = ((DoubleValue)arguments[0].head()).getDoubleValue();
+		final double exponent = ((DoubleValue)arguments[1].head()).getDoubleValue();
+		return pow(base, exponent);
+	}
+
+	private DoubleValue pow(final double base, final double exponent) {
+		return new DoubleValue(Math.pow(base, exponent));
 	}
 }

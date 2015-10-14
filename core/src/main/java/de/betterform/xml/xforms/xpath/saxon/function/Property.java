@@ -13,6 +13,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 
@@ -44,17 +45,28 @@ public class Property extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      * a simplified expression
      */
-
+	@Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+		return this;
     }
 
 	/**
 	 * Evaluate in a general context
 	 */
-	public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-		String name = argument[0].evaluateAsString(xpathContext).toString();
+	@Override
+	public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final String name = argument[0].evaluateAsString(
+			xpathContext).toString();
+		return getProperty(xpathContext, name);
+	}
 
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String name = arguments[0].head().getStringValue();
+		return getProperty(context, name);
+	}
+
+	private StringValue getProperty(final XPathContext context, final String name) throws XPathException {
 		if (("version").equals(name)) {
 			return VERSION;
 		}
@@ -63,7 +75,7 @@ public class Property extends XFormsFunction {
 			return CONFORMANCE;
 		}
 
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
+		XPathFunctionContext functionContext = getFunctionContext(context);
 		XFormsElement xformsElement = functionContext.getXFormsElement();
         if(xformsElement != null) {
 

@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateValue;
 import net.sf.saxon.value.NumericValue;
@@ -35,17 +36,25 @@ public class DaysToDate extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
+	@Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final NumericValue secondsAsNumericValue = ((NumericValue) argument[0].evaluateItem(xpathContext));
+		final NumericValue daysAsNumericValue = ((NumericValue) argument[0].evaluateItem(xpathContext));
+		return daysToDate(daysAsNumericValue);
+    }
 
-	if (secondsAsNumericValue.isNaN()) {
-	    return StringValue.EMPTY_STRING;
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		return daysToDate((NumericValue)arguments[0].head());
 	}
 
-	GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-	cal.setTime(new Date(Math.round(secondsAsNumericValue.getDoubleValue()) * 1000 * 60 * 60 * 24));
+	private StringValue daysToDate(final NumericValue days) {
+		if (days.isNaN()) {
+			return StringValue.EMPTY_STRING;
+		}
 
-	return new StringValue(new DateValue(cal, DateValue.NO_TIMEZONE).getStringValue());
+		final GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+		cal.setTime(new Date(Math.round(days.getDoubleValue()) * 1000 * 60 * 60 * 24));
 
-    }
+		return new StringValue(new DateValue(cal, DateValue.NO_TIMEZONE).getStringValue());
+	}
 }

@@ -7,11 +7,12 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 
 import de.betterform.xml.xforms.xpath.saxon.function.XFormsFunction;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 import org.w3c.dom.Attr;
@@ -33,30 +34,36 @@ public class XML2Props extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      * a simplified expression
      */
-
+    @Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+	    return this;
     }
 
 	/**
 	 * Evaluate in a general context
 	 */
-	public Item evaluateItem(XPathContext xpathContext) throws XPathException
-	{
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
+    @Override
+	public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+        final Item item = argument[0].evaluateItem(xpathContext);
+        return xmlToProps(xpathContext, item);
+    }
 
-		if (functionContext != null)
-		{
-                Item item = argument[0].evaluateItem(xpathContext);
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        return xmlToProps(context, arguments[0].head());
+    }
 
+    private StringValue xmlToProps(final XPathContext context, final Item item) {
+		final XPathFunctionContext functionContext = getFunctionContext(context);
+		if (functionContext != null) {
                 if (item != null) {
-                Node node = (Node) ((NodeWrapper) item).getUnderlyingNode();
+                final Node node = (Node) ((DOMNodeWrapper) item).getUnderlyingNode();
 
-                NamedNodeMap namedNodeMap = node.getAttributes();
-                StringBuffer props = new StringBuffer("{");
+                final NamedNodeMap namedNodeMap = node.getAttributes();
+                final StringBuilder props = new StringBuilder("{");
 
                 for (int i = 0;i <namedNodeMap.getLength(); i++) {
-                    Attr attributeNode = (Attr) namedNodeMap.item(i);
+                    final Attr attributeNode = (Attr) namedNodeMap.item(i);
                     props.append("\"" + attributeNode.getName() + "\"");
                     props.append(":");
                     props.append("\"" + attributeNode.getValue() + "\"");
@@ -64,9 +71,7 @@ public class XML2Props extends XFormsFunction {
                 }
 
                 props.deleteCharAt(props.length()-1);
-
                 props.append("}");
-
 
                 return new StringValue(props.toString());
 			}

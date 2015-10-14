@@ -5,6 +5,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 import org.apache.commons.net.util.SubnetUtils;
@@ -21,6 +22,7 @@ public class CalcIPRange extends XFormsFunction {
         return this;
     }
 
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
         if (argument.length !=  2) {
             throw new XPathException("There must be 2 arguments (ip address, subnetmask) for this function");
@@ -31,38 +33,24 @@ public class CalcIPRange extends XFormsFunction {
 
         final Expression subnetMaskExpression = argument[1];
         final String subnetMask = subnetMaskExpression.evaluateAsString(xpathContext).toString();
+
+        return ipRange(subnetID, subnetMask);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String subnetID = arguments[0].head().getStringValue();
+        final String subnetMask = arguments[1].head().getStringValue();
+
+        return ipRange(subnetID, subnetMask);
+    }
+
+    private StringValue ipRange(final String subnetID, final String subnetMask) {
         if ("".equals(subnetID.trim()) || "".equals(subnetMask.trim())) {
             return new StringValue("unknown");
         }
-        SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
+
+        final SubnetUtils subnetUtils = new SubnetUtils(subnetID, subnetMask);
         return  new StringValue(subnetUtils.getInfo().getLowAddress() + " - " + subnetUtils.getInfo().getHighAddress());
     }
 }
-
-
-/*
-IPAddress ip = new IPAddress(new byte[] { 192, 168, 0, 1 });
-int bits = 25;
-
-uint mask = ~(uint.MaxValue >> bits);
-
-// Convert the IP address to bytes.
-byte[] ipBytes = ip.GetAddressBytes();
-
-// BitConverter gives bytes in opposite order to GetAddressBytes().
-byte[] maskBytes = BitConverter.GetBytes(mask).Reverse().ToArray();
-
-byte[] startIPBytes = new byte[ipBytes.Length];
-byte[] endIPBytes = new byte[ipBytes.Length];
-
-// Calculate the bytes of the start and end IP addresses.
-for (int i = 0; i < ipBytes.Length; i++)
-{
-    startIPBytes[i] = (byte)(ipBytes[i] & maskBytes[i]);
-    endIPBytes[i] = (byte)(ipBytes[i] | ~maskBytes[i]);
-}
-
-// Convert the bytes to IP addresses.
-IPAddress startIP = new IPAddress(startIPBytes);
-IPAddress endIP = new IPAddress(endIPBytes);
-*/

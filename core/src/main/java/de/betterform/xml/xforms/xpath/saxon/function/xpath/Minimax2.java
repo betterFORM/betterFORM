@@ -8,15 +8,16 @@ package de.betterform.xml.xforms.xpath.saxon.function.xpath;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
+import net.sf.saxon.expr.parser.ContextItemStaticInfo;
 import net.sf.saxon.expr.parser.ExpressionTool;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
-import net.sf.saxon.expr.parser.Optimizer;
 import net.sf.saxon.expr.sort.AtomicComparer;
 import net.sf.saxon.expr.sort.DescendingComparer;
 import net.sf.saxon.expr.sort.GenericAtomicComparer;
 import net.sf.saxon.functions.CollatingFunction;
 import net.sf.saxon.lib.StringCollator;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
 import net.sf.saxon.om.StandardNames;
 import net.sf.saxon.trans.XPathException;
@@ -40,17 +41,17 @@ public class Minimax2 extends CollatingFunction {
     /**
      * Static analysis: prevent sorting of the argument
      */
-
+    @Override
     public void checkArguments(ExpressionVisitor visitor) throws XPathException {
         super.checkArguments(visitor);
-        Optimizer opt = visitor.getConfiguration().obtainOptimizer();
-        argument[0] = ExpressionTool.unsorted(opt, argument[0], false);
+        argument[0] = ExpressionTool.unsortedIfHomogeneous(argument[0], false);
     }
 
     /**
      * Determine the cardinality of theV function.
      */
 
+    @Override
     public int computeCardinality() {
         int c = super.computeCardinality();
         if (!Cardinality.allowsZero(argument[0].getCardinality())) {
@@ -59,23 +60,8 @@ public class Minimax2 extends CollatingFunction {
         return c;
     }
 
-    /**
-     * Perform optimisation of an expression and its subexpressions.
-     * <p/>
-     * <p>This method is called after all references to functions and variables have been resolved
-     * to the declaration of the function or variable, and after all type checking has been done.</p>
-     *
-     * @param visitor an expression visitor
-     * @param contextItemType the static type of "." at the point where this expression is invoked.
-     *                        The parameter is set to null if it is known statically that the context item will be undefined.
-     *                        If the type of the context item is not known statically, the argument is set to
-     *                        {@link net.sf.saxon.type.Type#ITEM_TYPE}
-     * @return the original expression, rewritten if appropriate to optimize execution
-     * @throws XPathException if an error is discovered during this phase
-     *                                        (typically a type error)
-     */
-
-    public Expression optimize(ExpressionVisitor visitor, ItemType contextItemType) throws XPathException {
+    @Override
+    public Expression optimize(ExpressionVisitor visitor, ContextItemStaticInfo contextItemType) throws XPathException {
         /*
         TypeHierarchy th = visitor.getConfiguration().getTypeHierarchy();
         argumentType = (BuiltInAtomicType)argument[0].getItemType(th).getAtomizedItemType().getPrimitiveItemType();
@@ -95,15 +81,9 @@ public class Minimax2 extends CollatingFunction {
         return this;
     }
 
-    /**
-     * Determine the item type of the value returned by the function
-     *
-     * @param th the type hierarchy cache
-     * @return the statically inferred type of the expression
-     */
-
-    public ItemType getItemType(TypeHierarchy th) {
-        ItemType t = argument[0].getItemType(th);
+    @Override
+    public ItemType getItemType() {
+        ItemType t = argument[0].getItemType();
         if (t.getPrimitiveType() == StandardNames.XS_UNTYPED_ATOMIC) {
             return BuiltInAtomicType.DOUBLE;
         } else {
@@ -111,22 +91,35 @@ public class Minimax2 extends CollatingFunction {
         }
     }
 
-    /**
-    * Evaluate the function
-    */
+    @Override
+    protected int getCollationArgument() {
+        return 1;
+    }
 
-    public Item evaluateItem(XPathContext context) throws XPathException {
-        StringCollator collator = getCollator(1, context);
+    @Override
+    public Item evaluateItem(final XPathContext context) throws XPathException {
+        final SequenceIterator iter = argument[0].iterate(context);
+        return minimax(context, iter);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final SequenceIterator iter = arguments[0].iterate();
+        return minimax(context, iter);
+    }
+
+    private AtomicValue minimax(final XPathContext context, final SequenceIterator values) throws XPathException {
+        final StringCollator collator = getCollator(context);
         //AtomicComparer comparer = getAtomicComparer(1, context);
         BuiltInAtomicType type = argumentType;
         if (type == BuiltInAtomicType.UNTYPED_ATOMIC) {
             type = BuiltInAtomicType.DOUBLE;
         }
-        AtomicComparer comparer =
-                GenericAtomicComparer.makeAtomicComparer(type, type, collator, context);
-        SequenceIterator iter = argument[0].iterate(context);
+        final AtomicComparer comparer =
+            GenericAtomicComparer.makeAtomicComparer(type, type, collator,
+                context);
         try {
-            return minimax(iter, operation, comparer, false, context);
+            return minimax(values, operation, comparer, false, context);
         } catch (XPathException err) {
             err.setLocator(this);
             throw err;
@@ -199,7 +192,7 @@ public class Minimax2 extends CollatingFunction {
                     break;
                 }
             } else {
-                if (!prim.getPrimitiveType().isOrdered()) {
+                if (!prim.getPrimitiveType().isOrdered(false)) {
                     return DoubleValue.NaN;
                 }
                 break;          // process the rest of the sequence

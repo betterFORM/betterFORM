@@ -9,6 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.Int64Value;
 
@@ -34,28 +35,37 @@ public class Compare extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      * a simplified expression
      */
-
-    public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+	@Override
+    public Expression preEvaluate(final ExpressionVisitor visitor) throws XPathException {
+			return this;
     }
 
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final String arg1 = argument[0].evaluateAsString(xpathContext).toString();
-	final String arg2 = argument[1].evaluateAsString(xpathContext).toString();
-
-	int result = arg1.compareTo(arg2);
-	
-	if (result < 0)
-	{
-	    return Int64Value.MINUS_ONE;
-	}
-	else if (result == 0)
-	{
-	    return Int64Value.ZERO;
-	}
-	return Int64Value.PLUS_ONE;
+	@Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final String arg1 = argument[0].evaluateAsString(xpathContext).toString();
+		final String arg2 = argument[1].evaluateAsString(xpathContext).toString();
+		return compare(arg1, arg2);
     }
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String arg1 = arguments[0].head().getStringValue();
+		final String arg2 = arguments[1].head().getStringValue();
+		return compare(arg1, arg2);
+	}
+
+	private Int64Value compare(final String a, final String b) {
+			final int result = a.compareTo(b);
+
+			if (result < 0) {
+				return Int64Value.MINUS_ONE;
+			} else if (result == 0) {
+				return Int64Value.ZERO;
+			} else {
+				return Int64Value.PLUS_ONE;
+			}
+		}
 }

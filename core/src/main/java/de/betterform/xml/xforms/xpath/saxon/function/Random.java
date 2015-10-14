@@ -10,7 +10,9 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
+import net.sf.saxon.value.AtomicValue;
 import net.sf.saxon.value.BooleanValue;
 import net.sf.saxon.value.DoubleValue;
 
@@ -50,17 +52,25 @@ public class Random extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	boolean isSeed = argument != null && argument.length > 0 && ((BooleanValue)argument[0].evaluateItem(xpathContext)).getBooleanValue();
-
-	synchronized (Random.class) 
-	{
-		if (random == null || isSeed)
-		{
-		    random = new java.util.Random();
-		}
-		
-		return new DoubleValue(random.nextDouble());
+	    final boolean seed = argument != null && argument.length > 0 && ((BooleanValue)argument[0].evaluateItem(xpathContext)).getBooleanValue();
+        return rand(seed);
     }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final boolean seed = ((AtomicValue)arguments[0].head()).effectiveBooleanValue();
+        return rand(seed);
+    }
+
+    private DoubleValue rand(final Boolean seed) {
+        synchronized(Random.class) {
+            if (random == null || seed) {
+                random = new java.util.Random();
+            }
+
+            return new DoubleValue(random.nextDouble());
+        }
     }
 }

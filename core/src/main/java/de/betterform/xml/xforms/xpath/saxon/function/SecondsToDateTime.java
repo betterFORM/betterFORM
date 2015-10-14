@@ -7,6 +7,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.DateTimeValue;
 import net.sf.saxon.value.NumericValue;
@@ -36,18 +37,25 @@ public class SecondsToDateTime extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final NumericValue secondsAsNumericValue = ((NumericValue) argument[0].evaluateItem(xpathContext)); 
-	
-	if (secondsAsNumericValue.isNaN())
-	{
-	    return StringValue.EMPTY_STRING;
+	@Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final NumericValue secondsAsNumericValue = ((NumericValue) argument[0].evaluateItem(xpathContext));
+		return toDateTime(secondsAsNumericValue);
+    }
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final NumericValue secondsAsNumericValue = (NumericValue)arguments[0].head();
+		return toDateTime(secondsAsNumericValue);
 	}
 
-	GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-	cal.setTime(new Date(secondsAsNumericValue.longValue() * 1000));
+	private StringValue toDateTime(final NumericValue secondsAsNumericValue) throws XPathException {
+		if(secondsAsNumericValue.isNaN()) {
+			return StringValue.EMPTY_STRING;
+		}
 
-	return new StringValue(new DateTimeValue(cal, true).getStringValue());
-
-    }
+		final GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+		cal.setTime(new Date(secondsAsNumericValue.longValue() * 1000));
+		return new StringValue(new DateTimeValue(cal, true).getStringValue());
+	}
 }

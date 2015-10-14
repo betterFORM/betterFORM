@@ -37,8 +37,8 @@ public class OutputTest extends TestCase {
     public void testUIBinding() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-ui-binding");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-ui-binding']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-ui-binding']/bf:data/@type"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-ui-binding']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-ui-binding']/bf:data/@type"));
         assertEquals("1", output.getValue());
 
 
@@ -46,7 +46,7 @@ public class OutputTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-item-1", "3");
         deregister(output.getTarget(), false);
 
-        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-ui-binding']/bf:data"));
+        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-ui-binding']/bf:data"));
         assertEquals("3", output.getValue());
         assertEquals("output-ui-binding", this.stateChangedListener.getId());
         assertEquals(1, this.stateChangedListener.getPropertyNames().size());
@@ -56,7 +56,7 @@ public class OutputTest extends TestCase {
     public void testTreeUIBinding() throws Exception {
         Document host = xformsProcesssorImpl.getContainer().getDocument();
         Node instanceNode = XPathUtil.evaluateAsSingleNode(host, "//tree");
-        Node dataNode = XPathUtil.evaluateAsSingleNode(host, "//xf:output[@id='tree-ui-binding']/bf:data/*");
+        Node dataNode = XPathUtil.evaluateAsSingleNode(host, "//xf:output[@id eq 'tree-ui-binding']/bf:data/*");
         assertTrue(getComparator().compare(instanceNode, dataNode));
     }
 
@@ -68,8 +68,8 @@ public class OutputTest extends TestCase {
     public void testModelBinding() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-model-binding");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-model-binding']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-model-binding']/bf:data/@type"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-model-binding']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-model-binding']/bf:data/@type"));
         assertEquals("2", output.getValue());
 
 
@@ -77,7 +77,7 @@ public class OutputTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-item-2", "3");
         deregister(output.getTarget(), false);
 
-        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-model-binding']/bf:data"));
+        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-model-binding']/bf:data"));
         assertEquals("3", output.getValue());
         assertEquals("output-model-binding", this.stateChangedListener.getId());
         assertEquals(1, this.stateChangedListener.getPropertyNames().size());
@@ -92,8 +92,8 @@ public class OutputTest extends TestCase {
     public void testStringValueExpression() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-string-expression-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("expression", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-string-expression-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-string-expression-value']/bf:data/@type"));
+        assertEquals("expression", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-string-expression-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-string-expression-value']/bf:data/@type"));
         assertEquals("expression", output.getValue());
     }
 
@@ -105,8 +105,8 @@ public class OutputTest extends TestCase {
     public void testIntegerValueExpression() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-integer-expression-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-integer-expression-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-integer-expression-value']/bf:data/@type"));
+        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-integer-expression-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-integer-expression-value']/bf:data/@type"));
         assertEquals("3", output.getValue());
     }
 
@@ -120,8 +120,8 @@ public class OutputTest extends TestCase {
         Document host = xformsProcesssorImpl.getContainer().getDocument();
 
         DOMUtil.prettyPrintDOM(host.getDocumentElement());
-        assertEquals("1.5", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-fraction-expression-value']/bf:data/@schema-value"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-fraction-expression-value']/bf:data/@type"));
+        assertEquals("1.5", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-fraction-expression-value']/bf:data/@schema-value"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-fraction-expression-value']/bf:data/@type"));
         assertEquals("1.5", output.getSchemaValue());
     }
 
@@ -133,8 +133,8 @@ public class OutputTest extends TestCase {
     public void testNaNValueExpression() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-nan-expression-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("NaN", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-nan-expression-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-nan-expression-value']/bf:data/@type"));
+        assertEquals("NaN", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-nan-expression-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-nan-expression-value']/bf:data/@type"));
         assertEquals("NaN", output.getValue());
     }
 
@@ -146,8 +146,8 @@ public class OutputTest extends TestCase {
     public void testNodesetValueExpression() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-nodeset-expression-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-nodeset-expression-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-nodeset-expression-value']/bf:data/@type"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-nodeset-expression-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-nodeset-expression-value']/bf:data/@type"));
         assertEquals("2", output.getValue());
     }
 
@@ -159,8 +159,8 @@ public class OutputTest extends TestCase {
     public void testEmptyNodesetValueExpression() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-empty-nodeset-expression-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-empty-nodeset-expression-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-empty-nodeset-expression-value']/bf:data/@type"));
+        assertEquals("", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-empty-nodeset-expression-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-empty-nodeset-expression-value']/bf:data/@type"));
         assertEquals(null, output.getValue());
     }
 
@@ -172,8 +172,8 @@ public class OutputTest extends TestCase {
     public void testValueExpressionUpdate() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-integer-expression-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-integer-expression-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-integer-expression-value']/bf:data/@type"));
+        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-integer-expression-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-integer-expression-value']/bf:data/@type"));
         assertEquals("3", output.getValue());
 
 
@@ -181,7 +181,7 @@ public class OutputTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-item-1", "3");
         deregister(output.getTarget(), false);
 
-        assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-integer-expression-value']/bf:data"));
+        assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-integer-expression-value']/bf:data"));
         assertEquals("5", output.getValue());
         assertEquals("output-integer-expression-value", this.stateChangedListener.getId());
         assertEquals(1, this.stateChangedListener.getPropertyNames().size());
@@ -196,8 +196,8 @@ public class OutputTest extends TestCase {
     public void testValueExpressionContext() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-expression-context-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-expression-context-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-expression-context-value']/bf:data/@type"));
+        assertEquals("3", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-expression-context-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-expression-context-value']/bf:data/@type"));
         assertEquals("3", output.getValue());
 
 
@@ -205,7 +205,7 @@ public class OutputTest extends TestCase {
         this.xformsProcesssorImpl.setControlValue("input-item-1", "3");
         deregister(output.getTarget(), false);
 
-        assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-expression-context-value']/bf:data"));
+        assertEquals("5", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-expression-context-value']/bf:data"));
         assertEquals("5", output.getValue());
         assertEquals("output-expression-context-value", this.stateChangedListener.getId());
         assertEquals(1, this.stateChangedListener.getPropertyNames().size());
@@ -220,8 +220,8 @@ public class OutputTest extends TestCase {
     public void testValueExpressionContextNonExisting() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-expression-empty-nodeset-context-value");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-expression-empty-nodeset-context-value']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-expression-empty-nodeset-context-value']/bf:data/@type"));
+        assertEquals("", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-expression-empty-nodeset-context-value']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-expression-empty-nodeset-context-value']/bf:data/@type"));
         assertEquals(null, output.getValue());
     }
 
@@ -233,8 +233,8 @@ public class OutputTest extends TestCase {
     public void testUIBindingPrecedence() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-ui-binding-precedence");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-ui-binding-precedence']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-ui-binding-precedence']/bf:data/@type"));
+        assertEquals("1", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-ui-binding-precedence']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-ui-binding-precedence']/bf:data/@type"));
         assertEquals("1", output.getValue());
 
     }
@@ -247,8 +247,8 @@ public class OutputTest extends TestCase {
     public void testModelBindingPrecedence() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-model-binding-precedence");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-model-binding-precedence']/bf:data"));
-        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id='output-model-binding-precedence']/bf:data/@type"));
+        assertEquals("2", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-model-binding-precedence']/bf:data"));
+        assertEquals("string", XPathUtil.evaluateAsString(host, "//xf:output[@id eq 'output-model-binding-precedence']/bf:data/@type"));
         assertEquals("2", output.getValue());
 
     }
@@ -261,7 +261,7 @@ public class OutputTest extends TestCase {
     public void testUnspecified() throws Exception {
         Output output = (Output) this.xformsProcesssorImpl.getContainer().lookup("output-unspecified");
         Document host = xformsProcesssorImpl.getContainer().getDocument();
-        assertEquals("0", XPathUtil.evaluateAsString(host, "count(//xf:output[@id='output-unspecified']/bf:data)"));
+        assertEquals("0", XPathUtil.evaluateAsString(host, "count(//xf:output[@id eq 'output-unspecified']/bf:data)"));
         assertEquals(null, output.getValue());
 
     }

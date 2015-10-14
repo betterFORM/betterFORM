@@ -10,6 +10,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 
@@ -32,7 +33,8 @@ public class Config extends XFormsFunction {
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
-    
+
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	    if (argument.length != 1) {
             throw new XPathException("There must be 1 argument (key) for this function");
@@ -40,7 +42,16 @@ public class Config extends XFormsFunction {
 
         final Expression keyExpression = argument[0];
         final String key = keyExpression.evaluateAsString(xpathContext).toString();
+        return getConfigProperty(key);
+    }
 
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String key = arguments[0].head().getStringValue();
+        return getConfigProperty(key);
+    }
+
+    private StringValue getConfigProperty(final String key) {
         String value = "";
         try {
             value = de.betterform.xml.config.Config.getInstance().getProperty(key);

@@ -35,7 +35,7 @@ public class ReadonlyCombineTest extends XMLTestBase {
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("aBind");
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getReadonly());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='a']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'a']/bf:data/@readonly"));
 
     }
 
@@ -47,7 +47,7 @@ public class ReadonlyCombineTest extends XMLTestBase {
         bind = (Bind) xformsProcesssorImpl.getContainer().lookup("bBind2");
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getReadonly());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='b']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'b']/bf:data/@readonly"));
     }
     public void testReadonlyMixedCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("cBind1");
@@ -58,14 +58,14 @@ public class ReadonlyCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getReadonly());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='c']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'c']/bf:data/@readonly"));
     }
 
     public void testReadonlyMixedOneParentCombination() throws Exception{
         Bind bind = (Bind) xformsProcesssorImpl.getContainer().lookup("dBind");
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getReadonly());
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='d']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'd']/bf:data/@readonly"));
     }
 
     public void testReadonlyCombineStandard() throws Exception{
@@ -77,7 +77,7 @@ public class ReadonlyCombineTest extends XMLTestBase {
         assertNotNull(bind);
         assertEquals("false() or true()",bind.getReadonly());
 
-        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id='e']/bf:data/@readonly"));
+        assertEquals("true", XPathUtil.evaluateAsString(doc, "//*[@id eq 'e']/bf:data/@readonly"));
     }
 
     protected void setUp() throws Exception {

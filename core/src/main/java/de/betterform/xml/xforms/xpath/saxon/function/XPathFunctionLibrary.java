@@ -5,127 +5,105 @@
 
 package de.betterform.xml.xforms.xpath.saxon.function;
 
-import net.sf.saxon.expr.Container;
-import net.sf.saxon.expr.Expression;
-import net.sf.saxon.expr.StaticContext;
+import net.sf.saxon.expr.*;
 import net.sf.saxon.functions.FunctionLibrary;
 import net.sf.saxon.functions.StandardFunction;
-import net.sf.saxon.functions.SystemFunction;
+import net.sf.saxon.functions.SystemFunctionCall;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.StructuredQName;
 import net.sf.saxon.pattern.NodeKindTest;
+import net.sf.saxon.trans.SymbolicName;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.type.ItemType;
 import net.sf.saxon.value.EmptySequence;
 import net.sf.saxon.value.SequenceType;
-import net.sf.saxon.value.Value;
 
 import java.util.HashMap;
 
-
+/**
+ * This class heavily borrows from {@link net.sf.saxon.functions.SystemFunctionLibrary}
+ * in particular special attention needs to be paid to making
+ * {@link XPathFunctionLibrary#bind} and {@link net.sf.saxon.functions.SystemFunctionLibrary#bind}
+ * as similar as possible when updating to newer Saxon versions
+ */
 public abstract class XPathFunctionLibrary implements FunctionLibrary {
-    protected static Value EMPTY = EmptySequence.getInstance();
+    protected static Sequence EMPTY = EmptySequence.getInstance();
     private static HashMap functionTable = new HashMap(20);
     protected static ItemType SAME_AS_FIRST_ARGUMENT = NodeKindTest.NAMESPACE;
     private static final long serialVersionUID = -6673788638743556161L;
 
-    protected  abstract String getFunctionNamespace();
+    protected abstract String getFunctionNamespace();
 
-    /**
-     * Test whether a system function with a given name and arity is available. This supports
-     * the function-available() function in XSLT. This method may be called either at compile time
-     * or at run time.
-     *
-     * @param functionName the name of the function being tested
-     * @param arity        The number of arguments. This is set to -1 in the case of the single-argument
-     *                     function-available() function; in this case the method should return true if there is some
-     */
-
-    public boolean isAvailable(StructuredQName functionName, int arity) {
+    public Expression bind(SymbolicName symbolicName,
+            Expression[] staticArgs, StaticContext env,
+            Container container) throws XPathException {
+        StructuredQName functionName = symbolicName.getComponentName();
+        int arity = symbolicName.getArity();
         String uri = functionName.getURI();
-        String local = functionName.getLocalPart();
-//        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
         if (uri.equals(getFunctionNamespace())) {
-//            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
+            String local = functionName.getLocalPart();
             StandardFunction.Entry entry = getFunction("{" + uri + "}" + local, arity);
             if (entry == null) {
-                return false;
+                if (getFunction("{" + uri + "}" + local, -1) == null) {
+                    XPathException err = new XPathException("Unknown function " + local + "()");
+                    err.setErrorCode("XPST0017");
+                    err.setIsStaticError(true);
+                    throw err;
+                } else {
+                    XPathException err = new XPathException("Function " + local + "() cannot be called with "
+                        + pluralArguments(arity));
+                    err.setErrorCode("XPST0017");
+                    err.setIsStaticError(true);
+                    throw err;
+                }
             }
-            return (arity == -1 || (arity >= entry.minArguments && arity <= entry.maxArguments));
-        } else {
-            return false;
-        }
-    }
-
-    //TODO: implement method!!!!!! 
-    public net.sf.saxon.value.SequenceType[] getFunctionSignature(StructuredQName functionName, int arity) {
-        String uri = functionName.getURI();
-        String local = functionName.getLocalPart();
-//        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
-        if (uri.equals(getFunctionNamespace())) {
-//            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, arity);
-            StandardFunction.Entry entry = getFunction("{" + uri + "}" + local, arity);
-            if (entry == null) {
-                return null;
+            int originalArity = arity;
+            if ((entry.properties & StandardFunction.IMP_CX_I) != 0 && arity == 0) {
+                // Add the context item as an implicit argument
+                staticArgs = new Expression[1];
+                staticArgs[0] = new ContextItemExpression();
+                arity = 1;
+                entry = StandardFunction.getFunction(local, arity);
             }
-            return entry.argumentTypes;
-        } else {
-            return null;
-        }
-     }
-
-
-    public Expression bind(StructuredQName structuredQName, Expression[] expressions, StaticContext staticContext, Container container) throws XPathException {
-        Expression expression =  bind(structuredQName, expressions, staticContext);
-        if (expression != null) {
-            expression.setContainer(container);
-        }
-        return expression;
-    }
-
-    /**
-     * Bind an extension function, given the URI and local parts of the function name,
-     * and the list of expressions supplied as arguments. This method is called at compile
-     * time.
-     *
-     * @param functionName the name of the function to be bound
-     * @param staticArgs   The expressions supplied statically in the function call. The intention is
-     *                     that the static type of the arguments (obtainable via getItemType() and getCardinality() may
-     *                     be used as part of the binding algorithm.
-     * @param env
-     * @return An object representing the extension function to be called, if one is found;
-     *         null if no extension function was found matching the required name and arity.
-     * @throws net.sf.saxon.trans.XPathException
-     *          if a function is found with the required name and arity, but
-     *          the implementation of the function cannot be loaded or used; or if an error occurs
-     *          while searching for the function; or if this function library "owns" the namespace containing
-     *          the function call, but no function was found.
-     */
-    public Expression bind(StructuredQName functionName, Expression[] staticArgs, StaticContext env) throws XPathException {
-        String uri = functionName.getURI();
-        String local = functionName.getLocalPart();
-//        if (uri.equals(NamespaceConstants.XFORMS_NS)) {
-           if (uri.equals(getFunctionNamespace())) {
-//            StandardFunction.Entry entry = XFormsFunction.getFunction("{" + uri + "}" + local, staticArgs.length);
-            StandardFunction.Entry entry = getFunction("{" + uri + "}" + local, staticArgs.length);
-            if (entry == null) {
-                return null;
+            if ((entry.properties & StandardFunction.IMP_CX_D) != 0) {
+                // Add the context document as an implicit argument
+                Expression[] newArgs = new Expression[arity + 1];
+                System.arraycopy(staticArgs, 0, newArgs, 0, arity);
+                newArgs[arity] = new RootExpression();
+                staticArgs = newArgs;
+                arity++;
+                entry = StandardFunction.getFunction(local, arity);
             }
-            Class functionClass = entry.implementationClass;
-            SystemFunction f;
+            final Class functionClass = entry.implementationClass;
+            final SystemFunctionCall f;
             try {
-                f = (SystemFunction) functionClass.newInstance();
+                f = (SystemFunctionCall) functionClass.newInstance();
+            } catch (Exception err) {
+                throw new AssertionError("Failed to load function {" + uri + "}" + local + " - " + err.getMessage());
             }
-            catch (Exception err) {
-                throw new AssertionError("Failed to load system function: " + err.getMessage());
-            }
+            f.setOriginalArity(originalArity);
             f.setDetails(entry);
             f.setFunctionName(functionName);
-
-            f.setArguments(staticArgs);
-            checkArgumentCount(staticArgs.length, entry.minArguments, entry.maxArguments, local);
+            checkArgumentCount(arity, entry.minArguments, entry.maxArguments, local);
+            if (staticArgs != null) {
+                f.setArguments(staticArgs);
+            }
+            f.setContainer(container);
+            f.bindStaticContext(env);
             return f;
         } else {
             return null;
+        }
+    }
+
+    public boolean isAvailable(final SymbolicName functionName) {
+        final String uri = functionName.getComponentName().getURI();
+        if (uri.equals(getFunctionNamespace())) {
+            final String local = functionName.getComponentName().getLocalPart();
+            final StandardFunction.Entry entry = getFunction("{" + uri + "}" + local, functionName.getArity());
+            return entry != null && (functionName.getArity() == -1 || (entry.minArguments <= functionName.getArity() && entry.maxArguments >= functionName.getArity()));
+        } else {
+            return false;
         }
     }
 
@@ -162,9 +140,13 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      */
 
     private static String pluralArguments(int num) {
-        if (num == 1)
-            return " argument";
-        return " arguments";
+        if (num == 0) {
+            return "zero arguments";
+        }
+        if (num == 1) {
+            return "one argument";
+        }
+        return num + " arguments";
     }
 
     /**
@@ -188,14 +170,28 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      * @param maxArguments        the maximum number of arguments allowed
      * @param itemType            the item type of the result of the function
      * @param cardinality         the cardinality of the result of the function
-     * @return the entry describing the function. The entry is incomplete, it does not yet contain information about the
-     *         function arguments.
+     * @param applicability       the host languages (and versions thereof) in which this function is available
+     * @param properties
+     * @return the entry describing the function. The entry is incomplete, it does not yet contain information
+     *         about the function arguments.
      */
-    protected static StandardFunction.Entry register(String name, Class implementationClass, int opcode, int minArguments, int maxArguments, ItemType itemType, int cardinality) {
-        StandardFunction.Entry e = makeEntry(name, implementationClass, opcode, minArguments, maxArguments, itemType, cardinality);
+
+    /*@NotNull*/
+    public static StandardFunction.Entry register(String name,
+                                 Class implementationClass,
+                                 int opcode,
+                                 int minArguments,
+                                 int maxArguments,
+                                 ItemType itemType,
+                                 int cardinality,
+                                 int applicability,
+                                 int properties) {
+        StandardFunction.Entry e = makeEntry(name, implementationClass, opcode, minArguments, maxArguments,
+            itemType, cardinality, applicability, properties);
         functionTable.put(name, e);
         return e;
     }
+
 
     /**
      * Make a table entry describing the signature of a function, with a reference to the implementation class.
@@ -207,10 +203,13 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      * @param maxArguments        the maximum number of arguments allowed
      * @param itemType            the item type of the result of the function
      * @param cardinality         the cardinality of the result of the function
-     * @return the entry describing the function. The entry is incomplete, it does not yet contain information about the
-     *         function arguments.
+     * @param applicability       the host languages (and versions of) in which this function is available
+     * @return the entry describing the function. The entry is incomplete, it does not yet contain information
+     *         about the function arguments.
      */
-    public static StandardFunction.Entry makeEntry(String name, Class implementationClass, int opcode, int minArguments, int maxArguments, ItemType itemType, int cardinality) {
+    public static StandardFunction.Entry makeEntry(String name, Class implementationClass, int opcode,
+                                  int minArguments, int maxArguments,
+                                  ItemType itemType, int cardinality, int applicability, int properties) {
         StandardFunction.Entry e = new StandardFunction.Entry();
         int hash = name.indexOf('#');
         if (hash < 0) {
@@ -224,33 +223,19 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
         e.maxArguments = maxArguments;
         e.itemType = itemType;
         e.cardinality = cardinality;
+        e.applicability = applicability;
+        e.properties = properties;
         if (maxArguments > 100) {
             // special case for concat()
             e.argumentTypes = new SequenceType[1];
-            e.resultIfEmpty = new Value[1];
+            e.resultIfEmpty = new Sequence[1];
+            e.usage = new OperandUsage[1];
         } else {
             e.argumentTypes = new SequenceType[maxArguments];
-            e.resultIfEmpty = new Value[maxArguments];
+            e.resultIfEmpty = new Sequence[maxArguments];
+            e.usage = new OperandUsage[maxArguments];
         }
         return e;
-    }
-
-    /**
-     * Add information to a function entry about the argument types of the function
-     *
-     * @param e           the entry for the function
-     * @param a           the position of the argument, counting from zero
-     * @param type        the item type of the argument
-     * @param cardinality the cardinality of the argument
-     */
-
-    public static void arg(StandardFunction.Entry e, int a, ItemType type, int cardinality) {
-        try {
-            e.argumentTypes[a] = SequenceType.makeSequenceType(type, cardinality);
-        }
-        catch (ArrayIndexOutOfBoundsException err) {
-            System.err.println("Internal Saxon error: Can't set argument " + a + " of " + e.name);
-        }
     }
 
     /**
@@ -264,7 +249,7 @@ public abstract class XPathFunctionLibrary implements FunctionLibrary {
      *                      when this result is unaffected by any other arguments
      */
 
-    public static void arg(StandardFunction.Entry e, int a, ItemType type, int cardinality, Value resultIfEmpty) {
+    public static void arg(StandardFunction.Entry e, int a, ItemType type, int cardinality, Sequence resultIfEmpty) {
         try {
             e.argumentTypes[a] = SequenceType.makeSequenceType(type, cardinality);
             e.resultIfEmpty[a] = resultIfEmpty;

@@ -8,6 +8,7 @@ package de.betterform.xml.xforms.xpath.saxon.function;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.lib.ConversionRules;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.*;
 
@@ -28,22 +29,32 @@ public class DaysFromDate extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final CharSequence argAsString = argument[0].evaluateAsString(xpathContext);
+    @Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+        final CharSequence date = argument[0].evaluateAsString(
+            xpathContext);
+        return daysFromDate(date.toString());
+    }
 
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String date = arguments[0].head().getStringValue();
+        return daysFromDate(date);
+    }
 
-	CalendarValue argAsValue = null;
+    private NumericValue daysFromDate(final String date) {
+        CalendarValue argAsValue;
         try {
-            argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(argAsString, new ConversionRules()).asAtomic();
-        } catch (XPathException e1) {
+            argAsValue = (CalendarValue) DateTimeValue.makeDateTimeValue(date, new ConversionRules()).asAtomic();
+        } catch (final XPathException e1) {
             try {
-        	argAsValue = new DateValue(argAsString);
+        	    argAsValue = new DateValue(date);
             } catch (XPathException e2) {
-        	return DoubleValue.NaN;
+        	    return DoubleValue.NaN;
             }
         }
         
-        double days = argAsValue.getCalendar().getTimeInMillis() / (1000d * 60 * 60 * 24);
+        final double days = argAsValue.getCalendar().getTimeInMillis() / (1000d * 60 * 60 * 24);
         return new Int64Value(days > 0 ? (int)Math.floor(days) : (int)Math.ceil(days));
 
     }

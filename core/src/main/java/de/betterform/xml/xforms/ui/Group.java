@@ -138,7 +138,7 @@ public class Group extends BindingElement implements DefaultAction {
     }
 
     private String getFirstFocusableControl() throws XFormsException {
-        return XPathUtil.evaluateAsString(this.element,".//*["+ NamespaceConstants.BETTERFORM_PREFIX +":data/@" + NamespaceConstants.BETTERFORM_PREFIX + ":enabled='true'][1]/@id");
+        return XPathUtil.evaluateAsString(this.element,".//*["+ NamespaceConstants.BETTERFORM_PREFIX +":data/@" + NamespaceConstants.BETTERFORM_PREFIX + ":enabled eq 'true'][1]/@id");
     }
 
     // template methods

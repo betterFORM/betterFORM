@@ -11,6 +11,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 import org.apache.commons.codec.BinaryEncoder;
@@ -55,65 +56,85 @@ public class Hmac extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      * a simplified expression
      */
-
+	@Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+		return this;
     }
 
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	final String key = argument[0].evaluateAsString(xpathContext).toString();
-	final String data = argument[1].evaluateAsString(xpathContext).toString();
-	final String originalAlgorithmString = argument[2].evaluateAsString(xpathContext).toString();
-	final String algorithm = "Hmac" + originalAlgorithmString.replaceAll("-", "");
-	final String encoding = argument != null && argument.length >= 4 ? argument[3].evaluateAsString(xpathContext).toString() : kBASE64;
-	
-	if (!kSUPPORTED_ALG.contains(originalAlgorithmString)) {
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		XFormsElement xformsElement = functionContext.getXFormsElement();
-		throw new XPathException(new XFormsComputeException("Unsupported algorithm '" + originalAlgorithmString + "'", xformsElement.getTarget(), this));
-	}
-	
-	if (!kSUPPORTED_ENCODINGS.contains(encoding)) {
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		XFormsElement xformsElement = functionContext.getXFormsElement();
-		throw new XPathException(new XFormsComputeException("Unsupported encoding '" + encoding + "'", xformsElement.getTarget(), this));
+	@Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+		final String key = argument[0].evaluateAsString(
+			xpathContext).toString();
+		final String data = argument[1].evaluateAsString(
+			xpathContext).toString();
+		final String originalAlgorithmString = argument[2].evaluateAsString(
+			xpathContext).toString();
+		final String encoding = argument != null && argument.length >= 4 ? argument[3].evaluateAsString(
+			xpathContext).toString() : kBASE64;
+
+		return hmac(xpathContext, key, data, originalAlgorithmString, encoding);
 	}
 
-	try {
-	    // Generate a key for the HMAC-MD5 keyed-hashing algorithm; see RFC 2104
-	    // In practice, you would save this key.
-	    SecretKey secretKey = new SecretKeySpec(key.getBytes("utf-8"), algorithm);
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String key = arguments[0].head().getStringValue();
+		final String data = arguments[1].head().getStringValue();
+		final String originalAlgorithmString = arguments[2].head().getStringValue();
+		final String encoding = arguments.length >= 4 ? arguments[3].head().getStringValue() : kBASE64;
 
-	    // Create a MAC object using HMAC-MD5 and initialize with kesaxoniay
-	    Mac mac = Mac.getInstance(secretKey.getAlgorithm());
-	    mac.init(secretKey);
-	    mac.update(data.getBytes("utf-8"));
-
-	    byte[] digest = mac.doFinal();
-
-	    final BinaryEncoder encoder;
-	    if ("base64".equals(encoding)) {
-		    encoder = new Base64(digest.length, "".getBytes(), false);
-	    } else {
-		    encoder = new Hex();
-	    }
-	    
-	    return new StringValue(new String(encoder.encode(digest), "ASCII"));
-
-	} catch (NoSuchAlgorithmException e) {
-	    throw new XPathException(e);
-	} catch (UnsupportedEncodingException e) {
-	    throw new XPathException(e);
-	} catch (EncoderException e) {
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		XFormsElement xformsElement = functionContext.getXFormsElement();
-		throw new XPathException(new XFormsComputeException("Encoder exception.", e, xformsElement.getTarget(), this));
-	} catch (InvalidKeyException e) {
-	    throw new XPathException(e);
+		return hmac(context, key, data, originalAlgorithmString, encoding);
 	}
 
+	private StringValue hmac(final XPathContext context, final String key, final String data, final String originalAlgorithmString, final String encoding) throws XPathException {
+
+		if (!kSUPPORTED_ALG.contains(originalAlgorithmString)) {
+			final XPathFunctionContext functionContext = getFunctionContext(context);
+			final XFormsElement xformsElement = functionContext.getXFormsElement();
+			throw new XPathException(new XFormsComputeException("Unsupported algorithm '" + originalAlgorithmString + "'", xformsElement.getTarget(), this));
+		}
+
+		if (!kSUPPORTED_ENCODINGS.contains(encoding)) {
+			final XPathFunctionContext functionContext = getFunctionContext(context);
+			final XFormsElement xformsElement = functionContext.getXFormsElement();
+			throw new XPathException(new XFormsComputeException("Unsupported encoding '" + encoding + "'", xformsElement.getTarget(), this));
+		}
+
+		final String algorithm = "Hmac" + originalAlgorithmString.replaceAll("-", "");
+
+		try {
+			// Generate a key for the HMAC-MD5 keyed-hashing algorithm; see RFC 2104
+			// In practice, you would save this key.
+			final SecretKey secretKey = new SecretKeySpec(key.getBytes("utf-8"), algorithm);
+
+			// Create a MAC object using HMAC-MD5 and initialize with kesaxoniay
+			final Mac mac = Mac.getInstance(secretKey.getAlgorithm());
+			mac.init(secretKey);
+			mac.update(data.getBytes("utf-8"));
+
+			final byte[] digest = mac.doFinal();
+
+			final BinaryEncoder encoder;
+			if ("base64".equals(encoding)) {
+				encoder = new Base64(digest.length, "".getBytes(), false);
+			} else {
+				encoder = new Hex();
+			}
+
+			return new StringValue(new String(encoder.encode(digest), "ASCII"));
+
+		} catch (final NoSuchAlgorithmException e) {
+			throw new XPathException(e);
+		} catch (final UnsupportedEncodingException e) {
+			throw new XPathException(e);
+		} catch (final EncoderException e) {
+			final XPathFunctionContext functionContext = getFunctionContext(context);
+			final XFormsElement xformsElement = functionContext.getXFormsElement();
+			throw new XPathException(new XFormsComputeException("Encoder exception.", e, xformsElement.getTarget(), this));
+		} catch (final InvalidKeyException e) {
+			throw new XPathException(e);
+		}
     }
 }

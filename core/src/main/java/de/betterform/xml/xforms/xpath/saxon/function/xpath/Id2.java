@@ -18,7 +18,9 @@ import net.sf.saxon.expr.StaticProperty;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.ArrayIterator;
 import net.sf.saxon.tree.iter.EmptyIterator;
@@ -64,7 +66,7 @@ public class Id2 extends XFormsFunction {
 	 * general, if property bit is set, it is true, but if it is unset, the
 	 * value is unknown.
 	 */
-
+	@Override
 	public int computeSpecialProperties() {
 		return StaticProperty.NON_CREATIVE;
 	}
@@ -79,7 +81,7 @@ public class Id2 extends XFormsFunction {
 	 * @return the result of the early evaluation, or the original expression,
 	 *         or potentially a simplified expression
 	 */
-
+	@Override
 	public Expression preEvaluate(ExpressionVisitor visitor)
 			throws XPathException {
 		return this;
@@ -92,21 +94,32 @@ public class Id2 extends XFormsFunction {
 	 *         necessarily document nodes)
 	 * @throws XPathException
 	 */
-
 	@SuppressWarnings("unchecked")
+	@Override
 	public SequenceIterator iterate(final XPathContext xpathContext)
 			throws XPathException {
 		final String ids = argument[0].evaluateAsString(xpathContext)
-				.toString();
+			.toString();
 		final SequenceIterator nodeIterator = argument.length > 1 ? argument[1]
-				.iterate(xpathContext) : null;
+			.iterate(xpathContext) : null;
 
-		final XPathFunctionContext functionContext = getFunctionContext(xpathContext);
+		return id2(xpathContext, ids, nodeIterator);
+	}
+
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String ids = arguments[0].head().getStringValue();
+		final SequenceIterator nodeIterator = arguments.length > 1 ? arguments[1].iterate() : null;
+		return SequenceTool.toLazySequence(id2(context, ids, nodeIterator));
+	}
+
+	private SequenceIterator id2(final XPathContext context, final String ids, final SequenceIterator nodeIterator) throws XPathException {
+		final XPathFunctionContext functionContext = getFunctionContext(context);
 		final XFormsElement xformsElement = functionContext.getXFormsElement();
 
 		ArrayList<Item> resultList = new ArrayList<Item>();
 
-		Item item = (nodeIterator != null)?nodeIterator.next():null;
+		Item item = (nodeIterator != null) ? nodeIterator.next() : null;
 		if (argument.length == 1 || item == null) {
 			final Binding binding;
             if (xformsElement instanceof Binding) {

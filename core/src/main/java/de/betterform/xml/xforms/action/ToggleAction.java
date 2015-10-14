@@ -71,7 +71,7 @@ public class ToggleAction extends AbstractAction {
         if(isRepeated()) {
             caseObject = null;
             RepeatItem repeatItem = (RepeatItem) this.container.lookup(getRepeatItemId());
-            Node caseNode = de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(repeatItem.getElement(), ".//*[@caseId='"+ caseId.getValue() + "']"), 1);
+            Node caseNode = de.betterform.xml.xpath.impl.saxon.XPathUtil.getAsNode(XPathUtil.evaluate(repeatItem.getElement(), ".//*[@caseId eq '"+ caseId.getValue() + "']"), 1);
             if(caseNode != null) {
                 caseObject = caseNode.getUserData("");
             }

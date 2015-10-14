@@ -10,6 +10,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.FloatValue;
 import org.apache.commons.logging.Log;
@@ -36,7 +37,8 @@ public class FileSize extends XFormsFunction {
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
-    
+
+    @Override
     public Item evaluateItem(XPathContext xpathContext) throws XPathException {
 	    if (argument.length != 1) {
             throw new XPathException("There must be 1 argument (filename) for this function");
@@ -45,15 +47,25 @@ public class FileSize extends XFormsFunction {
         final Expression keyExpression = argument[0];
         final String filename = keyExpression.evaluateAsString(xpathContext).toString();
 
+        return fileSize(xpathContext, filename);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String filename = arguments[0].head().getStringValue();
+        return fileSize(context, filename);
+    }
+
+    private FloatValue fileSize(final XPathContext context, final String filename) {
         if (filename == null) {
             return new FloatValue(Float.NaN);
         }
         try {
-            Container container = getContainer(xpathContext);
+            final Container container = getContainer(context);
             return new FloatValue(new URI(container.getProcessor().getBaseURI()).resolve(filename).toURL().openConnection().getContentLength());
         } catch (Exception e) {
             LOGGER.error("Unable to retrieve file size", e);
-            return  new FloatValue(Float.NaN);
+            return new FloatValue(Float.NaN);
         }
     }
 }

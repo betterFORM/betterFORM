@@ -51,31 +51,31 @@ public class ScopedResolutionTest extends XMLTestBase {
         this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("ScopedResolution-1-Test.xhtml"));
         this.xformsProcesssorImpl.init();
 
-        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id='group-1']/xf:input/bf:data"));
-        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id='group-2']/xf:input/bf:data"));
-        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id='group-3']/xf:input/bf:data"));
-        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id='group-4']/xf:input/bf:data"));
+        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id eq 'group-1']/xf:input/bf:data"));
+        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id eq 'group-2']/xf:input/bf:data"));
+        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id eq 'group-3']/xf:input/bf:data"));
+        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@id eq 'group-4']/xf:input/bf:data"));
     }
 
     public void testRepeatBindingWithBind() throws Exception {
         this.xformsProcesssorImpl.setXForms(getClass().getResourceAsStream("ScopedResolution-2-Test.xhtml"));
         this.xformsProcesssorImpl.init();
 
-        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][1]/xf:input[1]/bf:data"));
-        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][1]/xf:input[2]/bf:data"));
-        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][1]/xf:input[3]/bf:data"));
+        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][1]/xf:input[1]/bf:data"));
+        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][1]/xf:input[2]/bf:data"));
+        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][1]/xf:input[3]/bf:data"));
 
-        assertEquals("2", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][2]/xf:input[1]/bf:data"));
-        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][2]/xf:input[2]/bf:data"));
-        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][2]/xf:input[3]/bf:data"));
+        assertEquals("2", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][2]/xf:input[1]/bf:data"));
+        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][2]/xf:input[2]/bf:data"));
+        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][2]/xf:input[3]/bf:data"));
 
-        assertEquals("3", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][3]/xf:input[1]/bf:data"));
-        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][3]/xf:input[2]/bf:data"));
-        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][3]/xf:input[3]/bf:data"));
+        assertEquals("3", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][3]/xf:input[1]/bf:data"));
+        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][3]/xf:input[2]/bf:data"));
+        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][3]/xf:input[3]/bf:data"));
 
-        assertEquals("4", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][4]/xf:input[1]/bf:data"));
-        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][4]/xf:input[2]/bf:data"));
-        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][4]/xf:input[3]/bf:data"));
+        assertEquals("4", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][4]/xf:input[1]/bf:data"));
+        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][4]/xf:input[2]/bf:data"));
+        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][4]/xf:input[3]/bf:data"));
 
     }
 
@@ -84,21 +84,21 @@ public class ScopedResolutionTest extends XMLTestBase {
         this.xformsProcesssorImpl.init();
         // dump(xformsProcesssorImpl.getXForms().getDocumentElement());
                    
-        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][1]/xf:input[1]/bf:data"));
-        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][1]/xf:input[2]/bf:data"));
-        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][1]/xf:input[3]/bf:data"));
+        assertEquals("1", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][1]/xf:input[1]/bf:data"));
+        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][1]/xf:input[2]/bf:data"));
+        assertEquals("one", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][1]/xf:input[3]/bf:data"));
 
-        assertEquals("2", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][2]/xf:input[1]/bf:data"));
-        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][2]/xf:input[2]/bf:data"));
-        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][2]/xf:input[3]/bf:data"));
+        assertEquals("2", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][2]/xf:input[1]/bf:data"));
+        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][2]/xf:input[2]/bf:data"));
+        assertEquals("two", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][2]/xf:input[3]/bf:data"));
 
-        assertEquals("3", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][3]/xf:input[1]/bf:data"));
-        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][3]/xf:input[2]/bf:data"));
-        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][3]/xf:input[3]/bf:data"));
+        assertEquals("3", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][3]/xf:input[1]/bf:data"));
+        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][3]/xf:input[2]/bf:data"));
+        assertEquals("three", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][3]/xf:input[3]/bf:data"));
 
-        assertEquals("4", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][4]/xf:input[1]/bf:data"));
-        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][4]/xf:input[2]/bf:data"));
-        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance='repeated'][4]/xf:input[3]/bf:data"));
+        assertEquals("4", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][4]/xf:input[1]/bf:data"));
+        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][4]/xf:input[2]/bf:data"));
+        assertEquals("four", XPathUtil.evaluateAsString(xformsProcesssorImpl.getXForms().getDocumentElement(),"//xf:group[@appearance eq 'repeated'][4]/xf:input[3]/bf:data"));
 
 
 

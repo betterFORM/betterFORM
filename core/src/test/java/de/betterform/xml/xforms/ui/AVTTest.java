@@ -37,18 +37,18 @@ public class AVTTest extends TestCase {
         Document host = this.xformsProcesssorImpl.getContainer().getDocument();
         // DOMUtil.prettyPrintDOM(host);
 
-        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id='output1']/bf:data"));
-        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id='compClass']/@class"));
-        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id='output1']/@class"));
-        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id='input1']/@class"));
+        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'output1']/bf:data"));
+        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'compClass']/@class"));
+        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'output1']/@class"));
+        assertEquals("must be the same", "hallo foo welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'input1']/@class"));
 
         Selector selector = (Selector) this.xformsProcesssorImpl.getContainer().lookup("select");
         selector.setValue("bar");
 
-        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id='output1']/bf:data"));
-        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id='compClass']/@class"));
-        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id='output1']/@class"));
-        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id='input1']/@class"));
+        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'output1']/bf:data"));
+        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'compClass']/@class"));
+        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'output1']/@class"));
+        assertEquals("must be the same", "hallo bar welt", XPathUtil.evaluateAsString(host, "//*[@id eq 'input1']/@class"));
 
 
         // DOMUtil.prettyPrintDOM(host);

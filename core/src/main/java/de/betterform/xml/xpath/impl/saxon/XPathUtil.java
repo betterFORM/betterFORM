@@ -9,7 +9,7 @@ import de.betterform.xml.ns.NamespaceResolver;
 import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.XPathFunctionContext;
 import net.sf.saxon.dom.DocumentWrapper;
-import net.sf.saxon.dom.NodeWrapper;
+import net.sf.saxon.dom.DOMNodeWrapper;
 import net.sf.saxon.om.Item;
 import net.sf.saxon.om.NodeInfo;
 import net.sf.saxon.sxpath.IndependentContext;
@@ -108,8 +108,8 @@ public class XPathUtil {
         List resultAsNodeset = nodeset;
         if (resultAsNodeset.size() >= position) {
             Item item = ((Item) resultAsNodeset.get(position - 1));
-            if (item instanceof NodeWrapper) {
-                return (Node) ((NodeWrapper) item).getUnderlyingNode();
+            if (item instanceof DOMNodeWrapper) {
+                return (Node) ((DOMNodeWrapper) item).getUnderlyingNode();
             }
         }
         return null;

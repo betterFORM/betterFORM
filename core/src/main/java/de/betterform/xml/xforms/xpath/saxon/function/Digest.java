@@ -11,6 +11,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 import org.apache.commons.codec.BinaryEncoder;
@@ -23,6 +24,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Implementation of 7.8.3 The digest() Function
@@ -38,8 +40,8 @@ import java.util.HashSet;
  */
 public class Digest extends XFormsFunction {
     private static final String kBASE64 = "base64";
-    private static final HashSet<String> kSUPPORTED_ALG = new HashSet<String>(Arrays.asList(new String[] { "MD5", "SHA-1", "SHA-256", "SHA-384", "SHA-512" }));
-    private static final HashSet<String> kSUPPORTED_ENCODINGS = new HashSet<String>(Arrays.asList(new String[]{ kBASE64, "hex" }));
+    private static final Set<String> kSUPPORTED_ALG = new HashSet<String>(Arrays.asList(new String[] { "MD5", "SHA-1", "SHA-256", "SHA-384", "SHA-512" }));
+    private static final Set<String> kSUPPORTED_ENCODINGS = new HashSet<String>(Arrays.asList(new String[]{ kBASE64, "hex" }));
 
     private static final long serialVersionUID = -8331394395194343808L;
 
@@ -50,58 +52,75 @@ public class Digest extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      * a simplified expression
      */
-
-    public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
-	return this;
+	@Override
+    public Expression preEvaluate(final ExpressionVisitor visitor) throws XPathException {
+		return this;
     }
 
     /**
      * Evaluate in a general context
      */
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
-	
-    // XXX In some cases the xforms-compute-exception should be an xforms-bind-exception
-    	
-    final String data = argument[0].evaluateAsString(xpathContext).toString();
-	final String algorithm = argument[1].evaluateAsString(xpathContext).toString();
-	final String encoding = argument != null && argument.length >= 3 ? argument[2].evaluateAsString(xpathContext).toString() : kBASE64;
-	
-	if (!kSUPPORTED_ALG.contains(algorithm)) {
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		XFormsElement xformsElement = functionContext.getXFormsElement();
-		throw new XPathException(new XFormsComputeException("Unsupported algorithm '" + algorithm + "'", xformsElement.getTarget(), this));
-	}
-	
-	if (!kSUPPORTED_ENCODINGS.contains(encoding)) {
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		XFormsElement xformsElement = functionContext.getXFormsElement();
-		throw new XPathException(new XFormsComputeException("Unsupported encoding '" + encoding + "'", xformsElement.getTarget(), this));
+	@Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
+
+		// XXX In some cases the xforms-compute-exception should be an xforms-bind-exception
+
+		final String data = argument[0].evaluateAsString(
+			xpathContext).toString();
+		final String algorithm = argument[1].evaluateAsString(
+			xpathContext).toString();
+		final String encoding = argument != null && argument.length >= 3 ? argument[2].evaluateAsString(
+			xpathContext).toString() : kBASE64;
+
+		return digest(xpathContext, data, algorithm, encoding);
 	}
 
-	MessageDigest messageDigest;
-	try {
-	    messageDigest = MessageDigest.getInstance(algorithm);
-	    messageDigest.update(data.getBytes("utf-8"));
+	public Sequence call(final XPathContext context,
+						 final Sequence[] arguments) throws XPathException {
+		final String data = arguments[0].head().getStringValue();
+		final String algorithm = arguments[1].head().getStringValue();
+		final String encoding = arguments.length >=3 ? arguments[2].head().getStringValue() : kBASE64;
 
-	    byte[] digest = messageDigest.digest();
-
-	    final BinaryEncoder encoder;
-	    if ("base64".equals(encoding)) {
-		    encoder = new Base64(digest.length, "".getBytes(), false);
-	    } else {
-		    encoder = new Hex();
-	    }
-	    return new StringValue(new String(encoder.encode(digest), "ASCII"));
-
-	} catch (NoSuchAlgorithmException e) {
-	    throw new XPathException(e);
-	} catch (UnsupportedEncodingException e) {
-	    throw new XPathException(e);
-	} catch (EncoderException e) {
-		XPathFunctionContext functionContext = getFunctionContext(xpathContext);
-		XFormsElement xformsElement = functionContext.getXFormsElement();
-		throw new XPathException(new XFormsComputeException("Encoder exception.", e, xformsElement.getTarget(), this));
+		return digest(context, data, algorithm, encoding);
 	}
+
+	private StringValue digest(final XPathContext context, final String data, final String algorithm, final String encoding) throws XPathException {
+		if (!kSUPPORTED_ALG.contains(algorithm)) {
+			final XPathFunctionContext functionContext = getFunctionContext(context);
+			final XFormsElement xformsElement = functionContext.getXFormsElement();
+			throw new XPathException(new XFormsComputeException("Unsupported algorithm '" + algorithm + "'", xformsElement.getTarget(), this));
+		}
+
+		if (!kSUPPORTED_ENCODINGS.contains(encoding)) {
+			final XPathFunctionContext functionContext = getFunctionContext(context);
+			final XFormsElement xformsElement = functionContext.getXFormsElement();
+			throw new XPathException(new XFormsComputeException("Unsupported encoding '" + encoding + "'", xformsElement.getTarget(), this));
+		}
+
+		MessageDigest messageDigest;
+		try {
+			messageDigest = MessageDigest.getInstance(algorithm);
+			messageDigest.update(data.getBytes("utf-8"));
+
+			byte[] digest = messageDigest.digest();
+
+			final BinaryEncoder encoder;
+			if ("base64".equals(encoding)) {
+				encoder = new Base64(digest.length, "".getBytes(), false);
+			} else {
+				encoder = new Hex();
+			}
+			return new StringValue(new String(encoder.encode(digest), "ASCII"));
+
+		} catch (final NoSuchAlgorithmException e) {
+			throw new XPathException(e);
+		} catch (final UnsupportedEncodingException e) {
+			throw new XPathException(e);
+		} catch (final EncoderException e) {
+			final XPathFunctionContext functionContext = getFunctionContext(context);
+			final XFormsElement xformsElement = functionContext.getXFormsElement();
+			throw new XPathException(new XFormsComputeException("Encoder exception.", e, xformsElement.getTarget(), this));
+		}
 
     }
 }

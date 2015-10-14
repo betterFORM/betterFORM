@@ -9,6 +9,7 @@ import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
 import net.sf.saxon.om.Item;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.StringValue;
 import org.apache.commons.logging.Log;
@@ -35,12 +36,13 @@ public class FileDate extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      *         a simplified expression
      */
-
+    @Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
-    
-    public Item evaluateItem(XPathContext xpathContext) throws XPathException {
+
+    @Override
+    public Item evaluateItem(final XPathContext xpathContext) throws XPathException {
 	     if (argument.length < 1 || argument.length > 2) {
             throw new XPathException("There must be 1 argument (filename)  or 2 arguments (filename, format) for this function");
         }
@@ -58,7 +60,21 @@ public class FileDate extends XFormsFunction {
 
         return fileDate(xpathContext, filename, format);
     }
-    
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String filename = arguments[0].head().getStringValue();
+
+        final String format;
+        if (arguments.length == 2) {
+            format = arguments[1].head().getStringValue();
+        } else {
+            format = null;
+        }
+
+        return fileDate(context, filename, format);
+    }
+
     private Item fileDate(XPathContext c, String filename, String format) {
         if (filename == null) {
             return null;

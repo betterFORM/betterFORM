@@ -11,7 +11,9 @@ import de.betterform.xml.xforms.model.Model;
 import net.sf.saxon.expr.Expression;
 import net.sf.saxon.expr.XPathContext;
 import net.sf.saxon.expr.parser.ExpressionVisitor;
+import net.sf.saxon.om.Sequence;
 import net.sf.saxon.om.SequenceIterator;
+import net.sf.saxon.om.SequenceTool;
 import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.tree.iter.ListIterator;
 
@@ -28,7 +30,7 @@ public class InstanceOfModel extends XFormsFunction {
      * @return the result of the early evaluation, or the original expression, or potentially
      *         a simplified expression
      */
-
+    @Override
     public Expression preEvaluate(ExpressionVisitor visitor) throws XPathException {
         return this;
     }
@@ -36,30 +38,47 @@ public class InstanceOfModel extends XFormsFunction {
     /**
      * Evaluate in a general context
      */
-    public SequenceIterator iterate(XPathContext xpathContext) throws XPathException {
+    @Override
+    public SequenceIterator iterate(final XPathContext xpathContext) throws XPathException {
         if (argument.length != 2) {
-            throw new XPathException("There must be 2 arguments (modelId, instanceId) for this function");
+            throw new XPathException(
+                "There must be 2 arguments (modelId, instanceId) for this function");
         }
 
-        XPathFunctionContext functionContext = getFunctionContext(xpathContext);
+        final Expression modelIDExpression = argument[0];
+        final String modelId = modelIDExpression.evaluateAsString(
+            xpathContext).toString();
+
+        final Expression instanceIdExpression = argument[1];
+        final String instanceId = instanceIdExpression.evaluateAsString(
+            xpathContext).toString();
+
+        return instanceOfModel(xpathContext, modelId, instanceId);
+    }
+
+    public Sequence call(final XPathContext context,
+                         final Sequence[] arguments) throws XPathException {
+        final String modelId = arguments[0].head().getStringValue();
+        final String instanceId = arguments[0].head().getStringValue();
+
+        return SequenceTool.toLazySequence(instanceOfModel(context, modelId, instanceId));
+    }
+
+    private SequenceIterator instanceOfModel(final XPathContext context, final String modelId, final String instanceId) throws XPathException {
+        final XPathFunctionContext functionContext = getFunctionContext(context);
 
         if (functionContext != null) {
-            final Expression modelIDExpression = argument[0];
-            final String modelID = modelIDExpression.evaluateAsString(xpathContext).toString();
-
-            XFormsElement element = functionContext.getXFormsElement();
-            Model model = null;
+            final XFormsElement element = functionContext.getXFormsElement();
+            final Model model;
             try {
-                model = element.getContainerObject().getModel(modelID);
-            } catch (XFormsException e) {
-                throw new XPathException("Model: " + modelID + " not found");
+                model = element.getContainerObject().getModel(modelId);
+            } catch (final XFormsException e) {
+                throw new XPathException("Model: " + modelId + " not found");
             }
 
-            final Expression instanceIDExpression = argument[1];
-            final String instanceID = instanceIDExpression.evaluateAsString(xpathContext).toString();
 
-            final de.betterform.xml.xforms.model.Instance instance = model.getInstance(instanceID);
 
+            final de.betterform.xml.xforms.model.Instance instance = model.getInstance(instanceId);
             if (instance != null) {
                 return new ListIterator(instance.getInstanceNodeset());
             }

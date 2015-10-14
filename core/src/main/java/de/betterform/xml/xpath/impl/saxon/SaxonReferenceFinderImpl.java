@@ -10,9 +10,11 @@ import de.betterform.xml.xforms.exception.XFormsException;
 import de.betterform.xml.xforms.xpath.saxon.function.Instance;
 import de.betterform.xml.xpath.XPathReferenceFinder;
 import net.sf.saxon.expr.*;
+import net.sf.saxon.om.AxisInfo;
+import net.sf.saxon.pattern.NodeKindTest;
+import net.sf.saxon.type.Type;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,11 +41,11 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
    * @return the set of all references to other nodes.
    * @throws XFormsException if a reference detection error occurred.
    */
-  public Set getReferences(String xpath, Map prefixMapping, Container container) throws XFormsException {
+  public Set<String> getReferences(String xpath, Map prefixMapping, Container container) throws XFormsException {
     try {
       // we need this expression to remember the number
       Expression expression = XPathCache.getInstance().getXPathExpression(xpath, prefixMapping, container.getConfiguration()).getInternalExpression();
-      HashSet references = new HashSet();
+      Set<String> references = new HashSet<String>();
       addExpressionReferences(references, null, expression, prefixMapping);
 
       return references;
@@ -52,23 +54,52 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
     }
   }
 
-  private void addExpressionReferences(HashSet references, String context, Expression expression, Map prefixMapping) {
-    if (expression instanceof AxisExpression) {
-      references.add((context != null ? (context + "/") : "") + SaxonXPathExpressionSerializer.serialize(expression, prefixMapping));
+  private void addExpressionReferences(Set<String> references, String context, Expression expression, Map prefixMapping) {
+    if (expression instanceof AxisExpression && ((AxisExpression) expression).getAxis() == AxisInfo.PARENT && !(((AxisExpression)expression).getNodeTest() instanceof NodeKindTest && ((NodeKindTest)((AxisExpression)expression).getNodeTest()).getNodeKind() == Type.ELEMENT)) {
+      references.add(context != null ? (context + "/..") : "..");
+    } else if (expression instanceof AxisExpression) {
+      references.add(
+          (context != null ? (context + "/") : "") + SaxonXPathExpressionSerializer.serialize(
+              expression, prefixMapping));
+//    } else if(expression instanceof SimpleStepExpression && ((SimpleStepExpression) expression).getSelectExpression() instanceof ItemChecker && ((ItemChecker)((SimpleStepExpression) expression).getSelectExpression()).getBaseExpression() instanceof ContextItemExpression) {
+    } else if(expression instanceof SimpleStepExpression && ((SimpleStepExpression) expression).getSelectExpression() instanceof ItemChecker && ((ItemChecker)((SimpleStepExpression) expression).getSelectExpression()).getBaseExpression() instanceof ContextItemExpression) {
+      final SimpleStepExpression simpleStepExpression = (SimpleStepExpression) expression;
+      //ignore ContextItem select action
+      final Expression rhsExpression = simpleStepExpression.getActionExpression();
+      addExpressionReferences(references, context, rhsExpression, prefixMapping);
     } else if (expression instanceof SlashExpression) {
       final SlashExpression slashExpression = (SlashExpression) expression;
-      final Expression lhsExpression = slashExpression.getControllingExpression();
-      final Expression rhsExpression = slashExpression.getControlledExpression();
-
-      addExpressionReferences(references, context, lhsExpression, prefixMapping);
-      addExpressionReferences(references, SaxonXPathExpressionSerializer.serialize(lhsExpression, prefixMapping), rhsExpression, prefixMapping);
+      final Expression lhsExpression = slashExpression.getSelectExpression();
+      final Expression rhsExpression = slashExpression.getActionExpression();
+      if(lhsExpression instanceof SimpleStepExpression && ((SimpleStepExpression) lhsExpression).getSelectExpression() instanceof ItemChecker && ((ItemChecker)((SimpleStepExpression) lhsExpression).getSelectExpression()).getBaseExpression() instanceof ContextItemExpression) {
+        //ignore ContextItem select action
+        final Expression lhsExpressionAction = ((SimpleStepExpression) lhsExpression).getActionExpression();
+        addExpressionReferences(references, context, lhsExpressionAction, prefixMapping);
+        final String newContext = SaxonXPathExpressionSerializer.serialize(lhsExpressionAction, prefixMapping);
+        addExpressionReferences(references, newContext, rhsExpression, prefixMapping);
+      } else {
+        addExpressionReferences(references, context, lhsExpression,
+            prefixMapping);
+        final String newContext = SaxonXPathExpressionSerializer.serialize(lhsExpression, prefixMapping);
+        addExpressionReferences(references, newContext, rhsExpression, prefixMapping);
+      }
 
     } else if (expression instanceof FilterExpression) {
       final FilterExpression filterExpression = (FilterExpression) expression;
+      final Expression lhsExpression = filterExpression.getSelectExpression();
+      final Expression rhsExpression = filterExpression.getActionExpression();
 
-      String newContext = SaxonXPathExpressionSerializer.serialize(filterExpression.getControllingExpression(), prefixMapping);
-      addExpressionReferences(references, context, filterExpression.getControllingExpression(), prefixMapping);
-      addExpressionReferences(references, newContext, filterExpression.getFilter(), prefixMapping);
+      if(lhsExpression instanceof SimpleStepExpression && ((SimpleStepExpression) lhsExpression).getSelectExpression() instanceof ItemChecker && ((ItemChecker)((SimpleStepExpression) lhsExpression).getSelectExpression()).getBaseExpression() instanceof ContextItemExpression) {
+        //ignore ContextItem select action
+        final Expression lhsExpressionAction = ((SimpleStepExpression) lhsExpression).getActionExpression();
+        addExpressionReferences(references, context, lhsExpressionAction, prefixMapping);
+        final String newContext = SaxonXPathExpressionSerializer.serialize(lhsExpressionAction, prefixMapping);
+        addExpressionReferences(references, newContext, rhsExpression, prefixMapping);
+      } else {
+        addExpressionReferences(references, context, lhsExpression, prefixMapping);
+        final String newContext = SaxonXPathExpressionSerializer.serialize(lhsExpression, prefixMapping);
+        addExpressionReferences(references, newContext, rhsExpression, prefixMapping);
+      }
     } else if (expression instanceof FunctionCall) {
       String newContext = SaxonXPathExpressionSerializer.serialize(expression, prefixMapping);
 
@@ -76,13 +107,11 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
         references.add(newContext);
       }
 
-      for (Iterator it = expression.iterateSubExpressions(); it.hasNext();) {
-        addExpressionReferences(references, context, (Expression) it.next(), prefixMapping);
+      for (final Operand o : expression.operands()) {
+        addExpressionReferences(references, context, o.getExpression(), prefixMapping);
       }
     } else if (expression instanceof ContextItemExpression) {
       references.add(context != null ? context : ".");
-    } else if (expression instanceof ParentNodeExpression) {
-      references.add(context != null ? (context + "/..") : "..");
     } else if (expression instanceof Assignation) {
       Assignation a = (Assignation) expression;
       addExpressionReferences(references, context, a.getSequence(), prefixMapping);
@@ -90,9 +119,8 @@ public class SaxonReferenceFinderImpl implements XPathReferenceFinder {
         addExpressionReferences(references, context, a.getAction(), prefixMapping);
       }
     } else {
-      Iterator iter = expression.iterateSubExpressions();
-      while (iter.hasNext()) {
-        addExpressionReferences(references, context, (Expression) iter.next(), prefixMapping);
+      for(final Operand o : expression.operands()) {
+        addExpressionReferences(references, context, o.getExpression(), prefixMapping);
       }
     }
   }

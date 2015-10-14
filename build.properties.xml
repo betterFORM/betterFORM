@@ -74,8 +74,8 @@
             <name>betterform-core</name>
         </app>
         <transform>
-            <classpath pathid="transform.class.path" description="classpath for saxon XPath and XSLT engine">
-                <pathelement location="${core.dir}/src/main/lib/saxon-9.4.0.7.jar" groupid="net.sf.saxon" version="9.4.0.7" artifactId="Saxon-HE"/>
+            <classpath pathid="transform.class.path" description="classpath for Saxon XPath and XSLT engine">
+                <pathelement location="${core.dir}/src/main/lib/Saxon-HE-9.6.0-7.jar" groupid="net.sf.saxon" version="9.6.0-7" artifactId="Saxon-HE"/>
             </classpath>
         </transform>
         <compile>
@@ -104,13 +104,14 @@
 
                 <!-- eXist -->
                 <pathelement location="${core.dir}/src/main/lib/commons-pool-1.5.6.jar" groupid="commons-pool" version="1.5.6" artifactId="commons-pool"/>
-                <pathelement location="${core.dir}/src/main/lib/exist-2.3-trunk-20150519.jar" groupid="org.exist" version="2.3-trunk-20150519" artifactId="exist"/>
+                <pathelement location="${core.dir}/src/main/lib/exist-core-3.0.RC1.jar" groupid="org.exist-db" version="3.0.RC1" artifactId="exist-core"/>
                 <pathelement location="${core.dir}/src/main/lib/xmldb.jar" groupid="org.xmldb" version="1.0" artifactId="xmldb"/>
             </classpath>
         </compile>
         <test>
             <classpath pathid="test.class.path" description="classpath for compiling core with test classes">
                 <pathelement location="${core.dir}/src/test/lib/junit-4.10.jar" groupid="junit" version="4.10" artifactId="junit" scope="test"/>
+		<pathelement location="${core.dir}/src/test/lib/hamcrest-all-1.3.jar" groupid="org.hamcrest" version="1.3" artifactId="hamcrest-all"/>
                 <path refid="compile.class.path"/>
                 <pathelement path="${core.dir}/target/test-classes"/>
                 <pathelement path="${core.dir}/src/test/lib/jmdns.jar"/>
@@ -123,7 +124,7 @@
             <name>betterform</name>
         </app>
         <transform>
-            <classpath pathid="transform2.class.path" description="classpath for saxon XPath and XSLT engine">
+            <classpath pathid="transform2.class.path" description="classpath for Saxon XPath and XSLT engine">
                 <path refid="compile.class.path"/>
             </classpath>
         </transform>
