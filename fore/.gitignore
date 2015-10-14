@@ -1,6 +1,7 @@
-components
-/.htaccess
 node_modules
-bower_components
-.tmp
 dist
+test/temp
+.sass-cache
+app/bower_components
+.tmp
+test/bower_components/

@@ -18,7 +18,8 @@
 
         Polymer('fore-model', {
             ownerForm: null,
-           
+
+
             ready: function () {
                 this.states = []
                 this.instances = [];
@@ -109,7 +110,7 @@
                 } else {
                     //todo: implement inline model bind initialization
                     console.log("to be implemented...");
-                    
+
                     var foreInstances = this.querySelectorAll('fore-json-instance');
                     //console.log("foreInstances:" , foreInstances);
                     for(var j = 0; j < foreInstances.length; j++) {
@@ -128,7 +129,7 @@
                 this.ownerForm.xfmodel=this;
                 this.fire('model-construct-done',{model: this});
             },
-            
+
             modelConstructDone: function (e, details, sender) {
                 console.log("### FORE-MODEL :: ########### ", this.getAttribute('id'), " : model-construct-done ##########");
             },
@@ -158,11 +159,11 @@
 
                 if(item.hasAttribute('type')) {
                     if( item.getAttribute('type') === 'text') {
-                        bind.datatype = 'string'; 
+                        bind.datatype = 'string';
                     } else {
                         bind.datatype = item.getAttribute('type');
                     }
-                }        
+                }
                 if(item.hasAttribute('calculate')) {
                    bind.calculate = item.getAttribute('calculate');
                 }
