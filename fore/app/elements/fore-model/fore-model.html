@@ -49,7 +49,7 @@ Example:
         // ############################## Element Lifecycle ##############################
 
         ready: function () {
-            console.log("fore-model ready: ",this);
+            console.log(this, " ready");
             // `ready` is called after all elements have been configured, but
             // propagates bottom-up. This element's children are ready, but parents
             // are not.
@@ -61,18 +61,23 @@ Example:
         },
 
         attached: function () {
-            console.log("fore-model attached: ",this);
+            console.log(this, " attached");
             // `attached` fires once the element and its parents have been inserted
             // into a document.
             //
             // This is a good place to perform any work related to your element's
             // visual state or active behavior (measuring sizes, beginning animations,
             // loading resources, etc).
-            this._modelConstruct();
+            var self=this;
+            window.addEventListener("WebComponentsReady", function(){
+                console.log("##### WebComponentsReady #####");
+                self._modelConstruct();
+            });
+
         },
 
         detached: function () {
-            console.log("fore-model detached: ",this);
+            console.log(this, " detached");
             // The analog to `attached`, `detached` fires when the element has been
             // removed from a document.
             //
@@ -86,7 +91,7 @@ Example:
          * @returns {*|Element}
          */
         getDefaultInstance: function() {
-            console.log("FORE-MODEL::getDefaultInstance");
+            console.log(this, ".getDefaultInstance");
             return this.querySelector("fore-instance");
         },
 
@@ -96,9 +101,19 @@ Example:
         },
 
         _modelConstruct: function() {
-            console.log("FORE-MODEL::modelConstruct");
-            this.fire("model-construct");
+            console.log(this, "._modelConstruct");
+//            this.fire("model-construct");
+
+            // do stuff
+            console.log("firing model-construct-done");
+            this.fire("model-construct-done");
+
+        },
+
+/*
+        _modelConstructDone: function(){
         }
+*/
 
 
 

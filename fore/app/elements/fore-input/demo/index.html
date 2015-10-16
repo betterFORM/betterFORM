@@ -12,23 +12,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>seed-element Demo</title>
+    <title>fore-input Demo</title>
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../seed-element.html">
+    <link rel="import" href="../fore-input.html">
   </head>
   <body unresolved>
 
-    <p>An example of <code>&lt;seed-element&gt;</code>:</p>
+    <p>An example of <code>&lt;fore-input&gt;</code>:</p>
 
     <button>Say Something</button>
 
-    <seed-element author='{"name": "Lord Meowser", "image": "http://placekitten.com/g/200/300"}' fancy>
-      <h2>Hello seed-element</h2>
-    </seed-element>
+    <fore-input author='{"name": "Lord Meowser", "image": "http://placekitten.com/g/200/300"}' fancy>
+      <h2>Hello fore-input</h2>
+    </fore-input>
 
     <script>
       document.querySelector('button').addEventListener('click', function() {
-        alert(document.querySelector('seed-element').sayHello('Hallo!'));
+        alert(document.querySelector('fore-input').sayHello('Hallo!'));
       });
     </script>
 

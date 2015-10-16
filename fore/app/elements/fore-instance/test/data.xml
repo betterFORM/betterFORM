@@ -1,0 +1,9 @@
+<data>
+    <firstname>John</firstname>
+    <lastname>Doe</lastname>
+    <alias></alias>
+    <email></email>
+    <pass1></pass1>
+    <pass2></pass2>
+    <agreement>true</agreement>
+</data>

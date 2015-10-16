@@ -1,0 +1,34 @@
+<script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../bower_components/jquery-xpath/jquery.xpath.min.js"></script>
+
+
+<script>
+    $(function () {
+        $.ajaxSetup({
+            error: function (jqXHR, exception) {
+                if (jqXHR.status === 0) {
+                    alert('Not connect.\n Verify Network.');
+                } else if (jqXHR.status == 404) {
+//                    alert('Requested page not found. [404]');
+                    $.event.trigger('xforms-link-exception');
+                } else if (jqXHR.status == 500) {
+                    alert('Internal Server Error [500].');
+                } else if (exception === 'parsererror') {
+                    alert('Requested JSON parse failed.');
+                } else if (exception === 'timeout') {
+                    alert('Time out error.');
+                } else if (exception === 'abort') {
+                    alert('Ajax request aborted.');
+                } else {
+                    alert('Uncaught Error.\n' + jqXHR.responseText);
+                }
+            }
+        });
+    });
+</script>
+
+
+<link rel="import" href="fore-model/fore-model.html">
+<link rel="import" href="fore-instance/fore-instance.html">
+<link rel="import" href="fore-bind/fore-bind.html">
+<link rel="import" href="fore-input/fore-input.html">

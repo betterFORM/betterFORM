@@ -12,25 +12,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>seed-element Demo</title>
+
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../seed-element.html">
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
   </head>
-  <body unresolved>
-
-    <p>An example of <code>&lt;seed-element&gt;</code>:</p>
-
-    <button>Say Something</button>
-
-    <seed-element author='{"name": "Lord Meowser", "image": "http://placekitten.com/g/200/300"}' fancy>
-      <h2>Hello seed-element</h2>
-    </seed-element>
-
+  <body>
     <script>
-      document.querySelector('button').addEventListener('click', function() {
-        alert(document.querySelector('seed-element').sayHello('Hallo!'));
-      });
+      // Load and run all tests (.html, .js):
+      WCT.loadSuites([
+        'basic-test.html',
+        'instance-src-test.html',
+//        'instance-src-loading-fails.html',
+      ]);
     </script>
-
   </body>
 </html>

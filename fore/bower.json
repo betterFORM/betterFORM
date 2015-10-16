@@ -7,7 +7,9 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
-    "page": "visionmedia/page.js#~1.6.3"
+    "page": "visionmedia/page.js#~1.6.3",
+    "jquery": "~2.1.4",
+    "jquery-xpath": "~0.3.1"
   },
   "devDependencies": {
     "web-component-tester": "*",
