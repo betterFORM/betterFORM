@@ -1,0 +1,122 @@
+<!--
+@license
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <fore-model></fore-model>
+
+@group Seed Elements
+@element fore-model
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="fore-model">
+
+    <template>
+        <content></content>
+    </template>
+
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'fore-model',
+
+
+        properties: {
+
+/*
+            instances:{
+                type:Array,
+                value: function() { return []; }
+            },
+
+            binds:{
+                type:Array,
+                value: function() { return []; }
+            }
+*/
+
+        },
+
+        // ############################## Element Lifecycle ##############################
+
+        ready: function () {
+            console.log(this, " ready");
+            // `ready` is called after all elements have been configured, but
+            // propagates bottom-up. This element's children are ready, but parents
+            // are not.
+            //
+            // This is the point where you should make modifications to the DOM (when
+            // necessary), or kick off any processes the element wants to perform.
+
+            var $this = this;
+        },
+
+        attached: function () {
+            console.log(this, " attached");
+            // `attached` fires once the element and its parents have been inserted
+            // into a document.
+            //
+            // This is a good place to perform any work related to your element's
+            // visual state or active behavior (measuring sizes, beginning animations,
+            // loading resources, etc).
+            var self=this;
+            window.addEventListener("WebComponentsReady", function(){
+                console.log("##### WebComponentsReady #####");
+                self._modelConstruct();
+            });
+
+        },
+
+        detached: function () {
+            console.log(this, " detached");
+            // The analog to `attached`, `detached` fires when the element has been
+            // removed from a document.
+            //
+            // Use this to clean up anything you did in `attached`.
+        },
+
+        // ############################## Element Behavior ##############################
+
+        /**
+         * returns the first fore-instance element in document order that is a child of this fore-model
+         * @returns {*|Element}
+         */
+        getDefaultInstance: function() {
+            console.log(this, ".getDefaultInstance");
+            return this.querySelector("fore-instance");
+        },
+
+
+        getInstance: function(theId){
+            return this.querySelector("fore-instance[id=" + theId + "]");
+        },
+
+        _modelConstruct: function() {
+            console.log(this, "._modelConstruct");
+//            this.fire("model-construct");
+
+            // do stuff
+            console.log("firing model-construct-done");
+            this.fire("model-construct-done");
+
+        },
+
+/*
+        _modelConstructDone: function(){
+        }
+*/
+
+
+
+    });
+
+</script>

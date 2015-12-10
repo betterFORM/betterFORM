@@ -1,0 +1,233 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../fore-dependencies.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <fore-instance></fore-instance>
+
+@group Seed Elements
+@element fore-instance
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="fore-instance">
+
+    <style>
+        :host {
+            display: none;
+        }
+    </style>
+    <template>
+        <content></content>
+    </template>
+
+</dom-module>
+
+<script>
+    function State() {
+        this.value = '';
+        this.calculate = '';
+        this.readonly = false;
+        this.required = false;
+        this.relevant = true;
+        this.datatype = 'string';
+        this.valid = true;
+    }
+
+    Polymer({
+
+        is: 'fore-instance',
+
+        properties: {
+            /**
+             * the src attribute takes an url that is resolved by an Ajax GET request.
+             */
+            src: {
+                type: String,
+                notify: true,
+                observer: '_srcChanged',
+            },
+            instanceData: {
+                type: Object,
+                value: {},
+                notify: true,
+                observer: '_instanceDataChanged'
+            },
+
+            /**
+             * Array of itemState objects that represents the current state of the associated instance data item.
+             */
+            itemStates: {
+                type: Array,
+                value: [],
+                observer:'_itemStateChanged'
+            }
+        },
+
+        itemState: function () {
+            this.value = '';
+            this.calculate = '';
+            this.readonly = false;
+            this.required = false;
+            this.relevant = true;
+            this.datatype = 'string';
+            this.valid = true;
+        },
+
+        // Element Lifecycle
+
+        ready: function () {
+            console.log(this, " ready");
+
+            // `ready` is called after all elements have been configured, but
+            // propagates bottom-up. This element's children are ready, but parents
+            // are not.
+            //
+            // This is the point where you should make modifications to the DOM (when
+            // necessary), or kick off any processes the element wants to perform.
+        },
+
+        attached: function () {
+            console.log(this, " attached");
+            var self = this;
+            // `attached` fires once the element and its parents have been inserted
+            // into a document.
+            //
+            // This is a good place to perform any work related to your element's
+            // visual state or active behavior (measuring sizes, beginning animations,
+            // loading resources, etc).
+
+            $(document).on("xforms-link-exception", self, function () {
+                console.log("FORE-INSTANCE::xforms-link-exception self: ", self);
+//                alert("A xforms-link-exception (404 - not found) occured for: '" + self.src + "'");
+            });
+
+            window.addEventListener("model-construct", function (e) {
+                self._loadInstance();
+            });
+
+//            this.instanceData = Polymer.dom(self.root);
+        },
+
+        detached: function () {
+            console.log(this, " detached");
+            // The analog to `attached`, `detached` fires when the element has been
+            // removed from a document.
+            //
+            // Use this to clean up anything you did in `attached`.
+        },
+
+        /**
+         * get the itemState for a given path.
+         *
+         * @path the location path for the item.
+         * returns the itemState object for given path
+         */
+
+        get: function (path) {
+            console.log(this, ".getItem path: ", path);
+            var state;
+            //lazy State object creation
+            if (this.itemStates[path] === undefined) {
+                state = new this.itemState();
+                state.value = this._getValue(path);
+
+                //initialize from bind
+                //todo: handle all state properties
+                /*
+                 if (this.model.binds[path] !== undefined) {
+
+                 }
+                 */
+
+                this.itemStates[path] = state;
+                console.log(this, " created State for :", path, state);
+            }
+            console.log(this, " ItemStates:", this.itemStates);
+            return this.itemStates[path];
+        },
+
+
+        set: function (path, newVal) {
+            console.log(this,'.set', " path: ", path, " newVal: ", newVal );
+            var targetNode = $(this).xpath("data/"+ path).get(0);
+            try{
+                Polymer.dom(targetNode).textContent = newVal;
+            }catch (e){
+                console.log("error: ",e);
+            }
+        },
+
+        _getValue: function (path) {
+            console.log(this, "._getValue path: ", path);
+            var fullPath = "data/" + path;
+            var result = $(this).xpath(fullPath).get(0).textContent;
+            console.log(this, '.get || xpath:', fullPath, ' result: ', result);
+            return result;
+        },
+
+        /**
+         * called whenever src attribute changes
+         * @oldVal - old value of src attribute
+         * @newVal - new value for src attribute
+         */
+
+        _srcChanged: function (oldVal, newVal) {
+            console.log("FORE-INSTANCE::_srcChanged");
+        },
+
+        /**
+         * loads instance referenced by src attribute
+         * @private
+         */
+        _loadInstance: function () {
+            console.log(this, "._loadInstance");
+//            console.log("FORE-INSTANCE::_loadInstance", this.src);
+
+            if (this.src) {
+                var self = this;
+                var url = this.src;
+                var $Polymer = Polymer;
+                $.ajax({
+                    url: url,
+                    method: 'get',
+                    dataType: 'text',
+                    /*
+                     error: function (err, textStatus, jqXHR) {
+                     console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
+                     },
+                     */
+                    success: function (data) {
+                        console.log("FORE-INSTANCE::loadInstance data: ", $(data));
+                        Polymer.dom(self.root).appendChild($(data).get(0));
+
+                        console.log("lastname: ", self.querySelector("lastname"));
+                        console.log("lastname: ", $(data).xpath("//lastname[1]/text()").get(0).textContent);
+                    }
+                });
+            }
+        },
+
+        _instanceDataChanged: function (oldValue, newValue) {
+            console.debug("FORE-INSTANCE::_dataChanged: ");
+        },
+
+        _itemStateChanged: function(){
+            console.log(this,'._itemStateChanged');
+        }
+
+    });
+
+</script>
