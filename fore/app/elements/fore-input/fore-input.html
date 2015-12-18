@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/observe-js/observe-js.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -45,7 +46,13 @@ Example:
 
             ref:String,
             bind:String,
-            instance:Object
+            instance:Object,
+            boundValue: {
+                type: String,
+                notify: true,
+                observer: '_valueChanged',
+            },
+            refresh:Object
         },
 
 
@@ -94,21 +101,49 @@ Example:
         _init: function(){
             console.log(this,"._init");
             console.log(this,"._init::ref '", this.ref,"'");
-            console.log(this,"._init::bind '", this.bind,"'");
+//            console.log(this,"._init::bind '", this.bind,"'");
 
             var model = document.querySelector("fore-model");
             this.instance = model.getDefaultInstance();
 
 //            console.log(this," instance: ", instance.getItem(this.ref));
+            var binding;
             if(this.bind !== undefined){
                 //todo
             }else if (this.ref !== undefined){
-                this.value = this.instance.get(this.ref).value;
-                console.log(this.value);
+                binding = this.ref;
+//                this.value = this.instance.get(this.ref).value;
+//                console.log(this.value);
             }
 
-            // attach listeners for control changes by user interaction
+            // ### try to bind to itemState
+            var itemState = this.instance.getItem(binding);
+            console.log(this,' itemState:: ', itemState);
+            console.log(this,' item:: ', itemState.item);
+
+            this.value = itemState.value;
+            this.boundItem = itemState;
+
+            //binding to instance node
             var self=this;
+            var observer = new MutationObserver(function(mutations) {
+                console.log('observing ', self);
+                mutations.forEach(function(mutation) {
+                    console.log('observing',mutation.type);
+                    console.log('observing',mutation.target.textContent);
+                    self.value = mutation.target.textContent;
+                    console.log("updating from itemState... ",itemState);
+                });
+            });
+
+            observer.observe(itemState.item, {
+                attributes: true,
+                childList: true,
+                characterData: true
+            });
+
+            // ### if not exists switch to non-relevant (invisible/inactive)
+            // attach listeners for control changes by user interaction
             this.addEventListener('change',function(e){
                 self._valueChanged();
             });
@@ -120,12 +155,17 @@ Example:
 
         },
 
+
+
         _valueChanged: function(){
             console.log(this,'._valueChanged ', this.value );
 //            var item = this.instance.get(this.ref);
 //            console.log(this,'._valueChanged item', item );
-            this.instance.set(this.ref,this.value);
 
+            this.boundItem.value = this.value;
+            console.log(this,'._valueChanged::boundValue ', this.boundItem );
+
+            this.instance.set(this.ref,this.value);
         }
 
     });

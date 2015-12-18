@@ -36,16 +36,6 @@ Example:
 </dom-module>
 
 <script>
-    function State() {
-        this.value = '';
-        this.calculate = '';
-        this.readonly = false;
-        this.required = false;
-        this.relevant = true;
-        this.datatype = 'string';
-        this.valid = true;
-    }
-
     Polymer({
 
         is: 'fore-instance',
@@ -70,13 +60,17 @@ Example:
              * Array of itemState objects that represents the current state of the associated instance data item.
              */
             itemStates: {
-                type: Array,
-                value: [],
+                type: Object,
+                value: {},
+                notify:true,
                 observer:'_itemStateChanged'
             }
+
         },
 
-        itemState: function () {
+        ItemState: function () {
+            this.item= '';
+            this.path= '';
             this.value = '';
             this.calculate = '';
             this.readonly = false;
@@ -119,55 +113,108 @@ Example:
             });
 
 //            this.instanceData = Polymer.dom(self.root);
+//            this.itemStates = [];
+//            this.ItemStates = {}
+            window.addEventListener("item-states-changed", function (e) {
+                console.log("++++++++++++++++++++++++ item state changed");
+            });
+
+//            var observer = new MutationObserver(this._itemStateChanged);
+
         },
 
         detached: function () {
             console.log(this, " detached");
+
             // The analog to `attached`, `detached` fires when the element has been
             // removed from a document.
             //
             // Use this to clean up anything you did in `attached`.
         },
 
-        /**
-         * get the itemState for a given path.
-         *
-         * @path the location path for the item.
-         * returns the itemState object for given path
-         */
-
-        get: function (path) {
-            console.log(this, ".getItem path: ", path);
-            var state;
-            //lazy State object creation
-            if (this.itemStates[path] === undefined) {
-                state = new this.itemState();
-                state.value = this._getValue(path);
-
-                //initialize from bind
-                //todo: handle all state properties
-                /*
-                 if (this.model.binds[path] !== undefined) {
-
-                 }
-                 */
-
-                this.itemStates[path] = state;
-                console.log(this, " created State for :", path, state);
-            }
-            console.log(this, " ItemStates:", this.itemStates);
-            return this.itemStates[path];
-        },
-
-
         set: function (path, newVal) {
+//            var fullPath = "data/" + path;
             console.log(this,'.set', " path: ", path, " newVal: ", newVal );
-            var targetNode = $(this).xpath("data/"+ path).get(0);
+//            var targetNode = $(this).xpath("data/"+ path).get(0);
+
+//            var targetNode;
+//            console.log('itemstates : ', this.itemStates);
+//            for(var i=0; i<this.itemStates.length; i++) {
+//                if (arr[i].path == path) {
+//                    targetNode = arr[i];
+//                }
+//            }
+//            console.log('targetNode : ', targetNode);
+//            var targetNode = this.itemState();
+
+            var node = this.getItem(path);
+            console.log("node: ", node);
+            console.log("node: ", node.item);
+            node.value=newVal;
+
             try{
-                Polymer.dom(targetNode).textContent = newVal;
+                Polymer.dom(node.item).textContent = newVal;
             }catch (e){
                 console.log("error: ",e);
             }
+            console.log("###### itemstates after change ", this.itemStates);
+
+            // notify controls bound to this path
+
+        },
+        doRefresh: function(observer){
+//            observer.deliver();
+        },
+
+        getItem: function(path){
+            var fullPath = "data/" + path;
+
+            console.log(this, ".getItem path: ", fullPath);
+            // check for existance of item in itemStates
+            if(this.itemStates[fullPath] == undefined){
+//            if(this.itemStates.indexOf(fullPath) == -1){
+//            if(this._hasItemState(fullPath)){
+                console.log("*** creating item");
+                var newItem = this._createItem(fullPath);
+
+//                return this._createItem(fullPath);
+                return newItem;
+            }else{
+                console.log("### using item ", this.itemStates[fullPath]);
+                return this.itemStates[fullPath];
+            }
+
+
+//            var result = $(this).xpath(fullPath).get(0);
+//            console.log(this, '.getItem || xpath:', fullPath, ' result: ', result);
+//            return result;
+        },
+
+        _hasItemState: function(path){
+            console.log('######## ',this.itemStates);
+            console.log('######## ',this.itemStates[path]);
+
+            if(this.itemStates[path]){
+                return true;
+            }
+//            if(path.length == 0) return false;
+//            for(var i=0; i< this.itemStates.length; i++) {
+//                if (this.itemStates[i].path === path) return true;
+//            }
+            return false;
+        },
+
+        _createItem: function(path){
+            state = new this.ItemState();
+            var result = $(this).xpath(path).get(0);
+            state.item = result;
+            state.value = result.textContent;
+            state.path = path;
+            this.itemStates[path]=state;
+//            this.itemStates.push(state);
+            console.log("new state: ", state);
+            console.log("stored states: ", this.itemStates);
+            return state;
         },
 
         _getValue: function (path) {
@@ -224,8 +271,8 @@ Example:
             console.debug("FORE-INSTANCE::_dataChanged: ");
         },
 
-        _itemStateChanged: function(){
-            console.log(this,'._itemStateChanged');
+        _itemStateChanged: function(item){
+            console.log(this,'._itemStateChanged : ', item);
         }
 
     });

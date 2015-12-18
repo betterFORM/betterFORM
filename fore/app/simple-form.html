@@ -72,13 +72,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <fore-bind id="first" ref="first" required="true">
         </fore-model>
 
-<!--
         <label for="c-first">First Name</label>
-        <input id="c-first" is="fore-input" bind="first">
--->
+        <input id="c-first" is="fore-input" ref="first">
 
         <label for="c-last">Last Name</label>
         <input id="c-last" is="fore-input" ref="last">
+        <input id="c-last2" is="fore-input" ref="last">
 
         <button onclick="doit();">set value</button>
 
@@ -89,7 +88,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             function doit(){
 
                 document.querySelector("fore-instance").set("last","smith");
-                alert("hello?");
             }
 
         </script>

@@ -9,7 +9,8 @@
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "visionmedia/page.js#~1.6.3",
     "jquery": "~2.1.4",
-    "jquery-xpath": "~0.3.1"
+    "jquery-xpath": "~0.3.1",
+    "observe-js": "~0.5.7"
   },
   "devDependencies": {
     "web-component-tester": "*",
