@@ -10,5 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 (function(document) {
   'use strict';
 
+    window.addEventListener("model-construct-done", function(){
+        console.log("##### model-construct-done from page #####");
+    });
 
 })(document);

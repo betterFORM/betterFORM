@@ -64,8 +64,11 @@ Example:
                 value: {},
                 notify:true,
                 observer:'_itemStateChanged'
-            }
-
+            },
+            rootNode:{
+                type:String,
+                value:undefined
+            },
         },
 
         ItemState: function () {
@@ -94,7 +97,7 @@ Example:
         },
 
         attached: function () {
-            console.log(this, " attached");
+            console.log(this, "\tattached");
             var self = this;
             // `attached` fires once the element and its parents have been inserted
             // into a document.
@@ -120,6 +123,18 @@ Example:
             });
 
 //            var observer = new MutationObserver(this._itemStateChanged);
+
+
+            console.log(this, "\thas src attribute: ", this.src);
+
+
+            try {
+                this.rootNode = this.querySelector(":first-child").nodeName.toLowerCase() ;
+            } catch(e){
+                console.log("no inline instance found");
+
+
+            }
 
         },
 
@@ -167,7 +182,7 @@ Example:
         },
 
         getItem: function(path){
-            var fullPath = "data/" + path;
+            var fullPath = this.rootNode + '/' + path;
 
             console.log(this, ".getItem path: ", fullPath);
             // check for existance of item in itemStates
@@ -206,20 +221,27 @@ Example:
 
         _createItem: function(path){
             state = new this.ItemState();
-            var result = $(this).xpath(path).get(0);
-            state.item = result;
-            state.value = result.textContent;
-            state.path = path;
-            this.itemStates[path]=state;
+            console.log("###### xpath ", $(this).xpath(path));
+
+            try{
+                var result = $(this).xpath(path).get(0);
+                state.item = result;
+                state.value = result.textContent;
+                state.path = path;
+                this.itemStates[path]=state;
 //            this.itemStates.push(state);
-            console.log("new state: ", state);
-            console.log("stored states: ", this.itemStates);
-            return state;
+                console.log("new state: ", state);
+                console.log("stored states: ", this.itemStates);
+                return state;
+            }catch (e){
+                return undefined;
+            }
+
         },
 
         _getValue: function (path) {
             console.log(this, "._getValue path: ", path);
-            var fullPath = "data/" + path;
+            var fullPath = this.rootNode + path;
             var result = $(this).xpath(fullPath).get(0).textContent;
             console.log(this, '.get || xpath:', fullPath, ' result: ', result);
             return result;
@@ -233,6 +255,7 @@ Example:
 
         _srcChanged: function (oldVal, newVal) {
             console.log("FORE-INSTANCE::_srcChanged");
+            this._loadInstance();
         },
 
         /**
@@ -256,19 +279,23 @@ Example:
                      console.log("AJAX error in request: " + JSON.stringify(err, null, 2));
                      },
                      */
-                    success: function (data) {
-                        console.log("FORE-INSTANCE::loadInstance data: ", $(data));
-                        Polymer.dom(self.root).appendChild($(data).get(0));
-
-                        console.log("lastname: ", self.querySelector("lastname"));
-                        console.log("lastname: ", $(data).xpath("//lastname[1]/text()").get(0).textContent);
-                    }
+                }).done(function(data){
+                    console.log("FORE-INSTANCE::loadInstance data: ", $(data));
+                    console.log("FORE-INSTANCE::loadInstance old child: ", self.querySelector(":first-child"));
+//                    Polymer.dom(self.root).removeChild(self.querySelector(":first-child"));
+                    self.itemStates = {};
+                    Polymer.dom(self.root).appendChild($(data).get(0));
+                    console.log("rootnode: ", self.querySelector(":first-child"));
                 });
             }
         },
 
         _instanceDataChanged: function (oldValue, newValue) {
             console.debug("FORE-INSTANCE::_dataChanged: ");
+            this.rootNode = this.querySelector(":first-child") ;
+//            if(this.rootNode){
+//                console.log("rootNode: ", this.rootNode.nodeName);
+//            }
         },
 
         _itemStateChanged: function(item){

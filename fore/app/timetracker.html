@@ -60,41 +60,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <fore-model>
             <fore-instance id="default">
-                <data>
-                    <first>John</first>
-                    <last>Doe</last>
-                    <address>
-                        <street></street>
-                    </address>
-                </data>
+                <record id="" projectref="">
+                    <created></created>
+                    <date></date>
+                    <start></start>
+                    <end></end>
+                    <minutes></minutes>
+                    <user></user>
+                    <action></action>
+                    <url></url>
+                    <note></note>
+                    <billable></billable>
+                    <billed date="">false</billed>
+                </record>
             </fore-instance>
 
+            <fore-instance src="data/projects.xml" id="projects"></fore-instance>
+            <fore-instance src="data/actions.xml" id="actions"></fore-instance>
+            <fore-instance src="data/users.xml" id="users"></fore-instance>
             <fore-bind id="first" ref="first" required="true">
         </fore-model>
 
-        <label for="c-first">First Name</label>
-        <input id="c-first" is="fore-input" ref="first">
+        <label for="c-created">created</label>
+        <input id="c-created" is="fore-input" ref="created">
 
-        <label for="c-last">Last Name</label>
-        <input id="c-last" is="fore-input" ref="last">
-
-        <label for="c-last">Last Name</label>
-        <input id="c-last2" is="fore-input" ref="last">
-
-        <label for="c-street">Street</label>
-        <input ref="address/street" is="fore-input" id="c-street">
-
-
-        <button onclick="doit();">set last name</button>
-
-        <!--<div class="name">{{first}}</div>-->
-        <!-- build:js scripts/app.js -->
-        <script src="scripts/app.js"></script>
         <script>
-            function doit(){
+            (function(document) {
+                'use strict';
 
-                document.querySelector("fore-instance").set("last","smith");
-            }
+                window.addEventListener("model-construct-done", function(){
+                    console.log("##### model-construct-done from page #####");
+                    document.querySelector("fore-instance[id='default']").set("created",new Date());
+
+                });
+
+                window.addEventListener("model-ready", function(){
+                    console.log("##### model-ready from page #####");
+//                     todo: implement change of src attr
+//                    document.querySelector("fore-instance[id='default']").src='data/myrecord.xml';
+                });
+
+            })(document);
+
 
         </script>
         <!-- endbuild-->

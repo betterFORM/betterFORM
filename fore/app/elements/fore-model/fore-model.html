@@ -74,6 +74,7 @@ Example:
                 self._modelConstruct();
             });
 
+
         },
 
         detached: function () {
@@ -102,12 +103,14 @@ Example:
 
         _modelConstruct: function() {
             console.log(this, "._modelConstruct");
-//            this.fire("model-construct");
+            this.fire("model-construct");
 
             // do stuff
             console.log("firing model-construct-done");
             this.fire("model-construct-done");
 
+            // in the simplified world where there's only one model (for now) we fire the ready event right after
+            this.fire("model-ready");
         },
 
 /*

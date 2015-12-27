@@ -118,6 +118,14 @@ Example:
 
             // ### try to bind to itemState
             var itemState = this.instance.getItem(binding);
+
+            if(itemState === undefined){
+                console.log("item for path '" + binding + "' is unknown - control is unbound");
+                $(this).css("display","none");
+                return;
+            }
+
+
             console.log(this,' itemState:: ', itemState);
             console.log(this,' item:: ', itemState.item);
 
