@@ -1,0 +1,73 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <fore-submission></fore-submission>
+
+@group Seed Elements
+@element fore-submission
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="fore-submission">
+
+    <style>
+        :host {
+            display: none;
+        }
+    </style>
+
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'fore-submission',
+
+        properties: {
+            resource:String,
+            instance:String,
+            method:String,
+        },
+
+        // Element Lifecycle
+
+        ready: function () {
+            console.log( this, " ready");
+        },
+
+        attached: function () {
+//            console.log(this, " attached");
+        },
+
+        detached: function () {
+//            console.log(this, " detached");
+        },
+
+        serialize: function(instanceId){
+            console.log(this, ".serialize::instance ", instanceId);
+            var instanceData = document.querySelector("#default:first-child");
+            console.log(this, ".serialize::instance ", instanceData);
+
+            var serializer = new XMLSerializer();
+            var data = serializer.serializeToString(instanceData);
+            console.log("instance serialized: ", data);
+        }
+
+
+    });
+
+</script>

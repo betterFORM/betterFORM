@@ -53,7 +53,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- will be replaced with elements/elements.vulcanized.html -->
         <link rel="import" href="elements/fore-dependencies.html">
         <!-- endreplace-->
-
+        <style>
+            .timetracker{
+                margin:50px;
+                background-color:lightsteelblue;
+                padding:30px;
+            }
+            .fore-control{
+                display: block;
+            }
+            label{
+                width:250px;
+                text-align:right;
+                display:inline-block;
+                padding-right: 10px;
+            }
+        </style>
     </head>
 
     <body unresolved class="fullbleed layout vertical">
@@ -74,6 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <billed date="">false</billed>
                 </record>
             </fore-instance>
+            <fore-submission id="sendDefault"
+                         resource="url"
+                         instance="default"></fore-submission>
+
             <fore-bind instance="default">
                 <fore-bind ref="created" type="date"></fore-bind>
                 <fore-bind ref="date" type="date" required="true"></fore-bind>
@@ -84,41 +103,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <fore-instance src="data/users.xml" id="users"></fore-instance>
         </fore-model>
 
-        <div class="fore-control">
-            <label for="c-created">created</label>
-            <input id="c-created" is="fore-input" type="date" ref="created">
-        </div>
 
-        <div class="fore-control">
-            <select size="1" ref="@projectref" is="fore-select">
-                <option value="" selected>Please select...</option>
-                <option value="project1">Project 1</option>
-                <option value="project2">Project 2</option>
-                <option value="project3">Project 3</option>
-<!--
-                <fore-itemset instance="projects" ref="project">
-                    <option value="{.}">{.}</option>
-                </fore-itemset>
--->
-            </select>
-<!--
-            <input list="foo" ref="@projectref" is="fore-input">
-            <datalist id="foo">
-                <option value="ffo">foo</option>
-                <option value="bar">Bar</option>
-            </datalist>
--->
-        </div>
-        <div class="fore-control">
+        <div class="timetracker">
+            <h1>Timetracker</h1>
+            <div class="fore-control">
+                <label for="c-created">created</label>
+                <input id="c-created" is="fore-input" type="date" ref="created">
+            </div>
 
-        </div>
-        <div class="fore-control">
+            <div class="fore-control">
+                <label for="date">Date</label>
+                <input id="date" is="fore-input" type="date" ref="date">
+            </div>
 
-        </div>
-        <div class="fore-control">
+            <div class="fore-control">
+                <label for="project">Project</label>
+                <input id="project" ref="@projectref" is="fore-input" list="myProjects">
+                    <!--
+                                    <fore-itemset instance="projects" ref="project">
+                                        <option value="{.}">{.}</option>
+                                    </fore-itemset>
+                    -->
+                </input>
 
-        </div>
-        <div class="fore-control">
+
+                <datalist id="myProjects">
+                    <option value="project1">Project 1</option>
+                    <option value="project2">Project 2</option>
+                    <option value="project3">Project 3</option>
+                </datalist>
+                <!--
+                            <input list="foo" ref="@projectref" is="fore-input">
+                            <datalist id="foo">
+                                <option value="ffo">foo</option>
+                                <option value="bar">Bar</option>
+                            </datalist>
+                -->
+            </div>
+            <div class="fore-control">
+                <label for="action">Action</label>
+                <select id="action" size="1" ref="action" is="fore-select">
+                    <option value="" selected>Please select...</option>
+                    <option value="implementation">Implementation</option>
+                    <option value="communication">Communication</option>
+                    <option value="support">Support</option>
+                </select>
+
+            </div>
+            <div class="fore-control">
+                <label for="user">User</label>
+                <select id="user" size="1" ref="user" is="fore-select">
+                    <option value="" selected>Please select...</option>
+                    <option value="lars">Lars</option>
+                    <option value="wolfgang">wolfgang</option>
+                    <option value="joern">Joern</option>
+                    <option value="tobi">Tobi</option>
+                </select>
+
+            </div>
+            <div class="fore-control">
+                <label for="billable"></label>
+
+                <input id="billable" type="checkbox" is="fore-input" ref="note">
+            </div>
+            <div class="fore-control">
+                <label for="note"></label>
+
+                <input id="note" is="fore-input" ref="note" placeholder="your notes...">
+            </div>
+            <div class="fore-control">
+                 <button is="fore-trigger" submit="sendDefault">
+                     Send
+                 </button>
+            </div>
 
         </div>
 
@@ -129,7 +186,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 window.addEventListener("model-construct-done", function () {
                     console.log("##### model-construct-done from page #####");
+                    // +++ set creation date +++
                     document.querySelector("fore-instance[id='default']").set("created", new Date().toISOString().substring(0, 10));
+
+                    // +++ set reporting date - default to created date +++
+                    document.querySelector("fore-instance[id='default']").set("date", new Date().toISOString().substring(0, 10));
 
                 });
 
@@ -142,8 +203,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     }
                 });
 
-            })(document);
 
+/*
+                var btn = document.querySelector("button");
+                btn.addEventListener("click", function(){
+                    alert("clicked");
+                    document.querySelector("#sendDefault").serialize("foo");
+
+                });
+*/
+
+
+            })(document);
 
         </script>
         <!-- endbuild-->
