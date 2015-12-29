@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/observe-js/observe-js.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <fore-bound></fore-bound>
+
+@group Seed Elements
+@element fore-bound
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<script>
+    Fore = {},
+
+    Fore.ForeBound = {
+
+        is: 'fore-bound',
+
+        properties: {
+
+            ref:String,
+            bind:String,
+            instance:Object,
+            boundValue: {
+                type: String,
+                notify: true,
+                observer: '_valueChanged',
+            },
+            refresh:Object
+        },
+
+
+        // Element Lifecycle
+
+        ready: function () {
+//            console.log( this, " foreBound ready");
+        },
+
+        attached: function () {
+//            console.log(this, " foreBound attached");
+            var self=this;
+            document.addEventListener('model-construct-done',function(){
+                self.init();
+            });
+            $(document).on("fore-refresh", function(){
+               console.log(this, " EVENT 'fore-refresh' received");
+                self.init();
+            });
+        },
+
+        detached: function () {
+//            console.log(this, " foreBound detached");
+        },
+
+        // Element Behavior
+        /**
+         * kick off element initialization
+         */
+        init: function(){
+            console.log(this,".init::ref '", this.ref,"'");
+//            console.log(this,".init::bind '", this.bind,"'");
+
+            var model = document.querySelector("fore-model");
+            this.instance = model.getDefaultInstance();
+
+//            console.log(this," instance: ", instance.getItem(this.ref));
+            var binding;
+            if(this.bind !== undefined){
+                //todo
+            }else if (this.ref !== undefined){
+                binding = this.ref;
+            }
+
+            // ### try to bind to itemState - if path does not exist 'undefined' is returned
+            var itemState = this.instance.getItem(binding);
+            if(itemState === undefined){
+                console.log("item for path '" + binding + "' is unknown - control is unbound");
+                $(this).css("display","none");
+                return;
+            }
+
+            console.log(this,' bound item:: ', itemState.item);
+
+            this.value = itemState.value;
+            this.boundItem = itemState;
+
+            //binding to instance node
+            var self=this;
+            var observer = new MutationObserver(function(mutations) {
+                console.log('observing ', self);
+                mutations.forEach(function(mutation) {
+                    console.log('observing',mutation.type);
+                    console.log('observing',mutation.target.textContent);
+                    self.value = mutation.target.textContent;
+                    console.log("updating from itemState... ",itemState);
+                });
+            });
+
+            observer.observe(itemState.item, {
+                attributes: true,
+                childList: true,
+                characterData: true
+            });
+
+            // ### if not exists switch to non-relevant (invisible/inactive)
+            // attach listeners for control changes by user interaction
+            this.addEventListener('change',function(e){
+                self._valueChanged();
+            });
+
+            this.addEventListener('keyup',function(e){
+                self._valueChanged();
+            });
+
+        },
+
+
+
+        _valueChanged: function(){
+            console.log(this,'._valueChanged ', this.value );
+//            var item = this.instance.get(this.ref);
+//            console.log(this,'._valueChanged item', item );
+
+            this.boundItem.value = this.value;
+            console.log(this,'._valueChanged::boundValue ', this.boundItem );
+
+            this.instance.set(this.ref,this.value);
+            this.boundValue = this.value;
+        }
+
+    };
+
+</script>

@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="generator" content="Polymer Starter Kit"/>
-        <title>Polymer Starter Kit</title>
+        <title>Timetracker</title>
         <!-- Place favicon.ico in the `app/` directory -->
 
         <!-- Chrome for Android theme color -->
@@ -74,30 +74,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <billed date="">false</billed>
                 </record>
             </fore-instance>
+            <fore-bind instance="default">
+                <fore-bind ref="created" type="date"></fore-bind>
+                <fore-bind ref="date" type="date" required="true"></fore-bind>
+            </fore-bind>
 
             <fore-instance src="data/projects.xml" id="projects"></fore-instance>
             <fore-instance src="data/actions.xml" id="actions"></fore-instance>
             <fore-instance src="data/users.xml" id="users"></fore-instance>
-            <fore-bind id="first" ref="first" required="true">
         </fore-model>
 
-        <label for="c-created">created</label>
-        <input id="c-created" is="fore-input" ref="created">
+        <div class="fore-control">
+            <label for="c-created">created</label>
+            <input id="c-created" is="fore-input" type="date" ref="created">
+        </div>
+
+        <div class="fore-control">
+            <select size="1" ref="@projectref" is="fore-select">
+                <option value="" selected>Please select...</option>
+                <option value="project1">Project 1</option>
+                <option value="project2">Project 2</option>
+                <option value="project3">Project 3</option>
+<!--
+                <fore-itemset instance="projects" ref="project">
+                    <option value="{.}">{.}</option>
+                </fore-itemset>
+-->
+            </select>
+<!--
+            <input list="foo" ref="@projectref" is="fore-input">
+            <datalist id="foo">
+                <option value="ffo">foo</option>
+                <option value="bar">Bar</option>
+            </datalist>
+-->
+        </div>
+        <div class="fore-control">
+
+        </div>
+        <div class="fore-control">
+
+        </div>
+        <div class="fore-control">
+
+        </div>
+        <div class="fore-control">
+
+        </div>
+
 
         <script>
-            (function(document) {
+            (function (document) {
                 'use strict';
 
-                window.addEventListener("model-construct-done", function(){
+                window.addEventListener("model-construct-done", function () {
                     console.log("##### model-construct-done from page #####");
-                    document.querySelector("fore-instance[id='default']").set("created",new Date());
+                    document.querySelector("fore-instance[id='default']").set("created", new Date().toISOString().substring(0, 10));
 
                 });
 
-                window.addEventListener("model-ready", function(){
+                window.addEventListener("model-ready", function () {
                     console.log("##### model-ready from page #####");
 //                     todo: implement change of src attr
-//                    document.querySelector("fore-instance[id='default']").src='data/myrecord.xml';
+                    if(window.location.search.indexOf('id=') !== -1){
+                        //todo: use id param to load respective time record
+                        document.querySelector("fore-instance[id='default']").src='data/myrecord.xml';
+                    }
                 });
 
             })(document);

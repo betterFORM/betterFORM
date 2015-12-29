@@ -87,6 +87,7 @@ Example:
 
         ready: function () {
             console.log(this, " ready");
+            console.log(this, " ItemStates ", this.itemStates);
 
             // `ready` is called after all elements have been configured, but
             // propagates bottom-up. This element's children are ready, but parents
@@ -97,7 +98,7 @@ Example:
         },
 
         attached: function () {
-            console.log(this, "\tattached");
+//            console.log(this, "\tattached");
             var self = this;
             // `attached` fires once the element and its parents have been inserted
             // into a document.
@@ -107,7 +108,7 @@ Example:
             // loading resources, etc).
 
             $(document).on("xforms-link-exception", self, function () {
-                console.log("FORE-INSTANCE::xforms-link-exception self: ", self);
+                console.log(this, "xforms-link-exception self: ", self);
 //                alert("A xforms-link-exception (404 - not found) occured for: '" + self.src + "'");
             });
 
@@ -119,13 +120,10 @@ Example:
 //            this.itemStates = [];
 //            this.ItemStates = {}
             window.addEventListener("item-states-changed", function (e) {
-                console.log("++++++++++++++++++++++++ item state changed");
+//                console.log(this, " item state changed");
             });
 
 //            var observer = new MutationObserver(this._itemStateChanged);
-
-
-            console.log(this, "\thas src attribute: ", this.src);
 
 
             try {
@@ -139,7 +137,7 @@ Example:
         },
 
         detached: function () {
-            console.log(this, " detached");
+//            console.log(this, " detached");
 
             // The analog to `attached`, `detached` fires when the element has been
             // removed from a document.
@@ -165,10 +163,25 @@ Example:
             var node = this.getItem(path);
             console.log("node: ", node);
             console.log("node: ", node.item);
+
             node.value=newVal;
+                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>> ", Polymer.dom(node.item));
+
+            node.textContent=newVal;
 
             try{
-                Polymer.dom(node.item).textContent = newVal;
+//                Polymer.dom(node.item).textContent = newVal;
+
+                if(path.indexOf('@') != -1){
+                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>> ", Polymer.dom(node.item));
+                    node.item.value= newVal;
+//                    Polymer.dom(node.item).setAttribute("projectref", newVal);
+//                    $(node.item).attr('projectref',newVal);
+                }else {
+                    node.item.textContent= newVal;
+//                    Polymer.dom(node.item).textContent = newVal;
+//                    $(node.item).val(newVal);
+                }
             }catch (e){
                 console.log("error: ",e);
             }
@@ -184,12 +197,11 @@ Example:
         getItem: function(path){
             var fullPath = this.rootNode + '/' + path;
 
-            console.log(this, ".getItem path: ", fullPath);
+//            console.log(this, ".getItem path: ", fullPath);
             // check for existance of item in itemStates
             if(this.itemStates[fullPath] == undefined){
 //            if(this.itemStates.indexOf(fullPath) == -1){
 //            if(this._hasItemState(fullPath)){
-                console.log("*** creating item");
                 var newItem = this._createItem(fullPath);
 
 //                return this._createItem(fullPath);
@@ -205,9 +217,13 @@ Example:
 //            return result;
         },
 
+        getItems: function(){
+            return this.itemStates;
+        },
+
         _hasItemState: function(path){
-            console.log('######## ',this.itemStates);
-            console.log('######## ',this.itemStates[path]);
+//            console.log('######## ',this.itemStates);
+//            console.log('######## ',this.itemStates[path]);
 
             if(this.itemStates[path]){
                 return true;
@@ -221,7 +237,7 @@ Example:
 
         _createItem: function(path){
             state = new this.ItemState();
-            console.log("###### xpath ", $(this).xpath(path));
+//            console.log(this, "._createItem ", $(this).xpath(path));
 
             try{
                 var result = $(this).xpath(path).get(0);
@@ -230,8 +246,8 @@ Example:
                 state.path = path;
                 this.itemStates[path]=state;
 //            this.itemStates.push(state);
-                console.log("new state: ", state);
-                console.log("stored states: ", this.itemStates);
+                console.log(this, " created new state: ", state);
+                console.log(this, " stored states: ", this.itemStates);
                 return state;
             }catch (e){
                 return undefined;
@@ -240,7 +256,7 @@ Example:
         },
 
         _getValue: function (path) {
-            console.log(this, "._getValue path: ", path);
+//            console.log(this, "._getValue path: ", path);
             var fullPath = this.rootNode + path;
             var result = $(this).xpath(fullPath).get(0).textContent;
             console.log(this, '.get || xpath:', fullPath, ' result: ', result);
@@ -254,7 +270,7 @@ Example:
          */
 
         _srcChanged: function (oldVal, newVal) {
-            console.log("FORE-INSTANCE::_srcChanged");
+            console.log(this, "._srcChanged");
             this._loadInstance();
         },
 
@@ -280,18 +296,26 @@ Example:
                      },
                      */
                 }).done(function(data){
-                    console.log("FORE-INSTANCE::loadInstance data: ", $(data));
-                    console.log("FORE-INSTANCE::loadInstance old child: ", self.querySelector(":first-child"));
-//                    Polymer.dom(self.root).removeChild(self.querySelector(":first-child"));
-                    self.itemStates = {};
-                    Polymer.dom(self.root).appendChild($(data).get(0));
-                    console.log("rootnode: ", self.querySelector(":first-child"));
+                    console.log(this, ".loadInstance data: ", $(data));
+                    var oldChild = $(self).find("> :first-child");
+                    console.log(this, ".loadInstance old child: ", oldChild);
+
+                    if(oldChild !== undefined){
+                        self.itemStates = {};
+                        $(oldChild).replaceWith($(data).get(0));
+                        self.fire("fore-refresh");
+                    }
+
+//                    Polymer.dom(self.root).appendChild($(data).get(0));
+//                    console.log("rootnode: ", self.querySelector(":first-child"));
                 });
+            }else{
+                console.log(this, " using inline instance");
             }
         },
 
         _instanceDataChanged: function (oldValue, newValue) {
-            console.debug("FORE-INSTANCE::_dataChanged: ");
+            console.debug(this, "._dataChanged: ");
             this.rootNode = this.querySelector(":first-child") ;
 //            if(this.rootNode){
 //                console.log("rootNode: ", this.rootNode.nodeName);

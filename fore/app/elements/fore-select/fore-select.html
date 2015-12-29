@@ -15,14 +15,14 @@ An element providing a solution to no problem in particular.
 
 Example:
 
-    <fore-input></fore-input>
+    <fore-select></fore-select>
 
 @group Seed Elements
-@element fore-input
+@element fore-select
 @demo demo/index.html
 @hero hero.svg
 -->
-<dom-module id="fore-input">
+<dom-module id="fore-select">
 
     <style>
         :host {
@@ -32,20 +32,14 @@ Example:
 
     </style>
 
-    <template>
-        <div class="fore-control">
-            <content></content>
-        </div>
-    </template>
-
 </dom-module>
 
 <script>
 
     Polymer({
 
-        is: 'fore-input',
-        extends: 'input',
+        is: 'fore-select',
+        extends: 'select',
         behaviors:[Fore.ForeBound],
 
         // Element Lifecycle
@@ -70,25 +64,10 @@ Example:
             // This is a good place to perform any work related to your element's
             // visual state or active behavior (measuring sizes, beginning animations,
             // loading resources, etc).
-//            var self=this;
-//            document.addEventListener('model-construct-done',function(){
-//                console.log(this, " EVENT 'model-construct-done' received");
-//                Fore.ForeBound.init.call(this);
-//            });
-//            $(document).on("fore-refresh", function(){
-//               console.log(this, " EVENT 'fore-refresh' received");
-////                self._init();
-//                Fore.ForeBound.init.call(this);
-//
-//            });
         },
 
         detached: function () {
-            console.log(this, " detached");
-            // The analog to `attached`, `detached` fires when the element has been
-            // removed from a document.
-            //
-            // Use this to clean up anything you did in `attached`.
+//            console.log(this, " detached");
         }
 
 

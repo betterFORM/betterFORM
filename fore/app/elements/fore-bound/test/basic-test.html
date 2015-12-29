@@ -17,55 +17,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../../bower_components/web-component-tester/browser.js"></script>
 
     <!-- Step 1: import the element to test -->
-      <link rel="import" href="../../fore-dependencies.html">
-      <link rel="import" href="../fore-input.html">
+    <link rel="import" href="../fore-bound.html">
   </head>
   <body>
 
     <!-- You can use the document as a place to set up your fixtures. -->
-      <fore-model>
-          <fore-instance id="default">
-              <data>
-                  <foo>Foo</foo>
-              </data>
-          </fore-instance>
-      </fore-model>
+    <fore-bound></fore-bound>
 
+    <script>
+      var myEl = document.querySelector('fore-bound');
 
+      suite('<fore-bound>', function() {
 
-      <input is="fore-input" ref="foo">
-
-      <script>
-      var myEl = document.querySelector('input');
-
-      suite('<fore-input>', function() {
-
-        test("value of bound ItemState is 'Foo'", function() {
-            assert.equal(document.querySelector('fore-instance').getItem("foo").value, 'Foo');
-        });
-        test("value of bound Node  is 'Foo'", function() {
-            assert.equal(document.querySelector('fore-instance').getItem("foo").item.textContent, 'Foo');
-        });
-        test("value property is 'Foo'", function() {
-          assert.equal(myEl.value, 'Foo');
+        test('defines the "author" property', function() {
+          assert.equal(myEl.author.name, 'Dimitri Glazkov');
+          assert.equal(myEl.author.image, 'http://addyosmani.com/blog/wp-content/uploads/2013/04/unicorn.jpg');
         });
 
-/*
         test('says hello', function() {
-          assert.equal(myEl.sayHello(), 'fore-input says, Hello World!');
+          assert.equal(myEl.sayHello(), 'fore-bound says, Hello World!');
 
           var greetings = myEl.sayHello('greetings Earthlings');
-          assert.equal(greetings, 'fore-input says, greetings Earthlings');
+          assert.equal(greetings, 'fore-bound says, greetings Earthlings');
         });
 
         test('fires lasers', function(done) {
-          myEl.addEventListener('fore-input-lasers', function(event) {
+          myEl.addEventListener('fore-bound-lasers', function(event) {
             assert.equal(event.detail.sound, 'Pew pew!');
             done();
           });
           myEl.fireLasers();
         });
-*/
 
       });
     </script>

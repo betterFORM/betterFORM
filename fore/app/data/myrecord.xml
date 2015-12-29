@@ -1,5 +1,5 @@
-<record id="" projectref="">
-    <created>sometime</created>
+<record id="uuid" projectref="project1">
+    <created>2014-12-29</created>
     <date></date>
     <start></start>
     <end></end>

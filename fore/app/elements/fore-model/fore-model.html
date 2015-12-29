@@ -61,7 +61,7 @@ Example:
         },
 
         attached: function () {
-            console.log(this, " attached");
+//            console.log(this, " attached");
             // `attached` fires once the element and its parents have been inserted
             // into a document.
             //
@@ -70,7 +70,7 @@ Example:
             // loading resources, etc).
             var self=this;
             window.addEventListener("WebComponentsReady", function(){
-                console.log("##### WebComponentsReady #####");
+                console.log("########## WebComponentsReady .- kick off initialization ##########");
                 self._modelConstruct();
             });
 
@@ -78,7 +78,7 @@ Example:
         },
 
         detached: function () {
-            console.log(this, " detached");
+//            console.log(this, " detached");
             // The analog to `attached`, `detached` fires when the element has been
             // removed from a document.
             //

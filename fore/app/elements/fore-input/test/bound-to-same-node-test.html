@@ -33,20 +33,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-      <input is="fore-input" ref="foo">
+      <input id="one" is="fore-input" ref="foo">
+      <input id="two" is="fore-input" ref="foo">
 
       <script>
-      var myEl = document.querySelector('input');
 
       suite('<fore-input>', function() {
 
-        test("value of bound ItemState is 'Foo'", function() {
-            assert.equal(document.querySelector('fore-instance').getItem("foo").value, 'Foo');
+        test("value of control 'one' is 'Foo'", function() {
+          var myEl = document.querySelector('#one');
+          assert.equal(myEl.value, 'Foo');
         });
-        test("value of bound Node  is 'Foo'", function() {
-            assert.equal(document.querySelector('fore-instance').getItem("foo").item.textContent, 'Foo');
-        });
-        test("value property is 'Foo'", function() {
+
+        test("value of control 'two' is 'Foo'", function() {
+          var myEl = document.querySelector('#two');
           assert.equal(myEl.value, 'Foo');
         });
 
