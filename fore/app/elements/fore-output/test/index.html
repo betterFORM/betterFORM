@@ -12,36 +12,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>fore-input Demo</title>
+
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../fore-dependencies.html">
-    <link rel="import" href="../fore-input.html">
+    <script src="../../../bower_components/web-component-tester/browser.js"></script>
   </head>
-  <body unresolved>
-
-    <p>An example of <code>&lt;fore-input&gt;</code>:</p>
-
-    <button>Say Something</button>
-
-      <fore-model>
-          <fore-instance id="default">
-              <data>
-                  <foo>Foo</foo>
-              </data>
-          </fore-instance>
-
-          <fore-bind id="first" ref="first" required="true">
-      </fore-model>
-
-
-
-    <input is="fore-input" ref="foo">
-
+  <body>
     <script>
-      document.querySelector('button').addEventListener('click', function() {
-        alert(document.querySelector('input').boundItem.value);
-      });
+      // Load and run all tests (.html, .js):
+      WCT.loadSuites([
+        'basic-test.html',
+        'two-bindings-test.html',
+        'bound-to-same-node-test.html',
+        'not-existing-test.html',
+      ]);
     </script>
-
   </body>
 </html>

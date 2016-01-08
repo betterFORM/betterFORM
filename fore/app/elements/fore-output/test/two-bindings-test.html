@@ -1,0 +1,90 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+        <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../../bower_components/web-component-tester/browser.js"></script>
+
+        <!-- Step 1: import the element to test -->
+        <link rel="import" href="../../fore-dependencies.html">
+        <link rel="import" href="../fore-output.html">
+    </head>
+    <body>
+
+        <!-- You can use the document as a place to set up your fixtures. -->
+        <fore-model>
+            <fore-instance id="default">
+                <data>
+                    <foo>Foo</foo>
+                    <bar>Bar</bar>
+                </data>
+            </fore-instance>
+        </fore-model>
+
+
+        <input id="one" is="fore-output" ref="foo">
+        <input id="two" is="fore-output" ref="bar">
+
+        <script>
+
+            suite('<fore-output>', function () {
+
+                test("value of bound ItemState is 'Foo'", function () {
+                    var myEl = document.querySelector('#one');
+                    assert.equal(document.querySelector('fore-instance').getItem("foo").value, 'Foo');
+                });
+                test("value of bound Node  is 'Foo'", function () {
+                    var myEl = document.querySelector('#one');
+                    assert.equal(document.querySelector('fore-instance').getItem("foo").item.textContent, 'Foo');
+                });
+                test("value property is 'Foo'", function () {
+                    var myEl = document.querySelector('#one');
+                    assert.equal(myEl.value, 'Foo');
+                });
+
+                test("value of 2nd bound ItemState is 'Bar'", function () {
+                    var myEl = document.querySelector('#two');
+                    assert.equal(document.querySelector('fore-instance').getItem("bar").value, 'Bar');
+                });
+                test("value of bound Node  is 'Bar'", function () {
+                    var myEl = document.querySelector('#two');
+                    assert.equal(document.querySelector('fore-instance').getItem("bar").item.textContent, 'Bar');
+                });
+                test("value property is 'Bar'", function () {
+                    var myEl = document.querySelector('#two');
+                    assert.equal(myEl.value, 'Bar');
+                });
+
+                /*
+                 test('says hello', function() {
+                 assert.equal(myEl.sayHello(), 'fore-output says, Hello World!');
+
+                 var greetings = myEl.sayHello('greetings Earthlings');
+                 assert.equal(greetings, 'fore-output says, greetings Earthlings');
+                 });
+
+                 test('fires lasers', function(done) {
+                 myEl.addEventListener('fore-output-lasers', function(event) {
+                 assert.equal(event.detail.sound, 'Pew pew!');
+                 done();
+                 });
+                 myEl.fireLasers();
+                 });
+                 */
+
+            });
+        </script>
+
+    </body>
+</html>

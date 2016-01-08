@@ -1,0 +1,50 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>isomer-date-selector Demo</title>
+    <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../isomer-date-selector.html">
+  </head>
+  <body unresolved>
+
+    <p>An example of <code>&lt;isomer-date-selector&gt;</code>:</p>
+
+    <button id="getDate">get selected date</button>
+
+    <isomer-date-selector bind-value="" days-back="7">
+    </isomer-date-selector>
+
+<!--
+  multiple of these in one page still break
+    <isomer-date-selector bind-value="" days-back="5">
+    </isomer-date-selector>
+
+    <isomer-date-selector bind-value="" days-back="10">
+    </isomer-date-selector>
+-->
+
+    <script>
+      var seedElement = document.querySelector('isomer-date-selector');
+      
+      document.querySelector('#getDate').addEventListener('click', function() {
+        alert(seedElement.getValue());
+      });
+      document.querySelector("isomer-date-selector").addEventListener("date-selected",function(){
+         alert("selected date: " + document.querySelector('isomer-date-selector').getValue());
+      });
+
+    </script>
+
+  </body>
+</html>

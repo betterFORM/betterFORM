@@ -12,16 +12,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>fore-input Demo</title>
+    <title>fore-output Demo</title>
     <script src="../../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../fore-dependencies.html">
-    <link rel="import" href="../fore-input.html">
+    <link rel="import" href="../fore-output.html">
   </head>
   <body unresolved>
 
-    <p>An example of <code>&lt;fore-input&gt;</code>:</p>
+    <p>An example of <code>&lt;fore-output&gt;</code>:</p>
 
-    <button>Say Something</button>
 
       <fore-model>
           <fore-instance id="default">
@@ -30,16 +29,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </data>
           </fore-instance>
 
-          <fore-bind id="first" ref="first" required="true">
       </fore-model>
 
 
 
-    <input is="fore-input" ref="foo">
+    <fore-output ref="foo"></fore-output>
+    <button id="test1">change bound value imperatively</button>
 
-    <script>
-      document.querySelector('button').addEventListener('click', function() {
-        alert(document.querySelector('input').boundItem.value);
+      <script>
+      document.getElementById('test1').addEventListener('click', function() {
+          alert("doit");
+          var defaultInstance = document.querySelector("fore-instance[id='default']");
+          defaultInstance.set("foo","foobar");
       });
     </script>
 

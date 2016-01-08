@@ -38,7 +38,7 @@ Example:
             boundValue: {
                 type: String,
                 notify: true,
-                observer: '_valueChanged',
+                observer: 'valueChanged',
             },
             refresh:Object
         },
@@ -56,10 +56,16 @@ Example:
             document.addEventListener('model-construct-done',function(){
                 self.init();
             });
-            $(document).on("fore-refresh", function(){
+            $(document).on("fore-refresh", function(e){
                console.log(this, " EVENT 'fore-refresh' received");
+//               console.log(this, " EVENT 'fore-refresh' received", e.detail.path);
                 self.init();
             });
+//            this.addEventListener("fore-refresh", function(e){
+//               console.log("------------------------------------------- refresh fired");
+//                                self.init();
+//
+//            });
         },
 
         detached: function () {
@@ -71,7 +77,7 @@ Example:
          * kick off element initialization
          */
         init: function(){
-            console.log(this,".init::ref '", this.ref,"'");
+//            console.log(this,".init::ref '", this.ref,"'");
 //            console.log(this,".init::bind '", this.bind,"'");
 
             var model = document.querySelector("fore-model");
@@ -93,7 +99,7 @@ Example:
                 return;
             }
 
-            console.log(this,' bound item:: ', itemState.item);
+            console.log(this,' bound item ref "', this.ref, '" node: ', itemState.item);
 
             this.value = itemState.value;
             this.boundItem = itemState;
@@ -101,12 +107,11 @@ Example:
             //binding to instance node
             var self=this;
             var observer = new MutationObserver(function(mutations) {
-                console.log('observing ', self);
+//                console.log('observing ', self);
                 mutations.forEach(function(mutation) {
-                    console.log('observing',mutation.type);
-                    console.log('observing',mutation.target.textContent);
+//                    console.log(this, ' observing',mutation.type,' value: ', mutation.target.textContent);
                     self.value = mutation.target.textContent;
-                    console.log("updating from itemState... ",itemState);
+//                    console.log("updating from itemState... ",itemState);
                 });
             });
 
@@ -116,27 +121,32 @@ Example:
                 characterData: true
             });
 
+
+
             // ### if not exists switch to non-relevant (invisible/inactive)
             // attach listeners for control changes by user interaction
             this.addEventListener('change',function(e){
-                self._valueChanged();
+                self.valueChanged();
             });
 
             this.addEventListener('keyup',function(e){
-                self._valueChanged();
+                self.valueChanged();
             });
-
+            this.instance.observer = observer;
         },
 
+        getValue: function(){
+            console.log(this," getValue: ", this.boundValue);
+          return this.boundItem;
+        },
 
-
-        _valueChanged: function(){
-            console.log(this,'._valueChanged ', this.value );
+        valueChanged: function(){
+//            console.log(this,'.valueChanged ', this.value );
 //            var item = this.instance.get(this.ref);
-//            console.log(this,'._valueChanged item', item );
+//            console.log(this,'.valueChanged item', item );
 
             this.boundItem.value = this.value;
-            console.log(this,'._valueChanged::boundValue ', this.boundItem );
+            console.log(this,'.valueChanged::boundValue ', this.boundItem );
 
             this.instance.set(this.ref,this.value);
             this.boundValue = this.value;

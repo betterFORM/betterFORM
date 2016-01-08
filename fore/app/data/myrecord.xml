@@ -1,13 +1,13 @@
 <record id="uuid" projectref="project1">
     <created>2014-12-29</created>
-    <date></date>
+    <date>2014-12-12</date>
     <start></start>
     <end></end>
     <minutes></minutes>
-    <user></user>
-    <action></action>
+    <user>joern</user>
+    <action>implementation</action>
     <url></url>
     <note></note>
-    <billable></billable>
+    <billable>true</billable>
     <billed date="">false</billed>
 </record>

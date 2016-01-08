@@ -87,7 +87,7 @@ Example:
 
         ready: function () {
             console.log(this, " ready");
-            console.log(this, " ItemStates ", this.itemStates);
+//            console.log(this, " ItemStates ", this.itemStates);
 
             // `ready` is called after all elements have been configured, but
             // propagates bottom-up. This element's children are ready, but parents
@@ -129,9 +129,7 @@ Example:
             try {
                 this.rootNode = this.querySelector(":first-child").nodeName.toLowerCase() ;
             } catch(e){
-                console.log("no inline instance found");
-
-
+//                console.log("no inline instance found");
             }
 
         },
@@ -161,11 +159,11 @@ Example:
 //            var targetNode = this.itemState();
 
             var node = this.getItem(path);
-            console.log("node: ", node);
-            console.log("node: ", node.item);
+//            console.log("node: ", node);
+//            console.log("node: ", node.item);
 
             node.value=newVal;
-                    console.log(">>>>>>>>>>>>>>>>>>>>>>>>> ", Polymer.dom(node.item));
+//            console.log(">>>>>>>>>>>>>>>>>>>>>>>>> ", Polymer.dom(node.item));
 
             node.textContent=newVal;
 
@@ -185,13 +183,11 @@ Example:
             }catch (e){
                 console.log("error: ",e);
             }
-            console.log("###### itemstates after change ", this.itemStates);
 
             // notify controls bound to this path
-
-        },
-        doRefresh: function(observer){
-//            observer.deliver();
+            console.log("FORE-REFRESH for path: ", path);
+            $("[ref='" + path + "']").trigger("fore-refresh",[path]);
+            console.log("###### itemstates after change ", this.itemStates);
         },
 
         getItem: function(path){
@@ -207,7 +203,7 @@ Example:
 //                return this._createItem(fullPath);
                 return newItem;
             }else{
-                console.log("### using item ", this.itemStates[fullPath]);
+//                console.log("### using item ", this.itemStates[fullPath]);
                 return this.itemStates[fullPath];
             }
 
@@ -246,8 +242,8 @@ Example:
                 state.path = path;
                 this.itemStates[path]=state;
 //            this.itemStates.push(state);
-                console.log(this, " created new state: ", state);
-                console.log(this, " stored states: ", this.itemStates);
+//                console.log(this, " created new state: ", state);
+//                console.log(this, " stored states: ", this.itemStates);
                 return state;
             }catch (e){
                 return undefined;
@@ -259,7 +255,7 @@ Example:
 //            console.log(this, "._getValue path: ", path);
             var fullPath = this.rootNode + path;
             var result = $(this).xpath(fullPath).get(0).textContent;
-            console.log(this, '.get || xpath:', fullPath, ' result: ', result);
+//            console.log(this, '.get || xpath:', fullPath, ' result: ', result);
             return result;
         },
 
@@ -270,7 +266,7 @@ Example:
          */
 
         _srcChanged: function (oldVal, newVal) {
-            console.log(this, "._srcChanged");
+//            console.log(this, "._srcChanged");
             this._loadInstance();
         },
 
@@ -279,7 +275,7 @@ Example:
          * @private
          */
         _loadInstance: function () {
-            console.log(this, "._loadInstance");
+//            console.log(this, "._loadInstance");
 //            console.log("FORE-INSTANCE::_loadInstance", this.src);
 
             if (this.src) {
@@ -296,9 +292,9 @@ Example:
                      },
                      */
                 }).done(function(data){
-                    console.log(this, ".loadInstance data: ", $(data));
+//                    console.log(this, ".loadInstance data: ", $(data));
                     var oldChild = $(self).find("> :first-child");
-                    console.log(this, ".loadInstance old child: ", oldChild);
+//                    console.log(this, ".loadInstance old child: ", oldChild);
 
                     if(oldChild !== undefined){
                         self.itemStates = {};
@@ -316,7 +312,7 @@ Example:
 
         _instanceDataChanged: function (oldValue, newValue) {
             console.debug(this, "._dataChanged: ");
-            this.rootNode = this.querySelector(":first-child") ;
+//            this.rootNode = this.querySelector(":first-child") ;
 //            if(this.rootNode){
 //                console.log("rootNode: ", this.rootNode.nodeName);
 //            }

@@ -108,13 +108,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <h1>Timetracker</h1>
             <div class="fore-control">
                 <label for="c-created">created</label>
-                <input id="c-created" is="fore-input" type="date" ref="created">
+                <fore-output id="c-created" ref="created"></fore-output>
             </div>
 
+<!--
             <div class="fore-control">
                 <label for="date">Date</label>
                 <input id="date" is="fore-input" type="date" ref="date">
             </div>
+-->
+
+            <isomer-date-selector bind-value="" days-back="7" ref="date"></isomer-date-selector>
+
+            <!--<div class="fore-control">-->
+                <!--<label for="date">Duration</label>-->
+                <!--&lt;!&ndash; need a duration component here to output the right amount of minutes &ndash;&gt;-->
+                <!--<input id="date" is="fore-input" type="number" ref="minutes">-->
+            <!--</div>-->
 
             <div class="fore-control">
                 <label for="project">Project</label>
@@ -166,23 +176,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                 <input id="billable" type="checkbox" is="fore-input" ref="note">
             </div>
+<!--
             <div class="fore-control">
                 <label for="note"></label>
 
                 <input id="note" is="fore-input" ref="note" placeholder="your notes...">
             </div>
+-->
             <div class="fore-control">
                  <button is="fore-trigger" submit="sendDefault">
                      Send
                  </button>
             </div>
 
+            <button id="test1">set created</button>
         </div>
 
 
         <script>
+
+
             (function (document) {
                 'use strict';
+                var dateSelector = document.querySelector("isomer-date-selector");
+                var defaultInstance = document.querySelector("fore-instance[id='default']");
+
+
+
+                document.getElementById("test1").addEventListener('click',function(){
+                    var defaultInstance = document.querySelector("fore-instance[id='default']");
+                    defaultInstance.set("created","foobar");
+                });
 
                 window.addEventListener("model-construct-done", function () {
                     console.log("##### model-construct-done from page #####");
@@ -190,7 +214,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     document.querySelector("fore-instance[id='default']").set("created", new Date().toISOString().substring(0, 10));
 
                     // +++ set reporting date - default to created date +++
-                    document.querySelector("fore-instance[id='default']").set("date", new Date().toISOString().substring(0, 10));
+//                    document.querySelector("fore-instance[id='default']").set("date", new Date().toISOString().substring(0, 10));
 
                 });
 
@@ -202,6 +226,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         document.querySelector("fore-instance[id='default']").src='data/myrecord.xml';
                     }
                 });
+/*
+                window.addEventListener("date-selected", function () {
+                    var dateVal = dateSelector.getValue();
+                    console.log("currently selected date: ", dateVal);
+                    defaultInstance.set("date",dateVal);
+                });
+*/
 
 
 /*

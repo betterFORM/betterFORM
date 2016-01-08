@@ -1,0 +1,116 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../fore-bound/fore-bound.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <fore-output></fore-output>
+
+@group Seed Elements
+@element fore-output
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="fore-output">
+
+    <style>
+        :host {
+            display: block;
+            box-sizing: border-box;
+        }
+
+    </style>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'fore-output',
+//        extends: 'span',
+        behaviors:[Fore.ForeBound],
+
+        // Element Lifecycle
+
+        ready: function () {
+            console.log( this, " ready");
+
+            // `ready` is called after all elements have been configured, but
+            // propagates bottom-up. This element's children are ready, but parents
+            // are not.
+            //
+            // This is the point where you should make modifications to the DOM (when
+            // necessary), or kick off any processes the element wants to perform.
+        },
+
+        attached: function () {
+            console.log(this, " attached");
+
+            // `attached` fires once the element and its parents have been inserted
+            // into a document.
+            //
+            // This is a good place to perform any work related to your element's
+            // visual state or active behavior (measuring sizes, beginning animations,
+            // loading resources, etc).
+//            var self=this;
+//            document.addEventListener('model-construct-done',function(){
+//                console.log(this, " EVENT 'model-construct-done' received");
+//                Fore.ForeBound.init.call(this);
+//            });
+//            $(document).on("fore-refresh", function(){
+//               console.log(this, " EVENT 'fore-refresh' received");
+////                self._init();
+//                Fore.ForeBound.init.call(this);
+//
+//            });
+//            Fore.ForeBound.init.call(this);
+//            var myval = Fore.ForeBound.getValue.call(this);
+//            console.log(this, " boundValue: ", myval.textContent);
+//            console.log(this, " boundValue: ", Fore.ForeBound.boundValue);
+//            $(this).html(Fore.ForeBound.boundItem.value);
+            var that = this;
+            document.addEventListener('model-construct-done',function(){
+                console.log("++++++++++++++++++++++++++++++++++++++++++ ", that.boundItem);
+                console.log("++++++++++++++++++++++++++++++++++++++++++ ", that.boundItem.value);
+                $(that).html(that.boundItem.value);
+            });
+            $(document).on('fore-refresh',function(event,param1){
+//                alert(param1);
+                if(that.boundItem != undefined) {
+                    console.log(that.boundItem.value);
+                    $(that).html(that.boundItem.value);
+                }
+            });
+
+        },
+
+        detached: function () {
+            console.log(this, " detached");
+            // The analog to `attached`, `detached` fires when the element has been
+            // removed from a document.
+            //
+            // Use this to clean up anything you did in `attached`.
+        },
+
+        valueChanged: function(){
+            console.log(this, " value-changed");
+            var val = Fore.ForeBound.getValue.call(this);
+            console.log(this, " boundValue: ", val);
+            $(this).html(val);
+        }
+
+
+    });
+
+</script>

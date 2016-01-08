@@ -1,0 +1,313 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script type="import" src="../fore-dependencies.html"></script>
+<link rel="import" href="../fore-bound/fore-bound.html">
+
+<!--
+<script type="text/javascript" src="../../bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
+-->
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <isomer-date-selector></isomer-date-selector>
+
+@group Seed Elements
+@element isomer-date-selector
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="isomer-date-selector">
+    <link rel="stylesheet" href="../../bower_components/font-awesome/Font-Awesome-4.5.0/css/font-awesome.min.css">
+    <template>
+        <style>
+            .dark-primary-color {
+                background: #303F9F;
+            }
+
+            .default-primary-color {
+                background: #3F51B5;
+            }
+
+            .light-primary-color {
+                background: #C8E6C9;
+            }
+
+            .text-primary-color {
+                color: #FFFFFF;
+            }
+
+            .accent-color {
+                background: #03A9F4;
+            }
+
+            .primary-text-color {
+                color: #212121;
+            }
+
+            .secondary-text-color {
+                color: #727272;
+            }
+
+            .divider-color {
+                border-color: #B6B6B6;
+            }
+
+            :host {
+                display: block;
+                box-sizing: border-box;
+            }
+
+            .wrapper {
+                /*height: 50px;*/
+                background: #303F9F;
+                display: table;
+            }
+
+            .month, .day, .weekday {
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+
+            .day {
+                font-size: 1.6em;
+                font-weight: 700;
+            }
+
+            a {
+                display: table;
+                text-decoration: none;
+                padding: 10px;
+                color: white;
+                background: #3F51B5;
+                transition: 0.5s ease;
+            }
+
+            .arrow a {
+                background-color: transparent;
+            }
+
+            a:hover {
+                outline: solid 1px;
+
+            }
+
+            a[selected] {
+                background-color: #03A9F4;
+                transition: 0.4s ease;
+                transform: scale(1.2);
+                box-shadow:0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+            }
+
+/*
+            a.disabled {
+                opacity: 0.5
+            }
+*/
+
+            .fa {
+                font-size: 3em;
+            }
+        </style>
+
+        <div class="wrapper" tabindex="0">
+            <table>
+                <tr>
+                    <td class="arrow back"><a href="#"><i class="fa fa-angle-left"></i></a></td>
+                    <template id="repeat" is="dom-repeat" items="[[days]]">
+                        <td>
+                            <a href="#" datevalue$="[[getValue()]]" index$="{{index}}"
+                               selected$="[[_isSelected(index)]]" tabindex="0">
+                                <span class="month">[[_getMonth(item.moment)]]</span>
+                                <span class="day">[[_getDay(item.moment)]]</span>
+                                <span class="weekday">[[_getWeekDay(item.moment)]]</span>
+                            </a>
+                        </td>
+                    </template>
+                    <td class="arrow forward"><a class="disabled" href="#"><i class="fa fa-angle-right"></i></a></td>
+                </tr>
+            </table>
+
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'isomer-date-selector',
+            behaviors:[Fore.ForeBound],
+
+//            daysback: 5,
+            selectedIndex: this.daysback,
+
+            properties: {
+                bindValue: {
+                    type: String,
+                    reflectToAttribute: true,
+                    readonly: true
+                },
+                days: {
+                    type: Array,
+                    notify: true,
+                    value: function () {
+                        return [];
+                    }
+                },
+                daysBack:{
+                    type:Number,
+                    reflectToAttribute:true,
+                    value:10
+                }
+                /*
+                dateValue: {
+                    type: String,
+                    notify: true,
+                    readonly: true
+                }
+*/
+
+            },
+
+
+            getValue: function () {
+                return this.bindValue;
+            },
+
+
+            _getMonth: function (item) {
+                return item.format('MMM');
+            },
+            _getDay: function (item) {
+                return item.format('DD');
+            },
+            _getWeekDay: function (item) {
+                return item.format('ddd');
+            },
+
+
+            _isSelected: function (element) {
+//                console.log("element: ", element);
+                if (this.selectedIndex === element) {
+                    return "selected";
+                } else {
+                    ""
+                }
+            },
+
+            // Element Lifecycle
+
+            ready: function () {
+                // `ready` is called after all elements have been configured, but
+                // propagates bottom-up. This element's children are ready, but parents
+                // are not.
+                //
+                // This is the point where you should make modifications to the DOM (when
+                // necessary), or kick off any processes the element wants to perform.
+
+//                this.daysBack = 10;
+                for (i = this.daysBack; i > 0; i--) {
+                    this.push('days', {
+                        moment: moment().subtract(i, 'days')
+                    });
+                }
+                this.push('days', {moment: moment()});
+                this.selectedIndex = this.daysBack;
+//                console.log("selected", this.selectedIndex);
+
+            },
+
+            attached: function () {
+//                console.log("daysBack: ",this.daysBack);
+                this.bindValue = this.days[this.daysBack].moment.format('YYYY-MM-DD');
+                // `attached` fires once the element and its parents have been inserted
+                // into a document.
+                //
+                // This is a good place to perform any work related to your element's
+                // visual state or active behavior (measuring sizes, beginning animations,
+                // loading resources, etc).
+
+//                console.log("now: ", moment().format("dddd DD MMM"));
+                that = this;
+
+//                console.log("days: ", this.days);
+                var self = this;
+                $(this).find('a[index]').on("click", function () {
+                    $(self).find('a[selected]').removeAttr("selected");
+                    $(this).attr("selected", "selected");
+                    self.bindValue = self.days[$(this).attr('index')].moment.format('YYYY-MM-DD');
+//                    console.log("selected date: ", self.bindValue);
+                    self.fire('date-selected');
+                });
+
+                $(this).find('.arrow.back').on("click", function () {
+                    var earliestDay = moment(self.days[0].moment.toDate());
+//                    console.log("arrow.back eaarliest ", earliestDay);
+
+//                    self.set('days.10.moment', earliestDay);
+//                    newDay = moment(earliestDay.toDate());
+                    self._updateBack(earliestDay);
+                    $('.arrow.forward').find('a').removeClass('disabled');
+                });
+
+                $(this).find('.arrow.forward').on("click", function () {
+                    var latestDay = moment(self.days[self.daysBack].moment.toDate());
+//                    console.log("arrow.back latestDay ", latestDay);
+//                    console.log("now: ",moment());
+
+                    if(moment().isSame(latestDay,'day')){
+//                        $('.arrow.forward').find('a').addClass('disabled');
+                        return;
+                    }
+                    self._updateForward(latestDay);
+                });
+
+
+            },
+            _updateBack: function (earliestDay) {
+                for (i = that.daysBack; i >= 0; i--) {
+                    newDay = moment(earliestDay.toDate());
+                    that.push('days', {moment: newDay.subtract(moment.duration(i, 'd'))});
+                }
+                var newArr = this.splice('days', 0, that.daysBack+1);
+            },
+
+            _updateForward:function(latestDay){
+//                console.log('updateforward');
+                for (i = 0; i <= this.daysBack; i++) {
+                    newDay = moment(latestDay.toDate());
+                    that.push('days', {moment: newDay.add(moment.duration(i, 'd'))});
+                }
+                var newArr = this.splice('days', 0, that.daysBack+1);
+//                console.log(that.days[that.daysBack]);
+//                console.log(moment());
+
+//                if(moment().isSame(latestDay,'day')){
+//                    $('.arrow.forward').find('a').attr('disabled','disabled').addClass('disabled');
+//                }
+            },
+
+            detached: function () {
+                // The analog to `attached`, `detached` fires when the element has been
+                // removed from a document.
+                //
+                // Use this to clean up anything you did in `attached`.
+            },
+
+            // Element Behavior
+
+        });
+    </script>
+</dom-module>
