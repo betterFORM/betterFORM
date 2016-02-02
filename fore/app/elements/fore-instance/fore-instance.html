@@ -49,26 +49,32 @@ Example:
                 notify: true,
                 observer: '_srcChanged',
             },
+/*
             instanceData: {
                 type: Object,
                 value: {},
                 notify: true,
                 observer: '_instanceDataChanged'
             },
+*/
 
             /**
              * Array of itemState objects that represents the current state of the associated instance data item.
              */
+/*
             itemStates: {
                 type: Object,
                 value: {},
                 notify:true,
                 observer:'_itemStateChanged'
             },
+*/
             rootNode:{
                 type:String,
                 value:undefined
             },
+
+            modelReady:Boolean
         },
 
         ItemState: function () {
@@ -95,6 +101,8 @@ Example:
             //
             // This is the point where you should make modifications to the DOM (when
             // necessary), or kick off any processes the element wants to perform.
+            this.itemStates={};
+            this.modelReady=false;
         },
 
         attached: function () {
@@ -119,6 +127,12 @@ Example:
 //            this.instanceData = Polymer.dom(self.root);
 //            this.itemStates = [];
 //            this.ItemStates = {}
+
+            window.addEventListener("model-construct-done",function(){
+                this.modelReady=true;
+                console.log("@@@@@@@@@@@@@@@@@@@ ", this.modelReady);
+            });
+
             window.addEventListener("item-states-changed", function (e) {
 //                console.log(this, " item state changed");
             });
@@ -131,7 +145,6 @@ Example:
             } catch(e){
 //                console.log("no inline instance found");
             }
-
         },
 
         detached: function () {
@@ -186,7 +199,12 @@ Example:
 
             // notify controls bound to this path
             console.log("FORE-REFRESH for path: ", path);
-            $("[ref='" + path + "']").trigger("fore-refresh",[path]);
+            console.log("FORE-REFRESH for path: ", this.modelReady);
+//            if(this.modelReady){
+            var pathExpr = "[ref='" + path + "']";
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> pathExpr: ", pathExpr);
+                $(pathExpr).trigger("fore-refresh",[path]);
+//            }
             console.log("###### itemstates after change ", this.itemStates);
         },
 
@@ -266,7 +284,7 @@ Example:
          */
 
         _srcChanged: function (oldVal, newVal) {
-//            console.log(this, "._srcChanged");
+            console.log(this, "._srcChanged");
             this._loadInstance();
         },
 
@@ -276,8 +294,7 @@ Example:
          */
         _loadInstance: function () {
 //            console.log(this, "._loadInstance");
-//            console.log("FORE-INSTANCE::_loadInstance", this.src);
-
+            console.log("FORE-INSTANCE::_loadInstance", this.src);
             if (this.src) {
                 var self = this;
                 var url = this.src;
@@ -299,28 +316,32 @@ Example:
                     if(oldChild !== undefined){
                         self.itemStates = {};
                         $(oldChild).replaceWith($(data).get(0));
-                        self.fire("fore-refresh");
-                    }
 
-//                    Polymer.dom(self.root).appendChild($(data).get(0));
-//                    console.log("rootnode: ", self.querySelector(":first-child"));
+                        console.log("#### ready", self.modelReady);
+//                        if(self.modelReady) {
+//                            self.fire("fore-refresh");
+                              $(document).trigger("fore-refresh");
+
+//                        }
+//                        $(document).trigger("fore-refresh");
+                    }
                 });
             }else{
                 console.log(this, " using inline instance");
             }
         },
 
-        _instanceDataChanged: function (oldValue, newValue) {
-            console.debug(this, "._dataChanged: ");
-//            this.rootNode = this.querySelector(":first-child") ;
-//            if(this.rootNode){
-//                console.log("rootNode: ", this.rootNode.nodeName);
-//            }
-        },
+//        _instanceDataChanged: function (oldValue, newValue) {
+//            console.debug(this, "._instanceDataChanged: ");
+////            this.rootNode = this.querySelector(":first-child") ;
+////            if(this.rootNode){
+////                console.log("rootNode: ", this.rootNode.nodeName);
+////            }
+//        },
 
-        _itemStateChanged: function(item){
-            console.log(this,'._itemStateChanged : ', item);
-        }
+//        _itemStateChanged: function(item){
+//            console.log(this,'._itemStateChanged : ', item);
+//        }
 
     });
 
