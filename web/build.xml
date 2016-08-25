@@ -33,6 +33,7 @@
     <property name="target" value="${basedir}/target"/>
     <property name="webapp.dir" value="${target}/${web.app.name}"/>
     <!--<property name="resources.dir" value="${webapp.dir}/resources"/>-->
+    <property name="polymer.dir" value="${webapp.dir}/js"/>
     <property name="resources.dir" value="${webapp.dir}/WEB-INF/classes/META-INF/resources"/>
     <property name="targetname" value="${target}/${web.app.name}-${app.version.number}"/>
 
@@ -402,6 +403,23 @@
             <fileset dir="${basedir}/src/main/webapp/forms" excludes="**/TimeTracker.xhtml"/>
         </copy>
     </target>
+
+    <target name="copy-polymer">
+        <echo>
+        ************************************************************************************
+        copying global Polymer files
+        ************************************************************************************
+        </echo>
+
+         <copy description="copy polymer from global 'src' directory"
+              todir="${polymer.dir}"
+              includeemptydirs="true">
+            <fileset dir="${resource.src.dir}/main/webapp/js">
+                <exclude name="**/scripts/**"/>
+            </fileset>
+        </copy>
+    </target>
+
 
     <target name="copy-src-resources">
         <echo>

@@ -35,6 +35,7 @@ web/src/test/java/de/betterfrom/conformance/xf11/*
 web/target/*
 xApp/target/*
 zaphod/target/*
+web/src/main/webapp/js/bower_components/*
 
 ## files to ignore
 tools/installer/betterform-*install*

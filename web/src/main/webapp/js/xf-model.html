@@ -1,0 +1,38 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<!--
+`xf-model`
+XForms Model Element
+
+@demo demo/index.html 
+-->
+
+<dom-module id="xf-model">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'xf-model',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'xf-model',
+        },
+      },
+
+      attached: function(){
+        alert("i'm here");
+      }
+
+    });
+  </script>
+</dom-module>
