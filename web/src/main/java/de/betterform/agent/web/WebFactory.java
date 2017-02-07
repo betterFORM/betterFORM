@@ -308,7 +308,7 @@ public class WebFactory {
                 String rootPath = new File(resourcePath).getParentFile().getParent();
                 computedRealPath = new File(rootPath, path).getAbsolutePath();
             } else if(resourceURL != null){
-                computedRealPath = new File(resourceURL.toExternalForm(),path).getAbsolutePath();
+                computedRealPath = new File(resourceURL.toURI()).getAbsolutePath();
             } else {
                 String resourcePath = context.getRealPath("/");
                 computedRealPath = new File(resourcePath, path).getAbsolutePath();
