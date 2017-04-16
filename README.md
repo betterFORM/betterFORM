@@ -1,5 +1,7 @@
 # betterForm 5 Quickstart Guide
 
+[![Join the chat at https://gitter.im/betterFORM/betterFORM](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/betterFORM/betterFORM?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 betterFORM 5 is an implementation of XForms 1.1 in Java. It's about 97% conformant to the W3C recommendation and allows to build advanced form applications that require complex validations, calculations and dependency management. 
 
 For further information on XForms  see:
