@@ -1,3 +1,4 @@
+# this project is abandoned and no longer maintained - if you're looking for an alternative see https://github.com/Jinntec/Fore
 # betterForm 5 Quickstart Guide
 
 betterFORM 5 is an implementation of XForms 1.1 in Java. It's about 97% conformant to the W3C recommendation and allows to build advanced form applications that require complex validations, calculations and dependency management. 
