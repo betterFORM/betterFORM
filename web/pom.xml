@@ -460,7 +460,7 @@
 <dependency>
 <groupId>org.exist-db</groupId>
 <artifactId>exist-core</artifactId>
-<version>3.0.RC1</version>
+<version>5.1.0</version>
 </dependency>
 <dependency>
 <groupId>org.xmldb</groupId>
